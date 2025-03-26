@@ -50,6 +50,10 @@
             // 
             this.btnEditar.Click += new System.EventHandler(this.btnEditar_Click);
             // 
+            // btnIncluir
+            // 
+            this.btnIncluir.Click += new System.EventHandler(this.btnIncluir_Click);
+            // 
             // ID
             // 
             this.ID.Text = "ID";

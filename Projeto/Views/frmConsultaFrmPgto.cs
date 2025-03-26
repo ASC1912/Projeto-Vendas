@@ -1,4 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
+using Projeto.Controller;
+using Projeto.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,6 +13,7 @@ namespace Projeto
 {
     public partial class frmConsultaFrmPgto : Projeto.frmBaseConsulta
     {
+        private FormaPagamentoController controller = new FormaPagamentoController();
         public frmConsultaFrmPgto()
         {
             InitializeComponent();
@@ -18,31 +21,16 @@ namespace Projeto
         }
         private void CarregarFormasPagamento()
         {
-            string conexao = "Server=localhost;Database=sistema;Uid=root;Pwd=;";
-
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(conexao))
+                listView1.Items.Clear();
+                List<FormaPagamento> formasPagamento = controller.ListarFormaPagamento();
+
+                foreach (var forma in formasPagamento)
                 {
-                    conn.Open();
-
-                    string query = "SELECT id, descricao FROM formas_pagamento";
-
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                    {
-                        using (MySqlDataReader reader = cmd.ExecuteReader())
-                        {
-                            listView1.Items.Clear();
-
-                            while (reader.Read())
-                            {
-                                ListViewItem item = new ListViewItem(reader["id"].ToString()); 
-                                item.SubItems.Add(reader["descricao"].ToString()); 
-
-                                listView1.Items.Add(item);
-                            }
-                        }
-                    }
+                    ListViewItem item = new ListViewItem(forma.Id.ToString());
+                    item.SubItems.Add(forma.Descricao);
+                    listView1.Items.Add(item);
                 }
             }
             catch (Exception ex)
@@ -54,6 +42,12 @@ namespace Projeto
         private void btnPesquisar_Click(object sender, EventArgs e)
         {
             CarregarFormasPagamento();
+        }
+
+        private void btnIncluir_Click(object sender, EventArgs e)
+        {
+            frmCadastroFrmPgto formCadastroPagamento = new frmCadastroFrmPgto();
+            formCadastroPagamento.ShowDialog();
         }
 
         private void btnEditar_Click(object sender, EventArgs e)
@@ -86,35 +80,15 @@ namespace Projeto
                 var confirmacao = MessageBox.Show("Tem certeza que deseja excluir essa forma de pagamento?", "Confirmação", MessageBoxButtons.YesNo);
                 if (confirmacao == DialogResult.Yes)
                 {
-                    string conexao = "Server=localhost;Database=sistema;Uid=root;Pwd=;";
-
                     try
                     {
-                        using (MySqlConnection conn = new MySqlConnection(conexao))
-                        {
-                            conn.Open();
-                            string query = "DELETE FROM formas_pagamento WHERE id = @id";
-
-                            using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                            {
-                                cmd.Parameters.AddWithValue("@id", id);
-                                int rowsAffected = cmd.ExecuteNonQuery();
-
-                                if (rowsAffected > 0)
-                                {
-                                    listView1.Items.Remove(itemSelecionado);
-                                    MessageBox.Show("Forma de pagamento excluída com sucesso!");
-                                }
-                                else
-                                {
-                                    MessageBox.Show("Erro ao excluir a forma de pagamento.");
-                                }
-                            }
-                        }
+                        controller.Excluir(id);
+                        listView1.Items.Remove(itemSelecionado);
+                        MessageBox.Show("Forma de pagamento excluída com sucesso!");
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show($"Erro: {ex.Message}");
+                        MessageBox.Show($"Erro ao excluir: {ex.Message}");
                     }
                 }
             }
@@ -123,5 +97,7 @@ namespace Projeto
                 MessageBox.Show("Por favor, selecione uma forma de pagamento para excluir.");
             }
         }
+
+        
     }
 }

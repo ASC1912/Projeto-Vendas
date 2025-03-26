@@ -98,69 +98,199 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
+    <Compile Include="Controller\CidadeController.cs" />
+    <Compile Include="Controller\ClienteController.cs" />
+    <Compile Include="Controller\CondicaoPagamentoController.cs" />
+    <Compile Include="Controller\EstadoController.cs" />
+    <Compile Include="Controller\FornecedorController.cs" />
+    <Compile Include="Controller\FuncionarioController.cs" />
+    <Compile Include="Controller\PaisController.cs" />
+    <Compile Include="Controller\FormaPagamentoController.cs" />
+    <Compile Include="Controller\ParcelaController.cs" />
+    <Compile Include="DAO\DAOCidade.cs" />
+    <Compile Include="DAO\DAOCliente.cs" />
+    <Compile Include="DAO\DAOCondicaoPagamento.cs" />
+    <Compile Include="DAO\DAOEstado.cs" />
+    <Compile Include="DAO\DAOFormaPagamento.cs" />
+    <Compile Include="DAO\DAOFornecedor.cs" />
+    <Compile Include="DAO\DAOFuncionario.cs" />
+    <Compile Include="DAO\DAOPais.cs" />
+    <Compile Include="DAO\DAOParcela.cs" />
+    <Compile Include="Models\Cidade.cs" />
+    <Compile Include="Models\Cliente.cs" />
+    <Compile Include="Models\CondicaoPagamento.cs" />
+    <Compile Include="Models\Estado.cs" />
+    <Compile Include="Models\FormaPagamento.cs" />
+    <Compile Include="Models\Fornecedor.cs" />
+    <Compile Include="Models\Funcionario.cs" />
+    <Compile Include="Models\Pais.cs" />
+    <Compile Include="Models\Parcelamento.cs" />
+    <Compile Include="Models\Pessoa.cs" />
+    <Compile Include="Views\FormPrincipal.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Views\FormPrincipal.Designer.cs">
+      <DependentUpon>FormPrincipal.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmBase.cs">
+    <Compile Include="Views\frmBase.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmBase.Designer.cs">
+    <Compile Include="Views\frmBase.Designer.cs">
       <DependentUpon>frmBase.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmBaseConsulta.cs">
+    <Compile Include="Views\frmBaseConsulta.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmBaseConsulta.Designer.cs">
+    <Compile Include="Views\frmBaseConsulta.Designer.cs">
       <DependentUpon>frmBaseConsulta.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmCadastroCondPgto.cs">
+    <Compile Include="Views\frmCadastroCidade.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmCadastroCondPgto.Designer.cs">
+    <Compile Include="Views\frmCadastroCidade.Designer.cs">
+      <DependentUpon>frmCadastroCidade.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\frmCadastroCliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\frmCadastroCliente.Designer.cs">
+      <DependentUpon>frmCadastroCliente.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\frmCadastroCondPgto.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\frmCadastroCondPgto.Designer.cs">
       <DependentUpon>frmCadastroCondPgto.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmCadastroFrmPgto.cs">
+    <Compile Include="Views\frmCadastroEstado.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmCadastroFrmPgto.Designer.cs">
+    <Compile Include="Views\frmCadastroEstado.Designer.cs">
+      <DependentUpon>frmCadastroEstado.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\frmCadastroFornecedor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\frmCadastroFornecedor.Designer.cs">
+      <DependentUpon>frmCadastroFornecedor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\frmCadastroFrmPgto.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\frmCadastroFrmPgto.Designer.cs">
       <DependentUpon>frmCadastroFrmPgto.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmConsultaCondPgto.cs">
+    <Compile Include="Views\frmCadastroFuncionario.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmConsultaCondPgto.Designer.cs">
+    <Compile Include="Views\frmCadastroFuncionario.Designer.cs">
+      <DependentUpon>frmCadastroFuncionario.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\frmCadastroPais.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\frmCadastroPais.Designer.cs">
+      <DependentUpon>frmCadastroPais.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\frmConsultaCidade.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\frmConsultaCidade.Designer.cs">
+      <DependentUpon>frmConsultaCidade.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\frmConsultaCliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\frmConsultaCliente.Designer.cs">
+      <DependentUpon>frmConsultaCliente.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\frmConsultaCondPgto.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\frmConsultaCondPgto.Designer.cs">
       <DependentUpon>frmConsultaCondPgto.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmConsultaFrmPgto.cs">
+    <Compile Include="Views\frmConsultaEstado.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmConsultaFrmPgto.Designer.cs">
+    <Compile Include="Views\frmConsultaEstado.Designer.cs">
+      <DependentUpon>frmConsultaEstado.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\frmConsultaFornecedor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\frmConsultaFornecedor.Designer.cs">
+      <DependentUpon>frmConsultaFornecedor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\frmConsultaFrmPgto.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\frmConsultaFrmPgto.Designer.cs">
       <DependentUpon>frmConsultaFrmPgto.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Views\frmConsultaFuncionario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\frmConsultaFuncionario.Designer.cs">
+      <DependentUpon>frmConsultaFuncionario.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\frmConsultaPais.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\frmConsultaPais.Designer.cs">
+      <DependentUpon>frmConsultaPais.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Views\FormPrincipal.resx">
+      <DependentUpon>FormPrincipal.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmBase.resx">
+    <EmbeddedResource Include="Views\frmBase.resx">
       <DependentUpon>frmBase.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmBaseConsulta.resx">
+    <EmbeddedResource Include="Views\frmBaseConsulta.resx">
       <DependentUpon>frmBaseConsulta.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmCadastroCondPgto.resx">
+    <EmbeddedResource Include="Views\frmCadastroCidade.resx">
+      <DependentUpon>frmCadastroCidade.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\frmCadastroCliente.resx">
+      <DependentUpon>frmCadastroCliente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\frmCadastroCondPgto.resx">
       <DependentUpon>frmCadastroCondPgto.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmCadastroFrmPgto.resx">
+    <EmbeddedResource Include="Views\frmCadastroEstado.resx">
+      <DependentUpon>frmCadastroEstado.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\frmCadastroFornecedor.resx">
+      <DependentUpon>frmCadastroFornecedor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\frmCadastroFrmPgto.resx">
       <DependentUpon>frmCadastroFrmPgto.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmConsultaCondPgto.resx">
+    <EmbeddedResource Include="Views\frmCadastroFuncionario.resx">
+      <DependentUpon>frmCadastroFuncionario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\frmCadastroPais.resx">
+      <DependentUpon>frmCadastroPais.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\frmConsultaCidade.resx">
+      <DependentUpon>frmConsultaCidade.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\frmConsultaCliente.resx">
+      <DependentUpon>frmConsultaCliente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\frmConsultaCondPgto.resx">
       <DependentUpon>frmConsultaCondPgto.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmConsultaFrmPgto.resx">
+    <EmbeddedResource Include="Views\frmConsultaEstado.resx">
+      <DependentUpon>frmConsultaEstado.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\frmConsultaFornecedor.resx">
+      <DependentUpon>frmConsultaFornecedor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\frmConsultaFrmPgto.resx">
       <DependentUpon>frmConsultaFrmPgto.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -172,6 +302,12 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Views\frmConsultaFuncionario.resx">
+      <DependentUpon>frmConsultaFuncionario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\frmConsultaPais.resx">
+      <DependentUpon>frmConsultaPais.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -186,5 +322,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

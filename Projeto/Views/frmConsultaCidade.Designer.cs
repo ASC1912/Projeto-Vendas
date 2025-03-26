@@ -1,6 +1,6 @@
-﻿namespace Projeto
+﻿namespace Projeto.Views
 {
-    partial class frmConsultaCondPgto
+    partial class frmConsultaCidade
     {
         /// <summary>
         /// Variável de designer necessária.
@@ -29,19 +29,16 @@
         private void InitializeComponent()
         {
             this.ID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.Prazo_dias = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.Descricao = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.Qtd_parcelas = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Nome = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Estado = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // listView1
             // 
             this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.ID,
-            this.Prazo_dias,
-            this.Descricao,
-            this.Qtd_parcelas});
-            this.listView1.Location = new System.Drawing.Point(48, 117);
+            this.Nome,
+            this.Estado});
             // 
             // btnDeletar
             // 
@@ -55,30 +52,27 @@
             // 
             this.btnEditar.Click += new System.EventHandler(this.btnEditar_Click);
             // 
+            // btnIncluir
+            // 
+            this.btnIncluir.Click += new System.EventHandler(this.btnIncluir_Click);
+            // 
             // ID
             // 
             this.ID.Text = "ID";
             // 
-            // Prazo_dias
+            // Nome
             // 
-            this.Prazo_dias.Text = "Prazo Dias";
-            this.Prazo_dias.Width = 88;
+            this.Nome.Text = "Nome";
             // 
-            // Descricao
+            // Estado
             // 
-            this.Descricao.Text = "Descrição";
-            this.Descricao.Width = 97;
+            this.Estado.Text = "Estado";
             // 
-            // Qtd_parcelas
-            // 
-            this.Qtd_parcelas.Text = "Qtd_Parcelas";
-            this.Qtd_parcelas.Width = 139;
-            // 
-            // frmConsultaCondPgto
+            // frmConsultaCidade
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Name = "frmConsultaCondPgto";
+            this.Name = "frmConsultaCidade";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -87,8 +81,7 @@
         #endregion
 
         private System.Windows.Forms.ColumnHeader ID;
-        private System.Windows.Forms.ColumnHeader Prazo_dias;
-        private System.Windows.Forms.ColumnHeader Descricao;
-        private System.Windows.Forms.ColumnHeader Qtd_parcelas;
+        private System.Windows.Forms.ColumnHeader Nome;
+        private System.Windows.Forms.ColumnHeader Estado;
     }
 }

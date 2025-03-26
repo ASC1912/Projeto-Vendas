@@ -34,6 +34,7 @@
             this.btnPesquisar = new System.Windows.Forms.Button();
             this.btnDeletar = new System.Windows.Forms.Button();
             this.btnEditar = new System.Windows.Forms.Button();
+            this.btnIncluir = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // listView1
@@ -92,11 +93,21 @@
             this.btnEditar.Text = "Editar";
             this.btnEditar.UseVisualStyleBackColor = true;
             // 
+            // btnIncluir
+            // 
+            this.btnIncluir.Location = new System.Drawing.Point(411, 415);
+            this.btnIncluir.Name = "btnIncluir";
+            this.btnIncluir.Size = new System.Drawing.Size(75, 23);
+            this.btnIncluir.TabIndex = 6;
+            this.btnIncluir.Text = "Incluir";
+            this.btnIncluir.UseVisualStyleBackColor = true;
+            // 
             // frmBaseConsulta
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnIncluir);
             this.Controls.Add(this.btnEditar);
             this.Controls.Add(this.btnDeletar);
             this.Controls.Add(this.btnPesquisar);
@@ -117,5 +128,6 @@
         protected System.Windows.Forms.Button btnSair;
         protected System.Windows.Forms.Button btnPesquisar;
         protected System.Windows.Forms.Button btnEditar;
+        protected System.Windows.Forms.Button btnIncluir;
     }
 }
