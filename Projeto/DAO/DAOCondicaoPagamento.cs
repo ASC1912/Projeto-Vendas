@@ -62,44 +62,6 @@ namespace Projeto.DAO
             return condicaoId;
         }
 
-        /*
-        public void Salvar(CondicaoPagamento condPagamento)
-        {
-            try
-            {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
-                {
-                    conn.Open();
-                    string query;
-
-                    if (condPagamento.Id > 0)
-                    {
-                        query = "UPDATE condicoes_pagamento SET descricao = @descricao, qtd_parcelas = @qtd_parcelas WHERE id = @id";
-                    }
-                    else
-                    {
-                        query = "INSERT INTO condicoes_pagamento (descricao, qtd_parcelas) VALUES (@descricao, @qtd_parcelas)";
-                    }
-
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                    {
-                        if (condPagamento.Id > 0)
-                        {
-                            cmd.Parameters.AddWithValue("@id", condPagamento.Id);
-                        }
-
-                        cmd.Parameters.AddWithValue("@descricao", condPagamento.Descricao);
-                        cmd.Parameters.AddWithValue("@qtd_parcelas", condPagamento.QtdParcelas);
-                        cmd.ExecuteNonQuery();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Erro ao salvar condição de pagamento: " + ex.Message);
-            }
-        }
-        */
         public void Excluir(int id)
         {
             using (MySqlConnection conn = new MySqlConnection(connectionString))

@@ -12,14 +12,6 @@ namespace Projeto.Controller
     {
         private DAOParcela dao = new DAOParcela();
 
-        
-
-        public void EditarParcela(Parcelamento parcela, int condicaoId)
-        {
-           
-            dao.EditarParcelas(parcela, condicaoId);
-            
-        }
 
         public List<Parcelamento> ListarParcelas(int condicaoId)
         {

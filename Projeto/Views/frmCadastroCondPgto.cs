@@ -88,9 +88,21 @@ namespace Projeto
         {
             try
             {
+                if (!ValidarPorcentagemTotal())
+                {
+                    return;
+                }
+
                 int id = string.IsNullOrEmpty(txtCodigo.Text) ? 0 : int.Parse(txtCodigo.Text);
                 string descricao = txtDescricao.Text;
                 int qtdParcelas = int.Parse(txtQtdParcelas.Text);
+                int qtdParcelasView = listView1.Items.Count;
+
+                if (qtdParcelas != qtdParcelasView)
+                {
+                    MessageBox.Show("O número de parcelas não corresponde a quantidade definida");
+                    return;
+                }
 
                 CondicaoPagamento condicao = new CondicaoPagamento
                 {
@@ -133,6 +145,7 @@ namespace Projeto
                 MessageBox.Show("Erro: " + ex.Message);
             }
         }
+
 
 
 
@@ -225,6 +238,43 @@ namespace Projeto
             }
         }
 
-        
+        private bool ValidarPorcentagemTotal()
+        {
+            decimal somaPorcentagens = 0;
+
+            foreach (ListViewItem item in listView1.Items)
+            {
+                string porcentagemTexto = item.SubItems[2].Text.Replace("%", "").Trim();
+                if (decimal.TryParse(porcentagemTexto, out decimal porcentagem))
+                {
+                    somaPorcentagens += porcentagem;
+                }
+                else
+                {
+                    MessageBox.Show("Erro ao converter a porcentagem de uma parcela.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+            }
+
+            if (somaPorcentagens != 100)
+            {
+                MessageBox.Show($"A soma das porcentagens das parcelas é {somaPorcentagens:N2}%. O total deve ser exatamente 100%.","Erro de Validação", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            return true;
+        }
+
+        private void btnRemoverParcela_Click(object sender, EventArgs e)
+        {
+            if (listView1.Items.Count > 0)
+            {
+                listView1.Items.RemoveAt(listView1.Items.Count - 1);
+            }
+            else
+            {
+                MessageBox.Show("Não há parcelas para remover.");
+            }
+        }
     }
 }

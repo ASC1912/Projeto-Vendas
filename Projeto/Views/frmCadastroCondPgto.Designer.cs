@@ -50,6 +50,7 @@
             this.lblNumParcela = new System.Windows.Forms.Label();
             this.txtNumParcela = new System.Windows.Forms.TextBox();
             this.btnEditarParcela = new System.Windows.Forms.Button();
+            this.btnRemoverParcela = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnSair
@@ -164,7 +165,7 @@
             // 
             // Prazo
             // 
-            this.Prazo.Text = "Prazo";
+            this.Prazo.Text = "Prazo Dias";
             // 
             // Porcentagem
             // 
@@ -196,7 +197,7 @@
             // 
             this.btnGerarParcelas.Location = new System.Drawing.Point(546, 147);
             this.btnGerarParcelas.Name = "btnGerarParcelas";
-            this.btnGerarParcelas.Size = new System.Drawing.Size(134, 23);
+            this.btnGerarParcelas.Size = new System.Drawing.Size(172, 23);
             this.btnGerarParcelas.TabIndex = 21;
             this.btnGerarParcelas.Text = "Gerar Parcelas";
             this.btnGerarParcelas.UseVisualStyleBackColor = true;
@@ -231,16 +232,27 @@
             // 
             this.btnEditarParcela.Location = new System.Drawing.Point(546, 176);
             this.btnEditarParcela.Name = "btnEditarParcela";
-            this.btnEditarParcela.Size = new System.Drawing.Size(134, 23);
+            this.btnEditarParcela.Size = new System.Drawing.Size(172, 23);
             this.btnEditarParcela.TabIndex = 25;
             this.btnEditarParcela.Text = "Editar Parcela";
             this.btnEditarParcela.UseVisualStyleBackColor = true;
             this.btnEditarParcela.Click += new System.EventHandler(this.btnEditarParcela_Click);
             // 
+            // btnRemoverParcela
+            // 
+            this.btnRemoverParcela.Location = new System.Drawing.Point(546, 205);
+            this.btnRemoverParcela.Name = "btnRemoverParcela";
+            this.btnRemoverParcela.Size = new System.Drawing.Size(172, 23);
+            this.btnRemoverParcela.TabIndex = 26;
+            this.btnRemoverParcela.Text = "Remover Última Parcela";
+            this.btnRemoverParcela.UseVisualStyleBackColor = true;
+            this.btnRemoverParcela.Click += new System.EventHandler(this.btnRemoverParcela_Click);
+            // 
             // frmCadastroCondPgto
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.ClientSize = new System.Drawing.Size(876, 554);
+            this.Controls.Add(this.btnRemoverParcela);
             this.Controls.Add(this.btnEditarParcela);
             this.Controls.Add(this.lblNumParcela);
             this.Controls.Add(this.txtNumParcela);
@@ -281,6 +293,7 @@
             this.Controls.SetChildIndex(this.txtNumParcela, 0);
             this.Controls.SetChildIndex(this.lblNumParcela, 0);
             this.Controls.SetChildIndex(this.btnEditarParcela, 0);
+            this.Controls.SetChildIndex(this.btnRemoverParcela, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -310,5 +323,6 @@
         private System.Windows.Forms.Label lblNumParcela;
         private System.Windows.Forms.TextBox txtNumParcela;
         private System.Windows.Forms.Button btnEditarParcela;
+        private System.Windows.Forms.Button btnRemoverParcela;
     }
 }
