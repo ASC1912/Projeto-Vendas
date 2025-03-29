@@ -40,6 +40,9 @@ namespace Projeto.Views
                     item.SubItems.Add(funcionario.Telefone);
                     item.SubItems.Add(funcionario.Email);
                     item.SubItems.Add(funcionario.Endereco);
+                    item.SubItems.Add(funcionario.NumeroEndereco.ToString());
+                    item.SubItems.Add(funcionario.Bairro);
+                    item.SubItems.Add(funcionario.Complemento);
                     item.SubItems.Add(funcionario.CEP);
                     item.SubItems.Add(funcionario.Tipo);
                     item.SubItems.Add(funcionario.Cargo);
@@ -71,14 +74,18 @@ namespace Projeto.Views
                 string telefone = itemSelecionado.SubItems[3].Text;
                 string email = itemSelecionado.SubItems[4].Text;
                 string endereco = itemSelecionado.SubItems[5].Text;
-                string cep = itemSelecionado.SubItems[6].Text;
-                string tipo = itemSelecionado.SubItems[7].Text;
-                string cargo = itemSelecionado.SubItems[8].Text;
-                decimal salario = Convert.ToDecimal(itemSelecionado.SubItems[9].Text);
-                string nomeCidade = itemSelecionado.SubItems[10].Text;
+                string numEnderecoStr = itemSelecionado.SubItems[6].Text;
+                int numEndereco = string.IsNullOrWhiteSpace(numEnderecoStr) ? 0 : int.Parse(numEnderecoStr);
+                string bairro = itemSelecionado.SubItems[7].Text;
+                string complemento = itemSelecionado.SubItems[8].Text;
+                string cep = itemSelecionado.SubItems[9].Text;
+                string tipo = itemSelecionado.SubItems[10].Text;
+                string cargo = itemSelecionado.SubItems[11].Text;
+                decimal salario = Convert.ToDecimal(itemSelecionado.SubItems[12].Text);
+                string nomeCidade = itemSelecionado.SubItems[13].Text;
 
                 var formCadastro = new frmCadastroFuncionario();
-                formCadastro.CarregarFuncionario(id, nome, cpf_cnpj, telefone, email, endereco, cep, cargo, salario, tipo, nomeCidade);
+                formCadastro.CarregarFuncionario(id, nome, cpf_cnpj, telefone, email, endereco, numEndereco, bairro, complemento, cep, cargo, salario, tipo, nomeCidade);
 
                 formCadastro.FormClosed += (s, args) => CarregarFuncionarios();
                 formCadastro.ShowDialog();

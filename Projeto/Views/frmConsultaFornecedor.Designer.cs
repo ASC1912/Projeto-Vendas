@@ -39,6 +39,9 @@
             this.IDCidade = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.InscricaoEstadual = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.InscEstSubTrib = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Bairro = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Numero = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Complemento = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // listView1
@@ -50,6 +53,9 @@
             this.Telefone,
             this.Email,
             this.Endereco,
+            this.Numero,
+            this.Bairro,
+            this.Complemento,
             this.CEP,
             this.Tipo,
             this.InscricaoEstadual,
@@ -116,6 +122,18 @@
             // 
             this.InscEstSubTrib.Text = "InscEstSubTrib";
             // 
+            // Bairro
+            // 
+            this.Bairro.Text = "Bairro";
+            // 
+            // Numero
+            // 
+            this.Numero.Text = "Número";
+            // 
+            // Complemento
+            // 
+            this.Complemento.Text = "Complemento";
+            // 
             // frmConsultaFornecedor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -139,5 +157,8 @@
         private System.Windows.Forms.ColumnHeader IDCidade;
         private System.Windows.Forms.ColumnHeader InscricaoEstadual;
         private System.Windows.Forms.ColumnHeader InscEstSubTrib;
+        private System.Windows.Forms.ColumnHeader Bairro;
+        private System.Windows.Forms.ColumnHeader Numero;
+        private System.Windows.Forms.ColumnHeader Complemento;
     }
 }

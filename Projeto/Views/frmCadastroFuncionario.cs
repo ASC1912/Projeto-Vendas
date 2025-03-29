@@ -20,7 +20,7 @@ namespace Projeto.Views
             txtCodigo.Enabled = false;
         }
 
-        public void CarregarFuncionario(int id, string nome, string cpf_cnpj, string telefone, string email, string endereco, string cep, string cargo, decimal salario, string tipo, string nomeCidade)
+        public void CarregarFuncionario(int id, string nome, string cpf_cnpj, string telefone, string email, string endereco, int numEndereco, string bairro, string complemento, string cep, string cargo, decimal salario, string tipo, string nomeCidade)
         {
             txtCodigo.Text = id.ToString();
             txtNome.Text = nome;
@@ -28,6 +28,9 @@ namespace Projeto.Views
             txtTelefone.Text = telefone;
             txtEmail.Text = email;
             txtEndereco.Text = endereco;
+            txtNumEnd.Text = numEndereco.ToString();
+            txtBairro.Text = bairro;
+            txtComplemento.Text = complemento;
             txtCEP.Text = cep;
             txtCargo.Text = cargo;
             txtSalario.Text = salario.ToString();
@@ -66,6 +69,9 @@ namespace Projeto.Views
                 CPF_CNPJ = txtCPF.Text,
                 Email = txtEmail.Text,
                 Endereco = txtEndereco.Text,
+                NumeroEndereco = string.IsNullOrWhiteSpace(txtNumEnd.Text) ? 0 : Convert.ToInt32(txtNumEnd.Text),
+                Bairro = txtBairro.Text,
+                Complemento = txtComplemento.Text,
                 Telefone = txtTelefone.Text,
                 Tipo = txtTipo.Text,
                 CEP = txtCEP.Text,

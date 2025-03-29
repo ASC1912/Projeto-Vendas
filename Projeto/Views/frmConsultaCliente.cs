@@ -39,6 +39,9 @@ namespace Projeto.Views
                     item.SubItems.Add(cliente.Telefone);
                     item.SubItems.Add(cliente.Email);
                     item.SubItems.Add(cliente.Endereco);
+                    item.SubItems.Add(cliente.NumeroEndereco.ToString());
+                    item.SubItems.Add(cliente.Bairro);
+                    item.SubItems.Add(cliente.Complemento);
                     item.SubItems.Add(cliente.CEP);
                     item.SubItems.Add(cliente.Tipo);
                     item.SubItems.Add(cliente.NomeCidade);
@@ -68,12 +71,16 @@ namespace Projeto.Views
                 string telefone = itemSelecionado.SubItems[3].Text;
                 string email = itemSelecionado.SubItems[4].Text;
                 string endereco = itemSelecionado.SubItems[5].Text;
-                string cep = itemSelecionado.SubItems[6].Text;
-                string tipo = itemSelecionado.SubItems[7].Text;
-                string nomeCidade = itemSelecionado.SubItems[8].Text;
+                string numEnderecoStr = itemSelecionado.SubItems[6].Text;
+                int numEndereco = string.IsNullOrWhiteSpace(numEnderecoStr) ? 0 : int.Parse(numEnderecoStr);
+                string bairro = itemSelecionado.SubItems[7].Text;
+                string complemento = itemSelecionado.SubItems[8].Text;
+                string cep = itemSelecionado.SubItems[9].Text;
+                string tipo = itemSelecionado.SubItems[10].Text;
+                string nomeCidade = itemSelecionado.SubItems[11].Text;
 
                 var formCadastro = new frmCadastroCliente();
-                formCadastro.CarregarCliente(id, nome, cpf_cnpj, telefone, email, endereco, cep, tipo, nomeCidade);
+                formCadastro.CarregarCliente(id, nome, cpf_cnpj, telefone, email, endereco, numEndereco, bairro, complemento, cep, tipo, nomeCidade);
 
                 formCadastro.FormClosed += (s, args) => CarregarClientes();
                 formCadastro.ShowDialog();

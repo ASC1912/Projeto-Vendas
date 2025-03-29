@@ -40,6 +40,9 @@ namespace Projeto.Views
                     item.SubItems.Add(fornecedor.Telefone);
                     item.SubItems.Add(fornecedor.Email);
                     item.SubItems.Add(fornecedor.Endereco);
+                    item.SubItems.Add(fornecedor.NumeroEndereco.ToString());
+                    item.SubItems.Add(fornecedor.Bairro);
+                    item.SubItems.Add(fornecedor.Complemento);
                     item.SubItems.Add(fornecedor.CEP);
                     item.SubItems.Add(fornecedor.Tipo);
                     item.SubItems.Add(fornecedor.InscricaoEstadual);
@@ -71,14 +74,18 @@ namespace Projeto.Views
                 string telefone = itemSelecionado.SubItems[3].Text;
                 string email = itemSelecionado.SubItems[4].Text;
                 string endereco = itemSelecionado.SubItems[5].Text;
-                string cep = itemSelecionado.SubItems[6].Text;
-                string tipo = itemSelecionado.SubItems[7].Text;
-                string insEst = itemSelecionado.SubItems[8].Text;
-                string insEstSubTrib = itemSelecionado.SubItems[9].Text;
-                string nomeCidade = itemSelecionado.SubItems[10].Text;
+                string numEnderecoStr = itemSelecionado.SubItems[6].Text;
+                int numEndereco = string.IsNullOrWhiteSpace(numEnderecoStr) ? 0 : int.Parse(numEnderecoStr);
+                string bairro = itemSelecionado.SubItems[7].Text;
+                string complemento = itemSelecionado.SubItems[8].Text;
+                string cep = itemSelecionado.SubItems[9].Text;
+                string tipo = itemSelecionado.SubItems[10].Text;
+                string insEst = itemSelecionado.SubItems[11].Text;
+                string insEstSubTrib = itemSelecionado.SubItems[12].Text;
+                string nomeCidade = itemSelecionado.SubItems[13].Text;
 
                 var formCadastro = new frmCadastroFornecedor();
-                formCadastro.CarregarFornecedor(id, nome, cpf_cnpj, telefone, email, endereco, cep, insEst, insEstSubTrib, tipo, nomeCidade);
+                formCadastro.CarregarFornecedor(id, nome, cpf_cnpj, telefone, email, endereco, numEndereco, bairro, complemento, cep, insEst, insEstSubTrib, tipo, nomeCidade);
 
                 formCadastro.FormClosed += (s, args) => CarregarFornecedores();
                 formCadastro.ShowDialog();

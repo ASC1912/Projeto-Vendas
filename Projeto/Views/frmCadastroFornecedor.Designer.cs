@@ -50,6 +50,12 @@
             this.lblCodigo = new System.Windows.Forms.Label();
             this.lblEndereco = new System.Windows.Forms.Label();
             this.txtEndereco = new System.Windows.Forms.TextBox();
+            this.lblComplemento = new System.Windows.Forms.Label();
+            this.txtComplemento = new System.Windows.Forms.TextBox();
+            this.lblNumEndereco = new System.Windows.Forms.Label();
+            this.txtNumEnd = new System.Windows.Forms.TextBox();
+            this.lblBairro = new System.Windows.Forms.Label();
+            this.txtBairro = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // lblCEP
@@ -178,7 +184,7 @@
             // lblInscEstSubTrib
             // 
             this.lblInscEstSubTrib.AutoSize = true;
-            this.lblInscEstSubTrib.Location = new System.Drawing.Point(401, 194);
+            this.lblInscEstSubTrib.Location = new System.Drawing.Point(401, 376);
             this.lblInscEstSubTrib.Name = "lblInscEstSubTrib";
             this.lblInscEstSubTrib.Size = new System.Drawing.Size(107, 16);
             this.lblInscEstSubTrib.TabIndex = 51;
@@ -186,7 +192,7 @@
             // 
             // txtInscEstSubTrib
             // 
-            this.txtInscEstSubTrib.Location = new System.Drawing.Point(404, 213);
+            this.txtInscEstSubTrib.Location = new System.Drawing.Point(404, 395);
             this.txtInscEstSubTrib.Name = "txtInscEstSubTrib";
             this.txtInscEstSubTrib.Size = new System.Drawing.Size(100, 22);
             this.txtInscEstSubTrib.TabIndex = 50;
@@ -194,7 +200,7 @@
             // lblInscEst
             // 
             this.lblInscEst.AutoSize = true;
-            this.lblInscEst.Location = new System.Drawing.Point(401, 137);
+            this.lblInscEst.Location = new System.Drawing.Point(401, 319);
             this.lblInscEst.Name = "lblInscEst";
             this.lblInscEst.Size = new System.Drawing.Size(117, 16);
             this.lblInscEst.TabIndex = 49;
@@ -202,7 +208,7 @@
             // 
             // txtInscEst
             // 
-            this.txtInscEst.Location = new System.Drawing.Point(404, 156);
+            this.txtInscEst.Location = new System.Drawing.Point(404, 338);
             this.txtInscEst.Name = "txtInscEst";
             this.txtInscEst.Size = new System.Drawing.Size(100, 22);
             this.txtInscEst.TabIndex = 48;
@@ -232,10 +238,64 @@
             this.txtEndereco.Size = new System.Drawing.Size(100, 22);
             this.txtEndereco.TabIndex = 53;
             // 
+            // lblComplemento
+            // 
+            this.lblComplemento.AutoSize = true;
+            this.lblComplemento.Location = new System.Drawing.Point(401, 254);
+            this.lblComplemento.Name = "lblComplemento";
+            this.lblComplemento.Size = new System.Drawing.Size(91, 16);
+            this.lblComplemento.TabIndex = 60;
+            this.lblComplemento.Text = "Complemento";
+            // 
+            // txtComplemento
+            // 
+            this.txtComplemento.Location = new System.Drawing.Point(404, 273);
+            this.txtComplemento.Name = "txtComplemento";
+            this.txtComplemento.Size = new System.Drawing.Size(100, 22);
+            this.txtComplemento.TabIndex = 59;
+            // 
+            // lblNumEndereco
+            // 
+            this.lblNumEndereco.AutoSize = true;
+            this.lblNumEndereco.Location = new System.Drawing.Point(401, 200);
+            this.lblNumEndereco.Name = "lblNumEndereco";
+            this.lblNumEndereco.Size = new System.Drawing.Size(55, 16);
+            this.lblNumEndereco.TabIndex = 58;
+            this.lblNumEndereco.Text = "Número";
+            // 
+            // txtNumEnd
+            // 
+            this.txtNumEnd.Location = new System.Drawing.Point(404, 219);
+            this.txtNumEnd.Name = "txtNumEnd";
+            this.txtNumEnd.Size = new System.Drawing.Size(100, 22);
+            this.txtNumEnd.TabIndex = 57;
+            // 
+            // lblBairro
+            // 
+            this.lblBairro.AutoSize = true;
+            this.lblBairro.Location = new System.Drawing.Point(401, 144);
+            this.lblBairro.Name = "lblBairro";
+            this.lblBairro.Size = new System.Drawing.Size(43, 16);
+            this.lblBairro.TabIndex = 56;
+            this.lblBairro.Text = "Bairro";
+            // 
+            // txtBairro
+            // 
+            this.txtBairro.Location = new System.Drawing.Point(404, 163);
+            this.txtBairro.Name = "txtBairro";
+            this.txtBairro.Size = new System.Drawing.Size(100, 22);
+            this.txtBairro.TabIndex = 55;
+            // 
             // frmCadastroFornecedor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.lblComplemento);
+            this.Controls.Add(this.txtComplemento);
+            this.Controls.Add(this.lblNumEndereco);
+            this.Controls.Add(this.txtNumEnd);
+            this.Controls.Add(this.lblBairro);
+            this.Controls.Add(this.txtBairro);
             this.Controls.Add(this.lblEndereco);
             this.Controls.Add(this.txtEndereco);
             this.Controls.Add(this.lblCodigo);
@@ -284,6 +344,12 @@
             this.Controls.SetChildIndex(this.txtCodigo, 0);
             this.Controls.SetChildIndex(this.txtEndereco, 0);
             this.Controls.SetChildIndex(this.lblEndereco, 0);
+            this.Controls.SetChildIndex(this.txtBairro, 0);
+            this.Controls.SetChildIndex(this.lblBairro, 0);
+            this.Controls.SetChildIndex(this.txtNumEnd, 0);
+            this.Controls.SetChildIndex(this.lblNumEndereco, 0);
+            this.Controls.SetChildIndex(this.txtComplemento, 0);
+            this.Controls.SetChildIndex(this.lblComplemento, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -313,5 +379,11 @@
         private System.Windows.Forms.Label lblCodigo;
         private System.Windows.Forms.Label lblEndereco;
         private System.Windows.Forms.TextBox txtEndereco;
+        private System.Windows.Forms.Label lblComplemento;
+        private System.Windows.Forms.TextBox txtComplemento;
+        private System.Windows.Forms.Label lblNumEndereco;
+        private System.Windows.Forms.TextBox txtNumEnd;
+        private System.Windows.Forms.Label lblBairro;
+        private System.Windows.Forms.TextBox txtBairro;
     }
 }

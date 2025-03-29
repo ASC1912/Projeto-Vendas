@@ -37,6 +37,9 @@
             this.CEP = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Tipo = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.IDCidade = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Bairro = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Numero = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Complemento = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // listView1
@@ -48,6 +51,9 @@
             this.Telefone,
             this.Email,
             this.Endereco,
+            this.Numero,
+            this.Bairro,
+            this.Complemento,
             this.CEP,
             this.Tipo,
             this.IDCidade});
@@ -104,6 +110,18 @@
             // 
             this.IDCidade.Text = "IDCidade";
             // 
+            // Bairro
+            // 
+            this.Bairro.Text = "Bairro";
+            // 
+            // Numero
+            // 
+            this.Numero.Text = "Número";
+            // 
+            // Complemento
+            // 
+            this.Complemento.Text = "Complemento";
+            // 
             // frmConsultaCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -125,5 +143,8 @@
         private System.Windows.Forms.ColumnHeader CEP;
         private System.Windows.Forms.ColumnHeader Tipo;
         private System.Windows.Forms.ColumnHeader IDCidade;
+        private System.Windows.Forms.ColumnHeader Bairro;
+        private System.Windows.Forms.ColumnHeader Numero;
+        private System.Windows.Forms.ColumnHeader Complemento;
     }
 }

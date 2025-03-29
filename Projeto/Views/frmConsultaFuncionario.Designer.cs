@@ -39,6 +39,9 @@
             this.Cargo = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Salario = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Endereco = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Bairro = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Numero = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Complemento = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // listView1
@@ -49,8 +52,11 @@
             this.CPF_CNPJ,
             this.Telefone,
             this.Email,
-            this.CEP,
             this.Endereco,
+            this.Numero,
+            this.Bairro,
+            this.Complemento,
+            this.CEP,
             this.Tipo,
             this.Cargo,
             this.Salario,
@@ -99,7 +105,6 @@
             // 
             // Tipo
             // 
-            this.Tipo.DisplayIndex = 6;
             this.Tipo.Text = "Tipo";
             // 
             // IDCidade
@@ -117,6 +122,18 @@
             // Endereco
             // 
             this.Endereco.Text = "Endereço";
+            // 
+            // Bairro
+            // 
+            this.Bairro.Text = "Bairro";
+            // 
+            // Numero
+            // 
+            this.Numero.Text = "Número";
+            // 
+            // Complemento
+            // 
+            this.Complemento.Text = "Complemento";
             // 
             // frmConsultaFuncionario
             // 
@@ -141,5 +158,8 @@
         private System.Windows.Forms.ColumnHeader Endereco;
         private System.Windows.Forms.ColumnHeader Cargo;
         private System.Windows.Forms.ColumnHeader Salario;
+        private System.Windows.Forms.ColumnHeader Bairro;
+        private System.Windows.Forms.ColumnHeader Numero;
+        private System.Windows.Forms.ColumnHeader Complemento;
     }
 }

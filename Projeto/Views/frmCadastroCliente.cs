@@ -20,7 +20,7 @@ namespace Projeto.Views
             txtCodigo.Enabled = false;
         }
 
-        public void CarregarCliente(int id, string nome, string cpf_cnpj, string telefone, string email, string endereco,  string cep, string tipo, string nomeCidade)
+        public void CarregarCliente(int id, string nome, string cpf_cnpj, string telefone, string email, string endereco, int numeroEndereco, string bairro, string complemento,  string cep, string tipo, string nomeCidade)
         {
             txtCodigo.Text = id.ToString();
             txtNome.Text = nome;
@@ -28,6 +28,9 @@ namespace Projeto.Views
             txtTelefone.Text = telefone;
             txtEmail.Text = email;
             txtEndereco.Text = endereco;
+            txtNumEnd.Text = numeroEndereco.ToString();
+            txtBairro.Text = bairro;
+            txtComplemento.Text = complemento;
             txtCEP.Text = cep;
             txtTipo.Text = tipo;
             cbCidade.Text = nomeCidade;
@@ -62,8 +65,11 @@ namespace Projeto.Views
                 Id = string.IsNullOrWhiteSpace(txtCodigo.Text) ? 0 : Convert.ToInt32(txtCodigo.Text),
                 Nome = txtNome.Text,
                 CPF_CNPJ = txtCPF.Text,
-                Email = txtEmail.Text, 
+                Email = txtEmail.Text,
                 Endereco = txtEndereco.Text,
+                NumeroEndereco = string.IsNullOrWhiteSpace(txtNumEnd.Text) ? 0 : Convert.ToInt32(txtNumEnd.Text),
+                Bairro = txtBairro.Text,
+                Complemento = txtComplemento.Text,
                 Telefone = txtTelefone.Text,
                 Tipo = txtTipo.Text,
                 CEP = txtCEP.Text,
