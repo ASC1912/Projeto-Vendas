@@ -13,6 +13,7 @@ namespace Projeto.Views
     public partial class frmCadastroCliente : Projeto.frmBase
     {
         private CidadeController cidadeController = new CidadeController();
+        private CondicaoPagamentoController condicaoPagamentoController = new CondicaoPagamentoController();
         private ClienteController controller = new ClienteController(); 
         public frmCadastroCliente()
         {
@@ -20,7 +21,7 @@ namespace Projeto.Views
             txtCodigo.Enabled = false;
         }
 
-        public void CarregarCliente(int id, string nome, string cpf_cnpj, string telefone, string email, string endereco, int numeroEndereco, string bairro, string complemento,  string cep, string tipo, string nomeCidade)
+        public void CarregarCliente(int id, string nome, string cpf_cnpj, string telefone, string email, string endereco, int numeroEndereco, string bairro, string complemento,  string cep, string tipo, string nomeCidade, int idCondicao)
         {
             txtCodigo.Text = id.ToString();
             txtNome.Text = nome;
@@ -34,6 +35,7 @@ namespace Projeto.Views
             txtCEP.Text = cep;
             txtTipo.Text = tipo;
             cbCidade.Text = nomeCidade;
+            cbCondPgto.Text = idCondicao.ToString();
         }
 
         private void CarregarCidades()
@@ -51,6 +53,23 @@ namespace Projeto.Views
                 MessageBox.Show("Erro ao carregar Cidades: " + ex.Message);
             }
         }
+
+        private void CarregarCondicoesPagamento()
+        {
+            try
+            {
+                List<CondicaoPagamento> listaCondicoes = condicaoPagamentoController.ListarCondicaoPagamento();
+
+                cbCondPgto.DisplayMember = "Id";
+                cbCondPgto.ValueMember = "Id";
+                cbCondPgto.DataSource = listaCondicoes;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao carregar condições de pagamento: " + ex.Message);
+            }
+        }
+
 
         private void btnSalvar_Click(object sender, EventArgs e)
         {
@@ -73,7 +92,8 @@ namespace Projeto.Views
                 Telefone = txtTelefone.Text,
                 Tipo = txtTipo.Text,
                 CEP = txtCEP.Text,
-                IdCidade = Convert.ToInt32(cbCidade.SelectedValue)
+                IdCidade = Convert.ToInt32(cbCidade.SelectedValue),
+                IdCondicao = Convert.ToInt32(cbCondPgto.SelectedValue)
             };
 
             try
@@ -90,6 +110,7 @@ namespace Projeto.Views
         private void frmCadastroCliente_Load(object sender, EventArgs e)
         {
             CarregarCidades();
+            CarregarCondicoesPagamento();
         }
     }
 }

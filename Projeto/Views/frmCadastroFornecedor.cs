@@ -1,4 +1,5 @@
 ﻿using Projeto.Controller;
+using Projeto.DAO;
 using Projeto.Models;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace Projeto.Views
     public partial class frmCadastroFornecedor : Projeto.frmBase
     {
         private CidadeController cidadeController = new CidadeController();
+        private CondicaoPagamentoController condicaoPagamentoController = new CondicaoPagamentoController();
         private FornecedorController controller = new FornecedorController();
         public frmCadastroFornecedor()
         {
@@ -20,7 +22,7 @@ namespace Projeto.Views
             txtCodigo.Enabled = false;
         }
 
-        public void CarregarFornecedor(int id, string nome, string cpf_cnpj, string telefone, string email, string endereco, int numEndereco, string bairro, string complemento, string cep, string inscEst, string inscEstSubTrib, string tipo, string nomeCidade)
+        public void CarregarFornecedor(int id, string nome, string cpf_cnpj, string telefone, string email, string endereco, int numEndereco, string bairro, string complemento, string cep, string inscEst, string inscEstSubTrib, string tipo, string nomeCidade, int idCondicao)
         {
             txtCodigo.Text = id.ToString();
             txtNome.Text = nome;
@@ -36,6 +38,7 @@ namespace Projeto.Views
             txtInscEstSubTrib.Text = inscEstSubTrib;
             txtTipo.Text = tipo;
             cbCidade.Text = nomeCidade;
+            cbCondPgto.Text = idCondicao.ToString();
         }
 
         private void CarregarCidades()
@@ -51,6 +54,22 @@ namespace Projeto.Views
             catch (Exception ex)
             {
                 MessageBox.Show("Erro ao carregar Cidades: " + ex.Message);
+            }
+        }
+
+        private void CarregarCondicoesPagamento()
+        {
+            try
+            {
+                List<CondicaoPagamento> listaCondicoes = condicaoPagamentoController.ListarCondicaoPagamento();
+
+                cbCondPgto.DisplayMember = "Id";
+                cbCondPgto.ValueMember = "Id";
+                cbCondPgto.DataSource = listaCondicoes;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao carregar condições de pagamento: " + ex.Message);
             }
         }
 
@@ -78,7 +97,8 @@ namespace Projeto.Views
                 CEP = txtCEP.Text,
                 InscricaoEstadual = txtInscEst.Text,
                 InscricaoEstadualSubTrib = txtInscEstSubTrib.Text,
-                IdCidade = Convert.ToInt32(cbCidade.SelectedValue)
+                IdCidade = Convert.ToInt32(cbCidade.SelectedValue),
+                IdCondicao = Convert.ToInt32(cbCondPgto.SelectedValue)
             };
 
             try
@@ -95,6 +115,7 @@ namespace Projeto.Views
         private void frmCadastroFornecedor_Load(object sender, EventArgs e)
         {
             CarregarCidades();
+            CarregarCondicoesPagamento();
         }
     }
 }

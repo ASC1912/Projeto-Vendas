@@ -52,6 +52,8 @@
             this.txtNumEnd = new System.Windows.Forms.TextBox();
             this.lblComplemento = new System.Windows.Forms.Label();
             this.txtComplemento = new System.Windows.Forms.TextBox();
+            this.cbCondPgto = new System.Windows.Forms.ComboBox();
+            this.lblCondPgto = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblCidade
@@ -250,10 +252,29 @@
             this.txtComplemento.Size = new System.Drawing.Size(100, 22);
             this.txtComplemento.TabIndex = 39;
             // 
+            // cbCondPgto
+            // 
+            this.cbCondPgto.FormattingEnabled = true;
+            this.cbCondPgto.Location = new System.Drawing.Point(572, 94);
+            this.cbCondPgto.Name = "cbCondPgto";
+            this.cbCondPgto.Size = new System.Drawing.Size(121, 24);
+            this.cbCondPgto.TabIndex = 41;
+            // 
+            // lblCondPgto
+            // 
+            this.lblCondPgto.AutoSize = true;
+            this.lblCondPgto.Location = new System.Drawing.Point(569, 75);
+            this.lblCondPgto.Name = "lblCondPgto";
+            this.lblCondPgto.Size = new System.Drawing.Size(138, 16);
+            this.lblCondPgto.TabIndex = 42;
+            this.lblCondPgto.Text = "Condição Pagamento";
+            // 
             // frmCadastroCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.lblCondPgto);
+            this.Controls.Add(this.cbCondPgto);
             this.Controls.Add(this.lblComplemento);
             this.Controls.Add(this.txtComplemento);
             this.Controls.Add(this.lblNumEndereco);
@@ -306,6 +327,8 @@
             this.Controls.SetChildIndex(this.lblNumEndereco, 0);
             this.Controls.SetChildIndex(this.txtComplemento, 0);
             this.Controls.SetChildIndex(this.lblComplemento, 0);
+            this.Controls.SetChildIndex(this.cbCondPgto, 0);
+            this.Controls.SetChildIndex(this.lblCondPgto, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -337,5 +360,7 @@
         private System.Windows.Forms.TextBox txtNumEnd;
         private System.Windows.Forms.Label lblComplemento;
         private System.Windows.Forms.TextBox txtComplemento;
+        private System.Windows.Forms.ComboBox cbCondPgto;
+        private System.Windows.Forms.Label lblCondPgto;
     }
 }

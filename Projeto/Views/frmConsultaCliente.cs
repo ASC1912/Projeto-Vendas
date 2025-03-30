@@ -45,7 +45,7 @@ namespace Projeto.Views
                     item.SubItems.Add(cliente.CEP);
                     item.SubItems.Add(cliente.Tipo);
                     item.SubItems.Add(cliente.NomeCidade);
-
+                    item.SubItems.Add(cliente.IdCondicao.ToString());
                     listView1.Items.Add(item);
                 }
             }
@@ -78,9 +78,11 @@ namespace Projeto.Views
                 string cep = itemSelecionado.SubItems[9].Text;
                 string tipo = itemSelecionado.SubItems[10].Text;
                 string nomeCidade = itemSelecionado.SubItems[11].Text;
+                string idCondicaoStr = itemSelecionado.SubItems[12].Text;
+                int idCondicao = string.IsNullOrWhiteSpace(idCondicaoStr) ? 0 : int.Parse(idCondicaoStr);
 
                 var formCadastro = new frmCadastroCliente();
-                formCadastro.CarregarCliente(id, nome, cpf_cnpj, telefone, email, endereco, numEndereco, bairro, complemento, cep, tipo, nomeCidade);
+                formCadastro.CarregarCliente(id, nome, cpf_cnpj, telefone, email, endereco, numEndereco, bairro, complemento, cep, tipo, nomeCidade, idCondicao);
 
                 formCadastro.FormClosed += (s, args) => CarregarClientes();
                 formCadastro.ShowDialog();

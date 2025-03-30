@@ -40,6 +40,7 @@
             this.Bairro = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Numero = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Complemento = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.IDCondPgto = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // listView1
@@ -56,7 +57,8 @@
             this.Complemento,
             this.CEP,
             this.Tipo,
-            this.IDCidade});
+            this.IDCidade,
+            this.IDCondPgto});
             // 
             // btnDeletar
             // 
@@ -122,6 +124,10 @@
             // 
             this.Complemento.Text = "Complemento";
             // 
+            // IDCondPgto
+            // 
+            this.IDCondPgto.Text = "Condição Pag.";
+            // 
             // frmConsultaCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -146,5 +152,6 @@
         private System.Windows.Forms.ColumnHeader Bairro;
         private System.Windows.Forms.ColumnHeader Numero;
         private System.Windows.Forms.ColumnHeader Complemento;
+        private System.Windows.Forms.ColumnHeader IDCondPgto;
     }
 }

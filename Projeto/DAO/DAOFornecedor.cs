@@ -1,4 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
+using MySqlX.XDevAPI;
 using Projeto.Models;
 using System;
 using System.Collections.Generic;
@@ -25,14 +26,14 @@ namespace Projeto.DAO
             {
                 query = @"
                 UPDATE fornecedores 
-                SET nome = @nome, cpf_cnpj = @cpf_cnpj, telefone = @telefone, email = @email, endereco = @endereco, numero_endereco = @numero_endereco, complemento = @complemento, bairro = @bairro, cep = @cep, inscricao_estadual = @inscricao_estadual, inscricao_estadual_subtrib = @inscricao_estadual_subtrib, id_cidade = @id_cidade, tipo = @tipo 
+                SET nome = @nome, cpf_cnpj = @cpf_cnpj, telefone = @telefone, email = @email, endereco = @endereco, numero_endereco = @numero_endereco, complemento = @complemento, bairro = @bairro, cep = @cep, inscricao_estadual = @inscricao_estadual, inscricao_estadual_subtrib = @inscricao_estadual_subtrib, id_cidade = @id_cidade, tipo = @tipo, id_condicao_pagamento = @id_condicao_pagamento
                 WHERE id = @id";
             }
             else
             {
                 query = @"
-                INSERT INTO fornecedores (nome, cpf_cnpj, telefone, email, endereco, numero_endereco, complemento, bairro, cep, inscricao_estadual, inscricao_estadual_subtrib, id_cidade, tipo) 
-                VALUES (@nome, @cpf_cnpj, @telefone, @email, @endereco, @numero_endereco, @complemento, @bairro, @cep, @inscricao_estadual, @inscricao_estadual_subtrib, @id_cidade, @tipo)";
+                INSERT INTO fornecedores (nome, cpf_cnpj, telefone, email, endereco, numero_endereco, complemento, bairro, cep, inscricao_estadual, inscricao_estadual_subtrib, id_cidade, tipo, id_condicao_pagamento) 
+                VALUES (@nome, @cpf_cnpj, @telefone, @email, @endereco, @numero_endereco, @complemento, @bairro, @cep, @inscricao_estadual, @inscricao_estadual_subtrib, @id_cidade, @tipo, @id_condicao_pagamento)";
             }
 
             using (MySqlCommand cmd = new MySqlCommand(query, conn))
@@ -55,6 +56,8 @@ namespace Projeto.DAO
                 cmd.Parameters.AddWithValue("@inscricao_estadual_subtrib", fornecedor.InscricaoEstadualSubTrib);
                 cmd.Parameters.AddWithValue("@id_cidade", fornecedor.IdCidade);
                 cmd.Parameters.AddWithValue("@tipo", fornecedor.Tipo);
+                cmd.Parameters.AddWithValue("@id_condicao_pagamento", fornecedor.IdCondicao > 0 ? (object)fornecedor.IdCondicao : DBNull.Value);
+
                 cmd.ExecuteNonQuery();
             }
         }
@@ -90,7 +93,7 @@ namespace Projeto.DAO
             {
                 conn.Open();
                 string query = @"
-                SELECT f.id, f.nome, f.cpf_cnpj, f.telefone, f.email, f.endereco, f.numero_endereco, f.complemento, f.bairro, f.cep, f.inscricao_estadual, f.inscricao_estadual_subtrib, f.id_cidade, ci.nome AS cidade_nome, f.tipo
+                SELECT f.id, f.nome, f.cpf_cnpj, f.telefone, f.email, f.endereco, f.numero_endereco, f.complemento, f.bairro, f.cep, f.inscricao_estadual, f.inscricao_estadual_subtrib, f.id_cidade, ci.nome AS cidade_nome, f.tipo, f.id_condicao_pagamento
                 FROM fornecedores f
                 LEFT JOIN cidades ci ON f.id_cidade = ci.id
                 ORDER BY f.nome";
@@ -117,7 +120,8 @@ namespace Projeto.DAO
                                 InscricaoEstadualSubTrib = reader.IsDBNull(reader.GetOrdinal("inscricao_estadual_subtrib")) ? null : reader.GetString("inscricao_estadual_subtrib"),
                                 IdCidade = reader.IsDBNull(reader.GetOrdinal("id_cidade")) ? (int?)null : reader.GetInt32("id_cidade"),
                                 NomeCidade = reader.IsDBNull(reader.GetOrdinal("cidade_nome")) ? null : reader.GetString("cidade_nome"),
-                                Tipo = reader.GetString("tipo")
+                                Tipo = reader.GetString("tipo"),
+                                IdCondicao = reader.IsDBNull(reader.GetOrdinal("id_condicao_pagamento")) ? (int?)null : reader.GetInt32("id_condicao_pagamento"),
                             });
                         }
                     }
