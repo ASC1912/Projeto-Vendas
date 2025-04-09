@@ -12,7 +12,10 @@ CREATE TABLE formas_pagamento (
 CREATE TABLE condicoes_pagamento (
     id INT AUTO_INCREMENT PRIMARY KEY,
     descricao VARCHAR(100) NOT NULL,
-    qtd_parcelas INT NOT NULL
+    qtd_parcelas INT NOT NULL,
+    juros DECIMAL(5,2) DEFAULT 0.00,
+    multa DECIMAL(5,2) DEFAULT 0.00,
+    desconto DECIMAL(5,2) DEFAULT 0.00
 );
 
 -- Tabela de Parcelamento 
@@ -45,6 +48,8 @@ CREATE TABLE cidades (
     id_estado INT NOT NULL,
     FOREIGN KEY (id_estado) REFERENCES estados(id)
 );
+
+
 
 
 CREATE TABLE clientes (
