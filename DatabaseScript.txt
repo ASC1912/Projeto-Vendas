@@ -54,10 +54,15 @@ CREATE TABLE clientes (
     telefone VARCHAR(20),
     email VARCHAR(100),
     endereco VARCHAR(200),
+    numero_endereco INT, 
+    bairro VARCHAR(100),
+    complemento VARCHAR(200),
     cep VARCHAR(10), 
     id_cidade INT,
+    id_condicao_pagamento INT,
     tipo VARCHAR(10) NOT NULL, 
-    FOREIGN KEY (id_cidade) REFERENCES cidades(id) ON DELETE SET NULL
+    FOREIGN KEY (id_cidade) REFERENCES cidades(id) ON DELETE SET NULL,
+    FOREIGN KEY (id_condicao_pagamento) REFERENCES condicao_pagamento(id) ON DELETE SET NULL
 );
 
 
@@ -73,6 +78,9 @@ CREATE TABLE funcionarios (
     salario DECIMAL(10,2),
     id_cidade INT,
     tipo VARCHAR(10) NOT NULL, 
+    bairro VARCHAR(100),
+    numero_endereco INT,
+    complemento VARCHAR(200),
     FOREIGN KEY (id_cidade) REFERENCES cidades(id) ON DELETE SET NULL
 );
 
@@ -87,6 +95,11 @@ CREATE TABLE fornecedores (
     inscricao_estadual VARCHAR(200),
     inscricao_estadual_subtrib VARCHAR(200),
     id_cidade INT,
+    id_condicao_pagamento INT,
     tipo VARCHAR(10) NOT NULL, 
-    FOREIGN KEY (id_cidade) REFERENCES cidades(id) ON DELETE SET NULL
+    bairro VARCHAR(100),
+    numero_endereco INT,
+    complemento VARCHAR(200),
+    FOREIGN KEY (id_cidade) REFERENCES cidades(id) ON DELETE SET NULL,
+    FOREIGN KEY (id_condicao_pagamento) REFERENCES condicao_pagamento(id) ON DELETE SET NULL
 );
