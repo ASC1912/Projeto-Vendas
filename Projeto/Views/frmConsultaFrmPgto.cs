@@ -14,10 +14,19 @@ namespace Projeto
     public partial class frmConsultaFrmPgto : Projeto.frmBaseConsulta
     {
         private FormaPagamentoController controller = new FormaPagamentoController();
+        public bool ModoSelecao { get; set; } = false;
+        internal FormaPagamento FormaSelecionada { get; private set; }
+
+
         public frmConsultaFrmPgto()
         {
             InitializeComponent();
             this.Text = "Consulta Forma de Pagamento";
+        }
+
+        private void frmConsultaFrmPgto_Load(object sender, EventArgs e)
+        {
+            btnSelecionar.Visible = ModoSelecao;
         }
         private void CarregarFormasPagamento()
         {
@@ -98,6 +107,27 @@ namespace Projeto
             }
         }
 
-        
+        private void btnSelecionar_Click(object sender, EventArgs e)
+        {
+            if (listView1.SelectedItems.Count > 0)
+            {
+                var itemSelecionado = listView1.SelectedItems[0];
+                int id = int.Parse(itemSelecionado.SubItems[0].Text);
+                string descricao = itemSelecionado.SubItems[1].Text;
+
+                FormaSelecionada = new FormaPagamento
+                {
+                    Id = id,
+                    Descricao = descricao
+                };
+
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Por favor, selecione uma forma de pagamento.");
+            }
+        }
     }
 }

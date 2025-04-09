@@ -20,6 +20,7 @@ namespace Projeto.Views
         {
             InitializeComponent();
             txtCodigo.Enabled = false;
+            cbTipo.SelectedIndex = 0;
         }
 
         public void CarregarFornecedor(int id, string nome, string cpf_cnpj, string telefone, string email, string endereco, int numEndereco, string bairro, string complemento, string cep, string inscEst, string inscEstSubTrib, string tipo, string nomeCidade, int idCondicao)
@@ -36,7 +37,7 @@ namespace Projeto.Views
             txtCEP.Text = cep;
             txtInscEst.Text = inscEst;
             txtInscEstSubTrib.Text = inscEstSubTrib;
-            txtTipo.Text = tipo;
+            cbTipo.Text = tipo;
             cbCidade.Text = nomeCidade;
             cbCondPgto.Text = idCondicao.ToString();
         }
@@ -93,7 +94,7 @@ namespace Projeto.Views
                 Bairro = txtBairro.Text,
                 Complemento = txtComplemento.Text,
                 Telefone = txtTelefone.Text,
-                Tipo = txtTipo.Text,
+                Tipo = cbTipo.Text,
                 CEP = txtCEP.Text,
                 InscricaoEstadual = txtInscEst.Text,
                 InscricaoEstadualSubTrib = txtInscEstSubTrib.Text,

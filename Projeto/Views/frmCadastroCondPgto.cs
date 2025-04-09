@@ -16,22 +16,23 @@ namespace Projeto
     {
         private ParcelaController parcelaController = new ParcelaController(); 
         private FormaPagamentoController formaPagamentoController = new FormaPagamentoController();
+        private int formaPagamentoSelecionadaId = -1;
 
 
         public frmCadastroCondPgto()
         {
             InitializeComponent();
             txtCodigo.Enabled = false;
+            txtFormaPagamento.ReadOnly = true;
         }
-        private void frmCadastroCondPgto_Load(object sender, EventArgs e)
-        {
-            CarregarFormasDePagamento();
-        }
-        public void CarregarCondicaoPagamento(int id, string descricao, int qtdParcelas)
+        public void CarregarCondicaoPagamento(int id, string descricao, int qtdParcelas, decimal juros, decimal multa, decimal desconto)
         {
             txtCodigo.Text = id.ToString();
-            txtDescricao.Text = descricao.ToString();
+            txtDescricao.Text = descricao;
             txtQtdParcelas.Text = qtdParcelas.ToString();
+            txtJuros.Text = juros.ToString("F2");
+            txtMulta.Text = multa.ToString("F2");
+            txtDesconto.Text = desconto.ToString("F2");
 
             CarregarParcelas(id);
         }
@@ -67,23 +68,6 @@ namespace Projeto
         }
 
 
-        private void CarregarFormasDePagamento()
-        {
-            try
-            {
-                List<FormaPagamento> listaFormasPagamento = formaPagamentoController.ListarFormaPagamento();
-
-                cbFormaPagamento.DisplayMember = "Descricao";  
-                cbFormaPagamento.ValueMember = "Id";           
-                cbFormaPagamento.DataSource = listaFormasPagamento; 
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Erro ao carregar formas de pagamento: " + ex.Message);
-            }
-        }
-
-
         private void AdicionarCondicaoeParcela()
         {
             try
@@ -97,6 +81,9 @@ namespace Projeto
                 string descricao = txtDescricao.Text;
                 int qtdParcelas = int.Parse(txtQtdParcelas.Text);
                 int qtdParcelasView = listView1.Items.Count;
+                decimal juros = string.IsNullOrWhiteSpace(txtJuros.Text) ? 0 : Convert.ToDecimal(txtJuros.Text);
+                decimal multa = string.IsNullOrWhiteSpace(txtMulta.Text) ? 0 : Convert.ToDecimal(txtMulta.Text);
+                decimal desconto = string.IsNullOrWhiteSpace(txtDesconto.Text) ? 0 : Convert.ToDecimal(txtDesconto.Text);
 
                 if (qtdParcelas != qtdParcelasView)
                 {
@@ -108,7 +95,10 @@ namespace Projeto
                 {
                     Id = id,
                     Descricao = descricao,
-                    QtdParcelas = qtdParcelas
+                    QtdParcelas = qtdParcelas,
+                    Juros = juros,
+                    Multa = multa,
+                    Desconto = desconto
                 };
 
                 List<Parcelamento> parcelas = new List<Parcelamento>();
@@ -147,8 +137,6 @@ namespace Projeto
         }
 
 
-
-
         private void AtualizarListViewParcelas(List<Parcelamento> parcelasTemp)
         {
             try
@@ -178,20 +166,26 @@ namespace Projeto
         {
             try
             {
-                int qtdMaxParcelas = Convert.ToInt32(txtQtdParcelas.Text); 
-                int numParcelasAtuais = listView1.Items.Count; 
+                int qtdMaxParcelas = Convert.ToInt32(txtQtdParcelas.Text);
+                int numParcelasAtuais = listView1.Items.Count;
 
                 if (numParcelasAtuais >= qtdMaxParcelas)
                 {
                     MessageBox.Show("Número máximo de parcelas atingido!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return; 
+                    return;
                 }
 
-                int numParcela = numParcelasAtuais + 1; 
+                int numParcela = numParcelasAtuais + 1;
                 decimal porcentagem = Convert.ToDecimal(txtPorcentagem.Text);
                 int prazoDias = Convert.ToInt32(txtPrazoDias.Text);
-                int formaPagamentoId = Convert.ToInt32(cbFormaPagamento.SelectedValue);
-                string descricaoFormaPagamento = formaPagamentoController.ObterDescricaoFormaPagamento(formaPagamentoId);
+
+                if (string.IsNullOrEmpty(txtFormaPagamento.Text) || formaPagamentoSelecionadaId == -1)
+                {
+                    MessageBox.Show("Selecione uma forma de pagamento válida!");
+                    return;
+                }
+
+                string descricaoFormaPagamento = txtFormaPagamento.Text;
 
                 ListViewItem item = new ListViewItem(numParcela.ToString());
                 item.SubItems.Add(prazoDias.ToString());
@@ -206,6 +200,7 @@ namespace Projeto
             }
         }
 
+
         private void btnEditarParcela_Click(object sender, EventArgs e)
         {
             try
@@ -218,15 +213,13 @@ namespace Projeto
                 {
                     decimal novaPorcentagem = Convert.ToDecimal(txtPorcentagem.Text);
                     int novoPrazoDias = Convert.ToInt32(txtPrazoDias.Text);
-                    int novaFormaPagamentoId = Convert.ToInt32(cbFormaPagamento.SelectedValue);
-
-                    string descricaoFormaPagamento = formaPagamentoController.ObterDescricaoFormaPagamento(novaFormaPagamentoId);
+                    string NovoDescricaoFormaPagamento = txtFormaPagamento.Text;
 
                     itemEditado.SubItems[1].Text = novoPrazoDias.ToString();
                     itemEditado.SubItems[2].Text = novaPorcentagem.ToString("F2") + "%";
-                    itemEditado.SubItems[3].Text = descricaoFormaPagamento; 
+                    itemEditado.SubItems[3].Text = NovoDescricaoFormaPagamento;
                 }
-               
+
                 else
                 {
                     MessageBox.Show("Parcela não encontrada.");
@@ -275,6 +268,21 @@ namespace Projeto
             {
                 MessageBox.Show("Não há parcelas para remover.");
             }
+        }
+
+        private void btnFormaPagamento_Click(object sender, EventArgs e)
+        {
+            frmConsultaFrmPgto consultaFrmPgto = new frmConsultaFrmPgto();
+            consultaFrmPgto.ModoSelecao = true;
+
+            var resultado = consultaFrmPgto.ShowDialog();
+
+            if (resultado == DialogResult.OK && consultaFrmPgto.FormaSelecionada != null)
+            {
+                txtFormaPagamento.Text = consultaFrmPgto.FormaSelecionada.Descricao;
+                formaPagamentoSelecionadaId = consultaFrmPgto.FormaSelecionada.Id;
+            }
+
         }
     }
 }

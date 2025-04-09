@@ -18,6 +18,7 @@ namespace Projeto.Views
         {
             InitializeComponent();
             txtCodigo.Enabled = false;
+            cbTipo.SelectedIndex = 0;
         }
 
         public void CarregarFuncionario(int id, string nome, string cpf_cnpj, string telefone, string email, string endereco, int numEndereco, string bairro, string complemento, string cep, string cargo, decimal salario, string tipo, string nomeCidade)
@@ -34,7 +35,7 @@ namespace Projeto.Views
             txtCEP.Text = cep;
             txtCargo.Text = cargo;
             txtSalario.Text = salario.ToString();
-            txtTipo.Text = tipo;
+            cbTipo.Text = tipo;
             cbCidade.Text = nomeCidade;
         }
 
@@ -73,7 +74,7 @@ namespace Projeto.Views
                 Bairro = txtBairro.Text,
                 Complemento = txtComplemento.Text,
                 Telefone = txtTelefone.Text,
-                Tipo = txtTipo.Text,
+                Tipo = cbTipo.Text,
                 CEP = txtCEP.Text,
                 Cargo = txtCargo.Text,
                 Salario = Convert.ToDecimal(txtSalario.Text),

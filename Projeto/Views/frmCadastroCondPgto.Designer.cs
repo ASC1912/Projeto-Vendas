@@ -37,7 +37,6 @@
             this.lblQtdParcelas = new System.Windows.Forms.Label();
             this.txtQtdParcelas = new System.Windows.Forms.TextBox();
             this.lblFormaPagamento = new System.Windows.Forms.Label();
-            this.cbFormaPagamento = new System.Windows.Forms.ComboBox();
             this.listView1 = new System.Windows.Forms.ListView();
             this.NumParcela = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Prazo = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -51,6 +50,14 @@
             this.txtNumParcela = new System.Windows.Forms.TextBox();
             this.btnEditarParcela = new System.Windows.Forms.Button();
             this.btnRemoverParcela = new System.Windows.Forms.Button();
+            this.btnFormaPagamento = new System.Windows.Forms.Button();
+            this.txtFormaPagamento = new System.Windows.Forms.TextBox();
+            this.lblJuros = new System.Windows.Forms.Label();
+            this.txtJuros = new System.Windows.Forms.TextBox();
+            this.lblMulta = new System.Windows.Forms.Label();
+            this.txtMulta = new System.Windows.Forms.TextBox();
+            this.lblDesconto = new System.Windows.Forms.Label();
+            this.txtDesconto = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // btnSair
@@ -60,7 +67,7 @@
             // lblPrazo
             // 
             this.lblPrazo.AutoSize = true;
-            this.lblPrazo.Location = new System.Drawing.Point(366, 119);
+            this.lblPrazo.Location = new System.Drawing.Point(395, 121);
             this.lblPrazo.Name = "lblPrazo";
             this.lblPrazo.Size = new System.Drawing.Size(133, 16);
             this.lblPrazo.TabIndex = 10;
@@ -68,7 +75,7 @@
             // 
             // txtPrazoDias
             // 
-            this.txtPrazoDias.Location = new System.Drawing.Point(369, 138);
+            this.txtPrazoDias.Location = new System.Drawing.Point(398, 140);
             this.txtPrazoDias.Name = "txtPrazoDias";
             this.txtPrazoDias.Size = new System.Drawing.Size(100, 22);
             this.txtPrazoDias.TabIndex = 9;
@@ -95,7 +102,7 @@
             // lblDescricao
             // 
             this.lblDescricao.AutoSize = true;
-            this.lblDescricao.Location = new System.Drawing.Point(9, 67);
+            this.lblDescricao.Location = new System.Drawing.Point(12, 67);
             this.lblDescricao.Name = "lblDescricao";
             this.lblDescricao.Size = new System.Drawing.Size(69, 16);
             this.lblDescricao.TabIndex = 13;
@@ -127,19 +134,11 @@
             // lblFormaPagamento
             // 
             this.lblFormaPagamento.AutoSize = true;
-            this.lblFormaPagamento.Location = new System.Drawing.Point(367, 184);
+            this.lblFormaPagamento.Location = new System.Drawing.Point(396, 186);
             this.lblFormaPagamento.Name = "lblFormaPagamento";
             this.lblFormaPagamento.Size = new System.Drawing.Size(138, 16);
             this.lblFormaPagamento.TabIndex = 17;
             this.lblFormaPagamento.Text = "Forma de Pagamento";
-            // 
-            // cbFormaPagamento
-            // 
-            this.cbFormaPagamento.FormattingEnabled = true;
-            this.cbFormaPagamento.Location = new System.Drawing.Point(370, 203);
-            this.cbFormaPagamento.Name = "cbFormaPagamento";
-            this.cbFormaPagamento.Size = new System.Drawing.Size(121, 24);
-            this.cbFormaPagamento.TabIndex = 16;
             // 
             // listView1
             // 
@@ -180,7 +179,7 @@
             // lblPorcentagem
             // 
             this.lblPorcentagem.AutoSize = true;
-            this.lblPorcentagem.Location = new System.Drawing.Point(366, 62);
+            this.lblPorcentagem.Location = new System.Drawing.Point(395, 64);
             this.lblPorcentagem.Name = "lblPorcentagem";
             this.lblPorcentagem.Size = new System.Drawing.Size(88, 16);
             this.lblPorcentagem.TabIndex = 20;
@@ -188,25 +187,25 @@
             // 
             // txtPorcentagem
             // 
-            this.txtPorcentagem.Location = new System.Drawing.Point(369, 81);
+            this.txtPorcentagem.Location = new System.Drawing.Point(398, 83);
             this.txtPorcentagem.Name = "txtPorcentagem";
             this.txtPorcentagem.Size = new System.Drawing.Size(100, 22);
             this.txtPorcentagem.TabIndex = 19;
             // 
             // btnGerarParcelas
             // 
-            this.btnGerarParcelas.Location = new System.Drawing.Point(546, 147);
+            this.btnGerarParcelas.Location = new System.Drawing.Point(664, 148);
             this.btnGerarParcelas.Name = "btnGerarParcelas";
             this.btnGerarParcelas.Size = new System.Drawing.Size(172, 23);
             this.btnGerarParcelas.TabIndex = 21;
-            this.btnGerarParcelas.Text = "Gerar Parcelas";
+            this.btnGerarParcelas.Text = "Inserir Parcela";
             this.btnGerarParcelas.UseVisualStyleBackColor = true;
             this.btnGerarParcelas.Click += new System.EventHandler(this.btnGerarParcelas_Click);
             // 
             // lblParcelas
             // 
             this.lblParcelas.AutoSize = true;
-            this.lblParcelas.Location = new System.Drawing.Point(273, 18);
+            this.lblParcelas.Location = new System.Drawing.Point(557, 8);
             this.lblParcelas.Name = "lblParcelas";
             this.lblParcelas.Size = new System.Drawing.Size(61, 16);
             this.lblParcelas.TabIndex = 22;
@@ -215,7 +214,7 @@
             // lblNumParcela
             // 
             this.lblNumParcela.AutoSize = true;
-            this.lblNumParcela.Location = new System.Drawing.Point(366, 18);
+            this.lblNumParcela.Location = new System.Drawing.Point(395, 20);
             this.lblNumParcela.Name = "lblNumParcela";
             this.lblNumParcela.Size = new System.Drawing.Size(124, 16);
             this.lblNumParcela.TabIndex = 24;
@@ -223,14 +222,14 @@
             // 
             // txtNumParcela
             // 
-            this.txtNumParcela.Location = new System.Drawing.Point(369, 37);
+            this.txtNumParcela.Location = new System.Drawing.Point(398, 39);
             this.txtNumParcela.Name = "txtNumParcela";
             this.txtNumParcela.Size = new System.Drawing.Size(100, 22);
             this.txtNumParcela.TabIndex = 23;
             // 
             // btnEditarParcela
             // 
-            this.btnEditarParcela.Location = new System.Drawing.Point(546, 176);
+            this.btnEditarParcela.Location = new System.Drawing.Point(664, 177);
             this.btnEditarParcela.Name = "btnEditarParcela";
             this.btnEditarParcela.Size = new System.Drawing.Size(172, 23);
             this.btnEditarParcela.TabIndex = 25;
@@ -240,7 +239,7 @@
             // 
             // btnRemoverParcela
             // 
-            this.btnRemoverParcela.Location = new System.Drawing.Point(546, 205);
+            this.btnRemoverParcela.Location = new System.Drawing.Point(664, 206);
             this.btnRemoverParcela.Name = "btnRemoverParcela";
             this.btnRemoverParcela.Size = new System.Drawing.Size(172, 23);
             this.btnRemoverParcela.TabIndex = 26;
@@ -248,10 +247,83 @@
             this.btnRemoverParcela.UseVisualStyleBackColor = true;
             this.btnRemoverParcela.Click += new System.EventHandler(this.btnRemoverParcela_Click);
             // 
+            // btnFormaPagamento
+            // 
+            this.btnFormaPagamento.Location = new System.Drawing.Point(506, 205);
+            this.btnFormaPagamento.Name = "btnFormaPagamento";
+            this.btnFormaPagamento.Size = new System.Drawing.Size(150, 23);
+            this.btnFormaPagamento.TabIndex = 27;
+            this.btnFormaPagamento.Text = "Buscar FrmPgto";
+            this.btnFormaPagamento.UseVisualStyleBackColor = true;
+            this.btnFormaPagamento.Click += new System.EventHandler(this.btnFormaPagamento_Click);
+            // 
+            // txtFormaPagamento
+            // 
+            this.txtFormaPagamento.Location = new System.Drawing.Point(400, 206);
+            this.txtFormaPagamento.Name = "txtFormaPagamento";
+            this.txtFormaPagamento.Size = new System.Drawing.Size(100, 22);
+            this.txtFormaPagamento.TabIndex = 28;
+            // 
+            // lblJuros
+            // 
+            this.lblJuros.AutoSize = true;
+            this.lblJuros.Location = new System.Drawing.Point(191, 8);
+            this.lblJuros.Name = "lblJuros";
+            this.lblJuros.Size = new System.Drawing.Size(40, 16);
+            this.lblJuros.TabIndex = 30;
+            this.lblJuros.Text = "Juros";
+            // 
+            // txtJuros
+            // 
+            this.txtJuros.Location = new System.Drawing.Point(191, 27);
+            this.txtJuros.Name = "txtJuros";
+            this.txtJuros.Size = new System.Drawing.Size(100, 22);
+            this.txtJuros.TabIndex = 29;
+            // 
+            // lblMulta
+            // 
+            this.lblMulta.AutoSize = true;
+            this.lblMulta.Location = new System.Drawing.Point(191, 67);
+            this.lblMulta.Name = "lblMulta";
+            this.lblMulta.Size = new System.Drawing.Size(39, 16);
+            this.lblMulta.TabIndex = 32;
+            this.lblMulta.Text = "Multa";
+            // 
+            // txtMulta
+            // 
+            this.txtMulta.Location = new System.Drawing.Point(191, 86);
+            this.txtMulta.Name = "txtMulta";
+            this.txtMulta.Size = new System.Drawing.Size(100, 22);
+            this.txtMulta.TabIndex = 31;
+            // 
+            // lblDesconto
+            // 
+            this.lblDesconto.AutoSize = true;
+            this.lblDesconto.Location = new System.Drawing.Point(191, 129);
+            this.lblDesconto.Name = "lblDesconto";
+            this.lblDesconto.Size = new System.Drawing.Size(65, 16);
+            this.lblDesconto.TabIndex = 34;
+            this.lblDesconto.Text = "Desconto";
+            // 
+            // txtDesconto
+            // 
+            this.txtDesconto.Location = new System.Drawing.Point(191, 148);
+            this.txtDesconto.Name = "txtDesconto";
+            this.txtDesconto.Size = new System.Drawing.Size(100, 22);
+            this.txtDesconto.TabIndex = 33;
+            // 
             // frmCadastroCondPgto
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.ClientSize = new System.Drawing.Size(876, 554);
+            this.Controls.Add(this.lblDesconto);
+            this.Controls.Add(this.txtDesconto);
+            this.Controls.Add(this.lblMulta);
+            this.Controls.Add(this.txtMulta);
+            this.Controls.Add(this.lblJuros);
+            this.Controls.Add(this.txtJuros);
+            this.Controls.Add(this.txtFormaPagamento);
+            this.Controls.Add(this.btnFormaPagamento);
             this.Controls.Add(this.btnRemoverParcela);
             this.Controls.Add(this.btnEditarParcela);
             this.Controls.Add(this.lblNumParcela);
@@ -262,7 +334,6 @@
             this.Controls.Add(this.txtPorcentagem);
             this.Controls.Add(this.listView1);
             this.Controls.Add(this.lblFormaPagamento);
-            this.Controls.Add(this.cbFormaPagamento);
             this.Controls.Add(this.lblQtdParcelas);
             this.Controls.Add(this.txtQtdParcelas);
             this.Controls.Add(this.lblDescricao);
@@ -272,7 +343,6 @@
             this.Controls.Add(this.txtPrazoDias);
             this.Controls.Add(this.btnSalvar);
             this.Name = "frmCadastroCondPgto";
-            this.Load += new System.EventHandler(this.frmCadastroCondPgto_Load);
             this.Controls.SetChildIndex(this.btnSair, 0);
             this.Controls.SetChildIndex(this.txtCodigo, 0);
             this.Controls.SetChildIndex(this.btnSalvar, 0);
@@ -283,7 +353,6 @@
             this.Controls.SetChildIndex(this.lblDescricao, 0);
             this.Controls.SetChildIndex(this.txtQtdParcelas, 0);
             this.Controls.SetChildIndex(this.lblQtdParcelas, 0);
-            this.Controls.SetChildIndex(this.cbFormaPagamento, 0);
             this.Controls.SetChildIndex(this.lblFormaPagamento, 0);
             this.Controls.SetChildIndex(this.listView1, 0);
             this.Controls.SetChildIndex(this.txtPorcentagem, 0);
@@ -294,6 +363,14 @@
             this.Controls.SetChildIndex(this.lblNumParcela, 0);
             this.Controls.SetChildIndex(this.btnEditarParcela, 0);
             this.Controls.SetChildIndex(this.btnRemoverParcela, 0);
+            this.Controls.SetChildIndex(this.btnFormaPagamento, 0);
+            this.Controls.SetChildIndex(this.txtFormaPagamento, 0);
+            this.Controls.SetChildIndex(this.txtJuros, 0);
+            this.Controls.SetChildIndex(this.lblJuros, 0);
+            this.Controls.SetChildIndex(this.txtMulta, 0);
+            this.Controls.SetChildIndex(this.lblMulta, 0);
+            this.Controls.SetChildIndex(this.txtDesconto, 0);
+            this.Controls.SetChildIndex(this.lblDesconto, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -310,7 +387,6 @@
         private System.Windows.Forms.Label lblQtdParcelas;
         private System.Windows.Forms.TextBox txtQtdParcelas;
         private System.Windows.Forms.Label lblFormaPagamento;
-        private System.Windows.Forms.ComboBox cbFormaPagamento;
         protected System.Windows.Forms.ListView listView1;
         private System.Windows.Forms.Label lblPorcentagem;
         private System.Windows.Forms.TextBox txtPorcentagem;
@@ -324,5 +400,13 @@
         private System.Windows.Forms.TextBox txtNumParcela;
         private System.Windows.Forms.Button btnEditarParcela;
         private System.Windows.Forms.Button btnRemoverParcela;
+        private System.Windows.Forms.Button btnFormaPagamento;
+        private System.Windows.Forms.TextBox txtFormaPagamento;
+        private System.Windows.Forms.Label lblJuros;
+        private System.Windows.Forms.TextBox txtJuros;
+        private System.Windows.Forms.Label lblMulta;
+        private System.Windows.Forms.TextBox txtMulta;
+        private System.Windows.Forms.Label lblDesconto;
+        private System.Windows.Forms.TextBox txtDesconto;
     }
 }

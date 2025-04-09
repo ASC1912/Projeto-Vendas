@@ -30,6 +30,9 @@ namespace Projeto
                     ListViewItem item = new ListViewItem(cond.Id.ToString());
                     item.SubItems.Add(cond.Descricao);
                     item.SubItems.Add(cond.QtdParcelas.ToString());
+                    item.SubItems.Add(cond.Juros.ToString("0.00"));
+                    item.SubItems.Add(cond.Multa.ToString("0.00"));
+                    item.SubItems.Add(cond.Desconto.ToString("0.00"));
                     listView1.Items.Add(item);
                 }
             }
@@ -58,9 +61,12 @@ namespace Projeto
                 int id = int.Parse(itemSelecionado.SubItems[0].Text);
                 string descricao = itemSelecionado.SubItems[1].Text;
                 int qtd_parcelas = int.Parse(itemSelecionado.SubItems[2].Text);
+                decimal juros = decimal.Parse(itemSelecionado.SubItems[3].Text);
+                decimal multa = decimal.Parse(itemSelecionado.SubItems[4].Text);
+                decimal desconto = decimal.Parse(itemSelecionado.SubItems[5].Text);
 
                 var formCadastro = new frmCadastroCondPgto();
-                formCadastro.CarregarCondicaoPagamento(id, descricao, qtd_parcelas);
+                formCadastro.CarregarCondicaoPagamento(id, descricao, qtd_parcelas, juros, multa, desconto);
 
                 formCadastro.FormClosed += (s, args) => CarregarCondicoesPagamento();
                 formCadastro.ShowDialog();

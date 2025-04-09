@@ -25,11 +25,11 @@ namespace Projeto.DAO
 
                     if (condicao.Id > 0)
                     {
-                        query = "UPDATE condicoes_pagamento SET descricao = @descricao, qtd_parcelas = @qtd_parcelas WHERE id = @id";
+                        query = "UPDATE condicoes_pagamento SET descricao = @descricao, qtd_parcelas = @qtd_parcelas, juros = @juros, multa = @multa, desconto = @desconto WHERE id = @id";
                     }
                     else
                     {
-                        query = "INSERT INTO condicoes_pagamento (descricao, qtd_parcelas) VALUES (@descricao, @qtd_parcelas); SELECT LAST_INSERT_ID();";
+                        query = "INSERT INTO condicoes_pagamento (descricao, qtd_parcelas, juros, multa, desconto) VALUES (@descricao, @qtd_parcelas, @juros, @multa, @desconto); SELECT LAST_INSERT_ID();";
                     }
 
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
@@ -41,6 +41,9 @@ namespace Projeto.DAO
 
                         cmd.Parameters.AddWithValue("@descricao", condicao.Descricao);
                         cmd.Parameters.AddWithValue("@qtd_parcelas", condicao.QtdParcelas);
+                        cmd.Parameters.AddWithValue("@juros", condicao.Juros);
+                        cmd.Parameters.AddWithValue("@multa", condicao.Multa);
+                        cmd.Parameters.AddWithValue("@desconto", condicao.Desconto);
 
                         if (condicao.Id > 0)
                         {
@@ -84,7 +87,7 @@ namespace Projeto.DAO
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
-                string query = "SELECT id, descricao, qtd_parcelas FROM condicoes_pagamento ORDER BY id";
+                string query = "SELECT id, descricao, qtd_parcelas, juros, multa, desconto FROM condicoes_pagamento ORDER BY id";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
@@ -96,7 +99,10 @@ namespace Projeto.DAO
                             {
                                 Id = reader.GetInt32("id"),
                                 Descricao = reader.GetString("descricao"),
-                                QtdParcelas = reader.GetInt32("qtd_parcelas")
+                                QtdParcelas = reader.GetInt32("qtd_parcelas"),
+                                Juros = reader.GetDecimal("juros"),
+                                Multa = reader.GetDecimal("multa"),
+                                Desconto = reader.GetDecimal("desconto")
                             });
                         }
                     }

@@ -31,6 +31,9 @@
             this.ID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Descricao = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Qtd_parcelas = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Juros = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Multa = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Desconto = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // listView1
@@ -38,7 +41,10 @@
             this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.ID,
             this.Descricao,
-            this.Qtd_parcelas});
+            this.Qtd_parcelas,
+            this.Juros,
+            this.Multa,
+            this.Desconto});
             this.listView1.Location = new System.Drawing.Point(48, 117);
             // 
             // btnDeletar
@@ -71,6 +77,19 @@
             this.Qtd_parcelas.Text = "Qtd_Parcelas";
             this.Qtd_parcelas.Width = 139;
             // 
+            // Juros
+            // 
+            this.Juros.Text = "Juros";
+            // 
+            // Multa
+            // 
+            this.Multa.Text = "Multa";
+            // 
+            // Desconto
+            // 
+            this.Desconto.Text = "Desconto";
+            this.Desconto.Width = 77;
+            // 
             // frmConsultaCondPgto
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -86,5 +105,8 @@
         private System.Windows.Forms.ColumnHeader ID;
         private System.Windows.Forms.ColumnHeader Descricao;
         private System.Windows.Forms.ColumnHeader Qtd_parcelas;
+        private System.Windows.Forms.ColumnHeader Juros;
+        private System.Windows.Forms.ColumnHeader Multa;
+        private System.Windows.Forms.ColumnHeader Desconto;
     }
 }

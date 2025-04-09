@@ -11,5 +11,8 @@ namespace Projeto.Models
         public int Id { get; set; }
         public string Descricao { get; set; }
         public int QtdParcelas { get; set; }
+        public decimal Juros { get; set; }
+        public decimal Multa { get; set; }
+        public decimal Desconto { get; set; }
     }
 }
