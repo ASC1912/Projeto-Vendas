@@ -17,6 +17,7 @@ namespace Projeto.Views
         public frmConsultaFuncionario()
         {
             InitializeComponent();
+            this.Shown += frmConsultaFuncionario_Shown;
         }
 
         private void btnIncluir_Click(object sender, EventArgs e)
@@ -48,6 +49,9 @@ namespace Projeto.Views
                     item.SubItems.Add(funcionario.Cargo);
                     item.SubItems.Add(funcionario.Salario.ToString());
                     item.SubItems.Add(funcionario.NomeCidade);
+                    item.SubItems.Add(funcionario.DataAdmissao?.ToShortDateString() ?? "");
+                    item.SubItems.Add(funcionario.DataDemissao?.ToShortDateString() ?? "");
+                    item.SubItems.Add(funcionario.Status ? "Ativo" : "Inativo");
 
                     listView1.Items.Add(item);
                 }
@@ -57,6 +61,7 @@ namespace Projeto.Views
                 MessageBox.Show("Erro ao carregar funcionarios: " + ex.Message);
             }
         }
+
 
         private void btnPesquisar_Click(object sender, EventArgs e)
         {
@@ -84,8 +89,19 @@ namespace Projeto.Views
                 decimal salario = Convert.ToDecimal(itemSelecionado.SubItems[12].Text);
                 string nomeCidade = itemSelecionado.SubItems[13].Text;
 
+                DateTime dataAdmissao = DateTime.Parse(itemSelecionado.SubItems[14].Text);
+                DateTime? dataDemissao = string.IsNullOrWhiteSpace(itemSelecionado.SubItems[15].Text)
+                    ? (DateTime?)null
+                    : DateTime.Parse(itemSelecionado.SubItems[15].Text);
+                bool status = itemSelecionado.SubItems[16].Text == "Ativo";
+
                 var formCadastro = new frmCadastroFuncionario();
-                formCadastro.CarregarFuncionario(id, nome, cpf_cnpj, telefone, email, endereco, numEndereco, bairro, complemento, cep, cargo, salario, tipo, nomeCidade);
+                formCadastro.modoEdicao = true;
+                formCadastro.CarregarFuncionario(
+                    id, nome, cpf_cnpj, telefone, email, endereco, numEndereco, bairro,
+                    complemento, cep, cargo, salario, tipo, nomeCidade,
+                    status, dataAdmissao, dataDemissao
+                );
 
                 formCadastro.FormClosed += (s, args) => CarregarFuncionarios();
                 formCadastro.ShowDialog();
@@ -95,6 +111,7 @@ namespace Projeto.Views
                 MessageBox.Show("Por favor, selecione um item para editar.");
             }
         }
+
 
         private void btnDeletar_Click(object sender, EventArgs e)
         {
@@ -123,5 +140,29 @@ namespace Projeto.Views
                 MessageBox.Show("Por favor, selecione um funcionário para excluir.");
             }
         }
+
+        private void frmConsultaFuncionario_Shown(object sender, EventArgs e)
+        {
+            StringBuilder sb = new StringBuilder();
+            int i = 0;
+
+            foreach (ColumnHeader column in listView1.Columns)
+            {
+                sb.AppendLine($"Coluna {i++}: \"{column.Text}\" - Largura: {column.Width}");
+            }
+
+            MessageBox.Show(sb.ToString(), "Tamanhos das colunas");
+            /*
+            foreach (ColumnHeader column in listView1.Columns)
+            {
+                column.Width = column.Width; // reforça o tamanho atual
+            }
+
+            listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.None); // evita redimensionamento automático
+            listView1.AutoSize = false;
+            */
+        }
+
+
     }
 }

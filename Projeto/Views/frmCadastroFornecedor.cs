@@ -8,6 +8,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Projeto.Views
 {
@@ -16,6 +17,8 @@ namespace Projeto.Views
         private CidadeController cidadeController = new CidadeController();
         private CondicaoPagamentoController condicaoPagamentoController = new CondicaoPagamentoController();
         private FornecedorController controller = new FornecedorController();
+        public bool modoEdicao = false;
+
         public frmCadastroFornecedor()
         {
             InitializeComponent();
@@ -23,7 +26,7 @@ namespace Projeto.Views
             cbTipo.SelectedIndex = 0;
         }
 
-        public void CarregarFornecedor(int id, string nome, string cpf_cnpj, string telefone, string email, string endereco, int numEndereco, string bairro, string complemento, string cep, string inscEst, string inscEstSubTrib, string tipo, string nomeCidade, int idCondicao)
+        public void CarregarFornecedor(int id, string nome, string cpf_cnpj, string telefone, string email, string endereco, int numEndereco, string bairro, string complemento, string cep, string inscEst, string inscEstSubTrib, string tipo, string nomeCidade, int idCondicao, bool status)
         {
             txtCodigo.Text = id.ToString();
             txtNome.Text = nome;
@@ -40,6 +43,7 @@ namespace Projeto.Views
             cbTipo.Text = tipo;
             cbCidade.Text = nomeCidade;
             cbCondPgto.Text = idCondicao.ToString();
+            chkInativo.Checked = !status;
         }
 
         private void CarregarCidades()
@@ -99,13 +103,15 @@ namespace Projeto.Views
                 InscricaoEstadual = txtInscEst.Text,
                 InscricaoEstadualSubTrib = txtInscEstSubTrib.Text,
                 IdCidade = Convert.ToInt32(cbCidade.SelectedValue),
-                IdCondicao = Convert.ToInt32(cbCondPgto.SelectedValue)
+                IdCondicao = Convert.ToInt32(cbCondPgto.SelectedValue),
+                Status = !chkInativo.Checked,
             };
 
             try
             {
                 controller.Salvar(fornecedor);
                 MessageBox.Show("fornecedor salvo com sucesso!");
+                this.Close();
             }
             catch (Exception ex)
             {
@@ -117,6 +123,11 @@ namespace Projeto.Views
         {
             CarregarCidades();
             CarregarCondicoesPagamento();
+
+            if (modoEdicao == true)
+            {
+                cbTipo.Enabled = false;
+            }
         }
     }
 }

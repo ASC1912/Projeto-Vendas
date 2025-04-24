@@ -23,11 +23,11 @@ namespace Projeto.DAO
 
                     if (cidade.Id > 0)
                     {
-                        query = "UPDATE cidades SET nome = @nome, id_estado = @id_estado WHERE id = @id";
+                        query = "UPDATE cidades SET nome = @nome, id_estado = @id_estado, status = @status WHERE id = @id";
                     }
                     else
                     {
-                        query = "INSERT INTO cidades (nome, id_estado) VALUES (@nome, @id_estado)";
+                        query = "INSERT INTO cidades (nome, id_estado, status) VALUES (@nome, @id_estado, @status)";
                     }
 
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
@@ -39,6 +39,8 @@ namespace Projeto.DAO
 
                         cmd.Parameters.AddWithValue("@nome", cidade.Nome);
                         cmd.Parameters.AddWithValue("@id_estado", cidade.IdEstado);
+                        cmd.Parameters.AddWithValue("@status", cidade.Status);
+
                         cmd.ExecuteNonQuery();
                     }
                 }
@@ -74,7 +76,7 @@ namespace Projeto.DAO
             {
                 conn.Open();
                 string query = @"
-            SELECT c.id, c.nome AS cidade_nome, c.id_estado, e.nome AS estado_nome 
+            SELECT c.id, c.nome AS cidade_nome, c.id_estado, c.status, e.nome AS estado_nome 
             FROM cidades c
             JOIN estados e ON c.id_estado = e.id
             ORDER BY c.nome";
@@ -90,7 +92,8 @@ namespace Projeto.DAO
                                 Id = reader.GetInt32("id"),
                                 Nome = reader.GetString("cidade_nome"),
                                 IdEstado = reader.GetInt32("id_estado"),
-                                EstadoNome = reader.GetString("estado_nome")
+                                EstadoNome = reader.GetString("estado_nome"),
+                                Status = reader.GetBoolean("status"),
                             });
                         }
                     }

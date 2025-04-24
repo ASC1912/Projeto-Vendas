@@ -14,14 +14,17 @@ namespace Projeto.Views
     {
         private CidadeController cidadeController = new CidadeController();
         private FuncionarioController controller = new FuncionarioController();
+        public bool modoEdicao = false;
+
         public frmCadastroFuncionario()
         {
             InitializeComponent();
             txtCodigo.Enabled = false;
             cbTipo.SelectedIndex = 0;
+            dtpDemissao.Checked = false;
         }
 
-        public void CarregarFuncionario(int id, string nome, string cpf_cnpj, string telefone, string email, string endereco, int numEndereco, string bairro, string complemento, string cep, string cargo, decimal salario, string tipo, string nomeCidade)
+        public void CarregarFuncionario(int id, string nome, string cpf_cnpj, string telefone, string email, string endereco, int numEndereco, string bairro, string complemento, string cep, string cargo, decimal salario, string tipo, string nomeCidade, bool status, DateTime? dataAdmissao, DateTime? dataDemissao)
         {
             txtCodigo.Text = id.ToString();
             txtNome.Text = nome;
@@ -37,7 +40,23 @@ namespace Projeto.Views
             txtSalario.Text = salario.ToString();
             cbTipo.Text = tipo;
             cbCidade.Text = nomeCidade;
+
+            chkInativo.Checked = !status;
+            if (dataAdmissao.HasValue)
+                dtpAdmissao.Value = dataAdmissao.Value;
+
+            if (dataDemissao.HasValue)
+            {
+                dtpDemissao.Value = dataDemissao.Value;
+                dtpDemissao.Checked = true;
+            }
+            else
+            {
+                dtpDemissao.Checked = false;
+            }
+
         }
+
 
         private void CarregarCidades()
         {
@@ -78,13 +97,17 @@ namespace Projeto.Views
                 CEP = txtCEP.Text,
                 Cargo = txtCargo.Text,
                 Salario = Convert.ToDecimal(txtSalario.Text),
-                IdCidade = Convert.ToInt32(cbCidade.SelectedValue)
+                IdCidade = Convert.ToInt32(cbCidade.SelectedValue),
+                Status = !chkInativo.Checked,
+                DataAdmissao = dtpAdmissao.Value,
+                DataDemissao = dtpDemissao.Checked ? (DateTime?)dtpDemissao.Value : null,
             };
 
             try
             {
                 controller.Salvar(funcionario);
                 MessageBox.Show("funcionario salvo com sucesso!");
+                this.Close();
             }
             catch (Exception ex)
             {
@@ -95,6 +118,11 @@ namespace Projeto.Views
         private void frmCadastroFuncionario_Load(object sender, EventArgs e)
         {
             CarregarCidades();
+
+            if (modoEdicao == true)
+            {
+                cbTipo.Enabled = false;
+            }
         }
     }
 }

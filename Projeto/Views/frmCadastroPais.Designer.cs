@@ -72,12 +72,15 @@
             // frmCadastroPais
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1342, 721);
             this.Controls.Add(this.lblCodigo);
             this.Controls.Add(this.lblNome);
             this.Controls.Add(this.txtNome);
             this.Controls.Add(this.btnSalvar);
             this.Name = "frmCadastroPais";
+            this.Text = "Cadastro Paises";
+            this.Controls.SetChildIndex(this.chkInativo, 0);
+            this.Controls.SetChildIndex(this.lblUltimaEdicao, 0);
             this.Controls.SetChildIndex(this.btnSair, 0);
             this.Controls.SetChildIndex(this.txtCodigo, 0);
             this.Controls.SetChildIndex(this.btnSalvar, 0);

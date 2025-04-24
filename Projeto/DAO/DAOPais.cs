@@ -23,11 +23,11 @@ namespace Projeto.DAO
 
                     if (pais.Id > 0)
                     {
-                        query = "UPDATE paises SET nome = @nome WHERE id = @id";
+                        query = "UPDATE paises SET nome = @nome, status = @status WHERE id = @id";
                     }
                     else
                     {
-                        query = "INSERT INTO paises (nome) VALUES (@nome)";
+                        query = "INSERT INTO paises (nome, status) VALUES (@nome, @status)";
                     }
 
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
@@ -38,6 +38,8 @@ namespace Projeto.DAO
                         }
 
                         cmd.Parameters.AddWithValue("@nome", pais.Nome);
+                        cmd.Parameters.AddWithValue("@status", pais.Status);
+
                         cmd.ExecuteNonQuery();
                     }
                 }
@@ -72,7 +74,7 @@ namespace Projeto.DAO
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
-                string query = "SELECT id, nome FROM paises ORDER BY id";
+                string query = "SELECT id, nome, status FROM paises ORDER BY id";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
@@ -83,7 +85,8 @@ namespace Projeto.DAO
                             lista.Add(new Pais
                             {
                                 Id = reader.GetInt32("id"),
-                                Nome = reader.GetString("nome")
+                                Nome = reader.GetString("nome"),
+                                Status = reader.GetBoolean("status"),
                             });
                         }
                     }

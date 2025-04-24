@@ -21,5 +21,7 @@ namespace Projeto.Models
         public string Complemento { get; set; }
         public int? IdCidade { get; set; }   
         public string NomeCidade { get; set; }
+        public bool Status { get; set; }
+
     }
 }

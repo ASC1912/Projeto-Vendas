@@ -34,6 +34,7 @@
             this.lblCodigo = new System.Windows.Forms.Label();
             this.lblPais = new System.Windows.Forms.Label();
             this.cbPais = new System.Windows.Forms.ComboBox();
+            this.btnBuscar = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblNome
@@ -88,10 +89,21 @@
             this.cbPais.Size = new System.Drawing.Size(121, 24);
             this.cbPais.TabIndex = 15;
             // 
+            // btnBuscar
+            // 
+            this.btnBuscar.Location = new System.Drawing.Point(170, 183);
+            this.btnBuscar.Name = "btnBuscar";
+            this.btnBuscar.Size = new System.Drawing.Size(150, 23);
+            this.btnBuscar.TabIndex = 65;
+            this.btnBuscar.Text = "Buscar País";
+            this.btnBuscar.UseVisualStyleBackColor = true;
+            this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
+            // 
             // frmCadastroEstado
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1342, 721);
+            this.Controls.Add(this.btnBuscar);
             this.Controls.Add(this.lblPais);
             this.Controls.Add(this.cbPais);
             this.Controls.Add(this.lblCodigo);
@@ -99,7 +111,10 @@
             this.Controls.Add(this.txtNome);
             this.Controls.Add(this.btnSalvar);
             this.Name = "frmCadastroEstado";
+            this.Text = "Cadastro Estados";
             this.Load += new System.EventHandler(this.frmCadastroEstado_Load);
+            this.Controls.SetChildIndex(this.chkInativo, 0);
+            this.Controls.SetChildIndex(this.lblUltimaEdicao, 0);
             this.Controls.SetChildIndex(this.btnSair, 0);
             this.Controls.SetChildIndex(this.txtCodigo, 0);
             this.Controls.SetChildIndex(this.btnSalvar, 0);
@@ -108,6 +123,7 @@
             this.Controls.SetChildIndex(this.lblCodigo, 0);
             this.Controls.SetChildIndex(this.cbPais, 0);
             this.Controls.SetChildIndex(this.lblPais, 0);
+            this.Controls.SetChildIndex(this.btnBuscar, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -121,5 +137,6 @@
         private System.Windows.Forms.Label lblCodigo;
         private System.Windows.Forms.Label lblPais;
         private System.Windows.Forms.ComboBox cbPais;
+        private System.Windows.Forms.Button btnBuscar;
     }
 }

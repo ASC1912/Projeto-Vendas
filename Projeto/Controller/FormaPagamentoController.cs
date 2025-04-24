@@ -22,7 +22,6 @@ namespace Projeto.Controller
             return dao.ListarFormaPagamento();
         }
 
-
         public FormaPagamento BuscarPorId(int id)
         {
             return dao.BuscarPorId(id);

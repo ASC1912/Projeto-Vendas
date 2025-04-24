@@ -1,4 +1,5 @@
-﻿using Projeto.Controller;
+﻿using MySqlX.XDevAPI;
+using Projeto.Controller;
 using Projeto.Models;
 using System;
 using System.Collections.Generic;
@@ -13,9 +14,16 @@ namespace Projeto.Views
     public partial class frmConsultaCidade : Projeto.frmBaseConsulta
     {
         private CidadeController controller = new CidadeController();
+        public bool ModoSelecao { get; set; } = false;
+
         public frmConsultaCidade()
         {
             InitializeComponent();
+        }
+
+        private void frmConsultaCidade_Load(object sender, EventArgs e)
+        {
+            btnSelecionar.Visible = ModoSelecao;
         }
 
         private void btnIncluir_Click(object sender, EventArgs e)
@@ -36,6 +44,7 @@ namespace Projeto.Views
                     ListViewItem item = new ListViewItem(cidade.Id.ToString());
                     item.SubItems.Add(cidade.Nome);
                     item.SubItems.Add(cidade.EstadoNome);
+                    item.SubItems.Add(cidade.Status ? "Ativo" : "Inativo");
 
                     listView1.Items.Add(item);
                 }
@@ -59,9 +68,11 @@ namespace Projeto.Views
                 int id = int.Parse(itemSelecionado.SubItems[0].Text);
                 string nome = itemSelecionado.SubItems[1].Text;
                 string nomeEstado = itemSelecionado.SubItems[2].Text;
+                bool status = itemSelecionado.SubItems[3].Text == "Ativo";
+
 
                 var formCadastro = new frmCadastroCidade();
-                formCadastro.CarregarCidade(id, nome, nomeEstado);
+                formCadastro.CarregarCidade(id, nome, nomeEstado, status);
 
                 formCadastro.FormClosed += (s, args) => CarregarCidades();
                 formCadastro.ShowDialog();
@@ -99,5 +110,7 @@ namespace Projeto.Views
                 MessageBox.Show("Por favor, selecione uma cidade para excluir.");
             }
         }
+
+        
     }
 }

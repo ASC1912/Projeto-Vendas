@@ -30,6 +30,8 @@
         {
             this.txtCodigo = new System.Windows.Forms.TextBox();
             this.btnSair = new System.Windows.Forms.Button();
+            this.chkInativo = new System.Windows.Forms.CheckBox();
+            this.lblUltimaEdicao = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txtCodigo
@@ -51,11 +53,32 @@
             this.btnSair.UseVisualStyleBackColor = true;
             this.btnSair.Click += new System.EventHandler(this.btnSair_Click);
             // 
+            // chkInativo
+            // 
+            this.chkInativo.AutoSize = true;
+            this.chkInativo.Location = new System.Drawing.Point(708, 29);
+            this.chkInativo.Name = "chkInativo";
+            this.chkInativo.Size = new System.Drawing.Size(68, 20);
+            this.chkInativo.TabIndex = 63;
+            this.chkInativo.Text = "Inativo";
+            this.chkInativo.UseVisualStyleBackColor = true;
+            // 
+            // lblUltimaEdicao
+            // 
+            this.lblUltimaEdicao.AutoSize = true;
+            this.lblUltimaEdicao.Location = new System.Drawing.Point(12, 528);
+            this.lblUltimaEdicao.Name = "lblUltimaEdicao";
+            this.lblUltimaEdicao.Size = new System.Drawing.Size(44, 16);
+            this.lblUltimaEdicao.TabIndex = 64;
+            this.lblUltimaEdicao.Text = "label1";
+            // 
             // frmBase
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1342, 721);
+            this.Controls.Add(this.lblUltimaEdicao);
+            this.Controls.Add(this.chkInativo);
             this.Controls.Add(this.txtCodigo);
             this.Controls.Add(this.btnSair);
             this.Name = "frmBase";
@@ -69,5 +92,7 @@
 
         public System.Windows.Forms.TextBox txtCodigo;
         protected System.Windows.Forms.Button btnSair;
+        protected System.Windows.Forms.CheckBox chkInativo;
+        protected System.Windows.Forms.Label lblUltimaEdicao;
     }
 }

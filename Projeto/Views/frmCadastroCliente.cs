@@ -14,7 +14,8 @@ namespace Projeto.Views
     {
         private CidadeController cidadeController = new CidadeController();
         private CondicaoPagamentoController condicaoPagamentoController = new CondicaoPagamentoController();
-        private ClienteController controller = new ClienteController(); 
+        private ClienteController controller = new ClienteController();
+        public bool modoEdicao = false;
         public frmCadastroCliente()
         {
             InitializeComponent();
@@ -22,7 +23,7 @@ namespace Projeto.Views
             cbTipo.SelectedIndex = 0;
         }
 
-        public void CarregarCliente(int id, string nome, string cpf_cnpj, string telefone, string email, string endereco, int numeroEndereco, string bairro, string complemento,  string cep, string tipo, string nomeCidade, int idCondicao)
+        public void CarregarCliente(int id, string nome, string cpf_cnpj, string telefone, string email, string endereco, int numeroEndereco, string bairro, string complemento,  string cep, string tipo, string nomeCidade, int idCondicao, bool status)
         {
             txtCodigo.Text = id.ToString();
             txtNome.Text = nome;
@@ -37,6 +38,7 @@ namespace Projeto.Views
             cbTipo.Text = tipo;
             cbCidade.Text = nomeCidade;
             cbCondPgto.Text = idCondicao.ToString();
+            chkInativo.Checked = !status;
         }
 
         private void CarregarCidades()
@@ -94,13 +96,16 @@ namespace Projeto.Views
                 Tipo = cbTipo.Text,
                 CEP = txtCEP.Text,
                 IdCidade = Convert.ToInt32(cbCidade.SelectedValue),
-                IdCondicao = Convert.ToInt32(cbCondPgto.SelectedValue)
+                IdCondicao = Convert.ToInt32(cbCondPgto.SelectedValue),
+                Status = !chkInativo.Checked,
+
             };
 
             try
             {
                 controller.Salvar(cliente);
                 MessageBox.Show("Cliente salvo com sucesso!");
+                this.Close();
             }
             catch (Exception ex)
             {
@@ -112,6 +117,11 @@ namespace Projeto.Views
         {
             CarregarCidades();
             CarregarCondicoesPagamento();
+
+            if (modoEdicao == true)
+            {
+                cbTipo.Enabled = false;
+            }
         }
     }
 }

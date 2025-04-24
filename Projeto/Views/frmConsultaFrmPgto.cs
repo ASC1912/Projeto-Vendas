@@ -50,7 +50,40 @@ namespace Projeto
 
         private void btnPesquisar_Click(object sender, EventArgs e)
         {
-            CarregarFormasPagamento();
+            try
+            {
+                listView1.Items.Clear();
+
+                string texto = txtPesquisar.Text.Trim();
+
+                if (string.IsNullOrEmpty(texto))
+                {
+                    CarregarFormasPagamento();
+                }
+                else if (int.TryParse(texto, out int id))
+                {
+                    FormaPagamento forma = controller.BuscarPorId(id);
+
+                    if (forma != null)
+                    {
+                        ListViewItem item = new ListViewItem(forma.Id.ToString());
+                        item.SubItems.Add(forma.Descricao);
+                        listView1.Items.Add(item);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Forma de pagamento não encontrada.");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Digite um ID válido (número inteiro).");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao pesquisar: " + ex.Message);
+            }
         }
 
         private void btnIncluir_Click(object sender, EventArgs e)

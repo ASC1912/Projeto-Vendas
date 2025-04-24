@@ -13,10 +13,17 @@ namespace Projeto.Views
     public partial class frmConsultaEstado : Projeto.frmBaseConsulta
     {
         private EstadoController controller = new EstadoController();
+        public bool ModoSelecao { get; set; } = false;
+
 
         public frmConsultaEstado()
         {
             InitializeComponent();
+        }
+
+        private void frmConsultaEstado_Load(object sender, EventArgs e)
+        {
+            btnSelecionar.Visible = ModoSelecao;
         }
 
         private void btnIncluir_Click(object sender, EventArgs e)
@@ -35,7 +42,8 @@ namespace Projeto.Views
                 {
                     ListViewItem item = new ListViewItem(estado.Id.ToString());
                     item.SubItems.Add(estado.Nome);
-                    item.SubItems.Add(estado.PaisNome); 
+                    item.SubItems.Add(estado.PaisNome);
+                    item.SubItems.Add(estado.Status ? "Ativo" : "Inativo");
 
                     listView1.Items.Add(item);
                 }
@@ -58,9 +66,10 @@ namespace Projeto.Views
                 int id = int.Parse(itemSelecionado.SubItems[0].Text);
                 string nome = itemSelecionado.SubItems[1].Text;
                 string nomePais = itemSelecionado.SubItems[2].Text;
+                bool status = itemSelecionado.SubItems[3].Text == "Ativo";
 
                 var formCadastro = new frmCadastroEstado();
-                formCadastro.CarregarEstado(id, nome, nomePais);
+                formCadastro.CarregarEstado(id, nome, nomePais, status);
 
                 formCadastro.FormClosed += (s, args) => CarregarEstados();
                 formCadastro.ShowDialog();
@@ -98,5 +107,12 @@ namespace Projeto.Views
                 MessageBox.Show("Por favor, selecione um estado para excluir.");
             }
         }
+
+        private void btnSelecionar_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        
     }
 }

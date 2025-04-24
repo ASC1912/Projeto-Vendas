@@ -46,6 +46,8 @@ namespace Projeto.Views
                     item.SubItems.Add(cliente.Tipo);
                     item.SubItems.Add(cliente.NomeCidade);
                     item.SubItems.Add(cliente.IdCondicao.ToString());
+                    item.SubItems.Add(cliente.Status ? "Ativo" : "Inativo");
+
                     listView1.Items.Add(item);
                 }
             }
@@ -80,9 +82,12 @@ namespace Projeto.Views
                 string nomeCidade = itemSelecionado.SubItems[11].Text;
                 string idCondicaoStr = itemSelecionado.SubItems[12].Text;
                 int idCondicao = string.IsNullOrWhiteSpace(idCondicaoStr) ? 0 : int.Parse(idCondicaoStr);
+                bool status = itemSelecionado.SubItems[13].Text == "Ativo";
+
 
                 var formCadastro = new frmCadastroCliente();
-                formCadastro.CarregarCliente(id, nome, cpf_cnpj, telefone, email, endereco, numEndereco, bairro, complemento, cep, tipo, nomeCidade, idCondicao);
+                formCadastro.modoEdicao = true;
+                formCadastro.CarregarCliente(id, nome, cpf_cnpj, telefone, email, endereco, numEndereco, bairro, complemento, cep, tipo, nomeCidade, idCondicao, status);
 
                 formCadastro.FormClosed += (s, args) => CarregarClientes();
                 formCadastro.ShowDialog();

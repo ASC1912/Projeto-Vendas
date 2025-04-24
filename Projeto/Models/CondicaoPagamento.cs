@@ -14,5 +14,7 @@ namespace Projeto.Models
         public decimal Juros { get; set; }
         public decimal Multa { get; set; }
         public decimal Desconto { get; set; }
+        public bool Status { get; set; }
+
     }
 }

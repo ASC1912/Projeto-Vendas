@@ -91,7 +91,7 @@
             // frmCadastroCidade
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1342, 742);
             this.Controls.Add(this.lblCodigo);
             this.Controls.Add(this.lblEstado);
             this.Controls.Add(this.cbEstado);
@@ -99,7 +99,10 @@
             this.Controls.Add(this.txtNome);
             this.Controls.Add(this.btnSalvar);
             this.Name = "frmCadastroCidade";
+            this.Text = "Cadastro Cidades";
             this.Load += new System.EventHandler(this.frmCadastroCidade_Load);
+            this.Controls.SetChildIndex(this.chkInativo, 0);
+            this.Controls.SetChildIndex(this.lblUltimaEdicao, 0);
             this.Controls.SetChildIndex(this.btnSair, 0);
             this.Controls.SetChildIndex(this.txtCodigo, 0);
             this.Controls.SetChildIndex(this.btnSalvar, 0);

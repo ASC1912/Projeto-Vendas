@@ -34,6 +34,7 @@
             this.Juros = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Multa = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Desconto = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Status = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // listView1
@@ -44,8 +45,10 @@
             this.Qtd_parcelas,
             this.Juros,
             this.Multa,
-            this.Desconto});
+            this.Desconto,
+            this.Status});
             this.listView1.Location = new System.Drawing.Point(48, 117);
+            this.listView1.Size = new System.Drawing.Size(715, 271);
             // 
             // btnDeletar
             // 
@@ -90,11 +93,16 @@
             this.Desconto.Text = "Desconto";
             this.Desconto.Width = 77;
             // 
+            // Status
+            // 
+            this.Status.Text = "Status";
+            // 
             // frmConsultaCondPgto
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1342, 721);
             this.Name = "frmConsultaCondPgto";
+            this.Text = "Consulta Condições de Pagamento";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -108,5 +116,6 @@
         private System.Windows.Forms.ColumnHeader Juros;
         private System.Windows.Forms.ColumnHeader Multa;
         private System.Windows.Forms.ColumnHeader Desconto;
+        private System.Windows.Forms.ColumnHeader Status;
     }
 }

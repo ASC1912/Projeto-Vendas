@@ -315,7 +315,7 @@
             // frmCadastroCondPgto
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.ClientSize = new System.Drawing.Size(876, 554);
+            this.ClientSize = new System.Drawing.Size(1342, 721);
             this.Controls.Add(this.lblDesconto);
             this.Controls.Add(this.txtDesconto);
             this.Controls.Add(this.lblMulta);
@@ -343,6 +343,9 @@
             this.Controls.Add(this.txtPrazoDias);
             this.Controls.Add(this.btnSalvar);
             this.Name = "frmCadastroCondPgto";
+            this.Text = "Cadastro Condições de Pagamento";
+            this.Controls.SetChildIndex(this.chkInativo, 0);
+            this.Controls.SetChildIndex(this.lblUltimaEdicao, 0);
             this.Controls.SetChildIndex(this.btnSair, 0);
             this.Controls.SetChildIndex(this.txtCodigo, 0);
             this.Controls.SetChildIndex(this.btnSalvar, 0);

@@ -7,6 +7,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Projeto.Views
 {
@@ -18,10 +19,11 @@ namespace Projeto.Views
             txtCodigo.Enabled = false;
         }
 
-        public void CarregarPais(int id, string nome)
+        public void CarregarPais(int id, string nome, bool status)
         {
             txtCodigo.Text = id.ToString();
             txtNome.Text = nome;
+            chkInativo.Checked = !status;
         }
 
         private void btnSalvar_Click(object sender, EventArgs e)
@@ -30,11 +32,13 @@ namespace Projeto.Views
             {
                 int id = string.IsNullOrEmpty(txtCodigo.Text) ? 0 : int.Parse(txtCodigo.Text);
                 string nome = txtNome.Text;
+                bool status = !chkInativo.Checked;
 
                 Pais pais = new Pais
                 {
                     Id = id,
-                    Nome = nome
+                    Nome = nome,
+                    Status = status,
                 };
 
                 PaisController controller = new PaisController();

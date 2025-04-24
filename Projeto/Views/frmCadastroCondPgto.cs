@@ -72,7 +72,9 @@ namespace Projeto
         {
             try
             {
-                if (!ValidarPorcentagemTotal())
+                decimal desconto = string.IsNullOrWhiteSpace(txtDesconto.Text) ? 0 : Convert.ToDecimal(txtDesconto.Text);
+
+                if (!ValidarPorcentagemTotal(desconto))
                 {
                     return;
                 }
@@ -83,7 +85,6 @@ namespace Projeto
                 int qtdParcelasView = listView1.Items.Count;
                 decimal juros = string.IsNullOrWhiteSpace(txtJuros.Text) ? 0 : Convert.ToDecimal(txtJuros.Text);
                 decimal multa = string.IsNullOrWhiteSpace(txtMulta.Text) ? 0 : Convert.ToDecimal(txtMulta.Text);
-                decimal desconto = string.IsNullOrWhiteSpace(txtDesconto.Text) ? 0 : Convert.ToDecimal(txtDesconto.Text);
 
                 if (qtdParcelas != qtdParcelasView)
                 {
@@ -185,6 +186,18 @@ namespace Projeto
                     return;
                 }
 
+                if (listView1.Items.Count > 0)
+                {
+                    var ultimaParcela = listView1.Items[listView1.Items.Count - 1];
+                    int prazoUltimaParcela = int.Parse(ultimaParcela.SubItems[1].Text);
+
+                    if (prazoDias <= prazoUltimaParcela)
+                    {
+                        MessageBox.Show("O prazo da nova parcela deve ser maior que o prazo da parcela anterior.", "Prazo inválido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                }
+
                 string descricaoFormaPagamento = txtFormaPagamento.Text;
 
                 ListViewItem item = new ListViewItem(numParcela.ToString());
@@ -198,6 +211,7 @@ namespace Projeto
             {
                 MessageBox.Show("Erro ao adicionar parcela: " + ex.Message);
             }
+
         }
 
 
@@ -231,7 +245,7 @@ namespace Projeto
             }
         }
 
-        private bool ValidarPorcentagemTotal()
+        private bool ValidarPorcentagemTotal(decimal desconto)
         {
             decimal somaPorcentagens = 0;
 
@@ -249,14 +263,20 @@ namespace Projeto
                 }
             }
 
-            if (somaPorcentagens != 100)
+            decimal totalComDesconto = somaPorcentagens + desconto;
+
+            if (Math.Round(totalComDesconto, 2) != 100)
             {
-                MessageBox.Show($"A soma das porcentagens das parcelas é {somaPorcentagens:N2}%. O total deve ser exatamente 100%.","Erro de Validação", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(
+                    $"A soma das porcentagens das parcelas é {somaPorcentagens:N2}% e o desconto é {desconto:N2}%. " +
+                    $"O total deve ser exatamente 100%.",
+                    "Erro de Validação", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
 
             return true;
         }
+
 
         private void btnRemoverParcela_Click(object sender, EventArgs e)
         {

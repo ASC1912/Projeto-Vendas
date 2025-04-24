@@ -43,6 +43,7 @@
             this.Numero = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Complemento = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.IDCondPgto = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Status = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // listView1
@@ -62,11 +63,18 @@
             this.InscricaoEstadual,
             this.InscEstSubTrib,
             this.IDCidade,
-            this.IDCondPgto});
+            this.IDCondPgto,
+            this.Status});
+            this.listView1.Size = new System.Drawing.Size(1140, 338);
             // 
             // btnDeletar
             // 
+            this.btnDeletar.Location = new System.Drawing.Point(1022, 519);
             this.btnDeletar.Click += new System.EventHandler(this.btnDeletar_Click);
+            // 
+            // btnSair
+            // 
+            this.btnSair.Location = new System.Drawing.Point(1113, 519);
             // 
             // btnPesquisar
             // 
@@ -74,10 +82,12 @@
             // 
             // btnEditar
             // 
+            this.btnEditar.Location = new System.Drawing.Point(929, 519);
             this.btnEditar.Click += new System.EventHandler(this.btnEditar_Click);
             // 
             // btnIncluir
             // 
+            this.btnIncluir.Location = new System.Drawing.Point(836, 519);
             this.btnIncluir.Click += new System.EventHandler(this.btnIncluir_Click);
             // 
             // ID
@@ -140,11 +150,16 @@
             // 
             this.IDCondPgto.Text = "Condição Pagamento";
             // 
+            // Status
+            // 
+            this.Status.Text = "Status";
+            // 
             // frmConsultaFornecedor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1342, 721);
             this.Name = "frmConsultaFornecedor";
+            this.Text = "Consulta Fornecedores";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -167,5 +182,6 @@
         private System.Windows.Forms.ColumnHeader Numero;
         private System.Windows.Forms.ColumnHeader Complemento;
         private System.Windows.Forms.ColumnHeader IDCondPgto;
+        private System.Windows.Forms.ColumnHeader Status;
     }
 }

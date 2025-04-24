@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.listView1 = new System.Windows.Forms.ListView();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtPesquisar = new System.Windows.Forms.TextBox();
             this.btnSair = new System.Windows.Forms.Button();
             this.btnPesquisar = new System.Windows.Forms.Button();
             this.btnDeletar = new System.Windows.Forms.Button();
@@ -49,12 +49,12 @@
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
             // 
-            // textBox1
+            // txtPesquisar
             // 
-            this.textBox1.Location = new System.Drawing.Point(48, 55);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(198, 22);
-            this.textBox1.TabIndex = 1;
+            this.txtPesquisar.Location = new System.Drawing.Point(48, 55);
+            this.txtPesquisar.Name = "txtPesquisar";
+            this.txtPesquisar.Size = new System.Drawing.Size(198, 22);
+            this.txtPesquisar.TabIndex = 1;
             // 
             // btnSair
             // 
@@ -106,13 +106,13 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1342, 721);
             this.Controls.Add(this.btnIncluir);
             this.Controls.Add(this.btnEditar);
             this.Controls.Add(this.btnDeletar);
             this.Controls.Add(this.btnPesquisar);
             this.Controls.Add(this.btnSair);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.txtPesquisar);
             this.Controls.Add(this.listView1);
             this.Name = "frmBaseConsulta";
             this.Text = "Consulta";
@@ -124,7 +124,7 @@
         #endregion
         protected System.Windows.Forms.ListView listView1;
         protected System.Windows.Forms.Button btnDeletar;
-        protected System.Windows.Forms.TextBox textBox1;
+        protected System.Windows.Forms.TextBox txtPesquisar;
         protected System.Windows.Forms.Button btnSair;
         protected System.Windows.Forms.Button btnPesquisar;
         protected System.Windows.Forms.Button btnEditar;

@@ -42,6 +42,9 @@
             this.Bairro = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Numero = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Complemento = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.DataAdmissao = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.DataDemissao = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Status = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // listView1
@@ -60,23 +63,39 @@
             this.Tipo,
             this.Cargo,
             this.Salario,
-            this.IDCidade});
-            this.listView1.Size = new System.Drawing.Size(665, 271);
+            this.IDCidade,
+            this.DataAdmissao,
+            this.DataDemissao,
+            this.Status});
+            this.listView1.Location = new System.Drawing.Point(23, 109);
+            this.listView1.Size = new System.Drawing.Size(1307, 352);
             // 
             // btnDeletar
             // 
+            this.btnDeletar.Location = new System.Drawing.Point(1066, 517);
             this.btnDeletar.Click += new System.EventHandler(this.btnDeletar_Click);
+            // 
+            // txtPesquisar
+            // 
+            this.txtPesquisar.Location = new System.Drawing.Point(23, 55);
+            // 
+            // btnSair
+            // 
+            this.btnSair.Location = new System.Drawing.Point(1157, 517);
             // 
             // btnPesquisar
             // 
+            this.btnPesquisar.Location = new System.Drawing.Point(265, 55);
             this.btnPesquisar.Click += new System.EventHandler(this.btnPesquisar_Click);
             // 
             // btnEditar
             // 
+            this.btnEditar.Location = new System.Drawing.Point(973, 517);
             this.btnEditar.Click += new System.EventHandler(this.btnEditar_Click);
             // 
             // btnIncluir
             // 
+            this.btnIncluir.Location = new System.Drawing.Point(880, 517);
             this.btnIncluir.Click += new System.EventHandler(this.btnIncluir_Click);
             // 
             // ID
@@ -85,15 +104,18 @@
             // 
             // Nome
             // 
-            this.Nome.Text = "Nome";
+            this.Nome.Text = "Funcionário";
+            this.Nome.Width = 88;
             // 
             // CPF_CNPJ
             // 
-            this.CPF_CNPJ.Text = "CPJ/CNPJ";
+            this.CPF_CNPJ.Text = "CPF/CNPJ";
+            this.CPF_CNPJ.Width = 82;
             // 
             // Telefone
             // 
             this.Telefone.Text = "Telefone";
+            this.Telefone.Width = 76;
             // 
             // Email
             // 
@@ -110,6 +132,7 @@
             // IDCidade
             // 
             this.IDCidade.Text = "IDCidade";
+            this.IDCidade.Width = 74;
             // 
             // Cargo
             // 
@@ -122,6 +145,7 @@
             // Endereco
             // 
             this.Endereco.Text = "Endereço";
+            this.Endereco.Width = 74;
             // 
             // Bairro
             // 
@@ -134,12 +158,28 @@
             // Complemento
             // 
             this.Complemento.Text = "Complemento";
+            this.Complemento.Width = 104;
+            // 
+            // DataAdmissao
+            // 
+            this.DataAdmissao.Text = "Data de Admissão";
+            this.DataAdmissao.Width = 126;
+            // 
+            // DataDemissao
+            // 
+            this.DataDemissao.Text = "Data de Demissão";
+            this.DataDemissao.Width = 133;
+            // 
+            // Status
+            // 
+            this.Status.Text = "Status";
             // 
             // frmConsultaFuncionario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1342, 721);
             this.Name = "frmConsultaFuncionario";
+            this.Text = "Consulta Funcionarios";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -161,5 +201,8 @@
         private System.Windows.Forms.ColumnHeader Bairro;
         private System.Windows.Forms.ColumnHeader Numero;
         private System.Windows.Forms.ColumnHeader Complemento;
+        private System.Windows.Forms.ColumnHeader DataAdmissao;
+        private System.Windows.Forms.ColumnHeader DataDemissao;
+        private System.Windows.Forms.ColumnHeader Status;
     }
 }

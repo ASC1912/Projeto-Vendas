@@ -72,12 +72,15 @@
             // frmCadastroFrmPgto
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1342, 721);
             this.Controls.Add(this.lblDescricao);
             this.Controls.Add(this.txtDescricao);
             this.Controls.Add(this.btnSalvar);
             this.Controls.Add(this.lblCodigo);
             this.Name = "frmCadastroFrmPgto";
+            this.Text = "Cadastro Formas de Pagamento";
+            this.Controls.SetChildIndex(this.chkInativo, 0);
+            this.Controls.SetChildIndex(this.lblUltimaEdicao, 0);
             this.Controls.SetChildIndex(this.lblCodigo, 0);
             this.Controls.SetChildIndex(this.btnSair, 0);
             this.Controls.SetChildIndex(this.txtCodigo, 0);

@@ -13,10 +13,18 @@ namespace Projeto.Views
     public partial class frmConsultaPais : Projeto.frmBaseConsulta
     {
         private PaisController controller = new PaisController();
+        public bool ModoSelecao { get; set; } = false;
+        internal Pais PaisSelecionado { get; private set; }
+
 
         public frmConsultaPais()
         {
             InitializeComponent();
+        }
+
+        private void frmConsultaPais_Load(object sender, EventArgs e)
+        {
+            btnSelecionar.Visible = ModoSelecao;
         }
 
         private void btnIncluir_Click(object sender, EventArgs e)
@@ -36,7 +44,9 @@ namespace Projeto.Views
                 {
                     ListViewItem item = new ListViewItem(pais.Id.ToString());
                     item.SubItems.Add(pais.Nome);
+                    item.SubItems.Add(pais.Status ? "Ativo" : "Inativo");
                     listView1.Items.Add(item);
+
                 }
             }
             catch (Exception ex)
@@ -57,9 +67,11 @@ namespace Projeto.Views
                 var itemSelecionado = listView1.SelectedItems[0];
                 int id = int.Parse(itemSelecionado.SubItems[0].Text);
                 string nome = itemSelecionado.SubItems[1].Text;
+                bool status = itemSelecionado.SubItems[2].Text == "Ativo";
+
 
                 var formCadastro = new frmCadastroPais();
-                formCadastro.CarregarPais(id, nome);
+                formCadastro.CarregarPais(id, nome, status);
 
                 formCadastro.FormClosed += (s, args) => CarregarPaises();
                 formCadastro.ShowDialog();
@@ -97,5 +109,30 @@ namespace Projeto.Views
                 MessageBox.Show("Por favor, selecione um país para excluir.");
             }
         }
+
+        private void btnSelecionar_Click(object sender, EventArgs e)
+        {
+            if (listView1.SelectedItems.Count > 0)
+            {
+                var itemSelecionado = listView1.SelectedItems[0];
+                int id = int.Parse(itemSelecionado.SubItems[0].Text);
+                string nome = itemSelecionado.SubItems[1].Text;
+
+                PaisSelecionado = new Pais
+                {
+                    Id = id,
+                    Nome = nome
+                };
+
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Por favor, selecione um nome.");
+            }
+        }
+
+        
     }
 }

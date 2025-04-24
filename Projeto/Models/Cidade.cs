@@ -12,5 +12,7 @@ namespace Projeto.Models
         public string Nome { get; set; }    
         public int IdEstado { get; set; }   
         public string EstadoNome { get; set; }
+        public bool Status { get; set; }
+
     }
 }

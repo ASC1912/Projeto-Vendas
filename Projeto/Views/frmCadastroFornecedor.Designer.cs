@@ -317,7 +317,7 @@
             // frmCadastroFornecedor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1342, 721);
             this.Controls.Add(this.cbTipo);
             this.Controls.Add(this.lblCondPgto);
             this.Controls.Add(this.cbCondPgto);
@@ -349,7 +349,10 @@
             this.Controls.Add(this.lblNome);
             this.Controls.Add(this.txtNome);
             this.Name = "frmCadastroFornecedor";
+            this.Text = "Cadastro Fornecedores";
             this.Load += new System.EventHandler(this.frmCadastroFornecedor_Load);
+            this.Controls.SetChildIndex(this.chkInativo, 0);
+            this.Controls.SetChildIndex(this.lblUltimaEdicao, 0);
             this.Controls.SetChildIndex(this.txtNome, 0);
             this.Controls.SetChildIndex(this.lblNome, 0);
             this.Controls.SetChildIndex(this.cbCidade, 0);

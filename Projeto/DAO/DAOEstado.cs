@@ -1,4 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
+using MySqlX.XDevAPI;
 using Projeto.Models;
 using System;
 using System.Collections.Generic;
@@ -23,11 +24,11 @@ namespace Projeto.DAO
 
                     if (estado.Id > 0)
                     {
-                        query = "UPDATE estados SET nome = @nome, id_pais = @id_pais WHERE id = @id";
+                        query = "UPDATE estados SET nome = @nome, id_pais = @id_pais, status = @status WHERE id = @id";
                     }
                     else
                     {
-                        query = "INSERT INTO estados (nome, id_pais) VALUES (@nome, @id_pais)";
+                        query = "INSERT INTO estados (nome, id_pais, status) VALUES (@nome, @id_pais, @status)";
                     }
 
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
@@ -39,6 +40,8 @@ namespace Projeto.DAO
 
                         cmd.Parameters.AddWithValue("@nome", estado.Nome);
                         cmd.Parameters.AddWithValue("@id_pais", estado.IdPais);
+                        cmd.Parameters.AddWithValue("@status", estado.Status);
+
                         cmd.ExecuteNonQuery();
                     }
                 }
@@ -74,7 +77,7 @@ namespace Projeto.DAO
             {
                 conn.Open();
                 string query = @"
-            SELECT e.id, e.nome AS estado_nome, e.id_pais, p.nome AS pais_nome 
+            SELECT e.id, e.nome AS estado_nome, e.id_pais, e.status, p.nome AS pais_nome 
             FROM estados e
             JOIN paises p ON e.id_pais = p.id
             ORDER BY e.nome";
@@ -90,7 +93,8 @@ namespace Projeto.DAO
                                 Id = reader.GetInt32("id"),
                                 Nome = reader.GetString("estado_nome"),
                                 IdPais = reader.GetInt32("id_pais"),
-                                PaisNome = reader.GetString("pais_nome") 
+                                PaisNome = reader.GetString("pais_nome"),
+                                Status = reader.GetBoolean("status"),
                             });
                         }
                     }

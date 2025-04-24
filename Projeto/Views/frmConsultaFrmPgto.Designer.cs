@@ -31,13 +31,16 @@
             this.ID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Descricao = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnSelecionar = new System.Windows.Forms.Button();
+            this.Status = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // listView1
             // 
             this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.ID,
-            this.Descricao});
+            this.Descricao,
+            this.Status});
+            this.listView1.Size = new System.Drawing.Size(715, 271);
             // 
             // btnDeletar
             // 
@@ -74,15 +77,20 @@
             this.btnSelecionar.UseVisualStyleBackColor = true;
             this.btnSelecionar.Click += new System.EventHandler(this.btnSelecionar_Click);
             // 
+            // Status
+            // 
+            this.Status.Text = "Status";
+            // 
             // frmConsultaFrmPgto
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1342, 721);
             this.Controls.Add(this.btnSelecionar);
             this.Name = "frmConsultaFrmPgto";
+            this.Text = "Consulta Formas de Pagamento";
             this.Load += new System.EventHandler(this.frmConsultaFrmPgto_Load);
             this.Controls.SetChildIndex(this.listView1, 0);
-            this.Controls.SetChildIndex(this.textBox1, 0);
+            this.Controls.SetChildIndex(this.txtPesquisar, 0);
             this.Controls.SetChildIndex(this.btnSair, 0);
             this.Controls.SetChildIndex(this.btnPesquisar, 0);
             this.Controls.SetChildIndex(this.btnDeletar, 0);
@@ -99,5 +107,6 @@
         private System.Windows.Forms.ColumnHeader ID;
         private System.Windows.Forms.ColumnHeader Descricao;
         private System.Windows.Forms.Button btnSelecionar;
+        private System.Windows.Forms.ColumnHeader Status;
     }
 }

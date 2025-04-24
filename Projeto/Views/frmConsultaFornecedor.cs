@@ -49,6 +49,7 @@ namespace Projeto.Views
                     item.SubItems.Add(fornecedor.InscricaoEstadualSubTrib);
                     item.SubItems.Add(fornecedor.NomeCidade);
                     item.SubItems.Add(fornecedor.IdCondicao.ToString());
+                    item.SubItems.Add(fornecedor.Status ? "Ativo" : "Inativo");
                     listView1.Items.Add(item);
                 }
             }
@@ -85,9 +86,12 @@ namespace Projeto.Views
                 string nomeCidade = itemSelecionado.SubItems[13].Text;
                 string idCondicaoStr = itemSelecionado.SubItems[14].Text;
                 int idCondicao = string.IsNullOrWhiteSpace(idCondicaoStr) ? 0 : int.Parse(idCondicaoStr);
+                bool status = itemSelecionado.SubItems[15].Text == "Ativo";
+
 
                 var formCadastro = new frmCadastroFornecedor();
-                formCadastro.CarregarFornecedor(id, nome, cpf_cnpj, telefone, email, endereco, numEndereco, bairro, complemento, cep, insEst, insEstSubTrib, tipo, nomeCidade, idCondicao);
+                formCadastro.modoEdicao = true;
+                formCadastro.CarregarFornecedor(id, nome, cpf_cnpj, telefone, email, endereco, numEndereco, bairro, complemento, cep, insEst, insEstSubTrib, tipo, nomeCidade, idCondicao, status);
 
                 formCadastro.FormClosed += (s, args) => CarregarFornecedores();
                 formCadastro.ShowDialog();

@@ -20,11 +20,12 @@ namespace Projeto.Views
             txtCodigo.Enabled = false;
         }
 
-        public void CarregarCidade(int id, string nome, string nomeEstado)
+        public void CarregarCidade(int id, string nome, string nomeEstado, bool status)
         {
             txtCodigo.Text = id.ToString();
             txtNome.Text = nome;
             cbEstado.Text = nomeEstado;
+            chkInativo.Checked = !status;
         }
 
         private void CarregarEstados()
@@ -60,13 +61,15 @@ namespace Projeto.Views
             {
                 Id = string.IsNullOrWhiteSpace(txtCodigo.Text) ? 0 : Convert.ToInt32(txtCodigo.Text), 
                 Nome = txtNome.Text,
-                IdEstado = Convert.ToInt32(cbEstado.SelectedValue)
+                IdEstado = Convert.ToInt32(cbEstado.SelectedValue),
+                Status = !chkInativo.Checked,
             };
 
             try
             {
                 controller.Salvar(cidade);
                 MessageBox.Show("Cidade salva com sucesso!");
+                this.Close();
             }
             catch (Exception ex)
             {

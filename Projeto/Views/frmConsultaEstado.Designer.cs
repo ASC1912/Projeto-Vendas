@@ -31,6 +31,8 @@
             this.ID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Nome = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Pais = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Status = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.btnSelecionar = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // listView1
@@ -38,7 +40,9 @@
             this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.ID,
             this.Nome,
-            this.Pais});
+            this.Pais,
+            this.Status});
+            this.listView1.Size = new System.Drawing.Size(715, 271);
             // 
             // btnDeletar
             // 
@@ -68,11 +72,36 @@
             // 
             this.Pais.Text = "País";
             // 
+            // Status
+            // 
+            this.Status.Text = "Status";
+            // 
+            // btnSelecionar
+            // 
+            this.btnSelecionar.Location = new System.Drawing.Point(304, 415);
+            this.btnSelecionar.Name = "btnSelecionar";
+            this.btnSelecionar.Size = new System.Drawing.Size(90, 23);
+            this.btnSelecionar.TabIndex = 8;
+            this.btnSelecionar.Text = "Selecionar";
+            this.btnSelecionar.UseVisualStyleBackColor = true;
+            this.btnSelecionar.Click += new System.EventHandler(this.btnSelecionar_Click);
+            // 
             // frmConsultaEstado
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1342, 721);
+            this.Controls.Add(this.btnSelecionar);
             this.Name = "frmConsultaEstado";
+            this.Text = "Consulta Estados";
+            this.Load += new System.EventHandler(this.frmConsultaEstado_Load);
+            this.Controls.SetChildIndex(this.listView1, 0);
+            this.Controls.SetChildIndex(this.txtPesquisar, 0);
+            this.Controls.SetChildIndex(this.btnSair, 0);
+            this.Controls.SetChildIndex(this.btnPesquisar, 0);
+            this.Controls.SetChildIndex(this.btnDeletar, 0);
+            this.Controls.SetChildIndex(this.btnEditar, 0);
+            this.Controls.SetChildIndex(this.btnIncluir, 0);
+            this.Controls.SetChildIndex(this.btnSelecionar, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -83,5 +112,7 @@
         private System.Windows.Forms.ColumnHeader ID;
         private System.Windows.Forms.ColumnHeader Nome;
         private System.Windows.Forms.ColumnHeader Pais;
+        private System.Windows.Forms.ColumnHeader Status;
+        private System.Windows.Forms.Button btnSelecionar;
     }
 }
