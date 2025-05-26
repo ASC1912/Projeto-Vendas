@@ -140,6 +140,7 @@ namespace Projeto.Views
                         cliente.CEP,
                         cliente.Tipo,
                         cidade?.Nome ?? "Não encontrado",
+                        cliente.IdCidade ?? 0,
                         cliente.IdCondicao ?? 0,
                         cliente.Status,
                         cliente.Rg,

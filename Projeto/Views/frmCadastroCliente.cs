@@ -29,8 +29,9 @@ namespace Projeto.Views
         }
 
         public void CarregarCliente(int id, string nome, string cpf_cnpj, string telefone, string email, string endereco,
-                                    int numeroEndereco, string bairro, string complemento, string cep, string tipo, string nomeCidade,
-                                    int idCondicao, bool status, string rg, DateTime? dataCriacao, DateTime? dataModificacao)
+                     int numeroEndereco, string bairro, string complemento, string cep, string tipo,
+                     string nomeCidade, int idCidade, int idCondicao, bool status, string rg,
+                     DateTime? dataCriacao, DateTime? dataModificacao)
         {
             txtCodigo.Text = id.ToString();
             txtNome.Text = nome;
@@ -44,13 +45,21 @@ namespace Projeto.Views
             txtCEP.Text = cep;
             cbTipo.Text = tipo;
             txtCidade.Text = nomeCidade;
+            cidadeSelecionadoId = idCidade;
             txtCondicao.Text = idCondicao.ToString();
+            condicaoSelecionadoId = idCondicao;
             chkInativo.Checked = !status;
             txtRG.Text = rg;
 
-            lblDataCriacao.Text = dataCriacao.HasValue ? $"Criado em: {dataCriacao.Value:dd/MM/yyyy HH:mm}" : "";
-            lblDataModificacao.Text = dataModificacao.HasValue ? $"Modificado em: {dataModificacao.Value:dd/MM/yyyy HH:mm}" : "";
+            lblDataCriacao.Text = dataCriacao.HasValue
+                ? $"Criado em: {dataCriacao:dd/MM/yyyy HH:mm}"
+                : "Criado em: -";
+
+            lblDataModificacao.Text = dataModificacao.HasValue
+                ? $"Modificado em: {dataModificacao:dd/MM/yyyy HH:mm}"
+                : "Modificado em: -";
         }
+
 
 
 
