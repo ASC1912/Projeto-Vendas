@@ -16,6 +16,10 @@ namespace Projeto.Controller
         {
             dao.Salvar(pais);
         }
+        public Pais BuscarPorId(int id)
+        {
+            return dao.BuscarPorId(id);
+        }
 
         public List<Pais> ListarPais()
         {

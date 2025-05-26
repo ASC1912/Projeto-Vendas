@@ -29,34 +29,39 @@
         private void InitializeComponent()
         {
             this.lblEstado = new System.Windows.Forms.Label();
-            this.cbEstado = new System.Windows.Forms.ComboBox();
             this.lblNome = new System.Windows.Forms.Label();
             this.txtNome = new System.Windows.Forms.TextBox();
             this.btnSalvar = new System.Windows.Forms.Button();
             this.lblCodigo = new System.Windows.Forms.Label();
+            this.btnBuscar = new System.Windows.Forms.Button();
+            this.txtEstado = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
+            // 
+            // btnSair
+            // 
+            this.btnSair.Location = new System.Drawing.Point(1233, 674);
+            // 
+            // lblDataCriacao
+            // 
+            this.lblDataCriacao.Location = new System.Drawing.Point(12, 642);
+            // 
+            // lblDataModificacao
+            // 
+            this.lblDataModificacao.Location = new System.Drawing.Point(12, 678);
             // 
             // lblEstado
             // 
             this.lblEstado.AutoSize = true;
-            this.lblEstado.Location = new System.Drawing.Point(15, 164);
+            this.lblEstado.Location = new System.Drawing.Point(9, 207);
             this.lblEstado.Name = "lblEstado";
             this.lblEstado.Size = new System.Drawing.Size(50, 16);
             this.lblEstado.TabIndex = 21;
             this.lblEstado.Text = "Estado";
             // 
-            // cbEstado
-            // 
-            this.cbEstado.FormattingEnabled = true;
-            this.cbEstado.Location = new System.Drawing.Point(18, 183);
-            this.cbEstado.Name = "cbEstado";
-            this.cbEstado.Size = new System.Drawing.Size(121, 24);
-            this.cbEstado.TabIndex = 20;
-            // 
             // lblNome
             // 
             this.lblNome.AutoSize = true;
-            this.lblNome.Location = new System.Drawing.Point(12, 91);
+            this.lblNome.Location = new System.Drawing.Point(9, 101);
             this.lblNome.Name = "lblNome";
             this.lblNome.Size = new System.Drawing.Size(44, 16);
             this.lblNome.TabIndex = 19;
@@ -64,14 +69,14 @@
             // 
             // txtNome
             // 
-            this.txtNome.Location = new System.Drawing.Point(15, 110);
+            this.txtNome.Location = new System.Drawing.Point(12, 120);
             this.txtNome.Name = "txtNome";
             this.txtNome.Size = new System.Drawing.Size(100, 22);
             this.txtNome.TabIndex = 18;
             // 
             // btnSalvar
             // 
-            this.btnSalvar.Location = new System.Drawing.Point(611, 389);
+            this.btnSalvar.Location = new System.Drawing.Point(1136, 674);
             this.btnSalvar.Name = "btnSalvar";
             this.btnSalvar.Size = new System.Drawing.Size(80, 35);
             this.btnSalvar.TabIndex = 17;
@@ -88,29 +93,50 @@
             this.lblCodigo.TabIndex = 22;
             this.lblCodigo.Text = "Código";
             // 
+            // btnBuscar
+            // 
+            this.btnBuscar.Location = new System.Drawing.Point(186, 225);
+            this.btnBuscar.Name = "btnBuscar";
+            this.btnBuscar.Size = new System.Drawing.Size(150, 23);
+            this.btnBuscar.TabIndex = 66;
+            this.btnBuscar.Text = "Buscar Estado";
+            this.btnBuscar.UseVisualStyleBackColor = true;
+            this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
+            // 
+            // txtEstado
+            // 
+            this.txtEstado.Location = new System.Drawing.Point(12, 226);
+            this.txtEstado.Name = "txtEstado";
+            this.txtEstado.ReadOnly = true;
+            this.txtEstado.Size = new System.Drawing.Size(100, 22);
+            this.txtEstado.TabIndex = 67;
+            // 
             // frmCadastroCidade
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.ClientSize = new System.Drawing.Size(1342, 742);
+            this.Controls.Add(this.txtEstado);
+            this.Controls.Add(this.btnBuscar);
             this.Controls.Add(this.lblCodigo);
             this.Controls.Add(this.lblEstado);
-            this.Controls.Add(this.cbEstado);
             this.Controls.Add(this.lblNome);
             this.Controls.Add(this.txtNome);
             this.Controls.Add(this.btnSalvar);
             this.Name = "frmCadastroCidade";
             this.Text = "Cadastro Cidades";
             this.Load += new System.EventHandler(this.frmCadastroCidade_Load);
+            this.Controls.SetChildIndex(this.lblDataModificacao, 0);
             this.Controls.SetChildIndex(this.chkInativo, 0);
-            this.Controls.SetChildIndex(this.lblUltimaEdicao, 0);
+            this.Controls.SetChildIndex(this.lblDataCriacao, 0);
             this.Controls.SetChildIndex(this.btnSair, 0);
             this.Controls.SetChildIndex(this.txtCodigo, 0);
             this.Controls.SetChildIndex(this.btnSalvar, 0);
             this.Controls.SetChildIndex(this.txtNome, 0);
             this.Controls.SetChildIndex(this.lblNome, 0);
-            this.Controls.SetChildIndex(this.cbEstado, 0);
             this.Controls.SetChildIndex(this.lblEstado, 0);
             this.Controls.SetChildIndex(this.lblCodigo, 0);
+            this.Controls.SetChildIndex(this.btnBuscar, 0);
+            this.Controls.SetChildIndex(this.txtEstado, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -119,10 +145,11 @@
         #endregion
 
         private System.Windows.Forms.Label lblEstado;
-        private System.Windows.Forms.ComboBox cbEstado;
         private System.Windows.Forms.Label lblNome;
         private System.Windows.Forms.TextBox txtNome;
         private System.Windows.Forms.Button btnSalvar;
         private System.Windows.Forms.Label lblCodigo;
+        private System.Windows.Forms.Button btnBuscar;
+        private System.Windows.Forms.TextBox txtEstado;
     }
 }

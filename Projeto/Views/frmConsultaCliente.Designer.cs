@@ -42,6 +42,7 @@
             this.Complemento = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.IDCondPgto = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Status = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Rg = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // listView1
@@ -60,7 +61,8 @@
             this.Tipo,
             this.IDCidade,
             this.IDCondPgto,
-            this.Status});
+            this.Status,
+            this.Rg});
             this.listView1.Size = new System.Drawing.Size(1027, 391);
             // 
             // btnDeletar
@@ -142,6 +144,10 @@
             // 
             this.Status.Text = "Status";
             // 
+            // Rg
+            // 
+            this.Rg.Text = "RG";
+            // 
             // frmConsultaCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -169,5 +175,6 @@
         private System.Windows.Forms.ColumnHeader Complemento;
         private System.Windows.Forms.ColumnHeader IDCondPgto;
         private System.Windows.Forms.ColumnHeader Status;
+        private System.Windows.Forms.ColumnHeader Rg;
     }
 }

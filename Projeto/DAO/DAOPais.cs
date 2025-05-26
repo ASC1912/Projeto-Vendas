@@ -23,22 +23,33 @@ namespace Projeto.DAO
 
                     if (pais.Id > 0)
                     {
-                        query = "UPDATE paises SET nome = @nome, status = @status WHERE id = @id";
+                        query = @"UPDATE paises 
+                          SET nome = @nome, 
+                              status = @status,
+                              data_modificacao = @data_modificacao 
+                          WHERE id = @id";
                     }
                     else
                     {
-                        query = "INSERT INTO paises (nome, status) VALUES (@nome, @status)";
+                        query = @"INSERT INTO paises 
+                          (nome, status, data_criacao, data_modificacao) 
+                          VALUES (@nome, @status, @data_criacao, @data_modificacao)";
                     }
 
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
+                        cmd.Parameters.AddWithValue("@nome", pais.Nome);
+                        cmd.Parameters.AddWithValue("@status", pais.Status);
+                        cmd.Parameters.AddWithValue("@data_modificacao", pais.DataModificacao);
+
                         if (pais.Id > 0)
                         {
                             cmd.Parameters.AddWithValue("@id", pais.Id);
                         }
-
-                        cmd.Parameters.AddWithValue("@nome", pais.Nome);
-                        cmd.Parameters.AddWithValue("@status", pais.Status);
+                        else
+                        {
+                            cmd.Parameters.AddWithValue("@data_criacao", pais.DataCriacao);
+                        }
 
                         cmd.ExecuteNonQuery();
                     }
@@ -49,6 +60,7 @@ namespace Projeto.DAO
                 throw new Exception("Erro ao salvar país: " + ex.Message);
             }
         }
+
 
         public void Excluir(int id)
         {
@@ -65,7 +77,36 @@ namespace Projeto.DAO
             }
         }
 
-        
+        public Pais BuscarPorId(int id)
+        {
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = "SELECT id, nome, status, data_criacao, data_modificacao FROM paises WHERE id = @id";
+
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            return new Pais
+                            {
+                                Id = reader.GetInt32("id"),
+                                Nome = reader.GetString("nome"),
+                                Status = reader.GetBoolean("status"),
+                                DataCriacao = reader.GetDateTime("data_criacao"),
+                                DataModificacao = reader.GetDateTime("data_modificacao")
+                            };
+                        }
+                    }
+                }
+            }
+            return null;
+        }
+
 
         public List<Pais> ListarPais()
         {
@@ -74,7 +115,7 @@ namespace Projeto.DAO
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
-                string query = "SELECT id, nome, status FROM paises ORDER BY id";
+                string query = "SELECT id, nome, status, data_criacao, data_modificacao FROM paises ORDER BY id";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
@@ -87,6 +128,9 @@ namespace Projeto.DAO
                                 Id = reader.GetInt32("id"),
                                 Nome = reader.GetString("nome"),
                                 Status = reader.GetBoolean("status"),
+                                DataCriacao = reader.IsDBNull(reader.GetOrdinal("data_criacao")) ? (DateTime?)null : reader.GetDateTime("data_criacao"),
+                                DataModificacao = reader.IsDBNull(reader.GetOrdinal("data_modificacao")) ? (DateTime?)null : reader.GetDateTime("data_modificacao"),
+
                             });
                         }
                     }

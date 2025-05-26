@@ -16,7 +16,10 @@ namespace Projeto.Controller
         {
             dao.Salvar(cidade);
         }
-
+        public Cidade BuscarPorId(int id)
+        {
+            return dao.BuscarPorId(id);
+        }
         public List<Cidade> ListarCidade()
         {
             return dao.ListarCidade();

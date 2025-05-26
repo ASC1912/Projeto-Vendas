@@ -45,6 +45,7 @@
             this.DataAdmissao = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.DataDemissao = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Status = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Rg = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // listView1
@@ -66,7 +67,8 @@
             this.IDCidade,
             this.DataAdmissao,
             this.DataDemissao,
-            this.Status});
+            this.Status,
+            this.Rg});
             this.listView1.Location = new System.Drawing.Point(23, 109);
             this.listView1.Size = new System.Drawing.Size(1307, 352);
             // 
@@ -174,6 +176,10 @@
             // 
             this.Status.Text = "Status";
             // 
+            // Rg
+            // 
+            this.Rg.Text = "RG";
+            // 
             // frmConsultaFuncionario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -204,5 +210,6 @@
         private System.Windows.Forms.ColumnHeader DataAdmissao;
         private System.Windows.Forms.ColumnHeader DataDemissao;
         private System.Windows.Forms.ColumnHeader Status;
+        private System.Windows.Forms.ColumnHeader Rg;
     }
 }

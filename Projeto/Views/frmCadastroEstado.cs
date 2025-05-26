@@ -15,6 +15,8 @@ namespace Projeto.Views
         private PaisController paisController = new PaisController();
         private EstadoController controller = new EstadoController();
         private int paisSelecionadoId = -1;
+        public bool modoEdicao = false;
+
 
         public frmCadastroEstado()
         {
@@ -22,53 +24,63 @@ namespace Projeto.Views
             txtCodigo.Enabled = false;
         }
 
-        public void CarregarEstado(int id, string nome, string nomePais, bool status)
+        public void CarregarEstado(int id, string nome, string nomePais, bool status, DateTime? dataCriacao, DateTime? dataModificacao)
         {
-            txtCodigo.Text = id.ToString();
-            txtNome.Text = nome;
-            cbPais.Text = nomePais;
-            chkInativo.Checked = !status;
+           modoEdicao = true;
+
+           txtCodigo.Text = id.ToString();
+           txtNome.Text = nome;
+           txtPais.Text = nomePais;
+           chkInativo.Checked = !status;
+
+
+            lblDataCriacao.Text = dataCriacao.HasValue
+                ? $"Criado em: {dataCriacao.Value:dd/MM/yyyy HH:mm}"
+                : "Criado em: -";
+
+            lblDataModificacao.Text = dataModificacao.HasValue
+                ? $"Modificado em: {dataModificacao.Value:dd/MM/yyyy HH:mm}"
+                : "Modificado em: -";
         }
 
-
-        private void CarregarPaises()
-        {
-            try
-            {
-                List<Pais> listaPaises = paisController.ListarPais();
-
-                cbPais.DisplayMember = "Nome";
-                cbPais.ValueMember = "Id";
-                cbPais.DataSource = listaPaises;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Erro ao carregar países: " + ex.Message);
-            }
-        }
         private void frmCadastroEstado_Load(object sender, EventArgs e)
         {
-            CarregarPaises();
+            lblDataCriacao.Visible = modoEdicao;
+            lblDataModificacao.Visible = modoEdicao;
+
         }
 
         private void btnSalvar_Click(object sender, EventArgs e)
         {
-            if (cbPais.SelectedValue == null)
+            if (paisSelecionadoId <= 0)
             {
                 MessageBox.Show("Selecione um país!");
                 return;
             }
 
-            Estado estado = new Estado
-            {
-                Id = string.IsNullOrWhiteSpace(txtCodigo.Text) ? 0 : Convert.ToInt32(txtCodigo.Text), 
-                Nome = txtNome.Text,
-                IdPais = Convert.ToInt32(cbPais.SelectedValue),
-                Status = !chkInativo.Checked,
-            };
-
             try
             {
+                int id = string.IsNullOrWhiteSpace(txtCodigo.Text) ? 0 : Convert.ToInt32(txtCodigo.Text);
+                string nome = txtNome.Text;
+                int idPais = paisSelecionadoId;
+                bool status = !chkInativo.Checked;
+
+                DateTime dataCriacao = id == 0
+                    ? DateTime.Now
+                    : DateTime.Parse(lblDataCriacao.Text.Replace("Criado em: ", ""));
+
+                DateTime dataModificacao = DateTime.Now;
+
+                Estado estado = new Estado
+                {
+                    Id = id,
+                    Nome = nome,
+                    IdPais = idPais,
+                    Status = status,
+                    DataCriacao = dataCriacao,
+                    DataModificacao = dataModificacao
+                };
+
                 controller.Salvar(estado);
                 MessageBox.Show("Estado salvo com sucesso!");
                 this.Close();
@@ -79,6 +91,8 @@ namespace Projeto.Views
             }
         }
 
+
+
         private void btnBuscar_Click(object sender, EventArgs e)
         {
             frmConsultaPais consultaPais = new frmConsultaPais();
@@ -88,7 +102,7 @@ namespace Projeto.Views
 
             if (resultado == DialogResult.OK && consultaPais.PaisSelecionado != null)
             {
-                cbPais.Text = consultaPais.PaisSelecionado.Nome;
+                txtPais.Text = consultaPais.PaisSelecionado.Nome;
                 paisSelecionadoId = consultaPais.PaisSelecionado.Id;
             }
         }

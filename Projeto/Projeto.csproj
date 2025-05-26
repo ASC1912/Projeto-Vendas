@@ -126,6 +126,7 @@
     <Compile Include="Models\Pais.cs" />
     <Compile Include="Models\Parcelamento.cs" />
     <Compile Include="Models\Pessoa.cs" />
+    <Compile Include="Utils\Validador.cs" />
     <Compile Include="Views\FormPrincipal.cs">
       <SubType>Form</SubType>
     </Compile>

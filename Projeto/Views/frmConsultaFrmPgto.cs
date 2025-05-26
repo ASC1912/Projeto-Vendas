@@ -17,7 +17,6 @@ namespace Projeto
         public bool ModoSelecao { get; set; } = false;
         internal FormaPagamento FormaSelecionada { get; private set; }
 
-
         public frmConsultaFrmPgto()
         {
             InitializeComponent();
@@ -28,6 +27,7 @@ namespace Projeto
         {
             btnSelecionar.Visible = ModoSelecao;
         }
+
         private void CarregarFormasPagamento()
         {
             try
@@ -39,6 +39,7 @@ namespace Projeto
                 {
                     ListViewItem item = new ListViewItem(forma.Id.ToString());
                     item.SubItems.Add(forma.Descricao);
+                    item.SubItems.Add(forma.Status ? "Ativo" : "Inativo");
                     listView1.Items.Add(item);
                 }
             }
@@ -53,7 +54,6 @@ namespace Projeto
             try
             {
                 listView1.Items.Clear();
-
                 string texto = txtPesquisar.Text.Trim();
 
                 if (string.IsNullOrEmpty(texto))
@@ -68,6 +68,7 @@ namespace Projeto
                     {
                         ListViewItem item = new ListViewItem(forma.Id.ToString());
                         item.SubItems.Add(forma.Descricao);
+                        item.SubItems.Add(forma.Status ? "Ativo" : "Inativo");
                         listView1.Items.Add(item);
                     }
                     else
@@ -90,6 +91,7 @@ namespace Projeto
         {
             frmCadastroFrmPgto formCadastroPagamento = new frmCadastroFrmPgto();
             formCadastroPagamento.ShowDialog();
+            CarregarFormasPagamento();
         }
 
         private void btnEditar_Click(object sender, EventArgs e)
@@ -98,13 +100,27 @@ namespace Projeto
             {
                 var itemSelecionado = listView1.SelectedItems[0];
                 int id = int.Parse(itemSelecionado.SubItems[0].Text);
-                string descricao = itemSelecionado.SubItems[1].Text;
 
-                var formCadastro = new frmCadastroFrmPgto();
-                formCadastro.CarregarFormaPagamento(id, descricao);
+                FormaPagamento forma = controller.BuscarPorId(id);
 
-                formCadastro.FormClosed += (s, args) => CarregarFormasPagamento();
-                formCadastro.ShowDialog();
+                if (forma != null)
+                {
+                    var formCadastro = new frmCadastroFrmPgto();
+                    formCadastro.CarregarFormaPagamento(
+                        forma.Id,
+                        forma.Descricao,
+                        forma.Status,
+                        forma.DataCriacao,
+                        forma.DataModificacao
+                    );
+
+                    formCadastro.FormClosed += (s, args) => CarregarFormasPagamento();
+                    formCadastro.ShowDialog();
+                }
+                else
+                {
+                    MessageBox.Show("Forma de pagamento não encontrada.");
+                }
             }
             else
             {
@@ -146,16 +162,18 @@ namespace Projeto
             {
                 var itemSelecionado = listView1.SelectedItems[0];
                 int id = int.Parse(itemSelecionado.SubItems[0].Text);
-                string descricao = itemSelecionado.SubItems[1].Text;
 
-                FormaSelecionada = new FormaPagamento
+                FormaSelecionada = controller.BuscarPorId(id);
+
+                if (FormaSelecionada != null)
                 {
-                    Id = id,
-                    Descricao = descricao
-                };
-
-                this.DialogResult = DialogResult.OK;
-                this.Close();
+                    this.DialogResult = DialogResult.OK;
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Erro ao carregar os dados da forma de pagamento.");
+                }
             }
             else
             {

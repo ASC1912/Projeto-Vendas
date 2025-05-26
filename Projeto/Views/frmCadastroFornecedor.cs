@@ -18,6 +18,10 @@ namespace Projeto.Views
         private CondicaoPagamentoController condicaoPagamentoController = new CondicaoPagamentoController();
         private FornecedorController controller = new FornecedorController();
         public bool modoEdicao = false;
+        private int cidadeSelecionadoId = -1;
+        private int condicaoSelecionadoId = -1;
+
+
 
         public frmCadastroFornecedor()
         {
@@ -26,7 +30,10 @@ namespace Projeto.Views
             cbTipo.SelectedIndex = 0;
         }
 
-        public void CarregarFornecedor(int id, string nome, string cpf_cnpj, string telefone, string email, string endereco, int numEndereco, string bairro, string complemento, string cep, string inscEst, string inscEstSubTrib, string tipo, string nomeCidade, int idCondicao, bool status)
+        public void CarregarFornecedor(int id, string nome, string cpf_cnpj, string telefone, string email, string endereco,
+                                int numEndereco, string bairro, string complemento, string cep, string inscEst,
+                                string inscEstSubTrib, string tipo, string nomeCidade, int idCidade, int idCondicao,
+                                bool status, DateTime? dataCriacao, DateTime? dataModificacao)
         {
             txtCodigo.Text = id.ToString();
             txtNome.Text = nome;
@@ -41,76 +48,65 @@ namespace Projeto.Views
             txtInscEst.Text = inscEst;
             txtInscEstSubTrib.Text = inscEstSubTrib;
             cbTipo.Text = tipo;
-            cbCidade.Text = nomeCidade;
-            cbCondPgto.Text = idCondicao.ToString();
+            txtCidade.Text = nomeCidade;
+            cidadeSelecionadoId = idCidade;
+            txtCondicao.Text = idCondicao.ToString();
+            condicaoSelecionadoId = idCondicao;
             chkInativo.Checked = !status;
+
+            lblDataCriacao.Text = dataCriacao.HasValue
+                ? $"Criado em: {dataCriacao:dd/MM/yyyy HH:mm}"
+                : "Criado em: -";
+
+            lblDataModificacao.Text = dataModificacao.HasValue
+                ? $"Modificado em: {dataModificacao:dd/MM/yyyy HH:mm}"
+                : "Modificado em: -";
         }
 
-        private void CarregarCidades()
-        {
-            try
-            {
-                List<Cidade> listaCidades = cidadeController.ListarCidade();
 
-                cbCidade.DisplayMember = "Nome";
-                cbCidade.ValueMember = "Id";
-                cbCidade.DataSource = listaCidades;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Erro ao carregar Cidades: " + ex.Message);
-            }
-        }
-
-        private void CarregarCondicoesPagamento()
-        {
-            try
-            {
-                List<CondicaoPagamento> listaCondicoes = condicaoPagamentoController.ListarCondicaoPagamento();
-
-                cbCondPgto.DisplayMember = "Id";
-                cbCondPgto.ValueMember = "Id";
-                cbCondPgto.DataSource = listaCondicoes;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Erro ao carregar condições de pagamento: " + ex.Message);
-            }
-        }
 
 
         private void btnSalvar_Click(object sender, EventArgs e)
         {
-            if (cbCidade.SelectedValue == null)
+            if (cidadeSelecionadoId <= 0)
             {
-                MessageBox.Show("Selecione uma cidade!");
+                MessageBox.Show("Selecione uma cidade antes de salvar!");
                 return;
             }
 
-            Fornecedor fornecedor = new Fornecedor
-            {
-                Id = string.IsNullOrWhiteSpace(txtCodigo.Text) ? 0 : Convert.ToInt32(txtCodigo.Text),
-                Nome = txtNome.Text,
-                CPF_CNPJ = txtCPF.Text,
-                Email = txtEmail.Text,
-                Endereco = txtEndereco.Text,
-                NumeroEndereco = string.IsNullOrWhiteSpace(txtNumEnd.Text) ? 0 : Convert.ToInt32(txtNumEnd.Text),
-                Bairro = txtBairro.Text,
-                Complemento = txtComplemento.Text,
-                Telefone = txtTelefone.Text,
-                Tipo = cbTipo.Text,
-                CEP = txtCEP.Text,
-                InscricaoEstadual = txtInscEst.Text,
-                InscricaoEstadualSubTrib = txtInscEstSubTrib.Text,
-                IdCidade = Convert.ToInt32(cbCidade.SelectedValue),
-                IdCondicao = Convert.ToInt32(cbCondPgto.SelectedValue),
-                Status = !chkInativo.Checked,
-            };
-
             try
             {
+                int id = string.IsNullOrWhiteSpace(txtCodigo.Text) ? 0 : Convert.ToInt32(txtCodigo.Text);
+                DateTime dataCriacao = id == 0
+                    ? DateTime.Now
+                    : DateTime.Parse(lblDataCriacao.Text.Replace("Criado em: ", ""));
+
+                DateTime dataModificacao = DateTime.Now;
+
+                Fornecedor fornecedor = new Fornecedor
+                {
+                    Id = id,
+                    Nome = txtNome.Text,
+                    CPF_CNPJ = txtCPF.Text,
+                    Email = txtEmail.Text,
+                    Endereco = txtEndereco.Text,
+                    NumeroEndereco = string.IsNullOrWhiteSpace(txtNumEnd.Text) ? 0 : Convert.ToInt32(txtNumEnd.Text),
+                    Bairro = txtBairro.Text,
+                    Complemento = txtComplemento.Text,
+                    Telefone = txtTelefone.Text,
+                    Tipo = cbTipo.Text,
+                    CEP = txtCEP.Text,
+                    InscricaoEstadual = txtInscEst.Text,
+                    InscricaoEstadualSubTrib = txtInscEstSubTrib.Text,
+                    IdCidade = cidadeSelecionadoId,
+                    IdCondicao = condicaoSelecionadoId > 0 ? (int?)condicaoSelecionadoId : null,
+                    Status = !chkInativo.Checked,
+                    DataCriacao = dataCriacao,
+                    DataModificacao = dataModificacao
+                };
+
                 controller.Salvar(fornecedor);
-                MessageBox.Show("fornecedor salvo com sucesso!");
+                MessageBox.Show("Fornecedor salvo com sucesso!");
                 this.Close();
             }
             catch (Exception ex)
@@ -119,14 +115,43 @@ namespace Projeto.Views
             }
         }
 
+
+
+
         private void frmCadastroFornecedor_Load(object sender, EventArgs e)
         {
-            CarregarCidades();
-            CarregarCondicoesPagamento();
 
             if (modoEdicao == true)
             {
                 cbTipo.Enabled = false;
+            }
+        }
+
+        private void btnBuscar_Click(object sender, EventArgs e)
+        {
+            frmConsultaCidade consultaCidade = new frmConsultaCidade();
+            consultaCidade.ModoSelecao = true;
+
+            var resultado = consultaCidade.ShowDialog();
+
+            if (resultado == DialogResult.OK && consultaCidade.CidadeSelecionado != null)
+            {
+                txtCidade.Text = consultaCidade.CidadeSelecionado.Nome;
+                cidadeSelecionadoId = consultaCidade.CidadeSelecionado.Id;
+            }
+        }
+
+        private void btnBuscarCond_Click(object sender, EventArgs e)
+        {
+            frmConsultaCondPgto consultaCondicao = new frmConsultaCondPgto();
+            consultaCondicao.ModoSelecao = true;
+
+            var resultado = consultaCondicao.ShowDialog();
+
+            if (resultado == DialogResult.OK && consultaCondicao.CondicaoSelecionado != null)
+            {
+                txtCondicao.Text = consultaCondicao.CondicaoSelecionado.Id.ToString();
+                condicaoSelecionadoId = consultaCondicao.CondicaoSelecionado.Id;
             }
         }
     }

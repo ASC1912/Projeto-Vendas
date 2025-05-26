@@ -61,8 +61,55 @@ namespace Projeto.Views
 
         private void btnPesquisar_Click(object sender, EventArgs e)
         {
-            CarregarFornecedores();
+            try
+            {
+                listView1.Items.Clear();
+                string texto = txtPesquisar.Text.Trim();
+
+                if (string.IsNullOrEmpty(texto))
+                {
+                    CarregarFornecedores();
+                }
+                else if (int.TryParse(texto, out int id))
+                {
+                    Fornecedor fornecedor = controller.BuscarPorId(id);
+
+                    if (fornecedor != null)
+                    {
+                        ListViewItem item = new ListViewItem(fornecedor.Id.ToString());
+                        item.SubItems.Add(fornecedor.Nome);
+                        item.SubItems.Add(fornecedor.CPF_CNPJ);
+                        item.SubItems.Add(fornecedor.Telefone);
+                        item.SubItems.Add(fornecedor.Email);
+                        item.SubItems.Add(fornecedor.Endereco);
+                        item.SubItems.Add(fornecedor.NumeroEndereco.ToString());
+                        item.SubItems.Add(fornecedor.Bairro);
+                        item.SubItems.Add(fornecedor.Complemento);
+                        item.SubItems.Add(fornecedor.CEP);
+                        item.SubItems.Add(fornecedor.Tipo);
+                        item.SubItems.Add(fornecedor.InscricaoEstadual);
+                        item.SubItems.Add(fornecedor.InscricaoEstadualSubTrib);
+                        item.SubItems.Add(fornecedor.NomeCidade);
+                        item.SubItems.Add(fornecedor.IdCondicao?.ToString() ?? "");
+                        item.SubItems.Add(fornecedor.Status ? "Ativo" : "Inativo");
+                        listView1.Items.Add(item);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Fornecedor não encontrado.");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Digite um ID válido (número inteiro).");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao pesquisar: " + ex.Message);
+            }
         }
+
 
         private void btnEditar_Click(object sender, EventArgs e)
         {
@@ -70,37 +117,54 @@ namespace Projeto.Views
             {
                 var itemSelecionado = listView1.SelectedItems[0];
                 int id = int.Parse(itemSelecionado.SubItems[0].Text);
-                string nome = itemSelecionado.SubItems[1].Text;
-                string cpf_cnpj = itemSelecionado.SubItems[2].Text;
-                string telefone = itemSelecionado.SubItems[3].Text;
-                string email = itemSelecionado.SubItems[4].Text;
-                string endereco = itemSelecionado.SubItems[5].Text;
-                string numEnderecoStr = itemSelecionado.SubItems[6].Text;
-                int numEndereco = string.IsNullOrWhiteSpace(numEnderecoStr) ? 0 : int.Parse(numEnderecoStr);
-                string bairro = itemSelecionado.SubItems[7].Text;
-                string complemento = itemSelecionado.SubItems[8].Text;
-                string cep = itemSelecionado.SubItems[9].Text;
-                string tipo = itemSelecionado.SubItems[10].Text;
-                string insEst = itemSelecionado.SubItems[11].Text;
-                string insEstSubTrib = itemSelecionado.SubItems[12].Text;
-                string nomeCidade = itemSelecionado.SubItems[13].Text;
-                string idCondicaoStr = itemSelecionado.SubItems[14].Text;
-                int idCondicao = string.IsNullOrWhiteSpace(idCondicaoStr) ? 0 : int.Parse(idCondicaoStr);
-                bool status = itemSelecionado.SubItems[15].Text == "Ativo";
 
+                Fornecedor fornecedor = controller.BuscarPorId(id);
 
-                var formCadastro = new frmCadastroFornecedor();
-                formCadastro.modoEdicao = true;
-                formCadastro.CarregarFornecedor(id, nome, cpf_cnpj, telefone, email, endereco, numEndereco, bairro, complemento, cep, insEst, insEstSubTrib, tipo, nomeCidade, idCondicao, status);
+                if (fornecedor != null)
+                {
+                    Cidade cidade = fornecedor.IdCidade.HasValue
+                        ? new CidadeController().BuscarPorId(fornecedor.IdCidade.Value)
+                        : null;
 
-                formCadastro.FormClosed += (s, args) => CarregarFornecedores();
-                formCadastro.ShowDialog();
+                    var formCadastro = new frmCadastroFornecedor();
+                    formCadastro.modoEdicao = true;
+                    formCadastro.CarregarFornecedor(
+                        fornecedor.Id,
+                        fornecedor.Nome,
+                        fornecedor.CPF_CNPJ,
+                        fornecedor.Telefone,
+                        fornecedor.Email,
+                        fornecedor.Endereco,
+                        fornecedor.NumeroEndereco ?? 0,
+                        fornecedor.Bairro,
+                        fornecedor.Complemento,
+                        fornecedor.CEP,
+                        fornecedor.InscricaoEstadual,
+                        fornecedor.InscricaoEstadualSubTrib,
+                        fornecedor.Tipo,
+                        cidade?.Nome ?? "Não encontrado",
+                        fornecedor.IdCidade ?? 0,
+                        fornecedor.IdCondicao ?? 0,
+                        fornecedor.Status,
+                        fornecedor.DataCriacao,
+                        fornecedor.DataModificacao
+                    );
+
+                    formCadastro.FormClosed += (s, args) => CarregarFornecedores();
+                    formCadastro.ShowDialog();
+                }
+                else
+                {
+                    MessageBox.Show("Fornecedor não encontrado.");
+                }
             }
             else
             {
-                MessageBox.Show("Por favor, selecione um item para editar.");
+                MessageBox.Show("Por favor, selecione um fornecedor para editar.");
             }
         }
+
+
 
         private void btnDeletar_Click(object sender, EventArgs e)
         {

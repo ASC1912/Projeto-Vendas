@@ -16,12 +16,14 @@ namespace Projeto.Controller
         {
             dao.Salvar(cliente);
         }
-
+        public Cliente BuscarPorId(int id)
+        {
+            return dao.BuscarPorId(id);
+        }
         public List<Cliente> ListarCliente()
         {
             return dao.ListarClientes();
         }
-
         public void Excluir(int id)
         {
             dao.Excluir(id);

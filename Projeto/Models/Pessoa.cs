@@ -22,6 +22,9 @@ namespace Projeto.Models
         public int? IdCidade { get; set; }   
         public string NomeCidade { get; set; }
         public bool Status { get; set; }
+        public DateTime? DataCriacao { get; set; }
+        public DateTime? DataModificacao { get; set; }
+
 
     }
 }

@@ -57,7 +57,40 @@ namespace Projeto.Views
 
         private void btnPesquisar_Click(object sender, EventArgs e)
         {
-            CarregarPaises();
+            try
+            {
+                listView1.Items.Clear();
+                string texto = txtPesquisar.Text.Trim();
+
+                if (string.IsNullOrEmpty(texto))
+                {
+                    CarregarPaises(); 
+                }
+                else if (int.TryParse(texto, out int id))
+                {
+                    Pais pais = controller.BuscarPorId(id);
+
+                    if (pais != null)
+                    {
+                        ListViewItem item = new ListViewItem(pais.Id.ToString());
+                        item.SubItems.Add(pais.Nome);
+                        item.SubItems.Add(pais.Status ? "Ativo" : "Inativo");
+                        listView1.Items.Add(item);
+                    }
+                    else
+                    {
+                        MessageBox.Show("País não encontrado.");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Digite um ID válido (número inteiro).");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao pesquisar: " + ex.Message);
+            }
         }
 
         private void btnEditar_Click(object sender, EventArgs e)
@@ -66,21 +99,34 @@ namespace Projeto.Views
             {
                 var itemSelecionado = listView1.SelectedItems[0];
                 int id = int.Parse(itemSelecionado.SubItems[0].Text);
-                string nome = itemSelecionado.SubItems[1].Text;
-                bool status = itemSelecionado.SubItems[2].Text == "Ativo";
 
+                Pais pais = controller.BuscarPorId(id);
 
-                var formCadastro = new frmCadastroPais();
-                formCadastro.CarregarPais(id, nome, status);
+                if (pais != null)
+                {
+                    var formCadastro = new frmCadastroPais();
+                    formCadastro.CarregarPais(
+                        pais.Id,
+                        pais.Nome,
+                        pais.Status,
+                        pais.DataCriacao,
+                        pais.DataModificacao
+                    );
 
-                formCadastro.FormClosed += (s, args) => CarregarPaises();
-                formCadastro.ShowDialog();
+                    formCadastro.FormClosed += (s, args) => CarregarPaises();
+                    formCadastro.ShowDialog();
+                }
+                else
+                {
+                    MessageBox.Show("País não encontrado.");
+                }
             }
             else
             {
                 MessageBox.Show("Por favor, selecione um item para editar.");
             }
         }
+
 
         private void btnDeletar_Click(object sender, EventArgs e)
         {

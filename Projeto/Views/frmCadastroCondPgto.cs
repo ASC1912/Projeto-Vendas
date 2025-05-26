@@ -25,7 +25,7 @@ namespace Projeto
             txtCodigo.Enabled = false;
             txtFormaPagamento.ReadOnly = true;
         }
-        public void CarregarCondicaoPagamento(int id, string descricao, int qtdParcelas, decimal juros, decimal multa, decimal desconto)
+        public void CarregarCondicaoPagamento(int id, string descricao, int qtdParcelas, decimal juros, decimal multa, decimal desconto, bool status, DateTime? dataCriacao, DateTime? dataModificacao)
         {
             txtCodigo.Text = id.ToString();
             txtDescricao.Text = descricao;
@@ -33,9 +33,19 @@ namespace Projeto
             txtJuros.Text = juros.ToString("F2");
             txtMulta.Text = multa.ToString("F2");
             txtDesconto.Text = desconto.ToString("F2");
+            chkInativo.Checked = !status;
+
+            lblDataCriacao.Text = dataCriacao.HasValue
+                ? $"Criado em: {dataCriacao:dd/MM/yyyy HH:mm}"
+                : "Criado em: -";
+
+            lblDataModificacao.Text = dataModificacao.HasValue
+                ? $"Modificado em: {dataModificacao:dd/MM/yyyy HH:mm}"
+                : "Modificado em: -";
 
             CarregarParcelas(id);
         }
+
         private void btnSalvar_Click(object sender, EventArgs e)
         {
             AdicionarCondicaoeParcela();
@@ -85,12 +95,18 @@ namespace Projeto
                 int qtdParcelasView = listView1.Items.Count;
                 decimal juros = string.IsNullOrWhiteSpace(txtJuros.Text) ? 0 : Convert.ToDecimal(txtJuros.Text);
                 decimal multa = string.IsNullOrWhiteSpace(txtMulta.Text) ? 0 : Convert.ToDecimal(txtMulta.Text);
+                bool status = !chkInativo.Checked;
 
                 if (qtdParcelas != qtdParcelasView)
                 {
-                    MessageBox.Show("O número de parcelas não corresponde a quantidade definida");
+                    MessageBox.Show("O número de parcelas não corresponde à quantidade definida.");
                     return;
                 }
+
+                DateTime dataModificacao = DateTime.Now;
+                DateTime dataCriacao = id == 0
+                    ? DateTime.Now
+                    : DateTime.Parse(lblDataCriacao.Text.Replace("Criado em: ", ""));
 
                 CondicaoPagamento condicao = new CondicaoPagamento
                 {
@@ -99,7 +115,10 @@ namespace Projeto
                     QtdParcelas = qtdParcelas,
                     Juros = juros,
                     Multa = multa,
-                    Desconto = desconto
+                    Desconto = desconto,
+                    Status = status,
+                    DataCriacao = dataCriacao,
+                    DataModificacao = dataModificacao
                 };
 
                 List<Parcelamento> parcelas = new List<Parcelamento>();
@@ -136,6 +155,7 @@ namespace Projeto
                 MessageBox.Show("Erro: " + ex.Message);
             }
         }
+
 
 
         private void AtualizarListViewParcelas(List<Parcelamento> parcelasTemp)

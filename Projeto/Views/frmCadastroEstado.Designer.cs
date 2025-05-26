@@ -33,8 +33,8 @@
             this.btnSalvar = new System.Windows.Forms.Button();
             this.lblCodigo = new System.Windows.Forms.Label();
             this.lblPais = new System.Windows.Forms.Label();
-            this.cbPais = new System.Windows.Forms.ComboBox();
             this.btnBuscar = new System.Windows.Forms.Button();
+            this.txtPais = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // lblNome
@@ -81,14 +81,6 @@
             this.lblPais.TabIndex = 16;
             this.lblPais.Text = "País";
             // 
-            // cbPais
-            // 
-            this.cbPais.FormattingEnabled = true;
-            this.cbPais.Location = new System.Drawing.Point(15, 183);
-            this.cbPais.Name = "cbPais";
-            this.cbPais.Size = new System.Drawing.Size(121, 24);
-            this.cbPais.TabIndex = 15;
-            // 
             // btnBuscar
             // 
             this.btnBuscar.Location = new System.Drawing.Point(170, 183);
@@ -99,13 +91,21 @@
             this.btnBuscar.UseVisualStyleBackColor = true;
             this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
             // 
+            // txtPais
+            // 
+            this.txtPais.Location = new System.Drawing.Point(12, 184);
+            this.txtPais.Name = "txtPais";
+            this.txtPais.ReadOnly = true;
+            this.txtPais.Size = new System.Drawing.Size(119, 22);
+            this.txtPais.TabIndex = 66;
+            // 
             // frmCadastroEstado
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.ClientSize = new System.Drawing.Size(1342, 721);
+            this.Controls.Add(this.txtPais);
             this.Controls.Add(this.btnBuscar);
             this.Controls.Add(this.lblPais);
-            this.Controls.Add(this.cbPais);
             this.Controls.Add(this.lblCodigo);
             this.Controls.Add(this.lblNome);
             this.Controls.Add(this.txtNome);
@@ -113,17 +113,18 @@
             this.Name = "frmCadastroEstado";
             this.Text = "Cadastro Estados";
             this.Load += new System.EventHandler(this.frmCadastroEstado_Load);
+            this.Controls.SetChildIndex(this.lblDataModificacao, 0);
             this.Controls.SetChildIndex(this.chkInativo, 0);
-            this.Controls.SetChildIndex(this.lblUltimaEdicao, 0);
+            this.Controls.SetChildIndex(this.lblDataCriacao, 0);
             this.Controls.SetChildIndex(this.btnSair, 0);
             this.Controls.SetChildIndex(this.txtCodigo, 0);
             this.Controls.SetChildIndex(this.btnSalvar, 0);
             this.Controls.SetChildIndex(this.txtNome, 0);
             this.Controls.SetChildIndex(this.lblNome, 0);
             this.Controls.SetChildIndex(this.lblCodigo, 0);
-            this.Controls.SetChildIndex(this.cbPais, 0);
             this.Controls.SetChildIndex(this.lblPais, 0);
             this.Controls.SetChildIndex(this.btnBuscar, 0);
+            this.Controls.SetChildIndex(this.txtPais, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -136,7 +137,7 @@
         private System.Windows.Forms.Button btnSalvar;
         private System.Windows.Forms.Label lblCodigo;
         private System.Windows.Forms.Label lblPais;
-        private System.Windows.Forms.ComboBox cbPais;
         private System.Windows.Forms.Button btnBuscar;
+        private System.Windows.Forms.TextBox txtPais;
     }
 }

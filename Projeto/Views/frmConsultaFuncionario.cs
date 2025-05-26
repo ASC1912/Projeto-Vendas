@@ -52,6 +52,7 @@ namespace Projeto.Views
                     item.SubItems.Add(funcionario.DataAdmissao?.ToShortDateString() ?? "");
                     item.SubItems.Add(funcionario.DataDemissao?.ToShortDateString() ?? "");
                     item.SubItems.Add(funcionario.Status ? "Ativo" : "Inativo");
+                    item.SubItems.Add(funcionario.Rg);
 
                     listView1.Items.Add(item);
                 }
@@ -62,11 +63,60 @@ namespace Projeto.Views
             }
         }
 
-
         private void btnPesquisar_Click(object sender, EventArgs e)
         {
-            CarregarFuncionarios();
+            try
+            {
+                listView1.Items.Clear();
+                string texto = txtPesquisar.Text.Trim();
+
+                if (string.IsNullOrEmpty(texto))
+                {
+                    CarregarFuncionarios();
+                }
+                else if (int.TryParse(texto, out int id))
+                {
+                    Funcionario funcionario = controller.BuscarPorId(id);
+
+                    if (funcionario != null)
+                    {
+                        ListViewItem item = new ListViewItem(funcionario.Id.ToString());
+                        item.SubItems.Add(funcionario.Nome);
+                        item.SubItems.Add(funcionario.CPF_CNPJ);
+                        item.SubItems.Add(funcionario.Telefone);
+                        item.SubItems.Add(funcionario.Email);
+                        item.SubItems.Add(funcionario.Endereco);
+                        item.SubItems.Add(funcionario.NumeroEndereco?.ToString() ?? "0");
+                        item.SubItems.Add(funcionario.Bairro);
+                        item.SubItems.Add(funcionario.Complemento);
+                        item.SubItems.Add(funcionario.CEP);
+                        item.SubItems.Add(funcionario.Tipo);
+                        item.SubItems.Add(funcionario.Cargo);
+                        item.SubItems.Add(funcionario.Salario.ToString("F2"));
+                        item.SubItems.Add(funcionario.NomeCidade ?? "-");
+                        item.SubItems.Add(funcionario.DataAdmissao?.ToShortDateString() ?? "");
+                        item.SubItems.Add(funcionario.DataDemissao?.ToShortDateString() ?? "");
+                        item.SubItems.Add(funcionario.Status ? "Ativo" : "Inativo");
+                        item.SubItems.Add(funcionario.Rg ?? "");
+
+                        listView1.Items.Add(item);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Funcionário não encontrado.");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Digite um ID válido (número inteiro).");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao pesquisar: " + ex.Message);
+            }
         }
+
 
         private void btnEditar_Click(object sender, EventArgs e)
         {
@@ -74,43 +124,56 @@ namespace Projeto.Views
             {
                 var itemSelecionado = listView1.SelectedItems[0];
                 int id = int.Parse(itemSelecionado.SubItems[0].Text);
-                string nome = itemSelecionado.SubItems[1].Text;
-                string cpf_cnpj = itemSelecionado.SubItems[2].Text;
-                string telefone = itemSelecionado.SubItems[3].Text;
-                string email = itemSelecionado.SubItems[4].Text;
-                string endereco = itemSelecionado.SubItems[5].Text;
-                string numEnderecoStr = itemSelecionado.SubItems[6].Text;
-                int numEndereco = string.IsNullOrWhiteSpace(numEnderecoStr) ? 0 : int.Parse(numEnderecoStr);
-                string bairro = itemSelecionado.SubItems[7].Text;
-                string complemento = itemSelecionado.SubItems[8].Text;
-                string cep = itemSelecionado.SubItems[9].Text;
-                string tipo = itemSelecionado.SubItems[10].Text;
-                string cargo = itemSelecionado.SubItems[11].Text;
-                decimal salario = Convert.ToDecimal(itemSelecionado.SubItems[12].Text);
-                string nomeCidade = itemSelecionado.SubItems[13].Text;
 
-                DateTime dataAdmissao = DateTime.Parse(itemSelecionado.SubItems[14].Text);
-                DateTime? dataDemissao = string.IsNullOrWhiteSpace(itemSelecionado.SubItems[15].Text)
-                    ? (DateTime?)null
-                    : DateTime.Parse(itemSelecionado.SubItems[15].Text);
-                bool status = itemSelecionado.SubItems[16].Text == "Ativo";
+                Funcionario funcionario = controller.BuscarPorId(id);
 
-                var formCadastro = new frmCadastroFuncionario();
-                formCadastro.modoEdicao = true;
-                formCadastro.CarregarFuncionario(
-                    id, nome, cpf_cnpj, telefone, email, endereco, numEndereco, bairro,
-                    complemento, cep, cargo, salario, tipo, nomeCidade,
-                    status, dataAdmissao, dataDemissao
-                );
+                if (funcionario != null)
+                {
+                    Cidade cidade = funcionario.IdCidade.HasValue
+                        ? new CidadeController().BuscarPorId(funcionario.IdCidade.Value)
+                        : null;
 
-                formCadastro.FormClosed += (s, args) => CarregarFuncionarios();
-                formCadastro.ShowDialog();
+                    var formCadastro = new frmCadastroFuncionario();
+                    formCadastro.modoEdicao = true;
+                    formCadastro.CarregarFuncionario(
+                        funcionario.Id,
+                        funcionario.Nome,
+                        funcionario.CPF_CNPJ,
+                        funcionario.Telefone,
+                        funcionario.Email,
+                        funcionario.Endereco,
+                        funcionario.NumeroEndereco ?? 0,
+                        funcionario.Bairro,
+                        funcionario.Complemento,
+                        funcionario.CEP,
+                        funcionario.Cargo,
+                        funcionario.Salario,
+                        funcionario.Tipo,
+                        cidade?.Nome ?? "Não encontrado",
+                        funcionario.IdCidade ?? 0,
+                        funcionario.Status,
+                        funcionario.DataAdmissao,
+                        funcionario.DataDemissao,
+                        funcionario.Rg,
+                        funcionario.DataCriacao,
+                        funcionario.DataModificacao
+                    );
+
+                    formCadastro.FormClosed += (s, args) => CarregarFuncionarios();
+                    formCadastro.ShowDialog();
+                }
+
+                else
+                {
+                    MessageBox.Show("Funcionário não encontrado.");
+                }
             }
             else
             {
                 MessageBox.Show("Por favor, selecione um item para editar.");
             }
         }
+
 
 
         private void btnDeletar_Click(object sender, EventArgs e)
@@ -141,8 +204,10 @@ namespace Projeto.Views
             }
         }
 
+
         private void frmConsultaFuncionario_Shown(object sender, EventArgs e)
         {
+            /*
             StringBuilder sb = new StringBuilder();
             int i = 0;
 
@@ -152,14 +217,6 @@ namespace Projeto.Views
             }
 
             MessageBox.Show(sb.ToString(), "Tamanhos das colunas");
-            /*
-            foreach (ColumnHeader column in listView1.Columns)
-            {
-                column.Width = column.Width; // reforça o tamanho atual
-            }
-
-            listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.None); // evita redimensionamento automático
-            listView1.AutoSize = false;
             */
         }
 

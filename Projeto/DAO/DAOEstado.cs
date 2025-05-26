@@ -24,24 +24,35 @@ namespace Projeto.DAO
 
                     if (estado.Id > 0)
                     {
-                        query = "UPDATE estados SET nome = @nome, id_pais = @id_pais, status = @status WHERE id = @id";
+                        query = @"UPDATE estados 
+                                  SET nome = @nome, 
+                                      id_pais = @id_pais, 
+                                      status = @status, 
+                                      data_modificacao = @data_modificacao 
+                                  WHERE id = @id";
                     }
                     else
                     {
-                        query = "INSERT INTO estados (nome, id_pais, status) VALUES (@nome, @id_pais, @status)";
+                        query = @"INSERT INTO estados 
+                                  (nome, id_pais, status, data_criacao, data_modificacao) 
+                                  VALUES (@nome, @id_pais, @status, @data_criacao, @data_modificacao)";
                     }
 
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
+                        cmd.Parameters.AddWithValue("@nome", estado.Nome);
+                        cmd.Parameters.AddWithValue("@id_pais", estado.IdPais);
+                        cmd.Parameters.AddWithValue("@status", estado.Status);
+                        cmd.Parameters.AddWithValue("@data_modificacao", estado.DataModificacao);
+
                         if (estado.Id > 0)
                         {
                             cmd.Parameters.AddWithValue("@id", estado.Id);
                         }
-
-                        cmd.Parameters.AddWithValue("@nome", estado.Nome);
-                        cmd.Parameters.AddWithValue("@id_pais", estado.IdPais);
-                        cmd.Parameters.AddWithValue("@status", estado.Status);
-
+                        else
+                        {
+                            cmd.Parameters.AddWithValue("@data_criacao", estado.DataCriacao);
+                        }
                         cmd.ExecuteNonQuery();
                     }
                 }
@@ -67,7 +78,42 @@ namespace Projeto.DAO
             }
         }
 
+        public Estado BuscarPorId(int id)
+        {
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = @"SELECT e.id, e.nome AS estado_nome, e.id_pais, e.status, 
+                                        e.data_criacao, e.data_modificacao, 
+                                        p.nome AS pais_nome 
+                                 FROM estados e
+                                 JOIN paises p ON e.id_pais = p.id
+                                 WHERE e.id = @id";
 
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            return new Estado
+                            {
+                                Id = reader.GetInt32("id"),
+                                Nome = reader.GetString("estado_nome"),
+                                IdPais = reader.GetInt32("id_pais"),
+                                PaisNome = reader.GetString("pais_nome"),
+                                Status = reader.GetBoolean("status"),
+                                DataCriacao = reader.IsDBNull(reader.GetOrdinal("data_criacao")) ? (DateTime?)null : reader.GetDateTime("data_criacao"),
+                                DataModificacao = reader.IsDBNull(reader.GetOrdinal("data_modificacao")) ? (DateTime?)null : reader.GetDateTime("data_modificacao")
+                            };
+                        }
+                    }
+                }
+            }
+            return null;
+        }
 
         public List<Estado> ListarEstado()
         {
@@ -77,10 +123,10 @@ namespace Projeto.DAO
             {
                 conn.Open();
                 string query = @"
-            SELECT e.id, e.nome AS estado_nome, e.id_pais, e.status, p.nome AS pais_nome 
-            FROM estados e
-            JOIN paises p ON e.id_pais = p.id
-            ORDER BY e.nome";
+                    SELECT e.id, e.nome AS estado_nome, e.id_pais, e.status, p.nome AS pais_nome 
+                    FROM estados e
+                    JOIN paises p ON e.id_pais = p.id
+                    ORDER BY e.nome";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {

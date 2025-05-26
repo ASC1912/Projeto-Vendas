@@ -84,6 +84,7 @@
             this.btnSelecionar.TabIndex = 8;
             this.btnSelecionar.Text = "Selecionar";
             this.btnSelecionar.UseVisualStyleBackColor = true;
+            this.btnSelecionar.Click += new System.EventHandler(this.btnSelecionar_Click);
             // 
             // frmConsultaCidade
             // 

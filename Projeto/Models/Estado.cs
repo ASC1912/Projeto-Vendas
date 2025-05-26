@@ -13,6 +13,9 @@ namespace Projeto.Models
         public int IdPais { get; set; }
         public string PaisNome { get; set; }
         public bool Status { get; set; }
+        public DateTime? DataCriacao { get; set; }
+        public DateTime? DataModificacao { get; set; }
+
 
     }
 }

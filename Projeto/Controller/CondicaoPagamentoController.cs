@@ -28,6 +28,11 @@ namespace Projeto.Controller
             }
         }
 
+        public CondicaoPagamento BuscarPorId(int id)
+        {
+            return dao.BuscarPorId(id);
+        }
+
 
         public List<CondicaoPagamento> ListarCondicaoPagamento()
         {

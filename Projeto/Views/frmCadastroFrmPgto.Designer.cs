@@ -79,8 +79,10 @@
             this.Controls.Add(this.lblCodigo);
             this.Name = "frmCadastroFrmPgto";
             this.Text = "Cadastro Formas de Pagamento";
+            this.Load += new System.EventHandler(this.frmCadastroFrmPgto_Load);
+            this.Controls.SetChildIndex(this.lblDataModificacao, 0);
             this.Controls.SetChildIndex(this.chkInativo, 0);
-            this.Controls.SetChildIndex(this.lblUltimaEdicao, 0);
+            this.Controls.SetChildIndex(this.lblDataCriacao, 0);
             this.Controls.SetChildIndex(this.lblCodigo, 0);
             this.Controls.SetChildIndex(this.btnSair, 0);
             this.Controls.SetChildIndex(this.txtCodigo, 0);

@@ -14,9 +14,16 @@ namespace Projeto
     public partial class frmConsultaCondPgto : Projeto.frmBaseConsulta
     {
         private CondicaoPagamentoController controller = new CondicaoPagamentoController();
+        public bool ModoSelecao { get; set; } = false;
+        internal CondicaoPagamento CondicaoSelecionado { get; private set; }
+
         public frmConsultaCondPgto()
         {
             InitializeComponent();
+        }
+        private void frmConsultaCondPgto_Load(object sender, EventArgs e)
+        {
+            btnSelecionar.Visible = ModoSelecao;
         }
         private void CarregarCondicoesPagamento()
         {
@@ -33,6 +40,7 @@ namespace Projeto
                     item.SubItems.Add(cond.Juros.ToString("0.00"));
                     item.SubItems.Add(cond.Multa.ToString("0.00"));
                     item.SubItems.Add(cond.Desconto.ToString("0.00"));
+                    item.SubItems.Add(cond.Status ? "Ativo" : "Inativo");
                     listView1.Items.Add(item);
                 }
             }
@@ -44,8 +52,46 @@ namespace Projeto
 
         private void btnPesquisar_Click(object sender, EventArgs e)
         {
-            CarregarCondicoesPagamento();
+            try
+            {
+                listView1.Items.Clear();
+                string texto = txtPesquisar.Text.Trim();
+
+                if (string.IsNullOrEmpty(texto))
+                {
+                    CarregarCondicoesPagamento();
+                }
+                else if (int.TryParse(texto, out int id))
+                {
+                    CondicaoPagamento cond = controller.BuscarPorId(id);
+
+                    if (cond != null)
+                    {
+                        ListViewItem item = new ListViewItem(cond.Id.ToString());
+                        item.SubItems.Add(cond.Descricao);
+                        item.SubItems.Add(cond.QtdParcelas.ToString());
+                        item.SubItems.Add(cond.Juros.ToString("0.00"));
+                        item.SubItems.Add(cond.Multa.ToString("0.00"));
+                        item.SubItems.Add(cond.Desconto.ToString("0.00"));
+                        item.SubItems.Add(cond.Status ? "Ativo" : "Inativo");
+                        listView1.Items.Add(item);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Condição de pagamento não encontrada.");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Digite um ID válido (número inteiro).");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao pesquisar: " + ex.Message);
+            }
         }
+
 
         private void btnIncluir_Click(object sender, EventArgs e)
         {
@@ -59,17 +105,31 @@ namespace Projeto
             {
                 var itemSelecionado = listView1.SelectedItems[0];
                 int id = int.Parse(itemSelecionado.SubItems[0].Text);
-                string descricao = itemSelecionado.SubItems[1].Text;
-                int qtd_parcelas = int.Parse(itemSelecionado.SubItems[2].Text);
-                decimal juros = decimal.Parse(itemSelecionado.SubItems[3].Text);
-                decimal multa = decimal.Parse(itemSelecionado.SubItems[4].Text);
-                decimal desconto = decimal.Parse(itemSelecionado.SubItems[5].Text);
 
-                var formCadastro = new frmCadastroCondPgto();
-                formCadastro.CarregarCondicaoPagamento(id, descricao, qtd_parcelas, juros, multa, desconto);
+                CondicaoPagamento condicao = new CondicaoPagamentoController().BuscarPorId(id);
 
-                formCadastro.FormClosed += (s, args) => CarregarCondicoesPagamento();
-                formCadastro.ShowDialog();
+                if (condicao != null)
+                {
+                    var formCadastro = new frmCadastroCondPgto();
+                    formCadastro.CarregarCondicaoPagamento(
+                        condicao.Id,
+                        condicao.Descricao,
+                        condicao.QtdParcelas,
+                        condicao.Juros,
+                        condicao.Multa,
+                        condicao.Desconto,
+                        condicao.Status,
+                        condicao.DataCriacao,
+                        condicao.DataModificacao
+                    );
+
+                    formCadastro.FormClosed += (s, args) => CarregarCondicoesPagamento();
+                    formCadastro.ShowDialog();
+                }
+                else
+                {
+                    MessageBox.Show("Condição de pagamento não encontrada.");
+                }
             }
             else
             {
@@ -102,6 +162,29 @@ namespace Projeto
             else
             {
                 MessageBox.Show("Por favor, selecione uma condição de pagamento para excluir.");
+            }
+        }
+
+        private void btnSelecionar_Click(object sender, EventArgs e)
+        {
+            if (listView1.SelectedItems.Count > 0)
+            {
+                var itemSelecionado = listView1.SelectedItems[0];
+                int id = int.Parse(itemSelecionado.SubItems[0].Text);
+                string descricao = itemSelecionado.SubItems[1].Text;
+
+                CondicaoSelecionado = new CondicaoPagamento
+                {
+                    Id = id,
+                    Descricao = descricao,
+                };
+
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Por favor, selecione um nome.");
             }
         }
 

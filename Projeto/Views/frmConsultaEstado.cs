@@ -14,6 +14,8 @@ namespace Projeto.Views
     {
         private EstadoController controller = new EstadoController();
         public bool ModoSelecao { get; set; } = false;
+        internal Estado EstadoSelecionado { get; private set; }
+
 
 
         public frmConsultaEstado()
@@ -55,8 +57,43 @@ namespace Projeto.Views
         }
         private void btnPesquisar_Click(object sender, EventArgs e)
         {
-            CarregarEstados();
+            try
+            {
+                listView1.Items.Clear();
+                string texto = txtPesquisar.Text.Trim();
+
+                if (string.IsNullOrEmpty(texto))
+                {
+                    CarregarEstados();
+                }
+                else if (int.TryParse(texto, out int id))
+                {
+                    Estado estado = controller.BuscarPorId(id);
+
+                    if (estado != null)
+                    {
+                        ListViewItem item = new ListViewItem(estado.Id.ToString());
+                        item.SubItems.Add(estado.Nome);
+                        item.SubItems.Add(estado.PaisNome);
+                        item.SubItems.Add(estado.Status ? "Ativo" : "Inativo");
+                        listView1.Items.Add(item);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Estado não encontrado.");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Digite um ID válido (número inteiro).");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao pesquisar: " + ex.Message);
+            }
         }
+
 
         private void btnEditar_Click(object sender, EventArgs e)
         {
@@ -64,21 +101,35 @@ namespace Projeto.Views
             {
                 var itemSelecionado = listView1.SelectedItems[0];
                 int id = int.Parse(itemSelecionado.SubItems[0].Text);
-                string nome = itemSelecionado.SubItems[1].Text;
-                string nomePais = itemSelecionado.SubItems[2].Text;
-                bool status = itemSelecionado.SubItems[3].Text == "Ativo";
 
-                var formCadastro = new frmCadastroEstado();
-                formCadastro.CarregarEstado(id, nome, nomePais, status);
+                Estado estado = controller.BuscarPorId(id);
 
-                formCadastro.FormClosed += (s, args) => CarregarEstados();
-                formCadastro.ShowDialog();
+                if (estado != null)
+                {
+                    var formCadastro = new frmCadastroEstado();
+                    formCadastro.CarregarEstado(
+                        estado.Id,
+                        estado.Nome,
+                        estado.PaisNome,
+                        estado.Status,
+                        estado.DataCriacao,
+                        estado.DataModificacao
+                    );
+
+                    formCadastro.FormClosed += (s, args) => CarregarEstados();
+                    formCadastro.ShowDialog();
+                }
+                else
+                {
+                    MessageBox.Show("Estado não encontrado.");
+                }
             }
             else
             {
                 MessageBox.Show("Por favor, selecione um item para editar.");
             }
         }
+
 
         private void btnDeletar_Click(object sender, EventArgs e)
         {
@@ -110,7 +161,27 @@ namespace Projeto.Views
 
         private void btnSelecionar_Click(object sender, EventArgs e)
         {
+            if (listView1.SelectedItems.Count > 0)
+            {
+                var itemSelecionado = listView1.SelectedItems[0];
+                int id = int.Parse(itemSelecionado.SubItems[0].Text);
+                string nome = itemSelecionado.SubItems[1].Text;
+                string pais = itemSelecionado.SubItems[2].Text;
 
+                EstadoSelecionado = new Estado
+                {
+                    Id = id,
+                    Nome = nome,
+                    PaisNome = pais,
+                };
+
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Por favor, selecione um nome.");
+            }
         }
 
         

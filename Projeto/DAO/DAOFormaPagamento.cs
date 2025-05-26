@@ -2,9 +2,6 @@
 using Projeto.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Projeto.DAO
@@ -24,21 +21,34 @@ namespace Projeto.DAO
 
                     if (formaPagamento.Id > 0) 
                     {
-                        query = "UPDATE formas_pagamento SET descricao = @descricao WHERE id = @id";
+                        query = @"UPDATE formas_pagamento 
+                                  SET descricao = @descricao, 
+                                      status = @status,
+                                      data_modificacao = @data_modificacao 
+                                  WHERE id = @id";
                     }
                     else 
                     {
-                        query = "INSERT INTO formas_pagamento (descricao) VALUES (@descricao)";
+                        query = @"INSERT INTO formas_pagamento 
+                                  (descricao, status, data_criacao, data_modificacao) 
+                                  VALUES (@descricao, @status, @data_criacao, @data_modificacao)";
                     }
 
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
+                        cmd.Parameters.AddWithValue("@descricao", formaPagamento.Descricao);
+                        cmd.Parameters.AddWithValue("@status", formaPagamento.Status);
+                        cmd.Parameters.AddWithValue("@data_modificacao", formaPagamento.DataModificacao);
+
                         if (formaPagamento.Id > 0)
                         {
                             cmd.Parameters.AddWithValue("@id", formaPagamento.Id);
                         }
+                        else
+                        {
+                            cmd.Parameters.AddWithValue("@data_criacao", formaPagamento.DataCriacao);
+                        }
 
-                        cmd.Parameters.AddWithValue("@descricao", formaPagamento.Descricao);
                         cmd.ExecuteNonQuery();
                     }
                 }
@@ -69,7 +79,9 @@ namespace Projeto.DAO
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
-                string query = "SELECT id, descricao FROM formas_pagamento WHERE id = @id";
+                string query = @"SELECT id, descricao, status, data_criacao, data_modificacao 
+                                 FROM formas_pagamento 
+                                 WHERE id = @id";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
@@ -79,10 +91,19 @@ namespace Projeto.DAO
                     {
                         if (reader.Read())
                         {
+                            int colId = reader.GetOrdinal("id");
+                            int colDescricao = reader.GetOrdinal("descricao");
+                            int colStatus = reader.GetOrdinal("status");
+                            int colDataCriacao = reader.GetOrdinal("data_criacao");
+                            int colDataModificacao = reader.GetOrdinal("data_modificacao");
+
                             return new FormaPagamento
                             {
-                                Id = reader.GetInt32("id"),
-                                Descricao = reader.GetString("descricao")
+                                Id = reader.GetInt32(colId),
+                                Descricao = reader.GetString(colDescricao),
+                                Status = reader.IsDBNull(colStatus) ? true : reader.GetBoolean(colStatus),
+                                DataCriacao = reader.IsDBNull(colDataCriacao) ? DateTime.MinValue : reader.GetDateTime(colDataCriacao),
+                                DataModificacao = reader.IsDBNull(colDataModificacao) ? DateTime.MinValue : reader.GetDateTime(colDataModificacao)
                             };
                         }
                     }
@@ -98,23 +119,35 @@ namespace Projeto.DAO
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
-                string query = "SELECT id, descricao FROM formas_pagamento ORDER BY id";
+                string query = @"SELECT id, descricao, status, data_criacao, data_modificacao 
+                                 FROM formas_pagamento 
+                                 ORDER BY id";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
                     using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
+                        int colId = reader.GetOrdinal("id");
+                        int colDescricao = reader.GetOrdinal("descricao");
+                        int colStatus = reader.GetOrdinal("status");
+                        int colDataCriacao = reader.GetOrdinal("data_criacao");
+                        int colDataModificacao = reader.GetOrdinal("data_modificacao");
+
                         while (reader.Read())
                         {
                             lista.Add(new FormaPagamento
                             {
-                                Id = reader.GetInt32("id"),
-                                Descricao = reader.GetString("descricao")
+                                Id = reader.GetInt32(colId),
+                                Descricao = reader.GetString(colDescricao),
+                                Status = reader.IsDBNull(colStatus) ? true : reader.GetBoolean(colStatus),
+                                DataCriacao = reader.IsDBNull(colDataCriacao) ? DateTime.MinValue : reader.GetDateTime(colDataCriacao),
+                                DataModificacao = reader.IsDBNull(colDataModificacao) ? DateTime.MinValue : reader.GetDateTime(colDataModificacao)
                             });
                         }
                     }
                 }
             }
+
             return lista;
         }
 
@@ -127,11 +160,11 @@ namespace Projeto.DAO
                 try
                 {
                     conn.Open();
-                    string query = "SELECT Descricao FROM formas_pagamento WHERE Id = @id";
+                    string query = "SELECT descricao FROM formas_pagamento WHERE id = @id";
+
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@id", id);
-
                         descricao = cmd.ExecuteScalar()?.ToString();
                     }
                 }
@@ -150,6 +183,7 @@ namespace Projeto.DAO
             {
                 conn.Open();
                 string query = "SELECT id FROM formas_pagamento WHERE descricao = @descricao";
+
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@descricao", descricao);
@@ -158,7 +192,5 @@ namespace Projeto.DAO
                 }
             }
         }
-
-
     }
 }
