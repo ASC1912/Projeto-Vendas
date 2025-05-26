@@ -63,16 +63,16 @@
             this.IDCondPgto,
             this.Status,
             this.Rg});
-            this.listView1.Size = new System.Drawing.Size(1027, 391);
+            this.listView1.Size = new System.Drawing.Size(1267, 517);
             // 
             // btnDeletar
             // 
-            this.btnDeletar.Location = new System.Drawing.Point(909, 539);
+            this.btnDeletar.Location = new System.Drawing.Point(1149, 669);
             this.btnDeletar.Click += new System.EventHandler(this.btnDeletar_Click);
             // 
             // btnSair
             // 
-            this.btnSair.Location = new System.Drawing.Point(1000, 539);
+            this.btnSair.Location = new System.Drawing.Point(1240, 669);
             // 
             // btnPesquisar
             // 
@@ -80,12 +80,12 @@
             // 
             // btnEditar
             // 
-            this.btnEditar.Location = new System.Drawing.Point(816, 539);
+            this.btnEditar.Location = new System.Drawing.Point(1056, 669);
             this.btnEditar.Click += new System.EventHandler(this.btnEditar_Click);
             // 
             // btnIncluir
             // 
-            this.btnIncluir.Location = new System.Drawing.Point(723, 539);
+            this.btnIncluir.Location = new System.Drawing.Point(963, 669);
             this.btnIncluir.Click += new System.EventHandler(this.btnIncluir_Click);
             // 
             // ID

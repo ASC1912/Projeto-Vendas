@@ -42,7 +42,7 @@
             this.Nome,
             this.Estado,
             this.Status});
-            this.listView1.Size = new System.Drawing.Size(715, 271);
+            this.listView1.Size = new System.Drawing.Size(1263, 517);
             // 
             // btnDeletar
             // 
@@ -78,7 +78,7 @@
             // 
             // btnSelecionar
             // 
-            this.btnSelecionar.Location = new System.Drawing.Point(303, 415);
+            this.btnSelecionar.Location = new System.Drawing.Point(848, 659);
             this.btnSelecionar.Name = "btnSelecionar";
             this.btnSelecionar.Size = new System.Drawing.Size(90, 23);
             this.btnSelecionar.TabIndex = 8;

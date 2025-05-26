@@ -44,7 +44,7 @@
             this.listView1.HideSelection = false;
             this.listView1.Location = new System.Drawing.Point(48, 118);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(624, 271);
+            this.listView1.Size = new System.Drawing.Size(1263, 525);
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
@@ -58,7 +58,7 @@
             // 
             // btnSair
             // 
-            this.btnSair.Location = new System.Drawing.Point(688, 415);
+            this.btnSair.Location = new System.Drawing.Point(1236, 659);
             this.btnSair.Name = "btnSair";
             this.btnSair.Size = new System.Drawing.Size(75, 23);
             this.btnSair.TabIndex = 2;
@@ -77,7 +77,7 @@
             // 
             // btnDeletar
             // 
-            this.btnDeletar.Location = new System.Drawing.Point(597, 415);
+            this.btnDeletar.Location = new System.Drawing.Point(1145, 659);
             this.btnDeletar.Name = "btnDeletar";
             this.btnDeletar.Size = new System.Drawing.Size(75, 23);
             this.btnDeletar.TabIndex = 4;
@@ -86,7 +86,7 @@
             // 
             // btnEditar
             // 
-            this.btnEditar.Location = new System.Drawing.Point(504, 415);
+            this.btnEditar.Location = new System.Drawing.Point(1052, 659);
             this.btnEditar.Name = "btnEditar";
             this.btnEditar.Size = new System.Drawing.Size(75, 23);
             this.btnEditar.TabIndex = 5;
@@ -95,7 +95,7 @@
             // 
             // btnIncluir
             // 
-            this.btnIncluir.Location = new System.Drawing.Point(411, 415);
+            this.btnIncluir.Location = new System.Drawing.Point(959, 659);
             this.btnIncluir.Name = "btnIncluir";
             this.btnIncluir.Size = new System.Drawing.Size(75, 23);
             this.btnIncluir.TabIndex = 6;
