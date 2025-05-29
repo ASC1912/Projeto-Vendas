@@ -19,7 +19,7 @@ namespace Projeto
         private int formaPagamentoSelecionadaId = -1;
 
 
-        public frmCadastroCondPgto()
+        public frmCadastroCondPgto() : base()
         {
             InitializeComponent();
             txtCodigo.Enabled = false;

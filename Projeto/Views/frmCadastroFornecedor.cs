@@ -23,7 +23,7 @@ namespace Projeto.Views
 
 
 
-        public frmCadastroFornecedor()
+        public frmCadastroFornecedor() : base()
         {
             InitializeComponent();
             txtCodigo.Enabled = false;

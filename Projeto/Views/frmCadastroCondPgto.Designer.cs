@@ -60,22 +60,6 @@
             this.txtDesconto = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
-            // btnSair
-            // 
-            this.btnSair.Location = new System.Drawing.Point(882, 542);
-            // 
-            // chkInativo
-            // 
-            this.chkInativo.Location = new System.Drawing.Point(748, 31);
-            // 
-            // lblDataCriacao
-            // 
-            this.lblDataCriacao.Location = new System.Drawing.Point(12, 525);
-            // 
-            // lblDataModificacao
-            // 
-            this.lblDataModificacao.Location = new System.Drawing.Point(12, 561);
-            // 
             // lblPrazo
             // 
             this.lblPrazo.AutoSize = true;
@@ -94,7 +78,7 @@
             // 
             // btnSalvar
             // 
-            this.btnSalvar.Location = new System.Drawing.Point(796, 542);
+            this.btnSalvar.Location = new System.Drawing.Point(1119, 634);
             this.btnSalvar.Name = "btnSalvar";
             this.btnSalvar.Size = new System.Drawing.Size(80, 35);
             this.btnSalvar.TabIndex = 8;
@@ -328,8 +312,8 @@
             // 
             // frmCadastroCondPgto
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.ClientSize = new System.Drawing.Size(1342, 721);
+            //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            //this.ClientSize = new System.Drawing.Size(1342, 681);
             this.Controls.Add(this.lblDesconto);
             this.Controls.Add(this.txtDesconto);
             this.Controls.Add(this.lblMulta);

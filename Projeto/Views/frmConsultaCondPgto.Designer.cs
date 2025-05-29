@@ -48,8 +48,7 @@
             this.Multa,
             this.Desconto,
             this.Status});
-            this.listView1.Location = new System.Drawing.Point(48, 117);
-            this.listView1.Size = new System.Drawing.Size(1263, 521);
+           
             // 
             // btnDeletar
             // 
@@ -110,8 +109,8 @@
             // 
             // frmConsultaCondPgto
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.ClientSize = new System.Drawing.Size(1342, 721);
+            //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            //this.ClientSize = new System.Drawing.Size(1342, 721);
             this.Controls.Add(this.btnSelecionar);
             this.Name = "frmConsultaCondPgto";
             this.Text = "Consulta Condições de Pagamento";

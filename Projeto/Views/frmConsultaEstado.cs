@@ -18,7 +18,7 @@ namespace Projeto.Views
 
 
 
-        public frmConsultaEstado()
+        public frmConsultaEstado() : base()
         {
             InitializeComponent();
         }

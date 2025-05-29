@@ -17,7 +17,7 @@ namespace Projeto
         public bool ModoSelecao { get; set; } = false;
         internal FormaPagamento FormaSelecionada { get; private set; }
 
-        public frmConsultaFrmPgto()
+        public frmConsultaFrmPgto() : base()
         {
             InitializeComponent();
             this.Text = "Consulta Forma de Pagamento";

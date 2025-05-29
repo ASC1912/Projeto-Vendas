@@ -40,7 +40,6 @@
             this.ID,
             this.Nome,
             this.Status});
-            this.listView1.Size = new System.Drawing.Size(1263, 524);
             // 
             // btnDeletar
             // 
@@ -82,8 +81,8 @@
             // 
             // frmConsultaPais
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.ClientSize = new System.Drawing.Size(1342, 721);
+            //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            //this.ClientSize = new System.Drawing.Size(1342, 721);
             this.Controls.Add(this.btnSelecionar);
             this.Name = "frmConsultaPais";
             this.Text = "Consulta Paises";

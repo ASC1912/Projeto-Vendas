@@ -67,11 +67,9 @@
             // 
             // lblDataCriacao
             // 
-            this.lblDataCriacao.Location = new System.Drawing.Point(12, 491);
             // 
             // lblDataModificacao
             // 
-            this.lblDataModificacao.Location = new System.Drawing.Point(9, 518);
             // 
             // lblCidade
             // 
@@ -100,7 +98,7 @@
             // 
             // btnSalvar
             // 
-            this.btnSalvar.Location = new System.Drawing.Point(622, 389);
+            this.btnSalvar.Location = new System.Drawing.Point(1104, 634);
             this.btnSalvar.Name = "btnSalvar";
             this.btnSalvar.Size = new System.Drawing.Size(80, 35);
             this.btnSalvar.TabIndex = 21;
@@ -329,8 +327,8 @@
             // 
             // frmCadastroCliente
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.ClientSize = new System.Drawing.Size(1342, 721);
+            //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            //this.ClientSize = new System.Drawing.Size(1342, 681);
             this.Controls.Add(this.txtCondicao);
             this.Controls.Add(this.btnBuscarCond);
             this.Controls.Add(this.txtCidade);

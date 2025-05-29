@@ -17,7 +17,7 @@ namespace Projeto.Views
         internal Pais PaisSelecionado { get; private set; }
 
 
-        public frmConsultaPais()
+        public frmConsultaPais() : base()
         {
             InitializeComponent();
         }

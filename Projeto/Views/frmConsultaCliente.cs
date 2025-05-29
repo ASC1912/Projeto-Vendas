@@ -13,7 +13,7 @@ namespace Projeto.Views
     public partial class frmConsultaCliente : Projeto.frmBaseConsulta
     {
         private ClienteController controller = new ClienteController();
-        public frmConsultaCliente()
+        public frmConsultaCliente() : base()
         {
             InitializeComponent();
         }

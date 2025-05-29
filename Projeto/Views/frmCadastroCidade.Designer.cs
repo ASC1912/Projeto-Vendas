@@ -37,18 +37,6 @@
             this.txtEstado = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
-            // btnSair
-            // 
-            this.btnSair.Location = new System.Drawing.Point(1233, 674);
-            // 
-            // lblDataCriacao
-            // 
-            this.lblDataCriacao.Location = new System.Drawing.Point(12, 642);
-            // 
-            // lblDataModificacao
-            // 
-            this.lblDataModificacao.Location = new System.Drawing.Point(12, 678);
-            // 
             // lblEstado
             // 
             this.lblEstado.AutoSize = true;
@@ -76,7 +64,7 @@
             // 
             // btnSalvar
             // 
-            this.btnSalvar.Location = new System.Drawing.Point(1136, 674);
+            this.btnSalvar.Location = new System.Drawing.Point(1117, 634);
             this.btnSalvar.Name = "btnSalvar";
             this.btnSalvar.Size = new System.Drawing.Size(80, 35);
             this.btnSalvar.TabIndex = 17;
@@ -113,8 +101,8 @@
             // 
             // frmCadastroCidade
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.ClientSize = new System.Drawing.Size(1342, 742);
+            //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            //this.ClientSize = new System.Drawing.Size(1342, 681);
             this.Controls.Add(this.txtEstado);
             this.Controls.Add(this.btnBuscar);
             this.Controls.Add(this.lblCodigo);

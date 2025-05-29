@@ -21,7 +21,7 @@ namespace Projeto.Views
         private int condicaoSelecionadoId = -1;
 
 
-        public frmCadastroCliente()
+        public frmCadastroCliente() : base()
         {
             InitializeComponent();
             txtCodigo.Enabled = false;

@@ -69,35 +69,28 @@
             this.DataDemissao,
             this.Status,
             this.Rg});
-            this.listView1.Location = new System.Drawing.Point(23, 109);
-            this.listView1.Size = new System.Drawing.Size(1307, 554);
+
             // 
             // btnDeletar
             // 
-            this.btnDeletar.Location = new System.Drawing.Point(1164, 669);
             this.btnDeletar.Click += new System.EventHandler(this.btnDeletar_Click);
             // 
             // txtPesquisar
             // 
-            this.txtPesquisar.Location = new System.Drawing.Point(23, 55);
             // 
             // btnSair
             // 
-            this.btnSair.Location = new System.Drawing.Point(1255, 669);
             // 
             // btnPesquisar
             // 
-            this.btnPesquisar.Location = new System.Drawing.Point(265, 55);
             this.btnPesquisar.Click += new System.EventHandler(this.btnPesquisar_Click);
             // 
             // btnEditar
             // 
-            this.btnEditar.Location = new System.Drawing.Point(1071, 669);
             this.btnEditar.Click += new System.EventHandler(this.btnEditar_Click);
             // 
             // btnIncluir
             // 
-            this.btnIncluir.Location = new System.Drawing.Point(978, 669);
             this.btnIncluir.Click += new System.EventHandler(this.btnIncluir_Click);
             // 
             // ID
@@ -182,8 +175,8 @@
             // 
             // frmConsultaFuncionario
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.ClientSize = new System.Drawing.Size(1342, 721);
+            //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            //this.ClientSize = new System.Drawing.Size(1342, 681);
             this.Name = "frmConsultaFuncionario";
             this.Text = "Consulta Funcionarios";
             this.ResumeLayout(false);

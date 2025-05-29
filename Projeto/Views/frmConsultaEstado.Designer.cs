@@ -42,7 +42,6 @@
             this.Nome,
             this.Pais,
             this.Status});
-            this.listView1.Size = new System.Drawing.Size(1263, 520);
             // 
             // btnDeletar
             // 
@@ -88,8 +87,8 @@
             // 
             // frmConsultaEstado
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.ClientSize = new System.Drawing.Size(1342, 721);
+            //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            //this.ClientSize = new System.Drawing.Size(1342, 721);
             this.Controls.Add(this.btnSelecionar);
             this.Name = "frmConsultaEstado";
             this.Text = "Consulta Estados";

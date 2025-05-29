@@ -17,7 +17,7 @@ namespace Projeto.Views
         private int estadoSelecionadoId = -1;
         public bool modoEdicao = false;
 
-        public frmCadastroCidade()
+        public frmCadastroCidade() : base()
         {
             InitializeComponent();
             txtCodigo.Enabled = false;

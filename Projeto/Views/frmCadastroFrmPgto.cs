@@ -14,7 +14,7 @@ namespace Projeto
     public partial class frmCadastroFrmPgto : Projeto.frmBase
     {
         public bool modoEdicao = false;
-        public frmCadastroFrmPgto()
+        public frmCadastroFrmPgto() : base()
         {
             InitializeComponent();
             txtCodigo.Enabled = false;

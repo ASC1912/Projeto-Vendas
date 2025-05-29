@@ -18,7 +18,7 @@ namespace Projeto.Views
         private int cidadeSelecionadoId = -1;
 
 
-        public frmCadastroFuncionario()
+        public frmCadastroFuncionario() : base()
         {
             InitializeComponent();
             txtCodigo.Enabled = false;

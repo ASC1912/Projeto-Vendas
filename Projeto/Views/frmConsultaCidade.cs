@@ -17,7 +17,7 @@ namespace Projeto.Views
         public bool ModoSelecao { get; set; } = false;
         internal Cidade CidadeSelecionado { get; private set; }
 
-        public frmConsultaCidade()
+        public frmConsultaCidade() : base()
         {
             InitializeComponent();
         }

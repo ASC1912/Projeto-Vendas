@@ -46,7 +46,7 @@
             // btnSair
             // 
             this.btnSair.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnSair.Location = new System.Drawing.Point(708, 389);
+            this.btnSair.Location = new System.Drawing.Point(1220, 634);
             this.btnSair.Name = "btnSair";
             this.btnSair.Size = new System.Drawing.Size(80, 35);
             this.btnSair.TabIndex = 2;
@@ -57,7 +57,7 @@
             // chkInativo
             // 
             this.chkInativo.AutoSize = true;
-            this.chkInativo.Location = new System.Drawing.Point(708, 29);
+            this.chkInativo.Location = new System.Drawing.Point(1220, 30);
             this.chkInativo.Name = "chkInativo";
             this.chkInativo.Size = new System.Drawing.Size(68, 20);
             this.chkInativo.TabIndex = 63;
@@ -67,7 +67,7 @@
             // lblDataCriacao
             // 
             this.lblDataCriacao.AutoSize = true;
-            this.lblDataCriacao.Location = new System.Drawing.Point(12, 465);
+            this.lblDataCriacao.Location = new System.Drawing.Point(12, 620);
             this.lblDataCriacao.Name = "lblDataCriacao";
             this.lblDataCriacao.Size = new System.Drawing.Size(72, 16);
             this.lblDataCriacao.TabIndex = 64;
@@ -76,7 +76,7 @@
             // lblDataModificacao
             // 
             this.lblDataModificacao.AutoSize = true;
-            this.lblDataModificacao.Location = new System.Drawing.Point(12, 501);
+            this.lblDataModificacao.Location = new System.Drawing.Point(12, 656);
             this.lblDataModificacao.Name = "lblDataModificacao";
             this.lblDataModificacao.Size = new System.Drawing.Size(99, 16);
             this.lblDataModificacao.TabIndex = 65;
@@ -84,9 +84,9 @@
             // 
             // frmBase
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1342, 721);
+            //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            //this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(1342, 681);
             this.Controls.Add(this.lblDataModificacao);
             this.Controls.Add(this.lblDataCriacao);
             this.Controls.Add(this.chkInativo);

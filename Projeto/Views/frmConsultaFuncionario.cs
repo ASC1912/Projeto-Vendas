@@ -14,7 +14,7 @@ namespace Projeto.Views
     {
         private FuncionarioController controller = new FuncionarioController();
 
-        public frmConsultaFuncionario()
+        public frmConsultaFuncionario() : base()
         {
             InitializeComponent();
             this.Shown += frmConsultaFuncionario_Shown;

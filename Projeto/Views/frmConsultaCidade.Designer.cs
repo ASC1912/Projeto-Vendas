@@ -42,7 +42,6 @@
             this.Nome,
             this.Estado,
             this.Status});
-            this.listView1.Size = new System.Drawing.Size(1263, 517);
             // 
             // btnDeletar
             // 
@@ -88,8 +87,8 @@
             // 
             // frmConsultaCidade
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.ClientSize = new System.Drawing.Size(1342, 721);
+            //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            //this.ClientSize = new System.Drawing.Size(1342, 721);
             this.Controls.Add(this.btnSelecionar);
             this.Name = "frmConsultaCidade";
             this.Text = "Consulta Cidades";

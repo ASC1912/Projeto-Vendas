@@ -17,7 +17,7 @@ namespace Projeto
         public bool ModoSelecao { get; set; } = false;
         internal CondicaoPagamento CondicaoSelecionado { get; private set; }
 
-        public frmConsultaCondPgto()
+        public frmConsultaCondPgto() : base()
         {
             InitializeComponent();
         }

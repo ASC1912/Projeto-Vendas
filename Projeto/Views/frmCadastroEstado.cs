@@ -18,7 +18,7 @@ namespace Projeto.Views
         public bool modoEdicao = false;
 
 
-        public frmCadastroEstado()
+        public frmCadastroEstado() : base()
         {
             InitializeComponent();
             txtCodigo.Enabled = false;

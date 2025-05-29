@@ -14,7 +14,7 @@ namespace Projeto.Views
     {
         private FornecedorController controller = new FornecedorController();
 
-        public frmConsultaFornecedor()
+        public frmConsultaFornecedor() : base()
         {
             InitializeComponent();
         }

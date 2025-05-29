@@ -40,7 +40,6 @@
             this.ID,
             this.Descricao,
             this.Status});
-            this.listView1.Size = new System.Drawing.Size(1263, 517);
             // 
             // btnDeletar
             // 
@@ -69,7 +68,7 @@
             // 
             // btnSelecionar
             // 
-            this.btnSelecionar.Location = new System.Drawing.Point(845, 659);
+            this.btnSelecionar.Location = new System.Drawing.Point(848, 644);
             this.btnSelecionar.Name = "btnSelecionar";
             this.btnSelecionar.Size = new System.Drawing.Size(90, 23);
             this.btnSelecionar.TabIndex = 7;
@@ -83,8 +82,8 @@
             // 
             // frmConsultaFrmPgto
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.ClientSize = new System.Drawing.Size(1342, 721);
+            //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            //this.ClientSize = new System.Drawing.Size(1342, 681);
             this.Controls.Add(this.btnSelecionar);
             this.Name = "frmConsultaFrmPgto";
             this.Text = "Consulta Formas de Pagamento";
