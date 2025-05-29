@@ -52,7 +52,7 @@
             // 
             // btnSalvar
             // 
-            this.btnSalvar.Location = new System.Drawing.Point(612, 389);
+            this.btnSalvar.Location = new System.Drawing.Point(1113, 634);
             this.btnSalvar.Name = "btnSalvar";
             this.btnSalvar.Size = new System.Drawing.Size(80, 35);
             this.btnSalvar.TabIndex = 8;
@@ -72,13 +72,14 @@
             // frmCadastroPais
             // 
             //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            //this.ClientSize = new System.Drawing.Size(1342, 721);
+            //this.ClientSize = new System.Drawing.Size(1342, 681);
             this.Controls.Add(this.lblCodigo);
             this.Controls.Add(this.lblNome);
             this.Controls.Add(this.txtNome);
             this.Controls.Add(this.btnSalvar);
             this.Name = "frmCadastroPais";
             this.Text = "Cadastro Paises";
+            this.Controls.SetChildIndex(this.lblDataModificacao, 0);
             this.Controls.SetChildIndex(this.chkInativo, 0);
             this.Controls.SetChildIndex(this.lblDataCriacao, 0);
             this.Controls.SetChildIndex(this.btnSair, 0);

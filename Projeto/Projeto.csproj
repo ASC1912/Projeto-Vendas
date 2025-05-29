@@ -133,165 +133,165 @@
     <Compile Include="Views\FormPrincipal.Designer.cs">
       <DependentUpon>FormPrincipal.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\frmBase.cs">
+    <Compile Include="Views\Cadastros\frmBase.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\frmBase.Designer.cs">
+    <Compile Include="Views\Cadastros\frmBase.Designer.cs">
       <DependentUpon>frmBase.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\frmBaseConsulta.cs">
+    <Compile Include="Views\Consultas\frmBaseConsulta.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\frmBaseConsulta.Designer.cs">
+    <Compile Include="Views\Consultas\frmBaseConsulta.Designer.cs">
       <DependentUpon>frmBaseConsulta.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\frmCadastroCidade.cs">
+    <Compile Include="Views\Cadastros\frmCadastroCidade.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\frmCadastroCidade.Designer.cs">
+    <Compile Include="Views\Cadastros\frmCadastroCidade.Designer.cs">
       <DependentUpon>frmCadastroCidade.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\frmCadastroCliente.cs">
+    <Compile Include="Views\Cadastros\frmCadastroCliente.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\frmCadastroCliente.Designer.cs">
+    <Compile Include="Views\Cadastros\frmCadastroCliente.Designer.cs">
       <DependentUpon>frmCadastroCliente.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\frmCadastroCondPgto.cs">
+    <Compile Include="Views\Cadastros\frmCadastroCondPgto.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\frmCadastroCondPgto.Designer.cs">
+    <Compile Include="Views\Cadastros\frmCadastroCondPgto.Designer.cs">
       <DependentUpon>frmCadastroCondPgto.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\frmCadastroEstado.cs">
+    <Compile Include="Views\Cadastros\frmCadastroEstado.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\frmCadastroEstado.Designer.cs">
+    <Compile Include="Views\Cadastros\frmCadastroEstado.Designer.cs">
       <DependentUpon>frmCadastroEstado.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\frmCadastroFornecedor.cs">
+    <Compile Include="Views\Cadastros\frmCadastroFornecedor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\frmCadastroFornecedor.Designer.cs">
+    <Compile Include="Views\Cadastros\frmCadastroFornecedor.Designer.cs">
       <DependentUpon>frmCadastroFornecedor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\frmCadastroFrmPgto.cs">
+    <Compile Include="Views\Cadastros\frmCadastroFrmPgto.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\frmCadastroFrmPgto.Designer.cs">
+    <Compile Include="Views\Cadastros\frmCadastroFrmPgto.Designer.cs">
       <DependentUpon>frmCadastroFrmPgto.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\frmCadastroFuncionario.cs">
+    <Compile Include="Views\Cadastros\frmCadastroFuncionario.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\frmCadastroFuncionario.Designer.cs">
+    <Compile Include="Views\Cadastros\frmCadastroFuncionario.Designer.cs">
       <DependentUpon>frmCadastroFuncionario.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\frmCadastroPais.cs">
+    <Compile Include="Views\Cadastros\frmCadastroPais.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\frmCadastroPais.Designer.cs">
+    <Compile Include="Views\Cadastros\frmCadastroPais.Designer.cs">
       <DependentUpon>frmCadastroPais.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\frmConsultaCidade.cs">
+    <Compile Include="Views\Consultas\frmConsultaCidade.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\frmConsultaCidade.Designer.cs">
+    <Compile Include="Views\Consultas\frmConsultaCidade.Designer.cs">
       <DependentUpon>frmConsultaCidade.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\frmConsultaCliente.cs">
+    <Compile Include="Views\Consultas\frmConsultaCliente.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\frmConsultaCliente.Designer.cs">
+    <Compile Include="Views\Consultas\frmConsultaCliente.Designer.cs">
       <DependentUpon>frmConsultaCliente.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\frmConsultaCondPgto.cs">
+    <Compile Include="Views\Consultas\frmConsultaCondPgto.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\frmConsultaCondPgto.Designer.cs">
+    <Compile Include="Views\Consultas\frmConsultaCondPgto.Designer.cs">
       <DependentUpon>frmConsultaCondPgto.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\frmConsultaEstado.cs">
+    <Compile Include="Views\Consultas\frmConsultaEstado.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\frmConsultaEstado.Designer.cs">
+    <Compile Include="Views\Consultas\frmConsultaEstado.Designer.cs">
       <DependentUpon>frmConsultaEstado.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\frmConsultaFornecedor.cs">
+    <Compile Include="Views\Consultas\frmConsultaFornecedor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\frmConsultaFornecedor.Designer.cs">
+    <Compile Include="Views\Consultas\frmConsultaFornecedor.Designer.cs">
       <DependentUpon>frmConsultaFornecedor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\frmConsultaFrmPgto.cs">
+    <Compile Include="Views\Consultas\frmConsultaFrmPgto.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\frmConsultaFrmPgto.Designer.cs">
+    <Compile Include="Views\Consultas\frmConsultaFrmPgto.Designer.cs">
       <DependentUpon>frmConsultaFrmPgto.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Views\frmConsultaFuncionario.cs">
+    <Compile Include="Views\Consultas\frmConsultaFuncionario.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\frmConsultaFuncionario.Designer.cs">
+    <Compile Include="Views\Consultas\frmConsultaFuncionario.Designer.cs">
       <DependentUpon>frmConsultaFuncionario.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\frmConsultaPais.cs">
+    <Compile Include="Views\Consultas\frmConsultaPais.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\frmConsultaPais.Designer.cs">
+    <Compile Include="Views\Consultas\frmConsultaPais.Designer.cs">
       <DependentUpon>frmConsultaPais.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Views\FormPrincipal.resx">
       <DependentUpon>FormPrincipal.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\frmBase.resx">
+    <EmbeddedResource Include="Views\Cadastros\frmBase.resx">
       <DependentUpon>frmBase.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\frmBaseConsulta.resx">
+    <EmbeddedResource Include="Views\Consultas\frmBaseConsulta.resx">
       <DependentUpon>frmBaseConsulta.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\frmCadastroCidade.resx">
+    <EmbeddedResource Include="Views\Cadastros\frmCadastroCidade.resx">
       <DependentUpon>frmCadastroCidade.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\frmCadastroCliente.resx">
+    <EmbeddedResource Include="Views\Cadastros\frmCadastroCliente.resx">
       <DependentUpon>frmCadastroCliente.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\frmCadastroCondPgto.resx">
+    <EmbeddedResource Include="Views\Cadastros\frmCadastroCondPgto.resx">
       <DependentUpon>frmCadastroCondPgto.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\frmCadastroEstado.resx">
+    <EmbeddedResource Include="Views\Cadastros\frmCadastroEstado.resx">
       <DependentUpon>frmCadastroEstado.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\frmCadastroFornecedor.resx">
+    <EmbeddedResource Include="Views\Cadastros\frmCadastroFornecedor.resx">
       <DependentUpon>frmCadastroFornecedor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\frmCadastroFrmPgto.resx">
+    <EmbeddedResource Include="Views\Cadastros\frmCadastroFrmPgto.resx">
       <DependentUpon>frmCadastroFrmPgto.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\frmCadastroFuncionario.resx">
+    <EmbeddedResource Include="Views\Cadastros\frmCadastroFuncionario.resx">
       <DependentUpon>frmCadastroFuncionario.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\frmCadastroPais.resx">
+    <EmbeddedResource Include="Views\Cadastros\frmCadastroPais.resx">
       <DependentUpon>frmCadastroPais.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\frmConsultaCidade.resx">
+    <EmbeddedResource Include="Views\Consultas\frmConsultaCidade.resx">
       <DependentUpon>frmConsultaCidade.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\frmConsultaCliente.resx">
+    <EmbeddedResource Include="Views\Consultas\frmConsultaCliente.resx">
       <DependentUpon>frmConsultaCliente.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\frmConsultaCondPgto.resx">
+    <EmbeddedResource Include="Views\Consultas\frmConsultaCondPgto.resx">
       <DependentUpon>frmConsultaCondPgto.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\frmConsultaEstado.resx">
+    <EmbeddedResource Include="Views\Consultas\frmConsultaEstado.resx">
       <DependentUpon>frmConsultaEstado.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\frmConsultaFornecedor.resx">
+    <EmbeddedResource Include="Views\Consultas\frmConsultaFornecedor.resx">
       <DependentUpon>frmConsultaFornecedor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\frmConsultaFrmPgto.resx">
+    <EmbeddedResource Include="Views\Consultas\frmConsultaFrmPgto.resx">
       <DependentUpon>frmConsultaFrmPgto.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -303,10 +303,10 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Views\frmConsultaFuncionario.resx">
+    <EmbeddedResource Include="Views\Consultas\frmConsultaFuncionario.resx">
       <DependentUpon>frmConsultaFuncionario.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\frmConsultaPais.resx">
+    <EmbeddedResource Include="Views\Consultas\frmConsultaPais.resx">
       <DependentUpon>frmConsultaPais.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
