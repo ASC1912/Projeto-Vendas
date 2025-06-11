@@ -99,6 +99,42 @@ namespace Projeto.Utils
         }
 
 
+        public static bool ValidarCNPJ(string cnpj)
+        {
+            cnpj = new string(cnpj.Where(char.IsDigit).ToArray());
+
+            if (cnpj.Length != 14)
+                return false;
+
+            if (new string(cnpj[0], 14) == cnpj)
+                return false;
+
+            int[] multiplicador1 = { 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };
+            int[] multiplicador2 = { 6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };
+
+            string tempCnpj = cnpj.Substring(0, 12);
+            int soma = 0;
+
+            for (int i = 0; i < 12; i++)
+                soma += int.Parse(tempCnpj[i].ToString()) * multiplicador1[i];
+
+            int resto = soma % 11;
+            resto = resto < 2 ? 0 : 11 - resto;
+            tempCnpj += resto.ToString();
+
+            soma = 0;
+            for (int i = 0; i < 13; i++)
+                soma += int.Parse(tempCnpj[i].ToString()) * multiplicador2[i];
+
+            resto = soma % 11;
+            resto = resto < 2 ? 0 : 11 - resto;
+
+            string digitoVerificador = tempCnpj.Substring(12, 1) + resto.ToString();
+
+            return cnpj.EndsWith(digitoVerificador);
+        }
+
+
         public static bool ComboBoxObrigatorio(ComboBox combo, string mensagem)
         {
             if (combo.SelectedIndex < 0 || combo.SelectedItem == null)

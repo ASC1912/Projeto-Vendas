@@ -144,7 +144,7 @@
             // 
             // btnSalvar
             // 
-            this.btnSalvar.Location = new System.Drawing.Point(622, 389);
+            this.btnSalvar.Location = new System.Drawing.Point(1117, 634);
             this.btnSalvar.Name = "btnSalvar";
             this.btnSalvar.Size = new System.Drawing.Size(80, 35);
             this.btnSalvar.TabIndex = 37;
@@ -304,7 +304,7 @@
             // dtpDemissao
             // 
             this.dtpDemissao.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpDemissao.Location = new System.Drawing.Point(520, 336);
+            this.dtpDemissao.Location = new System.Drawing.Point(520, 338);
             this.dtpDemissao.Name = "dtpDemissao";
             this.dtpDemissao.ShowCheckBox = true;
             this.dtpDemissao.Size = new System.Drawing.Size(160, 22);
@@ -322,7 +322,7 @@
             // lblDataDemissao
             // 
             this.lblDataDemissao.AutoSize = true;
-            this.lblDataDemissao.Location = new System.Drawing.Point(517, 317);
+            this.lblDataDemissao.Location = new System.Drawing.Point(517, 319);
             this.lblDataDemissao.Name = "lblDataDemissao";
             this.lblDataDemissao.Size = new System.Drawing.Size(120, 16);
             this.lblDataDemissao.TabIndex = 68;
@@ -365,7 +365,7 @@
             // frmCadastroFuncionario
             // 
             //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            //this.ClientSize = new System.Drawing.Size(1342, 721);
+            //this.ClientSize = new System.Drawing.Size(1342, 681);
             this.Controls.Add(this.txtCidade);
             this.Controls.Add(this.btnBuscar);
             this.Controls.Add(this.lblRG);

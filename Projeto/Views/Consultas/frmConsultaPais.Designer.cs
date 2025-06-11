@@ -71,7 +71,7 @@
             // 
             // btnSelecionar
             // 
-            this.btnSelecionar.Location = new System.Drawing.Point(845, 659);
+            this.btnSelecionar.Location = new System.Drawing.Point(854, 644);
             this.btnSelecionar.Name = "btnSelecionar";
             this.btnSelecionar.Size = new System.Drawing.Size(90, 23);
             this.btnSelecionar.TabIndex = 8;
@@ -82,7 +82,7 @@
             // frmConsultaPais
             // 
             //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            //this.ClientSize = new System.Drawing.Size(1342, 721);
+            //this.ClientSize = new System.Drawing.Size(1342, 681);
             this.Controls.Add(this.btnSelecionar);
             this.Name = "frmConsultaPais";
             this.Text = "Consulta Paises";

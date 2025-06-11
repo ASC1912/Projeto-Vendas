@@ -59,7 +59,7 @@
             // 
             this.txtNome.Location = new System.Drawing.Point(12, 120);
             this.txtNome.Name = "txtNome";
-            this.txtNome.Size = new System.Drawing.Size(100, 22);
+            this.txtNome.Size = new System.Drawing.Size(181, 22);
             this.txtNome.TabIndex = 18;
             // 
             // btnSalvar
@@ -83,7 +83,7 @@
             // 
             // btnBuscar
             // 
-            this.btnBuscar.Location = new System.Drawing.Point(186, 225);
+            this.btnBuscar.Location = new System.Drawing.Point(228, 225);
             this.btnBuscar.Name = "btnBuscar";
             this.btnBuscar.Size = new System.Drawing.Size(150, 23);
             this.btnBuscar.TabIndex = 66;
@@ -96,7 +96,7 @@
             this.txtEstado.Location = new System.Drawing.Point(12, 226);
             this.txtEstado.Name = "txtEstado";
             this.txtEstado.ReadOnly = true;
-            this.txtEstado.Size = new System.Drawing.Size(100, 22);
+            this.txtEstado.Size = new System.Drawing.Size(181, 22);
             this.txtEstado.TabIndex = 67;
             // 
             // frmCadastroCidade

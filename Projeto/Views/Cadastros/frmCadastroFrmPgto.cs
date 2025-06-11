@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using Projeto.Models;
 using Projeto.Controller;
+using Projeto.Utils;
 
 namespace Projeto
 {
@@ -40,6 +41,8 @@ namespace Projeto
 
         private void btnSalvar_Click(object sender, EventArgs e)
         {
+            if (!Validador.CampoObrigatorio(txtDescricao, "A descrição é obrigatória.")) return;
+
             try
             {
                 int id = string.IsNullOrEmpty(txtCodigo.Text) ? 0 : int.Parse(txtCodigo.Text);
@@ -72,6 +75,7 @@ namespace Projeto
                 MessageBox.Show("Erro: " + ex.Message);
             }
         }
+
 
         private void frmCadastroFrmPgto_Load(object sender, EventArgs e)
         {

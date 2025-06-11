@@ -7,6 +7,8 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using Projeto.Utils;
+
 
 namespace Projeto.Views
 {
@@ -52,6 +54,8 @@ namespace Projeto.Views
 
         private void btnSalvar_Click(object sender, EventArgs e)
         {
+            if (!Validador.CampoObrigatorio(txtNome, "O nome do estado é obrigatório.")) return;
+
             if (paisSelecionadoId <= 0)
             {
                 MessageBox.Show("Selecione um país!");
@@ -90,6 +94,7 @@ namespace Projeto.Views
                 MessageBox.Show("Erro ao salvar estado: " + ex.Message);
             }
         }
+
 
 
 

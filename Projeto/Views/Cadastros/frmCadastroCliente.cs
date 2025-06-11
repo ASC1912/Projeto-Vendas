@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
@@ -70,10 +71,43 @@ namespace Projeto.Views
             if (!Validador.ValidarEmail(txtEmail)) return;
             if (!Validador.ValidarNumerico(txtNumEnd, "O número do endereço deve ser numérico.")) return;
 
-            if (!Validador.ValidarCPF(txtCPF.Text))
+            string tipoPessoa = cbTipo.Text.Trim();
+            string documento = new string(txtCPF.Text.Where(char.IsDigit).ToArray());
+
+            if (tipoPessoa == "Físico")
             {
-                MessageBox.Show("CPF inválido.");
-                txtCPF.Focus();
+                if (!Validador.ValidarCPF(documento))
+                {
+                    MessageBox.Show("CPF inválido.");
+                    txtCPF.Focus();
+                    return;
+                }
+            }
+            else if (tipoPessoa == "Jurídico")
+            {
+                if (!Validador.ValidarCNPJ(documento))
+                {
+                    MessageBox.Show("CNPJ inválido.");
+                    txtCPF.Focus();
+                    return;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Tipo de pessoa inválido.");
+                cbTipo.Focus();
+                return;
+            }
+
+            if (cidadeSelecionadoId <= 0)
+            {
+                MessageBox.Show("Selecione uma cidade.");
+                return;
+            }
+
+            if (condicaoSelecionadoId <= 0)
+            {
+                MessageBox.Show("Selecione uma condição de pagamento.");
                 return;
             }
 

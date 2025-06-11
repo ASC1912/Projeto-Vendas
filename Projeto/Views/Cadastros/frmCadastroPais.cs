@@ -8,6 +8,8 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using Projeto.Utils;
+
 
 namespace Projeto.Views
 {
@@ -41,6 +43,8 @@ namespace Projeto.Views
 
         private void btnSalvar_Click(object sender, EventArgs e)
         {
+            if (!Validador.CampoObrigatorio(txtNome, "O nome do país é obrigatório.")) return;
+
             try
             {
                 int id = string.IsNullOrEmpty(txtCodigo.Text) ? 0 : int.Parse(txtCodigo.Text);
@@ -73,6 +77,7 @@ namespace Projeto.Views
                 MessageBox.Show("Erro: " + ex.Message);
             }
         }
+
 
     }
 }

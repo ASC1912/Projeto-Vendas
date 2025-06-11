@@ -9,6 +9,8 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Projeto.Utils;
+
 
 namespace Projeto
 {
@@ -80,28 +82,31 @@ namespace Projeto
 
         private void AdicionarCondicaoeParcela()
         {
+            if (!Validador.CampoObrigatorio(txtDescricao, "A descrição é obrigatória.")) return;
+
+            if (!Validador.ValidarNumerico(txtQtdParcelas, "A quantidade de parcelas deve ser um número.")) return;
+
+            decimal desconto = string.IsNullOrWhiteSpace(txtDesconto.Text) ? 0 : Convert.ToDecimal(txtDesconto.Text);
+
+            if (!ValidarPorcentagemTotal(desconto))
+                return;
+
+            int qtdParcelas = int.Parse(txtQtdParcelas.Text);
+            int qtdParcelasView = listView1.Items.Count;
+
+            if (qtdParcelas != qtdParcelasView)
+            {
+                MessageBox.Show("O número de parcelas não corresponde à quantidade definida.");
+                return;
+            }
+
             try
             {
-                decimal desconto = string.IsNullOrWhiteSpace(txtDesconto.Text) ? 0 : Convert.ToDecimal(txtDesconto.Text);
-
-                if (!ValidarPorcentagemTotal(desconto))
-                {
-                    return;
-                }
-
                 int id = string.IsNullOrEmpty(txtCodigo.Text) ? 0 : int.Parse(txtCodigo.Text);
                 string descricao = txtDescricao.Text;
-                int qtdParcelas = int.Parse(txtQtdParcelas.Text);
-                int qtdParcelasView = listView1.Items.Count;
                 decimal juros = string.IsNullOrWhiteSpace(txtJuros.Text) ? 0 : Convert.ToDecimal(txtJuros.Text);
                 decimal multa = string.IsNullOrWhiteSpace(txtMulta.Text) ? 0 : Convert.ToDecimal(txtMulta.Text);
                 bool status = !chkInativo.Checked;
-
-                if (qtdParcelas != qtdParcelasView)
-                {
-                    MessageBox.Show("O número de parcelas não corresponde à quantidade definida.");
-                    return;
-                }
 
                 DateTime dataModificacao = DateTime.Now;
                 DateTime dataCriacao = id == 0
@@ -110,7 +115,7 @@ namespace Projeto
 
                 CondicaoPagamento condicao = new CondicaoPagamento
                 {
-                    Id = id,
+                    Id = id,    
                     Descricao = descricao,
                     QtdParcelas = qtdParcelas,
                     Juros = juros,
@@ -155,6 +160,7 @@ namespace Projeto
                 MessageBox.Show("Erro: " + ex.Message);
             }
         }
+
 
 
 

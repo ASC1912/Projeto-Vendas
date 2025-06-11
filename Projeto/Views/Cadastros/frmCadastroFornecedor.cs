@@ -1,11 +1,13 @@
 ﻿using Projeto.Controller;
 using Projeto.DAO;
 using Projeto.Models;
+using Projeto.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
@@ -68,11 +70,52 @@ namespace Projeto.Views
 
         private void btnSalvar_Click(object sender, EventArgs e)
         {
+            if (!Validador.CampoObrigatorio(txtNome, "O nome é obrigatório.")) return;
+            if (!Validador.CampoObrigatorio(txtCPF, "O CPF/CNPJ é obrigatório.")) return;
+            if (!Validador.ValidarEmail(txtEmail)) return;
+            if (!Validador.ValidarNumerico(txtNumEnd, "O número do endereço deve ser numérico.")) return;
+
+            string tipoPessoa = cbTipo.Text.Trim();
+            string documento = new string(txtCPF.Text.Where(char.IsDigit).ToArray());
+
+            if (tipoPessoa == "Físico")
+            {
+                if (!Validador.ValidarCPF(documento))
+                {
+                    MessageBox.Show("CPF inválido.");
+                    txtCPF.Focus();
+                    return;
+                }
+            }
+            else if (tipoPessoa == "Jurídico")
+            {
+                if (!Validador.ValidarCNPJ(documento))
+                {
+                    MessageBox.Show("CNPJ inválido.");
+                    txtCPF.Focus();
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(txtInscEst.Text))
+                {
+                    MessageBox.Show("Inscrição estadual é obrigatória para pessoa jurídica.");
+                    txtInscEst.Focus();
+                    return;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Tipo de pessoa inválido.");
+                cbTipo.Focus();
+                return;
+            }
+
             if (cidadeSelecionadoId <= 0)
             {
                 MessageBox.Show("Selecione uma cidade antes de salvar!");
                 return;
             }
+
 
             try
             {

@@ -55,7 +55,7 @@
             // 
             // btnSalvar
             // 
-            this.btnSalvar.Location = new System.Drawing.Point(608, 389);
+            this.btnSalvar.Location = new System.Drawing.Point(1121, 634);
             this.btnSalvar.Name = "btnSalvar";
             this.btnSalvar.Size = new System.Drawing.Size(80, 35);
             this.btnSalvar.TabIndex = 11;
@@ -102,7 +102,7 @@
             // frmCadastroEstado
             // 
             //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            //this.ClientSize = new System.Drawing.Size(1342, 721);
+            //this.ClientSize = new System.Drawing.Size(1342, 681);
             this.Controls.Add(this.txtPais);
             this.Controls.Add(this.btnBuscar);
             this.Controls.Add(this.lblPais);
