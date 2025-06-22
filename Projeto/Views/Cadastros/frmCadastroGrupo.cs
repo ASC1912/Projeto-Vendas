@@ -1,5 +1,6 @@
 ﻿using Projeto.Controller;
 using Projeto.Models;
+using Projeto.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -7,28 +8,25 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using Projeto.Utils;
 
-
-namespace Projeto.Views
+namespace Projeto.Views.Cadastros
 {
-    public partial class frmCadastroPais : Projeto.frmBase
+    public partial class frmCadastroGrupo : Projeto.frmBase
     {
         public bool modoEdicao = false;
-
-        public frmCadastroPais() : base()
+        public frmCadastroGrupo()
         {
             InitializeComponent();
             txtCodigo.Enabled = false;
         }
 
-        public void CarregarPais(int id, string nome, bool status, DateTime? dataCriacao, DateTime? dataModificacao)
+        public void CarregarGrupo(int id, string nome, string descricao, bool status, DateTime? dataCriacao, DateTime? dataModificacao)
         {
             modoEdicao = true;
 
             txtCodigo.Text = id.ToString();
             txtNome.Text = nome;
+            txtDescricao.Text = descricao;
             chkInativo.Checked = !status;
 
             lblDataCriacao.Text = dataCriacao.HasValue
@@ -40,15 +38,15 @@ namespace Projeto.Views
                 : "Modificado em: -";
         }
 
-
         private void btnSalvar_Click(object sender, EventArgs e)
         {
-            if (!Validador.CampoObrigatorio(txtNome, "O nome do país é obrigatório.")) return;
+            if (!Validador.CampoObrigatorio(txtNome, "O nome é obrigatório.")) return;
 
             try
             {
                 int id = string.IsNullOrEmpty(txtCodigo.Text) ? 0 : int.Parse(txtCodigo.Text);
                 string nome = txtNome.Text;
+                string descricao = txtDescricao.Text;
                 bool status = !chkInativo.Checked;
 
                 DateTime dataCriacao = id == 0
@@ -57,19 +55,20 @@ namespace Projeto.Views
 
                 DateTime dataModificacao = DateTime.Now;
 
-                Pais pais = new Pais
+                Grupo grupo = new Grupo
                 {
                     Id = id,
                     Nome = nome,
+                    Descricao = descricao,
                     Status = status,
                     DataCriacao = dataCriacao,
                     DataModificacao = dataModificacao
                 };
 
-                PaisController controller = new PaisController();
-                controller.Salvar(pais);
+                GrupoController controller = new GrupoController();
+                controller.Salvar(grupo);
 
-                MessageBox.Show("País salvo com sucesso!");
+                MessageBox.Show("Grupo salvo com sucesso!");
                 this.Close();
             }
             catch (Exception ex)
@@ -78,7 +77,7 @@ namespace Projeto.Views
             }
         }
 
-        private void frmCadastroPais_Load(object sender, EventArgs e)
+        private void frmCadastroGrupo_Load(object sender, EventArgs e)
         {
             lblDataCriacao.Visible = modoEdicao;
             lblDataModificacao.Visible = modoEdicao;

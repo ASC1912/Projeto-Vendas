@@ -2,6 +2,7 @@
 using Projeto.Controller;
 using Projeto.Models;
 using Projeto.Views;
+using Projeto.Views.Consultas;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -87,6 +88,30 @@ namespace Projeto
         {
             frmConsultaFornecedor formConsultaFornecedor = new frmConsultaFornecedor();
             formConsultaFornecedor.ShowDialog();
+        }
+
+        private void marcasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmConsultaMarca formConsultaMarca = new frmConsultaMarca();
+            formConsultaMarca.ShowDialog();
+        }
+
+        private void gruposToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmConsultaGrupo formConsultaGrupo = new frmConsultaGrupo();
+            formConsultaGrupo.ShowDialog();
+        }
+
+        private void produtosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmConsultaProduto formConstulaProduto = new frmConsultaProduto();
+            formConstulaProduto.ShowDialog();
+        }
+
+        private void transportadorasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmConsultaTransportadora formConlsultaTransportadora = new frmConsultaTransportadora();
+            formConlsultaTransportadora.ShowDialog();
         }
     }
 }

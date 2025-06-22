@@ -10,25 +10,27 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Projeto.Views
+namespace Projeto.Views.Cadastros
 {
-    public partial class frmCadastroFuncionario : Projeto.frmBase
+    public partial class frmCadastroTransportadora : Projeto.frmBase
     {
         private CidadeController cidadeController = new CidadeController();
-        private FuncionarioController controller = new FuncionarioController();
+        private CondicaoPagamentoController condicaoPagamentoController = new CondicaoPagamentoController();
+        private TransportadoraController controller = new TransportadoraController();
         public bool modoEdicao = false;
         private int cidadeSelecionadoId = -1;
-
-
-        public frmCadastroFuncionario() : base()
+        private int condicaoSelecionadoId = -1;
+        public frmCadastroTransportadora() : base()
         {
             InitializeComponent();
             txtCodigo.Enabled = false;
             cbTipo.SelectedIndex = 0;
-            dtpDemissao.Checked = false;
         }
 
-        public void CarregarFuncionario(int id, string nome, string cpf_cnpj, string telefone, string email, string endereco, int numEndereco, string bairro, string complemento, string cep, string cargo, decimal salario, string tipo, string nomeCidade, int idCidade, bool status, DateTime? dataAdmissao, DateTime? dataDemissao, string rg, DateTime? dataCriacao, DateTime? dataModificacao)
+        public void CarregarTransportadora(int id, string nome, string cpf_cnpj, string telefone, string email, string endereco,
+                                int numEndereco, string bairro, string complemento, string cep, string inscEst,
+                                string inscEstSubTrib, string tipo, string nomeCidade, int idCidade, int idCondicao,
+                                bool status, DateTime? dataCriacao, DateTime? dataModificacao)
         {
             txtCodigo.Text = id.ToString();
             txtNome.Text = nome;
@@ -40,22 +42,14 @@ namespace Projeto.Views
             txtBairro.Text = bairro;
             txtComplemento.Text = complemento;
             txtCEP.Text = cep;
+            txtInscEst.Text = inscEst;
+            txtInscEstSubTrib.Text = inscEstSubTrib;
             cbTipo.Text = tipo;
             txtCidade.Text = nomeCidade;
             cidadeSelecionadoId = idCidade;
-            txtCargo.Text = cargo;
-            txtSalario.Text = salario.ToString();
-            txtRG.Text = rg;
+            txtCondicao.Text = idCondicao.ToString();
+            condicaoSelecionadoId = idCondicao;
             chkInativo.Checked = !status;
-
-            if (dataAdmissao.HasValue)
-                dtpAdmissao.Value = dataAdmissao.Value;
-
-            if (dataDemissao.HasValue)
-            {
-                dtpDemissao.Value = dataDemissao.Value;
-                dtpDemissao.Checked = true;
-            }
 
             lblDataCriacao.Text = dataCriacao.HasValue
                 ? $"Criado em: {dataCriacao:dd/MM/yyyy HH:mm}"
@@ -66,15 +60,12 @@ namespace Projeto.Views
                 : "Modificado em: -";
         }
 
-
-
         private void btnSalvar_Click(object sender, EventArgs e)
         {
             if (!Validador.CampoObrigatorio(txtNome, "O nome é obrigatório.")) return;
             if (!Validador.CampoObrigatorio(txtCPF, "O CPF/CNPJ é obrigatório.")) return;
             if (!Validador.ValidarEmail(txtEmail)) return;
             if (!Validador.ValidarNumerico(txtNumEnd, "O número do endereço deve ser numérico.")) return;
-            if (!Validador.CampoObrigatorio(txtCargo, "O cargo é obrigatório.")) return;
 
             string tipoPessoa = cbTipo.Text.Trim();
             string documento = new string(txtCPF.Text.Where(char.IsDigit).ToArray());
@@ -96,6 +87,13 @@ namespace Projeto.Views
                     txtCPF.Focus();
                     return;
                 }
+
+                if (string.IsNullOrWhiteSpace(txtInscEst.Text))
+                {
+                    MessageBox.Show("Inscrição estadual é obrigatória para pessoa jurídica.");
+                    txtInscEst.Focus();
+                    return;
+                }
             }
             else
             {
@@ -106,7 +104,7 @@ namespace Projeto.Views
 
             if (cidadeSelecionadoId <= 0)
             {
-                MessageBox.Show("Selecione uma cidade.");
+                MessageBox.Show("Selecione uma cidade antes de salvar!");
                 return;
             }
 
@@ -114,19 +112,16 @@ namespace Projeto.Views
             try
             {
                 int id = string.IsNullOrWhiteSpace(txtCodigo.Text) ? 0 : Convert.ToInt32(txtCodigo.Text);
-                string nome = txtNome.Text;
-                bool status = !chkInativo.Checked;
-
                 DateTime dataCriacao = id == 0
                     ? DateTime.Now
                     : DateTime.Parse(lblDataCriacao.Text.Replace("Criado em: ", ""));
 
                 DateTime dataModificacao = DateTime.Now;
 
-                Funcionario funcionario = new Funcionario
+                Transportadora transportadora = new Transportadora
                 {
                     Id = id,
-                    Nome = nome,
+                    Nome = txtNome.Text,
                     CPF_CNPJ = txtCPF.Text,
                     Email = txtEmail.Text,
                     Endereco = txtEndereco.Text,
@@ -136,30 +131,27 @@ namespace Projeto.Views
                     Telefone = txtTelefone.Text,
                     Tipo = cbTipo.Text,
                     CEP = txtCEP.Text,
-                    Cargo = txtCargo.Text,
-                    Salario = Convert.ToDecimal(txtSalario.Text),
+                    InscricaoEstadual = txtInscEst.Text,
+                    InscricaoEstadualSubTrib = txtInscEstSubTrib.Text,
                     IdCidade = cidadeSelecionadoId,
-                    Status = status,
-                    DataAdmissao = dtpAdmissao.Value,
-                    DataDemissao = dtpDemissao.Checked ? (DateTime?)dtpDemissao.Value : null,
-                    Rg = txtRG.Text,
+                    IdCondicao = condicaoSelecionadoId > 0 ? (int?)condicaoSelecionadoId : null,
+                    Status = !chkInativo.Checked,
                     DataCriacao = dataCriacao,
                     DataModificacao = dataModificacao
                 };
 
-                controller.Salvar(funcionario);
-                MessageBox.Show("Funcionário salvo com sucesso!");
+                controller.Salvar(transportadora);
+                MessageBox.Show("Transportadora salva com sucesso!");
                 this.Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Erro ao salvar funcionário: " + ex.Message);
+                MessageBox.Show("Erro ao salvar transportadora: " + ex.Message);
             }
         }
 
-        private void frmCadastroFuncionario_Load(object sender, EventArgs e)
+        private void frmCadastroTransportadora_Load(object sender, EventArgs e)
         {
-
             if (modoEdicao == true)
             {
                 cbTipo.Enabled = false;
@@ -177,6 +169,20 @@ namespace Projeto.Views
             {
                 txtCidade.Text = consultaCidade.CidadeSelecionado.Nome;
                 cidadeSelecionadoId = consultaCidade.CidadeSelecionado.Id;
+            }
+        }
+
+        private void btnBuscarCond_Click(object sender, EventArgs e)
+        {
+            frmConsultaCondPgto consultaCondicao = new frmConsultaCondPgto();
+            consultaCondicao.ModoSelecao = true;
+
+            var resultado = consultaCondicao.ShowDialog();
+
+            if (resultado == DialogResult.OK && consultaCondicao.CondicaoSelecionado != null)
+            {
+                txtCondicao.Text = consultaCondicao.CondicaoSelecionado.Id.ToString();
+                condicaoSelecionadoId = consultaCondicao.CondicaoSelecionado.Id;
             }
         }
     }

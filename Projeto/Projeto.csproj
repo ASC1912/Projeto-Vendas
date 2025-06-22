@@ -104,9 +104,15 @@
     <Compile Include="Controller\EstadoController.cs" />
     <Compile Include="Controller\FornecedorController.cs" />
     <Compile Include="Controller\FuncionarioController.cs" />
+    <Compile Include="Controller\GrupoController.cs" />
+    <Compile Include="Controller\MarcaController.cs" />
     <Compile Include="Controller\PaisController.cs" />
     <Compile Include="Controller\FormaPagamentoController.cs" />
     <Compile Include="Controller\ParcelaController.cs" />
+    <Compile Include="Controller\ProdutoController.cs" />
+    <Compile Include="Controller\TransportadoraController.cs" />
+    <Compile Include="DAO\DAOGrupo.cs" />
+    <Compile Include="DAO\DAOProduto.cs" />
     <Compile Include="DAO\DAOCidade.cs" />
     <Compile Include="DAO\DAOCliente.cs" />
     <Compile Include="DAO\DAOCondicaoPagamento.cs" />
@@ -114,8 +120,10 @@
     <Compile Include="DAO\DAOFormaPagamento.cs" />
     <Compile Include="DAO\DAOFornecedor.cs" />
     <Compile Include="DAO\DAOFuncionario.cs" />
+    <Compile Include="DAO\DAOMarca.cs" />
     <Compile Include="DAO\DAOPais.cs" />
     <Compile Include="DAO\DAOParcela.cs" />
+    <Compile Include="DAO\DAOTransportadora.cs" />
     <Compile Include="Models\Cidade.cs" />
     <Compile Include="Models\Cliente.cs" />
     <Compile Include="Models\CondicaoPagamento.cs" />
@@ -123,10 +131,62 @@
     <Compile Include="Models\FormaPagamento.cs" />
     <Compile Include="Models\Fornecedor.cs" />
     <Compile Include="Models\Funcionario.cs" />
+    <Compile Include="Models\Grupo.cs" />
+    <Compile Include="Models\Marca.cs" />
     <Compile Include="Models\Pais.cs" />
     <Compile Include="Models\Parcelamento.cs" />
     <Compile Include="Models\Pessoa.cs" />
+    <Compile Include="Models\Produto.cs" />
+    <Compile Include="Models\Transportadora.cs" />
     <Compile Include="Utils\Validador.cs" />
+    <Compile Include="Views\Cadastros\frmCadastroGrupo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Cadastros\frmCadastroGrupo.Designer.cs">
+      <DependentUpon>frmCadastroGrupo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Cadastros\frmCadastroMarca.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Cadastros\frmCadastroMarca.Designer.cs">
+      <DependentUpon>frmCadastroMarca.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Cadastros\frmCadastroProduto.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Cadastros\frmCadastroProduto.Designer.cs">
+      <DependentUpon>frmCadastroProduto.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Cadastros\frmCadastroTransportadora.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Cadastros\frmCadastroTransportadora.Designer.cs">
+      <DependentUpon>frmCadastroTransportadora.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Consultas\frmConsultaGrupo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Consultas\frmConsultaGrupo.Designer.cs">
+      <DependentUpon>frmConsultaGrupo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Consultas\frmConsultaMarca.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Consultas\frmConsultaMarca.Designer.cs">
+      <DependentUpon>frmConsultaMarca.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Consultas\frmConsultaProduto.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Consultas\frmConsultaProduto.Designer.cs">
+      <DependentUpon>frmConsultaProduto.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Consultas\frmConsultaTransportadora.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Consultas\frmConsultaTransportadora.Designer.cs">
+      <DependentUpon>frmConsultaTransportadora.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\FormPrincipal.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -243,6 +303,30 @@
     <Compile Include="Views\Consultas\frmConsultaPais.Designer.cs">
       <DependentUpon>frmConsultaPais.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Views\Cadastros\frmCadastroGrupo.resx">
+      <DependentUpon>frmCadastroGrupo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Cadastros\frmCadastroMarca.resx">
+      <DependentUpon>frmCadastroMarca.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Cadastros\frmCadastroProduto.resx">
+      <DependentUpon>frmCadastroProduto.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Cadastros\frmCadastroTransportadora.resx">
+      <DependentUpon>frmCadastroTransportadora.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Consultas\frmConsultaGrupo.resx">
+      <DependentUpon>frmConsultaGrupo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Consultas\frmConsultaMarca.resx">
+      <DependentUpon>frmConsultaMarca.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Consultas\frmConsultaProduto.resx">
+      <DependentUpon>frmConsultaProduto.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Consultas\frmConsultaTransportadora.resx">
+      <DependentUpon>frmConsultaTransportadora.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\FormPrincipal.resx">
       <DependentUpon>FormPrincipal.cs</DependentUpon>
     </EmbeddedResource>

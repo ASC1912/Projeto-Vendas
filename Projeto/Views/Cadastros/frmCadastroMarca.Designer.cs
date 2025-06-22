@@ -1,6 +1,6 @@
-﻿namespace Projeto.Views
+﻿namespace Projeto.Views.Cadastros
 {
-    partial class frmCadastroPais
+    partial class frmCadastroMarca
     {
         /// <summary>
         /// Variável de designer necessária.
@@ -28,67 +28,67 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.lblCodigo = new System.Windows.Forms.Label();
             this.lblNome = new System.Windows.Forms.Label();
             this.txtNome = new System.Windows.Forms.TextBox();
             this.btnSalvar = new System.Windows.Forms.Button();
-            this.lblCodigo = new System.Windows.Forms.Label();
             this.SuspendLayout();
-            // 
-            // lblNome
-            // 
-            this.lblNome.AutoSize = true;
-            this.lblNome.Location = new System.Drawing.Point(13, 91);
-            this.lblNome.Name = "lblNome";
-            this.lblNome.Size = new System.Drawing.Size(44, 16);
-            this.lblNome.TabIndex = 10;
-            this.lblNome.Text = "Nome";
-            // 
-            // txtNome
-            // 
-            this.txtNome.Location = new System.Drawing.Point(16, 110);
-            this.txtNome.Name = "txtNome";
-            this.txtNome.Size = new System.Drawing.Size(100, 22);
-            this.txtNome.TabIndex = 9;
-            // 
-            // btnSalvar
-            // 
-            this.btnSalvar.Location = new System.Drawing.Point(1113, 634);
-            this.btnSalvar.Name = "btnSalvar";
-            this.btnSalvar.Size = new System.Drawing.Size(80, 35);
-            this.btnSalvar.TabIndex = 8;
-            this.btnSalvar.Text = "Salvar";
-            this.btnSalvar.UseVisualStyleBackColor = true;
-            this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
             // 
             // lblCodigo
             // 
             this.lblCodigo.AutoSize = true;
-            this.lblCodigo.Location = new System.Drawing.Point(13, 9);
+            this.lblCodigo.Location = new System.Drawing.Point(9, 9);
             this.lblCodigo.Name = "lblCodigo";
             this.lblCodigo.Size = new System.Drawing.Size(51, 16);
-            this.lblCodigo.TabIndex = 11;
+            this.lblCodigo.TabIndex = 66;
             this.lblCodigo.Text = "Código";
             // 
-            // frmCadastroPais
+            // lblNome
+            // 
+            this.lblNome.AutoSize = true;
+            this.lblNome.Location = new System.Drawing.Point(9, 87);
+            this.lblNome.Name = "lblNome";
+            this.lblNome.Size = new System.Drawing.Size(44, 16);
+            this.lblNome.TabIndex = 68;
+            this.lblNome.Text = "Nome";
+            // 
+            // txtNome
+            // 
+            this.txtNome.Location = new System.Drawing.Point(12, 106);
+            this.txtNome.Name = "txtNome";
+            this.txtNome.Size = new System.Drawing.Size(151, 22);
+            this.txtNome.TabIndex = 67;
+            // 
+            // btnSalvar
+            // 
+            this.btnSalvar.Location = new System.Drawing.Point(1114, 634);
+            this.btnSalvar.Name = "btnSalvar";
+            this.btnSalvar.Size = new System.Drawing.Size(80, 35);
+            this.btnSalvar.TabIndex = 69;
+            this.btnSalvar.Text = "Salvar";
+            this.btnSalvar.UseVisualStyleBackColor = true;
+            this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
+            // 
+            // frmCadastroMarca
             // 
             //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             //this.ClientSize = new System.Drawing.Size(1342, 681);
-            this.Controls.Add(this.lblCodigo);
+            this.Controls.Add(this.btnSalvar);
             this.Controls.Add(this.lblNome);
             this.Controls.Add(this.txtNome);
-            this.Controls.Add(this.btnSalvar);
-            this.Name = "frmCadastroPais";
-            this.Text = "Cadastro Paises";
-            this.Load += new System.EventHandler(this.frmCadastroPais_Load);
-            this.Controls.SetChildIndex(this.lblDataModificacao, 0);
-            this.Controls.SetChildIndex(this.chkInativo, 0);
-            this.Controls.SetChildIndex(this.lblDataCriacao, 0);
-            this.Controls.SetChildIndex(this.btnSair, 0);
-            this.Controls.SetChildIndex(this.txtCodigo, 0);
-            this.Controls.SetChildIndex(this.btnSalvar, 0);
+            this.Controls.Add(this.lblCodigo);
+            this.Name = "frmCadastroMarca";
+            this.Text = "Cadastro Marcas";
+            this.Load += new System.EventHandler(this.frmCadastroMarca_Load);
+            this.Controls.SetChildIndex(this.lblCodigo, 0);
             this.Controls.SetChildIndex(this.txtNome, 0);
             this.Controls.SetChildIndex(this.lblNome, 0);
-            this.Controls.SetChildIndex(this.lblCodigo, 0);
+            this.Controls.SetChildIndex(this.btnSair, 0);
+            this.Controls.SetChildIndex(this.txtCodigo, 0);
+            this.Controls.SetChildIndex(this.chkInativo, 0);
+            this.Controls.SetChildIndex(this.lblDataCriacao, 0);
+            this.Controls.SetChildIndex(this.lblDataModificacao, 0);
+            this.Controls.SetChildIndex(this.btnSalvar, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -96,9 +96,9 @@
 
         #endregion
 
+        private System.Windows.Forms.Label lblCodigo;
         private System.Windows.Forms.Label lblNome;
         private System.Windows.Forms.TextBox txtNome;
         private System.Windows.Forms.Button btnSalvar;
-        private System.Windows.Forms.Label lblCodigo;
     }
 }

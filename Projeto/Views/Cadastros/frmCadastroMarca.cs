@@ -1,5 +1,6 @@
 ﻿using Projeto.Controller;
 using Projeto.Models;
+using Projeto.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -7,23 +8,19 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using Projeto.Utils;
 
-
-namespace Projeto.Views
+namespace Projeto.Views.Cadastros
 {
-    public partial class frmCadastroPais : Projeto.frmBase
+    public partial class frmCadastroMarca : Projeto.frmBase
     {
         public bool modoEdicao = false;
-
-        public frmCadastroPais() : base()
+        public frmCadastroMarca() : base() 
         {
             InitializeComponent();
             txtCodigo.Enabled = false;
         }
 
-        public void CarregarPais(int id, string nome, bool status, DateTime? dataCriacao, DateTime? dataModificacao)
+        public void CarregarMarca(int id, string nome, bool status, DateTime? dataCriacao, DateTime? dataModificacao)
         {
             modoEdicao = true;
 
@@ -40,10 +37,10 @@ namespace Projeto.Views
                 : "Modificado em: -";
         }
 
-
         private void btnSalvar_Click(object sender, EventArgs e)
         {
-            if (!Validador.CampoObrigatorio(txtNome, "O nome do país é obrigatório.")) return;
+
+            if (!Validador.CampoObrigatorio(txtNome, "O nome é obrigatório.")) return;
 
             try
             {
@@ -57,7 +54,7 @@ namespace Projeto.Views
 
                 DateTime dataModificacao = DateTime.Now;
 
-                Pais pais = new Pais
+                Marca marca = new Marca
                 {
                     Id = id,
                     Nome = nome,
@@ -66,10 +63,10 @@ namespace Projeto.Views
                     DataModificacao = dataModificacao
                 };
 
-                PaisController controller = new PaisController();
-                controller.Salvar(pais);
+                MarcaController controller = new MarcaController();
+                controller.Salvar(marca);
 
-                MessageBox.Show("País salvo com sucesso!");
+                MessageBox.Show("Marca salva com sucesso!");
                 this.Close();
             }
             catch (Exception ex)
@@ -78,10 +75,12 @@ namespace Projeto.Views
             }
         }
 
-        private void frmCadastroPais_Load(object sender, EventArgs e)
+        private void frmCadastroMarca_Load(object sender, EventArgs e)
         {
             lblDataCriacao.Visible = modoEdicao;
             lblDataModificacao.Visible = modoEdicao;
         }
+
+       
     }
 }

@@ -163,7 +163,6 @@ namespace Projeto.Views
 
         private void frmCadastroFornecedor_Load(object sender, EventArgs e)
         {
-
             if (modoEdicao == true)
             {
                 cbTipo.Enabled = false;
