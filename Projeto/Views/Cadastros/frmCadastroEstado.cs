@@ -26,15 +26,16 @@ namespace Projeto.Views
             txtCodigo.Enabled = false;
         }
 
-        public void CarregarEstado(int id, string nome, string nomePais, bool status, DateTime? dataCriacao, DateTime? dataModificacao)
+        public void CarregarEstado(int id, string nome, string uf, string nomePais, int idPais, bool status, DateTime? dataCriacao, DateTime? dataModificacao)
         {
-           modoEdicao = true;
+            modoEdicao = true;
 
-           txtCodigo.Text = id.ToString();
-           txtNome.Text = nome;
-           txtPais.Text = nomePais;
-           chkInativo.Checked = !status;
-
+            txtCodigo.Text = id.ToString();
+            txtNome.Text = nome;
+            txtUF.Text = uf;
+            txtPais.Text = nomePais;
+            paisSelecionadoId = idPais;
+            chkInativo.Checked = !status;
 
             lblDataCriacao.Text = dataCriacao.HasValue
                 ? $"Criado em: {dataCriacao.Value:dd/MM/yyyy HH:mm}"
@@ -44,6 +45,7 @@ namespace Projeto.Views
                 ? $"Modificado em: {dataModificacao.Value:dd/MM/yyyy HH:mm}"
                 : "Modificado em: -";
         }
+
 
         private void frmCadastroEstado_Load(object sender, EventArgs e)
         {
@@ -66,6 +68,15 @@ namespace Projeto.Views
             {
                 int id = string.IsNullOrWhiteSpace(txtCodigo.Text) ? 0 : Convert.ToInt32(txtCodigo.Text);
                 string nome = txtNome.Text;
+
+                string uf = txtUF.Text.Trim().ToUpper();
+
+                if (string.IsNullOrWhiteSpace(uf) || uf.Length != 2)
+                {
+                    MessageBox.Show("Informe a sigla UF com 2 letras.");
+                    return;
+                }
+
                 int idPais = paisSelecionadoId;
                 bool status = !chkInativo.Checked;
 
@@ -79,6 +90,7 @@ namespace Projeto.Views
                 {
                     Id = id,
                     Nome = nome,
+                    UF = uf,
                     IdPais = idPais,
                     Status = status,
                     DataCriacao = dataCriacao,

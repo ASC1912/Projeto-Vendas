@@ -1,11 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
-using MySqlX.XDevAPI;
 using Projeto.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Projeto.DAO
 {
@@ -26,6 +22,7 @@ namespace Projeto.DAO
                     {
                         query = @"UPDATE estados 
                                   SET nome = @nome, 
+                                      uf = @uf,
                                       id_pais = @id_pais, 
                                       status = @status, 
                                       data_modificacao = @data_modificacao 
@@ -34,13 +31,14 @@ namespace Projeto.DAO
                     else
                     {
                         query = @"INSERT INTO estados 
-                                  (nome, id_pais, status, data_criacao, data_modificacao) 
-                                  VALUES (@nome, @id_pais, @status, @data_criacao, @data_modificacao)";
+                                  (nome, uf, id_pais, status, data_criacao, data_modificacao) 
+                                  VALUES (@nome, @uf, @id_pais, @status, @data_criacao, @data_modificacao)";
                     }
 
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@nome", estado.Nome);
+                        cmd.Parameters.AddWithValue("@uf", estado.UF);
                         cmd.Parameters.AddWithValue("@id_pais", estado.IdPais);
                         cmd.Parameters.AddWithValue("@status", estado.Status);
                         cmd.Parameters.AddWithValue("@data_modificacao", estado.DataModificacao);
@@ -53,6 +51,7 @@ namespace Projeto.DAO
                         {
                             cmd.Parameters.AddWithValue("@data_criacao", estado.DataCriacao);
                         }
+
                         cmd.ExecuteNonQuery();
                     }
                 }
@@ -83,7 +82,7 @@ namespace Projeto.DAO
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
-                string query = @"SELECT e.id, e.nome AS estado_nome, e.id_pais, e.status, 
+                string query = @"SELECT e.id, e.nome AS estado_nome, e.uf, e.id_pais, e.status, 
                                         e.data_criacao, e.data_modificacao, 
                                         p.nome AS pais_nome 
                                  FROM estados e
@@ -102,6 +101,7 @@ namespace Projeto.DAO
                             {
                                 Id = reader.GetInt32("id"),
                                 Nome = reader.GetString("estado_nome"),
+                                UF = reader.GetString("uf"),
                                 IdPais = reader.GetInt32("id_pais"),
                                 PaisNome = reader.GetString("pais_nome"),
                                 Status = reader.GetBoolean("status"),
@@ -123,7 +123,7 @@ namespace Projeto.DAO
             {
                 conn.Open();
                 string query = @"
-                    SELECT e.id, e.nome AS estado_nome, e.id_pais, e.status, p.nome AS pais_nome 
+                    SELECT e.id, e.nome AS estado_nome, e.uf, e.id_pais, e.status, p.nome AS pais_nome 
                     FROM estados e
                     JOIN paises p ON e.id_pais = p.id
                     ORDER BY e.nome";
@@ -138,6 +138,7 @@ namespace Projeto.DAO
                             {
                                 Id = reader.GetInt32("id"),
                                 Nome = reader.GetString("estado_nome"),
+                                UF = reader.GetString("uf"),
                                 IdPais = reader.GetInt32("id_pais"),
                                 PaisNome = reader.GetString("pais_nome"),
                                 Status = reader.GetBoolean("status"),
@@ -146,9 +147,8 @@ namespace Projeto.DAO
                     }
                 }
             }
+
             return lista;
         }
-
-
     }
 }

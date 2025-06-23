@@ -44,6 +44,7 @@ namespace Projeto.Views
                 {
                     ListViewItem item = new ListViewItem(estado.Id.ToString());
                     item.SubItems.Add(estado.Nome);
+                    item.SubItems.Add(estado.UF);  
                     item.SubItems.Add(estado.PaisNome);
                     item.SubItems.Add(estado.Status ? "Ativo" : "Inativo");
 
@@ -74,6 +75,7 @@ namespace Projeto.Views
                     {
                         ListViewItem item = new ListViewItem(estado.Id.ToString());
                         item.SubItems.Add(estado.Nome);
+                        item.SubItems.Add(estado.UF);
                         item.SubItems.Add(estado.PaisNome);
                         item.SubItems.Add(estado.Status ? "Ativo" : "Inativo");
                         listView1.Items.Add(item);
@@ -110,7 +112,9 @@ namespace Projeto.Views
                     formCadastro.CarregarEstado(
                         estado.Id,
                         estado.Nome,
+                        estado.UF,
                         estado.PaisNome,
+                        estado.IdPais,
                         estado.Status,
                         estado.DataCriacao,
                         estado.DataModificacao
@@ -166,11 +170,13 @@ namespace Projeto.Views
                 var itemSelecionado = listView1.SelectedItems[0];
                 int id = int.Parse(itemSelecionado.SubItems[0].Text);
                 string nome = itemSelecionado.SubItems[1].Text;
-                string pais = itemSelecionado.SubItems[2].Text;
+                string uf = itemSelecionado.SubItems[2].Text;
+                string pais = itemSelecionado.SubItems[3].Text;
 
                 EstadoSelecionado = new Estado
                 {
                     Id = id,
+                    UF = uf,
                     Nome = nome,
                     PaisNome = pais,
                 };

@@ -10,6 +10,7 @@ namespace Projeto.Models
     {
         public int Id { get; set; }
         public string Nome { get; set; }
+        public string UF { get; set; }  
         public int IdPais { get; set; }
         public string PaisNome { get; set; }
         public bool Status { get; set; }

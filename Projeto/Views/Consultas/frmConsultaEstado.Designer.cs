@@ -33,6 +33,7 @@
             this.Pais = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Status = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnSelecionar = new System.Windows.Forms.Button();
+            this.UF = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // listView1
@@ -40,6 +41,7 @@
             this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.ID,
             this.Nome,
+            this.UF,
             this.Pais,
             this.Status});
             // 
@@ -85,6 +87,10 @@
             this.btnSelecionar.UseVisualStyleBackColor = true;
             this.btnSelecionar.Click += new System.EventHandler(this.btnSelecionar_Click);
             // 
+            // UF
+            // 
+            this.UF.Text = "UF";
+            // 
             // frmConsultaEstado
             // 
             //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -113,5 +119,6 @@
         private System.Windows.Forms.ColumnHeader Pais;
         private System.Windows.Forms.ColumnHeader Status;
         private System.Windows.Forms.Button btnSelecionar;
+        private System.Windows.Forms.ColumnHeader UF;
     }
 }

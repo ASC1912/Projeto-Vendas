@@ -35,6 +35,8 @@
             this.lblPais = new System.Windows.Forms.Label();
             this.btnBuscar = new System.Windows.Forms.Button();
             this.txtPais = new System.Windows.Forms.TextBox();
+            this.lblUF = new System.Windows.Forms.Label();
+            this.txtUF = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // lblNome
@@ -99,10 +101,28 @@
             this.txtPais.Size = new System.Drawing.Size(119, 22);
             this.txtPais.TabIndex = 66;
             // 
+            // lblUF
+            // 
+            this.lblUF.AutoSize = true;
+            this.lblUF.Location = new System.Drawing.Point(167, 91);
+            this.lblUF.Name = "lblUF";
+            this.lblUF.Size = new System.Drawing.Size(25, 16);
+            this.lblUF.TabIndex = 68;
+            this.lblUF.Text = "UF";
+            // 
+            // txtUF
+            // 
+            this.txtUF.Location = new System.Drawing.Point(170, 110);
+            this.txtUF.Name = "txtUF";
+            this.txtUF.Size = new System.Drawing.Size(100, 22);
+            this.txtUF.TabIndex = 67;
+            // 
             // frmCadastroEstado
             // 
             //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             //this.ClientSize = new System.Drawing.Size(1342, 681);
+            this.Controls.Add(this.lblUF);
+            this.Controls.Add(this.txtUF);
             this.Controls.Add(this.txtPais);
             this.Controls.Add(this.btnBuscar);
             this.Controls.Add(this.lblPais);
@@ -125,6 +145,8 @@
             this.Controls.SetChildIndex(this.lblPais, 0);
             this.Controls.SetChildIndex(this.btnBuscar, 0);
             this.Controls.SetChildIndex(this.txtPais, 0);
+            this.Controls.SetChildIndex(this.txtUF, 0);
+            this.Controls.SetChildIndex(this.lblUF, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -139,5 +161,7 @@
         private System.Windows.Forms.Label lblPais;
         private System.Windows.Forms.Button btnBuscar;
         private System.Windows.Forms.TextBox txtPais;
+        private System.Windows.Forms.Label lblUF;
+        private System.Windows.Forms.TextBox txtUF;
     }
 }
