@@ -22,28 +22,28 @@ namespace Projeto.DAO
                     {
                         query = @"
                         UPDATE grupos SET 
-                            nome = @nome,
+                            grupo = @grupo,
                             descricao = @descricao,
-                            status = @status,
-                            data_modificacao = @data_modificacao
+                            ativo = @ativo,
+                            data_alteracao = @data_alteracao
                         WHERE id = @id";
                     }
                     else
                     {
                         query = @"
                         INSERT INTO grupos (
-                            nome, descricao, status, data_criacao, data_modificacao
+                            grupo, descricao, ativo, data_cadastro, data_alteracao
                         ) VALUES (
-                            @nome, @descricao, @status, @data_criacao, @data_modificacao
+                            @grupo, @descricao, @ativo, @data_cadastro, @data_alteracao
                         )";
                     }
 
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
-                        cmd.Parameters.AddWithValue("@nome", grupo.Nome);
+                        cmd.Parameters.AddWithValue("@grupo", grupo.NomeGrupo);
                         cmd.Parameters.AddWithValue("@descricao", string.IsNullOrEmpty(grupo.Descricao) ? (object)DBNull.Value : grupo.Descricao);
-                        cmd.Parameters.AddWithValue("@status", grupo.Status);
-                        cmd.Parameters.AddWithValue("@data_modificacao", grupo.DataModificacao ?? DateTime.Now);
+                        cmd.Parameters.AddWithValue("@ativo", grupo.Ativo);
+                        cmd.Parameters.AddWithValue("@data_alteracao", grupo.DataAlteracao ?? DateTime.Now);
 
                         if (grupo.Id > 0)
                         {
@@ -51,7 +51,7 @@ namespace Projeto.DAO
                         }
                         else
                         {
-                            cmd.Parameters.AddWithValue("@data_criacao", grupo.DataCriacao ?? DateTime.Now);
+                            cmd.Parameters.AddWithValue("@data_cadastro", grupo.DataCadastro ?? DateTime.Now);
                         }
 
                         cmd.ExecuteNonQuery();
@@ -85,7 +85,7 @@ namespace Projeto.DAO
             {
                 conn.Open();
                 string query = @"
-                    SELECT id, nome, descricao, status, data_criacao, data_modificacao
+                    SELECT id, grupo, descricao, ativo, data_cadastro, data_alteracao
                     FROM grupos 
                     WHERE id = @id";
 
@@ -100,17 +100,16 @@ namespace Projeto.DAO
                             return new Grupo
                             {
                                 Id = reader.GetInt32(reader.GetOrdinal("id")),
-                                Nome = reader.GetString(reader.GetOrdinal("nome")),
+                                NomeGrupo = reader.GetString(reader.GetOrdinal("grupo")),
                                 Descricao = reader.IsDBNull(reader.GetOrdinal("descricao")) ? null : reader.GetString(reader.GetOrdinal("descricao")),
-                                Status = reader.GetBoolean(reader.GetOrdinal("status")),
-                                DataCriacao = reader.IsDBNull(reader.GetOrdinal("data_criacao")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("data_criacao")),
-                                DataModificacao = reader.IsDBNull(reader.GetOrdinal("data_modificacao")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("data_modificacao"))
+                                Ativo = reader.GetBoolean(reader.GetOrdinal("ativo")),
+                                DataCadastro = reader.IsDBNull(reader.GetOrdinal("data_cadastro")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("data_cadastro")),
+                                DataAlteracao = reader.IsDBNull(reader.GetOrdinal("data_alteracao")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("data_alteracao"))
                             };
                         }
                     }
                 }
             }
-
             return null;
         }
 
@@ -122,9 +121,9 @@ namespace Projeto.DAO
             {
                 conn.Open();
                 string query = @"
-                    SELECT id, nome, descricao, status, data_criacao, data_modificacao
+                    SELECT id, grupo, descricao, ativo, data_cadastro, data_alteracao
                     FROM grupos 
-                    ORDER BY nome";
+                    ORDER BY grupo";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
@@ -135,17 +134,16 @@ namespace Projeto.DAO
                             lista.Add(new Grupo
                             {
                                 Id = reader.GetInt32(reader.GetOrdinal("id")),
-                                Nome = reader.GetString(reader.GetOrdinal("nome")),
+                                NomeGrupo = reader.GetString(reader.GetOrdinal("grupo")),
                                 Descricao = reader.IsDBNull(reader.GetOrdinal("descricao")) ? null : reader.GetString(reader.GetOrdinal("descricao")),
-                                Status = reader.GetBoolean(reader.GetOrdinal("status")),
-                                DataCriacao = reader.IsDBNull(reader.GetOrdinal("data_criacao")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("data_criacao")),
-                                DataModificacao = reader.IsDBNull(reader.GetOrdinal("data_modificacao")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("data_modificacao"))
+                                Ativo = reader.GetBoolean(reader.GetOrdinal("ativo")),
+                                DataCadastro = reader.IsDBNull(reader.GetOrdinal("data_cadastro")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("data_cadastro")),
+                                DataAlteracao = reader.IsDBNull(reader.GetOrdinal("data_alteracao")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("data_alteracao"))
                             });
                         }
                     }
                 }
             }
-
             return lista;
         }
     }

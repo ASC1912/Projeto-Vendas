@@ -42,6 +42,7 @@
             this.Nome,
             this.Estado,
             this.Status});
+            this.listView1.Location = new System.Drawing.Point(48, 106);
             // 
             // btnDeletar
             // 
@@ -65,7 +66,7 @@
             // 
             // Nome
             // 
-            this.Nome.Text = "Nome";
+            this.Nome.Text = "Cidade";
             // 
             // Estado
             // 

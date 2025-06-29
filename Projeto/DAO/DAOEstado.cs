@@ -21,27 +21,27 @@ namespace Projeto.DAO
                     if (estado.Id > 0)
                     {
                         query = @"UPDATE estados 
-                                  SET nome = @nome, 
+                                  SET estado = @estado, 
                                       uf = @uf,
-                                      id_pais = @id_pais, 
-                                      status = @status, 
-                                      data_modificacao = @data_modificacao 
+                                      pais_id = @pais_id, 
+                                      ativo = @ativo, 
+                                      data_alteracao = @data_alteracao 
                                   WHERE id = @id";
                     }
                     else
                     {
                         query = @"INSERT INTO estados 
-                                  (nome, uf, id_pais, status, data_criacao, data_modificacao) 
-                                  VALUES (@nome, @uf, @id_pais, @status, @data_criacao, @data_modificacao)";
+                                  (estado, uf, pais_id, ativo, data_cadastro, data_alteracao) 
+                                  VALUES (@estado, @uf, @pais_id, @ativo, @data_cadastro, @data_alteracao)";
                     }
 
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
-                        cmd.Parameters.AddWithValue("@nome", estado.Nome);
+                        cmd.Parameters.AddWithValue("@estado", estado.NomeEstado);
                         cmd.Parameters.AddWithValue("@uf", estado.UF);
-                        cmd.Parameters.AddWithValue("@id_pais", estado.IdPais);
-                        cmd.Parameters.AddWithValue("@status", estado.Status);
-                        cmd.Parameters.AddWithValue("@data_modificacao", estado.DataModificacao);
+                        cmd.Parameters.AddWithValue("@pais_id", estado.PaisId);
+                        cmd.Parameters.AddWithValue("@ativo", estado.Ativo);
+                        cmd.Parameters.AddWithValue("@data_alteracao", estado.DataAlteracao);
 
                         if (estado.Id > 0)
                         {
@@ -49,7 +49,7 @@ namespace Projeto.DAO
                         }
                         else
                         {
-                            cmd.Parameters.AddWithValue("@data_criacao", estado.DataCriacao);
+                            cmd.Parameters.AddWithValue("@data_cadastro", estado.DataCadastro);
                         }
 
                         cmd.ExecuteNonQuery();
@@ -82,11 +82,11 @@ namespace Projeto.DAO
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
-                string query = @"SELECT e.id, e.nome AS estado_nome, e.uf, e.id_pais, e.status, 
-                                        e.data_criacao, e.data_modificacao, 
-                                        p.nome AS pais_nome 
+                string query = @"SELECT e.id, e.estado, e.uf, e.pais_id, e.ativo, 
+                                        e.data_cadastro, e.data_alteracao, 
+                                        p.pais AS pais_nome 
                                  FROM estados e
-                                 JOIN paises p ON e.id_pais = p.id
+                                 JOIN paises p ON e.pais_id = p.id
                                  WHERE e.id = @id";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
@@ -100,13 +100,13 @@ namespace Projeto.DAO
                             return new Estado
                             {
                                 Id = reader.GetInt32("id"),
-                                Nome = reader.GetString("estado_nome"),
+                                NomeEstado = reader.GetString("estado"),
                                 UF = reader.GetString("uf"),
-                                IdPais = reader.GetInt32("id_pais"),
+                                PaisId = reader.GetInt32("pais_id"),
                                 PaisNome = reader.GetString("pais_nome"),
-                                Status = reader.GetBoolean("status"),
-                                DataCriacao = reader.IsDBNull(reader.GetOrdinal("data_criacao")) ? (DateTime?)null : reader.GetDateTime("data_criacao"),
-                                DataModificacao = reader.IsDBNull(reader.GetOrdinal("data_modificacao")) ? (DateTime?)null : reader.GetDateTime("data_modificacao")
+                                Ativo = reader.GetBoolean("ativo"),
+                                DataCadastro = reader.IsDBNull(reader.GetOrdinal("data_cadastro")) ? (DateTime?)null : reader.GetDateTime("data_cadastro"),
+                                DataAlteracao = reader.IsDBNull(reader.GetOrdinal("data_alteracao")) ? (DateTime?)null : reader.GetDateTime("data_alteracao")
                             };
                         }
                     }
@@ -123,10 +123,10 @@ namespace Projeto.DAO
             {
                 conn.Open();
                 string query = @"
-                    SELECT e.id, e.nome AS estado_nome, e.uf, e.id_pais, e.status, p.nome AS pais_nome 
+                    SELECT e.id, e.estado, e.uf, e.pais_id, e.ativo, p.pais AS pais_nome 
                     FROM estados e
-                    JOIN paises p ON e.id_pais = p.id
-                    ORDER BY e.nome";
+                    JOIN paises p ON e.pais_id = p.id
+                    ORDER BY e.estado";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
@@ -137,11 +137,11 @@ namespace Projeto.DAO
                             lista.Add(new Estado
                             {
                                 Id = reader.GetInt32("id"),
-                                Nome = reader.GetString("estado_nome"),
+                                NomeEstado = reader.GetString("estado"),
                                 UF = reader.GetString("uf"),
-                                IdPais = reader.GetInt32("id_pais"),
+                                PaisId = reader.GetInt32("pais_id"),
                                 PaisNome = reader.GetString("pais_nome"),
-                                Status = reader.GetBoolean("status"),
+                                Ativo = reader.GetBoolean("ativo"),
                             });
                         }
                     }

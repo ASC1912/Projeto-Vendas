@@ -49,7 +49,7 @@ namespace Projeto.Views.Consultas
                     item.SubItems.Add(transportadora.InscricaoEstadualSubTrib);
                     item.SubItems.Add(transportadora.NomeCidade);
                     item.SubItems.Add(transportadora.IdCondicao.ToString());
-                    item.SubItems.Add(transportadora.Status ? "Ativo" : "Inativo");
+                    item.SubItems.Add(transportadora.Ativo ? "Ativo" : "Inativo");
                     listView1.Items.Add(item);
                 }
             }
@@ -91,7 +91,7 @@ namespace Projeto.Views.Consultas
                         item.SubItems.Add(transportadora.InscricaoEstadualSubTrib);
                         item.SubItems.Add(transportadora.NomeCidade);
                         item.SubItems.Add(transportadora.IdCondicao?.ToString() ?? "");
-                        item.SubItems.Add(transportadora.Status ? "Ativo" : "Inativo");
+                        item.SubItems.Add(transportadora.Ativo ? "Ativo" : "Inativo");
                         listView1.Items.Add(item);
                     }
                     else
@@ -141,12 +141,12 @@ namespace Projeto.Views.Consultas
                         transportadora.InscricaoEstadual,
                         transportadora.InscricaoEstadualSubTrib,
                         transportadora.Tipo,
-                        cidade?.Nome ?? "Não encontrado",
+                        cidade?.NomeCidade ?? "Não encontrado",
                         transportadora.IdCidade ?? 0,
                         transportadora.IdCondicao ?? 0,
-                        transportadora.Status,
-                        transportadora.DataCriacao,
-                        transportadora.DataModificacao
+                        transportadora.Ativo,
+                        transportadora.DataCadastro,
+                        transportadora.DataAlteracao
                     );
 
                     formCadastro.FormClosed += (s, args) => CarregarTransportadoras();
@@ -188,6 +188,67 @@ namespace Projeto.Views.Consultas
             else
             {
                 MessageBox.Show("Por favor, selecione uma transportadora para excluir.");
+            }
+        }
+
+        private void frmConsultaTransportadora_Load(object sender, EventArgs e)
+        {
+            foreach (ColumnHeader column in listView1.Columns)
+            {
+                switch (column.Text)
+                {
+                    case "ID":
+                        column.Width = 50;
+                        break;
+                    case "Nome":
+                        column.Width = 100;
+                        break;
+                    case "CPF/CNPJ":
+                        column.Width = 100;
+                        break;
+                    case "Telefone":
+                        column.Width = 90;
+                        break;
+                    case "Email":
+                        column.Width = 100;
+                        break;
+                    case "Endereço":
+                        column.Width = 100;
+                        break;
+                    case "Número":
+                        column.Width = 60;
+                        break;
+                    case "Bairro":
+                        column.Width = 90;
+                        break;
+                    case "Complemento":
+                        column.Width = 90;
+                        break;
+                    case "CEP":
+                        column.Width = 80;
+                        break;
+                    case "Tipo":
+                        column.Width = 60;
+                        break;
+                    case "IE":
+                        column.Width = 100;
+                        break;
+                    case "IESubTrib":
+                        column.Width = 100;
+                        break;
+                    case "Cidade":
+                        column.Width = 100;
+                        break;
+                    case "Cond. Pgto":
+                        column.Width = 100;
+                        break;
+                    case "Status":
+                        column.Width = 70;
+                        break;
+                    default:
+                        column.Width = 100;
+                        break;
+                }
             }
         }
     }

@@ -26,6 +26,25 @@ namespace Projeto
         private void frmConsultaFrmPgto_Load(object sender, EventArgs e)
         {
             btnSelecionar.Visible = ModoSelecao;
+
+            foreach (ColumnHeader column in listView1.Columns)
+            {
+                switch (column.Text)
+                {
+                    case "ID":
+                        column.Width = 50;
+                        break;
+                    case "Descricao":
+                        column.Width = 100;
+                        break;
+                    case "Status":
+                        column.Width = 50;
+                        break;
+                    default:
+                        column.Width = 100;
+                        break;
+                }
+            }
         }
 
         private void CarregarFormasPagamento()
@@ -39,7 +58,7 @@ namespace Projeto
                 {
                     ListViewItem item = new ListViewItem(forma.Id.ToString());
                     item.SubItems.Add(forma.Descricao);
-                    item.SubItems.Add(forma.Status ? "Ativo" : "Inativo");
+                    item.SubItems.Add(forma.Ativo ? "Ativo" : "Inativo");
                     listView1.Items.Add(item);
                 }
             }
@@ -68,13 +87,14 @@ namespace Projeto
                     {
                         ListViewItem item = new ListViewItem(forma.Id.ToString());
                         item.SubItems.Add(forma.Descricao);
-                        item.SubItems.Add(forma.Status ? "Ativo" : "Inativo");
+                        item.SubItems.Add(forma.Ativo ? "Ativo" : "Inativo");
                         listView1.Items.Add(item);
                     }
                     else
                     {
                         MessageBox.Show("Forma de pagamento não encontrada.");
                     }
+
                 }
                 else
                 {
@@ -106,13 +126,16 @@ namespace Projeto
                 if (forma != null)
                 {
                     var formCadastro = new frmCadastroFrmPgto();
+                    formCadastro.modoEdicao = true;
+
                     formCadastro.CarregarFormaPagamento(
                         forma.Id,
                         forma.Descricao,
-                        forma.Status,
-                        forma.DataCriacao,
-                        forma.DataModificacao
+                        forma.Ativo,
+                        forma.DataCadastro,
+                        forma.DataAlteracao
                     );
+
 
                     formCadastro.FormClosed += (s, args) => CarregarFormasPagamento();
                     formCadastro.ShowDialog();

@@ -1,22 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Projeto.Models
 {
     internal class Estado
     {
         public int Id { get; set; }
-        public string Nome { get; set; }
-        public string UF { get; set; }  
-        public int IdPais { get; set; }
+        public string NomeEstado { get; set; }
+        public string UF { get; set; }
+        public int PaisId { get; set; }
         public string PaisNome { get; set; }
-        public bool Status { get; set; }
-        public DateTime? DataCriacao { get; set; }
-        public DateTime? DataModificacao { get; set; }
-
-
+        public bool Ativo { get; set; }
+        public DateTime? DataCadastro { get; set; }
+        public DateTime? DataAlteracao { get; set; }
     }
 }

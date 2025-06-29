@@ -68,7 +68,7 @@
             this.lblNome.Name = "lblNome";
             this.lblNome.Size = new System.Drawing.Size(44, 16);
             this.lblNome.TabIndex = 70;
-            this.lblNome.Text = "Nome";
+            this.lblNome.Text = "Grupo";
             // 
             // txtNome
             // 

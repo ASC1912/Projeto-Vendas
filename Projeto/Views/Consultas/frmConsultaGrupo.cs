@@ -26,6 +26,28 @@ namespace Projeto.Views.Consultas
         private void frmConsultaGrupo_Load(object sender, EventArgs e)
         {
             btnSelecionar.Visible = ModoSelecao;
+
+            foreach (ColumnHeader column in listView1.Columns)
+            {
+                switch (column.Text)
+                {
+                    case "ID":
+                        column.Width = 50;
+                        break;
+                    case "Nome":
+                        column.Width = 100;
+                        break;
+                    case "Descricao":
+                        column.Width = 100;
+                        break;
+                    case "Status":
+                        column.Width = 50;
+                        break;
+                    default:
+                        column.Width = 100;
+                        break;
+                }
+            }
         }
 
         private void CarregarGrupos()
@@ -38,9 +60,9 @@ namespace Projeto.Views.Consultas
                 foreach (var grupo in grupos)
                 {
                     ListViewItem item = new ListViewItem(grupo.Id.ToString());
-                    item.SubItems.Add(grupo.Nome);
+                    item.SubItems.Add(grupo.NomeGrupo);
                     item.SubItems.Add(grupo.Descricao);
-                    item.SubItems.Add(grupo.Status ? "Ativo" : "Inativo");
+                    item.SubItems.Add(grupo.Ativo ? "Ativo" : "Inativo");
                     listView1.Items.Add(item);
                 }
             }
@@ -68,9 +90,9 @@ namespace Projeto.Views.Consultas
                     if (grupo != null)
                     {
                         ListViewItem item = new ListViewItem(grupo.Id.ToString());
-                        item.SubItems.Add(grupo.Nome);
+                        item.SubItems.Add(grupo.NomeGrupo);
                         item.SubItems.Add(grupo.Descricao);
-                        item.SubItems.Add(grupo.Status ? "Ativo" : "Inativo");
+                        item.SubItems.Add(grupo.Ativo ? "Ativo" : "Inativo");
                         listView1.Items.Add(item);
                     }
                     else
@@ -108,13 +130,15 @@ namespace Projeto.Views.Consultas
                 if (grupo != null)
                 {
                     var formCadastro = new frmCadastroGrupo();
+                    formCadastro.modoEdicao = true;
+
                     formCadastro.CarregarGrupo(
                         grupo.Id,
-                        grupo.Nome,
+                        grupo.NomeGrupo,
                         grupo.Descricao,
-                        grupo.Status,
-                        grupo.DataCriacao,
-                        grupo.DataModificacao
+                        grupo.Ativo,
+                        grupo.DataCadastro,
+                        grupo.DataAlteracao
                     );
 
                     formCadastro.FormClosed += (s, args) => CarregarGrupos();

@@ -60,9 +60,9 @@
             this.lblNome.AutoSize = true;
             this.lblNome.Location = new System.Drawing.Point(9, 72);
             this.lblNome.Name = "lblNome";
-            this.lblNome.Size = new System.Drawing.Size(44, 16);
+            this.lblNome.Size = new System.Drawing.Size(54, 16);
             this.lblNome.TabIndex = 68;
-            this.lblNome.Text = "Nome";
+            this.lblNome.Text = "Produto";
             // 
             // txtNome
             // 

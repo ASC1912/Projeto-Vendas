@@ -22,34 +22,34 @@ namespace Projeto.DAO
                     {
                         query = @"
                         UPDATE marcas SET 
-                            nome = @nome, 
-                            status = @status,
-                            data_modificacao = @data_modificacao
+                            marca = @marca, 
+                            ativo = @ativo,
+                            data_alteracao = @data_alteracao
                         WHERE id = @id";
                     }
                     else
                     {
                         query = @"
                         INSERT INTO marcas (
-                            nome, status, data_criacao, data_modificacao
+                            marca, ativo, data_cadastro, data_alteracao
                         ) VALUES (
-                            @nome, @status, @data_criacao, @data_modificacao
+                            @marca, @ativo, @data_cadastro, @data_alteracao
                         )";
                     }
 
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
-                        cmd.Parameters.AddWithValue("@nome", marca.Nome);
-                        cmd.Parameters.AddWithValue("@status", marca.Status);
-                        cmd.Parameters.AddWithValue("@data_modificacao", marca.DataModificacao ?? DateTime.Now);
+                        cmd.Parameters.AddWithValue("@marca", marca.NomeMarca);
+                        cmd.Parameters.AddWithValue("@ativo", marca.Ativo);
+                        cmd.Parameters.AddWithValue("@data_alteracao", marca.DataAlteracao ?? DateTime.Now);
 
                         if (marca.Id > 0)
                         {
                             cmd.Parameters.AddWithValue("@id", marca.Id);
-                        }   
+                        }
                         else
                         {
-                            cmd.Parameters.AddWithValue("@data_criacao", marca.DataCriacao ?? DateTime.Now);
+                            cmd.Parameters.AddWithValue("@data_cadastro", marca.DataCadastro ?? DateTime.Now);
                         }
 
                         cmd.ExecuteNonQuery();
@@ -83,7 +83,7 @@ namespace Projeto.DAO
             {
                 conn.Open();
                 string query = @"
-                    SELECT id, nome, status, data_criacao, data_modificacao
+                    SELECT id, marca, ativo, data_cadastro, data_alteracao
                     FROM marcas 
                     WHERE id = @id";
 
@@ -97,17 +97,16 @@ namespace Projeto.DAO
                         {
                             return new Marca
                             {
-                                Id = reader.GetInt32(reader.GetOrdinal("id")),
-                                Nome = reader.GetString(reader.GetOrdinal("nome")),
-                                Status = reader.GetBoolean(reader.GetOrdinal("status")),
-                                DataCriacao = reader.IsDBNull(reader.GetOrdinal("data_criacao")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("data_criacao")),
-                                DataModificacao = reader.IsDBNull(reader.GetOrdinal("data_modificacao")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("data_modificacao")),
+                                Id = reader.GetInt32("id"),
+                                NomeMarca = reader.GetString("marca"),
+                                Ativo = reader.GetBoolean("ativo"),
+                                DataCadastro = reader.IsDBNull(reader.GetOrdinal("data_cadastro")) ? (DateTime?)null : reader.GetDateTime("data_cadastro"),
+                                DataAlteracao = reader.IsDBNull(reader.GetOrdinal("data_alteracao")) ? (DateTime?)null : reader.GetDateTime("data_alteracao"),
                             };
                         }
                     }
                 }
             }
-
             return null;
         }
 
@@ -119,9 +118,9 @@ namespace Projeto.DAO
             {
                 conn.Open();
                 string query = @"
-                    SELECT id, nome, status, data_criacao, data_modificacao
+                    SELECT id, marca, ativo, data_cadastro, data_alteracao
                     FROM marcas 
-                    ORDER BY nome";
+                    ORDER BY marca";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
@@ -131,11 +130,11 @@ namespace Projeto.DAO
                         {
                             lista.Add(new Marca
                             {
-                                Id = reader.GetInt32(reader.GetOrdinal("id")),
-                                Nome = reader.GetString(reader.GetOrdinal("nome")),
-                                Status = reader.GetBoolean(reader.GetOrdinal("status")),
-                                DataCriacao = reader.IsDBNull(reader.GetOrdinal("data_criacao")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("data_criacao")),
-                                DataModificacao = reader.IsDBNull(reader.GetOrdinal("data_modificacao")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("data_modificacao")),
+                                Id = reader.GetInt32("id"),
+                                NomeMarca = reader.GetString("marca"),
+                                Ativo = reader.GetBoolean("ativo"),
+                                DataCadastro = reader.IsDBNull(reader.GetOrdinal("data_cadastro")) ? (DateTime?)null : reader.GetDateTime("data_cadastro"),
+                                DataAlteracao = reader.IsDBNull(reader.GetOrdinal("data_alteracao")) ? (DateTime?)null : reader.GetDateTime("data_alteracao"),
                             });
                         }
                     }

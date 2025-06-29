@@ -1,17 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Projeto.Models
 {
     internal class Marca
     {
         public int Id { get; set; }
-        public string Nome { get; set; }
-        public bool Status { get; set; }
-        public DateTime? DataCriacao { get; set; }
-        public DateTime? DataModificacao { get; set; }
+        public string NomeMarca { get; set; }  
+        public bool Ativo { get; set; }
+        public DateTime? DataCadastro { get; set; }
+        public DateTime? DataAlteracao { get; set; }
     }
 }

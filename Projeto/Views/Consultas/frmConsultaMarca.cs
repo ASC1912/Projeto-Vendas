@@ -3,10 +3,6 @@ using Projeto.Models;
 using Projeto.Views.Cadastros;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Projeto.Views.Consultas
@@ -17,7 +13,6 @@ namespace Projeto.Views.Consultas
         public bool ModoSelecao { get; set; } = false;
         internal Marca MarcaSelecionado { get; private set; }
 
-
         public frmConsultaMarca()
         {
             InitializeComponent();
@@ -26,6 +21,27 @@ namespace Projeto.Views.Consultas
         private void frmConsultaMarca_Load(object sender, EventArgs e)
         {
             btnSelecionar.Visible = ModoSelecao;
+
+            foreach (ColumnHeader column in listView1.Columns)
+            {
+                switch (column.Text)
+                {
+                    case "ID":
+                        column.Width = 50;
+                        break;
+                    case "Marca":
+                        column.Width = 100;
+                        break;
+                    case "Status":
+                        column.Width = 60;
+                        break;
+                    default:
+                        column.Width = 100;
+                        break;
+                }
+            }
+
+            CarregarMarcas();
         }
 
         private void CarregarMarcas()
@@ -38,8 +54,8 @@ namespace Projeto.Views.Consultas
                 foreach (var marca in marcas)
                 {
                     ListViewItem item = new ListViewItem(marca.Id.ToString());
-                    item.SubItems.Add(marca.Nome);
-                    item.SubItems.Add(marca.Status ? "Ativo" : "Inativo");
+                    item.SubItems.Add(marca.NomeMarca);
+                    item.SubItems.Add(marca.Ativo ? "Ativo" : "Inativo");
                     listView1.Items.Add(item);
                 }
             }
@@ -67,8 +83,8 @@ namespace Projeto.Views.Consultas
                     if (marca != null)
                     {
                         ListViewItem item = new ListViewItem(marca.Id.ToString());
-                        item.SubItems.Add(marca.Nome);
-                        item.SubItems.Add(marca.Status ? "Ativo" : "Inativo");
+                        item.SubItems.Add(marca.NomeMarca);
+                        item.SubItems.Add(marca.Ativo ? "Ativo" : "Inativo");
                         listView1.Items.Add(item);
                     }
                     else
@@ -90,8 +106,8 @@ namespace Projeto.Views.Consultas
         private void btnIncluir_Click(object sender, EventArgs e)
         {
             frmCadastroMarca formCadastroMarca = new frmCadastroMarca();
+            formCadastroMarca.FormClosed += (s, args) => CarregarMarcas();
             formCadastroMarca.ShowDialog();
-            CarregarMarcas();
         }
 
         private void btnEditar_Click(object sender, EventArgs e)
@@ -108,10 +124,10 @@ namespace Projeto.Views.Consultas
                     var formCadastro = new frmCadastroMarca();
                     formCadastro.CarregarMarca(
                         marca.Id,
-                        marca.Nome,
-                        marca.Status,
-                        marca.DataCriacao,
-                        marca.DataModificacao
+                        marca.NomeMarca,
+                        marca.Ativo,
+                        marca.DataCadastro,
+                        marca.DataAlteracao
                     );
 
                     formCadastro.FormClosed += (s, args) => CarregarMarcas();
@@ -119,7 +135,7 @@ namespace Projeto.Views.Consultas
                 }
                 else
                 {
-                    MessageBox.Show("Narca não encontrada.");
+                    MessageBox.Show("Marca não encontrada.");
                 }
             }
             else

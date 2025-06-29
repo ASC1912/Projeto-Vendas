@@ -2,9 +2,7 @@
 using Projeto.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Projeto.DAO
 {
@@ -28,20 +26,20 @@ namespace Projeto.DAO
                         query = @"
                         UPDATE condicoes_pagamento SET 
                             descricao = @descricao, qtd_parcelas = @qtd_parcelas, juros = @juros, 
-                            multa = @multa, desconto = @desconto, status = @status, 
-                            data_modificacao = @data_modificacao
+                            multa = @multa, desconto = @desconto, ativo = @ativo, 
+                            data_alteracao = @data_alteracao
                         WHERE id = @id";
                     }
                     else
                     {
                         query = @"
                         INSERT INTO condicoes_pagamento (
-                            descricao, qtd_parcelas, juros, multa, desconto, status, 
-                            data_criacao, data_modificacao
+                            descricao, qtd_parcelas, juros, multa, desconto, ativo, 
+                            data_cadastro, data_alteracao
                         )
                         VALUES (
-                            @descricao, @qtd_parcelas, @juros, @multa, @desconto, @status, 
-                            @data_criacao, @data_modificacao
+                            @descricao, @qtd_parcelas, @juros, @multa, @desconto, @ativo, 
+                            @data_cadastro, @data_alteracao
                         )";
                     }
 
@@ -52,26 +50,20 @@ namespace Projeto.DAO
                         cmd.Parameters.AddWithValue("@juros", condicao.Juros);
                         cmd.Parameters.AddWithValue("@multa", condicao.Multa);
                         cmd.Parameters.AddWithValue("@desconto", condicao.Desconto);
-                        cmd.Parameters.AddWithValue("@status", condicao.Status);
-                        cmd.Parameters.AddWithValue("@data_modificacao", condicao.DataModificacao);
+                        cmd.Parameters.AddWithValue("@ativo", condicao.Ativo);
+                        cmd.Parameters.AddWithValue("@data_alteracao", condicao.DataAlteracao ?? DateTime.Now);
 
                         if (condicao.Id > 0)
                         {
                             cmd.Parameters.AddWithValue("@id", condicao.Id);
-                        }
-                        else
-                        {
-                            cmd.Parameters.AddWithValue("@data_criacao", condicao.DataCriacao);
-                        }
-
-                        if (condicao.Id > 0)
-                        {
                             cmd.ExecuteNonQuery();
                             condicaoId = condicao.Id;
                         }
                         else
                         {
-                            condicaoId = Convert.ToInt32(cmd.ExecuteScalar());
+                            cmd.Parameters.AddWithValue("@data_cadastro", condicao.DataCadastro ?? DateTime.Now);
+                            cmd.ExecuteNonQuery();
+                            condicaoId = (int)cmd.LastInsertedId;
                         }
                     }
                 }
@@ -105,10 +97,10 @@ namespace Projeto.DAO
             {
                 conn.Open();
                 string query = @"
-            SELECT id, descricao, qtd_parcelas, juros, multa, desconto, status,
-                   data_criacao, data_modificacao
-            FROM condicoes_pagamento
-            WHERE id = @id";
+                SELECT id, descricao, qtd_parcelas, juros, multa, desconto, ativo,
+                       data_cadastro, data_alteracao
+                FROM condicoes_pagamento
+                WHERE id = @id";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
@@ -126,9 +118,9 @@ namespace Projeto.DAO
                                 Juros = reader.GetDecimal("juros"),
                                 Multa = reader.GetDecimal("multa"),
                                 Desconto = reader.GetDecimal("desconto"),
-                                Status = reader.GetBoolean("status"),
-                                DataCriacao = reader.GetDateTime("data_criacao"),
-                                DataModificacao = reader.GetDateTime("data_modificacao"),
+                                Ativo = reader.GetBoolean("ativo"),
+                                DataCadastro = reader.IsDBNull(reader.GetOrdinal("data_cadastro")) ? (DateTime?)null : reader.GetDateTime("data_cadastro"),
+                                DataAlteracao = reader.IsDBNull(reader.GetOrdinal("data_alteracao")) ? (DateTime?)null : reader.GetDateTime("data_alteracao"),
                             };
                         }
                     }
@@ -136,7 +128,6 @@ namespace Projeto.DAO
             }
             return null;
         }
-
 
         public List<CondicaoPagamento> ListarCondicaoPagamento()
         {
@@ -146,8 +137,8 @@ namespace Projeto.DAO
             {
                 conn.Open();
                 string query = @"
-                SELECT id, descricao, qtd_parcelas, juros, multa, desconto, status,
-                       data_criacao, data_modificacao
+                SELECT id, descricao, qtd_parcelas, juros, multa, desconto, ativo,
+                       data_cadastro, data_alteracao
                 FROM condicoes_pagamento
                 ORDER BY id";
 
@@ -165,9 +156,9 @@ namespace Projeto.DAO
                                 Juros = reader.GetDecimal("juros"),
                                 Multa = reader.GetDecimal("multa"),
                                 Desconto = reader.GetDecimal("desconto"),
-                                Status = reader.GetBoolean("status"),
-                                DataCriacao = reader.IsDBNull(reader.GetOrdinal("data_criacao")) ? (DateTime?)null : reader.GetDateTime("data_criacao"),
-                                DataModificacao = reader.IsDBNull(reader.GetOrdinal("data_modificacao")) ? (DateTime?)null : reader.GetDateTime("data_modificacao")
+                                Ativo = reader.GetBoolean("ativo"),
+                                DataCadastro = reader.IsDBNull(reader.GetOrdinal("data_cadastro")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("data_cadastro")),
+                                DataAlteracao = reader.IsDBNull(reader.GetOrdinal("data_alteracao")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("data_alteracao"))
                             });
                         }
                     }
@@ -176,10 +167,5 @@ namespace Projeto.DAO
 
             return lista;
         }
-
-
-
-
-
     }
 }

@@ -2,9 +2,6 @@
 using Projeto.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Projeto.DAO
 {
@@ -24,23 +21,23 @@ namespace Projeto.DAO
                     if (pais.Id > 0)
                     {
                         query = @"UPDATE paises 
-                          SET nome = @nome, 
-                              status = @status,
-                              data_modificacao = @data_modificacao 
-                          WHERE id = @id";
+                                  SET pais = @pais, 
+                                      ativo = @ativo,
+                                      data_alteracao = @data_alteracao 
+                                  WHERE id = @id";
                     }
                     else
                     {
                         query = @"INSERT INTO paises 
-                          (nome, status, data_criacao, data_modificacao) 
-                          VALUES (@nome, @status, @data_criacao, @data_modificacao)";
+                                  (pais, ativo, data_cadastro, data_alteracao) 
+                                  VALUES (@pais, @ativo, @data_cadastro, @data_alteracao)";
                     }
 
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
-                        cmd.Parameters.AddWithValue("@nome", pais.Nome);
-                        cmd.Parameters.AddWithValue("@status", pais.Status);
-                        cmd.Parameters.AddWithValue("@data_modificacao", pais.DataModificacao);
+                        cmd.Parameters.AddWithValue("@pais", pais.NomePais);
+                        cmd.Parameters.AddWithValue("@ativo", pais.Ativo);
+                        cmd.Parameters.AddWithValue("@data_alteracao", pais.DataAlteracao);
 
                         if (pais.Id > 0)
                         {
@@ -48,7 +45,7 @@ namespace Projeto.DAO
                         }
                         else
                         {
-                            cmd.Parameters.AddWithValue("@data_criacao", pais.DataCriacao);
+                            cmd.Parameters.AddWithValue("@data_cadastro", pais.DataCadastro);
                         }
 
                         cmd.ExecuteNonQuery();
@@ -60,7 +57,6 @@ namespace Projeto.DAO
                 throw new Exception("Erro ao salvar país: " + ex.Message);
             }
         }
-
 
         public void Excluir(int id)
         {
@@ -82,7 +78,7 @@ namespace Projeto.DAO
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
-                string query = "SELECT id, nome, status, data_criacao, data_modificacao FROM paises WHERE id = @id";
+                string query = "SELECT id, pais, ativo, data_cadastro, data_alteracao FROM paises WHERE id = @id";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
@@ -95,10 +91,10 @@ namespace Projeto.DAO
                             return new Pais
                             {
                                 Id = reader.GetInt32("id"),
-                                Nome = reader.GetString("nome"),
-                                Status = reader.GetBoolean("status"),
-                                DataCriacao = reader.GetDateTime("data_criacao"),
-                                DataModificacao = reader.GetDateTime("data_modificacao")
+                                NomePais = reader.GetString("pais"),
+                                Ativo = reader.GetBoolean("ativo"),
+                                DataCadastro = reader.IsDBNull(reader.GetOrdinal("data_cadastro")) ? (DateTime?)null : reader.GetDateTime("data_cadastro"),
+                                DataAlteracao = reader.IsDBNull(reader.GetOrdinal("data_alteracao")) ? (DateTime?)null : reader.GetDateTime("data_alteracao"),
                             };
                         }
                     }
@@ -107,7 +103,6 @@ namespace Projeto.DAO
             return null;
         }
 
-
         public List<Pais> ListarPais()
         {
             List<Pais> lista = new List<Pais>();
@@ -115,7 +110,7 @@ namespace Projeto.DAO
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
-                string query = "SELECT id, nome, status, data_criacao, data_modificacao FROM paises ORDER BY id";
+                string query = "SELECT id, pais, ativo, data_cadastro, data_alteracao FROM paises ORDER BY id";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
@@ -126,11 +121,10 @@ namespace Projeto.DAO
                             lista.Add(new Pais
                             {
                                 Id = reader.GetInt32("id"),
-                                Nome = reader.GetString("nome"),
-                                Status = reader.GetBoolean("status"),
-                                DataCriacao = reader.IsDBNull(reader.GetOrdinal("data_criacao")) ? (DateTime?)null : reader.GetDateTime("data_criacao"),
-                                DataModificacao = reader.IsDBNull(reader.GetOrdinal("data_modificacao")) ? (DateTime?)null : reader.GetDateTime("data_modificacao"),
-
+                                NomePais = reader.GetString("pais"),
+                                Ativo = reader.GetBoolean("ativo"),
+                                DataCadastro = reader.IsDBNull(reader.GetOrdinal("data_cadastro")) ? (DateTime?)null : reader.GetDateTime("data_cadastro"),
+                                DataAlteracao = reader.IsDBNull(reader.GetOrdinal("data_alteracao")) ? (DateTime?)null : reader.GetDateTime("data_alteracao"),
                             });
                         }
                     }
@@ -138,6 +132,5 @@ namespace Projeto.DAO
             }
             return lista;
         }
-
     }
 }

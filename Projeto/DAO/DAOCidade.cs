@@ -2,9 +2,6 @@
 using Projeto.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Projeto.DAO
 {
@@ -24,23 +21,23 @@ namespace Projeto.DAO
                     if (cidade.Id > 0)
                     {
                         query = @"UPDATE cidades 
-                          SET nome = @nome, id_estado = @id_estado, status = @status, 
-                              data_modificacao = @data_modificacao 
-                          WHERE id = @id";
+                                  SET cidade = @cidade, estado_id = @estado_id, ativo = @ativo, 
+                                      data_alteracao = @data_alteracao 
+                                  WHERE id = @id";
                     }
                     else
                     {
                         query = @"INSERT INTO cidades 
-                          (nome, id_estado, status, data_criacao, data_modificacao) 
-                          VALUES (@nome, @id_estado, @status, @data_criacao, @data_modificacao)";
+                                  (cidade, estado_id, ativo, data_cadastro, data_alteracao) 
+                                  VALUES (@cidade, @estado_id, @ativo, @data_cadastro, @data_alteracao)";
                     }
 
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
-                        cmd.Parameters.AddWithValue("@nome", cidade.Nome);
-                        cmd.Parameters.AddWithValue("@id_estado", cidade.IdEstado);
-                        cmd.Parameters.AddWithValue("@status", cidade.Status);
-                        cmd.Parameters.AddWithValue("@data_modificacao", cidade.DataModificacao);
+                        cmd.Parameters.AddWithValue("@cidade", cidade.NomeCidade);
+                        cmd.Parameters.AddWithValue("@estado_id", cidade.EstadoId);
+                        cmd.Parameters.AddWithValue("@ativo", cidade.Ativo);
+                        cmd.Parameters.AddWithValue("@data_alteracao", cidade.DataAlteracao);
 
                         if (cidade.Id > 0)
                         {
@@ -48,7 +45,7 @@ namespace Projeto.DAO
                         }
                         else
                         {
-                            cmd.Parameters.AddWithValue("@data_criacao", cidade.DataCriacao);
+                            cmd.Parameters.AddWithValue("@data_cadastro", cidade.DataCadastro);
                         }
 
                         cmd.ExecuteNonQuery();
@@ -60,7 +57,6 @@ namespace Projeto.DAO
                 throw new Exception("Erro ao salvar cidade: " + ex.Message);
             }
         }
-
 
         public void Excluir(int id)
         {
@@ -83,12 +79,12 @@ namespace Projeto.DAO
             {
                 conn.Open();
                 string query = @"
-                                SELECT c.id, c.nome AS cidade_nome, c.id_estado, c.status, 
-                                       c.data_criacao, c.data_modificacao, 
-                                       e.nome AS estado_nome 
-                                FROM cidades c
-                                JOIN estados e ON c.id_estado = e.id
-                                WHERE c.id = @id";
+                    SELECT c.id, c.cidade, c.estado_id, c.ativo, 
+                           c.data_cadastro, c.data_alteracao, 
+                           e.estado AS estado_nome 
+                    FROM cidades c
+                    JOIN estados e ON c.estado_id = e.id
+                    WHERE c.id = @id";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
@@ -101,21 +97,19 @@ namespace Projeto.DAO
                             return new Cidade
                             {
                                 Id = reader.GetInt32("id"),
-                                Nome = reader.GetString("cidade_nome"),
-                                IdEstado = reader.GetInt32("id_estado"),
+                                NomeCidade = reader.GetString("cidade"),
+                                EstadoId = reader.GetInt32("estado_id"),
                                 EstadoNome = reader.GetString("estado_nome"),
-                                Status = reader.GetBoolean("status"),
-                                DataCriacao = reader.IsDBNull(reader.GetOrdinal("data_criacao")) ? (DateTime?)null : reader.GetDateTime("data_criacao"),
-                                DataModificacao = reader.IsDBNull(reader.GetOrdinal("data_modificacao")) ? (DateTime?)null : reader.GetDateTime("data_modificacao")
+                                Ativo = reader.GetBoolean("ativo"),
+                                DataCadastro = reader.IsDBNull(reader.GetOrdinal("data_cadastro")) ? (DateTime?)null : reader.GetDateTime("data_cadastro"),
+                                DataAlteracao = reader.IsDBNull(reader.GetOrdinal("data_alteracao")) ? (DateTime?)null : reader.GetDateTime("data_alteracao")
                             };
                         }
                     }
                 }
             }
-
             return null;
         }
-
 
         public List<Cidade> ListarCidade()
         {
@@ -125,10 +119,10 @@ namespace Projeto.DAO
             {
                 conn.Open();
                 string query = @"
-            SELECT c.id, c.nome AS cidade_nome, c.id_estado, c.status, e.nome AS estado_nome 
-            FROM cidades c
-            JOIN estados e ON c.id_estado = e.id
-            ORDER BY c.nome";
+                    SELECT c.id, c.cidade, c.estado_id, c.ativo, e.estado AS estado_nome 
+                    FROM cidades c
+                    JOIN estados e ON c.estado_id = e.id
+                    ORDER BY c.cidade";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
@@ -139,10 +133,10 @@ namespace Projeto.DAO
                             lista.Add(new Cidade
                             {
                                 Id = reader.GetInt32("id"),
-                                Nome = reader.GetString("cidade_nome"),
-                                IdEstado = reader.GetInt32("id_estado"),
+                                NomeCidade = reader.GetString("cidade"),
+                                EstadoId = reader.GetInt32("estado_id"),
                                 EstadoNome = reader.GetString("estado_nome"),
-                                Status = reader.GetBoolean("status"),
+                                Ativo = reader.GetBoolean("ativo"),
                             });
                         }
                     }

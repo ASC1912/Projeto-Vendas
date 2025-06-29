@@ -3,10 +3,6 @@ using Projeto.Models;
 using Projeto.Views.Cadastros;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Projeto.Views.Consultas
@@ -15,6 +11,7 @@ namespace Projeto.Views.Consultas
     {
         private ProdutoController controller = new ProdutoController();
         public bool ModoSelecao { get; set; } = false;
+
         public frmConsultaProduto() : base()
         {
             InitializeComponent();
@@ -30,22 +27,23 @@ namespace Projeto.Views.Consultas
                 foreach (var produto in produtos)
                 {
                     ListViewItem item = new ListViewItem(produto.Id.ToString());
-                    item.SubItems.Add(produto.Nome);
+                    item.SubItems.Add(produto.NomeProduto);
                     item.SubItems.Add(produto.Descricao);
-                    item.SubItems.Add(produto.Preco.ToString());
+                    item.SubItems.Add(produto.Preco.ToString("F2"));
                     item.SubItems.Add(produto.Estoque.ToString());
-                    item.SubItems.Add(produto.NomeMarca);
-                    item.SubItems.Add(produto.NomeGrupo);
-                    item.SubItems.Add(produto.Status ? "Ativo" : "Inativo");
+                    item.SubItems.Add(produto.NomeMarca ?? "");
+                    item.SubItems.Add(produto.NomeGrupo ?? "");
+                    item.SubItems.Add(produto.Ativo ? "Ativo" : "Inativo");
 
                     listView1.Items.Add(item);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Erro ao carregar cidades: " + ex.Message);
+                MessageBox.Show("Erro ao carregar produtos: " + ex.Message);
             }
         }
+
         private void btnPesquisar_Click(object sender, EventArgs e)
         {
             try
@@ -64,19 +62,19 @@ namespace Projeto.Views.Consultas
                     if (produto != null)
                     {
                         ListViewItem item = new ListViewItem(produto.Id.ToString());
-                        item.SubItems.Add(produto.Nome);
+                        item.SubItems.Add(produto.NomeProduto);
                         item.SubItems.Add(produto.Descricao);
-                        item.SubItems.Add(produto.Preco.ToString());
+                        item.SubItems.Add(produto.Preco.ToString("F2"));
                         item.SubItems.Add(produto.Estoque.ToString());
-                        item.SubItems.Add(produto.NomeMarca);
-                        item.SubItems.Add(produto.NomeGrupo);
-                        item.SubItems.Add(produto.Status ? "Ativo" : "Inativo");
+                        item.SubItems.Add(produto.NomeMarca ?? "");
+                        item.SubItems.Add(produto.NomeGrupo ?? "");
+                        item.SubItems.Add(produto.Ativo ? "Ativo" : "Inativo");
 
                         listView1.Items.Add(item);
                     }
                     else
                     {
-                        MessageBox.Show("Produto não encontrada.");
+                        MessageBox.Show("Produto não encontrado.");
                     }
                 }
                 else
@@ -93,6 +91,7 @@ namespace Projeto.Views.Consultas
         private void btnIncluir_Click(object sender, EventArgs e)
         {
             frmCadastroProduto formCadastroProduto = new frmCadastroProduto();
+            formCadastroProduto.FormClosed += (s, args) => CarregarProdutos();
             formCadastroProduto.ShowDialog();
         }
 
@@ -107,20 +106,24 @@ namespace Projeto.Views.Consultas
 
                 if (produto != null)
                 {
-                    var formCadastro = new frmCadastroProduto();
+                    var formCadastro = new frmCadastroProduto
+                    {
+                        modoEdicao = true
+                    };
+
                     formCadastro.CarregarProduto(
                         produto.Id,
-                        produto.Nome,
+                        produto.NomeProduto,
                         produto.Descricao,
                         produto.Preco,
                         produto.Estoque,
                         produto.IdMarca ?? 0,
                         produto.NomeMarca,
-                        produto.IdGrupo ?? 0,
+                        produto.GrupoId ?? 0,
                         produto.NomeGrupo,
-                        produto.Status,
-                        produto.DataCriacao,
-                        produto.DataModificacao
+                        produto.Ativo,
+                        produto.DataCadastro,
+                        produto.DataAlteracao
                     );
 
                     formCadastro.FormClosed += (s, args) => CarregarProdutos();
@@ -144,7 +147,7 @@ namespace Projeto.Views.Consultas
                 var itemSelecionado = listView1.SelectedItems[0];
                 int id = int.Parse(itemSelecionado.SubItems[0].Text);
 
-                var confirmacao = MessageBox.Show("Tem certeza que deseja excluir esse Produto?", "Confirmação", MessageBoxButtons.YesNo);
+                var confirmacao = MessageBox.Show("Tem certeza que deseja excluir esse produto?", "Confirmação", MessageBoxButtons.YesNo);
                 if (confirmacao == DialogResult.Yes)
                 {
                     try
@@ -163,6 +166,51 @@ namespace Projeto.Views.Consultas
             {
                 MessageBox.Show("Por favor, selecione um produto para excluir.");
             }
+        }
+
+        private void frmConsultaProduto_Load(object sender, EventArgs e)
+        {
+            if (listView1.Columns.Count == 0 || listView1.Columns[listView1.Columns.Count - 1].Text != "")
+            {
+                var ultimaColuna = new ColumnHeader { Text = "", Width = 1 };
+                listView1.Columns.Add(ultimaColuna);
+            }
+
+            foreach (ColumnHeader column in listView1.Columns)
+            {
+                switch (column.Text)
+                {
+                    case "ID":
+                        column.Width = 50;
+                        break;
+                    case "Nome":
+                        column.Width = 100;
+                        break;
+                    case "Descrição":
+                        column.Width = 120;
+                        break;
+                    case "Preço":
+                        column.Width = 80;
+                        break;
+                    case "Estoque":
+                        column.Width = 70;
+                        break;
+                    case "Marca":
+                        column.Width = 100;
+                        break;
+                    case "Grupo":
+                        column.Width = 100;
+                        break;
+                    case "Status":
+                        column.Width = 60;
+                        break;
+                    default:
+                        column.Width = 100;
+                        break;
+                }
+            }
+
+            CarregarProdutos();
         }
     }
 }

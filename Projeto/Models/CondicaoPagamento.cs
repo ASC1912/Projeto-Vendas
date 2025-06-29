@@ -14,10 +14,8 @@ namespace Projeto.Models
         public decimal Juros { get; set; }
         public decimal Multa { get; set; }
         public decimal Desconto { get; set; }
-        public bool Status { get; set; }
-        public DateTime? DataCriacao { get; set; }
-        public DateTime? DataModificacao { get; set; }
-
-
+        public bool Ativo { get; set; }       
+        public DateTime? DataCadastro { get; set; }  
+        public DateTime? DataAlteracao { get; set; }
     }
 }

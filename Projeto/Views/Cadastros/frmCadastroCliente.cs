@@ -29,14 +29,14 @@ namespace Projeto.Views
             cbTipo.SelectedIndex = 0;
         }
 
-        public void CarregarCliente(int id, string nome, string cpf_cnpj, string telefone, string email, string endereco,
-                     int numeroEndereco, string bairro, string complemento, string cep, string tipo,
-                     string nomeCidade, int idCidade, int idCondicao, bool status, string rg,
-                     DateTime? dataCriacao, DateTime? dataModificacao)
+        public void CarregarCliente(int id, string nome, string cpfCnpj, string telefone, string email, string endereco,
+                 int numeroEndereco, string bairro, string complemento, string cep, string tipo,
+                 string nomeCidade, int idCidade, string descricaoCondicao, int idCondicao, bool ativo, string rg,
+                 DateTime? dataCadastro, DateTime? dataAlteracao)
         {
             txtCodigo.Text = id.ToString();
             txtNome.Text = nome;
-            txtCPF.Text = cpf_cnpj;
+            txtCPF.Text = cpfCnpj;
             txtTelefone.Text = telefone;
             txtEmail.Text = email;
             txtEndereco.Text = endereco;
@@ -47,21 +47,19 @@ namespace Projeto.Views
             cbTipo.Text = tipo;
             txtCidade.Text = nomeCidade;
             cidadeSelecionadoId = idCidade;
-            txtCondicao.Text = idCondicao.ToString();
+            txtCondicao.Text = descricaoCondicao;
             condicaoSelecionadoId = idCondicao;
-            chkInativo.Checked = !status;
+            chkInativo.Checked = !ativo;
             txtRG.Text = rg;
 
-            lblDataCriacao.Text = dataCriacao.HasValue
-                ? $"Criado em: {dataCriacao:dd/MM/yyyy HH:mm}"
+            lblDataCriacao.Text = dataCadastro.HasValue
+                ? $"Criado em: {dataCadastro.Value:dd/MM/yyyy HH:mm}"
                 : "Criado em: -";
 
-            lblDataModificacao.Text = dataModificacao.HasValue
-                ? $"Modificado em: {dataModificacao:dd/MM/yyyy HH:mm}"
+            lblDataModificacao.Text = dataAlteracao.HasValue
+                ? $"Modificado em: {dataAlteracao.Value:dd/MM/yyyy HH:mm}"
                 : "Modificado em: -";
         }
-
-
 
 
         private void btnSalvar_Click(object sender, EventArgs e)
@@ -135,10 +133,10 @@ namespace Projeto.Views
                     CEP = txtCEP.Text,
                     IdCidade = cidadeSelecionadoId,
                     IdCondicao = condicaoSelecionadoId,
-                    Status = !chkInativo.Checked,
+                    Ativo = !chkInativo.Checked,
                     Rg = txtRG.Text,
-                    DataCriacao = dataCriacao,
-                    DataModificacao = dataModificacao
+                    DataCadastro = dataCriacao,
+                    DataAlteracao = dataModificacao
                 };
 
                 controller.Salvar(cliente);
@@ -155,10 +153,18 @@ namespace Projeto.Views
 
         private void frmCadastroCliente_Load(object sender, EventArgs e)
         {
-
-            if (modoEdicao == true)
+            if (modoEdicao)
             {
                 cbTipo.Enabled = false;
+            }
+            else
+            {
+                txtCodigo.Text = "0"; 
+
+                DateTime agora = DateTime.Now;
+
+                lblDataCriacao.Text = $"Criado em: {agora:dd/MM/yyyy HH:mm}";
+                lblDataModificacao.Text = $"Modificado em: {agora:dd/MM/yyyy HH:mm}";
             }
         }
 
@@ -171,8 +177,9 @@ namespace Projeto.Views
 
             if (resultado == DialogResult.OK && consultaCidade.CidadeSelecionado != null)
             {
-                txtCidade.Text = consultaCidade.CidadeSelecionado.Nome;
+                txtCidade.Text = consultaCidade.CidadeSelecionado.NomeCidade;
                 cidadeSelecionadoId = consultaCidade.CidadeSelecionado.Id;
+                txtIdCidade.Text = consultaCidade.CidadeSelecionado.Id.ToString();
             }
         }
 
@@ -185,9 +192,44 @@ namespace Projeto.Views
 
             if (resultado == DialogResult.OK && consultaCondicao.CondicaoSelecionado != null)
             {
-                txtCondicao.Text = consultaCondicao.CondicaoSelecionado.Id.ToString();
+                txtCondicao.Text = consultaCondicao.CondicaoSelecionado.Descricao;
                 condicaoSelecionadoId = consultaCondicao.CondicaoSelecionado.Id;
             }
         }
+
+        private void txtIdCidade_Leave(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtIdCidade.Text))
+            {
+                txtCidade.Text = "";
+                cidadeSelecionadoId = -1;
+                return;
+            }
+
+            if (!Validador.ValidarNumerico(txtIdCidade, "O campo ID Cidade deve conter apenas números."))
+            {
+                txtCidade.Text = "";
+                cidadeSelecionadoId = -1;
+                return;
+            }
+
+            int id = int.Parse(txtIdCidade.Text);
+            var cidade = cidadeController.BuscarPorId(id);
+
+            if (cidade != null)
+            {
+                txtCidade.Text = cidade.NomeCidade;
+                cidadeSelecionadoId = cidade.Id;
+            }
+            else
+            {
+                MessageBox.Show("Cidade não encontrada.");
+                txtCidade.Text = "";
+                cidadeSelecionadoId = -1;
+            }
+        }
+
+
+
     }
 }

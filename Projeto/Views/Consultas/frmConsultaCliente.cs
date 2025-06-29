@@ -13,6 +13,7 @@ namespace Projeto.Views
     public partial class frmConsultaCliente : Projeto.frmBaseConsulta
     {
         private ClienteController controller = new ClienteController();
+
         public frmConsultaCliente() : base()
         {
             InitializeComponent();
@@ -45,11 +46,9 @@ namespace Projeto.Views
                     item.SubItems.Add(cliente.CEP);
                     item.SubItems.Add(cliente.Tipo);
                     item.SubItems.Add(cliente.NomeCidade);
-                    item.SubItems.Add(cliente.IdCondicao?.ToString() ?? "");
-                    item.SubItems.Add(cliente.Status ? "Ativo" : "Inativo");
+                    item.SubItems.Add(cliente.DescricaoCondicao ?? "");
+                    item.SubItems.Add(cliente.Ativo ? "Ativo" : "Inativo");
                     item.SubItems.Add(cliente.Rg);
-                    item.SubItems.Add(cliente.DataCriacao?.ToString("dd/MM/yyyy HH:mm") ?? "");
-                    item.SubItems.Add(cliente.DataModificacao?.ToString("dd/MM/yyyy HH:mm") ?? "");
 
                     listView1.Items.Add(item);
                 }
@@ -90,8 +89,8 @@ namespace Projeto.Views
                         item.SubItems.Add(cliente.CEP);
                         item.SubItems.Add(cliente.NomeCidade);
                         item.SubItems.Add(cliente.Tipo);
-                        item.SubItems.Add(cliente.IdCondicao?.ToString() ?? "");
-                        item.SubItems.Add(cliente.Status ? "Ativo" : "Inativo");
+                        item.SubItems.Add(cliente.DescricaoCondicao ?? "");
+                        item.SubItems.Add(cliente.Ativo ? "Ativo" : "Inativo");
                         listView1.Items.Add(item);
                     }
                     else
@@ -121,10 +120,6 @@ namespace Projeto.Views
 
                 if (cliente != null)
                 {
-                    Cidade cidade = cliente.IdCidade.HasValue
-                        ? new CidadeController().BuscarPorId(cliente.IdCidade.Value)
-                        : null;
-
                     var formCadastro = new frmCadastroCliente();
                     formCadastro.modoEdicao = true;
                     formCadastro.CarregarCliente(
@@ -139,13 +134,15 @@ namespace Projeto.Views
                         cliente.Complemento,
                         cliente.CEP,
                         cliente.Tipo,
-                        cidade?.Nome ?? "Não encontrado",
+                        cliente.NomeCidade ?? "Não encontrado",
                         cliente.IdCidade ?? 0,
+                        cliente.DescricaoCondicao ?? "Não encontrada",
+
                         cliente.IdCondicao ?? 0,
-                        cliente.Status,
+                        cliente.Ativo,
                         cliente.Rg,
-                        cliente.DataCriacao,
-                        cliente.DataModificacao
+                        cliente.DataCadastro,
+                        cliente.DataAlteracao
                     );
 
                     formCadastro.FormClosed += (s, args) => CarregarClientes();
@@ -189,6 +186,65 @@ namespace Projeto.Views
             {
                 MessageBox.Show("Por favor, selecione um cliente para excluir.");
             }
+        }
+
+        private void frmConsultaCliente_Load(object sender, EventArgs e)
+        {
+            foreach (ColumnHeader column in listView1.Columns)
+            {
+                switch (column.Text)
+                {
+                    case "ID":
+                        column.Width = 50;
+                        break;
+                    case "Nome":
+                        column.Width = 100;
+                        break;
+                    case "CPF/CNPJ":
+                        column.Width = 100;
+                        break;
+                    case "Telefone":
+                        column.Width = 90;
+                        break;
+                    case "Email":
+                        column.Width = 100;
+                        break;
+                    case "Endereço":
+                        column.Width = 100;
+                        break;
+                    case "Número":
+                        column.Width = 60;
+                        break;
+                    case "Bairro":
+                        column.Width = 90;
+                        break;
+                    case "Complemento":
+                        column.Width = 90;
+                        break;
+                    case "CEP":
+                        column.Width = 80;
+                        break;
+                    case "Tipo":
+                        column.Width = 60;
+                        break;
+                    case "Cidade":
+                        column.Width = 100;
+                        break;
+                    case "Condição":
+                        column.Width = 100;
+                        break;
+                    case "Status":
+                        column.Width = 60;
+                        break;
+                    case "RG":
+                        column.Width = 80;
+                        break;
+                    default:
+                        column.Width = 100;
+                        break;
+                }
+            }
+
         }
     }
 }

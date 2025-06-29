@@ -2,9 +2,6 @@
 using Projeto.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Projeto.DAO
 {
@@ -24,50 +21,47 @@ namespace Projeto.DAO
                     if (funcionario.Id > 0)
                     {
                         query = @"
-                    UPDATE funcionarios SET 
-                        nome = @nome, cpf_cnpj = @cpf_cnpj, rg = @rg, telefone = @telefone, email = @email,
-                        endereco = @endereco, numero_endereco = @numero_endereco, complemento = @complemento,
-                        bairro = @bairro, cep = @cep, cargo = @cargo, salario = @salario, id_cidade = @id_cidade,
-                        tipo = @tipo, status = @status, data_admissao = @data_admissao, data_demissao = @data_demissao,
-                        data_modificacao = @data_modificacao
-                    WHERE id = @id";
+                        UPDATE funcionarios SET 
+                            funcionario = @funcionario, cpf_cnpj = @cpf_cnpj, rg = @rg, telefone = @telefone, email = @email,
+                            endereco = @endereco, numero_endereco = @numero_endereco, complemento = @complemento,
+                            bairro = @bairro, cep = @cep, id_cidade = @id_cidade, tipo = @tipo, cargo = @cargo, salario = @salario,
+                            data_admissao = @data_admissao, data_demissao = @data_demissao, ativo = @ativo,
+                            data_alteracao = @data_alteracao
+                        WHERE id = @id";
                     }
                     else
                     {
                         query = @"
-                    INSERT INTO funcionarios (
-                        nome, cpf_cnpj, rg, telefone, email, endereco, numero_endereco, complemento,
-                        bairro, cep, cargo, salario, id_cidade, tipo, status, data_admissao, data_demissao,
-                        data_criacao, data_modificacao
-                    )
-                    VALUES (
-                        @nome, @cpf_cnpj, @rg, @telefone, @email, @endereco, @numero_endereco, @complemento,
-                        @bairro, @cep, @cargo, @salario, @id_cidade, @tipo, @status, @data_admissao, @data_demissao,
-                        @data_criacao, @data_modificacao
-                    )";
+                        INSERT INTO funcionarios (
+                            funcionario, cpf_cnpj, rg, telefone, email, endereco, numero_endereco, complemento,
+                            bairro, cep, id_cidade, tipo, cargo, salario, data_admissao, data_demissao, ativo, data_cadastro, data_alteracao
+                        )
+                        VALUES (
+                            @funcionario, @cpf_cnpj, @rg, @telefone, @email, @endereco, @numero_endereco, @complemento,
+                            @bairro, @cep, @id_cidade, @tipo, @cargo, @salario, @data_admissao, @data_demissao, @ativo, @data_cadastro, @data_alteracao
+                        )";
                     }
 
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
-                        cmd.Parameters.AddWithValue("@nome", funcionario.Nome);
+                        cmd.Parameters.AddWithValue("@funcionario", funcionario.Nome);
                         cmd.Parameters.AddWithValue("@cpf_cnpj", funcionario.CPF_CNPJ);
-                        cmd.Parameters.AddWithValue("@rg", funcionario.Rg);
-                        cmd.Parameters.AddWithValue("@telefone", funcionario.Telefone);
-                        cmd.Parameters.AddWithValue("@email", funcionario.Email);
-                        cmd.Parameters.AddWithValue("@endereco", funcionario.Endereco);
-                        cmd.Parameters.AddWithValue("@numero_endereco", funcionario.NumeroEndereco);
-                        cmd.Parameters.AddWithValue("@complemento", funcionario.Complemento);
-                        cmd.Parameters.AddWithValue("@bairro", funcionario.Bairro);
-                        cmd.Parameters.AddWithValue("@cep", funcionario.CEP);
-                        cmd.Parameters.AddWithValue("@cargo", funcionario.Cargo);
+                        cmd.Parameters.AddWithValue("@rg", funcionario.Rg ?? (object)DBNull.Value);
+                        cmd.Parameters.AddWithValue("@telefone", funcionario.Telefone ?? (object)DBNull.Value);
+                        cmd.Parameters.AddWithValue("@email", funcionario.Email ?? (object)DBNull.Value);
+                        cmd.Parameters.AddWithValue("@endereco", funcionario.Endereco ?? (object)DBNull.Value);
+                        cmd.Parameters.AddWithValue("@numero_endereco", funcionario.NumeroEndereco ?? (object)DBNull.Value);
+                        cmd.Parameters.AddWithValue("@complemento", funcionario.Complemento ?? (object)DBNull.Value);
+                        cmd.Parameters.AddWithValue("@bairro", funcionario.Bairro ?? (object)DBNull.Value);
+                        cmd.Parameters.AddWithValue("@cep", funcionario.CEP ?? (object)DBNull.Value);
+                        cmd.Parameters.AddWithValue("@id_cidade", funcionario.IdCidade ?? (object)DBNull.Value);
+                        cmd.Parameters.AddWithValue("@tipo", funcionario.Tipo ?? (object)DBNull.Value);
+                        cmd.Parameters.AddWithValue("@cargo", funcionario.Cargo ?? (object)DBNull.Value);
                         cmd.Parameters.AddWithValue("@salario", funcionario.Salario);
-                        cmd.Parameters.AddWithValue("@id_cidade", funcionario.IdCidade);
-                        cmd.Parameters.AddWithValue("@tipo", funcionario.Tipo);
-                        cmd.Parameters.AddWithValue("@status", funcionario.Status);
-                        cmd.Parameters.AddWithValue("@data_admissao", funcionario.DataAdmissao?.ToString("yyyy-MM-dd"));
-                        cmd.Parameters.AddWithValue("@data_demissao", funcionario.DataDemissao?.ToString("yyyy-MM-dd"));
-
-                        cmd.Parameters.AddWithValue("@data_modificacao", funcionario.DataModificacao);
+                        cmd.Parameters.AddWithValue("@data_admissao", funcionario.DataAdmissao ?? (object)DBNull.Value);
+                        cmd.Parameters.AddWithValue("@data_demissao", funcionario.DataDemissao ?? (object)DBNull.Value);
+                        cmd.Parameters.AddWithValue("@ativo", funcionario.Ativo);
+                        cmd.Parameters.AddWithValue("@data_alteracao", funcionario.DataAlteracao ?? DateTime.Now);
 
                         if (funcionario.Id > 0)
                         {
@@ -75,7 +69,7 @@ namespace Projeto.DAO
                         }
                         else
                         {
-                            cmd.Parameters.AddWithValue("@data_criacao", funcionario.DataCriacao);
+                            cmd.Parameters.AddWithValue("@data_cadastro", funcionario.DataCadastro ?? DateTime.Now);
                         }
 
                         cmd.ExecuteNonQuery();
@@ -87,8 +81,6 @@ namespace Projeto.DAO
                 throw new Exception("Erro ao salvar funcionário: " + ex.Message);
             }
         }
-
-
 
         public void Excluir(int id)
         {
@@ -111,16 +103,14 @@ namespace Projeto.DAO
             {
                 conn.Open();
                 string query = @"
-                                SELECT f.id, f.nome, f.cpf_cnpj, f.rg, f.telefone, f.email,
-                                       f.endereco, f.numero_endereco, f.complemento, f.bairro,
-                                       f.cep, f.cargo, f.salario, f.tipo, f.data_admissao,
-                                       f.data_demissao, f.status, f.id_cidade,
-                                       f.data_criacao, f.data_modificacao,
-                                       c.nome AS cidade_nome
-                                FROM funcionarios f
-                                LEFT JOIN cidades c ON f.id_cidade = c.id
-                                WHERE f.id = @id";
-
+                SELECT f.id, f.funcionario, f.cpf_cnpj, f.rg, f.telefone, f.email,
+                       f.endereco, f.numero_endereco, f.complemento, f.bairro,
+                       f.cep, f.tipo, f.cargo, f.salario, f.data_admissao, f.data_demissao, f.ativo, f.id_cidade,
+                       f.data_cadastro, f.data_alteracao,
+                       c.cidade AS cidade_nome
+                FROM funcionarios f
+                LEFT JOIN cidades c ON f.id_cidade = c.id
+                WHERE f.id = @id";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
@@ -133,36 +123,33 @@ namespace Projeto.DAO
                             return new Funcionario
                             {
                                 Id = reader.GetInt32("id"),
-                                Nome = reader.GetString("nome"),
+                                Nome = reader.GetString("funcionario"),
                                 CPF_CNPJ = reader.GetString("cpf_cnpj"),
                                 Rg = reader.IsDBNull(reader.GetOrdinal("rg")) ? null : reader.GetString("rg"),
                                 Telefone = reader.IsDBNull(reader.GetOrdinal("telefone")) ? null : reader.GetString("telefone"),
                                 Email = reader.IsDBNull(reader.GetOrdinal("email")) ? null : reader.GetString("email"),
                                 Endereco = reader.IsDBNull(reader.GetOrdinal("endereco")) ? null : reader.GetString("endereco"),
-                                NumeroEndereco = reader.IsDBNull(reader.GetOrdinal("numero_endereco")) ? 0 : reader.GetInt32("numero_endereco"),
+                                NumeroEndereco = reader.IsDBNull(reader.GetOrdinal("numero_endereco")) ? (int?)null : reader.GetInt32("numero_endereco"),
                                 Complemento = reader.IsDBNull(reader.GetOrdinal("complemento")) ? null : reader.GetString("complemento"),
                                 Bairro = reader.IsDBNull(reader.GetOrdinal("bairro")) ? null : reader.GetString("bairro"),
                                 CEP = reader.IsDBNull(reader.GetOrdinal("cep")) ? null : reader.GetString("cep"),
-                                Cargo = reader.IsDBNull(reader.GetOrdinal("cargo")) ? null : reader.GetString("cargo"),
-                                Salario = reader.IsDBNull(reader.GetOrdinal("salario")) ? 0 : reader.GetDecimal("salario"),
                                 Tipo = reader.IsDBNull(reader.GetOrdinal("tipo")) ? null : reader.GetString("tipo"),
-                                DataAdmissao = reader.GetDateTime("data_admissao"),
+                                Cargo = reader.IsDBNull(reader.GetOrdinal("cargo")) ? null : reader.GetString("cargo"),
+                                Salario = reader.GetDecimal("salario"),
+                                DataAdmissao = reader.IsDBNull(reader.GetOrdinal("data_admissao")) ? (DateTime?)null : reader.GetDateTime("data_admissao"),
                                 DataDemissao = reader.IsDBNull(reader.GetOrdinal("data_demissao")) ? (DateTime?)null : reader.GetDateTime("data_demissao"),
-                                Status = reader.GetBoolean("status"),
-                                IdCidade = reader.IsDBNull(reader.GetOrdinal("id_cidade")) ? 0 : reader.GetInt32("id_cidade"),
+                                Ativo = reader.GetBoolean("ativo"),
+                                IdCidade = reader.IsDBNull(reader.GetOrdinal("id_cidade")) ? (int?)null : reader.GetInt32("id_cidade"),
                                 NomeCidade = reader.IsDBNull(reader.GetOrdinal("cidade_nome")) ? null : reader.GetString("cidade_nome"),
-                                DataCriacao = reader.GetDateTime("data_criacao"),
-                                DataModificacao = reader.GetDateTime("data_modificacao"),
-
+                                DataCadastro = reader.IsDBNull(reader.GetOrdinal("data_cadastro")) ? (DateTime?)null : reader.GetDateTime("data_cadastro"),
+                                DataAlteracao = reader.IsDBNull(reader.GetOrdinal("data_alteracao")) ? (DateTime?)null : reader.GetDateTime("data_alteracao")
                             };
                         }
                     }
                 }
             }
-
             return null;
         }
-
 
         public List<Funcionario> ListarFuncionarios()
         {
@@ -172,12 +159,14 @@ namespace Projeto.DAO
             {
                 conn.Open();
                 string query = @"
-                SELECT f.id, f.nome, f.cpf_cnpj, f.rg, f.telefone, f.email, f.endereco, f.numero_endereco, f.complemento, 
-                       f.bairro, f.cep, f.cargo, f.salario, f.id_cidade, ci.nome AS cidade_nome, f.tipo, 
-                       f.status, f.data_admissao, f.data_demissao, f.data_criacao, f.data_modificacao
+                SELECT f.id, f.funcionario, f.cpf_cnpj, f.rg, f.telefone, f.email,
+                       f.endereco, f.numero_endereco, f.complemento, f.bairro,
+                       f.cep, f.tipo, f.cargo, f.salario, f.data_admissao, f.data_demissao, f.ativo, f.id_cidade,
+                       f.data_cadastro, f.data_alteracao,
+                       c.cidade AS cidade_nome
                 FROM funcionarios f
-                LEFT JOIN cidades ci ON f.id_cidade = ci.id
-                ORDER BY f.nome";
+                LEFT JOIN cidades c ON f.id_cidade = c.id
+                ORDER BY f.funcionario";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
@@ -188,27 +177,26 @@ namespace Projeto.DAO
                             lista.Add(new Funcionario
                             {
                                 Id = reader.GetInt32("id"),
-                                Nome = reader.GetString("nome"),
+                                Nome = reader.GetString("funcionario"),
                                 CPF_CNPJ = reader.GetString("cpf_cnpj"),
                                 Rg = reader.IsDBNull(reader.GetOrdinal("rg")) ? null : reader.GetString("rg"),
                                 Telefone = reader.IsDBNull(reader.GetOrdinal("telefone")) ? null : reader.GetString("telefone"),
                                 Email = reader.IsDBNull(reader.GetOrdinal("email")) ? null : reader.GetString("email"),
                                 Endereco = reader.IsDBNull(reader.GetOrdinal("endereco")) ? null : reader.GetString("endereco"),
-                                NumeroEndereco = reader.IsDBNull(reader.GetOrdinal("numero_endereco")) ? 0 : reader.GetInt32("numero_endereco"),
+                                NumeroEndereco = reader.IsDBNull(reader.GetOrdinal("numero_endereco")) ? (int?)null : reader.GetInt32("numero_endereco"),
                                 Complemento = reader.IsDBNull(reader.GetOrdinal("complemento")) ? null : reader.GetString("complemento"),
                                 Bairro = reader.IsDBNull(reader.GetOrdinal("bairro")) ? null : reader.GetString("bairro"),
                                 CEP = reader.IsDBNull(reader.GetOrdinal("cep")) ? null : reader.GetString("cep"),
+                                Tipo = reader.IsDBNull(reader.GetOrdinal("tipo")) ? null : reader.GetString("tipo"),
                                 Cargo = reader.IsDBNull(reader.GetOrdinal("cargo")) ? null : reader.GetString("cargo"),
-                                Salario = reader.IsDBNull(reader.GetOrdinal("salario")) ? 0m : reader.GetDecimal(reader.GetOrdinal("salario")),
-                                IdCidade = reader.IsDBNull(reader.GetOrdinal("id_cidade")) ? (int?)null : reader.GetInt32("id_cidade"),
-                                NomeCidade = reader.IsDBNull(reader.GetOrdinal("cidade_nome")) ? null : reader.GetString("cidade_nome"),
-                                Tipo = reader.GetString("tipo"),
-                                Status = reader.GetBoolean("status"),
+                                Salario = reader.GetDecimal("salario"),
                                 DataAdmissao = reader.IsDBNull(reader.GetOrdinal("data_admissao")) ? (DateTime?)null : reader.GetDateTime("data_admissao"),
                                 DataDemissao = reader.IsDBNull(reader.GetOrdinal("data_demissao")) ? (DateTime?)null : reader.GetDateTime("data_demissao"),
-                                DataCriacao = reader.IsDBNull(reader.GetOrdinal("data_criacao")) ? (DateTime?)null : reader.GetDateTime("data_criacao"),
-                                DataModificacao = reader.IsDBNull(reader.GetOrdinal("data_modificacao")) ? (DateTime?)null : reader.GetDateTime("data_modificacao"),
-
+                                Ativo = reader.GetBoolean("ativo"),
+                                IdCidade = reader.IsDBNull(reader.GetOrdinal("id_cidade")) ? (int?)null : reader.GetInt32("id_cidade"),
+                                NomeCidade = reader.IsDBNull(reader.GetOrdinal("cidade_nome")) ? null : reader.GetString("cidade_nome"),
+                                DataCadastro = reader.IsDBNull(reader.GetOrdinal("data_cadastro")) ? (DateTime?)null : reader.GetDateTime("data_cadastro"),
+                                DataAlteracao = reader.IsDBNull(reader.GetOrdinal("data_alteracao")) ? (DateTime?)null : reader.GetDateTime("data_alteracao")
                             });
                         }
                     }
@@ -216,7 +204,5 @@ namespace Projeto.DAO
             }
             return lista;
         }
-
-
     }
 }

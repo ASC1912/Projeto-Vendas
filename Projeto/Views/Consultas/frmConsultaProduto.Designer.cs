@@ -72,7 +72,7 @@
             // 
             // Nome
             // 
-            this.Nome.Text = "Nome";
+            this.Nome.Text = "Produto";
             // 
             // Descricao
             // 
@@ -104,6 +104,7 @@
             //this.ClientSize = new System.Drawing.Size(1342, 681);
             this.Name = "frmConsultaProduto";
             this.Text = "Consulta Produtos";
+            this.Load += new System.EventHandler(this.frmConsultaProduto_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

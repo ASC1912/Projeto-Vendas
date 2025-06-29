@@ -69,17 +69,10 @@
             this.DataDemissao,
             this.Status,
             this.Rg});
-
             // 
             // btnDeletar
             // 
             this.btnDeletar.Click += new System.EventHandler(this.btnDeletar_Click);
-            // 
-            // txtPesquisar
-            // 
-            // 
-            // btnSair
-            // 
             // 
             // btnPesquisar
             // 
@@ -179,6 +172,7 @@
             //this.ClientSize = new System.Drawing.Size(1342, 681);
             this.Name = "frmConsultaFuncionario";
             this.Text = "Consulta Funcionarios";
+            this.Load += new System.EventHandler(this.frmConsultaFuncionario_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

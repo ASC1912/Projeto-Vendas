@@ -70,9 +70,6 @@
             // 
             this.btnDeletar.Click += new System.EventHandler(this.btnDeletar_Click);
             // 
-            // btnSair
-            // 
-            // 
             // btnPesquisar
             // 
             this.btnPesquisar.Click += new System.EventHandler(this.btnPesquisar_Click);
@@ -91,7 +88,8 @@
             // 
             // Nome
             // 
-            this.Nome.Text = "Nome";
+            this.Nome.Text = "Fornecedor";
+            this.Nome.Width = 87;
             // 
             // CPF_CNPJ
             // 
@@ -119,7 +117,7 @@
             // 
             // IDCidade
             // 
-            this.IDCidade.Text = "IDCidade";
+            this.IDCidade.Text = "Cidade";
             // 
             // InscricaoEstadual
             // 
@@ -152,9 +150,10 @@
             // frmConsultaFornecedor
             // 
             //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            //this.ClientSize = new System.Drawing.Size(1342, 721);
+            //this.ClientSize = new System.Drawing.Size(1342, 681);
             this.Name = "frmConsultaFornecedor";
             this.Text = "Consulta Fornecedores";
+            this.Load += new System.EventHandler(this.frmConsultaFornecedor_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

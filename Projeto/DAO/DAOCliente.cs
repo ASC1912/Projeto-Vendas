@@ -2,9 +2,6 @@
 using Projeto.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Projeto.DAO
 {
@@ -24,31 +21,31 @@ namespace Projeto.DAO
                     if (cliente.Id > 0)
                     {
                         query = @"
-                    UPDATE clientes SET 
-                        nome = @nome, cpf_cnpj = @cpf_cnpj, rg = @rg, telefone = @telefone, email = @email,
-                        endereco = @endereco, numero_endereco = @numero_endereco, complemento = @complemento,
-                        bairro = @bairro, cep = @cep, id_cidade = @id_cidade, tipo = @tipo, 
-                        id_condicao_pagamento = @id_condicao_pagamento, status = @status,
-                        data_modificacao = @data_modificacao
-                    WHERE id = @id";
+                        UPDATE clientes SET 
+                            cliente = @cliente, cpf_cnpj = @cpf_cnpj, rg = @rg, telefone = @telefone, email = @email,
+                            endereco = @endereco, numero_endereco = @numero_endereco, complemento = @complemento,
+                            bairro = @bairro, cep = @cep, id_cidade = @id_cidade, tipo = @tipo,
+                            id_condicao_pagamento = @id_condicao_pagamento, ativo = @ativo,
+                            data_alteracao = @data_alteracao
+                        WHERE id = @id";
                     }
                     else
                     {
                         query = @"
-                    INSERT INTO clientes (
-                        nome, cpf_cnpj, rg, telefone, email, endereco, numero_endereco, complemento,
-                        bairro, cep, id_cidade, tipo, id_condicao_pagamento, status,
-                        data_criacao, data_modificacao
-                    ) VALUES (
-                        @nome, @cpf_cnpj, @rg, @telefone, @email, @endereco, @numero_endereco, @complemento,
-                        @bairro, @cep, @id_cidade, @tipo, @id_condicao_pagamento, @status,
-                        @data_criacao, @data_modificacao
-                    )";
+                        INSERT INTO clientes (
+                            cliente, cpf_cnpj, rg, telefone, email, endereco, numero_endereco, complemento,
+                            bairro, cep, id_cidade, tipo, id_condicao_pagamento, ativo,
+                            data_cadastro, data_alteracao
+                        ) VALUES (
+                            @cliente, @cpf_cnpj, @rg, @telefone, @email, @endereco, @numero_endereco, @complemento,
+                            @bairro, @cep, @id_cidade, @tipo, @id_condicao_pagamento, @ativo,
+                            @data_cadastro, @data_alteracao
+                        )";
                     }
 
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
-                        cmd.Parameters.AddWithValue("@nome", cliente.Nome);
+                        cmd.Parameters.AddWithValue("@cliente", cliente.Nome);
                         cmd.Parameters.AddWithValue("@cpf_cnpj", cliente.CPF_CNPJ);
                         cmd.Parameters.AddWithValue("@rg", cliente.Rg);
                         cmd.Parameters.AddWithValue("@telefone", cliente.Telefone);
@@ -61,8 +58,8 @@ namespace Projeto.DAO
                         cmd.Parameters.AddWithValue("@id_cidade", cliente.IdCidade);
                         cmd.Parameters.AddWithValue("@tipo", cliente.Tipo);
                         cmd.Parameters.AddWithValue("@id_condicao_pagamento", cliente.IdCondicao > 0 ? (object)cliente.IdCondicao : DBNull.Value);
-                        cmd.Parameters.AddWithValue("@status", cliente.Status);
-                        cmd.Parameters.AddWithValue("@data_modificacao", cliente.DataModificacao);
+                        cmd.Parameters.AddWithValue("@ativo", cliente.Ativo);
+                        cmd.Parameters.AddWithValue("@data_alteracao", cliente.DataAlteracao ?? DateTime.Now);
 
                         if (cliente.Id > 0)
                         {
@@ -70,7 +67,7 @@ namespace Projeto.DAO
                         }
                         else
                         {
-                            cmd.Parameters.AddWithValue("@data_criacao", cliente.DataCriacao);
+                            cmd.Parameters.AddWithValue("@data_cadastro", cliente.DataCadastro ?? DateTime.Now);
                         }
 
                         cmd.ExecuteNonQuery();
@@ -82,8 +79,6 @@ namespace Projeto.DAO
                 throw new Exception("Erro ao salvar cliente: " + ex.Message);
             }
         }
-
-
 
         public void Excluir(int id)
         {
@@ -106,12 +101,14 @@ namespace Projeto.DAO
             {
                 conn.Open();
                 string query = @"
-                                SELECT c.id, c.nome, c.cpf_cnpj, c.rg, c.telefone, c.email, c.endereco, c.numero_endereco, 
-                                       c.complemento, c.bairro, c.cep, c.id_cidade, ci.nome AS cidade_nome, 
-                                       c.tipo, c.id_condicao_pagamento, c.status, c.data_criacao, c.data_modificacao
-                                FROM clientes c
-                                LEFT JOIN cidades ci ON c.id_cidade = ci.id
-                                WHERE c.id = @id";
+                SELECT c.id, c.cliente, c.cpf_cnpj, c.rg, c.telefone, c.email, c.endereco, c.numero_endereco,
+                       c.complemento, c.bairro, c.cep, c.id_cidade, ci.cidade AS cidade_nome,
+                       c.tipo, c.id_condicao_pagamento, cp.descricao AS condicao_descricao, c.ativo,
+                       c.data_cadastro, c.data_alteracao
+                FROM clientes c
+                LEFT JOIN cidades ci ON c.id_cidade = ci.id
+                LEFT JOIN condicoes_pagamento cp ON c.id_condicao_pagamento = cp.id
+                WHERE c.id = @id";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
@@ -124,7 +121,7 @@ namespace Projeto.DAO
                             return new Cliente
                             {
                                 Id = reader.GetInt32("id"),
-                                Nome = reader.GetString("nome"),
+                                Nome = reader.GetString("cliente"),
                                 CPF_CNPJ = reader.GetString("cpf_cnpj"),
                                 Rg = reader.IsDBNull(reader.GetOrdinal("rg")) ? null : reader.GetString("rg"),
                                 Telefone = reader.IsDBNull(reader.GetOrdinal("telefone")) ? null : reader.GetString("telefone"),
@@ -138,18 +135,17 @@ namespace Projeto.DAO
                                 NomeCidade = reader.IsDBNull(reader.GetOrdinal("cidade_nome")) ? null : reader.GetString("cidade_nome"),
                                 Tipo = reader.GetString("tipo"),
                                 IdCondicao = reader.IsDBNull(reader.GetOrdinal("id_condicao_pagamento")) ? (int?)null : reader.GetInt32("id_condicao_pagamento"),
-                                Status = reader.GetBoolean("status"),
-                                DataCriacao = reader.GetDateTime("data_criacao"),
-                                DataModificacao = reader.GetDateTime("data_modificacao")
+                                DescricaoCondicao = reader.IsDBNull(reader.GetOrdinal("condicao_descricao")) ? null : reader.GetString("condicao_descricao"),
+                                Ativo = reader.GetBoolean("ativo"),
+                                DataCadastro = reader.IsDBNull(reader.GetOrdinal("data_cadastro")) ? (DateTime?)null : reader.GetDateTime("data_cadastro"),
+                                DataAlteracao = reader.IsDBNull(reader.GetOrdinal("data_alteracao")) ? (DateTime?)null : reader.GetDateTime("data_alteracao")
                             };
                         }
                     }
                 }
             }
-
             return null;
         }
-
 
         public List<Cliente> ListarClientes()
         {
@@ -159,13 +155,14 @@ namespace Projeto.DAO
             {
                 conn.Open();
                 string query = @"
-                SELECT c.id, c.nome, c.cpf_cnpj, c.rg, c.telefone, c.email, c.endereco, c.numero_endereco, 
-                       c.complemento, c.bairro, c.cep, c.id_cidade, ci.nome AS cidade_nome, 
-                       c.tipo, c.id_condicao_pagamento, c.status,
-                       c.data_criacao, c.data_modificacao
+                SELECT c.id, c.cliente, c.cpf_cnpj, c.rg, c.telefone, c.email, c.endereco, c.numero_endereco,
+                       c.complemento, c.bairro, c.cep, c.id_cidade, ci.cidade AS cidade_nome,
+                       c.tipo, c.id_condicao_pagamento, cp.descricao AS condicao_descricao, c.ativo,
+                       c.data_cadastro, c.data_alteracao
                 FROM clientes c
                 LEFT JOIN cidades ci ON c.id_cidade = ci.id
-                ORDER BY c.nome";
+                LEFT JOIN condicoes_pagamento cp ON c.id_condicao_pagamento = cp.id
+                ORDER BY c.cliente";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
@@ -176,13 +173,13 @@ namespace Projeto.DAO
                             lista.Add(new Cliente
                             {
                                 Id = reader.GetInt32("id"),
-                                Nome = reader.GetString("nome"),
+                                Nome = reader.GetString("cliente"),
                                 CPF_CNPJ = reader.GetString("cpf_cnpj"),
                                 Rg = reader.IsDBNull(reader.GetOrdinal("rg")) ? null : reader.GetString("rg"),
                                 Telefone = reader.IsDBNull(reader.GetOrdinal("telefone")) ? null : reader.GetString("telefone"),
                                 Email = reader.IsDBNull(reader.GetOrdinal("email")) ? null : reader.GetString("email"),
                                 Endereco = reader.IsDBNull(reader.GetOrdinal("endereco")) ? null : reader.GetString("endereco"),
-                                NumeroEndereco = reader.IsDBNull(reader.GetOrdinal("numero_endereco")) ? 0 : reader.GetInt32("numero_endereco"),
+                                NumeroEndereco = reader.IsDBNull(reader.GetOrdinal("numero_endereco")) ? (int?)null : reader.GetInt32("numero_endereco"),
                                 Complemento = reader.IsDBNull(reader.GetOrdinal("complemento")) ? null : reader.GetString("complemento"),
                                 Bairro = reader.IsDBNull(reader.GetOrdinal("bairro")) ? null : reader.GetString("bairro"),
                                 CEP = reader.IsDBNull(reader.GetOrdinal("cep")) ? null : reader.GetString("cep"),
@@ -190,9 +187,10 @@ namespace Projeto.DAO
                                 NomeCidade = reader.IsDBNull(reader.GetOrdinal("cidade_nome")) ? null : reader.GetString("cidade_nome"),
                                 Tipo = reader.GetString("tipo"),
                                 IdCondicao = reader.IsDBNull(reader.GetOrdinal("id_condicao_pagamento")) ? (int?)null : reader.GetInt32("id_condicao_pagamento"),
-                                Status = reader.GetBoolean("status"),
-                                DataCriacao = reader.IsDBNull(reader.GetOrdinal("data_criacao")) ? (DateTime?)null : reader.GetDateTime("data_criacao"),
-                                DataModificacao = reader.IsDBNull(reader.GetOrdinal("data_modificacao")) ? (DateTime?)null : reader.GetDateTime("data_modificacao")
+                                DescricaoCondicao = reader.IsDBNull(reader.GetOrdinal("condicao_descricao")) ? null : reader.GetString("condicao_descricao"),
+                                Ativo = reader.GetBoolean("ativo"),
+                                DataCadastro = reader.IsDBNull(reader.GetOrdinal("data_cadastro")) ? (DateTime?)null : reader.GetDateTime("data_cadastro"),
+                                DataAlteracao = reader.IsDBNull(reader.GetOrdinal("data_alteracao")) ? (DateTime?)null : reader.GetDateTime("data_alteracao")
                             });
                         }
                     }
@@ -200,8 +198,5 @@ namespace Projeto.DAO
             }
             return lista;
         }
-
-
-
     }
 }

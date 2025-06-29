@@ -20,21 +20,21 @@ namespace Projeto.Views.Cadastros
             txtCodigo.Enabled = false;
         }
 
-        public void CarregarGrupo(int id, string nome, string descricao, bool status, DateTime? dataCriacao, DateTime? dataModificacao)
+        public void CarregarGrupo(int id, string nomeGrupo, string descricao, bool ativo, DateTime? dataCadastro, DateTime? dataAlteracao)
         {
             modoEdicao = true;
 
             txtCodigo.Text = id.ToString();
-            txtNome.Text = nome;
+            txtNome.Text = nomeGrupo;
             txtDescricao.Text = descricao;
-            chkInativo.Checked = !status;
+            chkInativo.Checked = !ativo;
 
-            lblDataCriacao.Text = dataCriacao.HasValue
-                ? $"Criado em: {dataCriacao.Value:dd/MM/yyyy HH:mm}"
+            lblDataCriacao.Text = dataCadastro.HasValue
+                ? $"Criado em: {dataCadastro.Value:dd/MM/yyyy HH:mm}"
                 : "Criado em: -";
 
-            lblDataModificacao.Text = dataModificacao.HasValue
-                ? $"Modificado em: {dataModificacao.Value:dd/MM/yyyy HH:mm}"
+            lblDataModificacao.Text = dataAlteracao.HasValue
+                ? $"Modificado em: {dataAlteracao.Value:dd/MM/yyyy HH:mm}"
                 : "Modificado em: -";
         }
 
@@ -58,11 +58,11 @@ namespace Projeto.Views.Cadastros
                 Grupo grupo = new Grupo
                 {
                     Id = id,
-                    Nome = nome,
+                    NomeGrupo = nome,
                     Descricao = descricao,
-                    Status = status,
-                    DataCriacao = dataCriacao,
-                    DataModificacao = dataModificacao
+                    Ativo = status,
+                    DataCadastro = dataCriacao,
+                    DataAlteracao = dataModificacao
                 };
 
                 GrupoController controller = new GrupoController();
@@ -79,8 +79,15 @@ namespace Projeto.Views.Cadastros
 
         private void frmCadastroGrupo_Load(object sender, EventArgs e)
         {
-            lblDataCriacao.Visible = modoEdicao;
-            lblDataModificacao.Visible = modoEdicao;
+            if (modoEdicao == false)
+            {
+                txtCodigo.Text = "0";
+
+                DateTime agora = DateTime.Now;
+
+                lblDataCriacao.Text = $"Criado em: {agora:dd/MM/yyyy HH:mm}";
+                lblDataModificacao.Text = $"Modificado em: {agora:dd/MM/yyyy HH:mm}";
+            }
         }
     }
 }

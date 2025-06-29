@@ -139,12 +139,12 @@ namespace Projeto.Views
                     Cargo = txtCargo.Text,
                     Salario = Convert.ToDecimal(txtSalario.Text),
                     IdCidade = cidadeSelecionadoId,
-                    Status = status,
+                    Ativo = status,
                     DataAdmissao = dtpAdmissao.Value,
                     DataDemissao = dtpDemissao.Checked ? (DateTime?)dtpDemissao.Value : null,
                     Rg = txtRG.Text,
-                    DataCriacao = dataCriacao,
-                    DataModificacao = dataModificacao
+                    DataCadastro = dataCriacao,
+                    DataAlteracao = dataModificacao
                 };
 
                 controller.Salvar(funcionario);
@@ -159,10 +159,18 @@ namespace Projeto.Views
 
         private void frmCadastroFuncionario_Load(object sender, EventArgs e)
         {
-
-            if (modoEdicao == true)
+            if (modoEdicao)
             {
                 cbTipo.Enabled = false;
+            }
+            else
+            {
+                txtCodigo.Text = "0";
+
+                DateTime agora = DateTime.Now;
+
+                lblDataCriacao.Text = $"Criado em: {agora:dd/MM/yyyy HH:mm}";
+                lblDataModificacao.Text = $"Modificado em: {agora:dd/MM/yyyy HH:mm}";
             }
         }
 
@@ -175,8 +183,41 @@ namespace Projeto.Views
 
             if (resultado == DialogResult.OK && consultaCidade.CidadeSelecionado != null)
             {
-                txtCidade.Text = consultaCidade.CidadeSelecionado.Nome;
+                txtCidade.Text = consultaCidade.CidadeSelecionado.NomeCidade;
                 cidadeSelecionadoId = consultaCidade.CidadeSelecionado.Id;
+                txtIdCidade.Text = consultaCidade.CidadeSelecionado.Id.ToString();
+            }
+        }
+
+        private void txtIdCidade_Leave(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtIdCidade.Text))
+            {
+                txtCidade.Text = "";
+                cidadeSelecionadoId = -1;
+                return;
+            }
+
+            if (!Validador.ValidarNumerico(txtIdCidade, "O campo ID Cidade deve conter apenas números."))
+            {
+                txtCidade.Text = "";
+                cidadeSelecionadoId = -1;
+                return;
+            }
+
+            int id = int.Parse(txtIdCidade.Text);
+            var cidade = cidadeController.BuscarPorId(id);
+
+            if (cidade != null)
+            {
+                txtCidade.Text = cidade.NomeCidade;
+                cidadeSelecionadoId = cidade.Id;
+            }
+            else
+            {
+                MessageBox.Show("Cidade não encontrada.");
+                txtCidade.Text = "";
+                cidadeSelecionadoId = -1;
             }
         }
     }

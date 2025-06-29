@@ -1,11 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
-using MySqlX.XDevAPI;
 using Projeto.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Projeto.DAO
 {
@@ -25,49 +21,47 @@ namespace Projeto.DAO
                     if (fornecedor.Id > 0)
                     {
                         query = @"
-                        UPDATE fornecedores 
-                        SET nome = @nome, cpf_cnpj = @cpf_cnpj, telefone = @telefone, email = @email, 
-                            endereco = @endereco, numero_endereco = @numero_endereco, complemento = @complemento, 
-                            bairro = @bairro, cep = @cep, inscricao_estadual = @inscricao_estadual, 
-                            inscricao_estadual_subtrib = @inscricao_estadual_subtrib, id_cidade = @id_cidade, 
-                            tipo = @tipo, id_condicao_pagamento = @id_condicao_pagamento, status = @status,
-                            data_modificacao = @data_modificacao
+                        UPDATE fornecedores SET 
+                            fornecedor = @fornecedor, cpf_cnpj = @cpf_cnpj, telefone = @telefone, email = @email,
+                            endereco = @endereco, numero_endereco = @numero_endereco, complemento = @complemento,
+                            bairro = @bairro, cep = @cep, id_cidade = @id_cidade, tipo = @tipo,
+                            inscricao_estadual = @inscricao_estadual, inscricao_estadual_subtrib = @inscricao_estadual_subtrib,
+                            id_condicao_pagamento = @id_condicao_pagamento,
+                            ativo = @ativo, data_alteracao = @data_alteracao
                         WHERE id = @id";
                     }
                     else
                     {
                         query = @"
                         INSERT INTO fornecedores (
-                            nome, cpf_cnpj, telefone, email, endereco, numero_endereco, complemento, 
-                            bairro, cep, inscricao_estadual, inscricao_estadual_subtrib, id_cidade, tipo, 
-                            id_condicao_pagamento, status, data_criacao, data_modificacao
-                        ) 
-                        VALUES (
-                            @nome, @cpf_cnpj, @telefone, @email, @endereco, @numero_endereco, @complemento, 
-                            @bairro, @cep, @inscricao_estadual, @inscricao_estadual_subtrib, @id_cidade, @tipo, 
-                            @id_condicao_pagamento, @status, @data_criacao, @data_modificacao
+                            fornecedor, cpf_cnpj, telefone, email, endereco, numero_endereco, complemento,
+                            bairro, cep, id_cidade, tipo, inscricao_estadual, inscricao_estadual_subtrib, id_condicao_pagamento,
+                            ativo, data_cadastro, data_alteracao
+                        ) VALUES (
+                            @fornecedor, @cpf_cnpj, @telefone, @email, @endereco, @numero_endereco, @complemento,
+                            @bairro, @cep, @id_cidade, @tipo, @inscricao_estadual, @inscricao_estadual_subtrib, @id_condicao_pagamento,
+                            @ativo, @data_cadastro, @data_alteracao
                         )";
                     }
 
-
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
-                        cmd.Parameters.AddWithValue("@nome", fornecedor.Nome);
+                        cmd.Parameters.AddWithValue("@fornecedor", fornecedor.Nome);
                         cmd.Parameters.AddWithValue("@cpf_cnpj", fornecedor.CPF_CNPJ);
-                        cmd.Parameters.AddWithValue("@telefone", fornecedor.Telefone);
-                        cmd.Parameters.AddWithValue("@email", fornecedor.Email);
-                        cmd.Parameters.AddWithValue("@endereco", fornecedor.Endereco);
-                        cmd.Parameters.AddWithValue("@numero_endereco", fornecedor.NumeroEndereco);
-                        cmd.Parameters.AddWithValue("@complemento", fornecedor.Complemento);
-                        cmd.Parameters.AddWithValue("@bairro", fornecedor.Bairro);
-                        cmd.Parameters.AddWithValue("@cep", fornecedor.CEP);
-                        cmd.Parameters.AddWithValue("@inscricao_estadual", fornecedor.InscricaoEstadual);
-                        cmd.Parameters.AddWithValue("@inscricao_estadual_subtrib", fornecedor.InscricaoEstadualSubTrib);
-                        cmd.Parameters.AddWithValue("@id_cidade", fornecedor.IdCidade);
-                        cmd.Parameters.AddWithValue("@tipo", fornecedor.Tipo);
-                        cmd.Parameters.AddWithValue("@id_condicao_pagamento", fornecedor.IdCondicao > 0 ? (object)fornecedor.IdCondicao : DBNull.Value);
-                        cmd.Parameters.AddWithValue("@status", fornecedor.Status);
-                        cmd.Parameters.AddWithValue("@data_modificacao", fornecedor.DataModificacao);
+                        cmd.Parameters.AddWithValue("@telefone", fornecedor.Telefone ?? (object)DBNull.Value);
+                        cmd.Parameters.AddWithValue("@email", fornecedor.Email ?? (object)DBNull.Value);
+                        cmd.Parameters.AddWithValue("@endereco", fornecedor.Endereco ?? (object)DBNull.Value);
+                        cmd.Parameters.AddWithValue("@numero_endereco", fornecedor.NumeroEndereco ?? (object)DBNull.Value);
+                        cmd.Parameters.AddWithValue("@complemento", fornecedor.Complemento ?? (object)DBNull.Value);
+                        cmd.Parameters.AddWithValue("@bairro", fornecedor.Bairro ?? (object)DBNull.Value);
+                        cmd.Parameters.AddWithValue("@cep", fornecedor.CEP ?? (object)DBNull.Value);
+                        cmd.Parameters.AddWithValue("@id_cidade", fornecedor.IdCidade ?? (object)DBNull.Value);
+                        cmd.Parameters.AddWithValue("@tipo", fornecedor.Tipo ?? (object)DBNull.Value);
+                        cmd.Parameters.AddWithValue("@inscricao_estadual", fornecedor.InscricaoEstadual ?? (object)DBNull.Value);
+                        cmd.Parameters.AddWithValue("@inscricao_estadual_subtrib", fornecedor.InscricaoEstadualSubTrib ?? (object)DBNull.Value);
+                        cmd.Parameters.AddWithValue("@id_condicao_pagamento", fornecedor.IdCondicao ?? (object)DBNull.Value);
+                        cmd.Parameters.AddWithValue("@ativo", fornecedor.Ativo);
+                        cmd.Parameters.AddWithValue("@data_alteracao", fornecedor.DataAlteracao ?? DateTime.Now);
 
                         if (fornecedor.Id > 0)
                         {
@@ -75,8 +69,9 @@ namespace Projeto.DAO
                         }
                         else
                         {
-                            cmd.Parameters.AddWithValue("@data_criacao", fornecedor.DataCriacao);
+                            cmd.Parameters.AddWithValue("@data_cadastro", fornecedor.DataCadastro ?? DateTime.Now);
                         }
+
                         cmd.ExecuteNonQuery();
                     }
                 }
@@ -86,8 +81,6 @@ namespace Projeto.DAO
                 throw new Exception("Erro ao salvar fornecedor: " + ex.Message);
             }
         }
-
-
 
         public void Excluir(int id)
         {
@@ -110,12 +103,15 @@ namespace Projeto.DAO
             {
                 conn.Open();
                 string query = @"
-                                SELECT f.id, f.nome, f.cpf_cnpj, f.telefone, f.email, f.endereco, f.numero_endereco, 
-                                       f.complemento, f.bairro, f.cep, f.inscricao_estadual, f.inscricao_estadual_subtrib, 
-                                       f.id_cidade, ci.nome AS cidade_nome, f.tipo, f.id_condicao_pagamento, f.status, f.data_criacao, f.data_modificacao
-                                FROM fornecedores f
-                                LEFT JOIN cidades ci ON f.id_cidade = ci.id
-                                WHERE f.id = @id";
+                SELECT f.id, f.fornecedor, f.cpf_cnpj, f.telefone, f.email, f.endereco, f.numero_endereco,
+                       f.complemento, f.bairro, f.cep, f.id_cidade, ci.cidade AS cidade_nome,
+                       f.tipo, f.inscricao_estadual, f.inscricao_estadual_subtrib, f.id_condicao_pagamento,
+                       cp.descricao AS condicao_descricao,
+                       f.ativo, f.data_cadastro, f.data_alteracao
+                FROM fornecedores f
+                LEFT JOIN cidades ci ON f.id_cidade = ci.id
+                LEFT JOIN condicoes_pagamento cp ON f.id_condicao_pagamento = cp.id
+                WHERE f.id = @id";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
@@ -128,33 +124,32 @@ namespace Projeto.DAO
                             return new Fornecedor
                             {
                                 Id = reader.GetInt32("id"),
-                                Nome = reader.GetString("nome"),
+                                Nome = reader.GetString("fornecedor"),
                                 CPF_CNPJ = reader.GetString("cpf_cnpj"),
                                 Telefone = reader.IsDBNull(reader.GetOrdinal("telefone")) ? null : reader.GetString("telefone"),
                                 Email = reader.IsDBNull(reader.GetOrdinal("email")) ? null : reader.GetString("email"),
                                 Endereco = reader.IsDBNull(reader.GetOrdinal("endereco")) ? null : reader.GetString("endereco"),
-                                NumeroEndereco = reader.IsDBNull(reader.GetOrdinal("numero_endereco")) ? 0 : reader.GetInt32("numero_endereco"),
+                                NumeroEndereco = reader.IsDBNull(reader.GetOrdinal("numero_endereco")) ? (int?)null : reader.GetInt32("numero_endereco"),
                                 Complemento = reader.IsDBNull(reader.GetOrdinal("complemento")) ? null : reader.GetString("complemento"),
                                 Bairro = reader.IsDBNull(reader.GetOrdinal("bairro")) ? null : reader.GetString("bairro"),
                                 CEP = reader.IsDBNull(reader.GetOrdinal("cep")) ? null : reader.GetString("cep"),
-                                InscricaoEstadual = reader.IsDBNull(reader.GetOrdinal("inscricao_estadual")) ? null : reader.GetString("inscricao_estadual"),
-                                InscricaoEstadualSubTrib = reader.IsDBNull(reader.GetOrdinal("inscricao_estadual_subtrib")) ? null : reader.GetString("inscricao_estadual_subtrib"),
                                 IdCidade = reader.IsDBNull(reader.GetOrdinal("id_cidade")) ? (int?)null : reader.GetInt32("id_cidade"),
                                 NomeCidade = reader.IsDBNull(reader.GetOrdinal("cidade_nome")) ? null : reader.GetString("cidade_nome"),
                                 Tipo = reader.GetString("tipo"),
+                                InscricaoEstadual = reader.IsDBNull(reader.GetOrdinal("inscricao_estadual")) ? null : reader.GetString("inscricao_estadual"),
+                                InscricaoEstadualSubTrib = reader.IsDBNull(reader.GetOrdinal("inscricao_estadual_subtrib")) ? null : reader.GetString("inscricao_estadual_subtrib"),
                                 IdCondicao = reader.IsDBNull(reader.GetOrdinal("id_condicao_pagamento")) ? (int?)null : reader.GetInt32("id_condicao_pagamento"),
-                                Status = reader.GetBoolean("status"),
-                                DataCriacao = reader.GetDateTime("data_criacao"),
-                                DataModificacao = reader.GetDateTime("data_modificacao"),
+                                DescricaoCondicao = reader.IsDBNull(reader.GetOrdinal("condicao_descricao")) ? null : reader.GetString("condicao_descricao"),
+                                Ativo = reader.GetBoolean("ativo"),
+                                DataCadastro = reader.IsDBNull(reader.GetOrdinal("data_cadastro")) ? (DateTime?)null : reader.GetDateTime("data_cadastro"),
+                                DataAlteracao = reader.IsDBNull(reader.GetOrdinal("data_alteracao")) ? (DateTime?)null : reader.GetDateTime("data_alteracao")
                             };
                         }
                     }
                 }
             }
-
             return null;
         }
-
 
         public List<Fornecedor> ListarFornecedores()
         {
@@ -164,12 +159,15 @@ namespace Projeto.DAO
             {
                 conn.Open();
                 string query = @"
-                SELECT f.id, f.nome, f.cpf_cnpj, f.telefone, f.email, f.endereco, f.numero_endereco, f.complemento, 
-                       f.bairro, f.cep, f.inscricao_estadual, f.inscricao_estadual_subtrib, f.id_cidade, ci.nome AS cidade_nome, f.tipo, 
-                       f.id_condicao_pagamento, f.status, f.data_criacao, f.data_modificacao
+                SELECT f.id, f.fornecedor, f.cpf_cnpj, f.telefone, f.email, f.endereco, f.numero_endereco,
+                       f.complemento, f.bairro, f.cep, f.id_cidade, ci.cidade AS cidade_nome,
+                       f.tipo, f.inscricao_estadual, f.inscricao_estadual_subtrib, f.id_condicao_pagamento,
+                       cp.descricao AS condicao_descricao,
+                       f.ativo, f.data_cadastro, f.data_alteracao
                 FROM fornecedores f
                 LEFT JOIN cidades ci ON f.id_cidade = ci.id
-                ORDER BY f.nome";
+                LEFT JOIN condicoes_pagamento cp ON f.id_condicao_pagamento = cp.id
+                ORDER BY f.fornecedor";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
@@ -180,24 +178,25 @@ namespace Projeto.DAO
                             lista.Add(new Fornecedor
                             {
                                 Id = reader.GetInt32("id"),
-                                Nome = reader.GetString("nome"),
+                                Nome = reader.GetString("fornecedor"),
                                 CPF_CNPJ = reader.GetString("cpf_cnpj"),
                                 Telefone = reader.IsDBNull(reader.GetOrdinal("telefone")) ? null : reader.GetString("telefone"),
                                 Email = reader.IsDBNull(reader.GetOrdinal("email")) ? null : reader.GetString("email"),
                                 Endereco = reader.IsDBNull(reader.GetOrdinal("endereco")) ? null : reader.GetString("endereco"),
-                                NumeroEndereco = reader.IsDBNull(reader.GetOrdinal("numero_endereco")) ? 0 : reader.GetInt32("numero_endereco"),
+                                NumeroEndereco = reader.IsDBNull(reader.GetOrdinal("numero_endereco")) ? (int?)null : reader.GetInt32("numero_endereco"),
                                 Complemento = reader.IsDBNull(reader.GetOrdinal("complemento")) ? null : reader.GetString("complemento"),
                                 Bairro = reader.IsDBNull(reader.GetOrdinal("bairro")) ? null : reader.GetString("bairro"),
                                 CEP = reader.IsDBNull(reader.GetOrdinal("cep")) ? null : reader.GetString("cep"),
-                                InscricaoEstadual = reader.IsDBNull(reader.GetOrdinal("inscricao_estadual")) ? null : reader.GetString("inscricao_estadual"),
-                                InscricaoEstadualSubTrib = reader.IsDBNull(reader.GetOrdinal("inscricao_estadual_subtrib")) ? null : reader.GetString("inscricao_estadual_subtrib"),
                                 IdCidade = reader.IsDBNull(reader.GetOrdinal("id_cidade")) ? (int?)null : reader.GetInt32("id_cidade"),
                                 NomeCidade = reader.IsDBNull(reader.GetOrdinal("cidade_nome")) ? null : reader.GetString("cidade_nome"),
                                 Tipo = reader.GetString("tipo"),
+                                InscricaoEstadual = reader.IsDBNull(reader.GetOrdinal("inscricao_estadual")) ? null : reader.GetString("inscricao_estadual"),
+                                InscricaoEstadualSubTrib = reader.IsDBNull(reader.GetOrdinal("inscricao_estadual_subtrib")) ? null : reader.GetString("inscricao_estadual_subtrib"),
                                 IdCondicao = reader.IsDBNull(reader.GetOrdinal("id_condicao_pagamento")) ? (int?)null : reader.GetInt32("id_condicao_pagamento"),
-                                Status = reader.GetBoolean("status"),
-                                DataCriacao = reader.IsDBNull(reader.GetOrdinal("data_criacao")) ? (DateTime?)null : reader.GetDateTime("data_criacao"),
-                                DataModificacao = reader.IsDBNull(reader.GetOrdinal("data_modificacao")) ? (DateTime?)null : reader.GetDateTime("data_modificacao"),
+                                DescricaoCondicao = reader.IsDBNull(reader.GetOrdinal("condicao_descricao")) ? null : reader.GetString("condicao_descricao"),
+                                Ativo = reader.GetBoolean("ativo"),
+                                DataCadastro = reader.IsDBNull(reader.GetOrdinal("data_cadastro")) ? (DateTime?)null : reader.GetDateTime("data_cadastro"),
+                                DataAlteracao = reader.IsDBNull(reader.GetOrdinal("data_alteracao")) ? (DateTime?)null : reader.GetDateTime("data_alteracao")
                             });
                         }
                     }
@@ -205,7 +204,5 @@ namespace Projeto.DAO
             }
             return lista;
         }
-
     }
 }
-

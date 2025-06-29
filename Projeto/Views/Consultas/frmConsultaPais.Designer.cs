@@ -63,7 +63,7 @@
             // 
             // Nome
             // 
-            this.Nome.Text = "Nome";
+            this.Nome.Text = "País";
             // 
             // Status
             // 

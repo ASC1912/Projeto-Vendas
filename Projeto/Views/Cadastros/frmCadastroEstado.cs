@@ -26,32 +26,38 @@ namespace Projeto.Views
             txtCodigo.Enabled = false;
         }
 
-        public void CarregarEstado(int id, string nome, string uf, string nomePais, int idPais, bool status, DateTime? dataCriacao, DateTime? dataModificacao)
+        public void CarregarEstado(int id, string nomeEstado, string uf, string nomePais, int paisId, bool ativo, DateTime? dataCadastro, DateTime? dataAlteracao)
         {
             modoEdicao = true;
 
             txtCodigo.Text = id.ToString();
-            txtNome.Text = nome;
+            txtNome.Text = nomeEstado;
             txtUF.Text = uf;
             txtPais.Text = nomePais;
-            paisSelecionadoId = idPais;
-            chkInativo.Checked = !status;
+            paisSelecionadoId = paisId;
+            chkInativo.Checked = !ativo;
 
-            lblDataCriacao.Text = dataCriacao.HasValue
-                ? $"Criado em: {dataCriacao.Value:dd/MM/yyyy HH:mm}"
+            lblDataCriacao.Text = dataCadastro.HasValue
+                ? $"Criado em: {dataCadastro.Value:dd/MM/yyyy HH:mm}"
                 : "Criado em: -";
 
-            lblDataModificacao.Text = dataModificacao.HasValue
-                ? $"Modificado em: {dataModificacao.Value:dd/MM/yyyy HH:mm}"
+            lblDataModificacao.Text = dataAlteracao.HasValue
+                ? $"Modificado em: {dataAlteracao.Value:dd/MM/yyyy HH:mm}"
                 : "Modificado em: -";
         }
 
 
         private void frmCadastroEstado_Load(object sender, EventArgs e)
         {
-            lblDataCriacao.Visible = modoEdicao;
-            lblDataModificacao.Visible = modoEdicao;
+            if (modoEdicao == false)
+            {
+                txtCodigo.Text = "0";
 
+                DateTime agora = DateTime.Now;
+
+                lblDataCriacao.Text = $"Criado em: {agora:dd/MM/yyyy HH:mm}";
+                lblDataModificacao.Text = $"Modificado em: {agora:dd/MM/yyyy HH:mm}";
+            }
         }
 
         private void btnSalvar_Click(object sender, EventArgs e)
@@ -89,12 +95,12 @@ namespace Projeto.Views
                 Estado estado = new Estado
                 {
                     Id = id,
-                    Nome = nome,
+                    NomeEstado = nome,
                     UF = uf,
-                    IdPais = idPais,
-                    Status = status,
-                    DataCriacao = dataCriacao,
-                    DataModificacao = dataModificacao
+                    PaisId = idPais,
+                    Ativo = status,
+                    DataCadastro = dataCriacao,
+                    DataAlteracao = dataModificacao
                 };
 
                 controller.Salvar(estado);
@@ -119,7 +125,7 @@ namespace Projeto.Views
 
             if (resultado == DialogResult.OK && consultaPais.PaisSelecionado != null)
             {
-                txtPais.Text = consultaPais.PaisSelecionado.Nome;
+                txtPais.Text = consultaPais.PaisSelecionado.NomePais;
                 paisSelecionadoId = consultaPais.PaisSelecionado.Id;
             }
         }

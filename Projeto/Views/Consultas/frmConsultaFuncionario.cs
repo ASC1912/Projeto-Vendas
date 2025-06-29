@@ -51,7 +51,7 @@ namespace Projeto.Views
                     item.SubItems.Add(funcionario.NomeCidade);
                     item.SubItems.Add(funcionario.DataAdmissao?.ToShortDateString() ?? "");
                     item.SubItems.Add(funcionario.DataDemissao?.ToShortDateString() ?? "");
-                    item.SubItems.Add(funcionario.Status ? "Ativo" : "Inativo");
+                    item.SubItems.Add(funcionario.Ativo ? "Ativo" : "Inativo");
                     item.SubItems.Add(funcionario.Rg);
 
                     listView1.Items.Add(item);
@@ -96,7 +96,7 @@ namespace Projeto.Views
                         item.SubItems.Add(funcionario.NomeCidade ?? "-");
                         item.SubItems.Add(funcionario.DataAdmissao?.ToShortDateString() ?? "");
                         item.SubItems.Add(funcionario.DataDemissao?.ToShortDateString() ?? "");
-                        item.SubItems.Add(funcionario.Status ? "Ativo" : "Inativo");
+                        item.SubItems.Add(funcionario.Ativo ? "Ativo" : "Inativo");
                         item.SubItems.Add(funcionario.Rg ?? "");
 
                         listView1.Items.Add(item);
@@ -149,14 +149,14 @@ namespace Projeto.Views
                         funcionario.Cargo,
                         funcionario.Salario,
                         funcionario.Tipo,
-                        cidade?.Nome ?? "Não encontrado",
+                        cidade?.NomeCidade ?? "Não encontrado",
                         funcionario.IdCidade ?? 0,
-                        funcionario.Status,
+                        funcionario.Ativo,
                         funcionario.DataAdmissao,
                         funcionario.DataDemissao,
                         funcionario.Rg,
-                        funcionario.DataCriacao,
-                        funcionario.DataModificacao
+                        funcionario.DataCadastro,
+                        funcionario.DataAlteracao
                     );
 
                     formCadastro.FormClosed += (s, args) => CarregarFuncionarios();
@@ -207,19 +207,75 @@ namespace Projeto.Views
 
         private void frmConsultaFuncionario_Shown(object sender, EventArgs e)
         {
-            /*
-            StringBuilder sb = new StringBuilder();
-            int i = 0;
 
-            foreach (ColumnHeader column in listView1.Columns)
-            {
-                sb.AppendLine($"Coluna {i++}: \"{column.Text}\" - Largura: {column.Width}");
-            }
-
-            MessageBox.Show(sb.ToString(), "Tamanhos das colunas");
-            */
         }
 
+        private void frmConsultaFuncionario_Load(object sender, EventArgs e)
+        {
+            foreach (ColumnHeader column in listView1.Columns)
+            {
+                switch (column.Text)
+                {
+                    case "ID":
+                        column.Width = 50;
+                        break;
+                    case "Nome":
+                        column.Width = 100;
+                        break;
+                    case "CPF/CNPJ":
+                        column.Width = 100;
+                        break;
+                    case "Telefone":
+                        column.Width = 90;
+                        break;
+                    case "Email":
+                        column.Width = 100;
+                        break;
+                    case "Endereço":
+                        column.Width = 100;
+                        break;
+                    case "Número":
+                        column.Width = 60;
+                        break;
+                    case "Bairro":
+                        column.Width = 90;
+                        break;
+                    case "Complemento":
+                        column.Width = 90;
+                        break;
+                    case "CEP":
+                        column.Width = 80;
+                        break;
+                    case "Tipo":
+                        column.Width = 60;
+                        break;
+                    case "Cargo":
+                        column.Width = 100;
+                        break;
+                    case "Salário":
+                        column.Width = 80;
+                        break;
+                    case "Cidade":
+                        column.Width = 100;
+                        break;
+                    case "Admissão":
+                        column.Width = 90;
+                        break;
+                    case "Demissão":
+                        column.Width = 90;
+                        break;
+                    case "Status":
+                        column.Width = 60;
+                        break;
+                    case "RG":
+                        column.Width = 80;
+                        break;
+                    default:
+                        column.Width = 100;
+                        break;
+                }
+            }
 
+        }
     }
 }

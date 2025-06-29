@@ -11,6 +11,7 @@ namespace Projeto.Models
         public string InscricaoEstadual {  get; set; }
         public string InscricaoEstadualSubTrib { get; set; }
         public int? IdCondicao { get; set; }
+        public string DescricaoCondicao { get; set; }
 
     }
 }

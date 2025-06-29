@@ -10,6 +10,8 @@ namespace Projeto.Models
     {
         public string Rg { get; set; }
         public int? IdCondicao { get; set; }
+        public string DescricaoCondicao { get; set; } 
+
 
     }
 }

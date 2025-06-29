@@ -63,6 +63,8 @@
             this.txtRG = new System.Windows.Forms.TextBox();
             this.txtCidade = new System.Windows.Forms.TextBox();
             this.btnBuscar = new System.Windows.Forms.Button();
+            this.IDCidade = new System.Windows.Forms.Label();
+            this.txtIdCidade = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // txtCodigo
@@ -88,7 +90,7 @@
             // lblTipo
             // 
             this.lblTipo.AutoSize = true;
-            this.lblTipo.Location = new System.Drawing.Point(315, 15);
+            this.lblTipo.Location = new System.Drawing.Point(171, 17);
             this.lblTipo.Name = "lblTipo";
             this.lblTipo.Size = new System.Drawing.Size(35, 16);
             this.lblTipo.TabIndex = 45;
@@ -97,7 +99,7 @@
             // lblTelefone
             // 
             this.lblTelefone.AutoSize = true;
-            this.lblTelefone.Location = new System.Drawing.Point(545, 134);
+            this.lblTelefone.Location = new System.Drawing.Point(543, 144);
             this.lblTelefone.Name = "lblTelefone";
             this.lblTelefone.Size = new System.Drawing.Size(61, 16);
             this.lblTelefone.TabIndex = 43;
@@ -105,7 +107,7 @@
             // 
             // txtTelefone
             // 
-            this.txtTelefone.Location = new System.Drawing.Point(548, 153);
+            this.txtTelefone.Location = new System.Drawing.Point(546, 163);
             this.txtTelefone.Name = "txtTelefone";
             this.txtTelefone.Size = new System.Drawing.Size(100, 22);
             this.txtTelefone.TabIndex = 42;
@@ -113,7 +115,7 @@
             // lblEmail
             // 
             this.lblEmail.AutoSize = true;
-            this.lblEmail.Location = new System.Drawing.Point(425, 134);
+            this.lblEmail.Location = new System.Drawing.Point(423, 144);
             this.lblEmail.Name = "lblEmail";
             this.lblEmail.Size = new System.Drawing.Size(41, 16);
             this.lblEmail.TabIndex = 41;
@@ -121,7 +123,7 @@
             // 
             // txtEmail
             // 
-            this.txtEmail.Location = new System.Drawing.Point(428, 153);
+            this.txtEmail.Location = new System.Drawing.Point(426, 163);
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(100, 22);
             this.txtEmail.TabIndex = 40;
@@ -155,7 +157,7 @@
             // lblCidade
             // 
             this.lblCidade.AutoSize = true;
-            this.lblCidade.Location = new System.Drawing.Point(12, 143);
+            this.lblCidade.Location = new System.Drawing.Point(93, 145);
             this.lblCidade.Name = "lblCidade";
             this.lblCidade.Size = new System.Drawing.Size(51, 16);
             this.lblCidade.TabIndex = 36;
@@ -164,15 +166,15 @@
             // lblNome
             // 
             this.lblNome.AutoSize = true;
-            this.lblNome.Location = new System.Drawing.Point(153, 17);
+            this.lblNome.Location = new System.Drawing.Point(298, 19);
             this.lblNome.Name = "lblNome";
-            this.lblNome.Size = new System.Drawing.Size(44, 16);
+            this.lblNome.Size = new System.Drawing.Size(77, 16);
             this.lblNome.TabIndex = 34;
-            this.lblNome.Text = "Nome";
+            this.lblNome.Text = "Funcionário";
             // 
             // txtNome
             // 
-            this.txtNome.Location = new System.Drawing.Point(156, 36);
+            this.txtNome.Location = new System.Drawing.Point(301, 38);
             this.txtNome.Name = "txtNome";
             this.txtNome.Size = new System.Drawing.Size(156, 22);
             this.txtNome.TabIndex = 33;
@@ -288,7 +290,7 @@
             this.cbTipo.FormattingEnabled = true;
             this.cbTipo.Items.AddRange(new object[] {
             "Físico"});
-            this.cbTipo.Location = new System.Drawing.Point(318, 34);
+            this.cbTipo.Location = new System.Drawing.Point(174, 36);
             this.cbTipo.Name = "cbTipo";
             this.cbTipo.Size = new System.Drawing.Size(121, 24);
             this.cbTipo.TabIndex = 61;
@@ -346,7 +348,7 @@
             // 
             // txtCidade
             // 
-            this.txtCidade.Location = new System.Drawing.Point(15, 162);
+            this.txtCidade.Location = new System.Drawing.Point(96, 164);
             this.txtCidade.Name = "txtCidade";
             this.txtCidade.ReadOnly = true;
             this.txtCidade.Size = new System.Drawing.Size(100, 22);
@@ -354,7 +356,7 @@
             // 
             // btnBuscar
             // 
-            this.btnBuscar.Location = new System.Drawing.Point(143, 161);
+            this.btnBuscar.Location = new System.Drawing.Point(224, 163);
             this.btnBuscar.Name = "btnBuscar";
             this.btnBuscar.Size = new System.Drawing.Size(150, 23);
             this.btnBuscar.TabIndex = 71;
@@ -362,10 +364,29 @@
             this.btnBuscar.UseVisualStyleBackColor = true;
             this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
             // 
+            // IDCidade
+            // 
+            this.IDCidade.AutoSize = true;
+            this.IDCidade.Location = new System.Drawing.Point(9, 145);
+            this.IDCidade.Name = "IDCidade";
+            this.IDCidade.Size = new System.Drawing.Size(67, 16);
+            this.IDCidade.TabIndex = 80;
+            this.IDCidade.Text = "ID Cidade";
+            // 
+            // txtIdCidade
+            // 
+            this.txtIdCidade.Location = new System.Drawing.Point(12, 164);
+            this.txtIdCidade.Name = "txtIdCidade";
+            this.txtIdCidade.Size = new System.Drawing.Size(67, 22);
+            this.txtIdCidade.TabIndex = 79;
+            this.txtIdCidade.Leave += new System.EventHandler(this.txtIdCidade_Leave);
+            // 
             // frmCadastroFuncionario
             // 
             //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             //this.ClientSize = new System.Drawing.Size(1342, 681);
+            this.Controls.Add(this.IDCidade);
+            this.Controls.Add(this.txtIdCidade);
             this.Controls.Add(this.txtCidade);
             this.Controls.Add(this.btnBuscar);
             this.Controls.Add(this.lblRG);
@@ -404,7 +425,6 @@
             this.Name = "frmCadastroFuncionario";
             this.Text = "Cadastro Funcionarios";
             this.Load += new System.EventHandler(this.frmCadastroFuncionario_Load);
-            this.Click += new System.EventHandler(this.btnBuscar_Click);
             this.Controls.SetChildIndex(this.lblDataModificacao, 0);
             this.Controls.SetChildIndex(this.chkInativo, 0);
             this.Controls.SetChildIndex(this.lblDataCriacao, 0);
@@ -445,6 +465,8 @@
             this.Controls.SetChildIndex(this.lblRG, 0);
             this.Controls.SetChildIndex(this.btnBuscar, 0);
             this.Controls.SetChildIndex(this.txtCidade, 0);
+            this.Controls.SetChildIndex(this.txtIdCidade, 0);
+            this.Controls.SetChildIndex(this.IDCidade, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -487,5 +509,7 @@
         private System.Windows.Forms.TextBox txtRG;
         private System.Windows.Forms.TextBox txtCidade;
         private System.Windows.Forms.Button btnBuscar;
+        private System.Windows.Forms.Label IDCidade;
+        private System.Windows.Forms.TextBox txtIdCidade;
     }
 }

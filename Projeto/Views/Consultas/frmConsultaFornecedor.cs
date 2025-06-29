@@ -49,7 +49,7 @@ namespace Projeto.Views
                     item.SubItems.Add(fornecedor.InscricaoEstadualSubTrib);
                     item.SubItems.Add(fornecedor.NomeCidade);
                     item.SubItems.Add(fornecedor.IdCondicao.ToString());
-                    item.SubItems.Add(fornecedor.Status ? "Ativo" : "Inativo");
+                    item.SubItems.Add(fornecedor.Ativo ? "Ativo" : "Inativo");
                     listView1.Items.Add(item);
                 }
             }
@@ -91,7 +91,7 @@ namespace Projeto.Views
                         item.SubItems.Add(fornecedor.InscricaoEstadualSubTrib);
                         item.SubItems.Add(fornecedor.NomeCidade);
                         item.SubItems.Add(fornecedor.IdCondicao?.ToString() ?? "");
-                        item.SubItems.Add(fornecedor.Status ? "Ativo" : "Inativo");
+                        item.SubItems.Add(fornecedor.Ativo ? "Ativo" : "Inativo");
                         listView1.Items.Add(item);
                     }
                     else
@@ -142,12 +142,12 @@ namespace Projeto.Views
                         fornecedor.InscricaoEstadual,
                         fornecedor.InscricaoEstadualSubTrib,
                         fornecedor.Tipo,
-                        cidade?.Nome ?? "Não encontrado",
+                        cidade?.NomeCidade ?? "Não encontrado",
                         fornecedor.IdCidade ?? 0,
                         fornecedor.IdCondicao ?? 0,
-                        fornecedor.Status,
-                        fornecedor.DataCriacao,
-                        fornecedor.DataModificacao
+                        fornecedor.Ativo,
+                        fornecedor.DataCadastro,
+                        fornecedor.DataAlteracao
                     );
 
                     formCadastro.FormClosed += (s, args) => CarregarFornecedores();
@@ -192,6 +192,68 @@ namespace Projeto.Views
             {
                 MessageBox.Show("Por favor, selecione um fornecedor para excluir.");
             }
+        }
+
+        private void frmConsultaFornecedor_Load(object sender, EventArgs e)
+        {
+            foreach (ColumnHeader column in listView1.Columns)
+            {
+                switch (column.Text)
+                {
+                    case "ID":
+                        column.Width = 50;
+                        break;
+                    case "Nome":
+                        column.Width = 100;
+                        break;
+                    case "CPF/CNPJ":
+                        column.Width = 100;
+                        break;
+                    case "Telefone":
+                        column.Width = 90;
+                        break;
+                    case "Email":
+                        column.Width = 100;
+                        break;
+                    case "Endereço":
+                        column.Width = 100;
+                        break;
+                    case "Número":
+                        column.Width = 60;
+                        break;
+                    case "Bairro":
+                        column.Width = 90;
+                        break;
+                    case "Complemento":
+                        column.Width = 90;
+                        break;
+                    case "CEP":
+                        column.Width = 80;
+                        break;
+                    case "Tipo":
+                        column.Width = 60;
+                        break;
+                    case "IE":
+                        column.Width = 100;
+                        break;
+                    case "IESubTrib":
+                        column.Width = 100;
+                        break;
+                    case "Cidade":
+                        column.Width = 100;
+                        break;
+                    case "Cond. Pgto":
+                        column.Width = 100;
+                        break;
+                    case "Status":
+                        column.Width = 70;
+                        break;
+                    default:
+                        column.Width = 100;
+                        break;
+                }
+            }
+
         }
     }
 }

@@ -51,9 +51,9 @@
             this.lblNome.AutoSize = true;
             this.lblNome.Location = new System.Drawing.Point(9, 101);
             this.lblNome.Name = "lblNome";
-            this.lblNome.Size = new System.Drawing.Size(44, 16);
+            this.lblNome.Size = new System.Drawing.Size(51, 16);
             this.lblNome.TabIndex = 19;
-            this.lblNome.Text = "Nome";
+            this.lblNome.Text = "Cidade";
             // 
             // txtNome
             // 

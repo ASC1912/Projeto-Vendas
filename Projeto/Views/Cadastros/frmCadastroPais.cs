@@ -60,10 +60,10 @@ namespace Projeto.Views
                 Pais pais = new Pais
                 {
                     Id = id,
-                    Nome = nome,
-                    Status = status,
-                    DataCriacao = dataCriacao,
-                    DataModificacao = dataModificacao
+                    NomePais = nome,
+                    Ativo = status,
+                    DataCadastro = dataCriacao,
+                    DataAlteracao = dataModificacao
                 };
 
                 PaisController controller = new PaisController();
@@ -80,8 +80,16 @@ namespace Projeto.Views
 
         private void frmCadastroPais_Load(object sender, EventArgs e)
         {
-            lblDataCriacao.Visible = modoEdicao;
-            lblDataModificacao.Visible = modoEdicao;
+            if (modoEdicao == false)
+            {
+                txtCodigo.Text = "0";
+
+                DateTime agora = DateTime.Now;
+
+                lblDataCriacao.Text = $"Criado em: {agora:dd/MM/yyyy HH:mm}";
+                lblDataModificacao.Text = $"Modificado em: {agora:dd/MM/yyyy HH:mm}";
+            }
+          
         }
     }
 }

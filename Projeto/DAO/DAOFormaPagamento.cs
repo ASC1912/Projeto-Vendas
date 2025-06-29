@@ -19,26 +19,26 @@ namespace Projeto.DAO
                     conn.Open();
                     string query;
 
-                    if (formaPagamento.Id > 0) 
+                    if (formaPagamento.Id > 0)
                     {
                         query = @"UPDATE formas_pagamento 
                                   SET descricao = @descricao, 
-                                      status = @status,
-                                      data_modificacao = @data_modificacao 
+                                      ativo = @ativo,
+                                      data_alteracao = @data_alteracao 
                                   WHERE id = @id";
                     }
-                    else 
+                    else
                     {
                         query = @"INSERT INTO formas_pagamento 
-                                  (descricao, status, data_criacao, data_modificacao) 
-                                  VALUES (@descricao, @status, @data_criacao, @data_modificacao)";
+                                  (descricao, ativo, data_cadastro, data_alteracao) 
+                                  VALUES (@descricao, @ativo, @data_cadastro, @data_alteracao)";
                     }
 
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@descricao", formaPagamento.Descricao);
-                        cmd.Parameters.AddWithValue("@status", formaPagamento.Status);
-                        cmd.Parameters.AddWithValue("@data_modificacao", formaPagamento.DataModificacao);
+                        cmd.Parameters.AddWithValue("@ativo", formaPagamento.Ativo);
+                        cmd.Parameters.AddWithValue("@data_alteracao", formaPagamento.DataAlteracao ?? DateTime.Now);
 
                         if (formaPagamento.Id > 0)
                         {
@@ -46,7 +46,7 @@ namespace Projeto.DAO
                         }
                         else
                         {
-                            cmd.Parameters.AddWithValue("@data_criacao", formaPagamento.DataCriacao);
+                            cmd.Parameters.AddWithValue("@data_cadastro", formaPagamento.DataCadastro ?? DateTime.Now);
                         }
 
                         cmd.ExecuteNonQuery();
@@ -79,7 +79,7 @@ namespace Projeto.DAO
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
-                string query = @"SELECT id, descricao, status, data_criacao, data_modificacao 
+                string query = @"SELECT id, descricao, ativo, data_cadastro, data_alteracao 
                                  FROM formas_pagamento 
                                  WHERE id = @id";
 
@@ -91,19 +91,13 @@ namespace Projeto.DAO
                     {
                         if (reader.Read())
                         {
-                            int colId = reader.GetOrdinal("id");
-                            int colDescricao = reader.GetOrdinal("descricao");
-                            int colStatus = reader.GetOrdinal("status");
-                            int colDataCriacao = reader.GetOrdinal("data_criacao");
-                            int colDataModificacao = reader.GetOrdinal("data_modificacao");
-
                             return new FormaPagamento
                             {
-                                Id = reader.GetInt32(colId),
-                                Descricao = reader.GetString(colDescricao),
-                                Status = reader.IsDBNull(colStatus) ? true : reader.GetBoolean(colStatus),
-                                DataCriacao = reader.IsDBNull(colDataCriacao) ? DateTime.MinValue : reader.GetDateTime(colDataCriacao),
-                                DataModificacao = reader.IsDBNull(colDataModificacao) ? DateTime.MinValue : reader.GetDateTime(colDataModificacao)
+                                Id = reader.GetInt32(reader.GetOrdinal("id")),
+                                Descricao = reader.GetString(reader.GetOrdinal("descricao")),
+                                Ativo = reader.GetBoolean(reader.GetOrdinal("ativo")),
+                                DataCadastro = reader.IsDBNull(reader.GetOrdinal("data_cadastro")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("data_cadastro")),
+                                DataAlteracao = reader.IsDBNull(reader.GetOrdinal("data_alteracao")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("data_alteracao"))
                             };
                         }
                     }
@@ -119,7 +113,7 @@ namespace Projeto.DAO
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
-                string query = @"SELECT id, descricao, status, data_criacao, data_modificacao 
+                string query = @"SELECT id, descricao, ativo, data_cadastro, data_alteracao 
                                  FROM formas_pagamento 
                                  ORDER BY id";
 
@@ -127,27 +121,20 @@ namespace Projeto.DAO
                 {
                     using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
-                        int colId = reader.GetOrdinal("id");
-                        int colDescricao = reader.GetOrdinal("descricao");
-                        int colStatus = reader.GetOrdinal("status");
-                        int colDataCriacao = reader.GetOrdinal("data_criacao");
-                        int colDataModificacao = reader.GetOrdinal("data_modificacao");
-
                         while (reader.Read())
                         {
                             lista.Add(new FormaPagamento
                             {
-                                Id = reader.GetInt32(colId),
-                                Descricao = reader.GetString(colDescricao),
-                                Status = reader.IsDBNull(colStatus) ? true : reader.GetBoolean(colStatus),
-                                DataCriacao = reader.IsDBNull(colDataCriacao) ? DateTime.MinValue : reader.GetDateTime(colDataCriacao),
-                                DataModificacao = reader.IsDBNull(colDataModificacao) ? DateTime.MinValue : reader.GetDateTime(colDataModificacao)
+                                Id = reader.GetInt32(reader.GetOrdinal("id")),
+                                Descricao = reader.GetString(reader.GetOrdinal("descricao")),
+                                Ativo = reader.GetBoolean(reader.GetOrdinal("ativo")),
+                                DataCadastro = reader.IsDBNull(reader.GetOrdinal("data_cadastro")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("data_cadastro")),
+                                DataAlteracao = reader.IsDBNull(reader.GetOrdinal("data_alteracao")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("data_alteracao"))
                             });
                         }
                     }
                 }
             }
-
             return lista;
         }
 
@@ -173,7 +160,6 @@ namespace Projeto.DAO
                     MessageBox.Show("Erro ao buscar descrição da forma de pagamento: " + ex.Message);
                 }
             }
-
             return descricao;
         }
 

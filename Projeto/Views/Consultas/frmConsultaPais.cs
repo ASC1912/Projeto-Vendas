@@ -25,6 +25,25 @@ namespace Projeto.Views
         private void frmConsultaPais_Load(object sender, EventArgs e)
         {
             btnSelecionar.Visible = ModoSelecao;
+
+            foreach (ColumnHeader column in listView1.Columns)
+            {
+                switch (column.Text)
+                {
+                    case "ID":
+                        column.Width = 50;
+                        break;
+                    case "Nome":
+                        column.Width = 100;
+                        break;
+                    case "Status":
+                        column.Width = 50;
+                        break;
+                    default:
+                        column.Width = 100;
+                        break;
+                }
+            }
         }
 
         private void btnIncluir_Click(object sender, EventArgs e)
@@ -43,11 +62,11 @@ namespace Projeto.Views
                 foreach (var pais in paises)
                 {
                     ListViewItem item = new ListViewItem(pais.Id.ToString());
-                    item.SubItems.Add(pais.Nome);
-                    item.SubItems.Add(pais.Status ? "Ativo" : "Inativo");
+                    item.SubItems.Add(pais.NomePais);
+                    item.SubItems.Add(pais.Ativo ? "Ativo" : "Inativo");
                     listView1.Items.Add(item);
-
                 }
+
             }
             catch (Exception ex)
             {
@@ -73,8 +92,8 @@ namespace Projeto.Views
                     if (pais != null)
                     {
                         ListViewItem item = new ListViewItem(pais.Id.ToString());
-                        item.SubItems.Add(pais.Nome);
-                        item.SubItems.Add(pais.Status ? "Ativo" : "Inativo");
+                        item.SubItems.Add(pais.NomePais);
+                        item.SubItems.Add(pais.Ativo ? "Ativo" : "Inativo");
                         listView1.Items.Add(item);
                     }
                     else
@@ -105,13 +124,16 @@ namespace Projeto.Views
                 if (pais != null)
                 {
                     var formCadastro = new frmCadastroPais();
+                    formCadastro.modoEdicao = true;
+
                     formCadastro.CarregarPais(
                         pais.Id,
-                        pais.Nome,
-                        pais.Status,
-                        pais.DataCriacao,
-                        pais.DataModificacao
+                        pais.NomePais,
+                        pais.Ativo,
+                        pais.DataCadastro,
+                        pais.DataAlteracao
                     );
+
 
                     formCadastro.FormClosed += (s, args) => CarregarPaises();
                     formCadastro.ShowDialog();
@@ -167,8 +189,9 @@ namespace Projeto.Views
                 PaisSelecionado = new Pais
                 {
                     Id = id,
-                    Nome = nome
+                    NomePais = nome
                 };
+
 
                 this.DialogResult = DialogResult.OK;
                 this.Close();

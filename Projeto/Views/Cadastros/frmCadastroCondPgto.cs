@@ -19,6 +19,7 @@ namespace Projeto
         private ParcelaController parcelaController = new ParcelaController(); 
         private FormaPagamentoController formaPagamentoController = new FormaPagamentoController();
         private int formaPagamentoSelecionadaId = -1;
+        public bool modoEdicao = false;
 
 
         public frmCadastroCondPgto() : base()
@@ -27,7 +28,7 @@ namespace Projeto
             txtCodigo.Enabled = false;
             txtFormaPagamento.ReadOnly = true;
         }
-        public void CarregarCondicaoPagamento(int id, string descricao, int qtdParcelas, decimal juros, decimal multa, decimal desconto, bool status, DateTime? dataCriacao, DateTime? dataModificacao)
+        public void CarregarCondicaoPagamento(int id, string descricao, int qtdParcelas, decimal juros, decimal multa, decimal desconto, bool ativo, DateTime? dataCadastro, DateTime? dataAlteracao)
         {
             txtCodigo.Text = id.ToString();
             txtDescricao.Text = descricao;
@@ -35,14 +36,14 @@ namespace Projeto
             txtJuros.Text = juros.ToString("F2");
             txtMulta.Text = multa.ToString("F2");
             txtDesconto.Text = desconto.ToString("F2");
-            chkInativo.Checked = !status;
+            chkInativo.Checked = !ativo;
 
-            lblDataCriacao.Text = dataCriacao.HasValue
-                ? $"Criado em: {dataCriacao:dd/MM/yyyy HH:mm}"
+            lblDataCriacao.Text = dataCadastro.HasValue
+                ? $"Criado em: {dataCadastro:dd/MM/yyyy HH:mm}"
                 : "Criado em: -";
 
-            lblDataModificacao.Text = dataModificacao.HasValue
-                ? $"Modificado em: {dataModificacao:dd/MM/yyyy HH:mm}"
+            lblDataModificacao.Text = dataAlteracao.HasValue
+                ? $"Modificado em: {dataAlteracao:dd/MM/yyyy HH:mm}"
                 : "Modificado em: -";
 
             CarregarParcelas(id);
@@ -115,16 +116,17 @@ namespace Projeto
 
                 CondicaoPagamento condicao = new CondicaoPagamento
                 {
-                    Id = id,    
+                    Id = id,
                     Descricao = descricao,
                     QtdParcelas = qtdParcelas,
                     Juros = juros,
                     Multa = multa,
                     Desconto = desconto,
-                    Status = status,
-                    DataCriacao = dataCriacao,
-                    DataModificacao = dataModificacao
+                    Ativo = status,
+                    DataCadastro = dataCriacao,
+                    DataAlteracao = dataModificacao
                 };
+
 
                 List<Parcelamento> parcelas = new List<Parcelamento>();
                 FormaPagamentoController formaPagamentoController = new FormaPagamentoController();
@@ -329,6 +331,19 @@ namespace Projeto
                 formaPagamentoSelecionadaId = consultaFrmPgto.FormaSelecionada.Id;
             }
 
+        }
+
+        private void frmCadastroCondPgto_Load(object sender, EventArgs e)
+        {
+            if (modoEdicao == false)
+            {
+                txtCodigo.Text = "0";
+
+                DateTime agora = DateTime.Now;
+
+                lblDataCriacao.Text = $"Criado em: {agora:dd/MM/yyyy HH:mm}";
+                lblDataModificacao.Text = $"Modificado em: {agora:dd/MM/yyyy HH:mm}";
+            }
         }
     }
 }

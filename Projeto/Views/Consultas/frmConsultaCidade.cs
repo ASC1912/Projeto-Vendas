@@ -25,6 +25,28 @@ namespace Projeto.Views
         private void frmConsultaCidade_Load(object sender, EventArgs e)
         {
             btnSelecionar.Visible = ModoSelecao;
+
+            foreach (ColumnHeader column in listView1.Columns)
+            {
+                switch (column.Text)
+                {
+                    case "ID":
+                        column.Width = 50; 
+                        break;
+                    case "Nome":
+                        column.Width = 100; 
+                        break;
+                    case "Estado":
+                        column.Width = 100; 
+                        break;
+                    case "Status":
+                        column.Width = 50; 
+                        break;
+                    default:
+                        column.Width = 100; 
+                        break;
+                }
+            }
         }
 
         private void btnIncluir_Click(object sender, EventArgs e)
@@ -43,9 +65,9 @@ namespace Projeto.Views
                 foreach (var cidade in cidades)
                 {
                     ListViewItem item = new ListViewItem(cidade.Id.ToString());
-                    item.SubItems.Add(cidade.Nome);
+                    item.SubItems.Add(cidade.NomeCidade);
                     item.SubItems.Add(cidade.EstadoNome);
-                    item.SubItems.Add(cidade.Status ? "Ativo" : "Inativo");
+                    item.SubItems.Add(cidade.Ativo ? "Ativo" : "Inativo");
 
                     listView1.Items.Add(item);
                 }
@@ -74,9 +96,9 @@ namespace Projeto.Views
                     if (cidade != null)
                     {
                         ListViewItem item = new ListViewItem(cidade.Id.ToString());
-                        item.SubItems.Add(cidade.Nome);
+                        item.SubItems.Add(cidade.NomeCidade);
                         item.SubItems.Add(cidade.EstadoNome);
-                        item.SubItems.Add(cidade.Status ? "Ativo" : "Inativo");
+                        item.SubItems.Add(cidade.Ativo ? "Ativo" : "Inativo");
 
                         listView1.Items.Add(item);
                     }
@@ -109,14 +131,16 @@ namespace Projeto.Views
                 if (cidade != null)
                 {
                     var formCadastro = new frmCadastroCidade();
+                    formCadastro.modoEdicao = true;
+
                     formCadastro.CarregarCidade(
-                        cidade.Id,
-                        cidade.Nome,
-                        cidade.EstadoNome,
-                        cidade.Status,
-                        cidade.DataCriacao,
-                        cidade.DataModificacao
-                    );
+                         cidade.Id,
+                         cidade.NomeCidade,
+                         cidade.EstadoNome,
+                         cidade.Ativo,
+                         cidade.DataCadastro,
+                         cidade.DataAlteracao
+                     );
 
                     formCadastro.FormClosed += (s, args) => CarregarCidades();
                     formCadastro.ShowDialog();
@@ -173,9 +197,10 @@ namespace Projeto.Views
                 CidadeSelecionado = new Cidade
                 {
                     Id = id,
-                    Nome = nome,
+                    NomeCidade = nome,
                     EstadoNome = estado,
                 };
+
 
                 this.DialogResult = DialogResult.OK;
                 this.Close();

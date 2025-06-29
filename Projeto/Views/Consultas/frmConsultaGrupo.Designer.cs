@@ -65,7 +65,7 @@
             // 
             // Nome
             // 
-            this.Nome.Text = "Nome";
+            this.Nome.Text = "Grupo";
             // 
             // Descricao
             // 

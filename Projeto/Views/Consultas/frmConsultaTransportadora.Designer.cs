@@ -88,7 +88,8 @@
             // 
             // Nome
             // 
-            this.Nome.Text = "Nome";
+            this.Nome.Text = "Transportadora";
+            this.Nome.Width = 115;
             // 
             // CPF_CNPJ
             // 
@@ -140,7 +141,7 @@
             // 
             // IDCondPgto
             // 
-            this.IDCondPgto.Text = "IDCondPgto";
+            this.IDCondPgto.Text = "CondPgto";
             // 
             // Status
             // 
@@ -151,6 +152,8 @@
             //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             //this.ClientSize = new System.Drawing.Size(1342, 681);
             this.Name = "frmConsultaTransportadora";
+            this.Text = "Consulta Transportadoras";
+            this.Load += new System.EventHandler(this.frmConsultaTransportadora_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

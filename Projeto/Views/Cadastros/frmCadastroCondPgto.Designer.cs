@@ -342,6 +342,7 @@
             this.Controls.Add(this.btnSalvar);
             this.Name = "frmCadastroCondPgto";
             this.Text = "Cadastro Condições de Pagamento";
+            this.Load += new System.EventHandler(this.frmCadastroCondPgto_Load);
             this.Controls.SetChildIndex(this.lblDataModificacao, 0);
             this.Controls.SetChildIndex(this.chkInativo, 0);
             this.Controls.SetChildIndex(this.lblDataCriacao, 0);

@@ -24,6 +24,37 @@ namespace Projeto
         private void frmConsultaCondPgto_Load(object sender, EventArgs e)
         {
             btnSelecionar.Visible = ModoSelecao;
+
+            foreach (ColumnHeader column in listView1.Columns)
+            {
+                switch (column.Text)
+                {
+                    case "ID":
+                        column.Width = 50;
+                        break;
+                    case "Descricao":
+                        column.Width = 100;
+                        break;
+                    case "Qtd_parcelas":
+                        column.Width = 50;
+                        break;
+                    case "Juros":
+                        column.Width = 60;
+                        break;
+                    case "Multa":
+                        column.Width = 60;
+                        break;
+                    case "Desconto":
+                        column.Width = 60;
+                        break;
+                    case "Status":
+                        column.Width = 50;
+                        break;
+                    default:
+                        column.Width = 100;
+                        break;
+                }
+            }
         }
         private void CarregarCondicoesPagamento()
         {
@@ -40,7 +71,7 @@ namespace Projeto
                     item.SubItems.Add(cond.Juros.ToString("0.00"));
                     item.SubItems.Add(cond.Multa.ToString("0.00"));
                     item.SubItems.Add(cond.Desconto.ToString("0.00"));
-                    item.SubItems.Add(cond.Status ? "Ativo" : "Inativo");
+                    item.SubItems.Add(cond.Ativo ? "Ativo" : "Inativo");
                     listView1.Items.Add(item);
                 }
             }
@@ -73,7 +104,7 @@ namespace Projeto
                         item.SubItems.Add(cond.Juros.ToString("0.00"));
                         item.SubItems.Add(cond.Multa.ToString("0.00"));
                         item.SubItems.Add(cond.Desconto.ToString("0.00"));
-                        item.SubItems.Add(cond.Status ? "Ativo" : "Inativo");
+                        item.SubItems.Add(cond.Ativo ? "Ativo" : "Inativo");
                         listView1.Items.Add(item);
                     }
                     else
@@ -111,6 +142,8 @@ namespace Projeto
                 if (condicao != null)
                 {
                     var formCadastro = new frmCadastroCondPgto();
+                    formCadastro.modoEdicao = true;
+
                     formCadastro.CarregarCondicaoPagamento(
                         condicao.Id,
                         condicao.Descricao,
@@ -118,9 +151,9 @@ namespace Projeto
                         condicao.Juros,
                         condicao.Multa,
                         condicao.Desconto,
-                        condicao.Status,
-                        condicao.DataCriacao,
-                        condicao.DataModificacao
+                        condicao.Ativo,
+                        condicao.DataCadastro,
+                        condicao.DataAlteracao
                     );
 
                     formCadastro.FormClosed += (s, args) => CarregarCondicoesPagamento();

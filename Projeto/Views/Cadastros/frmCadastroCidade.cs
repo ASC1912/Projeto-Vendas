@@ -25,29 +25,35 @@ namespace Projeto.Views
             txtCodigo.Enabled = false;
         }
 
-        public void CarregarCidade(int id, string nome, string nomeEstado, bool status, DateTime? dataCriacao, DateTime? dataModificacao)
+        public void CarregarCidade(int id, string nomeCidade, string nomeEstado, bool ativo, DateTime? dataCadastro, DateTime? dataAlteracao)
         {
             modoEdicao = true;
 
             txtCodigo.Text = id.ToString();
-            txtNome.Text = nome;
+            txtNome.Text = nomeCidade;
             txtEstado.Text = nomeEstado;
-            chkInativo.Checked = !status;
+            chkInativo.Checked = !ativo;
 
-            lblDataCriacao.Text = dataCriacao.HasValue
-                ? $"Criado em: {dataCriacao.Value:dd/MM/yyyy HH:mm}"
+            lblDataCriacao.Text = dataCadastro.HasValue
+                ? $"Criado em: {dataCadastro.Value:dd/MM/yyyy HH:mm}"
                 : "Criado em: -";
 
-            lblDataModificacao.Text = dataModificacao.HasValue
-                ? $"Modificado em: {dataModificacao.Value:dd/MM/yyyy HH:mm}"
+            lblDataModificacao.Text = dataAlteracao.HasValue
+                ? $"Modificado em: {dataAlteracao.Value:dd/MM/yyyy HH:mm}"
                 : "Modificado em: -";
         }
 
 
         private void frmCadastroCidade_Load(object sender, EventArgs e)
         {
-            lblDataCriacao.Visible = modoEdicao;
-            lblDataModificacao.Visible = modoEdicao;
+            if (modoEdicao == false)
+            {
+                txtCodigo.Text = "0";
+                DateTime agora = DateTime.Now;
+
+                lblDataCriacao.Text = $"Criado em: {agora:dd/MM/yyyy HH:mm}";
+                lblDataModificacao.Text = $"Modificado em: {agora:dd/MM/yyyy HH:mm}";
+            }
         }
 
         private void btnSalvar_Click(object sender, EventArgs e)
@@ -76,11 +82,11 @@ namespace Projeto.Views
                 Cidade cidade = new Cidade
                 {
                     Id = id,
-                    Nome = nome,
-                    IdEstado = idEstado,
-                    Status = status,
-                    DataCriacao = dataCriacao,
-                    DataModificacao = dataModificacao
+                    NomeCidade = nome,
+                    EstadoId = idEstado,
+                    Ativo = status,
+                    DataCadastro = dataCriacao,
+                    DataAlteracao = dataModificacao
                 };
 
                 controller.Salvar(cidade);
@@ -102,7 +108,7 @@ namespace Projeto.Views
 
             if (resultado == DialogResult.OK && consultaEstado.EstadoSelecionado != null)
             {
-                txtEstado.Text = consultaEstado.EstadoSelecionado.Nome;
+                txtEstado.Text = consultaEstado.EstadoSelecionado.NomeEstado;
                 estadoSelecionadoId = consultaEstado.EstadoSelecionado.Id;
             }
         }

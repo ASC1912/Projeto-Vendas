@@ -26,6 +26,31 @@ namespace Projeto.Views
         private void frmConsultaEstado_Load(object sender, EventArgs e)
         {
             btnSelecionar.Visible = ModoSelecao;
+
+            foreach (ColumnHeader column in listView1.Columns)
+            {
+                switch (column.Text)
+                {
+                    case "ID":
+                        column.Width = 50;
+                        break;
+                    case "Nome":
+                        column.Width = 100;
+                        break;
+                    case "UF":
+                        column.Width = 50;
+                        break;
+                    case "Pais":
+                        column.Width = 100;
+                        break;
+                    case "Status":
+                        column.Width = 50;
+                        break;
+                    default:
+                        column.Width = 100;
+                        break;
+                }
+            }
         }
 
         private void btnIncluir_Click(object sender, EventArgs e)
@@ -43,10 +68,10 @@ namespace Projeto.Views
                 foreach (var estado in estados)
                 {
                     ListViewItem item = new ListViewItem(estado.Id.ToString());
-                    item.SubItems.Add(estado.Nome);
-                    item.SubItems.Add(estado.UF);  
+                    item.SubItems.Add(estado.NomeEstado);
+                    item.SubItems.Add(estado.UF);
                     item.SubItems.Add(estado.PaisNome);
-                    item.SubItems.Add(estado.Status ? "Ativo" : "Inativo");
+                    item.SubItems.Add(estado.Ativo ? "Ativo" : "Inativo");
 
                     listView1.Items.Add(item);
                 }
@@ -74,10 +99,10 @@ namespace Projeto.Views
                     if (estado != null)
                     {
                         ListViewItem item = new ListViewItem(estado.Id.ToString());
-                        item.SubItems.Add(estado.Nome);
+                        item.SubItems.Add(estado.NomeEstado);
                         item.SubItems.Add(estado.UF);
                         item.SubItems.Add(estado.PaisNome);
-                        item.SubItems.Add(estado.Status ? "Ativo" : "Inativo");
+                        item.SubItems.Add(estado.Ativo ? "Ativo" : "Inativo");
                         listView1.Items.Add(item);
                     }
                     else
@@ -109,15 +134,17 @@ namespace Projeto.Views
                 if (estado != null)
                 {
                     var formCadastro = new frmCadastroEstado();
+                    formCadastro.modoEdicao = true;
+
                     formCadastro.CarregarEstado(
                         estado.Id,
-                        estado.Nome,
+                        estado.NomeEstado,
                         estado.UF,
                         estado.PaisNome,
-                        estado.IdPais,
-                        estado.Status,
-                        estado.DataCriacao,
-                        estado.DataModificacao
+                        estado.PaisId,
+                        estado.Ativo,
+                        estado.DataCadastro,
+                        estado.DataAlteracao
                     );
 
                     formCadastro.FormClosed += (s, args) => CarregarEstados();
@@ -176,8 +203,8 @@ namespace Projeto.Views
                 EstadoSelecionado = new Estado
                 {
                     Id = id,
+                    NomeEstado = nome,
                     UF = uf,
-                    Nome = nome,
                     PaisNome = pais,
                 };
 
