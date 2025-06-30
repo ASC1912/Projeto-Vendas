@@ -15,6 +15,7 @@ namespace Projeto.Views
 {
     public partial class frmCadastroPais : Projeto.frmBase
     {
+        PaisController controller = new PaisController();
         public bool modoEdicao = false;
 
         public frmCadastroPais() : base()
@@ -43,13 +44,25 @@ namespace Projeto.Views
 
         private void btnSalvar_Click(object sender, EventArgs e)
         {
-            if (!Validador.CampoObrigatorio(txtNome, "O nome do país é obrigatório.")) return;
+            if (!Validador.CampoObrigatorio(txtNome, "O nome do país é obrigatório.")) return;  
 
             try
             {
                 int id = string.IsNullOrEmpty(txtCodigo.Text) ? 0 : int.Parse(txtCodigo.Text);
                 string nome = txtNome.Text;
                 bool status = !chkInativo.Checked;
+
+                List<Pais> paises = controller.ListarPais();
+                bool existeDuplicado = paises.Exists(p =>
+                    string.Equals(p.NomePais.Trim(), nome, StringComparison.OrdinalIgnoreCase)
+                    && p.Id != id);
+
+                if (existeDuplicado)
+                {
+                    MessageBox.Show("Este item já está cadastrado", "Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtNome.Focus();
+                    return;
+                }
 
                 DateTime dataCriacao = id == 0
                     ? DateTime.Now
@@ -66,7 +79,6 @@ namespace Projeto.Views
                     DataAlteracao = dataModificacao
                 };
 
-                PaisController controller = new PaisController();
                 controller.Salvar(pais);
 
                 MessageBox.Show("País salvo com sucesso!");

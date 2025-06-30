@@ -56,7 +56,7 @@
             // 
             this.txtNome.Location = new System.Drawing.Point(12, 106);
             this.txtNome.Name = "txtNome";
-            this.txtNome.Size = new System.Drawing.Size(151, 22);
+            this.txtNome.Size = new System.Drawing.Size(200, 22);
             this.txtNome.TabIndex = 67;
             // 
             // btnSalvar

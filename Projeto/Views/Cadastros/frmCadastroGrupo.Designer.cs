@@ -58,7 +58,7 @@
             // 
             this.txtDescricao.Location = new System.Drawing.Point(15, 150);
             this.txtDescricao.Name = "txtDescricao";
-            this.txtDescricao.Size = new System.Drawing.Size(148, 22);
+            this.txtDescricao.Size = new System.Drawing.Size(200, 22);
             this.txtDescricao.TabIndex = 67;
             // 
             // lblNome
@@ -74,7 +74,7 @@
             // 
             this.txtNome.Location = new System.Drawing.Point(12, 90);
             this.txtNome.Name = "txtNome";
-            this.txtNome.Size = new System.Drawing.Size(151, 22);
+            this.txtNome.Size = new System.Drawing.Size(200, 22);
             this.txtNome.TabIndex = 69;
             // 
             // btnSalvar

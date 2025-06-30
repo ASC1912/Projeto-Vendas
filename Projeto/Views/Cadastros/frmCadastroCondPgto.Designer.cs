@@ -63,7 +63,7 @@
             // lblPrazo
             // 
             this.lblPrazo.AutoSize = true;
-            this.lblPrazo.Location = new System.Drawing.Point(435, 123);
+            this.lblPrazo.Location = new System.Drawing.Point(514, 123);
             this.lblPrazo.Name = "lblPrazo";
             this.lblPrazo.Size = new System.Drawing.Size(133, 16);
             this.lblPrazo.TabIndex = 10;
@@ -71,7 +71,7 @@
             // 
             // txtPrazoDias
             // 
-            this.txtPrazoDias.Location = new System.Drawing.Point(438, 142);
+            this.txtPrazoDias.Location = new System.Drawing.Point(517, 142);
             this.txtPrazoDias.Name = "txtPrazoDias";
             this.txtPrazoDias.Size = new System.Drawing.Size(100, 22);
             this.txtPrazoDias.TabIndex = 9;
@@ -108,7 +108,7 @@
             // 
             this.txtDescricao.Location = new System.Drawing.Point(12, 86);
             this.txtDescricao.Name = "txtDescricao";
-            this.txtDescricao.Size = new System.Drawing.Size(100, 22);
+            this.txtDescricao.Size = new System.Drawing.Size(200, 22);
             this.txtDescricao.TabIndex = 12;
             // 
             // lblQtdParcelas
@@ -130,7 +130,7 @@
             // lblFormaPagamento
             // 
             this.lblFormaPagamento.AutoSize = true;
-            this.lblFormaPagamento.Location = new System.Drawing.Point(436, 188);
+            this.lblFormaPagamento.Location = new System.Drawing.Point(515, 188);
             this.lblFormaPagamento.Name = "lblFormaPagamento";
             this.lblFormaPagamento.Size = new System.Drawing.Size(138, 16);
             this.lblFormaPagamento.TabIndex = 17;
@@ -176,7 +176,7 @@
             // lblPorcentagem
             // 
             this.lblPorcentagem.AutoSize = true;
-            this.lblPorcentagem.Location = new System.Drawing.Point(435, 66);
+            this.lblPorcentagem.Location = new System.Drawing.Point(514, 66);
             this.lblPorcentagem.Name = "lblPorcentagem";
             this.lblPorcentagem.Size = new System.Drawing.Size(88, 16);
             this.lblPorcentagem.TabIndex = 20;
@@ -184,14 +184,14 @@
             // 
             // txtPorcentagem
             // 
-            this.txtPorcentagem.Location = new System.Drawing.Point(438, 85);
+            this.txtPorcentagem.Location = new System.Drawing.Point(517, 85);
             this.txtPorcentagem.Name = "txtPorcentagem";
             this.txtPorcentagem.Size = new System.Drawing.Size(100, 22);
             this.txtPorcentagem.TabIndex = 19;
             // 
             // btnGerarParcelas
             // 
-            this.btnGerarParcelas.Location = new System.Drawing.Point(704, 150);
+            this.btnGerarParcelas.Location = new System.Drawing.Point(883, 150);
             this.btnGerarParcelas.Name = "btnGerarParcelas";
             this.btnGerarParcelas.Size = new System.Drawing.Size(172, 23);
             this.btnGerarParcelas.TabIndex = 21;
@@ -202,7 +202,7 @@
             // lblParcelas
             // 
             this.lblParcelas.AutoSize = true;
-            this.lblParcelas.Location = new System.Drawing.Point(597, 10);
+            this.lblParcelas.Location = new System.Drawing.Point(676, 10);
             this.lblParcelas.Name = "lblParcelas";
             this.lblParcelas.Size = new System.Drawing.Size(61, 16);
             this.lblParcelas.TabIndex = 22;
@@ -211,7 +211,7 @@
             // lblNumParcela
             // 
             this.lblNumParcela.AutoSize = true;
-            this.lblNumParcela.Location = new System.Drawing.Point(435, 22);
+            this.lblNumParcela.Location = new System.Drawing.Point(514, 22);
             this.lblNumParcela.Name = "lblNumParcela";
             this.lblNumParcela.Size = new System.Drawing.Size(124, 16);
             this.lblNumParcela.TabIndex = 24;
@@ -219,14 +219,14 @@
             // 
             // txtNumParcela
             // 
-            this.txtNumParcela.Location = new System.Drawing.Point(438, 41);
+            this.txtNumParcela.Location = new System.Drawing.Point(517, 41);
             this.txtNumParcela.Name = "txtNumParcela";
             this.txtNumParcela.Size = new System.Drawing.Size(100, 22);
             this.txtNumParcela.TabIndex = 23;
             // 
             // btnEditarParcela
             // 
-            this.btnEditarParcela.Location = new System.Drawing.Point(704, 179);
+            this.btnEditarParcela.Location = new System.Drawing.Point(883, 179);
             this.btnEditarParcela.Name = "btnEditarParcela";
             this.btnEditarParcela.Size = new System.Drawing.Size(172, 23);
             this.btnEditarParcela.TabIndex = 25;
@@ -236,7 +236,7 @@
             // 
             // btnRemoverParcela
             // 
-            this.btnRemoverParcela.Location = new System.Drawing.Point(704, 208);
+            this.btnRemoverParcela.Location = new System.Drawing.Point(883, 208);
             this.btnRemoverParcela.Name = "btnRemoverParcela";
             this.btnRemoverParcela.Size = new System.Drawing.Size(172, 23);
             this.btnRemoverParcela.TabIndex = 26;
@@ -246,7 +246,7 @@
             // 
             // btnFormaPagamento
             // 
-            this.btnFormaPagamento.Location = new System.Drawing.Point(546, 207);
+            this.btnFormaPagamento.Location = new System.Drawing.Point(725, 207);
             this.btnFormaPagamento.Name = "btnFormaPagamento";
             this.btnFormaPagamento.Size = new System.Drawing.Size(150, 23);
             this.btnFormaPagamento.TabIndex = 27;
@@ -256,16 +256,16 @@
             // 
             // txtFormaPagamento
             // 
-            this.txtFormaPagamento.Location = new System.Drawing.Point(440, 208);
+            this.txtFormaPagamento.Location = new System.Drawing.Point(519, 208);
             this.txtFormaPagamento.Name = "txtFormaPagamento";
             this.txtFormaPagamento.ReadOnly = true;
-            this.txtFormaPagamento.Size = new System.Drawing.Size(100, 22);
+            this.txtFormaPagamento.Size = new System.Drawing.Size(200, 22);
             this.txtFormaPagamento.TabIndex = 28;
             // 
             // lblJuros
             // 
             this.lblJuros.AutoSize = true;
-            this.lblJuros.Location = new System.Drawing.Point(191, 8);
+            this.lblJuros.Location = new System.Drawing.Point(270, 8);
             this.lblJuros.Name = "lblJuros";
             this.lblJuros.Size = new System.Drawing.Size(40, 16);
             this.lblJuros.TabIndex = 30;
@@ -273,7 +273,7 @@
             // 
             // txtJuros
             // 
-            this.txtJuros.Location = new System.Drawing.Point(191, 27);
+            this.txtJuros.Location = new System.Drawing.Point(270, 27);
             this.txtJuros.Name = "txtJuros";
             this.txtJuros.Size = new System.Drawing.Size(100, 22);
             this.txtJuros.TabIndex = 29;
@@ -281,7 +281,7 @@
             // lblMulta
             // 
             this.lblMulta.AutoSize = true;
-            this.lblMulta.Location = new System.Drawing.Point(191, 67);
+            this.lblMulta.Location = new System.Drawing.Point(270, 67);
             this.lblMulta.Name = "lblMulta";
             this.lblMulta.Size = new System.Drawing.Size(39, 16);
             this.lblMulta.TabIndex = 32;
@@ -289,7 +289,7 @@
             // 
             // txtMulta
             // 
-            this.txtMulta.Location = new System.Drawing.Point(191, 86);
+            this.txtMulta.Location = new System.Drawing.Point(270, 86);
             this.txtMulta.Name = "txtMulta";
             this.txtMulta.Size = new System.Drawing.Size(100, 22);
             this.txtMulta.TabIndex = 31;
@@ -297,7 +297,7 @@
             // lblDesconto
             // 
             this.lblDesconto.AutoSize = true;
-            this.lblDesconto.Location = new System.Drawing.Point(191, 129);
+            this.lblDesconto.Location = new System.Drawing.Point(270, 129);
             this.lblDesconto.Name = "lblDesconto";
             this.lblDesconto.Size = new System.Drawing.Size(65, 16);
             this.lblDesconto.TabIndex = 34;
@@ -305,7 +305,7 @@
             // 
             // txtDesconto
             // 
-            this.txtDesconto.Location = new System.Drawing.Point(191, 148);
+            this.txtDesconto.Location = new System.Drawing.Point(270, 148);
             this.txtDesconto.Name = "txtDesconto";
             this.txtDesconto.Size = new System.Drawing.Size(100, 22);
             this.txtDesconto.TabIndex = 33;

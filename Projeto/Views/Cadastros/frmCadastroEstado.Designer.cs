@@ -52,7 +52,7 @@
             // 
             this.txtNome.Location = new System.Drawing.Point(12, 110);
             this.txtNome.Name = "txtNome";
-            this.txtNome.Size = new System.Drawing.Size(100, 22);
+            this.txtNome.Size = new System.Drawing.Size(200, 22);
             this.txtNome.TabIndex = 12;
             // 
             // btnSalvar
@@ -85,7 +85,7 @@
             // 
             // btnBuscar
             // 
-            this.btnBuscar.Location = new System.Drawing.Point(170, 183);
+            this.btnBuscar.Location = new System.Drawing.Point(265, 183);
             this.btnBuscar.Name = "btnBuscar";
             this.btnBuscar.Size = new System.Drawing.Size(150, 23);
             this.btnBuscar.TabIndex = 65;
@@ -98,13 +98,13 @@
             this.txtPais.Location = new System.Drawing.Point(12, 184);
             this.txtPais.Name = "txtPais";
             this.txtPais.ReadOnly = true;
-            this.txtPais.Size = new System.Drawing.Size(119, 22);
+            this.txtPais.Size = new System.Drawing.Size(200, 22);
             this.txtPais.TabIndex = 66;
             // 
             // lblUF
             // 
             this.lblUF.AutoSize = true;
-            this.lblUF.Location = new System.Drawing.Point(167, 91);
+            this.lblUF.Location = new System.Drawing.Point(262, 91);
             this.lblUF.Name = "lblUF";
             this.lblUF.Size = new System.Drawing.Size(25, 16);
             this.lblUF.TabIndex = 68;
@@ -112,9 +112,9 @@
             // 
             // txtUF
             // 
-            this.txtUF.Location = new System.Drawing.Point(170, 110);
+            this.txtUF.Location = new System.Drawing.Point(265, 110);
             this.txtUF.Name = "txtUF";
-            this.txtUF.Size = new System.Drawing.Size(100, 22);
+            this.txtUF.Size = new System.Drawing.Size(70, 22);
             this.txtUF.TabIndex = 67;
             // 
             // frmCadastroEstado

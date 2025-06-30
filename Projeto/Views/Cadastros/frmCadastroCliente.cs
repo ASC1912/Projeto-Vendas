@@ -46,6 +46,7 @@ namespace Projeto.Views
             txtCEP.Text = cep;
             cbTipo.Text = tipo;
             txtCidade.Text = nomeCidade;
+            txtIdCidade.Text = idCidade > 0 ? idCidade.ToString() : "";
             cidadeSelecionadoId = idCidade;
             txtCondicao.Text = descricaoCondicao;
             condicaoSelecionadoId = idCondicao;

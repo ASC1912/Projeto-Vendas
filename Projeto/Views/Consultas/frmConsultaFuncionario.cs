@@ -37,7 +37,9 @@ namespace Projeto.Views
                 {
                     ListViewItem item = new ListViewItem(funcionario.Id.ToString());
                     item.SubItems.Add(funcionario.Nome);
+                    item.SubItems.Add(funcionario.Apelido);
                     item.SubItems.Add(funcionario.CPF_CNPJ);
+                    item.SubItems.Add(funcionario.Genero);
                     item.SubItems.Add(funcionario.Telefone);
                     item.SubItems.Add(funcionario.Email);
                     item.SubItems.Add(funcionario.Endereco);
@@ -46,13 +48,14 @@ namespace Projeto.Views
                     item.SubItems.Add(funcionario.Complemento);
                     item.SubItems.Add(funcionario.CEP);
                     item.SubItems.Add(funcionario.Tipo);
+                    item.SubItems.Add(funcionario.Rg);
+                    item.SubItems.Add(funcionario.Matricula);
                     item.SubItems.Add(funcionario.Cargo);
                     item.SubItems.Add(funcionario.Salario.ToString());
                     item.SubItems.Add(funcionario.NomeCidade);
                     item.SubItems.Add(funcionario.DataAdmissao?.ToShortDateString() ?? "");
                     item.SubItems.Add(funcionario.DataDemissao?.ToShortDateString() ?? "");
                     item.SubItems.Add(funcionario.Ativo ? "Ativo" : "Inativo");
-                    item.SubItems.Add(funcionario.Rg);
 
                     listView1.Items.Add(item);
                 }
@@ -98,6 +101,9 @@ namespace Projeto.Views
                         item.SubItems.Add(funcionario.DataDemissao?.ToShortDateString() ?? "");
                         item.SubItems.Add(funcionario.Ativo ? "Ativo" : "Inativo");
                         item.SubItems.Add(funcionario.Rg ?? "");
+                        item.SubItems.Add(funcionario.Genero);
+                        item.SubItems.Add(funcionario.Apelido);
+                        item.SubItems.Add(funcionario.Matricula);
 
                         listView1.Items.Add(item);
                     }
@@ -138,6 +144,7 @@ namespace Projeto.Views
                     formCadastro.CarregarFuncionario(
                         funcionario.Id,
                         funcionario.Nome,
+                        funcionario.Apelido,
                         funcionario.CPF_CNPJ,
                         funcionario.Telefone,
                         funcionario.Email,
@@ -148,6 +155,8 @@ namespace Projeto.Views
                         funcionario.CEP,
                         funcionario.Cargo,
                         funcionario.Salario,
+                        funcionario.Matricula,
+                        funcionario.Genero,
                         funcionario.Tipo,
                         cidade?.NomeCidade ?? "Não encontrado",
                         funcionario.IdCidade ?? 0,
@@ -162,7 +171,6 @@ namespace Projeto.Views
                     formCadastro.FormClosed += (s, args) => CarregarFuncionarios();
                     formCadastro.ShowDialog();
                 }
-
                 else
                 {
                     MessageBox.Show("Funcionário não encontrado.");
@@ -269,6 +277,15 @@ namespace Projeto.Views
                         break;
                     case "RG":
                         column.Width = 80;
+                        break;
+                    case "Apelido":
+                        column.Width = 90;
+                        break;
+                    case "Matrícula":
+                        column.Width = 90;
+                        break;
+                    case "Gênero":
+                        column.Width = 70;
                         break;
                     default:
                         column.Width = 100;

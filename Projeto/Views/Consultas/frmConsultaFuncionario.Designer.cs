@@ -46,6 +46,9 @@
             this.DataDemissao = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Status = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Rg = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Gênero = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Apelido = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Matricula = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // listView1
@@ -53,7 +56,9 @@
             this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.ID,
             this.Nome,
+            this.Apelido,
             this.CPF_CNPJ,
+            this.Gênero,
             this.Telefone,
             this.Email,
             this.Endereco,
@@ -62,13 +67,14 @@
             this.Complemento,
             this.CEP,
             this.Tipo,
+            this.Rg,
+            this.Matricula,
             this.Cargo,
             this.Salario,
             this.IDCidade,
             this.DataAdmissao,
             this.DataDemissao,
-            this.Status,
-            this.Rg});
+            this.Status});
             // 
             // btnDeletar
             // 
@@ -119,7 +125,7 @@
             // 
             // IDCidade
             // 
-            this.IDCidade.Text = "IDCidade";
+            this.IDCidade.Text = "Cidade";
             this.IDCidade.Width = 74;
             // 
             // Cargo
@@ -166,6 +172,18 @@
             // 
             this.Rg.Text = "RG";
             // 
+            // Gênero
+            // 
+            this.Gênero.Text = "Gênero";
+            // 
+            // Apelido
+            // 
+            this.Apelido.Text = "Apelido";
+            // 
+            // Matricula
+            // 
+            this.Matricula.Text = "Matrícula";
+            // 
             // frmConsultaFuncionario
             // 
             //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -198,5 +216,8 @@
         private System.Windows.Forms.ColumnHeader DataDemissao;
         private System.Windows.Forms.ColumnHeader Status;
         private System.Windows.Forms.ColumnHeader Rg;
+        private System.Windows.Forms.ColumnHeader Gênero;
+        private System.Windows.Forms.ColumnHeader Apelido;
+        private System.Windows.Forms.ColumnHeader Matricula;
     }
 }

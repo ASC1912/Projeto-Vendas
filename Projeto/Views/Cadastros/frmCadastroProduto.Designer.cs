@@ -68,7 +68,7 @@
             // 
             this.txtNome.Location = new System.Drawing.Point(12, 91);
             this.txtNome.Name = "txtNome";
-            this.txtNome.Size = new System.Drawing.Size(151, 22);
+            this.txtNome.Size = new System.Drawing.Size(200, 22);
             this.txtNome.TabIndex = 67;
             // 
             // lblDescricao
@@ -84,7 +84,7 @@
             // 
             this.txtDescricao.Location = new System.Drawing.Point(12, 157);
             this.txtDescricao.Name = "txtDescricao";
-            this.txtDescricao.Size = new System.Drawing.Size(148, 22);
+            this.txtDescricao.Size = new System.Drawing.Size(200, 22);
             this.txtDescricao.TabIndex = 69;
             // 
             // txtGrupo
@@ -92,12 +92,12 @@
             this.txtGrupo.Location = new System.Drawing.Point(387, 157);
             this.txtGrupo.Name = "txtGrupo";
             this.txtGrupo.ReadOnly = true;
-            this.txtGrupo.Size = new System.Drawing.Size(100, 22);
+            this.txtGrupo.Size = new System.Drawing.Size(200, 22);
             this.txtGrupo.TabIndex = 74;
             // 
             // btnBuscarGrupo
             // 
-            this.btnBuscarGrupo.Location = new System.Drawing.Point(562, 156);
+            this.btnBuscarGrupo.Location = new System.Drawing.Point(593, 156);
             this.btnBuscarGrupo.Name = "btnBuscarGrupo";
             this.btnBuscarGrupo.Size = new System.Drawing.Size(150, 23);
             this.btnBuscarGrupo.TabIndex = 73;
@@ -119,12 +119,12 @@
             this.txtMarca.Location = new System.Drawing.Point(387, 232);
             this.txtMarca.Name = "txtMarca";
             this.txtMarca.ReadOnly = true;
-            this.txtMarca.Size = new System.Drawing.Size(100, 22);
+            this.txtMarca.Size = new System.Drawing.Size(200, 22);
             this.txtMarca.TabIndex = 77;
             // 
             // btnMarca
             // 
-            this.btnMarca.Location = new System.Drawing.Point(562, 231);
+            this.btnMarca.Location = new System.Drawing.Point(593, 231);
             this.btnMarca.Name = "btnMarca";
             this.btnMarca.Size = new System.Drawing.Size(150, 23);
             this.btnMarca.TabIndex = 76;
@@ -154,7 +154,7 @@
             // 
             this.txtPreco.Location = new System.Drawing.Point(15, 228);
             this.txtPreco.Name = "txtPreco";
-            this.txtPreco.Size = new System.Drawing.Size(81, 22);
+            this.txtPreco.Size = new System.Drawing.Size(150, 22);
             this.txtPreco.TabIndex = 78;
             // 
             // lblEstoque
@@ -170,7 +170,7 @@
             // 
             this.txtEstoque.Location = new System.Drawing.Point(15, 302);
             this.txtEstoque.Name = "txtEstoque";
-            this.txtEstoque.Size = new System.Drawing.Size(81, 22);
+            this.txtEstoque.Size = new System.Drawing.Size(150, 22);
             this.txtEstoque.TabIndex = 80;
             // 
             // btnSalvar

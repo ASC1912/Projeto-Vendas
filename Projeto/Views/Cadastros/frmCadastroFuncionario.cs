@@ -26,12 +26,19 @@ namespace Projeto.Views
             txtCodigo.Enabled = false;
             cbTipo.SelectedIndex = 0;
             dtpDemissao.Checked = false;
+            cbGenero.SelectedIndex = 0;
         }
 
-        public void CarregarFuncionario(int id, string nome, string cpf_cnpj, string telefone, string email, string endereco, int numEndereco, string bairro, string complemento, string cep, string cargo, decimal salario, string tipo, string nomeCidade, int idCidade, bool status, DateTime? dataAdmissao, DateTime? dataDemissao, string rg, DateTime? dataCriacao, DateTime? dataModificacao)
+        public void CarregarFuncionario(
+                     int id, string nome, string apelido, string cpf_cnpj, string telefone, string email,
+                     string endereco, int numEndereco, string bairro, string complemento, string cep,
+                     string cargo, decimal salario, string matricula, string genero, string tipo,
+                     string nomeCidade, int idCidade, bool status, DateTime? dataAdmissao,
+                     DateTime? dataDemissao, string rg, DateTime? dataCriacao, DateTime? dataModificacao)
         {
             txtCodigo.Text = id.ToString();
             txtNome.Text = nome;
+            txtApelido.Text = apelido;
             txtCPF.Text = cpf_cnpj;
             txtTelefone.Text = telefone;
             txtEmail.Text = email;
@@ -42,11 +49,22 @@ namespace Projeto.Views
             txtCEP.Text = cep;
             cbTipo.Text = tipo;
             txtCidade.Text = nomeCidade;
+            txtIdCidade.Text = idCidade > 0 ? idCidade.ToString() : "";
             cidadeSelecionadoId = idCidade;
             txtCargo.Text = cargo;
             txtSalario.Text = salario.ToString();
+            txtMatricula.Text = matricula;
             txtRG.Text = rg;
             chkInativo.Checked = !status;
+
+            if (!string.IsNullOrWhiteSpace(genero))
+            {
+                cbGenero.SelectedItem = genero.Equals("M", StringComparison.OrdinalIgnoreCase) ? "Masculino" : "Feminino";
+            }
+            else
+            {
+                cbGenero.SelectedIndex = -1;
+            }
 
             if (dataAdmissao.HasValue)
                 dtpAdmissao.Value = dataAdmissao.Value;
@@ -65,6 +83,7 @@ namespace Projeto.Views
                 ? $"Modificado em: {dataModificacao:dd/MM/yyyy HH:mm}"
                 : "Modificado em: -";
         }
+
 
 
 
@@ -110,6 +129,17 @@ namespace Projeto.Views
                 return;
             }
 
+            string genero = "";
+            if (cbGenero.SelectedItem != null)
+            {
+                string generoSelecionado = cbGenero.SelectedItem.ToString();
+                genero = generoSelecionado.StartsWith("M", StringComparison.OrdinalIgnoreCase) ? "M" : "F";
+            }
+            else
+            {
+                MessageBox.Show("Selecione o gênero.");
+                return;
+            }
 
             try
             {
@@ -143,6 +173,9 @@ namespace Projeto.Views
                     DataAdmissao = dtpAdmissao.Value,
                     DataDemissao = dtpDemissao.Checked ? (DateTime?)dtpDemissao.Value : null,
                     Rg = txtRG.Text,
+                    Genero = genero,
+                    Apelido = txtApelido.Text,
+                    Matricula = txtMatricula.Text,
                     DataCadastro = dataCriacao,
                     DataAlteracao = dataModificacao
                 };
@@ -156,6 +189,7 @@ namespace Projeto.Views
                 MessageBox.Show("Erro ao salvar funcionário: " + ex.Message);
             }
         }
+
 
         private void frmCadastroFuncionario_Load(object sender, EventArgs e)
         {

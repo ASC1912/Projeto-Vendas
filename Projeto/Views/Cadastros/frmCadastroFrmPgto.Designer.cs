@@ -57,7 +57,7 @@
             // 
             this.txtDescricao.Location = new System.Drawing.Point(15, 110);
             this.txtDescricao.Name = "txtDescricao";
-            this.txtDescricao.Size = new System.Drawing.Size(158, 22);
+            this.txtDescricao.Size = new System.Drawing.Size(200, 22);
             this.txtDescricao.TabIndex = 6;
             // 
             // lblDescricao
@@ -65,9 +65,9 @@
             this.lblDescricao.AutoSize = true;
             this.lblDescricao.Location = new System.Drawing.Point(12, 91);
             this.lblDescricao.Name = "lblDescricao";
-            this.lblDescricao.Size = new System.Drawing.Size(69, 16);
+            this.lblDescricao.Size = new System.Drawing.Size(138, 16);
             this.lblDescricao.TabIndex = 7;
-            this.lblDescricao.Text = "Descrição";
+            this.lblDescricao.Text = "Forma de Pagamento";
             // 
             // frmCadastroFrmPgto
             // 

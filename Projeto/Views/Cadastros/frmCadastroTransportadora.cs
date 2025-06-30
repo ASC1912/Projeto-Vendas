@@ -46,6 +46,7 @@ namespace Projeto.Views.Cadastros
             txtInscEstSubTrib.Text = inscEstSubTrib;
             cbTipo.Text = tipo;
             txtCidade.Text = nomeCidade;
+            txtIdCidade.Text = idCidade > 0 ? idCidade.ToString() : "";
             cidadeSelecionadoId = idCidade;
             txtCondicao.Text = idCondicao.ToString();
             condicaoSelecionadoId = idCondicao;
