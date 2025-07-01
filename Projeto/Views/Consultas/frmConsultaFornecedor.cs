@@ -37,20 +37,20 @@ namespace Projeto.Views
                 foreach (var fornecedor in fornecedores)
                 {
                     ListViewItem item = new ListViewItem(fornecedor.Id.ToString());
+                    item.SubItems.Add(fornecedor.Tipo);
                     item.SubItems.Add(fornecedor.Nome);
-                    item.SubItems.Add(fornecedor.CPF_CNPJ);
-                    item.SubItems.Add(fornecedor.Telefone);
-                    item.SubItems.Add(fornecedor.Email);
                     item.SubItems.Add(fornecedor.Endereco);
                     item.SubItems.Add(fornecedor.NumeroEndereco.ToString());
                     item.SubItems.Add(fornecedor.Bairro);
                     item.SubItems.Add(fornecedor.Complemento);
                     item.SubItems.Add(fornecedor.CEP);
-                    item.SubItems.Add(fornecedor.Tipo);
-                    item.SubItems.Add(fornecedor.InscricaoEstadual);
-                    item.SubItems.Add(fornecedor.InscricaoEstadualSubTrib);
                     item.SubItems.Add(fornecedor.NomeCidade);
                     item.SubItems.Add(fornecedor.DescricaoCondicao);
+                    item.SubItems.Add(fornecedor.Telefone);
+                    item.SubItems.Add(fornecedor.Email);
+                    item.SubItems.Add(fornecedor.CPF_CNPJ);
+                    item.SubItems.Add(fornecedor.InscricaoEstadual);
+                    item.SubItems.Add(fornecedor.InscricaoEstadualSubTrib);
                     item.SubItems.Add(fornecedor.Ativo ? "Ativo" : "Inativo");
                     listView1.Items.Add(item);
                 }
@@ -79,20 +79,20 @@ namespace Projeto.Views
                     if (fornecedor != null)
                     {
                         ListViewItem item = new ListViewItem(fornecedor.Id.ToString());
+                        item.SubItems.Add(fornecedor.Tipo);
                         item.SubItems.Add(fornecedor.Nome);
-                        item.SubItems.Add(fornecedor.CPF_CNPJ);
-                        item.SubItems.Add(fornecedor.Telefone);
-                        item.SubItems.Add(fornecedor.Email);
                         item.SubItems.Add(fornecedor.Endereco);
                         item.SubItems.Add(fornecedor.NumeroEndereco.ToString());
                         item.SubItems.Add(fornecedor.Bairro);
                         item.SubItems.Add(fornecedor.Complemento);
                         item.SubItems.Add(fornecedor.CEP);
-                        item.SubItems.Add(fornecedor.Tipo);
-                        item.SubItems.Add(fornecedor.InscricaoEstadual);
-                        item.SubItems.Add(fornecedor.InscricaoEstadualSubTrib);
                         item.SubItems.Add(fornecedor.NomeCidade);
                         item.SubItems.Add(fornecedor.DescricaoCondicao);
+                        item.SubItems.Add(fornecedor.Telefone);
+                        item.SubItems.Add(fornecedor.Email);
+                        item.SubItems.Add(fornecedor.CPF_CNPJ);
+                        item.SubItems.Add(fornecedor.InscricaoEstadual);
+                        item.SubItems.Add(fornecedor.InscricaoEstadualSubTrib);
                         item.SubItems.Add(fornecedor.Ativo ? "Ativo" : "Inativo");
                         listView1.Items.Add(item);
                     }
@@ -206,59 +206,51 @@ namespace Projeto.Views
                 switch (column.Text)
                 {
                     case "ID":
-                        column.Width = 50;
+                        column.Width = 40;
+                        break;
+                    case "Tipo":
+                        column.Width = 60;
                         break;
                     case "Nome":
-                        column.Width = 100;
-                        break;
-                    case "CPF/CNPJ":
-                        column.Width = 100;
-                        break;
-                    case "Telefone":
-                        column.Width = 90;
-                        break;
-                    case "Email":
-                        column.Width = 100;
+                        column.Width = 200;
                         break;
                     case "Endereço":
-                        column.Width = 100;
+                        column.Width = 200;
                         break;
                     case "Número":
                         column.Width = 60;
                         break;
                     case "Bairro":
-                        column.Width = 90;
+                        column.Width = 150;
                         break;
                     case "Complemento":
-                        column.Width = 90;
+                        column.Width = 130;
                         break;
                     case "CEP":
                         column.Width = 80;
                         break;
-                    case "Tipo":
-                        column.Width = 60;
-                        break;
-                    case "IE":
-                        column.Width = 100;
-                        break;
-                    case "IESubTrib":
-                        column.Width = 100;
-                        break;
                     case "Cidade":
-                        column.Width = 100;
+                        column.Width = 150;
+                        break;
+                    case "Telefone":
+                        column.Width = 120;
+                        break;
+                    case "Email":
+                        column.Width = 200;
                         break;
                     case "Cond. Pgto":
-                        column.Width = 100;
+                        column.Width = 150;
                         break;
                     case "Status":
-                        column.Width = 70;
+                        column.Width = 60;
                         break;
                     default:
                         column.Width = 100;
                         break;
                 }
             }
-
         }
+
+
     }
 }

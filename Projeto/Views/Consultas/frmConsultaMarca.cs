@@ -32,9 +32,9 @@ namespace Projeto.Views.Consultas
                         column.Width = 50;
                         break;
                     case "Marca":
-                        column.Width = 100;
+                        column.Width = 150;
                         break;
-                    case "Status":
+                    case "Ativo":
                         column.Width = 60;
                         break;
                     default:

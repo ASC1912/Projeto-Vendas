@@ -36,20 +36,20 @@ namespace Projeto.Views
                 foreach (var cliente in clientes)
                 {
                     ListViewItem item = new ListViewItem(cliente.Id.ToString());
+                    item.SubItems.Add(cliente.Tipo);
                     item.SubItems.Add(cliente.Nome);
-                    item.SubItems.Add(cliente.CPF_CNPJ);
-                    item.SubItems.Add(cliente.Rg);
-                    item.SubItems.Add(cliente.Telefone);
-                    item.SubItems.Add(cliente.Email);
+                    item.SubItems.Add(cliente.Genero);
                     item.SubItems.Add(cliente.Endereco);
                     item.SubItems.Add(cliente.NumeroEndereco?.ToString() ?? "");
                     item.SubItems.Add(cliente.Bairro);
                     item.SubItems.Add(cliente.Complemento);
                     item.SubItems.Add(cliente.CEP);
-                    item.SubItems.Add(cliente.Tipo);
-                    item.SubItems.Add(cliente.Genero);
                     item.SubItems.Add(cliente.NomeCidade);
                     item.SubItems.Add(cliente.DescricaoCondicao ?? "");
+                    item.SubItems.Add(cliente.Telefone);
+                    item.SubItems.Add(cliente.Email);
+                    item.SubItems.Add(cliente.CPF_CNPJ);
+                    item.SubItems.Add(cliente.Rg);
                     item.SubItems.Add(cliente.Ativo ? "Ativo" : "Inativo");
 
                     listView1.Items.Add(item);
@@ -79,20 +79,20 @@ namespace Projeto.Views
                     if (cliente != null)
                     {
                         ListViewItem item = new ListViewItem(cliente.Id.ToString());
+                        item.SubItems.Add(cliente.Tipo);
                         item.SubItems.Add(cliente.Nome);
-                        item.SubItems.Add(cliente.CPF_CNPJ);
-                        item.SubItems.Add(cliente.Rg);
-                        item.SubItems.Add(cliente.Telefone);
-                        item.SubItems.Add(cliente.Email);
+                        item.SubItems.Add(cliente.Genero);
                         item.SubItems.Add(cliente.Endereco);
                         item.SubItems.Add(cliente.NumeroEndereco?.ToString() ?? "");
                         item.SubItems.Add(cliente.Complemento);
                         item.SubItems.Add(cliente.Bairro);
                         item.SubItems.Add(cliente.CEP);
                         item.SubItems.Add(cliente.NomeCidade);
-                        item.SubItems.Add(cliente.Tipo);
-                        item.SubItems.Add(cliente.Genero);
                         item.SubItems.Add(cliente.DescricaoCondicao ?? "");
+                        item.SubItems.Add(cliente.Telefone);
+                        item.SubItems.Add(cliente.Email);
+                        item.SubItems.Add(cliente.CPF_CNPJ);
+                        item.SubItems.Add(cliente.Rg);
                         item.SubItems.Add(cliente.Ativo ? "Ativo" : "Inativo");
                         listView1.Items.Add(item);
                     }
@@ -200,59 +200,53 @@ namespace Projeto.Views
                 switch (column.Text)
                 {
                     case "ID":
-                        column.Width = 50;
+                        column.Width = 40;
                         break;
-                    case "Nome":
-                        column.Width = 100;
+                    case "Tipo":
+                        column.Width = 60;
                         break;
-                    case "CPF/CNPJ":
-                        column.Width = 100;
+                    case "Cliente":
+                        column.Width = 200;
                         break;
-                    case "Telefone":
-                        column.Width = 90;
-                        break;
-                    case "Email":
-                        column.Width = 100;
+                    case "Gênero":
+                        column.Width = 60;
                         break;
                     case "Endereço":
-                        column.Width = 100;
+                        column.Width = 200;
                         break;
                     case "Número":
                         column.Width = 60;
                         break;
                     case "Bairro":
-                        column.Width = 90;
+                        column.Width = 150;
                         break;
                     case "Complemento":
-                        column.Width = 90;
+                        column.Width = 130;
                         break;
                     case "CEP":
                         column.Width = 80;
                         break;
-                    case "Tipo":
-                        column.Width = 60;
-                        break;
                     case "Cidade":
-                        column.Width = 100;
+                        column.Width = 150;
                         break;
-                    case "Condição":
-                        column.Width = 100;
+                    case "Condição Pag.":
+                        column.Width = 150;
+                        break;
+                    case "Telefone":
+                        column.Width = 120;
+                        break;
+                    case "Email":
+                        column.Width = 200;
                         break;
                     case "Status":
                         column.Width = 60;
-                        break;
-                    case "RG":
-                        column.Width = 80;
-                        break;
-                    case "Gênero":
-                        column.Width = 70;
                         break;
                     default:
                         column.Width = 100;
                         break;
                 }
             }
-
         }
+
     }
 }

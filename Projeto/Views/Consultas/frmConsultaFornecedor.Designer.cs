@@ -30,7 +30,6 @@
         {
             this.ID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Nome = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.CPF_CNPJ = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Telefone = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Email = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Endereco = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -44,26 +43,27 @@
             this.Complemento = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.IDCondPgto = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Status = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.CPF_CNPJ = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // listView1
             // 
             this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.ID,
+            this.Tipo,
             this.Nome,
-            this.CPF_CNPJ,
-            this.Telefone,
-            this.Email,
             this.Endereco,
             this.Numero,
             this.Bairro,
             this.Complemento,
             this.CEP,
-            this.Tipo,
-            this.InscricaoEstadual,
-            this.InscEstSubTrib,
             this.IDCidade,
             this.IDCondPgto,
+            this.Telefone,
+            this.Email,
+            this.CPF_CNPJ,
+            this.InscricaoEstadual,
+            this.InscEstSubTrib,
             this.Status});
             // 
             // btnDeletar
@@ -91,10 +91,6 @@
             this.Nome.Text = "Fornecedor";
             this.Nome.Width = 87;
             // 
-            // CPF_CNPJ
-            // 
-            this.CPF_CNPJ.Text = "CPF/CNPJ";
-            // 
             // Telefone
             // 
             this.Telefone.Text = "Telefone";
@@ -109,6 +105,7 @@
             // 
             // CEP
             // 
+            this.CEP.DisplayIndex = 8;
             this.CEP.Text = "CEP";
             // 
             // Tipo
@@ -117,6 +114,7 @@
             // 
             // IDCidade
             // 
+            this.IDCidade.DisplayIndex = 7;
             this.IDCidade.Text = "Cidade";
             // 
             // InscricaoEstadual
@@ -147,6 +145,10 @@
             // 
             this.Status.Text = "Ativo";
             // 
+            // CPF_CNPJ
+            // 
+            this.CPF_CNPJ.Text = "CPF/CNPJ";
+            // 
             // frmConsultaFornecedor
             // 
             //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -163,7 +165,6 @@
 
         private System.Windows.Forms.ColumnHeader ID;
         private System.Windows.Forms.ColumnHeader Nome;
-        private System.Windows.Forms.ColumnHeader CPF_CNPJ;
         private System.Windows.Forms.ColumnHeader Telefone;
         private System.Windows.Forms.ColumnHeader Email;
         private System.Windows.Forms.ColumnHeader Endereco;
@@ -177,5 +178,6 @@
         private System.Windows.Forms.ColumnHeader Complemento;
         private System.Windows.Forms.ColumnHeader IDCondPgto;
         private System.Windows.Forms.ColumnHeader Status;
+        private System.Windows.Forms.ColumnHeader CPF_CNPJ;
     }
 }

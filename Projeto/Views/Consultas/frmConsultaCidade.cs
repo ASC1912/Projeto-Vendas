@@ -33,15 +33,15 @@ namespace Projeto.Views
                 switch (column.Text)
                 {
                     case "ID":
-                        column.Width = 50; 
+                        column.Width = 40; 
                         break;
-                    case "Nome":
-                        column.Width = 100; 
+                    case "Cidade":
+                        column.Width = 170; 
                         break;
                     case "Estado":
-                        column.Width = 100; 
+                        column.Width = 150; 
                         break;
-                    case "Status":
+                    case "Ativo":
                         column.Width = 50; 
                         break;
                     default:

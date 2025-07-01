@@ -37,7 +37,7 @@ namespace Projeto
                         column.Width = 50;
                         break;
                     case "Descricao":
-                        column.Width = 100;
+                        column.Width = 200;
                         break;
                     case "Status":
                         column.Width = 50;

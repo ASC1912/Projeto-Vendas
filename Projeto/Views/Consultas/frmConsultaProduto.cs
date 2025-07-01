@@ -179,11 +179,11 @@ namespace Projeto.Views.Consultas
                     case "ID":
                         column.Width = 50;
                         break;
-                    case "Nome":
-                        column.Width = 100;
+                    case "Produto":
+                        column.Width = 200;
                         break;
                     case "Descrição":
-                        column.Width = 120;
+                        column.Width = 200;
                         break;
                     case "Preço":
                         column.Width = 80;
@@ -197,7 +197,7 @@ namespace Projeto.Views.Consultas
                     case "Grupo":
                         column.Width = 100;
                         break;
-                    case "Status":
+                    case "Ativo":
                         column.Width = 60;
                         break;
                     default:

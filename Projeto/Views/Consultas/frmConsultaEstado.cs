@@ -35,16 +35,16 @@ namespace Projeto.Views
                     case "ID":
                         column.Width = 50;
                         break;
-                    case "Nome":
-                        column.Width = 100;
+                    case "Estado":
+                        column.Width = 150;
                         break;
                     case "UF":
                         column.Width = 50;
                         break;
-                    case "Pais":
-                        column.Width = 100;
+                    case "País":
+                        column.Width = 150;
                         break;
-                    case "Status":
+                    case "Ativo":
                         column.Width = 50;
                         break;
                     default:

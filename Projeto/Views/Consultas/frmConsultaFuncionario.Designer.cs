@@ -30,7 +30,6 @@
         {
             this.ID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Nome = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.CPF_CNPJ = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Telefone = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Email = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.CEP = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -45,33 +44,34 @@
             this.DataAdmissao = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.DataDemissao = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Status = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.Rg = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Gênero = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Apelido = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Matricula = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.CPF_CNPJ = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.RG = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // listView1
             // 
             this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.ID,
+            this.Tipo,
             this.Nome,
             this.Apelido,
-            this.CPF_CNPJ,
             this.Gênero,
-            this.Telefone,
-            this.Email,
             this.Endereco,
             this.Numero,
             this.Bairro,
             this.Complemento,
             this.CEP,
-            this.Tipo,
-            this.Rg,
+            this.IDCidade,
+            this.Email,
+            this.Telefone,
             this.Matricula,
             this.Cargo,
             this.Salario,
-            this.IDCidade,
+            this.CPF_CNPJ,
+            this.RG,
             this.DataAdmissao,
             this.DataDemissao,
             this.Status});
@@ -100,11 +100,6 @@
             // 
             this.Nome.Text = "Funcionário";
             this.Nome.Width = 88;
-            // 
-            // CPF_CNPJ
-            // 
-            this.CPF_CNPJ.Text = "CPF/CNPJ";
-            this.CPF_CNPJ.Width = 82;
             // 
             // Telefone
             // 
@@ -168,10 +163,6 @@
             // 
             this.Status.Text = "Ativo";
             // 
-            // Rg
-            // 
-            this.Rg.Text = "RG";
-            // 
             // Gênero
             // 
             this.Gênero.Text = "Gênero";
@@ -183,6 +174,14 @@
             // Matricula
             // 
             this.Matricula.Text = "Matrícula";
+            // 
+            // CPF_CNPJ
+            // 
+            this.CPF_CNPJ.Text = "CPF/CNPJ";
+            // 
+            // RG
+            // 
+            this.RG.Text = "RG";
             // 
             // frmConsultaFuncionario
             // 
@@ -200,7 +199,6 @@
 
         private System.Windows.Forms.ColumnHeader ID;
         private System.Windows.Forms.ColumnHeader Nome;
-        private System.Windows.Forms.ColumnHeader CPF_CNPJ;
         private System.Windows.Forms.ColumnHeader Telefone;
         private System.Windows.Forms.ColumnHeader Email;
         private System.Windows.Forms.ColumnHeader CEP;
@@ -215,9 +213,10 @@
         private System.Windows.Forms.ColumnHeader DataAdmissao;
         private System.Windows.Forms.ColumnHeader DataDemissao;
         private System.Windows.Forms.ColumnHeader Status;
-        private System.Windows.Forms.ColumnHeader Rg;
         private System.Windows.Forms.ColumnHeader Gênero;
         private System.Windows.Forms.ColumnHeader Apelido;
         private System.Windows.Forms.ColumnHeader Matricula;
+        private System.Windows.Forms.ColumnHeader CPF_CNPJ;
+        private System.Windows.Forms.ColumnHeader RG;
     }
 }

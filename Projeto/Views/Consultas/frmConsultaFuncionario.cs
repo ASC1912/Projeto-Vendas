@@ -37,23 +37,23 @@ namespace Projeto.Views
                 foreach (var funcionario in funcionarios)
                 {
                     ListViewItem item = new ListViewItem(funcionario.Id.ToString());
+                    item.SubItems.Add(funcionario.Tipo);
                     item.SubItems.Add(funcionario.Nome);
                     item.SubItems.Add(funcionario.Apelido);
-                    item.SubItems.Add(funcionario.CPF_CNPJ);
                     item.SubItems.Add(funcionario.Genero);
-                    item.SubItems.Add(funcionario.Telefone);
-                    item.SubItems.Add(funcionario.Email);
                     item.SubItems.Add(funcionario.Endereco);
-                    item.SubItems.Add(funcionario.NumeroEndereco.ToString());
+                    item.SubItems.Add(funcionario.NumeroEndereco?.ToString() ?? "0");
                     item.SubItems.Add(funcionario.Bairro);
                     item.SubItems.Add(funcionario.Complemento);
                     item.SubItems.Add(funcionario.CEP);
-                    item.SubItems.Add(funcionario.Tipo);
-                    item.SubItems.Add(funcionario.Rg);
+                    item.SubItems.Add(funcionario.NomeCidade ?? "-");
+                    item.SubItems.Add(funcionario.Email);
+                    item.SubItems.Add(funcionario.Telefone);
                     item.SubItems.Add(funcionario.Matricula);
                     item.SubItems.Add(funcionario.Cargo);
-                    item.SubItems.Add(funcionario.Salario.ToString());
-                    item.SubItems.Add(funcionario.NomeCidade);
+                    item.SubItems.Add(funcionario.Salario.ToString("F2"));
+                    item.SubItems.Add(funcionario.CPF_CNPJ);
+                    item.SubItems.Add(funcionario.Rg);
                     item.SubItems.Add(funcionario.DataAdmissao?.ToShortDateString() ?? "");
                     item.SubItems.Add(funcionario.DataDemissao?.ToShortDateString() ?? "");
                     item.SubItems.Add(funcionario.Ativo ? "Ativo" : "Inativo");
@@ -85,26 +85,26 @@ namespace Projeto.Views
                     if (funcionario != null)
                     {
                         ListViewItem item = new ListViewItem(funcionario.Id.ToString());
+                        item.SubItems.Add(funcionario.Tipo);
                         item.SubItems.Add(funcionario.Nome);
-                        item.SubItems.Add(funcionario.CPF_CNPJ);
-                        item.SubItems.Add(funcionario.Telefone);
-                        item.SubItems.Add(funcionario.Email);
+                        item.SubItems.Add(funcionario.Apelido);
+                        item.SubItems.Add(funcionario.Genero);
                         item.SubItems.Add(funcionario.Endereco);
                         item.SubItems.Add(funcionario.NumeroEndereco?.ToString() ?? "0");
                         item.SubItems.Add(funcionario.Bairro);
                         item.SubItems.Add(funcionario.Complemento);
                         item.SubItems.Add(funcionario.CEP);
-                        item.SubItems.Add(funcionario.Tipo);
+                        item.SubItems.Add(funcionario.NomeCidade ?? "-");
+                        item.SubItems.Add(funcionario.Email);
+                        item.SubItems.Add(funcionario.Telefone);
+                        item.SubItems.Add(funcionario.Matricula);
                         item.SubItems.Add(funcionario.Cargo);
                         item.SubItems.Add(funcionario.Salario.ToString("F2"));
-                        item.SubItems.Add(funcionario.NomeCidade ?? "-");
+                        item.SubItems.Add(funcionario.CPF_CNPJ);
+                        item.SubItems.Add(funcionario.Rg);
                         item.SubItems.Add(funcionario.DataAdmissao?.ToShortDateString() ?? "");
                         item.SubItems.Add(funcionario.DataDemissao?.ToShortDateString() ?? "");
                         item.SubItems.Add(funcionario.Ativo ? "Ativo" : "Inativo");
-                        item.SubItems.Add(funcionario.Rg ?? "");
-                        item.SubItems.Add(funcionario.Genero);
-                        item.SubItems.Add(funcionario.Apelido);
-                        item.SubItems.Add(funcionario.Matricula);
 
                         listView1.Items.Add(item);
                     }
@@ -228,74 +228,53 @@ namespace Projeto.Views
                 switch (column.Text)
                 {
                     case "ID":
-                        column.Width = 50;
+                        column.Width = 40; 
+                        break;
+                    case "Tipo":
+                        column.Width = 60;
                         break;
                     case "Nome":
-                        column.Width = 100;
+                        column.Width = 200; 
                         break;
-                    case "CPF/CNPJ":
-                        column.Width = 100;
-                        break;
-                    case "Telefone":
-                        column.Width = 90;
-                        break;
-                    case "Email":
-                        column.Width = 100;
+                    case "Gênero":
+                        column.Width = 60;
                         break;
                     case "Endereço":
-                        column.Width = 100;
+                        column.Width = 200;
                         break;
                     case "Número":
                         column.Width = 60;
                         break;
                     case "Bairro":
-                        column.Width = 90;
+                        column.Width = 150;
                         break;
                     case "Complemento":
-                        column.Width = 90;
+                        column.Width = 130;
                         break;
                     case "CEP":
                         column.Width = 80;
                         break;
-                    case "Tipo":
-                        column.Width = 60;
+                    case "Cidade":
+                        column.Width = 150; 
                         break;
                     case "Cargo":
-                        column.Width = 100;
+                        column.Width = 130;
                         break;
-                    case "Salário":
-                        column.Width = 80;
+                    case "Telefone":
+                        column.Width = 120; 
                         break;
-                    case "Cidade":
-                        column.Width = 100;
-                        break;
-                    case "Admissão":
-                        column.Width = 90;
-                        break;
-                    case "Demissão":
-                        column.Width = 90;
+                    case "Email":
+                        column.Width = 200;
                         break;
                     case "Status":
-                        column.Width = 60;
-                        break;
-                    case "RG":
-                        column.Width = 80;
-                        break;
-                    case "Apelido":
-                        column.Width = 90;
-                        break;
-                    case "Matrícula":
-                        column.Width = 90;
-                        break;
-                    case "Gênero":
-                        column.Width = 70;
+                        column.Width = 60; 
                         break;
                     default:
                         column.Width = 100;
                         break;
                 }
             }
-
         }
+
     }
 }

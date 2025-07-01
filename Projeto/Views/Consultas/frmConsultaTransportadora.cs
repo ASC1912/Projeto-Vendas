@@ -3,10 +3,6 @@ using Projeto.Models;
 using Projeto.Views.Cadastros;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Projeto.Views.Consultas
@@ -14,7 +10,8 @@ namespace Projeto.Views.Consultas
     public partial class frmConsultaTransportadora : Projeto.frmBaseConsulta
     {
         private TransportadoraController controller = new TransportadoraController();
-        public frmConsultaTransportadora() : base() 
+
+        public frmConsultaTransportadora() : base()
         {
             InitializeComponent();
         }
@@ -36,27 +33,28 @@ namespace Projeto.Views.Consultas
                 foreach (var transportadora in transportadoras)
                 {
                     ListViewItem item = new ListViewItem(transportadora.Id.ToString());
+                    item.SubItems.Add(transportadora.Tipo);
                     item.SubItems.Add(transportadora.Nome);
-                    item.SubItems.Add(transportadora.CPF_CNPJ);
-                    item.SubItems.Add(transportadora.Telefone);
-                    item.SubItems.Add(transportadora.Email);
                     item.SubItems.Add(transportadora.Endereco);
-                    item.SubItems.Add(transportadora.NumeroEndereco.ToString());
+                    item.SubItems.Add(transportadora.NumeroEndereco?.ToString() ?? "");
                     item.SubItems.Add(transportadora.Bairro);
                     item.SubItems.Add(transportadora.Complemento);
                     item.SubItems.Add(transportadora.CEP);
-                    item.SubItems.Add(transportadora.Tipo);
+                    item.SubItems.Add(transportadora.NomeCidade);
+                    item.SubItems.Add(transportadora.Telefone);
+                    item.SubItems.Add(transportadora.Email);
+                    item.SubItems.Add(transportadora.CPF_CNPJ);
+                    item.SubItems.Add(transportadora.DescricaoCondicao);
                     item.SubItems.Add(transportadora.InscricaoEstadual);
                     item.SubItems.Add(transportadora.InscricaoEstadualSubTrib);
-                    item.SubItems.Add(transportadora.NomeCidade);
-                    item.SubItems.Add(transportadora.DescricaoCondicao);
                     item.SubItems.Add(transportadora.Ativo ? "Ativo" : "Inativo");
+
                     listView1.Items.Add(item);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Erro ao carregar transportadora: " + ex.Message);
+                MessageBox.Show("Erro ao carregar transportadoras: " + ex.Message);
             }
         }
 
@@ -78,21 +76,22 @@ namespace Projeto.Views.Consultas
                     if (transportadora != null)
                     {
                         ListViewItem item = new ListViewItem(transportadora.Id.ToString());
+                        item.SubItems.Add(transportadora.Tipo);
                         item.SubItems.Add(transportadora.Nome);
-                        item.SubItems.Add(transportadora.CPF_CNPJ);
-                        item.SubItems.Add(transportadora.Telefone);
-                        item.SubItems.Add(transportadora.Email);
                         item.SubItems.Add(transportadora.Endereco);
-                        item.SubItems.Add(transportadora.NumeroEndereco.ToString());
+                        item.SubItems.Add(transportadora.NumeroEndereco?.ToString() ?? "");
                         item.SubItems.Add(transportadora.Bairro);
                         item.SubItems.Add(transportadora.Complemento);
                         item.SubItems.Add(transportadora.CEP);
-                        item.SubItems.Add(transportadora.Tipo);
+                        item.SubItems.Add(transportadora.NomeCidade);
+                        item.SubItems.Add(transportadora.Telefone);
+                        item.SubItems.Add(transportadora.Email);
+                        item.SubItems.Add(transportadora.DescricaoCondicao);
+                        item.SubItems.Add(transportadora.CPF_CNPJ);
                         item.SubItems.Add(transportadora.InscricaoEstadual);
                         item.SubItems.Add(transportadora.InscricaoEstadualSubTrib);
-                        item.SubItems.Add(transportadora.NomeCidade);
-                        item.SubItems.Add(transportadora.DescricaoCondicao);
                         item.SubItems.Add(transportadora.Ativo ? "Ativo" : "Inativo");
+
                         listView1.Items.Add(item);
                     }
                     else
@@ -179,7 +178,7 @@ namespace Projeto.Views.Consultas
                     {
                         controller.Excluir(id);
                         listView1.Items.Remove(itemSelecionado);
-                        MessageBox.Show("Transportador excluído com sucesso!");
+                        MessageBox.Show("Transportadora excluída com sucesso!");
                     }
                     catch (Exception ex)
                     {
@@ -196,57 +195,49 @@ namespace Projeto.Views.Consultas
         private void frmConsultaTransportadora_Load(object sender, EventArgs e)
         {
             CarregarTransportadoras();
+
             foreach (ColumnHeader column in listView1.Columns)
             {
                 switch (column.Text)
                 {
                     case "ID":
-                        column.Width = 50;
+                        column.Width = 40;
                         break;
-                    case "Nome":
-                        column.Width = 100;
+                    case "Tipo":
+                        column.Width = 60;
                         break;
-                    case "CPF/CNPJ":
-                        column.Width = 100;
-                        break;
-                    case "Telefone":
-                        column.Width = 90;
-                        break;
-                    case "Email":
-                        column.Width = 100;
+                    case "Transportadora":
+                        column.Width = 200;
                         break;
                     case "Endereço":
-                        column.Width = 100;
+                        column.Width = 200;
                         break;
                     case "Número":
                         column.Width = 60;
                         break;
                     case "Bairro":
-                        column.Width = 90;
+                        column.Width = 150;
                         break;
                     case "Complemento":
-                        column.Width = 90;
+                        column.Width = 130; 
                         break;
                     case "CEP":
                         column.Width = 80;
                         break;
-                    case "Tipo":
-                        column.Width = 60;
-                        break;
-                    case "IE":
-                        column.Width = 100;
-                        break;
-                    case "IESubTrib":
-                        column.Width = 100;
-                        break;
                     case "Cidade":
-                        column.Width = 100;
+                        column.Width = 150;
+                        break;
+                    case "Telefone":
+                        column.Width = 120;
+                        break;
+                    case "Email":
+                        column.Width = 200;
                         break;
                     case "Cond. Pgto":
-                        column.Width = 100;
+                        column.Width = 150;
                         break;
                     case "Status":
-                        column.Width = 70;
+                        column.Width = 60;
                         break;
                     default:
                         column.Width = 100;

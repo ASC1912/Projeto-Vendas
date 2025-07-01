@@ -30,7 +30,6 @@
         {
             this.ID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Nome = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.CPF_CNPJ = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Telefone = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Email = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Endereco = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -42,28 +41,29 @@
             this.Complemento = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.IDCondPgto = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Status = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.Rg = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Genero = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.CPF_CNPJ = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.RG = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // listView1
             // 
             this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.ID,
+            this.Tipo,
             this.Nome,
-            this.CPF_CNPJ,
-            this.Rg,
-            this.Telefone,
-            this.Email,
+            this.Genero,
             this.Endereco,
             this.Numero,
             this.Bairro,
             this.Complemento,
             this.CEP,
-            this.Tipo,
-            this.Genero,
             this.IDCidade,
             this.IDCondPgto,
+            this.Telefone,
+            this.Email,
+            this.CPF_CNPJ,
+            this.RG,
             this.Status});
             // 
             // btnDeletar
@@ -89,11 +89,6 @@
             // Nome
             // 
             this.Nome.Text = "Cliente";
-            // 
-            // CPF_CNPJ
-            // 
-            this.CPF_CNPJ.Text = "CPF/CNPJ";
-            this.CPF_CNPJ.Width = 81;
             // 
             // Telefone
             // 
@@ -142,15 +137,22 @@
             // 
             // Status
             // 
+            this.Status.DisplayIndex = 13;
             this.Status.Text = "Ativo";
-            // 
-            // Rg
-            // 
-            this.Rg.Text = "RG";
             // 
             // Genero
             // 
             this.Genero.Text = "Gênero";
+            // 
+            // CPF_CNPJ
+            // 
+            this.CPF_CNPJ.DisplayIndex = 14;
+            this.CPF_CNPJ.Text = "CPF/CNPJ";
+            // 
+            // RG
+            // 
+            this.RG.DisplayIndex = 15;
+            this.RG.Text = "RG";
             // 
             // frmConsultaCliente
             // 
@@ -168,7 +170,6 @@
 
         private System.Windows.Forms.ColumnHeader ID;
         private System.Windows.Forms.ColumnHeader Nome;
-        private System.Windows.Forms.ColumnHeader CPF_CNPJ;
         private System.Windows.Forms.ColumnHeader Telefone;
         private System.Windows.Forms.ColumnHeader Email;
         private System.Windows.Forms.ColumnHeader Endereco;
@@ -180,7 +181,8 @@
         private System.Windows.Forms.ColumnHeader Complemento;
         private System.Windows.Forms.ColumnHeader IDCondPgto;
         private System.Windows.Forms.ColumnHeader Status;
-        private System.Windows.Forms.ColumnHeader Rg;
         private System.Windows.Forms.ColumnHeader Genero;
+        private System.Windows.Forms.ColumnHeader CPF_CNPJ;
+        private System.Windows.Forms.ColumnHeader RG;
     }
 }

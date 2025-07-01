@@ -34,8 +34,8 @@ namespace Projeto
                     case "ID":
                         column.Width = 50;
                         break;
-                    case "Descricao":
-                        column.Width = 100;
+                    case "Descrição":
+                        column.Width = 200;
                         break;
                     case "Qtd_parcelas":
                         column.Width = 50;
@@ -49,7 +49,7 @@ namespace Projeto
                     case "Desconto":
                         column.Width = 60;
                         break;
-                    case "Status":
+                    case "Ativo":
                         column.Width = 50;
                         break;
                     default:
