@@ -211,3 +211,19 @@ CREATE TABLE produtos (
     FOREIGN KEY (id_marca) REFERENCES marcas(id) ON DELETE SET NULL,
     FOREIGN KEY (grupo_id) REFERENCES grupos(id) ON DELETE SET NULL
 );
+
+-- Tabela de Veículos 
+CREATE TABLE veiculos (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    transportadora_id INT NOT NULL,
+    id_marca INT, -- ALTERADO
+    placa VARCHAR(10) UNIQUE NOT NULL,
+    modelo VARCHAR(50),
+    ano_fabricacao INT,
+    capacidade_carga_kg DECIMAL(10,2),
+    ativo TINYINT(1) DEFAULT 1,
+    data_cadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
+    data_alteracao DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (transportadora_id) REFERENCES transportadoras(id),
+    FOREIGN KEY (id_marca) REFERENCES marcas(id) -- ADICIONADO
+);
