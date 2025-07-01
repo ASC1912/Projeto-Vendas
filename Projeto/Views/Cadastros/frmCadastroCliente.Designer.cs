@@ -148,7 +148,7 @@
             // lblTelefone
             // 
             this.lblTelefone.AutoSize = true;
-            this.lblTelefone.Location = new System.Drawing.Point(744, 167);
+            this.lblTelefone.Location = new System.Drawing.Point(684, 167);
             this.lblTelefone.Name = "lblTelefone";
             this.lblTelefone.Size = new System.Drawing.Size(61, 16);
             this.lblTelefone.TabIndex = 28;
@@ -156,7 +156,7 @@
             // 
             // txtTelefone
             // 
-            this.txtTelefone.Location = new System.Drawing.Point(747, 186);
+            this.txtTelefone.Location = new System.Drawing.Point(687, 186);
             this.txtTelefone.Name = "txtTelefone";
             this.txtTelefone.Size = new System.Drawing.Size(150, 22);
             this.txtTelefone.TabIndex = 27;
@@ -315,7 +315,7 @@
             // 
             // btnBuscarCond
             // 
-            this.btnBuscarCond.Location = new System.Drawing.Point(747, 286);
+            this.btnBuscarCond.Location = new System.Drawing.Point(687, 285);
             this.btnBuscarCond.Name = "btnBuscarCond";
             this.btnBuscarCond.Size = new System.Drawing.Size(150, 23);
             this.btnBuscarCond.TabIndex = 70;

@@ -170,7 +170,7 @@ namespace Projeto.Views
                 MessageBox.Show("Selecione o gênero.");
                 return;
             }
-
+            
             try
             {
                 int id = string.IsNullOrWhiteSpace(txtCodigo.Text) ? 0 : Convert.ToInt32(txtCodigo.Text);
@@ -182,6 +182,21 @@ namespace Projeto.Views
                     : DateTime.Parse(lblDataCriacao.Text.Replace("Criado em: ", ""));
 
                 DateTime dataModificacao = DateTime.Now;
+
+                string cpfCnpjLimpo = new string(txtCPF.Text.Where(char.IsDigit).ToArray());
+
+                List<Funcionario> funcionarios = controller.ListarFuncionario();
+                bool existeDuplicado = funcionarios.Exists(f =>
+                    new string(f.CPF_CNPJ.Where(char.IsDigit).ToArray()).Equals(cpfCnpjLimpo, StringComparison.OrdinalIgnoreCase)
+                    && f.Id != id);
+
+                if (existeDuplicado)
+                {
+                    MessageBox.Show("Já existe um funcionário cadastrado com este CPF/CNPJ.", "Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtCPF.Focus();
+                    return;
+                }
+
 
                 Funcionario funcionario = new Funcionario
                 {

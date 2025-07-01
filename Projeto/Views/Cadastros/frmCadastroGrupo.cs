@@ -14,6 +14,8 @@ namespace Projeto.Views.Cadastros
     public partial class frmCadastroGrupo : Projeto.frmBase
     {
         public bool modoEdicao = false;
+        private GrupoController controller = new GrupoController();
+
         public frmCadastroGrupo()
         {
             InitializeComponent();
@@ -49,6 +51,18 @@ namespace Projeto.Views.Cadastros
                 string descricao = txtDescricao.Text;
                 bool status = !chkInativo.Checked;
 
+                var grupos = controller.ListarGrupos();
+                bool existeDuplicado = grupos.Exists(g =>
+                    g.NomeGrupo.Trim().Equals(nome, StringComparison.OrdinalIgnoreCase)
+                    && g.Id != id);
+
+                if (existeDuplicado)
+                {
+                    MessageBox.Show("Já existe um grupo cadastrado com este nome.", "Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtNome.Focus();
+                    return;
+                }
+
                 DateTime dataCriacao = id == 0
                     ? DateTime.Now
                     : DateTime.Parse(lblDataCriacao.Text.Replace("Criado em: ", ""));
@@ -65,7 +79,6 @@ namespace Projeto.Views.Cadastros
                     DataAlteracao = dataModificacao
                 };
 
-                GrupoController controller = new GrupoController();
                 controller.Salvar(grupo);
 
                 MessageBox.Show("Grupo salvo com sucesso!");

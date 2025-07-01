@@ -75,6 +75,19 @@ namespace Projeto.Views
                 int id = string.IsNullOrWhiteSpace(txtCodigo.Text) ? 0 : Convert.ToInt32(txtCodigo.Text);
                 string nome = txtNome.Text;
 
+                List<Estado> estados = controller.ListarEstado();
+                bool existeDuplicado = estados.Exists(item =>
+                    item.NomeEstado.Trim().Equals(nome, StringComparison.OrdinalIgnoreCase)
+                    && item.PaisId == paisSelecionadoId
+                    && item.Id != id);
+
+                if (existeDuplicado)
+                {
+                    MessageBox.Show("Já existe um estado com este nome cadastrado para este país.", "Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtNome.Focus();
+                    return;
+                }
+
                 string uf = txtUF.Text.Trim().ToUpper();
 
                 if (string.IsNullOrWhiteSpace(uf) || uf.Length != 2)

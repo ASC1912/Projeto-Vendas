@@ -63,6 +63,20 @@ namespace Projeto.Views.Cadastros
                 int estoque = string.IsNullOrWhiteSpace(txtEstoque.Text) ? 0 : Convert.ToInt32(txtEstoque.Text);
                 bool ativo = !chkInativo.Checked;
 
+                var produtos = controller.ListarProdutos();
+                bool existeDuplicado = produtos.Exists(p =>
+                    p.NomeProduto.Trim().Equals(nomeProduto, StringComparison.OrdinalIgnoreCase) &&
+                    p.GrupoId == grupoSelecionadoId &&
+                    p.IdMarca == marcaSelecionadoId &&
+                    p.Id != id);
+
+                if (existeDuplicado)
+                {
+                    MessageBox.Show("Já existe um produto com este nome cadastrado para este grupo e marca.", "Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtNome.Focus();
+                    return;
+                }
+
                 DateTime dataCadastro = id == 0
                     ? DateTime.Now
                     : DateTime.Parse(lblDataCriacao.Text.Replace("Criado em: ", ""));

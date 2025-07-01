@@ -170,6 +170,21 @@ namespace Projeto.Views
 
                 DateTime dataModificacao = DateTime.Now;
 
+
+                string cpfCnpjLimpo = new string(txtCPF.Text.Where(char.IsDigit).ToArray());
+
+                List<Cliente> clientes = controller.ListarCliente();
+                bool existeDuplicado = clientes.Exists(c =>
+                    new string(c.CPF_CNPJ.Where(char.IsDigit).ToArray()).Equals(cpfCnpjLimpo, StringComparison.OrdinalIgnoreCase)
+                    && c.Id != id);
+
+                if (existeDuplicado)
+                {
+                    MessageBox.Show("Já existe um cliente cadastrado com este CPF/CNPJ.", "Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtCPF.Focus();
+                    return;
+                }
+
                 Cliente cliente = new Cliente
                 {
                     Id = id,

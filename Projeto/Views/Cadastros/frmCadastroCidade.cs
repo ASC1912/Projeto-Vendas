@@ -73,6 +73,33 @@ namespace Projeto.Views
                 int idEstado = estadoSelecionadoId;
                 bool status = !chkInativo.Checked;
 
+                var estadoSelecionado = estadoController.BuscarPorId(estadoSelecionadoId);
+
+                if (estadoSelecionado == null)
+                {
+                    MessageBox.Show("Estado selecionado não encontrado. Selecione novamente.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                List<Cidade> cidades = controller.ListarCidade();
+                bool existeDuplicado = cidades.Exists(item =>
+                {
+                    var estadoCidade = estadoController.BuscarPorId(item.EstadoId);
+                    return
+                        item.NomeCidade.Trim().Equals(nome, StringComparison.OrdinalIgnoreCase) &&
+                        item.EstadoId == estadoSelecionadoId &&
+                        estadoCidade != null &&
+                        estadoCidade.PaisId == estadoSelecionado.PaisId &&
+                        item.Id != id;
+                });
+
+                if (existeDuplicado)
+                {
+                    MessageBox.Show("Já existe uma cidade com este nome cadastrada para este estado e país.", "Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtNome.Focus();
+                    return;
+                }
+
                 DateTime dataCriacao = id == 0
                     ? DateTime.Now
                     : DateTime.Parse(lblDataCriacao.Text.Replace("Criado em: ", ""));

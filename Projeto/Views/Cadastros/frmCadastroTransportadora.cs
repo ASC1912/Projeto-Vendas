@@ -122,6 +122,20 @@ namespace Projeto.Views.Cadastros
 
                 DateTime dataModificacao = DateTime.Now;
 
+                string cpfCnpjLimpo = new string(txtCPF.Text.Where(char.IsDigit).ToArray());
+
+                List<Transportadora> transportadoras = controller.ListarTransportadora();
+                bool existeDuplicado = transportadoras.Exists(t =>
+                    new string(t.CPF_CNPJ.Where(char.IsDigit).ToArray()).Equals(cpfCnpjLimpo, StringComparison.OrdinalIgnoreCase)
+                    && t.Id != id);
+
+                if (existeDuplicado)
+                {
+                    MessageBox.Show("Já existe uma transportadora cadastrada com este CPF/CNPJ.", "Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtCPF.Focus();
+                    return;
+                }
+
                 Transportadora transportadora = new Transportadora
                 {
                     Id = id,

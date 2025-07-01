@@ -9,6 +9,8 @@ namespace Projeto.Views.Cadastros
     public partial class frmCadastroMarca : Projeto.frmBase
     {
         public bool modoEdicao = false;
+        private MarcaController controller = new MarcaController();
+
 
         public frmCadastroMarca() : base()
         {
@@ -43,6 +45,18 @@ namespace Projeto.Views.Cadastros
                 string marcaNome = txtNome.Text;
                 bool ativo = !chkInativo.Checked;
 
+                var marcas = controller.ListarMarcas();
+                bool existeDuplicado = marcas.Exists(m =>
+                    m.NomeMarca.Trim().Equals(marcaNome, StringComparison.OrdinalIgnoreCase)
+                    && m.Id != id);
+
+                if (existeDuplicado)
+                {
+                    MessageBox.Show("Já existe uma marca cadastrada com este nome.", "Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtNome.Focus();
+                    return;
+                }
+
                 DateTime dataCadastro = id == 0
                     ? DateTime.Now
                     : DateTime.Parse(lblDataCriacao.Text.Replace("Criado em: ", ""));
@@ -58,7 +72,6 @@ namespace Projeto.Views.Cadastros
                     DataAlteracao = dataAlteracao
                 };
 
-                MarcaController controller = new MarcaController();
                 controller.Salvar(marca);
 
                 MessageBox.Show("Marca salva com sucesso!");
