@@ -60,6 +60,8 @@
             this.btnBuscarCond = new System.Windows.Forms.Button();
             this.IDCidade = new System.Windows.Forms.Label();
             this.txtIdCidade = new System.Windows.Forms.TextBox();
+            this.cbGenero = new System.Windows.Forms.ComboBox();
+            this.lblGenero = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txtCodigo
@@ -338,10 +340,33 @@
             this.txtIdCidade.TabIndex = 72;
             this.txtIdCidade.Leave += new System.EventHandler(this.txtIdCidade_Leave);
             // 
+            // cbGenero
+            // 
+            this.cbGenero.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbGenero.FormattingEnabled = true;
+            this.cbGenero.Items.AddRange(new object[] {
+            "Masculino",
+            "Feminino"});
+            this.cbGenero.Location = new System.Drawing.Point(570, 36);
+            this.cbGenero.Name = "cbGenero";
+            this.cbGenero.Size = new System.Drawing.Size(121, 24);
+            this.cbGenero.TabIndex = 88;
+            // 
+            // lblGenero
+            // 
+            this.lblGenero.AutoSize = true;
+            this.lblGenero.Location = new System.Drawing.Point(567, 17);
+            this.lblGenero.Name = "lblGenero";
+            this.lblGenero.Size = new System.Drawing.Size(52, 16);
+            this.lblGenero.TabIndex = 87;
+            this.lblGenero.Text = "Gênero";
+            // 
             // frmCadastroCliente
             // 
             //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             //this.ClientSize = new System.Drawing.Size(1342, 681);
+            this.Controls.Add(this.cbGenero);
+            this.Controls.Add(this.lblGenero);
             this.Controls.Add(this.IDCidade);
             this.Controls.Add(this.txtIdCidade);
             this.Controls.Add(this.txtCondicao);
@@ -414,6 +439,8 @@
             this.Controls.SetChildIndex(this.txtCondicao, 0);
             this.Controls.SetChildIndex(this.txtIdCidade, 0);
             this.Controls.SetChildIndex(this.IDCidade, 0);
+            this.Controls.SetChildIndex(this.lblGenero, 0);
+            this.Controls.SetChildIndex(this.cbGenero, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -453,5 +480,7 @@
         private System.Windows.Forms.Button btnBuscarCond;
         private System.Windows.Forms.Label IDCidade;
         private System.Windows.Forms.TextBox txtIdCidade;
+        private System.Windows.Forms.ComboBox cbGenero;
+        private System.Windows.Forms.Label lblGenero;
     }
 }

@@ -52,6 +52,7 @@
             this.ID,
             this.Nome,
             this.CPF_CNPJ,
+            this.Rg,
             this.Telefone,
             this.Email,
             this.Endereco,
@@ -63,8 +64,7 @@
             this.Genero,
             this.IDCidade,
             this.IDCondPgto,
-            this.Status,
-            this.Rg});
+            this.Status});
             // 
             // btnDeletar
             // 

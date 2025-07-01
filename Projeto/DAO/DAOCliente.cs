@@ -24,7 +24,7 @@ namespace Projeto.DAO
                         UPDATE clientes SET 
                             cliente = @cliente, cpf_cnpj = @cpf_cnpj, rg = @rg, telefone = @telefone, email = @email,
                             endereco = @endereco, numero_endereco = @numero_endereco, complemento = @complemento,
-                            bairro = @bairro, cep = @cep, id_cidade = @id_cidade, tipo = @tipo,
+                            bairro = @bairro, cep = @cep, id_cidade = @id_cidade, tipo = @tipo, genero = @genero,
                             id_condicao_pagamento = @id_condicao_pagamento, ativo = @ativo,
                             data_alteracao = @data_alteracao
                         WHERE id = @id";
@@ -34,11 +34,11 @@ namespace Projeto.DAO
                         query = @"
                         INSERT INTO clientes (
                             cliente, cpf_cnpj, rg, telefone, email, endereco, numero_endereco, complemento,
-                            bairro, cep, id_cidade, tipo, id_condicao_pagamento, ativo,
+                            bairro, cep, id_cidade, tipo, genero, id_condicao_pagamento, ativo,
                             data_cadastro, data_alteracao
                         ) VALUES (
                             @cliente, @cpf_cnpj, @rg, @telefone, @email, @endereco, @numero_endereco, @complemento,
-                            @bairro, @cep, @id_cidade, @tipo, @id_condicao_pagamento, @ativo,
+                            @bairro, @cep, @id_cidade, @tipo, @genero, @id_condicao_pagamento, @ativo,
                             @data_cadastro, @data_alteracao
                         )";
                     }
@@ -47,16 +47,17 @@ namespace Projeto.DAO
                     {
                         cmd.Parameters.AddWithValue("@cliente", cliente.Nome);
                         cmd.Parameters.AddWithValue("@cpf_cnpj", cliente.CPF_CNPJ);
-                        cmd.Parameters.AddWithValue("@rg", cliente.Rg);
-                        cmd.Parameters.AddWithValue("@telefone", cliente.Telefone);
-                        cmd.Parameters.AddWithValue("@email", cliente.Email);
-                        cmd.Parameters.AddWithValue("@endereco", cliente.Endereco);
-                        cmd.Parameters.AddWithValue("@numero_endereco", cliente.NumeroEndereco);
-                        cmd.Parameters.AddWithValue("@complemento", cliente.Complemento);
-                        cmd.Parameters.AddWithValue("@bairro", cliente.Bairro);
-                        cmd.Parameters.AddWithValue("@cep", cliente.CEP);
-                        cmd.Parameters.AddWithValue("@id_cidade", cliente.IdCidade);
-                        cmd.Parameters.AddWithValue("@tipo", cliente.Tipo);
+                        cmd.Parameters.AddWithValue("@rg", cliente.Rg ?? (object)DBNull.Value);
+                        cmd.Parameters.AddWithValue("@telefone", cliente.Telefone ?? (object)DBNull.Value);
+                        cmd.Parameters.AddWithValue("@email", cliente.Email ?? (object)DBNull.Value);
+                        cmd.Parameters.AddWithValue("@endereco", cliente.Endereco ?? (object)DBNull.Value);
+                        cmd.Parameters.AddWithValue("@numero_endereco", cliente.NumeroEndereco ?? (object)DBNull.Value);
+                        cmd.Parameters.AddWithValue("@complemento", cliente.Complemento ?? (object)DBNull.Value);
+                        cmd.Parameters.AddWithValue("@bairro", cliente.Bairro ?? (object)DBNull.Value);
+                        cmd.Parameters.AddWithValue("@cep", cliente.CEP ?? (object)DBNull.Value);
+                        cmd.Parameters.AddWithValue("@id_cidade", cliente.IdCidade ?? (object)DBNull.Value);
+                        cmd.Parameters.AddWithValue("@tipo", cliente.Tipo ?? (object)DBNull.Value);
+                        cmd.Parameters.AddWithValue("@genero", string.IsNullOrEmpty(cliente.Genero) ? (object)DBNull.Value : cliente.Genero);
                         cmd.Parameters.AddWithValue("@id_condicao_pagamento", cliente.IdCondicao > 0 ? (object)cliente.IdCondicao : DBNull.Value);
                         cmd.Parameters.AddWithValue("@ativo", cliente.Ativo);
                         cmd.Parameters.AddWithValue("@data_alteracao", cliente.DataAlteracao ?? DateTime.Now);
@@ -103,7 +104,7 @@ namespace Projeto.DAO
                 string query = @"
                 SELECT c.id, c.cliente, c.cpf_cnpj, c.rg, c.telefone, c.email, c.endereco, c.numero_endereco,
                        c.complemento, c.bairro, c.cep, c.id_cidade, ci.cidade AS cidade_nome,
-                       c.tipo, c.id_condicao_pagamento, cp.descricao AS condicao_descricao, c.ativo,
+                       c.tipo, c.genero, c.id_condicao_pagamento, cp.descricao AS condicao_descricao, c.ativo,
                        c.data_cadastro, c.data_alteracao
                 FROM clientes c
                 LEFT JOIN cidades ci ON c.id_cidade = ci.id
@@ -134,6 +135,7 @@ namespace Projeto.DAO
                                 IdCidade = reader.IsDBNull(reader.GetOrdinal("id_cidade")) ? (int?)null : reader.GetInt32("id_cidade"),
                                 NomeCidade = reader.IsDBNull(reader.GetOrdinal("cidade_nome")) ? null : reader.GetString("cidade_nome"),
                                 Tipo = reader.GetString("tipo"),
+                                Genero = reader.IsDBNull(reader.GetOrdinal("genero")) ? null : reader.GetString("genero"),
                                 IdCondicao = reader.IsDBNull(reader.GetOrdinal("id_condicao_pagamento")) ? (int?)null : reader.GetInt32("id_condicao_pagamento"),
                                 DescricaoCondicao = reader.IsDBNull(reader.GetOrdinal("condicao_descricao")) ? null : reader.GetString("condicao_descricao"),
                                 Ativo = reader.GetBoolean("ativo"),
@@ -157,7 +159,7 @@ namespace Projeto.DAO
                 string query = @"
                 SELECT c.id, c.cliente, c.cpf_cnpj, c.rg, c.telefone, c.email, c.endereco, c.numero_endereco,
                        c.complemento, c.bairro, c.cep, c.id_cidade, ci.cidade AS cidade_nome,
-                       c.tipo, c.id_condicao_pagamento, cp.descricao AS condicao_descricao, c.ativo,
+                       c.tipo, c.genero, c.id_condicao_pagamento, cp.descricao AS condicao_descricao, c.ativo,
                        c.data_cadastro, c.data_alteracao
                 FROM clientes c
                 LEFT JOIN cidades ci ON c.id_cidade = ci.id
@@ -186,6 +188,7 @@ namespace Projeto.DAO
                                 IdCidade = reader.IsDBNull(reader.GetOrdinal("id_cidade")) ? (int?)null : reader.GetInt32("id_cidade"),
                                 NomeCidade = reader.IsDBNull(reader.GetOrdinal("cidade_nome")) ? null : reader.GetString("cidade_nome"),
                                 Tipo = reader.GetString("tipo"),
+                                Genero = reader.IsDBNull(reader.GetOrdinal("genero")) ? null : reader.GetString("genero"),
                                 IdCondicao = reader.IsDBNull(reader.GetOrdinal("id_condicao_pagamento")) ? (int?)null : reader.GetInt32("id_condicao_pagamento"),
                                 DescricaoCondicao = reader.IsDBNull(reader.GetOrdinal("condicao_descricao")) ? null : reader.GetString("condicao_descricao"),
                                 Ativo = reader.GetBoolean("ativo"),

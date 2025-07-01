@@ -29,11 +29,12 @@ namespace Projeto.Views
             InitializeComponent();
             txtCodigo.Enabled = false;
             cbTipo.SelectedIndex = 0;
+            cbGenero.SelectedIndex = 0;
             cbTipo_SelectedIndexChanged(null, null);
         }
 
         public void CarregarCliente(int id, string nome, string cpfCnpj, string telefone, string email, string endereco,
-                 int numeroEndereco, string bairro, string complemento, string cep, string tipo,
+                 int numeroEndereco, string bairro, string complemento, string cep, string tipo, string genero, 
                  string nomeCidade, int idCidade, string descricaoCondicao, int idCondicao, bool ativo, string rg,
                  DateTime? dataCadastro, DateTime? dataAlteracao)
         {
@@ -54,7 +55,16 @@ namespace Projeto.Views
             txtCondicao.Text = descricaoCondicao;
             condicaoSelecionadoId = idCondicao;
             chkInativo.Checked = !ativo;
-            txtRG.Text = rg;
+            txtRG.Text = rg; 
+
+            if (!string.IsNullOrWhiteSpace(genero))
+            {
+                cbGenero.SelectedItem = genero.Equals("M", StringComparison.OrdinalIgnoreCase) ? "Masculino" : "Feminino";
+            }
+            else
+            {
+                cbGenero.SelectedIndex = -1;
+            }
 
             lblDataCriacao.Text = dataCadastro.HasValue
                 ? $"Criado em: {dataCadastro.Value:dd/MM/yyyy HH:mm}"
@@ -139,6 +149,18 @@ namespace Projeto.Views
                 return;
             }
 
+            string genero = "";
+            if (cbGenero.SelectedItem != null)
+            {
+                string generoSelecionado = cbGenero.SelectedItem.ToString();
+                genero = generoSelecionado.StartsWith("M", StringComparison.OrdinalIgnoreCase) ? "M" : "F";
+            }
+            else
+            {
+                MessageBox.Show("Selecione o gênero.");
+                return;
+            }
+
             try
             {
                 int id = string.IsNullOrWhiteSpace(txtCodigo.Text) ? 0 : Convert.ToInt32(txtCodigo.Text);
@@ -160,6 +182,7 @@ namespace Projeto.Views
                     Complemento = txtComplemento.Text,
                     Telefone = txtTelefone.Text,
                     Tipo = cbTipo.Text,
+                    Genero = genero,
                     CEP = txtCEP.Text,
                     IdCidade = cidadeSelecionadoId,
                     IdCondicao = condicaoSelecionadoId,

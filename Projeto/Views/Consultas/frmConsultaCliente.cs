@@ -38,6 +38,7 @@ namespace Projeto.Views
                     ListViewItem item = new ListViewItem(cliente.Id.ToString());
                     item.SubItems.Add(cliente.Nome);
                     item.SubItems.Add(cliente.CPF_CNPJ);
+                    item.SubItems.Add(cliente.Rg);
                     item.SubItems.Add(cliente.Telefone);
                     item.SubItems.Add(cliente.Email);
                     item.SubItems.Add(cliente.Endereco);
@@ -46,10 +47,10 @@ namespace Projeto.Views
                     item.SubItems.Add(cliente.Complemento);
                     item.SubItems.Add(cliente.CEP);
                     item.SubItems.Add(cliente.Tipo);
+                    item.SubItems.Add(cliente.Genero);
                     item.SubItems.Add(cliente.NomeCidade);
                     item.SubItems.Add(cliente.DescricaoCondicao ?? "");
                     item.SubItems.Add(cliente.Ativo ? "Ativo" : "Inativo");
-                    item.SubItems.Add(cliente.Rg);
 
                     listView1.Items.Add(item);
                 }
@@ -90,6 +91,7 @@ namespace Projeto.Views
                         item.SubItems.Add(cliente.CEP);
                         item.SubItems.Add(cliente.NomeCidade);
                         item.SubItems.Add(cliente.Tipo);
+                        item.SubItems.Add(cliente.Genero);
                         item.SubItems.Add(cliente.DescricaoCondicao ?? "");
                         item.SubItems.Add(cliente.Ativo ? "Ativo" : "Inativo");
                         listView1.Items.Add(item);
@@ -135,6 +137,7 @@ namespace Projeto.Views
                         cliente.Complemento,
                         cliente.CEP,
                         cliente.Tipo,
+                        cliente.Genero,
                         cliente.NomeCidade ?? "Não encontrado",
                         cliente.IdCidade ?? 0,
                         cliente.DescricaoCondicao ?? "Não encontrada",
@@ -240,6 +243,9 @@ namespace Projeto.Views
                         break;
                     case "RG":
                         column.Width = 80;
+                        break;
+                    case "Gênero":
+                        column.Width = 70;
                         break;
                     default:
                         column.Width = 100;

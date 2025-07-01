@@ -137,6 +137,28 @@ namespace Projeto.Views
                 return;
             }
 
+            if (cidadeSelecionadoId > 0)
+            {
+                var cidade = cidadeController.BuscarPorId(cidadeSelecionadoId);
+                if (cidade != null)
+                {
+                    var estado = estadoController.BuscarPorId(cidade.EstadoId);
+                    if (estado != null)
+                    {
+                        var pais = paisController.BuscarPorId(estado.PaisId);
+                        if (pais != null && pais.NomePais.Trim().Equals("Brasil", StringComparison.OrdinalIgnoreCase))
+                        {
+                            if (string.IsNullOrWhiteSpace(txtRG.Text))
+                            {
+                                MessageBox.Show("O campo RG é obrigatório para funcionarios brasileiros.", "Validação", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                txtRG.Focus();
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+
             string genero = "";
             if (cbGenero.SelectedItem != null)
             {
