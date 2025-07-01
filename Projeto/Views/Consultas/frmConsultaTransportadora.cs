@@ -10,6 +10,8 @@ namespace Projeto.Views.Consultas
     public partial class frmConsultaTransportadora : Projeto.frmBaseConsulta
     {
         private TransportadoraController controller = new TransportadoraController();
+        public bool ModoSelecao { get; set; } = false; 
+        internal Transportadora TransportadoraSelecionada { get; private set; } 
 
         public frmConsultaTransportadora() : base()
         {
@@ -41,10 +43,10 @@ namespace Projeto.Views.Consultas
                     item.SubItems.Add(transportadora.Complemento);
                     item.SubItems.Add(transportadora.CEP);
                     item.SubItems.Add(transportadora.NomeCidade);
+                    item.SubItems.Add(transportadora.DescricaoCondicao);
                     item.SubItems.Add(transportadora.Telefone);
                     item.SubItems.Add(transportadora.Email);
                     item.SubItems.Add(transportadora.CPF_CNPJ);
-                    item.SubItems.Add(transportadora.DescricaoCondicao);
                     item.SubItems.Add(transportadora.InscricaoEstadual);
                     item.SubItems.Add(transportadora.InscricaoEstadualSubTrib);
                     item.SubItems.Add(transportadora.Ativo ? "Ativo" : "Inativo");
@@ -84,9 +86,9 @@ namespace Projeto.Views.Consultas
                         item.SubItems.Add(transportadora.Complemento);
                         item.SubItems.Add(transportadora.CEP);
                         item.SubItems.Add(transportadora.NomeCidade);
+                        item.SubItems.Add(transportadora.DescricaoCondicao);
                         item.SubItems.Add(transportadora.Telefone);
                         item.SubItems.Add(transportadora.Email);
-                        item.SubItems.Add(transportadora.DescricaoCondicao);
                         item.SubItems.Add(transportadora.CPF_CNPJ);
                         item.SubItems.Add(transportadora.InscricaoEstadual);
                         item.SubItems.Add(transportadora.InscricaoEstadualSubTrib);
@@ -196,6 +198,11 @@ namespace Projeto.Views.Consultas
         {
             CarregarTransportadoras();
 
+            if (btnSelecionar != null)
+            {
+                btnSelecionar.Visible = ModoSelecao;
+            }
+
             foreach (ColumnHeader column in listView1.Columns)
             {
                 switch (column.Text)
@@ -243,6 +250,31 @@ namespace Projeto.Views.Consultas
                         column.Width = 100;
                         break;
                 }
+            }
+        }
+
+        private void btnSelecionar_Click(object sender, EventArgs e)
+        {
+            if (listView1.SelectedItems.Count > 0)
+            {
+                var itemSelecionado = listView1.SelectedItems[0];
+                int id = int.Parse(itemSelecionado.SubItems[0].Text);
+
+                TransportadoraSelecionada = controller.BuscarPorId(id);
+
+                if (TransportadoraSelecionada != null)
+                {
+                    this.DialogResult = DialogResult.OK;
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Erro ao carregar os dados da transportadora.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Por favor, selecione uma transportadora.");
             }
         }
     }

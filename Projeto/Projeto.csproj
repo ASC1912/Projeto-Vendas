@@ -111,6 +111,7 @@
     <Compile Include="Controller\ParcelaController.cs" />
     <Compile Include="Controller\ProdutoController.cs" />
     <Compile Include="Controller\TransportadoraController.cs" />
+    <Compile Include="Controller\VeiculoController.cs" />
     <Compile Include="DAO\DAOGrupo.cs" />
     <Compile Include="DAO\DAOProduto.cs" />
     <Compile Include="DAO\DAOCidade.cs" />
@@ -124,6 +125,7 @@
     <Compile Include="DAO\DAOPais.cs" />
     <Compile Include="DAO\DAOParcela.cs" />
     <Compile Include="DAO\DAOTransportadora.cs" />
+    <Compile Include="DAO\DAOVeiculo.cs" />
     <Compile Include="Models\Cidade.cs" />
     <Compile Include="Models\Cliente.cs" />
     <Compile Include="Models\CondicaoPagamento.cs" />
@@ -138,6 +140,7 @@
     <Compile Include="Models\Pessoa.cs" />
     <Compile Include="Models\Produto.cs" />
     <Compile Include="Models\Transportadora.cs" />
+    <Compile Include="Models\Veiculo.cs" />
     <Compile Include="Utils\Validador.cs" />
     <Compile Include="Views\Cadastros\frmCadastroGrupo.cs">
       <SubType>Form</SubType>
@@ -163,6 +166,12 @@
     <Compile Include="Views\Cadastros\frmCadastroTransportadora.Designer.cs">
       <DependentUpon>frmCadastroTransportadora.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\Cadastros\frmCadastroVeiculo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Cadastros\frmCadastroVeiculo.Designer.cs">
+      <DependentUpon>frmCadastroVeiculo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\Consultas\frmConsultaGrupo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -186,6 +195,12 @@
     </Compile>
     <Compile Include="Views\Consultas\frmConsultaTransportadora.Designer.cs">
       <DependentUpon>frmConsultaTransportadora.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Consultas\frmConsultaVeiculo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Consultas\frmConsultaVeiculo.Designer.cs">
+      <DependentUpon>frmConsultaVeiculo.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\FormPrincipal.cs">
       <SubType>Form</SubType>
@@ -315,6 +330,9 @@
     <EmbeddedResource Include="Views\Cadastros\frmCadastroTransportadora.resx">
       <DependentUpon>frmCadastroTransportadora.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\Cadastros\frmCadastroVeiculo.resx">
+      <DependentUpon>frmCadastroVeiculo.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\Consultas\frmConsultaGrupo.resx">
       <DependentUpon>frmConsultaGrupo.cs</DependentUpon>
     </EmbeddedResource>
@@ -326,6 +344,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Consultas\frmConsultaTransportadora.resx">
       <DependentUpon>frmConsultaTransportadora.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Consultas\frmConsultaVeiculo.resx">
+      <DependentUpon>frmConsultaVeiculo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\FormPrincipal.resx">
       <DependentUpon>FormPrincipal.cs</DependentUpon>

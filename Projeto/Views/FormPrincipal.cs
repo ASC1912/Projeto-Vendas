@@ -110,8 +110,14 @@ namespace Projeto
 
         private void transportadorasToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmConsultaTransportadora formConlsultaTransportadora = new frmConsultaTransportadora();
-            formConlsultaTransportadora.ShowDialog();
+            frmConsultaTransportadora formConsultaTransportadora = new frmConsultaTransportadora();
+            formConsultaTransportadora.ShowDialog();
+        }
+
+        private void veículosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmConsultaVeiculo formConsultaVeiculo = new frmConsultaVeiculo();
+            formConsultaVeiculo.ShowDialog();
         }
     }
 }
