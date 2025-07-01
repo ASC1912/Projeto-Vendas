@@ -166,7 +166,7 @@
             // 
             // Status
             // 
-            this.Status.Text = "Status";
+            this.Status.Text = "Ativo";
             // 
             // Rg
             // 
