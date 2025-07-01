@@ -88,6 +88,7 @@ CREATE TABLE clientes (
     id_cidade INT,
     id_condicao_pagamento INT,
     tipo VARCHAR(10) NOT NULL,
+    genero CHAR(1), 
     data_cadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
     data_alteracao DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     usuario_modificacao VARCHAR(100) DEFAULT 'sistema',
