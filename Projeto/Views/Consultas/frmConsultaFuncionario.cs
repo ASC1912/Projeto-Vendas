@@ -269,6 +269,9 @@ namespace Projeto.Views
                     case "Status":
                         column.Width = 60; 
                         break;
+                    case "CPF/CNPJ":
+                        column.Width = 130;
+                        break;
                     default:
                         column.Width = 100;
                         break;

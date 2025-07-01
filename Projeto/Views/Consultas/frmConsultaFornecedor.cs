@@ -211,7 +211,7 @@ namespace Projeto.Views
                     case "Tipo":
                         column.Width = 60;
                         break;
-                    case "Nome":
+                    case "Fornecedor":
                         column.Width = 200;
                         break;
                     case "Endereço":
@@ -238,11 +238,14 @@ namespace Projeto.Views
                     case "Email":
                         column.Width = 200;
                         break;
-                    case "Cond. Pgto":
+                    case "Condição Pagamento":
                         column.Width = 150;
                         break;
-                    case "Status":
+                    case "Ativo":
                         column.Width = 60;
+                        break;
+                    case "CPF/CNPJ":
+                        column.Width = 130;
                         break;
                     default:
                         column.Width = 100;

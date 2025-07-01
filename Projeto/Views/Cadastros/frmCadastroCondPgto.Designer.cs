@@ -60,6 +60,18 @@
             this.txtDesconto = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
+            // txtCodigo
+            // 
+            this.txtCodigo.TabIndex = 0;
+            // 
+            // btnSair
+            // 
+            this.btnSair.TabIndex = 15;
+            // 
+            // chkInativo
+            // 
+            this.chkInativo.TabIndex = 13;
+            // 
             // lblPrazo
             // 
             this.lblPrazo.AutoSize = true;
@@ -74,14 +86,14 @@
             this.txtPrazoDias.Location = new System.Drawing.Point(517, 142);
             this.txtPrazoDias.Name = "txtPrazoDias";
             this.txtPrazoDias.Size = new System.Drawing.Size(100, 22);
-            this.txtPrazoDias.TabIndex = 9;
+            this.txtPrazoDias.TabIndex = 7;
             // 
             // btnSalvar
             // 
             this.btnSalvar.Location = new System.Drawing.Point(1119, 634);
             this.btnSalvar.Name = "btnSalvar";
             this.btnSalvar.Size = new System.Drawing.Size(80, 35);
-            this.btnSalvar.TabIndex = 8;
+            this.btnSalvar.TabIndex = 14;
             this.btnSalvar.Text = "Salvar";
             this.btnSalvar.UseVisualStyleBackColor = true;
             this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
@@ -109,7 +121,7 @@
             this.txtDescricao.Location = new System.Drawing.Point(12, 86);
             this.txtDescricao.Name = "txtDescricao";
             this.txtDescricao.Size = new System.Drawing.Size(200, 22);
-            this.txtDescricao.TabIndex = 12;
+            this.txtDescricao.TabIndex = 1;
             // 
             // lblQtdParcelas
             // 
@@ -125,7 +137,7 @@
             this.txtQtdParcelas.Location = new System.Drawing.Point(12, 150);
             this.txtQtdParcelas.Name = "txtQtdParcelas";
             this.txtQtdParcelas.Size = new System.Drawing.Size(100, 22);
-            this.txtQtdParcelas.TabIndex = 14;
+            this.txtQtdParcelas.TabIndex = 2;
             // 
             // lblFormaPagamento
             // 
@@ -187,14 +199,14 @@
             this.txtPorcentagem.Location = new System.Drawing.Point(517, 85);
             this.txtPorcentagem.Name = "txtPorcentagem";
             this.txtPorcentagem.Size = new System.Drawing.Size(100, 22);
-            this.txtPorcentagem.TabIndex = 19;
+            this.txtPorcentagem.TabIndex = 6;
             // 
             // btnGerarParcelas
             // 
             this.btnGerarParcelas.Location = new System.Drawing.Point(883, 150);
             this.btnGerarParcelas.Name = "btnGerarParcelas";
             this.btnGerarParcelas.Size = new System.Drawing.Size(172, 23);
-            this.btnGerarParcelas.TabIndex = 21;
+            this.btnGerarParcelas.TabIndex = 10;
             this.btnGerarParcelas.Text = "Inserir Parcela";
             this.btnGerarParcelas.UseVisualStyleBackColor = true;
             this.btnGerarParcelas.Click += new System.EventHandler(this.btnGerarParcelas_Click);
@@ -229,7 +241,7 @@
             this.btnEditarParcela.Location = new System.Drawing.Point(883, 179);
             this.btnEditarParcela.Name = "btnEditarParcela";
             this.btnEditarParcela.Size = new System.Drawing.Size(172, 23);
-            this.btnEditarParcela.TabIndex = 25;
+            this.btnEditarParcela.TabIndex = 11;
             this.btnEditarParcela.Text = "Editar Parcela";
             this.btnEditarParcela.UseVisualStyleBackColor = true;
             this.btnEditarParcela.Click += new System.EventHandler(this.btnEditarParcela_Click);
@@ -239,7 +251,7 @@
             this.btnRemoverParcela.Location = new System.Drawing.Point(883, 208);
             this.btnRemoverParcela.Name = "btnRemoverParcela";
             this.btnRemoverParcela.Size = new System.Drawing.Size(172, 23);
-            this.btnRemoverParcela.TabIndex = 26;
+            this.btnRemoverParcela.TabIndex = 12;
             this.btnRemoverParcela.Text = "Remover Última Parcela";
             this.btnRemoverParcela.UseVisualStyleBackColor = true;
             this.btnRemoverParcela.Click += new System.EventHandler(this.btnRemoverParcela_Click);
@@ -249,7 +261,7 @@
             this.btnFormaPagamento.Location = new System.Drawing.Point(725, 207);
             this.btnFormaPagamento.Name = "btnFormaPagamento";
             this.btnFormaPagamento.Size = new System.Drawing.Size(150, 23);
-            this.btnFormaPagamento.TabIndex = 27;
+            this.btnFormaPagamento.TabIndex = 9;
             this.btnFormaPagamento.Text = "Buscar FrmPgto";
             this.btnFormaPagamento.UseVisualStyleBackColor = true;
             this.btnFormaPagamento.Click += new System.EventHandler(this.btnFormaPagamento_Click);
@@ -260,7 +272,7 @@
             this.txtFormaPagamento.Name = "txtFormaPagamento";
             this.txtFormaPagamento.ReadOnly = true;
             this.txtFormaPagamento.Size = new System.Drawing.Size(200, 22);
-            this.txtFormaPagamento.TabIndex = 28;
+            this.txtFormaPagamento.TabIndex = 8;
             // 
             // lblJuros
             // 
@@ -276,7 +288,7 @@
             this.txtJuros.Location = new System.Drawing.Point(270, 27);
             this.txtJuros.Name = "txtJuros";
             this.txtJuros.Size = new System.Drawing.Size(100, 22);
-            this.txtJuros.TabIndex = 29;
+            this.txtJuros.TabIndex = 3;
             // 
             // lblMulta
             // 
@@ -292,7 +304,7 @@
             this.txtMulta.Location = new System.Drawing.Point(270, 86);
             this.txtMulta.Name = "txtMulta";
             this.txtMulta.Size = new System.Drawing.Size(100, 22);
-            this.txtMulta.TabIndex = 31;
+            this.txtMulta.TabIndex = 4;
             // 
             // lblDesconto
             // 
@@ -308,7 +320,7 @@
             this.txtDesconto.Location = new System.Drawing.Point(270, 148);
             this.txtDesconto.Name = "txtDesconto";
             this.txtDesconto.Size = new System.Drawing.Size(100, 22);
-            this.txtDesconto.TabIndex = 33;
+            this.txtDesconto.TabIndex = 5;
             // 
             // frmCadastroCondPgto
             // 

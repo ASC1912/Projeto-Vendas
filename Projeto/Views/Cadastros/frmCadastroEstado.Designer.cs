@@ -39,6 +39,18 @@
             this.txtUF = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
+            // txtCodigo
+            // 
+            this.txtCodigo.TabIndex = 0;
+            // 
+            // btnSair
+            // 
+            this.btnSair.TabIndex = 7;
+            // 
+            // chkInativo
+            // 
+            this.chkInativo.TabIndex = 5;
+            // 
             // lblNome
             // 
             this.lblNome.AutoSize = true;
@@ -53,14 +65,14 @@
             this.txtNome.Location = new System.Drawing.Point(12, 110);
             this.txtNome.Name = "txtNome";
             this.txtNome.Size = new System.Drawing.Size(200, 22);
-            this.txtNome.TabIndex = 12;
+            this.txtNome.TabIndex = 1;
             // 
             // btnSalvar
             // 
             this.btnSalvar.Location = new System.Drawing.Point(1121, 634);
             this.btnSalvar.Name = "btnSalvar";
             this.btnSalvar.Size = new System.Drawing.Size(80, 35);
-            this.btnSalvar.TabIndex = 11;
+            this.btnSalvar.TabIndex = 6;
             this.btnSalvar.Text = "Salvar";
             this.btnSalvar.UseVisualStyleBackColor = true;
             this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
@@ -88,7 +100,7 @@
             this.btnBuscar.Location = new System.Drawing.Point(265, 183);
             this.btnBuscar.Name = "btnBuscar";
             this.btnBuscar.Size = new System.Drawing.Size(150, 23);
-            this.btnBuscar.TabIndex = 65;
+            this.btnBuscar.TabIndex = 4;
             this.btnBuscar.Text = "Buscar País";
             this.btnBuscar.UseVisualStyleBackColor = true;
             this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
@@ -99,7 +111,7 @@
             this.txtPais.Name = "txtPais";
             this.txtPais.ReadOnly = true;
             this.txtPais.Size = new System.Drawing.Size(200, 22);
-            this.txtPais.TabIndex = 66;
+            this.txtPais.TabIndex = 3;
             // 
             // lblUF
             // 
@@ -115,7 +127,7 @@
             this.txtUF.Location = new System.Drawing.Point(265, 110);
             this.txtUF.Name = "txtUF";
             this.txtUF.Size = new System.Drawing.Size(70, 22);
-            this.txtUF.TabIndex = 67;
+            this.txtUF.TabIndex = 2;
             // 
             // frmCadastroEstado
             // 

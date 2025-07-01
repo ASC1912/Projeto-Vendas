@@ -46,6 +46,14 @@
             this.btnSalvar = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
+            // btnSair
+            // 
+            this.btnSair.TabIndex = 10;
+            // 
+            // chkInativo
+            // 
+            this.chkInativo.TabIndex = 8;
+            // 
             // lblCodigo
             // 
             this.lblCodigo.AutoSize = true;
@@ -69,7 +77,7 @@
             this.txtNome.Location = new System.Drawing.Point(12, 91);
             this.txtNome.Name = "txtNome";
             this.txtNome.Size = new System.Drawing.Size(200, 22);
-            this.txtNome.TabIndex = 67;
+            this.txtNome.TabIndex = 0;
             // 
             // lblDescricao
             // 
@@ -85,7 +93,7 @@
             this.txtDescricao.Location = new System.Drawing.Point(12, 157);
             this.txtDescricao.Name = "txtDescricao";
             this.txtDescricao.Size = new System.Drawing.Size(200, 22);
-            this.txtDescricao.TabIndex = 69;
+            this.txtDescricao.TabIndex = 1;
             // 
             // txtGrupo
             // 
@@ -93,14 +101,14 @@
             this.txtGrupo.Name = "txtGrupo";
             this.txtGrupo.ReadOnly = true;
             this.txtGrupo.Size = new System.Drawing.Size(200, 22);
-            this.txtGrupo.TabIndex = 74;
+            this.txtGrupo.TabIndex = 2;
             // 
             // btnBuscarGrupo
             // 
             this.btnBuscarGrupo.Location = new System.Drawing.Point(593, 156);
             this.btnBuscarGrupo.Name = "btnBuscarGrupo";
             this.btnBuscarGrupo.Size = new System.Drawing.Size(150, 23);
-            this.btnBuscarGrupo.TabIndex = 73;
+            this.btnBuscarGrupo.TabIndex = 3;
             this.btnBuscarGrupo.Text = "Buscar Grupo";
             this.btnBuscarGrupo.UseVisualStyleBackColor = true;
             this.btnBuscarGrupo.Click += new System.EventHandler(this.btnBuscarGrupo_Click);
@@ -120,14 +128,14 @@
             this.txtMarca.Name = "txtMarca";
             this.txtMarca.ReadOnly = true;
             this.txtMarca.Size = new System.Drawing.Size(200, 22);
-            this.txtMarca.TabIndex = 77;
+            this.txtMarca.TabIndex = 5;
             // 
             // btnMarca
             // 
             this.btnMarca.Location = new System.Drawing.Point(593, 231);
             this.btnMarca.Name = "btnMarca";
             this.btnMarca.Size = new System.Drawing.Size(150, 23);
-            this.btnMarca.TabIndex = 76;
+            this.btnMarca.TabIndex = 6;
             this.btnMarca.Text = "Buscar Marca";
             this.btnMarca.UseVisualStyleBackColor = true;
             this.btnMarca.Click += new System.EventHandler(this.btnMarca_Click);
@@ -155,7 +163,7 @@
             this.txtPreco.Location = new System.Drawing.Point(15, 228);
             this.txtPreco.Name = "txtPreco";
             this.txtPreco.Size = new System.Drawing.Size(150, 22);
-            this.txtPreco.TabIndex = 78;
+            this.txtPreco.TabIndex = 4;
             // 
             // lblEstoque
             // 
@@ -171,14 +179,14 @@
             this.txtEstoque.Location = new System.Drawing.Point(15, 302);
             this.txtEstoque.Name = "txtEstoque";
             this.txtEstoque.Size = new System.Drawing.Size(150, 22);
-            this.txtEstoque.TabIndex = 80;
+            this.txtEstoque.TabIndex = 7;
             // 
             // btnSalvar
             // 
             this.btnSalvar.Location = new System.Drawing.Point(1108, 634);
             this.btnSalvar.Name = "btnSalvar";
             this.btnSalvar.Size = new System.Drawing.Size(80, 35);
-            this.btnSalvar.TabIndex = 82;
+            this.btnSalvar.TabIndex = 9;
             this.btnSalvar.Text = "Salvar";
             this.btnSalvar.UseVisualStyleBackColor = true;
             this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);

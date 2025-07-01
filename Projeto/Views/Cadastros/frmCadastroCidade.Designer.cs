@@ -37,13 +37,21 @@
             this.txtEstado = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
+            // btnSair
+            // 
+            this.btnSair.TabIndex = 6;
+            // 
+            // chkInativo
+            // 
+            this.chkInativo.TabIndex = 4;
+            // 
             // lblEstado
             // 
             this.lblEstado.AutoSize = true;
             this.lblEstado.Location = new System.Drawing.Point(9, 207);
             this.lblEstado.Name = "lblEstado";
             this.lblEstado.Size = new System.Drawing.Size(50, 16);
-            this.lblEstado.TabIndex = 21;
+            this.lblEstado.TabIndex = 6;
             this.lblEstado.Text = "Estado";
             // 
             // lblNome
@@ -60,14 +68,14 @@
             this.txtNome.Location = new System.Drawing.Point(12, 120);
             this.txtNome.Name = "txtNome";
             this.txtNome.Size = new System.Drawing.Size(181, 22);
-            this.txtNome.TabIndex = 18;
+            this.txtNome.TabIndex = 1;
             // 
             // btnSalvar
             // 
             this.btnSalvar.Location = new System.Drawing.Point(1117, 634);
             this.btnSalvar.Name = "btnSalvar";
             this.btnSalvar.Size = new System.Drawing.Size(80, 35);
-            this.btnSalvar.TabIndex = 17;
+            this.btnSalvar.TabIndex = 5;
             this.btnSalvar.Text = "Salvar";
             this.btnSalvar.UseVisualStyleBackColor = true;
             this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
@@ -86,7 +94,7 @@
             this.btnBuscar.Location = new System.Drawing.Point(228, 225);
             this.btnBuscar.Name = "btnBuscar";
             this.btnBuscar.Size = new System.Drawing.Size(150, 23);
-            this.btnBuscar.TabIndex = 66;
+            this.btnBuscar.TabIndex = 3;
             this.btnBuscar.Text = "Buscar Estado";
             this.btnBuscar.UseVisualStyleBackColor = true;
             this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
@@ -97,7 +105,7 @@
             this.txtEstado.Name = "txtEstado";
             this.txtEstado.ReadOnly = true;
             this.txtEstado.Size = new System.Drawing.Size(181, 22);
-            this.txtEstado.TabIndex = 67;
+            this.txtEstado.TabIndex = 2;
             // 
             // frmCadastroCidade
             // 

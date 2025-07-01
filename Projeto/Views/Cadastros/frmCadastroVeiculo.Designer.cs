@@ -49,6 +49,15 @@
             // txtCodigo
             // 
             this.txtCodigo.Location = new System.Drawing.Point(12, 42);
+            this.txtCodigo.TabIndex = 0;
+            // 
+            // btnSair
+            // 
+            this.btnSair.TabIndex = 11;
+            // 
+            // chkInativo
+            // 
+            this.chkInativo.TabIndex = 9;
             // 
             // lblCodigo
             // 
@@ -73,7 +82,7 @@
             this.txtPlaca.Location = new System.Drawing.Point(12, 124);
             this.txtPlaca.Name = "txtPlaca";
             this.txtPlaca.Size = new System.Drawing.Size(200, 22);
-            this.txtPlaca.TabIndex = 94;
+            this.txtPlaca.TabIndex = 1;
             // 
             // lblMarca
             // 
@@ -98,7 +107,7 @@
             this.txtModelo.Location = new System.Drawing.Point(260, 124);
             this.txtModelo.Name = "txtModelo";
             this.txtModelo.Size = new System.Drawing.Size(200, 22);
-            this.txtModelo.TabIndex = 98;
+            this.txtModelo.TabIndex = 2;
             // 
             // lblAnoFabricacao
             // 
@@ -114,7 +123,7 @@
             this.txtAnoFabricacao.Location = new System.Drawing.Point(15, 205);
             this.txtAnoFabricacao.Name = "txtAnoFabricacao";
             this.txtAnoFabricacao.Size = new System.Drawing.Size(150, 22);
-            this.txtAnoFabricacao.TabIndex = 100;
+            this.txtAnoFabricacao.TabIndex = 5;
             // 
             // lblCapacidadeCarga
             // 
@@ -130,7 +139,7 @@
             this.txtCapacidadeCarga.Location = new System.Drawing.Point(260, 205);
             this.txtCapacidadeCarga.Name = "txtCapacidadeCarga";
             this.txtCapacidadeCarga.Size = new System.Drawing.Size(150, 22);
-            this.txtCapacidadeCarga.TabIndex = 102;
+            this.txtCapacidadeCarga.TabIndex = 6;
             // 
             // txtTransportadora
             // 
@@ -138,14 +147,14 @@
             this.txtTransportadora.Name = "txtTransportadora";
             this.txtTransportadora.ReadOnly = true;
             this.txtTransportadora.Size = new System.Drawing.Size(200, 22);
-            this.txtTransportadora.TabIndex = 106;
+            this.txtTransportadora.TabIndex = 7;
             // 
             // btnTransportadora
             // 
             this.btnTransportadora.Location = new System.Drawing.Point(746, 202);
             this.btnTransportadora.Name = "btnTransportadora";
             this.btnTransportadora.Size = new System.Drawing.Size(195, 23);
-            this.btnTransportadora.TabIndex = 105;
+            this.btnTransportadora.TabIndex = 8;
             this.btnTransportadora.Text = "Buscar Transportadora";
             this.btnTransportadora.UseVisualStyleBackColor = true;
             this.btnTransportadora.Click += new System.EventHandler(this.btnBuscarTransportadora_Click);
@@ -165,14 +174,14 @@
             this.txtMarca.Name = "txtMarca";
             this.txtMarca.ReadOnly = true;
             this.txtMarca.Size = new System.Drawing.Size(200, 22);
-            this.txtMarca.TabIndex = 107;
+            this.txtMarca.TabIndex = 3;
             // 
             // btnMarca
             // 
             this.btnMarca.Location = new System.Drawing.Point(746, 124);
             this.btnMarca.Name = "btnMarca";
             this.btnMarca.Size = new System.Drawing.Size(195, 23);
-            this.btnMarca.TabIndex = 108;
+            this.btnMarca.TabIndex = 4;
             this.btnMarca.Text = "Buscar Marca";
             this.btnMarca.UseVisualStyleBackColor = true;
             this.btnMarca.Click += new System.EventHandler(this.btnBuscarMarca_Click);
@@ -182,7 +191,7 @@
             this.btnSalvar.Location = new System.Drawing.Point(1117, 634);
             this.btnSalvar.Name = "btnSalvar";
             this.btnSalvar.Size = new System.Drawing.Size(80, 35);
-            this.btnSalvar.TabIndex = 109;
+            this.btnSalvar.TabIndex = 10;
             this.btnSalvar.Text = "Salvar";
             this.btnSalvar.UseVisualStyleBackColor = true;
             this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
@@ -208,6 +217,7 @@
             this.Controls.Add(this.txtPlaca);
             this.Controls.Add(this.lblCodigo);
             this.Name = "frmCadastroVeiculo";
+            this.Text = "Cadastro Veículo";
             this.Load += new System.EventHandler(this.frmCadastroVeiculo_Load);
             this.Controls.SetChildIndex(this.btnSair, 0);
             this.Controls.SetChildIndex(this.txtCodigo, 0);

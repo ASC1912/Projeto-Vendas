@@ -140,6 +140,7 @@ namespace Projeto.Views
                          cidade.Id,
                          cidade.NomeCidade,
                          cidade.EstadoNome,
+                         cidade.EstadoId,
                          cidade.Ativo,
                          cidade.DataCadastro,
                          cidade.DataAlteracao

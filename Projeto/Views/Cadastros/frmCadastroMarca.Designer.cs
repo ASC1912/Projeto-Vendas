@@ -34,6 +34,18 @@
             this.btnSalvar = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
+            // txtCodigo
+            // 
+            this.txtCodigo.TabIndex = 0;
+            // 
+            // btnSair
+            // 
+            this.btnSair.TabIndex = 4;
+            // 
+            // chkInativo
+            // 
+            this.chkInativo.TabIndex = 2;
+            // 
             // lblCodigo
             // 
             this.lblCodigo.AutoSize = true;
@@ -57,14 +69,14 @@
             this.txtNome.Location = new System.Drawing.Point(12, 106);
             this.txtNome.Name = "txtNome";
             this.txtNome.Size = new System.Drawing.Size(200, 22);
-            this.txtNome.TabIndex = 67;
+            this.txtNome.TabIndex = 1;
             // 
             // btnSalvar
             // 
             this.btnSalvar.Location = new System.Drawing.Point(1114, 634);
             this.btnSalvar.Name = "btnSalvar";
             this.btnSalvar.Size = new System.Drawing.Size(80, 35);
-            this.btnSalvar.TabIndex = 69;
+            this.btnSalvar.TabIndex = 3;
             this.btnSalvar.Text = "Salvar";
             this.btnSalvar.UseVisualStyleBackColor = true;
             this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);

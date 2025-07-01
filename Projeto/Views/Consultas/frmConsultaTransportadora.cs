@@ -240,11 +240,14 @@ namespace Projeto.Views.Consultas
                     case "Email":
                         column.Width = 200;
                         break;
-                    case "Cond. Pgto":
+                    case "CondPgto":
                         column.Width = 150;
                         break;
                     case "Status":
                         column.Width = 60;
+                        break;
+                    case "CPF/CNPJ":
+                        column.Width = 130;
                         break;
                     default:
                         column.Width = 100;

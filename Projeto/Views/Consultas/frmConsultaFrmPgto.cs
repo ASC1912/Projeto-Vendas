@@ -39,7 +39,7 @@ namespace Projeto
                     case "Descricao":
                         column.Width = 200;
                         break;
-                    case "Status":
+                    case "Ativo":
                         column.Width = 50;
                         break;
                     default:

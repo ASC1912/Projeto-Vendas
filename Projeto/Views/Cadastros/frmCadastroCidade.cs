@@ -25,13 +25,14 @@ namespace Projeto.Views
             txtCodigo.Enabled = false;
         }
 
-        public void CarregarCidade(int id, string nomeCidade, string nomeEstado, bool ativo, DateTime? dataCadastro, DateTime? dataAlteracao)
+        public void CarregarCidade(int id, string nomeCidade, string nomeEstado, int estadoId, bool ativo, DateTime? dataCadastro, DateTime? dataAlteracao)
         {
             modoEdicao = true;
 
             txtCodigo.Text = id.ToString();
             txtNome.Text = nomeCidade;
             txtEstado.Text = nomeEstado;
+            estadoSelecionadoId = estadoId;
             chkInativo.Checked = !ativo;
 
             lblDataCriacao.Text = dataCadastro.HasValue

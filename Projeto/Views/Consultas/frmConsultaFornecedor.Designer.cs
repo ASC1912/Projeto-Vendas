@@ -101,7 +101,7 @@
             // 
             // Endereco
             // 
-            this.Endereco.Text = "Endereco";
+            this.Endereco.Text = "Endereço";
             // 
             // CEP
             // 

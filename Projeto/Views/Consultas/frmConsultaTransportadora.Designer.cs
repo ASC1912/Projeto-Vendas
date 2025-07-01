@@ -102,11 +102,11 @@
             // 
             // Endereco
             // 
-            this.Endereco.Text = "Endereco";
+            this.Endereco.Text = "Endereço";
             // 
             // Numero
             // 
-            this.Numero.Text = "Numero";
+            this.Numero.Text = "Número";
             // 
             // Bairro
             // 
