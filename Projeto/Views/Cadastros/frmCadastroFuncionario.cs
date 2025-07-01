@@ -30,6 +30,8 @@ namespace Projeto.Views
             cbGenero.SelectedIndex = 0;
             dtpDemissao.Checked = false;
             cbGenero.SelectedIndex = 0;
+            cbTipo.SelectedIndexChanged += cbTipo_SelectedIndexChanged;
+            cbTipo_SelectedIndexChanged(null, null);
         }
 
         public void CarregarFuncionario(
@@ -297,6 +299,18 @@ namespace Projeto.Views
                 MessageBox.Show("Cidade não encontrada.");
                 txtCidade.Text = "";
                 cidadeSelecionadoId = -1;
+            }
+        }
+
+        private void cbTipo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbTipo.Text == "Jurídico")
+            {
+                lblCPF.Text = "CNPJ";
+            }
+            else
+            {
+                lblCPF.Text = "CPF";
             }
         }
     }

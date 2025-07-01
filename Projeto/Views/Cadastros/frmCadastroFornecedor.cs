@@ -30,8 +30,21 @@ namespace Projeto.Views
             InitializeComponent();
             txtCodigo.Enabled = false;
             cbTipo.SelectedIndex = 0;
+            cbTipo.SelectedIndexChanged += cbTipo_SelectedIndexChanged;
+            cbTipo_SelectedIndexChanged(null, null);
         }
 
+        private void cbTipo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbTipo.Text == "Jurídico")
+            {
+                lblCPF.Text = "CNPJ";
+            }
+            else
+            {
+                lblCPF.Text = "CPF";
+            }
+        }
         public void CarregarFornecedor(int id, string nome, string cpf_cnpj, string telefone, string email, string endereco,
                                 int numEndereco, string bairro, string complemento, string cep, string inscEst,
                                 string inscEstSubTrib, string tipo, string nomeCidade, int idCidade, string descricaoCondicao, int idCondicao,
