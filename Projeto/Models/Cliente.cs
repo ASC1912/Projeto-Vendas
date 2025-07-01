@@ -9,6 +9,7 @@ namespace Projeto.Models
     internal class Cliente : Pessoa
     {
         public string Rg { get; set; }
+        public string Genero { get; set; }
         public int? IdCondicao { get; set; }
         public string DescricaoCondicao { get; set; } 
 

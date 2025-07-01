@@ -22,6 +22,8 @@ namespace Projeto.Views
         private void btnIncluir_Click(object sender, EventArgs e)
         {
             frmCadastroFornecedor formCadastroFornecedor = new frmCadastroFornecedor();
+            formCadastroFornecedor.FormClosed += (s, args) => CarregarFornecedores();
+
             formCadastroFornecedor.ShowDialog();
         }
 
@@ -48,7 +50,7 @@ namespace Projeto.Views
                     item.SubItems.Add(fornecedor.InscricaoEstadual);
                     item.SubItems.Add(fornecedor.InscricaoEstadualSubTrib);
                     item.SubItems.Add(fornecedor.NomeCidade);
-                    item.SubItems.Add(fornecedor.IdCondicao.ToString());
+                    item.SubItems.Add(fornecedor.DescricaoCondicao);
                     item.SubItems.Add(fornecedor.Ativo ? "Ativo" : "Inativo");
                     listView1.Items.Add(item);
                 }
@@ -90,7 +92,7 @@ namespace Projeto.Views
                         item.SubItems.Add(fornecedor.InscricaoEstadual);
                         item.SubItems.Add(fornecedor.InscricaoEstadualSubTrib);
                         item.SubItems.Add(fornecedor.NomeCidade);
-                        item.SubItems.Add(fornecedor.IdCondicao?.ToString() ?? "");
+                        item.SubItems.Add(fornecedor.DescricaoCondicao);
                         item.SubItems.Add(fornecedor.Ativo ? "Ativo" : "Inativo");
                         listView1.Items.Add(item);
                     }
@@ -144,6 +146,7 @@ namespace Projeto.Views
                         fornecedor.Tipo,
                         cidade?.NomeCidade ?? "Não encontrado",
                         fornecedor.IdCidade ?? 0,
+                        fornecedor.DescricaoCondicao ?? "Não encontrada",
                         fornecedor.IdCondicao ?? 0,
                         fornecedor.Ativo,
                         fornecedor.DataCadastro,
@@ -196,6 +199,8 @@ namespace Projeto.Views
 
         private void frmConsultaFornecedor_Load(object sender, EventArgs e)
         {
+            CarregarFornecedores();
+
             foreach (ColumnHeader column in listView1.Columns)
             {
                 switch (column.Text)

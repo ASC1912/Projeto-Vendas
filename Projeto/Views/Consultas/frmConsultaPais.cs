@@ -24,6 +24,7 @@ namespace Projeto.Views
 
         private void frmConsultaPais_Load(object sender, EventArgs e)
         {
+            CarregarPaises();
             btnSelecionar.Visible = ModoSelecao;
 
             foreach (ColumnHeader column in listView1.Columns)
@@ -49,6 +50,7 @@ namespace Projeto.Views
         private void btnIncluir_Click(object sender, EventArgs e)
         {
             frmCadastroPais formCadastroPais = new frmCadastroPais();
+            formCadastroPais.FormClosed += (s, args) => CarregarPaises();
             formCadastroPais.ShowDialog();
         }
 

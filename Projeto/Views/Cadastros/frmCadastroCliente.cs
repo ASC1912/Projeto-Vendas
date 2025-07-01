@@ -15,6 +15,8 @@ namespace Projeto.Views
     public partial class frmCadastroCliente : Projeto.frmBase
     {
         private CidadeController cidadeController = new CidadeController();
+        private EstadoController estadoController = new EstadoController();
+        private PaisController paisController = new PaisController();
         private CondicaoPagamentoController condicaoPagamentoController = new CondicaoPagamentoController();
         private ClienteController controller = new ClienteController();
         public bool modoEdicao = false;
@@ -27,6 +29,7 @@ namespace Projeto.Views
             InitializeComponent();
             txtCodigo.Enabled = false;
             cbTipo.SelectedIndex = 0;
+            cbTipo_SelectedIndexChanged(null, null);
         }
 
         public void CarregarCliente(int id, string nome, string cpfCnpj, string telefone, string email, string endereco,
@@ -67,6 +70,9 @@ namespace Projeto.Views
         {
             if (!Validador.CampoObrigatorio(txtNome, "O nome é obrigatório.")) return;
             if (!Validador.CampoObrigatorio(txtCPF, "O CPF/CNPJ é obrigatório.")) return;
+            if (!Validador.CampoObrigatorio(txtEndereco, "O Endereço é obrigatório.")) return;
+            if (!Validador.CampoObrigatorio(txtNumEnd, "O Número de endereço é obrigatório.")) return;
+            if (!Validador.CampoObrigatorio(txtBairro, "O Bairro é obrigatório.")) return;
             if (!Validador.ValidarEmail(txtEmail)) return;
             if (!Validador.ValidarNumerico(txtNumEnd, "O número do endereço deve ser numérico.")) return;
 
@@ -103,6 +109,29 @@ namespace Projeto.Views
                 MessageBox.Show("Selecione uma cidade.");
                 return;
             }
+
+            if (cidadeSelecionadoId > 0)
+            {
+                var cidade = cidadeController.BuscarPorId(cidadeSelecionadoId);
+                if (cidade != null)
+                {
+                    var estado = estadoController.BuscarPorId(cidade.EstadoId);
+                    if (estado != null)
+                    {
+                        var pais = paisController.BuscarPorId(estado.PaisId);
+                        if (pais != null && pais.NomePais.Trim().Equals("Brasil", StringComparison.OrdinalIgnoreCase))
+                        {
+                            if (string.IsNullOrWhiteSpace(txtRG.Text))
+                            {
+                                MessageBox.Show("O campo RG é obrigatório para clientes brasileiros.", "Validação", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                txtRG.Focus();
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+
 
             if (condicaoSelecionadoId <= 0)
             {
@@ -154,6 +183,9 @@ namespace Projeto.Views
 
         private void frmCadastroCliente_Load(object sender, EventArgs e)
         {
+            cbTipo.SelectedIndexChanged += cbTipo_SelectedIndexChanged;
+
+
             if (modoEdicao)
             {
                 cbTipo.Enabled = false;
@@ -231,6 +263,17 @@ namespace Projeto.Views
         }
 
 
+        private void cbTipo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbTipo.Text == "Jurídico")
+            {
+                lblCPF.Text = "CNPJ";
+            }
+            else
+            {
+                lblCPF.Text = "CPF";
+            }
+        }
 
     }
 }

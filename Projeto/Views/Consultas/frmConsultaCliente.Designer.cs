@@ -43,6 +43,7 @@
             this.IDCondPgto = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Status = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Rg = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Genero = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // listView1
@@ -59,6 +60,7 @@
             this.Complemento,
             this.CEP,
             this.Tipo,
+            this.Genero,
             this.IDCidade,
             this.IDCondPgto,
             this.Status,
@@ -146,6 +148,10 @@
             // 
             this.Rg.Text = "RG";
             // 
+            // Genero
+            // 
+            this.Genero.Text = "Gênero";
+            // 
             // frmConsultaCliente
             // 
             //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -175,5 +181,6 @@
         private System.Windows.Forms.ColumnHeader IDCondPgto;
         private System.Windows.Forms.ColumnHeader Status;
         private System.Windows.Forms.ColumnHeader Rg;
+        private System.Windows.Forms.ColumnHeader Genero;
     }
 }

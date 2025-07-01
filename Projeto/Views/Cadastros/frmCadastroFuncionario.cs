@@ -15,6 +15,8 @@ namespace Projeto.Views
     public partial class frmCadastroFuncionario : Projeto.frmBase
     {
         private CidadeController cidadeController = new CidadeController();
+        private EstadoController estadoController = new EstadoController();
+        private PaisController paisController = new PaisController();
         private FuncionarioController controller = new FuncionarioController();
         public bool modoEdicao = false;
         private int cidadeSelecionadoId = -1;
@@ -25,6 +27,7 @@ namespace Projeto.Views
             InitializeComponent();
             txtCodigo.Enabled = false;
             cbTipo.SelectedIndex = 0;
+            cbGenero.SelectedIndex = 0;
             dtpDemissao.Checked = false;
             cbGenero.SelectedIndex = 0;
         }
@@ -91,8 +94,13 @@ namespace Projeto.Views
         {
             if (!Validador.CampoObrigatorio(txtNome, "O nome é obrigatório.")) return;
             if (!Validador.CampoObrigatorio(txtCPF, "O CPF/CNPJ é obrigatório.")) return;
-            if (!Validador.ValidarEmail(txtEmail)) return;
+            if (!Validador.CampoObrigatorio(txtEndereco, "O Endereço é obrigatório.")) return;
+            if (!Validador.CampoObrigatorio(txtNumEnd, "O Número de endereço é obrigatório.")) return;
+            if (!Validador.CampoObrigatorio(txtMatricula, "A matrícula é obrigatória.")) return;
+            if (!Validador.CampoObrigatorio(txtSalario, "O salário é obrigatório.")) return;
             if (!Validador.ValidarNumerico(txtNumEnd, "O número do endereço deve ser numérico.")) return;
+            if (!Validador.CampoObrigatorio(txtBairro, "O Bairro é obrigatório.")) return;
+            if (!Validador.ValidarEmail(txtEmail)) return;
             if (!Validador.CampoObrigatorio(txtCargo, "O cargo é obrigatório.")) return;
 
             string tipoPessoa = cbTipo.Text.Trim();

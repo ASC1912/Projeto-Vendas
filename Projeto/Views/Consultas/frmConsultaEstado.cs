@@ -25,6 +25,7 @@ namespace Projeto.Views
 
         private void frmConsultaEstado_Load(object sender, EventArgs e)
         {
+            CarregarEstados();
             btnSelecionar.Visible = ModoSelecao;
 
             foreach (ColumnHeader column in listView1.Columns)
@@ -56,6 +57,7 @@ namespace Projeto.Views
         private void btnIncluir_Click(object sender, EventArgs e)
         {
             frmCadastroEstado formCadastroEstado = new frmCadastroEstado();
+            formCadastroEstado.FormClosed += (s, args) => CarregarEstados();
             formCadastroEstado.ShowDialog();
         }
         private void CarregarEstados()

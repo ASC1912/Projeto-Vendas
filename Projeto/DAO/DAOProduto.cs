@@ -143,7 +143,7 @@ namespace Projeto.DAO
                     FROM produtos p
                     LEFT JOIN marcas m ON p.id_marca = m.id
                     LEFT JOIN grupos g ON p.grupo_id = g.id
-                    ORDER BY p.produto";
+                    ORDER BY p.id";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {

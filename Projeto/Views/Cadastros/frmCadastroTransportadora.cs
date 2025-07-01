@@ -29,7 +29,7 @@ namespace Projeto.Views.Cadastros
 
         public void CarregarTransportadora(int id, string nome, string cpf_cnpj, string telefone, string email, string endereco,
                                 int numEndereco, string bairro, string complemento, string cep, string inscEst,
-                                string inscEstSubTrib, string tipo, string nomeCidade, int idCidade, int idCondicao,
+                                string inscEstSubTrib, string tipo, string nomeCidade, int idCidade,  string descricaoCondicao, int idCondicao,
                                 bool status, DateTime? dataCriacao, DateTime? dataModificacao)
         {
             txtCodigo.Text = id.ToString();
@@ -48,7 +48,7 @@ namespace Projeto.Views.Cadastros
             txtCidade.Text = nomeCidade;
             txtIdCidade.Text = idCidade > 0 ? idCidade.ToString() : "";
             cidadeSelecionadoId = idCidade;
-            txtCondicao.Text = idCondicao.ToString();
+            txtCondicao.Text = descricaoCondicao;
             condicaoSelecionadoId = idCondicao;
             chkInativo.Checked = !status;
 
@@ -65,8 +65,11 @@ namespace Projeto.Views.Cadastros
         {
             if (!Validador.CampoObrigatorio(txtNome, "O nome é obrigatório.")) return;
             if (!Validador.CampoObrigatorio(txtCPF, "O CPF/CNPJ é obrigatório.")) return;
-            if (!Validador.ValidarEmail(txtEmail)) return;
+            if (!Validador.CampoObrigatorio(txtEndereco, "O Endereço é obrigatório.")) return;
+            if (!Validador.CampoObrigatorio(txtNumEnd, "O Número de endereço é obrigatório.")) return;
             if (!Validador.ValidarNumerico(txtNumEnd, "O número do endereço deve ser numérico.")) return;
+            if (!Validador.CampoObrigatorio(txtBairro, "O Bairro é obrigatório.")) return;
+            if (!Validador.ValidarEmail(txtEmail)) return;
 
             string tipoPessoa = cbTipo.Text.Trim();
             string documento = new string(txtCPF.Text.Where(char.IsDigit).ToArray());
@@ -192,7 +195,7 @@ namespace Projeto.Views.Cadastros
 
             if (resultado == DialogResult.OK && consultaCondicao.CondicaoSelecionado != null)
             {
-                txtCondicao.Text = consultaCondicao.CondicaoSelecionado.Id.ToString();
+                txtCondicao.Text = consultaCondicao.CondicaoSelecionado.Descricao;
                 condicaoSelecionadoId = consultaCondicao.CondicaoSelecionado.Id;
             }
         }

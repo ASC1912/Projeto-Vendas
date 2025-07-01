@@ -126,7 +126,7 @@ namespace Projeto.DAO
                     SELECT e.id, e.estado, e.uf, e.pais_id, e.ativo, p.pais AS pais_nome 
                     FROM estados e
                     JOIN paises p ON e.pais_id = p.id
-                    ORDER BY e.estado";
+                    ORDER BY e.id";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {

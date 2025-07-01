@@ -23,6 +23,8 @@ namespace Projeto
         }
         private void frmConsultaCondPgto_Load(object sender, EventArgs e)
         {
+            CarregarCondicoesPagamento();
+
             btnSelecionar.Visible = ModoSelecao;
 
             foreach (ColumnHeader column in listView1.Columns)
@@ -127,6 +129,7 @@ namespace Projeto
         private void btnIncluir_Click(object sender, EventArgs e)
         {
             frmCadastroCondPgto formCadastroPagamento = new frmCadastroCondPgto();
+            formCadastroPagamento.FormClosed += (s, args) => CarregarCondicoesPagamento();
             formCadastroPagamento.ShowDialog();
         }
 

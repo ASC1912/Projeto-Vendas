@@ -25,6 +25,8 @@ namespace Projeto.Views.Consultas
 
         private void frmConsultaGrupo_Load(object sender, EventArgs e)
         {
+            CarregarGrupos();
+
             btnSelecionar.Visible = ModoSelecao;
 
             foreach (ColumnHeader column in listView1.Columns)
@@ -114,8 +116,8 @@ namespace Projeto.Views.Consultas
         private void btnIncluir_Click(object sender, EventArgs e)
         {
             frmCadastroGrupo formCadastroGrupo = new frmCadastroGrupo();
+            formCadastroGrupo.FormClosed += (s, args) => CarregarGrupos();
             formCadastroGrupo.ShowDialog();
-            CarregarGrupos();
         }
 
         private void btnEditar_Click(object sender, EventArgs e)

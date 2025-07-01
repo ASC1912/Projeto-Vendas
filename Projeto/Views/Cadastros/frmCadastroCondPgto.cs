@@ -84,6 +84,11 @@ namespace Projeto
         private void AdicionarCondicaoeParcela()
         {
             if (!Validador.CampoObrigatorio(txtDescricao, "A descrição é obrigatória.")) return;
+            if (!Validador.CampoObrigatorio(txtQtdParcelas, "A quantidade de parcelas é obrigatória.")) return;
+            if (!Validador.CampoObrigatorio(txtJuros, "O Juros é obrigatório.")) return;
+            if (!Validador.CampoObrigatorio(txtMulta, "A nykta é obrigatória.")) return;
+            if (!Validador.CampoObrigatorio(txtDesconto, "O desconto é obrigatória.")) return;
+            if (!Validador.CampoObrigatorio(txtDescricao, "A descrição é obrigatória.")) return;
 
             if (!Validador.ValidarNumerico(txtQtdParcelas, "A quantidade de parcelas deve ser um número.")) return;
 

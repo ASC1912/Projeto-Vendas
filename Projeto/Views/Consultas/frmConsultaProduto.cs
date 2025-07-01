@@ -170,11 +170,7 @@ namespace Projeto.Views.Consultas
 
         private void frmConsultaProduto_Load(object sender, EventArgs e)
         {
-            if (listView1.Columns.Count == 0 || listView1.Columns[listView1.Columns.Count - 1].Text != "")
-            {
-                var ultimaColuna = new ColumnHeader { Text = "", Width = 1 };
-                listView1.Columns.Add(ultimaColuna);
-            }
+            CarregarProdutos();
 
             foreach (ColumnHeader column in listView1.Columns)
             {
@@ -210,7 +206,6 @@ namespace Projeto.Views.Consultas
                 }
             }
 
-            CarregarProdutos();
         }
     }
 }

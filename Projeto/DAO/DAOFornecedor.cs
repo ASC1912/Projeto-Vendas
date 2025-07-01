@@ -167,7 +167,7 @@ namespace Projeto.DAO
                 FROM fornecedores f
                 LEFT JOIN cidades ci ON f.id_cidade = ci.id
                 LEFT JOIN condicoes_pagamento cp ON f.id_condicao_pagamento = cp.id
-                ORDER BY f.fornecedor";
+                ORDER BY f.id";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {

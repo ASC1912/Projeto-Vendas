@@ -122,7 +122,7 @@ namespace Projeto.DAO
                     SELECT c.id, c.cidade, c.estado_id, c.ativo, e.estado AS estado_nome 
                     FROM cidades c
                     JOIN estados e ON c.estado_id = e.id
-                    ORDER BY c.cidade";
+                    ORDER BY c.id";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {

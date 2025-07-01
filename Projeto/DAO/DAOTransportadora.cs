@@ -106,10 +106,12 @@ namespace Projeto.DAO
                 string query = @"
                     SELECT t.id, t.transportadora, t.cpf_cnpj, t.telefone, t.email, t.endereco, t.numero_endereco, 
                            t.complemento, t.bairro, t.cep, t.inscricao_estadual, t.inscricao_estadual_subtrib, 
-                           t.id_cidade, ci.cidade AS cidade_nome, t.tipo, t.id_condicao_pagamento, 
+                           t.id_cidade, ci.cidade AS cidade_nome, t.tipo, 
+                           t.id_condicao_pagamento, cp.descricao AS condicao_descricao,
                            t.ativo, t.data_cadastro, t.data_alteracao
                     FROM Transportadoras t
                     LEFT JOIN cidades ci ON t.id_cidade = ci.id
+                    LEFT JOIN condicoes_pagamento cp ON t.id_condicao_pagamento = cp.id
                     WHERE t.id = @id";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
@@ -138,6 +140,7 @@ namespace Projeto.DAO
                                 NomeCidade = reader.IsDBNull(reader.GetOrdinal("cidade_nome")) ? null : reader.GetString("cidade_nome"),
                                 Tipo = reader.GetString("tipo"),
                                 IdCondicao = reader.IsDBNull(reader.GetOrdinal("id_condicao_pagamento")) ? (int?)null : reader.GetInt32("id_condicao_pagamento"),
+                                DescricaoCondicao = reader.IsDBNull(reader.GetOrdinal("condicao_descricao")) ? null : reader.GetString("condicao_descricao"),
                                 Ativo = reader.GetBoolean("ativo"),
                                 DataCadastro = reader.IsDBNull(reader.GetOrdinal("data_cadastro")) ? (DateTime?)null : reader.GetDateTime("data_cadastro"),
                                 DataAlteracao = reader.IsDBNull(reader.GetOrdinal("data_alteracao")) ? (DateTime?)null : reader.GetDateTime("data_alteracao")
@@ -159,11 +162,13 @@ namespace Projeto.DAO
                 string query = @"
                     SELECT t.id, t.transportadora, t.cpf_cnpj, t.telefone, t.email, t.endereco, t.numero_endereco, 
                            t.complemento, t.bairro, t.cep, t.inscricao_estadual, t.inscricao_estadual_subtrib, 
-                           t.id_cidade, ci.cidade AS cidade_nome, t.tipo, t.id_condicao_pagamento, 
+                           t.id_cidade, ci.cidade AS cidade_nome, t.tipo, 
+                           t.id_condicao_pagamento, cp.descricao AS condicao_descricao,
                            t.ativo, t.data_cadastro, t.data_alteracao
                     FROM Transportadoras t
                     LEFT JOIN cidades ci ON t.id_cidade = ci.id
-                    ORDER BY t.transportadora";
+                    LEFT JOIN condicoes_pagamento cp ON t.id_condicao_pagamento = cp.id
+                    ORDER BY t.id";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
@@ -189,6 +194,7 @@ namespace Projeto.DAO
                                 NomeCidade = reader.IsDBNull(reader.GetOrdinal("cidade_nome")) ? null : reader.GetString("cidade_nome"),
                                 Tipo = reader.GetString("tipo"),
                                 IdCondicao = reader.IsDBNull(reader.GetOrdinal("id_condicao_pagamento")) ? (int?)null : reader.GetInt32("id_condicao_pagamento"),
+                                DescricaoCondicao = reader.IsDBNull(reader.GetOrdinal("condicao_descricao")) ? null : reader.GetString("condicao_descricao"),
                                 Ativo = reader.GetBoolean("ativo"),
                                 DataCadastro = reader.IsDBNull(reader.GetOrdinal("data_cadastro")) ? (DateTime?)null : reader.GetDateTime("data_cadastro"),
                                 DataAlteracao = reader.IsDBNull(reader.GetOrdinal("data_alteracao")) ? (DateTime?)null : reader.GetDateTime("data_alteracao")

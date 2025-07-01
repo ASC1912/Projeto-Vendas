@@ -22,6 +22,7 @@ namespace Projeto.Views.Consultas
         private void btnIncluir_Click(object sender, EventArgs e)
         {
             frmCadastroTransportadora formCadastroTransportadora = new frmCadastroTransportadora();
+            formCadastroTransportadora.FormClosed += (s, args) => CarregarTransportadoras();
             formCadastroTransportadora.ShowDialog();
         }
 
@@ -48,7 +49,7 @@ namespace Projeto.Views.Consultas
                     item.SubItems.Add(transportadora.InscricaoEstadual);
                     item.SubItems.Add(transportadora.InscricaoEstadualSubTrib);
                     item.SubItems.Add(transportadora.NomeCidade);
-                    item.SubItems.Add(transportadora.IdCondicao.ToString());
+                    item.SubItems.Add(transportadora.DescricaoCondicao);
                     item.SubItems.Add(transportadora.Ativo ? "Ativo" : "Inativo");
                     listView1.Items.Add(item);
                 }
@@ -90,7 +91,7 @@ namespace Projeto.Views.Consultas
                         item.SubItems.Add(transportadora.InscricaoEstadual);
                         item.SubItems.Add(transportadora.InscricaoEstadualSubTrib);
                         item.SubItems.Add(transportadora.NomeCidade);
-                        item.SubItems.Add(transportadora.IdCondicao?.ToString() ?? "");
+                        item.SubItems.Add(transportadora.DescricaoCondicao);
                         item.SubItems.Add(transportadora.Ativo ? "Ativo" : "Inativo");
                         listView1.Items.Add(item);
                     }
@@ -143,6 +144,7 @@ namespace Projeto.Views.Consultas
                         transportadora.Tipo,
                         cidade?.NomeCidade ?? "Não encontrado",
                         transportadora.IdCidade ?? 0,
+                        transportadora.DescricaoCondicao ?? "Não encontrado",
                         transportadora.IdCondicao ?? 0,
                         transportadora.Ativo,
                         transportadora.DataCadastro,
@@ -193,6 +195,7 @@ namespace Projeto.Views.Consultas
 
         private void frmConsultaTransportadora_Load(object sender, EventArgs e)
         {
+            CarregarTransportadoras();
             foreach (ColumnHeader column in listView1.Columns)
             {
                 switch (column.Text)

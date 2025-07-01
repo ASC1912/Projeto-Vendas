@@ -123,7 +123,7 @@ namespace Projeto.DAO
                 string query = @"
                     SELECT id, grupo, descricao, ativo, data_cadastro, data_alteracao
                     FROM grupos 
-                    ORDER BY grupo";
+                    ORDER BY id";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {

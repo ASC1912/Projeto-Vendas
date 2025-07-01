@@ -22,6 +22,7 @@ namespace Projeto.Views
         private void btnIncluir_Click(object sender, EventArgs e)
         {
             frmCadastroCliente formCadastroCliente = new frmCadastroCliente();
+            formCadastroCliente.FormClosed += (s, args) => CarregarClientes();
             formCadastroCliente.ShowDialog();
         }
 
@@ -137,7 +138,6 @@ namespace Projeto.Views
                         cliente.NomeCidade ?? "Não encontrado",
                         cliente.IdCidade ?? 0,
                         cliente.DescricaoCondicao ?? "Não encontrada",
-
                         cliente.IdCondicao ?? 0,
                         cliente.Ativo,
                         cliente.Rg,
@@ -190,6 +190,8 @@ namespace Projeto.Views
 
         private void frmConsultaCliente_Load(object sender, EventArgs e)
         {
+            CarregarClientes();
+
             foreach (ColumnHeader column in listView1.Columns)
             {
                 switch (column.Text)

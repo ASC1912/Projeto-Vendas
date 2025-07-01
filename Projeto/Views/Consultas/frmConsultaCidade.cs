@@ -24,6 +24,8 @@ namespace Projeto.Views
 
         private void frmConsultaCidade_Load(object sender, EventArgs e)
         {
+            CarregarCidades();
+
             btnSelecionar.Visible = ModoSelecao;
 
             foreach (ColumnHeader column in listView1.Columns)
@@ -52,6 +54,7 @@ namespace Projeto.Views
         private void btnIncluir_Click(object sender, EventArgs e)
         {
             frmCadastroCidade formCadastroCidade = new frmCadastroCidade();
+            formCadastroCidade.FormClosed += (s, args) => CarregarCidades();
             formCadastroCidade.ShowDialog();
         }
 

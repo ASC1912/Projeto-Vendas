@@ -20,6 +20,8 @@ namespace Projeto.Views.Consultas
 
         private void frmConsultaMarca_Load(object sender, EventArgs e)
         {
+            CarregarMarcas();
+
             btnSelecionar.Visible = ModoSelecao;
 
             foreach (ColumnHeader column in listView1.Columns)

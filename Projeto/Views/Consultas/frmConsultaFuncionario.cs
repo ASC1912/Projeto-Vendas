@@ -23,6 +23,7 @@ namespace Projeto.Views
         private void btnIncluir_Click(object sender, EventArgs e)
         {
             frmCadastroFuncionario formCadastroFuncionario = new frmCadastroFuncionario();
+            formCadastroFuncionario.FormClosed += (s, args) => CarregarFuncionarios();
             formCadastroFuncionario.ShowDialog();
         }
 
@@ -220,6 +221,8 @@ namespace Projeto.Views
 
         private void frmConsultaFuncionario_Load(object sender, EventArgs e)
         {
+            CarregarFuncionarios();
+
             foreach (ColumnHeader column in listView1.Columns)
             {
                 switch (column.Text)

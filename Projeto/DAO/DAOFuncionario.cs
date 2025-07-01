@@ -174,7 +174,7 @@ namespace Projeto.DAO
                        c.cidade AS cidade_nome
                 FROM funcionarios f
                 LEFT JOIN cidades c ON f.id_cidade = c.id
-                ORDER BY f.funcionario";
+                ORDER BY f.id";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {

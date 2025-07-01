@@ -120,7 +120,7 @@ namespace Projeto.DAO
                 string query = @"
                     SELECT id, marca, ativo, data_cadastro, data_alteracao
                     FROM marcas 
-                    ORDER BY marca";
+                    ORDER BY id";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
