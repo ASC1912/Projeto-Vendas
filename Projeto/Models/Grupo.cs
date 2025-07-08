@@ -2,7 +2,7 @@
 
 namespace Projeto.Models
 {
-    internal class Grupo
+    public class Grupo
     {
         public int Id { get; set; }
         public string NomeGrupo { get; set; }

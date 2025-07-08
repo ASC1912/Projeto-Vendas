@@ -1,31 +1,39 @@
 ﻿using Projeto.DAO;
 using Projeto.Models;
+using Projeto.Services;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Projeto.Controller
 {
     internal class GrupoController
     {
-        private DAOGrupo dao = new DAOGrupo();
+        private readonly IGrupoService _grupoService;
 
-        public void Salvar(Grupo grupo)
+        public GrupoController()
         {
-            dao.Salvar(grupo);
+
+            _grupoService = new DAOGrupo();
         }
 
-        public Grupo BuscarPorId(int id)
+        public Task Salvar(Grupo grupo)
         {
-            return dao.BuscarPorId(id);
+            return _grupoService.Salvar(grupo);
         }
 
-        public List<Grupo> ListarGrupos()
+        public Task<Grupo> BuscarPorId(int id)
         {
-            return dao.ListarGrupos();
+            return _grupoService.BuscarPorId(id);
         }
 
-        public void Excluir(int id)
+        public Task<List<Grupo>> ListarGrupos()
         {
-            dao.Excluir(id);
+            return _grupoService.ListarGrupos();
+        }
+
+        public Task Excluir(int id)
+        {
+            return _grupoService.Excluir(id);
         }
     }
 }

@@ -141,6 +141,7 @@
     <Compile Include="Models\Produto.cs" />
     <Compile Include="Models\Transportadora.cs" />
     <Compile Include="Models\Veiculo.cs" />
+    <Compile Include="Services\IGrupoService.cs" />
     <Compile Include="Utils\Validador.cs" />
     <Compile Include="Views\Cadastros\frmCadastroGrupo.cs">
       <SubType>Form</SubType>

@@ -2,7 +2,7 @@
 
 namespace Projeto.Models
 {
-    internal class Cidade
+    public class Cidade
     {
         public int Id { get; set; }
         public string NomeCidade { get; set; }

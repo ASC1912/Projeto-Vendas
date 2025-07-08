@@ -2,7 +2,7 @@
 
 namespace Projeto.Models
 {
-    internal class Estado
+    public class Estado
     {
         public int Id { get; set; }
         public string NomeEstado { get; set; }

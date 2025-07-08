@@ -2,7 +2,7 @@
 
 namespace Projeto.Models
 {
-    internal class Veiculo
+    public class Veiculo
     {
         public int Id { get; set; }
         public int TransportadoraId { get; set; }
