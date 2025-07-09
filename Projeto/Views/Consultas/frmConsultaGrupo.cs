@@ -159,41 +159,35 @@ namespace Projeto.Views.Consultas
                 var itemSelecionado = listView1.SelectedItems[0];
                 int id = int.Parse(itemSelecionado.SubItems[0].Text);
 
-                var confirmacao = MessageBox.Show("Tem certeza que deseja excluir esse grupo?", "Confirmação", MessageBoxButtons.YesNo);
-                if (confirmacao == DialogResult.Yes)
+                Grupo grupo = await controller.BuscarPorId(id);
+
+                if (grupo != null)
                 {
-                    try
+                    var formCadastro = new frmCadastroGrupo
                     {
-                        await controller.Excluir(id);
-                        listView1.Items.Remove(itemSelecionado);
-                        MessageBox.Show("Grupo excluído com sucesso!");
-                    }
-                    catch (Exception ex)
-                    {
-                        if (ex.Message.Contains("Cannot delete or update a parent row"))
-                        {
-                            MessageBox.Show(
-                                "Não é possível excluir este item, pois existem registros vinculados a ele.",
-                                "Erro ao excluir",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Warning
-                            );
-                        }
-                        else
-                        {
-                            MessageBox.Show(
-                                $"Erro ao excluir: {ex.Message}",
-                                "Erro ao excluir",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Error
-                            );
-                        }
-                    }
+                        modoExclusao = true 
+                    };
+
+                    formCadastro.CarregarGrupo(
+                        grupo.Id,
+                        grupo.NomeGrupo,
+                        grupo.Descricao,
+                        grupo.Ativo,
+                        grupo.DataCadastro,
+                        grupo.DataAlteracao
+                    );
+
+                    formCadastro.FormClosed += async (s, args) => await CarregarGrupos();
+                    formCadastro.ShowDialog();
+                }
+                else
+                {
+                    MessageBox.Show("Grupo não encontrado.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
             {
-                MessageBox.Show("Por favor, selecione um grupo para excluir.");
+                MessageBox.Show("Por favor, selecione um grupo para excluir.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 

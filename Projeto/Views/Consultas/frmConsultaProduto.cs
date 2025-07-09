@@ -147,24 +147,41 @@ namespace Projeto.Views.Consultas
                 var itemSelecionado = listView1.SelectedItems[0];
                 int id = int.Parse(itemSelecionado.SubItems[0].Text);
 
-                var confirmacao = MessageBox.Show("Tem certeza que deseja excluir esse produto?", "Confirmação", MessageBoxButtons.YesNo);
-                if (confirmacao == DialogResult.Yes)
+                Produto produto = controller.BuscarPorId(id);
+
+                if (produto != null)
                 {
-                    try
+                    var formCadastro = new frmCadastroProduto
                     {
-                        controller.Excluir(id);
-                        listView1.Items.Remove(itemSelecionado);
-                        MessageBox.Show("Produto excluído com sucesso!");
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"Erro ao excluir: {ex.Message}");
-                    }
+                        modoExclusao = true
+                    };
+
+                    formCadastro.CarregarProduto(
+                        produto.Id,
+                        produto.NomeProduto,
+                        produto.Descricao,
+                        produto.Preco,
+                        produto.Estoque,
+                        produto.IdMarca ?? 0,
+                        produto.NomeMarca,
+                        produto.GrupoId ?? 0,
+                        produto.NomeGrupo,
+                        produto.Ativo,
+                        produto.DataCadastro,
+                        produto.DataAlteracao
+                    );
+
+                    formCadastro.FormClosed += (s, args) => CarregarProdutos();
+                    formCadastro.ShowDialog();
+                }
+                else
+                {
+                    MessageBox.Show("Produto não encontrado.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
             {
-                MessageBox.Show("Por favor, selecione um produto para excluir.");
+                MessageBox.Show("Por favor, selecione um produto para excluir.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 

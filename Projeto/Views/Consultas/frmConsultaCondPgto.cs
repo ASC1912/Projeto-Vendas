@@ -180,24 +180,39 @@ namespace Projeto
                 var itemSelecionado = listView1.SelectedItems[0];
                 int id = int.Parse(itemSelecionado.SubItems[0].Text);
 
-                var confirmacao = MessageBox.Show("Tem certeza que deseja excluir essa condição de pagamento?", "Confirmação", MessageBoxButtons.YesNo);
-                if (confirmacao == DialogResult.Yes)
+                CondicaoPagamento condicao = controller.BuscarPorId(id);
+
+                if (condicao != null)
                 {
-                    try
+                    var formCadastro = new frmCadastroCondPgto
                     {
-                        controller.Excluir(id);
-                        listView1.Items.Remove(itemSelecionado);
-                        MessageBox.Show("Condição de pagamento excluída com sucesso!");
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"Erro ao excluir: {ex.Message}");
-                    }
+                        modoEdicao = true, 
+                        modoExclusao = true 
+                    };
+
+                    formCadastro.CarregarCondicaoPagamento(
+                        condicao.Id,
+                        condicao.Descricao,
+                        condicao.QtdParcelas,
+                        condicao.Juros,
+                        condicao.Multa,
+                        condicao.Desconto,
+                        condicao.Ativo,
+                        condicao.DataCadastro,
+                        condicao.DataAlteracao
+                    );
+
+                    formCadastro.FormClosed += (s, args) => CarregarCondicoesPagamento();
+                    formCadastro.ShowDialog();
+                }
+                else
+                {
+                    MessageBox.Show("Condição de pagamento não encontrada.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
             {
-                MessageBox.Show("Por favor, selecione uma condição de pagamento para excluir.");
+                MessageBox.Show("Por favor, selecione uma condição de pagamento para excluir.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 

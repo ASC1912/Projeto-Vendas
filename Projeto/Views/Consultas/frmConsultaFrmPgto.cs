@@ -160,41 +160,34 @@ namespace Projeto
                 var itemSelecionado = listView1.SelectedItems[0];
                 int id = int.Parse(itemSelecionado.SubItems[0].Text);
 
-                var confirmacao = MessageBox.Show("Tem certeza que deseja excluir essa forma de pagamento?", "Confirmação", MessageBoxButtons.YesNo);
-                if (confirmacao == DialogResult.Yes)
+                FormaPagamento forma = controller.BuscarPorId(id);
+
+                if (forma != null)
                 {
-                    try
+                    var formCadastro = new frmCadastroFrmPgto
                     {
-                        controller.Excluir(id);
-                        listView1.Items.Remove(itemSelecionado);
-                        MessageBox.Show("Forma de pagamento excluída com sucesso!");
-                    }
-                    catch (Exception ex)
-                    {
-                        if (ex.Message.Contains("Cannot delete or update a parent row"))
-                        {
-                            MessageBox.Show(
-                                "Não é possível excluir este item, pois existem registros vinculados a ele.",
-                                "Erro ao excluir",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Warning
-                            );
-                        }
-                        else
-                        {
-                            MessageBox.Show(
-                                $"Erro ao excluir: {ex.Message}",
-                                "Erro ao excluir",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Error
-                            );
-                        }
-                    }
+                        modoExclusao = true 
+                    };
+
+                    formCadastro.CarregarFormaPagamento(
+                        forma.Id,
+                        forma.Descricao,
+                        forma.Ativo,
+                        forma.DataCadastro,
+                        forma.DataAlteracao
+                    );
+
+                    formCadastro.FormClosed += (s, args) => CarregarFormasPagamento();
+                    formCadastro.ShowDialog();
+                }
+                else
+                {
+                    MessageBox.Show("Forma de pagamento não encontrada.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
             {
-                MessageBox.Show("Por favor, selecione uma forma de pagamento para excluir.");
+                MessageBox.Show("Por favor, selecione uma forma de pagamento para excluir.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 

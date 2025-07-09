@@ -20,6 +20,7 @@ namespace Projeto
         private FormaPagamentoController formaPagamentoController = new FormaPagamentoController();
         private int formaPagamentoSelecionadaId = -1;
         public bool modoEdicao = false;
+        public bool modoExclusao = false; 
 
 
         public frmCadastroCondPgto() : base()
@@ -83,88 +84,119 @@ namespace Projeto
 
         private void AdicionarCondicaoeParcela()
         {
-            if (!Validador.CampoObrigatorio(txtDescricao, "A descrição é obrigatória.")) return;
-            if (!Validador.CampoObrigatorio(txtQtdParcelas, "A quantidade de parcelas é obrigatória.")) return;
-            if (!Validador.CampoObrigatorio(txtJuros, "O Juros é obrigatório.")) return;
-            if (!Validador.CampoObrigatorio(txtMulta, "A nykta é obrigatória.")) return;
-            if (!Validador.CampoObrigatorio(txtDesconto, "O desconto é obrigatória.")) return;
-            if (!Validador.CampoObrigatorio(txtDescricao, "A descrição é obrigatória.")) return;
-
-            if (!Validador.ValidarNumerico(txtQtdParcelas, "A quantidade de parcelas deve ser um número.")) return;
-
-            decimal desconto = string.IsNullOrWhiteSpace(txtDesconto.Text) ? 0 : Convert.ToDecimal(txtDesconto.Text);
-
-            if (!ValidarPorcentagemTotal(desconto))
-                return;
-
-            int qtdParcelas = int.Parse(txtQtdParcelas.Text);
-            int qtdParcelasView = listView1.Items.Count;
-
-            if (qtdParcelas != qtdParcelasView)
+            if (modoExclusao)
             {
-                MessageBox.Show("O número de parcelas não corresponde à quantidade definida.");
-                return;
-            }
-
-            try
-            {
-                int id = string.IsNullOrEmpty(txtCodigo.Text) ? 0 : int.Parse(txtCodigo.Text);
-                string descricao = txtDescricao.Text;
-                decimal juros = string.IsNullOrWhiteSpace(txtJuros.Text) ? 0 : Convert.ToDecimal(txtJuros.Text);
-                decimal multa = string.IsNullOrWhiteSpace(txtMulta.Text) ? 0 : Convert.ToDecimal(txtMulta.Text);
-                bool status = !chkInativo.Checked;
-
-                DateTime dataModificacao = DateTime.Now;
-                DateTime dataCriacao = id == 0
-                    ? DateTime.Now
-                    : DateTime.Parse(lblDataCriacao.Text.Replace("Criado em: ", ""));
-
-                CondicaoPagamento condicao = new CondicaoPagamento
+                var confirmacao = MessageBox.Show("Tem certeza que deseja excluir esta Condição de Pagamento?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (confirmacao == DialogResult.Yes)
                 {
-                    Id = id,
-                    Descricao = descricao,
-                    QtdParcelas = qtdParcelas,
-                    Juros = juros,
-                    Multa = multa,
-                    Desconto = desconto,
-                    Ativo = status,
-                    DataCadastro = dataCriacao,
-                    DataAlteracao = dataModificacao
-                };
-
-
-                List<Parcelamento> parcelas = new List<Parcelamento>();
-                FormaPagamentoController formaPagamentoController = new FormaPagamentoController();
-
-                foreach (ListViewItem item in listView1.Items)
-                {
-                    int numParcela = int.Parse(item.SubItems[0].Text);
-                    int prazoDias = int.Parse(item.SubItems[1].Text);
-                    decimal porcentagem = decimal.Parse(item.SubItems[2].Text.Replace("%", ""));
-                    string descricaoFormaPagamento = item.SubItems[3].Text;
-
-                    int formaPagamentoId = formaPagamentoController.ObterIdFormaPagamento(descricaoFormaPagamento);
-
-                    Parcelamento parcela = new Parcelamento
+                    try
                     {
-                        NumParcela = numParcela,
-                        Porcentagem = porcentagem,
-                        PrazoDias = prazoDias,
-                        FormaPagamentoId = formaPagamentoId
-                    };
+                        int id = int.Parse(txtCodigo.Text);
+                        CondicaoPagamentoController controller = new CondicaoPagamentoController();
+                        controller.Excluir(id);
+                        MessageBox.Show("Condição de pagamento excluída com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        this.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        if (ex.Message.Contains("Cannot delete or update a parent row"))
+                        {
+                            MessageBox.Show(
+                                "Não é possível excluir este item, pois existem registros (clientes, fornecedores, etc.) vinculados a ele.",
+                                "Erro ao excluir",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Warning
+                            );
+                        }
+                        else
+                        {
+                            MessageBox.Show($"Erro ao excluir: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if (!Validador.CampoObrigatorio(txtDescricao, "A descrição é obrigatória.")) return;
+                if (!Validador.CampoObrigatorio(txtQtdParcelas, "A quantidade de parcelas é obrigatória.")) return;
+                if (!Validador.CampoObrigatorio(txtJuros, "O Juros é obrigatório.")) return;
+                if (!Validador.CampoObrigatorio(txtMulta, "A multa é obrigatória.")) return;
+                if (!Validador.CampoObrigatorio(txtDesconto, "O desconto é obrigatório.")) return;
 
-                    parcelas.Add(parcela);
+                if (!Validador.ValidarNumerico(txtQtdParcelas, "A quantidade de parcelas deve ser um número.")) return;
+
+                decimal desconto = string.IsNullOrWhiteSpace(txtDesconto.Text) ? 0 : Convert.ToDecimal(txtDesconto.Text);
+
+                if (!ValidarPorcentagemTotal(desconto))
+                    return;
+
+                int qtdParcelas = int.Parse(txtQtdParcelas.Text);
+                int qtdParcelasView = listView1.Items.Count;
+
+                if (qtdParcelas != qtdParcelasView)
+                {
+                    MessageBox.Show("O número de parcelas não corresponde à quantidade definida.");
+                    return;
                 }
 
-                CondicaoPagamentoController controller = new CondicaoPagamentoController();
-                controller.Salvar(condicao, parcelas);
+                try
+                {
+                    int id = string.IsNullOrEmpty(txtCodigo.Text) ? 0 : int.Parse(txtCodigo.Text);
+                    string descricao = txtDescricao.Text;
+                    decimal juros = string.IsNullOrWhiteSpace(txtJuros.Text) ? 0 : Convert.ToDecimal(txtJuros.Text);
+                    decimal multa = string.IsNullOrWhiteSpace(txtMulta.Text) ? 0 : Convert.ToDecimal(txtMulta.Text);
+                    bool status = !chkInativo.Checked;
 
-                MessageBox.Show("Condição de pagamento e parcelas salvas com sucesso!");
-                this.Close();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Erro: " + ex.Message);
+                    DateTime dataModificacao = DateTime.Now;
+                    DateTime dataCriacao = id == 0
+                        ? DateTime.Now
+                        : DateTime.Parse(lblDataCriacao.Text.Replace("Criado em: ", ""));
+
+                    CondicaoPagamento condicao = new CondicaoPagamento
+                    {
+                        Id = id,
+                        Descricao = descricao,
+                        QtdParcelas = qtdParcelas,
+                        Juros = juros,
+                        Multa = multa,
+                        Desconto = desconto,
+                        Ativo = status,
+                        DataCadastro = dataCriacao,
+                        DataAlteracao = dataModificacao
+                    };
+
+                    List<Parcelamento> parcelas = new List<Parcelamento>();
+                    FormaPagamentoController formaPagamentoController = new FormaPagamentoController();
+
+                    foreach (ListViewItem item in listView1.Items)
+                    {
+                        int numParcela = int.Parse(item.SubItems[0].Text);
+                        int prazoDias = int.Parse(item.SubItems[1].Text);
+                        decimal porcentagem = decimal.Parse(item.SubItems[2].Text.Replace("%", ""));
+                        string descricaoFormaPagamento = item.SubItems[3].Text;
+
+                        int formaPagamentoId = formaPagamentoController.ObterIdFormaPagamento(descricaoFormaPagamento);
+
+                        Parcelamento parcela = new Parcelamento
+                        {
+                            NumParcela = numParcela,
+                            Porcentagem = porcentagem,
+                            PrazoDias = prazoDias,
+                            FormaPagamentoId = formaPagamentoId
+                        };
+                        parcelas.Add(parcela);
+                    }
+
+                    CondicaoPagamentoController controller = new CondicaoPagamentoController();
+                    controller.Salvar(condicao, parcelas);
+
+                    MessageBox.Show("Condição de pagamento e parcelas salvas com sucesso!");
+                    this.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Erro: " + ex.Message);
+                }
             }
         }
 
@@ -340,12 +372,29 @@ namespace Projeto
 
         private void frmCadastroCondPgto_Load(object sender, EventArgs e)
         {
-            if (modoEdicao == false)
+            if (modoExclusao)
+            {
+                btnSalvar.Text = "Deletar";
+                txtDescricao.Enabled = false;
+                txtQtdParcelas.Enabled = false;
+                txtJuros.Enabled = false;
+                txtMulta.Enabled = false;
+                txtDesconto.Enabled = false;
+                chkInativo.Enabled = false;
+
+                txtNumParcela.Enabled = false;
+                txtPorcentagem.Enabled = false;
+                txtPrazoDias.Enabled = false;
+                txtFormaPagamento.Enabled = false;
+                btnFormaPagamento.Enabled = false;
+                btnGerarParcelas.Enabled = false;
+                btnEditarParcela.Enabled = false;
+                btnRemoverParcela.Enabled = false;
+            }
+            else if (modoEdicao == false)
             {
                 txtCodigo.Text = "0";
-
                 DateTime agora = DateTime.Now;
-
                 lblDataCriacao.Text = $"Criado em: {agora:dd/MM/yyyy HH:mm}";
                 lblDataModificacao.Text = $"Modificado em: {agora:dd/MM/yyyy HH:mm}";
             }

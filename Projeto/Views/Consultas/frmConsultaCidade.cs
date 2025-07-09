@@ -168,41 +168,36 @@ namespace Projeto.Views
                 var itemSelecionado = listView1.SelectedItems[0];
                 int id = int.Parse(itemSelecionado.SubItems[0].Text);
 
-                var confirmacao = MessageBox.Show("Tem certeza que deseja excluir essa Cidade?", "Confirmação", MessageBoxButtons.YesNo);
-                if (confirmacao == DialogResult.Yes)
+                Cidade cidade = controller.BuscarPorId(id);
+
+                if (cidade != null)
                 {
-                    try
+                    var formCadastro = new frmCadastroCidade
                     {
-                        controller.Excluir(id);
-                        listView1.Items.Remove(itemSelecionado);
-                        MessageBox.Show("Cidade excluída com sucesso!");
-                    }
-                    catch (Exception ex)
-                    {
-                        if (ex.Message.Contains("Cannot delete or update a parent row"))
-                        {
-                            MessageBox.Show(
-                                "Não é possível excluir este item, pois existem registros vinculados a ele.",
-                                "Erro ao excluir",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Warning
-                            );
-                        }
-                        else
-                        {
-                            MessageBox.Show(
-                                $"Erro ao excluir: {ex.Message}",
-                                "Erro ao excluir",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Error
-                            );
-                        }
-                    }
+                        modoExclusao = true // Ativa o modo de exclusão
+                    };
+
+                    formCadastro.CarregarCidade(
+                         cidade.Id,
+                         cidade.NomeCidade,
+                         cidade.EstadoNome,
+                         cidade.EstadoId,
+                         cidade.Ativo,
+                         cidade.DataCadastro,
+                         cidade.DataAlteracao
+                     );
+
+                    formCadastro.FormClosed += (s, args) => CarregarCidades();
+                    formCadastro.ShowDialog();
+                }
+                else
+                {
+                    MessageBox.Show("Cidade não encontrada.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
             {
-                MessageBox.Show("Por favor, selecione uma cidade para excluir.");
+                MessageBox.Show("Por favor, selecione uma cidade para excluir.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 

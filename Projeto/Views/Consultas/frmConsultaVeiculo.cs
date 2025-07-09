@@ -139,24 +139,41 @@ namespace Projeto.Views.Consultas
                 var itemSelecionado = listView1.SelectedItems[0];
                 int id = int.Parse(itemSelecionado.SubItems[0].Text);
 
-                var confirmacao = MessageBox.Show("Tem certeza que deseja excluir este veículo?", "Confirmação", MessageBoxButtons.YesNo);
-                if (confirmacao == DialogResult.Yes)
+                Veiculo veiculo = controller.BuscarPorId(id);
+
+                if (veiculo != null)
                 {
-                    try
+                    var formCadastro = new frmCadastroVeiculo
                     {
-                        controller.Excluir(id);
-                        listView1.Items.Remove(itemSelecionado);
-                        MessageBox.Show("Veículo excluído com sucesso!");
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"Erro ao excluir: {ex.Message}");
-                    }
+                        modoExclusao = true 
+                    };
+
+                    formCadastro.CarregarVeiculo(
+                        veiculo.Id,
+                        veiculo.Placa,
+                        veiculo.Modelo,
+                        veiculo.AnoFabricacao,
+                        veiculo.CapacidadeCargaKg,
+                        veiculo.Ativo,
+                        veiculo.TransportadoraId,
+                        veiculo.NomeTransportadora,
+                        veiculo.IdMarca,
+                        veiculo.NomeMarca,
+                        veiculo.DataCadastro,
+                        veiculo.DataAlteracao
+                    );
+
+                    formCadastro.FormClosed += (s, args) => CarregarVeiculos();
+                    formCadastro.ShowDialog();
+                }
+                else
+                {
+                    MessageBox.Show("Veículo não encontrado.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
             {
-                MessageBox.Show("Por favor, selecione um veículo para excluir.");
+                MessageBox.Show("Por favor, selecione um veículo para excluir.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 

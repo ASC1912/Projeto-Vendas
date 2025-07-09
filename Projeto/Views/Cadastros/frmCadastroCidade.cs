@@ -18,6 +18,7 @@ namespace Projeto.Views
         private CidadeController controller = new CidadeController();
         private int estadoSelecionadoId = -1;
         public bool modoEdicao = false;
+        public bool modoExclusao = false; 
 
         public frmCadastroCidade() : base()
         {
@@ -47,83 +48,121 @@ namespace Projeto.Views
 
         private void frmCadastroCidade_Load(object sender, EventArgs e)
         {
-            if (modoEdicao == false)
+            if (modoExclusao)
+            {
+                btnSalvar.Text = "Deletar";
+                txtNome.Enabled = false;
+                btnBuscar.Enabled = false;
+                chkInativo.Enabled = false;
+            }
+            else if (modoEdicao == false)
             {
                 txtCodigo.Text = "0";
                 DateTime agora = DateTime.Now;
-
                 lblDataCriacao.Text = $"Criado em: {agora:dd/MM/yyyy HH:mm}";
                 lblDataModificacao.Text = $"Modificado em: {agora:dd/MM/yyyy HH:mm}";
             }
         }
-
         private void btnSalvar_Click(object sender, EventArgs e)
         {
-            if (!Validador.CampoObrigatorio(txtNome, "O nome da cidade é obrigatório.")) return;
-
-            if (estadoSelecionadoId <= 0)
+            if (modoExclusao)
             {
-                MessageBox.Show("Selecione um estado!");
-                return;
-            }
-
-            try
-            {
-                int id = string.IsNullOrWhiteSpace(txtCodigo.Text) ? 0 : Convert.ToInt32(txtCodigo.Text);
-                string nome = txtNome.Text;
-                int idEstado = estadoSelecionadoId;
-                bool status = !chkInativo.Checked;
-
-                var estadoSelecionado = estadoController.BuscarPorId(estadoSelecionadoId);
-
-                if (estadoSelecionado == null)
+                var confirmacao = MessageBox.Show("Tem certeza que deseja excluir esta Cidade?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (confirmacao == DialogResult.Yes)
                 {
-                    MessageBox.Show("Estado selecionado não encontrado. Selecione novamente.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    try
+                    {
+                        int id = int.Parse(txtCodigo.Text);
+                        controller.Excluir(id);
+                        MessageBox.Show("Cidade excluída com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        this.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        if (ex.Message.Contains("Cannot delete or update a parent row"))
+                        {
+                            MessageBox.Show(
+                                "Não é possível excluir este item, pois existem registros vinculados a ele.",
+                                "Erro ao excluir",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Warning
+                            );
+                        }
+                        else
+                        {
+                            MessageBox.Show($"Erro ao excluir: {ex.Message}", "Erro ao excluir", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if (!Validador.CampoObrigatorio(txtNome, "O nome da cidade é obrigatório.")) return;
+
+                if (estadoSelecionadoId <= 0)
+                {
+                    MessageBox.Show("Selecione um estado!");
                     return;
                 }
 
-                List<Cidade> cidades = controller.ListarCidade();
-                bool existeDuplicado = cidades.Exists(item =>
+                try
                 {
-                    var estadoCidade = estadoController.BuscarPorId(item.EstadoId);
-                    return
-                        item.NomeCidade.Trim().Equals(nome, StringComparison.OrdinalIgnoreCase) &&
-                        item.EstadoId == estadoSelecionadoId &&
-                        estadoCidade != null &&
-                        estadoCidade.PaisId == estadoSelecionado.PaisId &&
-                        item.Id != id;
-                });
+                    int id = string.IsNullOrWhiteSpace(txtCodigo.Text) ? 0 : Convert.ToInt32(txtCodigo.Text);
+                    string nome = txtNome.Text;
+                    int idEstado = estadoSelecionadoId;
+                    bool status = !chkInativo.Checked;
 
-                if (existeDuplicado)
-                {
-                    MessageBox.Show("Já existe uma cidade com este nome cadastrada para este estado e país.", "Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    txtNome.Focus();
-                    return;
+                    var estadoSelecionado = estadoController.BuscarPorId(estadoSelecionadoId);
+
+                    if (estadoSelecionado == null)
+                    {
+                        MessageBox.Show("Estado selecionado não encontrado. Selecione novamente.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    List<Cidade> cidades = controller.ListarCidade();
+                    bool existeDuplicado = cidades.Exists(item =>
+                    {
+                        var estadoCidade = estadoController.BuscarPorId(item.EstadoId);
+                        return
+                            item.NomeCidade.Trim().Equals(nome, StringComparison.OrdinalIgnoreCase) &&
+                            item.EstadoId == estadoSelecionadoId &&
+                            estadoCidade != null &&
+                            estadoCidade.PaisId == estadoSelecionado.PaisId &&
+                            item.Id != id;
+                    });
+
+                    if (existeDuplicado)
+                    {
+                        MessageBox.Show("Já existe uma cidade com este nome cadastrada para este estado e país.", "Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        txtNome.Focus();
+                        return;
+                    }
+
+                    DateTime dataCriacao = id == 0
+                        ? DateTime.Now
+                        : DateTime.Parse(lblDataCriacao.Text.Replace("Criado em: ", ""));
+
+                    DateTime dataModificacao = DateTime.Now;
+
+                    Cidade cidade = new Cidade
+                    {
+                        Id = id,
+                        NomeCidade = nome,
+                        EstadoId = idEstado,
+                        Ativo = status,
+                        DataCadastro = dataCriacao,
+                        DataAlteracao = dataModificacao
+                    };
+
+                    controller.Salvar(cidade);
+                    MessageBox.Show("Cidade salva com sucesso!");
+                    this.Close();
                 }
-
-                DateTime dataCriacao = id == 0
-                    ? DateTime.Now
-                    : DateTime.Parse(lblDataCriacao.Text.Replace("Criado em: ", ""));
-
-                DateTime dataModificacao = DateTime.Now;
-
-                Cidade cidade = new Cidade
+                catch (Exception ex)
                 {
-                    Id = id,
-                    NomeCidade = nome,
-                    EstadoId = idEstado,
-                    Ativo = status,
-                    DataCadastro = dataCriacao,
-                    DataAlteracao = dataModificacao
-                };
-
-                controller.Salvar(cidade);
-                MessageBox.Show("Cidade salva com sucesso!");
-                this.Close();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Erro ao salvar cidade: " + ex.Message);
+                    MessageBox.Show("Erro ao salvar cidade: " + ex.Message);
+                }
             }
         }
 

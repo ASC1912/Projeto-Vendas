@@ -19,6 +19,7 @@ namespace Projeto.Views
         private PaisController paisController = new PaisController();
         private FuncionarioController controller = new FuncionarioController();
         public bool modoEdicao = false;
+        public bool modoExclusao = false;
         private int cidadeSelecionadoId = -1;
 
 
@@ -94,162 +95,205 @@ namespace Projeto.Views
 
         private void btnSalvar_Click(object sender, EventArgs e)
         {
-            if (!Validador.CampoObrigatorio(txtNome, "O nome é obrigatório.")) return;
-            if (!Validador.CampoObrigatorio(txtCPF, "O CPF/CNPJ é obrigatório.")) return;
-            if (!Validador.CampoObrigatorio(txtEndereco, "O Endereço é obrigatório.")) return;
-            if (!Validador.CampoObrigatorio(txtNumEnd, "O Número de endereço é obrigatório.")) return;
-            if (!Validador.CampoObrigatorio(txtMatricula, "A matrícula é obrigatória.")) return;
-            if (!Validador.CampoObrigatorio(txtSalario, "O salário é obrigatório.")) return;
-            if (!Validador.ValidarNumerico(txtNumEnd, "O número do endereço deve ser numérico.")) return;
-            if (!Validador.CampoObrigatorio(txtBairro, "O Bairro é obrigatório.")) return;
-            if (!Validador.ValidarEmail(txtEmail)) return;
-            if (!Validador.CampoObrigatorio(txtCargo, "O cargo é obrigatório.")) return;
-
-            string tipoPessoa = cbTipo.Text.Trim();
-            string documento = new string(txtCPF.Text.Where(char.IsDigit).ToArray());
-
-            if (tipoPessoa == "Físico")
+            if (modoExclusao)
             {
-                if (!Validador.ValidarCPF(documento))
+                var confirmacao = MessageBox.Show("Tem certeza que deseja excluir este Funcionário?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (confirmacao == DialogResult.Yes)
                 {
-                    MessageBox.Show("CPF inválido.");
-                    txtCPF.Focus();
-                    return;
-                }
-            }
-            else if (tipoPessoa == "Jurídico")
-            {
-                if (!Validador.ValidarCNPJ(documento))
-                {
-                    MessageBox.Show("CNPJ inválido.");
-                    txtCPF.Focus();
-                    return;
+                    try
+                    {
+                        int id = int.Parse(txtCodigo.Text);
+                        controller.Excluir(id);
+                        MessageBox.Show("Funcionário excluído com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        this.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Erro ao excluir: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
             else
             {
-                MessageBox.Show("Tipo de pessoa inválido.");
-                cbTipo.Focus();
-                return;
-            }
+                if (!Validador.CampoObrigatorio(txtNome, "O nome é obrigatório.")) return;
+                if (!Validador.CampoObrigatorio(txtCPF, "O CPF/CNPJ é obrigatório.")) return;
+                if (!Validador.CampoObrigatorio(txtEndereco, "O Endereço é obrigatório.")) return;
+                if (!Validador.CampoObrigatorio(txtNumEnd, "O Número de endereço é obrigatório.")) return;
+                if (!Validador.ValidarNumerico(txtNumEnd, "O número do endereço deve ser numérico.")) return;
+                if (!Validador.CampoObrigatorio(txtBairro, "O Bairro é obrigatório.")) return;
+                if (!Validador.ValidarEmail(txtEmail)) return;
+                if (!Validador.CampoObrigatorio(txtCargo, "O cargo é obrigatório.")) return;
+                if (!Validador.CampoObrigatorio(txtMatricula, "A matrícula é obrigatória.")) return;
+                if (!Validador.CampoObrigatorio(txtSalario, "O salário é obrigatório.")) return;
 
-            if (cidadeSelecionadoId <= 0)
-            {
-                MessageBox.Show("Selecione uma cidade.");
-                return;
-            }
+                string tipoPessoa = cbTipo.Text.Trim();
+                string documento = new string(txtCPF.Text.Where(char.IsDigit).ToArray());
 
-            if (cidadeSelecionadoId > 0)
-            {
-                var cidade = cidadeController.BuscarPorId(cidadeSelecionadoId);
-                if (cidade != null)
+                if (tipoPessoa == "Físico")
                 {
-                    var estado = estadoController.BuscarPorId(cidade.EstadoId);
-                    if (estado != null)
+                    if (!Validador.ValidarCPF(documento))
                     {
-                        var pais = paisController.BuscarPorId(estado.PaisId);
-                        if (pais != null && pais.NomePais.Trim().Equals("Brasil", StringComparison.OrdinalIgnoreCase))
+                        MessageBox.Show("CPF inválido.");
+                        txtCPF.Focus();
+                        return;
+                    }
+                }
+                else if (tipoPessoa == "Jurídico")
+                {
+                    if (!Validador.ValidarCNPJ(documento))
+                    {
+                        MessageBox.Show("CNPJ inválido.");
+                        txtCPF.Focus();
+                        return;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Tipo de pessoa inválido.");
+                    cbTipo.Focus();
+                    return;
+                }
+
+                if (cidadeSelecionadoId <= 0)
+                {
+                    MessageBox.Show("Selecione uma cidade.");
+                    return;
+                }
+
+                if (cidadeSelecionadoId > 0)
+                {
+                    var cidade = cidadeController.BuscarPorId(cidadeSelecionadoId);
+                    if (cidade != null)
+                    {
+                        var estado = estadoController.BuscarPorId(cidade.EstadoId);
+                        if (estado != null)
                         {
-                            if (string.IsNullOrWhiteSpace(txtRG.Text))
+                            var pais = paisController.BuscarPorId(estado.PaisId);
+                            if (pais != null && pais.NomePais.Trim().Equals("Brasil", StringComparison.OrdinalIgnoreCase))
                             {
-                                MessageBox.Show("O campo RG é obrigatório para funcionarios brasileiros.", "Validação", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                                txtRG.Focus();
-                                return;
+                                if (string.IsNullOrWhiteSpace(txtRG.Text))
+                                {
+                                    MessageBox.Show("O campo RG é obrigatório para funcionarios brasileiros.", "Validação", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                    txtRG.Focus();
+                                    return;
+                                }
                             }
                         }
                     }
                 }
-            }
 
-            string genero = "";
-            if (cbGenero.SelectedItem != null)
-            {
-                string generoSelecionado = cbGenero.SelectedItem.ToString();
-                genero = generoSelecionado.StartsWith("M", StringComparison.OrdinalIgnoreCase) ? "M" : "F";
-            }
-            else
-            {
-                MessageBox.Show("Selecione o gênero.");
-                return;
-            }
-            
-            try
-            {
-                int id = string.IsNullOrWhiteSpace(txtCodigo.Text) ? 0 : Convert.ToInt32(txtCodigo.Text);
-                string nome = txtNome.Text;
-                bool status = !chkInativo.Checked;
-
-                DateTime dataCriacao = id == 0
-                    ? DateTime.Now
-                    : DateTime.Parse(lblDataCriacao.Text.Replace("Criado em: ", ""));
-
-                DateTime dataModificacao = DateTime.Now;
-
-                string cpfCnpjLimpo = new string(txtCPF.Text.Where(char.IsDigit).ToArray());
-
-                List<Funcionario> funcionarios = controller.ListarFuncionario();
-                bool existeDuplicado = funcionarios.Exists(f =>
-                    new string(f.CPF_CNPJ.Where(char.IsDigit).ToArray()).Equals(cpfCnpjLimpo, StringComparison.OrdinalIgnoreCase)
-                    && f.Id != id);
-
-                if (existeDuplicado)
+                string genero = "";
+                if (cbGenero.SelectedItem != null)
                 {
-                    MessageBox.Show("Já existe um funcionário cadastrado com este CPF/CNPJ.", "Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    txtCPF.Focus();
+                    string generoSelecionado = cbGenero.SelectedItem.ToString();
+                    genero = generoSelecionado.StartsWith("M", StringComparison.OrdinalIgnoreCase) ? "M" : "F";
+                }
+                else
+                {
+                    MessageBox.Show("Selecione o gênero.");
                     return;
                 }
 
-
-                Funcionario funcionario = new Funcionario
+                try
                 {
-                    Id = id,
-                    Nome = nome,
-                    CPF_CNPJ = txtCPF.Text,
-                    Email = txtEmail.Text,
-                    Endereco = txtEndereco.Text,
-                    NumeroEndereco = string.IsNullOrWhiteSpace(txtNumEnd.Text) ? 0 : Convert.ToInt32(txtNumEnd.Text),
-                    Bairro = txtBairro.Text,
-                    Complemento = txtComplemento.Text,
-                    Telefone = txtTelefone.Text,
-                    Tipo = cbTipo.Text,
-                    CEP = txtCEP.Text,
-                    Cargo = txtCargo.Text,
-                    Salario = Convert.ToDecimal(txtSalario.Text),
-                    IdCidade = cidadeSelecionadoId,
-                    Ativo = status,
-                    DataAdmissao = dtpAdmissao.Value,
-                    DataDemissao = dtpDemissao.Checked ? (DateTime?)dtpDemissao.Value : null,
-                    Rg = txtRG.Text,
-                    Genero = genero,
-                    Apelido = txtApelido.Text,
-                    Matricula = txtMatricula.Text,
-                    DataCadastro = dataCriacao,
-                    DataAlteracao = dataModificacao
-                };
+                    int id = string.IsNullOrWhiteSpace(txtCodigo.Text) ? 0 : Convert.ToInt32(txtCodigo.Text);
+                    string nome = txtNome.Text;
+                    bool status = !chkInativo.Checked;
 
-                controller.Salvar(funcionario);
-                MessageBox.Show("Funcionário salvo com sucesso!");
-                this.Close();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Erro ao salvar funcionário: " + ex.Message);
+                    DateTime dataCriacao = id == 0
+                        ? DateTime.Now
+                        : DateTime.Parse(lblDataCriacao.Text.Replace("Criado em: ", ""));
+
+                    DateTime dataModificacao = DateTime.Now;
+
+                    string cpfCnpjLimpo = new string(txtCPF.Text.Where(char.IsDigit).ToArray());
+
+                    List<Funcionario> funcionarios = controller.ListarFuncionario();
+                    bool existeDuplicado = funcionarios.Exists(f =>
+                        new string(f.CPF_CNPJ.Where(char.IsDigit).ToArray()).Equals(cpfCnpjLimpo, StringComparison.OrdinalIgnoreCase)
+                        && f.Id != id);
+
+                    if (existeDuplicado)
+                    {
+                        MessageBox.Show("Já existe um funcionário cadastrado com este CPF/CNPJ.", "Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        txtCPF.Focus();
+                        return;
+                    }
+
+                    Funcionario funcionario = new Funcionario
+                    {
+                        Id = id,
+                        Nome = nome,
+                        CPF_CNPJ = txtCPF.Text,
+                        Email = txtEmail.Text,
+                        Endereco = txtEndereco.Text,
+                        NumeroEndereco = string.IsNullOrWhiteSpace(txtNumEnd.Text) ? 0 : Convert.ToInt32(txtNumEnd.Text),
+                        Bairro = txtBairro.Text,
+                        Complemento = txtComplemento.Text,
+                        Telefone = txtTelefone.Text,
+                        Tipo = cbTipo.Text,
+                        CEP = txtCEP.Text,
+                        Cargo = txtCargo.Text,
+                        Salario = Convert.ToDecimal(txtSalario.Text),
+                        IdCidade = cidadeSelecionadoId,
+                        Ativo = status,
+                        DataAdmissao = dtpAdmissao.Value,
+                        DataDemissao = dtpDemissao.Checked ? (DateTime?)dtpDemissao.Value : null,
+                        Rg = txtRG.Text,
+                        Genero = genero,
+                        Apelido = txtApelido.Text,
+                        Matricula = txtMatricula.Text,
+                        DataCadastro = dataCriacao,
+                        DataAlteracao = dataModificacao
+                    };
+
+                    controller.Salvar(funcionario);
+                    MessageBox.Show("Funcionário salvo com sucesso!");
+                    this.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Erro ao salvar funcionário: " + ex.Message);
+                }
             }
         }
 
 
         private void frmCadastroFuncionario_Load(object sender, EventArgs e)
         {
-            if (modoEdicao)
+            if (modoExclusao)
+            {
+                btnSalvar.Text = "Deletar";
+                cbTipo.Enabled = false;
+                txtNome.Enabled = false;
+                txtApelido.Enabled = false;
+                cbGenero.Enabled = false;
+                txtEndereco.Enabled = false;
+                txtNumEnd.Enabled = false;
+                txtBairro.Enabled = false;
+                txtComplemento.Enabled = false;
+                txtCEP.Enabled = false;
+                txtIdCidade.Enabled = false;
+                btnBuscar.Enabled = false;
+                txtEmail.Enabled = false;
+                txtTelefone.Enabled = false;
+                txtCPF.Enabled = false;
+                txtRG.Enabled = false;
+                txtMatricula.Enabled = false;
+                txtCargo.Enabled = false;
+                txtSalario.Enabled = false;
+                dtpAdmissao.Enabled = false;
+                dtpDemissao.Enabled = false;
+                chkInativo.Enabled = false;
+            }
+            else if (modoEdicao)
             {
                 cbTipo.Enabled = false;
             }
             else
             {
                 txtCodigo.Text = "0";
-
                 DateTime agora = DateTime.Now;
-
                 lblDataCriacao.Text = $"Criado em: {agora:dd/MM/yyyy HH:mm}";
                 lblDataModificacao.Text = $"Modificado em: {agora:dd/MM/yyyy HH:mm}";
             }

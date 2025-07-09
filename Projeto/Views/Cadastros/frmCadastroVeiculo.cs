@@ -15,6 +15,7 @@ namespace Projeto.Views.Cadastros
         private int transportadoraSelecionadaId = -1;
         private int marcaSelecionadaId = -1; 
         public bool modoEdicao = false;
+        public bool modoExclusao = false; 
 
         public frmCadastroVeiculo() : base()
         {
@@ -47,62 +48,96 @@ namespace Projeto.Views.Cadastros
 
         private void btnSalvar_Click(object sender, EventArgs e)
         {
-            if (!Validador.CampoObrigatorio(txtPlaca, "A placa é obrigatória.")) return;
-            if (transportadoraSelecionadaId <= 0)
+            if (modoExclusao)
             {
-                MessageBox.Show("Selecione uma transportadora.");
-                return;
-            }
-            if (marcaSelecionadaId <= 0)
-            {
-                MessageBox.Show("Selecione uma marca.");
-                return;
-            }
-
-            try
-            {
-                int id = string.IsNullOrEmpty(txtCodigo.Text) ? 0 : int.Parse(txtCodigo.Text);
-
-                var veiculos = controller.ListarVeiculos();
-                bool placaDuplicada = veiculos.Exists(v => v.Placa.Trim().Equals(txtPlaca.Text.Trim(), StringComparison.OrdinalIgnoreCase) && v.Id != id);
-
-                if (placaDuplicada)
+                var confirmacao = MessageBox.Show("Tem certeza que deseja excluir este veículo?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (confirmacao == DialogResult.Yes)
                 {
-                    MessageBox.Show("Já existe um veículo cadastrado com esta placa.", "Placa Duplicada", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    txtPlaca.Focus();
+                    try
+                    {
+                        int id = int.Parse(txtCodigo.Text);
+                        controller.Excluir(id);
+                        MessageBox.Show("Veículo excluído com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        this.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Erro ao excluir: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+            else
+            {
+                if (!Validador.CampoObrigatorio(txtPlaca, "A placa é obrigatória.")) return;
+                if (transportadoraSelecionadaId <= 0)
+                {
+                    MessageBox.Show("Selecione uma transportadora.");
+                    return;
+                }
+                if (marcaSelecionadaId <= 0)
+                {
+                    MessageBox.Show("Selecione uma marca.");
                     return;
                 }
 
-                DateTime dataCriacao = id == 0 ? DateTime.Now : DateTime.Parse(lblDataCriacao.Text.Replace("Criado em: ", ""));
-                DateTime dataModificacao = DateTime.Now;
-
-                Veiculo veiculo = new Veiculo
+                try
                 {
-                    Id = id,
-                    Placa = txtPlaca.Text,
-                    Modelo = txtModelo.Text,
-                    AnoFabricacao = string.IsNullOrWhiteSpace(txtAnoFabricacao.Text) ? (int?)null : Convert.ToInt32(txtAnoFabricacao.Text),
-                    CapacidadeCargaKg = string.IsNullOrWhiteSpace(txtCapacidadeCarga.Text) ? (decimal?)null : Convert.ToDecimal(txtCapacidadeCarga.Text),
-                    Ativo = !chkInativo.Checked,
-                    TransportadoraId = transportadoraSelecionadaId,
-                    IdMarca = marcaSelecionadaId,
-                    DataCadastro = dataCriacao,
-                    DataAlteracao = dataModificacao
-                };
+                    int id = string.IsNullOrEmpty(txtCodigo.Text) ? 0 : int.Parse(txtCodigo.Text);
 
-                controller.Salvar(veiculo);
-                MessageBox.Show("Veículo salvo com sucesso!");
-                this.Close();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Erro ao salvar veículo: " + ex.Message);
+                    var veiculos = controller.ListarVeiculos();
+                    bool placaDuplicada = veiculos.Exists(v => v.Placa.Trim().Equals(txtPlaca.Text.Trim(), StringComparison.OrdinalIgnoreCase) && v.Id != id);
+
+                    if (placaDuplicada)
+                    {
+                        MessageBox.Show("Já existe um veículo cadastrado com esta placa.", "Placa Duplicada", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        txtPlaca.Focus();
+                        return;
+                    }
+
+                    DateTime dataCriacao = id == 0 ? DateTime.Now : DateTime.Parse(lblDataCriacao.Text.Replace("Criado em: ", ""));
+                    DateTime dataModificacao = DateTime.Now;
+
+                    Veiculo veiculo = new Veiculo
+                    {
+                        Id = id,
+                        Placa = txtPlaca.Text,
+                        Modelo = txtModelo.Text,
+                        AnoFabricacao = string.IsNullOrWhiteSpace(txtAnoFabricacao.Text) ? (int?)null : Convert.ToInt32(txtAnoFabricacao.Text),
+                        CapacidadeCargaKg = string.IsNullOrWhiteSpace(txtCapacidadeCarga.Text) ? (decimal?)null : Convert.ToDecimal(txtCapacidadeCarga.Text),
+                        Ativo = !chkInativo.Checked,
+                        TransportadoraId = transportadoraSelecionadaId,
+                        IdMarca = marcaSelecionadaId,
+                        DataCadastro = dataCriacao,
+                        DataAlteracao = dataModificacao
+                    };
+
+                    controller.Salvar(veiculo);
+                    MessageBox.Show("Veículo salvo com sucesso!");
+                    this.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Erro ao salvar veículo: " + ex.Message);
+                }
             }
         }
 
         private void frmCadastroVeiculo_Load(object sender, EventArgs e)
         {
-            if (modoEdicao == false)
+            if (modoExclusao)
+            {
+                btnSalvar.Text = "Deletar";
+                txtPlaca.Enabled = false;
+                txtModelo.Enabled = false;
+                txtMarca.Enabled = false;
+                btnMarca.Enabled = false;
+                txtAnoFabricacao.Enabled = false;
+                txtCapacidadeCarga.Enabled = false;
+                txtTransportadora.Enabled = false;
+                btnTransportadora.Enabled = false;
+                chkInativo.Enabled = false;
+            }
+            else if (modoEdicao == false)
             {
                 txtCodigo.Text = "0";
                 DateTime agora = DateTime.Now;
@@ -110,7 +145,6 @@ namespace Projeto.Views.Cadastros
                 lblDataModificacao.Text = $"Modificado em: {agora:dd/MM/yyyy HH:mm}";
             }
         }
-
         private void btnBuscarTransportadora_Click(object sender, EventArgs e)
         {
             frmConsultaTransportadora consulta = new frmConsultaTransportadora();

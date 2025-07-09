@@ -173,24 +173,49 @@ namespace Projeto.Views.Consultas
                 var itemSelecionado = listView1.SelectedItems[0];
                 int id = int.Parse(itemSelecionado.SubItems[0].Text);
 
-                var confirmacao = MessageBox.Show("Tem certeza que deseja excluir essa Transportadora?", "Confirmação", MessageBoxButtons.YesNo);
-                if (confirmacao == DialogResult.Yes)
+                Transportadora transportadora = controller.BuscarPorId(id);
+
+                if (transportadora != null)
                 {
-                    try
+                    var formCadastro = new frmCadastroTransportadora
                     {
-                        controller.Excluir(id);
-                        listView1.Items.Remove(itemSelecionado);
-                        MessageBox.Show("Transportadora excluída com sucesso!");
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"Erro ao excluir: {ex.Message}");
-                    }
+                        modoExclusao = true 
+                    };
+
+                    formCadastro.CarregarTransportadora(
+                        transportadora.Id,
+                        transportadora.Nome,
+                        transportadora.CPF_CNPJ,
+                        transportadora.Telefone,
+                        transportadora.Email,
+                        transportadora.Endereco,
+                        transportadora.NumeroEndereco ?? 0,
+                        transportadora.Bairro,
+                        transportadora.Complemento,
+                        transportadora.CEP,
+                        transportadora.InscricaoEstadual,
+                        transportadora.InscricaoEstadualSubTrib,
+                        transportadora.Tipo,
+                        transportadora.NomeCidade ?? "Não encontrado",
+                        transportadora.IdCidade ?? 0,
+                        transportadora.DescricaoCondicao ?? "Não encontrado",
+                        transportadora.IdCondicao ?? 0,
+                        transportadora.Ativo,
+                        transportadora.DataCadastro,
+                        transportadora.DataAlteracao
+                    );
+
+                    formCadastro.FormClosed += (s, args) => CarregarTransportadoras();
+                    formCadastro.ShowDialog();
+                }
+                else
+                {
+                    MessageBox.Show("Transportadora não encontrada.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
             {
-                MessageBox.Show("Por favor, selecione uma transportadora para excluir.");
+                MessageBox.Show("Por favor, selecione uma transportadora para excluir.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 

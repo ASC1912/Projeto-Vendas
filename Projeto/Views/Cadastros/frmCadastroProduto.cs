@@ -13,6 +13,7 @@ namespace Projeto.Views.Cadastros
         private GrupoController grupoController = new GrupoController();
         private MarcaController marcaController = new MarcaController();
         public bool modoEdicao = false;
+        public bool modoExclusao = false;
         private int marcaSelecionadoId = -1;
         private int grupoSelecionadoId = -1;
 
@@ -48,74 +49,104 @@ namespace Projeto.Views.Cadastros
 
         private void btnSalvar_Click(object sender, EventArgs e)
         {
-            if (!Validador.CampoObrigatorio(txtNome, "O nome é obrigatório.")) return;
-            if (!Validador.CampoObrigatorio(txtPreco, "O preço é obrigatório.")) return;
-            if (!Validador.CampoObrigatorio(txtMarca, "A marca é obrigatória.")) return;
-            if (!Validador.CampoObrigatorio(txtGrupo, "O grupo é obrigatório.")) return;
-            if (!Validador.ValidarNumerico(txtEstoque, "O estoque deve ser um número válido.")) return;
-
-            try
+            if (modoExclusao)
             {
-                int id = string.IsNullOrEmpty(txtCodigo.Text) ? 0 : int.Parse(txtCodigo.Text);
-                string nomeProduto = txtNome.Text;
-                string descricao = txtDescricao.Text;
-                decimal preco = string.IsNullOrWhiteSpace(txtPreco.Text) ? 0 : Convert.ToDecimal(txtPreco.Text);
-                int estoque = string.IsNullOrWhiteSpace(txtEstoque.Text) ? 0 : Convert.ToInt32(txtEstoque.Text);
-                bool ativo = !chkInativo.Checked;
-
-                var produtos = controller.ListarProdutos();
-                bool existeDuplicado = produtos.Exists(p =>
-                    p.NomeProduto.Trim().Equals(nomeProduto, StringComparison.OrdinalIgnoreCase) &&
-                    p.GrupoId == grupoSelecionadoId &&
-                    p.IdMarca == marcaSelecionadoId &&
-                    p.Id != id);
-
-                if (existeDuplicado)
+                var confirmacao = MessageBox.Show("Tem certeza que deseja excluir este produto?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (confirmacao == DialogResult.Yes)
                 {
-                    MessageBox.Show("Já existe um produto com este nome cadastrado para este grupo e marca.", "Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    txtNome.Focus();
-                    return;
+                    try
+                    {
+                        int id = int.Parse(txtCodigo.Text);
+                        controller.Excluir(id);
+                        MessageBox.Show("Produto excluído com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        this.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Erro ao excluir: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
-
-                DateTime dataCadastro = id == 0
-                    ? DateTime.Now
-                    : DateTime.Parse(lblDataCriacao.Text.Replace("Criado em: ", ""));
-
-                DateTime dataAlteracao = DateTime.Now;
-
-                Produto produto = new Produto
-                {
-                    Id = id,
-                    NomeProduto = nomeProduto,
-                    Descricao = descricao,
-                    Preco = preco,
-                    Estoque = estoque,
-                    IdMarca = marcaSelecionadoId,
-                    GrupoId = grupoSelecionadoId,
-                    Ativo = ativo,
-                    DataCadastro = dataCadastro,
-                    DataAlteracao = dataAlteracao
-                };
-
-                controller.Salvar(produto);
-
-                MessageBox.Show("Produto salvo com sucesso!");
-                this.Close();
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show("Erro: " + ex.Message);
+                if (!Validador.CampoObrigatorio(txtNome, "O nome é obrigatório.")) return;
+                if (!Validador.CampoObrigatorio(txtPreco, "O preço é obrigatório.")) return;
+                if (!Validador.CampoObrigatorio(txtMarca, "A marca é obrigatória.")) return;
+                if (!Validador.CampoObrigatorio(txtGrupo, "O grupo é obrigatório.")) return;
+                if (!Validador.ValidarNumerico(txtEstoque, "O estoque deve ser um número válido.")) return;
+
+                try
+                {
+                    int id = string.IsNullOrEmpty(txtCodigo.Text) ? 0 : int.Parse(txtCodigo.Text);
+                    string nomeProduto = txtNome.Text;
+                    string descricao = txtDescricao.Text;
+                    decimal preco = string.IsNullOrWhiteSpace(txtPreco.Text) ? 0 : Convert.ToDecimal(txtPreco.Text);
+                    int estoque = string.IsNullOrWhiteSpace(txtEstoque.Text) ? 0 : Convert.ToInt32(txtEstoque.Text);
+                    bool ativo = !chkInativo.Checked;
+
+                    var produtos = controller.ListarProdutos();
+                    bool existeDuplicado = produtos.Exists(p =>
+                        p.NomeProduto.Trim().Equals(nomeProduto, StringComparison.OrdinalIgnoreCase) &&
+                        p.GrupoId == grupoSelecionadoId &&
+                        p.IdMarca == marcaSelecionadoId &&
+                        p.Id != id);
+
+                    if (existeDuplicado)
+                    {
+                        MessageBox.Show("Já existe um produto com este nome cadastrado para este grupo e marca.", "Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        txtNome.Focus();
+                        return;
+                    }
+
+                    DateTime dataCadastro = id == 0
+                        ? DateTime.Now
+                        : DateTime.Parse(lblDataCriacao.Text.Replace("Criado em: ", ""));
+
+                    DateTime dataAlteracao = DateTime.Now;
+
+                    Produto produto = new Produto
+                    {
+                        Id = id,
+                        NomeProduto = nomeProduto,
+                        Descricao = descricao,
+                        Preco = preco,
+                        Estoque = estoque,
+                        IdMarca = marcaSelecionadoId,
+                        GrupoId = grupoSelecionadoId,
+                        Ativo = ativo,
+                        DataCadastro = dataCadastro,
+                        DataAlteracao = dataAlteracao
+                    };
+
+                    controller.Salvar(produto);
+
+                    MessageBox.Show("Produto salvo com sucesso!");
+                    this.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Erro: " + ex.Message);
+                }
             }
         }
 
         private void frmCadastroProduto_Load(object sender, EventArgs e)
         {
-            if (modoEdicao == false)
+            if (modoExclusao)
+            {
+                btnSalvar.Text = "Deletar";
+                txtNome.Enabled = false;
+                txtDescricao.Enabled = false;
+                txtPreco.Enabled = false;
+                txtEstoque.Enabled = false;
+                btnMarca.Enabled = false;
+                btnBuscarGrupo.Enabled = false;
+                chkInativo.Enabled = false;
+            }
+            else if (modoEdicao == false)
             {
                 txtCodigo.Text = "0";
-
                 DateTime agora = DateTime.Now;
-
                 lblDataCriacao.Text = $"Criado em: {agora:dd/MM/yyyy HH:mm}";
                 lblDataModificacao.Text = $"Modificado em: {agora:dd/MM/yyyy HH:mm}";
             }

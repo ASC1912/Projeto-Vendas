@@ -20,6 +20,7 @@ namespace Projeto.Views
         private CondicaoPagamentoController condicaoPagamentoController = new CondicaoPagamentoController();
         private FornecedorController controller = new FornecedorController();
         public bool modoEdicao = false;
+        public bool modoExclusao = false; 
         private int cidadeSelecionadoId = -1;
         private int condicaoSelecionadoId = -1;
 
@@ -84,109 +85,125 @@ namespace Projeto.Views
 
         private void btnSalvar_Click(object sender, EventArgs e)
         {
-            if (!Validador.CampoObrigatorio(txtNome, "O nome é obrigatório.")) return;
-            if (!Validador.CampoObrigatorio(txtCPF, "O CPF/CNPJ é obrigatório.")) return;
-            if (!Validador.CampoObrigatorio(txtEndereco, "O Endereço é obrigatório.")) return;
-            if (!Validador.CampoObrigatorio(txtNumEnd, "O Número de endereço é obrigatório.")) return;
-            if (!Validador.ValidarNumerico(txtNumEnd, "O número do endereço deve ser numérico.")) return;
-            if (!Validador.CampoObrigatorio(txtBairro, "O Bairro é obrigatório.")) return;
-            if (!Validador.ValidarEmail(txtEmail)) return;
-
-            string tipoPessoa = cbTipo.Text.Trim();
-            string documento = new string(txtCPF.Text.Where(char.IsDigit).ToArray());
-
-            if (tipoPessoa == "Físico")
+            if (modoExclusao)
             {
-                if (!Validador.ValidarCPF(documento))
+                var confirmacao = MessageBox.Show("Tem certeza que deseja excluir este Fornecedor?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (confirmacao == DialogResult.Yes)
                 {
-                    MessageBox.Show("CPF inválido.");
-                    txtCPF.Focus();
-                    return;
-                }
-            }
-            else if (tipoPessoa == "Jurídico")
-            {
-                if (!Validador.ValidarCNPJ(documento))
-                {
-                    MessageBox.Show("CNPJ inválido.");
-                    txtCPF.Focus();
-                    return;
-                }
-
-                if (string.IsNullOrWhiteSpace(txtInscEst.Text))
-                {
-                    MessageBox.Show("Inscrição estadual é obrigatória para pessoa jurídica.");
-                    txtInscEst.Focus();
-                    return;
+                    try
+                    {
+                        int id = int.Parse(txtCodigo.Text);
+                        controller.Excluir(id);
+                        MessageBox.Show("Fornecedor excluído com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        this.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Erro ao excluir: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
             else
             {
-                MessageBox.Show("Tipo de pessoa inválido.");
-                cbTipo.Focus();
-                return;
-            }
+                if (!Validador.CampoObrigatorio(txtNome, "O nome é obrigatório.")) return;
+                if (!Validador.CampoObrigatorio(txtCPF, "O CPF/CNPJ é obrigatório.")) return;
+                if (!Validador.CampoObrigatorio(txtEndereco, "O Endereço é obrigatório.")) return;
+                if (!Validador.CampoObrigatorio(txtNumEnd, "O Número de endereço é obrigatório.")) return;
+                if (!Validador.ValidarNumerico(txtNumEnd, "O número do endereço deve ser numérico.")) return;
+                if (!Validador.CampoObrigatorio(txtBairro, "O Bairro é obrigatório.")) return;
+                if (!Validador.ValidarEmail(txtEmail)) return;
 
-            if (cidadeSelecionadoId <= 0)
-            {
-                MessageBox.Show("Selecione uma cidade antes de salvar!");
-                return;
-            }
+                string tipoPessoa = cbTipo.Text.Trim();
+                string documento = new string(txtCPF.Text.Where(char.IsDigit).ToArray());
 
-
-            try
-            {
-                int id = string.IsNullOrWhiteSpace(txtCodigo.Text) ? 0 : Convert.ToInt32(txtCodigo.Text);
-                DateTime dataCriacao = id == 0
-                    ? DateTime.Now
-                    : DateTime.Parse(lblDataCriacao.Text.Replace("Criado em: ", ""));
-
-                DateTime dataModificacao = DateTime.Now;
-
-
-                string cpfCnpjLimpo = new string(txtCPF.Text.Where(char.IsDigit).ToArray());
-
-                List<Fornecedor> fornecedores = controller.ListarFornecedor();
-                bool existeDuplicado = fornecedores.Exists(f =>
-                    new string(f.CPF_CNPJ.Where(char.IsDigit).ToArray()).Equals(cpfCnpjLimpo, StringComparison.OrdinalIgnoreCase)
-                    && f.Id != id);
-
-                if (existeDuplicado)
+                if (tipoPessoa == "Físico")
                 {
-                    MessageBox.Show("Já existe um fornecedor cadastrado com este CPF/CNPJ.", "Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    txtCPF.Focus();
+                    if (!Validador.ValidarCPF(documento))
+                    {
+                        MessageBox.Show("CPF inválido.");
+                        txtCPF.Focus();
+                        return;
+                    }
+                }
+                else if (tipoPessoa == "Jurídico")
+                {
+                    if (!Validador.ValidarCNPJ(documento))
+                    {
+                        MessageBox.Show("CNPJ inválido.");
+                        txtCPF.Focus();
+                        return;
+                    }
+                    if (string.IsNullOrWhiteSpace(txtInscEst.Text))
+                    {
+                        MessageBox.Show("Inscrição estadual é obrigatória para pessoa jurídica.");
+                        txtInscEst.Focus();
+                        return;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Tipo de pessoa inválido.");
+                    cbTipo.Focus();
                     return;
                 }
 
-                Fornecedor fornecedor = new Fornecedor
+                if (cidadeSelecionadoId <= 0)
                 {
-                    Id = id,
-                    Nome = txtNome.Text,
-                    CPF_CNPJ = txtCPF.Text,
-                    Email = txtEmail.Text,
-                    Endereco = txtEndereco.Text,
-                    NumeroEndereco = string.IsNullOrWhiteSpace(txtNumEnd.Text) ? 0 : Convert.ToInt32(txtNumEnd.Text),
-                    Bairro = txtBairro.Text,
-                    Complemento = txtComplemento.Text,
-                    Telefone = txtTelefone.Text,
-                    Tipo = cbTipo.Text,
-                    CEP = txtCEP.Text,
-                    InscricaoEstadual = txtInscEst.Text,
-                    InscricaoEstadualSubTrib = txtInscEstSubTrib.Text,
-                    IdCidade = cidadeSelecionadoId,
-                    IdCondicao = condicaoSelecionadoId > 0 ? (int?)condicaoSelecionadoId : null,
-                    Ativo = !chkInativo.Checked,
-                    DataCadastro = dataCriacao,
-                    DataAlteracao = dataModificacao
-                };
+                    MessageBox.Show("Selecione uma cidade antes de salvar!");
+                    return;
+                }
 
-                controller.Salvar(fornecedor);
-                MessageBox.Show("Fornecedor salvo com sucesso!");
-                this.Close();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Erro ao salvar fornecedor: " + ex.Message);
+                try
+                {
+                    int id = string.IsNullOrWhiteSpace(txtCodigo.Text) ? 0 : Convert.ToInt32(txtCodigo.Text);
+                    DateTime dataCriacao = id == 0
+                        ? DateTime.Now
+                        : DateTime.Parse(lblDataCriacao.Text.Replace("Criado em: ", ""));
+                    DateTime dataModificacao = DateTime.Now;
+                    string cpfCnpjLimpo = new string(txtCPF.Text.Where(char.IsDigit).ToArray());
+
+                    List<Fornecedor> fornecedores = controller.ListarFornecedor();
+                    bool existeDuplicado = fornecedores.Exists(f =>
+                        new string(f.CPF_CNPJ.Where(char.IsDigit).ToArray()).Equals(cpfCnpjLimpo, StringComparison.OrdinalIgnoreCase)
+                        && f.Id != id);
+
+                    if (existeDuplicado)
+                    {
+                        MessageBox.Show("Já existe um fornecedor cadastrado com este CPF/CNPJ.", "Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        txtCPF.Focus();
+                        return;
+                    }
+
+                    Fornecedor fornecedor = new Fornecedor
+                    {
+                        Id = id,
+                        Nome = txtNome.Text,
+                        CPF_CNPJ = txtCPF.Text,
+                        Email = txtEmail.Text,
+                        Endereco = txtEndereco.Text,
+                        NumeroEndereco = string.IsNullOrWhiteSpace(txtNumEnd.Text) ? 0 : Convert.ToInt32(txtNumEnd.Text),
+                        Bairro = txtBairro.Text,
+                        Complemento = txtComplemento.Text,
+                        Telefone = txtTelefone.Text,
+                        Tipo = cbTipo.Text,
+                        CEP = txtCEP.Text,
+                        InscricaoEstadual = txtInscEst.Text,
+                        InscricaoEstadualSubTrib = txtInscEstSubTrib.Text,
+                        IdCidade = cidadeSelecionadoId,
+                        IdCondicao = condicaoSelecionadoId > 0 ? (int?)condicaoSelecionadoId : null,
+                        Ativo = !chkInativo.Checked,
+                        DataCadastro = dataCriacao,
+                        DataAlteracao = dataModificacao
+                    };
+
+                    controller.Salvar(fornecedor);
+                    MessageBox.Show("Fornecedor salvo com sucesso!");
+                    this.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Erro ao salvar fornecedor: " + ex.Message);
+                }
             }
         }
 
@@ -194,16 +211,34 @@ namespace Projeto.Views
 
         private void frmCadastroFornecedor_Load(object sender, EventArgs e)
         {
-            if (modoEdicao)
+            if (modoExclusao)
+            {
+                btnSalvar.Text = "Deletar";
+                cbTipo.Enabled = false;
+                txtNome.Enabled = false;
+                txtEndereco.Enabled = false;
+                txtNumEnd.Enabled = false;
+                txtBairro.Enabled = false;
+                txtComplemento.Enabled = false;
+                txtCEP.Enabled = false;
+                txtIdCidade.Enabled = false;
+                btnBuscar.Enabled = false;
+                txtEmail.Enabled = false;
+                txtTelefone.Enabled = false;
+                txtCPF.Enabled = false;
+                txtInscEst.Enabled = false;
+                txtInscEstSubTrib.Enabled = false;
+                btnBuscarCond.Enabled = false;
+                chkInativo.Enabled = false;
+            }
+            else if (modoEdicao)
             {
                 cbTipo.Enabled = false;
             }
             else
             {
                 txtCodigo.Text = "0";
-
                 DateTime agora = DateTime.Now;
-
                 lblDataCriacao.Text = $"Criado em: {agora:dd/MM/yyyy HH:mm}";
                 lblDataModificacao.Text = $"Modificado em: {agora:dd/MM/yyyy HH:mm}";
             }

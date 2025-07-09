@@ -171,41 +171,37 @@ namespace Projeto.Views
                 var itemSelecionado = listView1.SelectedItems[0];
                 int id = int.Parse(itemSelecionado.SubItems[0].Text);
 
-                var confirmacao = MessageBox.Show("Tem certeza que deseja excluir esse Estado?", "Confirmação", MessageBoxButtons.YesNo);
-                if (confirmacao == DialogResult.Yes)
+                Estado estado = controller.BuscarPorId(id);
+
+                if (estado != null)
                 {
-                    try
+                    var formCadastro = new frmCadastroEstado
                     {
-                        controller.Excluir(id);
-                        listView1.Items.Remove(itemSelecionado);
-                        MessageBox.Show("Estado excluído com sucesso!");
-                    }
-                    catch (Exception ex)
-                    {
-                        if (ex.Message.Contains("Cannot delete or update a parent row"))
-                        {
-                            MessageBox.Show(
-                                "Não é possível excluir este item, pois existem registros vinculados a ele.",
-                                "Erro ao excluir",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Warning
-                            );
-                        }
-                        else
-                        {
-                            MessageBox.Show(
-                                $"Erro ao excluir: {ex.Message}",
-                                "Erro ao excluir",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Error
-                            );
-                        }
-                    }
+                        modoExclusao = true 
+                    };
+
+                    formCadastro.CarregarEstado(
+                        estado.Id,
+                        estado.NomeEstado,
+                        estado.UF,
+                        estado.PaisNome,
+                        estado.PaisId,
+                        estado.Ativo,
+                        estado.DataCadastro,
+                        estado.DataAlteracao
+                    );
+
+                    formCadastro.FormClosed += (s, args) => CarregarEstados();
+                    formCadastro.ShowDialog();
+                }
+                else
+                {
+                    MessageBox.Show("Estado não encontrado.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
             {
-                MessageBox.Show("Por favor, selecione um estado para excluir.");
+                MessageBox.Show("Por favor, selecione um estado para excluir.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 

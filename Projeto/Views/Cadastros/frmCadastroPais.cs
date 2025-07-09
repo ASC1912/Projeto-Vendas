@@ -17,6 +17,8 @@ namespace Projeto.Views
     {
         PaisController controller = new PaisController();
         public bool modoEdicao = false;
+        public bool modoExclusao = false; 
+
 
         public frmCadastroPais() : base()
         {
@@ -44,55 +46,99 @@ namespace Projeto.Views
 
         private void btnSalvar_Click(object sender, EventArgs e)
         {
-            if (!Validador.CampoObrigatorio(txtNome, "O nome do país é obrigatório.")) return;  
-
-            try
+            if (modoExclusao)
             {
-                int id = string.IsNullOrEmpty(txtCodigo.Text) ? 0 : int.Parse(txtCodigo.Text);
-                string nome = txtNome.Text;
-                bool status = !chkInativo.Checked;
-
-                List<Pais> paises = controller.ListarPais();
-                bool existeDuplicado = paises.Exists(p =>
-                    string.Equals(p.NomePais.Trim(), nome, StringComparison.OrdinalIgnoreCase)
-                    && p.Id != id);
-
-                if (existeDuplicado)
+                var confirmacao = MessageBox.Show("Tem certeza que deseja excluir este País?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (confirmacao == DialogResult.Yes)
                 {
-                    MessageBox.Show("Este item já está cadastrado", "Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    txtNome.Focus();
-                    return;
+                    try
+                    {
+                        int id = int.Parse(txtCodigo.Text);
+                        controller.Excluir(id);
+                        MessageBox.Show("País excluído com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        this.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        if (ex.Message.Contains("Cannot delete or update a parent row"))
+                        {
+                            MessageBox.Show(
+                                "Não é possível excluir este item, pois existem registros vinculados a ele.",
+                                "Erro ao excluir",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Warning
+                            );
+                        }
+                        else
+                        {
+                            MessageBox.Show(
+                                $"Erro ao excluir: {ex.Message}",
+                                "Erro ao excluir",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error
+                            );
+                        }
+                    }
                 }
-
-                DateTime dataCriacao = id == 0
-                    ? DateTime.Now
-                    : DateTime.Parse(lblDataCriacao.Text.Replace("Criado em: ", ""));
-
-                DateTime dataModificacao = DateTime.Now;
-
-                Pais pais = new Pais
-                {
-                    Id = id,
-                    NomePais = nome,
-                    Ativo = status,
-                    DataCadastro = dataCriacao,
-                    DataAlteracao = dataModificacao
-                };
-
-                controller.Salvar(pais);
-
-                MessageBox.Show("País salvo com sucesso!");
-                this.Close();
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show("Erro: " + ex.Message);
+                if (!Validador.CampoObrigatorio(txtNome, "O nome do país é obrigatório.")) return;
+
+                try
+                {
+                    int id = string.IsNullOrEmpty(txtCodigo.Text) ? 0 : int.Parse(txtCodigo.Text);
+                    string nome = txtNome.Text;
+                    bool status = !chkInativo.Checked;
+
+                    List<Pais> paises = controller.ListarPais();
+                    bool existeDuplicado = paises.Exists(p =>
+                        string.Equals(p.NomePais.Trim(), nome, StringComparison.OrdinalIgnoreCase)
+                        && p.Id != id);
+
+                    if (existeDuplicado)
+                    {
+                        MessageBox.Show("Este item já está cadastrado", "Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        txtNome.Focus();
+                        return;
+                    }
+
+                    DateTime dataCriacao = id == 0
+                        ? DateTime.Now
+                        : DateTime.Parse(lblDataCriacao.Text.Replace("Criado em: ", ""));
+
+                    DateTime dataModificacao = DateTime.Now;
+
+                    Pais pais = new Pais
+                    {
+                        Id = id,
+                        NomePais = nome,
+                        Ativo = status,
+                        DataCadastro = dataCriacao,
+                        DataAlteracao = dataModificacao
+                    };
+
+                    controller.Salvar(pais);
+
+                    MessageBox.Show("País salvo com sucesso!");
+                    this.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Erro: " + ex.Message);
+                }
             }
         }
 
         private void frmCadastroPais_Load(object sender, EventArgs e)
         {
-            if (modoEdicao == false)
+            if (modoExclusao)
+            {
+                btnSalvar.Text = "Deletar";
+                txtNome.Enabled = false;
+                chkInativo.Enabled = false;
+            }
+            else if (modoEdicao == false)
             {
                 txtCodigo.Text = "0";
 
@@ -101,7 +147,7 @@ namespace Projeto.Views
                 lblDataCriacao.Text = $"Criado em: {agora:dd/MM/yyyy HH:mm}";
                 lblDataModificacao.Text = $"Modificado em: {agora:dd/MM/yyyy HH:mm}";
             }
-          
+
         }
     }
 }

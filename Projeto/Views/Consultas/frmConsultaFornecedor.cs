@@ -176,24 +176,49 @@ namespace Projeto.Views
                 var itemSelecionado = listView1.SelectedItems[0];
                 int id = int.Parse(itemSelecionado.SubItems[0].Text);
 
-                var confirmacao = MessageBox.Show("Tem certeza que deseja excluir esse Fornecedor?", "Confirmação", MessageBoxButtons.YesNo);
-                if (confirmacao == DialogResult.Yes)
+                Fornecedor fornecedor = controller.BuscarPorId(id);
+
+                if (fornecedor != null)
                 {
-                    try
+                    var formCadastro = new frmCadastroFornecedor
                     {
-                        controller.Excluir(id);
-                        listView1.Items.Remove(itemSelecionado);
-                        MessageBox.Show("Fornecedor excluído com sucesso!");
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"Erro ao excluir: {ex.Message}");
-                    }
+                        modoExclusao = true 
+                    };
+
+                    formCadastro.CarregarFornecedor(
+                        fornecedor.Id,
+                        fornecedor.Nome,
+                        fornecedor.CPF_CNPJ,
+                        fornecedor.Telefone,
+                        fornecedor.Email,
+                        fornecedor.Endereco,
+                        fornecedor.NumeroEndereco ?? 0,
+                        fornecedor.Bairro,
+                        fornecedor.Complemento,
+                        fornecedor.CEP,
+                        fornecedor.InscricaoEstadual,
+                        fornecedor.InscricaoEstadualSubTrib,
+                        fornecedor.Tipo,
+                        fornecedor.NomeCidade ?? "Não encontrado",
+                        fornecedor.IdCidade ?? 0,
+                        fornecedor.DescricaoCondicao ?? "Não encontrada",
+                        fornecedor.IdCondicao ?? 0,
+                        fornecedor.Ativo,
+                        fornecedor.DataCadastro,
+                        fornecedor.DataAlteracao
+                    );
+
+                    formCadastro.FormClosed += (s, args) => CarregarFornecedores();
+                    formCadastro.ShowDialog();
+                }
+                else
+                {
+                    MessageBox.Show("Fornecedor não encontrado.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
             {
-                MessageBox.Show("Por favor, selecione um fornecedor para excluir.");
+                MessageBox.Show("Por favor, selecione um fornecedor para excluir.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 

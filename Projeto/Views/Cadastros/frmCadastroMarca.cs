@@ -9,6 +9,7 @@ namespace Projeto.Views.Cadastros
     public partial class frmCadastroMarca : Projeto.frmBase
     {
         public bool modoEdicao = false;
+        public bool modoExclusao = false; 
         private MarcaController controller = new MarcaController();
 
 
@@ -37,59 +38,97 @@ namespace Projeto.Views.Cadastros
 
         private void btnSalvar_Click(object sender, EventArgs e)
         {
-            if (!Validador.CampoObrigatorio(txtNome, "O nome da marca é obrigatório.")) return;
-
-            try
+            if (modoExclusao)
             {
-                int id = string.IsNullOrEmpty(txtCodigo.Text) ? 0 : int.Parse(txtCodigo.Text);
-                string marcaNome = txtNome.Text;
-                bool ativo = !chkInativo.Checked;
-
-                var marcas = controller.ListarMarcas();
-                bool existeDuplicado = marcas.Exists(m =>
-                    m.NomeMarca.Trim().Equals(marcaNome, StringComparison.OrdinalIgnoreCase)
-                    && m.Id != id);
-
-                if (existeDuplicado)
+                var confirmacao = MessageBox.Show("Tem certeza que deseja excluir esta marca?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (confirmacao == DialogResult.Yes)
                 {
-                    MessageBox.Show("Já existe uma marca cadastrada com este nome.", "Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    txtNome.Focus();
-                    return;
+                    try
+                    {
+                        int id = int.Parse(txtCodigo.Text);
+                        controller.Excluir(id);
+                        MessageBox.Show("Marca excluída com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        this.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        if (ex.Message.Contains("Cannot delete or update a parent row"))
+                        {
+                            MessageBox.Show(
+                                "Não é possível excluir este item, pois existem produtos vinculados a ele.",
+                                "Erro ao excluir",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Warning
+                            );
+                        }
+                        else
+                        {
+                            MessageBox.Show($"Erro ao excluir: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
                 }
-
-                DateTime dataCadastro = id == 0
-                    ? DateTime.Now
-                    : DateTime.Parse(lblDataCriacao.Text.Replace("Criado em: ", ""));
-
-                DateTime dataAlteracao = DateTime.Now;
-
-                Marca marca = new Marca
-                {
-                    Id = id,
-                    NomeMarca = marcaNome,
-                    Ativo = ativo,
-                    DataCadastro = dataCadastro,
-                    DataAlteracao = dataAlteracao
-                };
-
-                controller.Salvar(marca);
-
-                MessageBox.Show("Marca salva com sucesso!");
-                this.Close();
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show("Erro ao salvar marca: " + ex.Message);
+                if (!Validador.CampoObrigatorio(txtNome, "O nome da marca é obrigatório.")) return;
+
+                try
+                {
+                    int id = string.IsNullOrEmpty(txtCodigo.Text) ? 0 : int.Parse(txtCodigo.Text);
+                    string marcaNome = txtNome.Text;
+                    bool ativo = !chkInativo.Checked;
+
+                    var marcas = controller.ListarMarcas();
+                    bool existeDuplicado = marcas.Exists(m =>
+                        m.NomeMarca.Trim().Equals(marcaNome, StringComparison.OrdinalIgnoreCase)
+                        && m.Id != id);
+
+                    if (existeDuplicado)
+                    {
+                        MessageBox.Show("Já existe uma marca cadastrada com este nome.", "Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        txtNome.Focus();
+                        return;
+                    }
+
+                    DateTime dataCadastro = id == 0
+                        ? DateTime.Now
+                        : DateTime.Parse(lblDataCriacao.Text.Replace("Criado em: ", ""));
+
+                    DateTime dataAlteracao = DateTime.Now;
+
+                    Marca marca = new Marca
+                    {
+                        Id = id,
+                        NomeMarca = marcaNome,
+                        Ativo = ativo,
+                        DataCadastro = dataCadastro,
+                        DataAlteracao = dataAlteracao
+                    };
+
+                    controller.Salvar(marca);
+
+                    MessageBox.Show("Marca salva com sucesso!");
+                    this.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Erro ao salvar marca: " + ex.Message);
+                }
             }
         }
 
         private void frmCadastroMarca_Load(object sender, EventArgs e)
         {
-            if (modoEdicao == false)
+            if (modoExclusao)
+            {
+                btnSalvar.Text = "Deletar";
+                txtNome.Enabled = false;
+                chkInativo.Enabled = false;
+            }
+            else if (modoEdicao == false)
             {
                 txtCodigo.Text = "0";
                 DateTime agora = DateTime.Now;
-
                 lblDataCriacao.Text = $"Criado em: {agora:dd/MM/yyyy HH:mm}";
                 lblDataModificacao.Text = $"Modificado em: {agora:dd/MM/yyyy HH:mm}";
             }

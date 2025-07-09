@@ -170,24 +170,49 @@ namespace Projeto.Views
                 var itemSelecionado = listView1.SelectedItems[0];
                 int id = int.Parse(itemSelecionado.SubItems[0].Text);
 
-                var confirmacao = MessageBox.Show("Tem certeza que deseja excluir esse Cliente?", "Confirmação", MessageBoxButtons.YesNo);
-                if (confirmacao == DialogResult.Yes)
+                Cliente cliente = controller.BuscarPorId(id);
+
+                if (cliente != null)
                 {
-                    try
+                    var formCadastro = new frmCadastroCliente
                     {
-                        controller.Excluir(id);
-                        listView1.Items.Remove(itemSelecionado);
-                        MessageBox.Show("Cliente excluído com sucesso!");
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"Erro ao excluir: {ex.Message}");
-                    }
+                        modoExclusao = true 
+                    };
+
+                    formCadastro.CarregarCliente(
+                        cliente.Id,
+                        cliente.Nome,
+                        cliente.CPF_CNPJ,
+                        cliente.Telefone,
+                        cliente.Email,
+                        cliente.Endereco,
+                        cliente.NumeroEndereco ?? 0,
+                        cliente.Bairro,
+                        cliente.Complemento,
+                        cliente.CEP,
+                        cliente.Tipo,
+                        cliente.Genero,
+                        cliente.NomeCidade ?? "Não encontrado",
+                        cliente.IdCidade ?? 0,
+                        cliente.DescricaoCondicao ?? "Não encontrada",
+                        cliente.IdCondicao ?? 0,
+                        cliente.Ativo,
+                        cliente.Rg,
+                        cliente.DataCadastro,
+                        cliente.DataAlteracao
+                    );
+
+                    formCadastro.FormClosed += (s, args) => CarregarClientes();
+                    formCadastro.ShowDialog();
+                }
+                else
+                {
+                    MessageBox.Show("Cliente não encontrado.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
             {
-                MessageBox.Show("Por favor, selecione um cliente para excluir.");
+                MessageBox.Show("Por favor, selecione um cliente para excluir.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 

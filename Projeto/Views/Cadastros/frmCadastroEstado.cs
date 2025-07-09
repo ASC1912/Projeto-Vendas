@@ -18,6 +18,8 @@ namespace Projeto.Views
         private EstadoController controller = new EstadoController();
         private int paisSelecionadoId = -1;
         public bool modoEdicao = false;
+        public bool modoExclusao = false; 
+
 
 
         public frmCadastroEstado() : base()
@@ -49,12 +51,18 @@ namespace Projeto.Views
 
         private void frmCadastroEstado_Load(object sender, EventArgs e)
         {
-            if (modoEdicao == false)
+            if (modoExclusao)
+            {
+                btnSalvar.Text = "Deletar";
+                txtNome.Enabled = false;
+                txtUF.Enabled = false;
+                btnBuscar.Enabled = false;
+                chkInativo.Enabled = false;
+            }
+            else if (modoEdicao == false)
             {
                 txtCodigo.Text = "0";
-
                 DateTime agora = DateTime.Now;
-
                 lblDataCriacao.Text = $"Criado em: {agora:dd/MM/yyyy HH:mm}";
                 lblDataModificacao.Text = $"Modificado em: {agora:dd/MM/yyyy HH:mm}";
             }
@@ -62,67 +70,100 @@ namespace Projeto.Views
 
         private void btnSalvar_Click(object sender, EventArgs e)
         {
-            if (!Validador.CampoObrigatorio(txtNome, "O nome do estado é obrigatório.")) return;
-
-            if (paisSelecionadoId <= 0)
+            if (modoExclusao)
             {
-                MessageBox.Show("Selecione um país!");
-                return;
-            }
-
-            try
-            {
-                int id = string.IsNullOrWhiteSpace(txtCodigo.Text) ? 0 : Convert.ToInt32(txtCodigo.Text);
-                string nome = txtNome.Text;
-
-                List<Estado> estados = controller.ListarEstado();
-                bool existeDuplicado = estados.Exists(item =>
-                    item.NomeEstado.Trim().Equals(nome, StringComparison.OrdinalIgnoreCase)
-                    && item.PaisId == paisSelecionadoId
-                    && item.Id != id);
-
-                if (existeDuplicado)
+                var confirmacao = MessageBox.Show("Tem certeza que deseja excluir este Estado?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (confirmacao == DialogResult.Yes)
                 {
-                    MessageBox.Show("Já existe um estado com este nome cadastrado para este país.", "Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    txtNome.Focus();
+                    try
+                    {
+                        int id = int.Parse(txtCodigo.Text);
+                        controller.Excluir(id);
+                        MessageBox.Show("Estado excluído com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        this.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        if (ex.Message.Contains("Cannot delete or update a parent row"))
+                        {
+                            MessageBox.Show(
+                                "Não é possível excluir este item, pois existem registros vinculados a ele.",
+                                "Erro ao excluir",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Warning
+                            );
+                        }
+                        else
+                        {
+                            MessageBox.Show($"Erro ao excluir: {ex.Message}", "Erro ao excluir", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if (!Validador.CampoObrigatorio(txtNome, "O nome do estado é obrigatório.")) return;
+
+                if (paisSelecionadoId <= 0)
+                {
+                    MessageBox.Show("Selecione um país!");
                     return;
                 }
 
-                string uf = txtUF.Text.Trim().ToUpper();
-
-                if (string.IsNullOrWhiteSpace(uf) || uf.Length != 2)
+                try
                 {
-                    MessageBox.Show("Informe a sigla UF com 2 letras.");
-                    return;
+                    int id = string.IsNullOrWhiteSpace(txtCodigo.Text) ? 0 : Convert.ToInt32(txtCodigo.Text);
+                    string nome = txtNome.Text;
+
+                    List<Estado> estados = controller.ListarEstado();
+                    bool existeDuplicado = estados.Exists(item =>
+                        item.NomeEstado.Trim().Equals(nome, StringComparison.OrdinalIgnoreCase)
+                        && item.PaisId == paisSelecionadoId
+                        && item.Id != id);
+
+                    if (existeDuplicado)
+                    {
+                        MessageBox.Show("Já existe um estado com este nome cadastrado para este país.", "Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        txtNome.Focus();
+                        return;
+                    }
+
+                    string uf = txtUF.Text.Trim().ToUpper();
+
+                    if (string.IsNullOrWhiteSpace(uf) || uf.Length != 2)
+                    {
+                        MessageBox.Show("Informe a sigla UF com 2 letras.");
+                        return;
+                    }
+
+                    int idPais = paisSelecionadoId;
+                    bool status = !chkInativo.Checked;
+
+                    DateTime dataCriacao = id == 0
+                        ? DateTime.Now
+                        : DateTime.Parse(lblDataCriacao.Text.Replace("Criado em: ", ""));
+
+                    DateTime dataModificacao = DateTime.Now;
+
+                    Estado estado = new Estado
+                    {
+                        Id = id,
+                        NomeEstado = nome,
+                        UF = uf,
+                        PaisId = idPais,
+                        Ativo = status,
+                        DataCadastro = dataCriacao,
+                        DataAlteracao = dataModificacao
+                    };
+
+                    controller.Salvar(estado);
+                    MessageBox.Show("Estado salvo com sucesso!");
+                    this.Close();
                 }
-
-                int idPais = paisSelecionadoId;
-                bool status = !chkInativo.Checked;
-
-                DateTime dataCriacao = id == 0
-                    ? DateTime.Now
-                    : DateTime.Parse(lblDataCriacao.Text.Replace("Criado em: ", ""));
-
-                DateTime dataModificacao = DateTime.Now;
-
-                Estado estado = new Estado
+                catch (Exception ex)
                 {
-                    Id = id,
-                    NomeEstado = nome,
-                    UF = uf,
-                    PaisId = idPais,
-                    Ativo = status,
-                    DataCadastro = dataCriacao,
-                    DataAlteracao = dataModificacao
-                };
-
-                controller.Salvar(estado);
-                MessageBox.Show("Estado salvo com sucesso!");
-                this.Close();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Erro ao salvar estado: " + ex.Message);
+                    MessageBox.Show("Erro ao salvar estado: " + ex.Message);
+                }
             }
         }
 

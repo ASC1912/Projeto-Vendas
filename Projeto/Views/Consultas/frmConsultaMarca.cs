@@ -153,41 +153,34 @@ namespace Projeto.Views.Consultas
                 var itemSelecionado = listView1.SelectedItems[0];
                 int id = int.Parse(itemSelecionado.SubItems[0].Text);
 
-                var confirmacao = MessageBox.Show("Tem certeza que deseja excluir essa marca?", "Confirmação", MessageBoxButtons.YesNo);
-                if (confirmacao == DialogResult.Yes)
+                Marca marca = controller.BuscarPorId(id);
+
+                if (marca != null)
                 {
-                    try
+                    var formCadastro = new frmCadastroMarca
                     {
-                        controller.Excluir(id);
-                        listView1.Items.Remove(itemSelecionado);
-                        MessageBox.Show("Marca excluída com sucesso!");
-                    }
-                    catch (Exception ex)
-                    {
-                        if (ex.Message.Contains("Cannot delete or update a parent row"))
-                        {
-                            MessageBox.Show(
-                                "Não é possível excluir este item, pois existem registros vinculados a ele.",
-                                "Erro ao excluir",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Warning
-                            );
-                        }
-                        else
-                        {
-                            MessageBox.Show(
-                                $"Erro ao excluir: {ex.Message}",
-                                "Erro ao excluir",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Error
-                            );
-                        }
-                    }
+                        modoExclusao = true 
+                    };
+
+                    formCadastro.CarregarMarca(
+                        marca.Id,
+                        marca.NomeMarca,
+                        marca.Ativo,
+                        marca.DataCadastro,
+                        marca.DataAlteracao
+                    );
+
+                    formCadastro.FormClosed += (s, args) => CarregarMarcas();
+                    formCadastro.ShowDialog();
+                }
+                else
+                {
+                    MessageBox.Show("Marca não encontrada.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
             {
-                MessageBox.Show("Por favor, selecione uma marca para excluir.");
+                MessageBox.Show("Por favor, selecione uma marca para excluir.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 

@@ -20,6 +20,7 @@ namespace Projeto.Views
         private CondicaoPagamentoController condicaoPagamentoController = new CondicaoPagamentoController();
         private ClienteController controller = new ClienteController();
         public bool modoEdicao = false;
+        public bool modoExclusao = false; 
         private int cidadeSelecionadoId = -1;
         private int condicaoSelecionadoId = -1;
 
@@ -78,142 +79,161 @@ namespace Projeto.Views
 
         private void btnSalvar_Click(object sender, EventArgs e)
         {
-            if (!Validador.CampoObrigatorio(txtNome, "O nome é obrigatório.")) return;
-            if (!Validador.CampoObrigatorio(txtCPF, "O CPF/CNPJ é obrigatório.")) return;
-            if (!Validador.CampoObrigatorio(txtEndereco, "O Endereço é obrigatório.")) return;
-            if (!Validador.CampoObrigatorio(txtNumEnd, "O Número de endereço é obrigatório.")) return;
-            if (!Validador.CampoObrigatorio(txtBairro, "O Bairro é obrigatório.")) return;
-            if (!Validador.ValidarEmail(txtEmail)) return;
-            if (!Validador.ValidarNumerico(txtNumEnd, "O número do endereço deve ser numérico.")) return;
-
-            string tipoPessoa = cbTipo.Text.Trim();
-            string documento = new string(txtCPF.Text.Where(char.IsDigit).ToArray());
-
-            if (tipoPessoa == "Físico")
+            if (modoExclusao)
             {
-                if (!Validador.ValidarCPF(documento))
+                var confirmacao = MessageBox.Show("Tem certeza que deseja excluir este Cliente?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (confirmacao == DialogResult.Yes)
                 {
-                    MessageBox.Show("CPF inválido.");
-                    txtCPF.Focus();
-                    return;
-                }
-            }
-            else if (tipoPessoa == "Jurídico")
-            {
-                if (!Validador.ValidarCNPJ(documento))
-                {
-                    MessageBox.Show("CNPJ inválido.");
-                    txtCPF.Focus();
-                    return;
+                    try
+                    {
+                        int id = int.Parse(txtCodigo.Text);
+                        controller.Excluir(id);
+                        MessageBox.Show("Cliente excluído com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        this.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Erro ao excluir: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
             else
             {
-                MessageBox.Show("Tipo de pessoa inválido.");
-                cbTipo.Focus();
-                return;
-            }
+                if (!Validador.CampoObrigatorio(txtNome, "O nome é obrigatório.")) return;
+                if (!Validador.CampoObrigatorio(txtCPF, "O CPF/CNPJ é obrigatório.")) return;
+                if (!Validador.CampoObrigatorio(txtEndereco, "O Endereço é obrigatório.")) return;
+                if (!Validador.CampoObrigatorio(txtNumEnd, "O Número de endereço é obrigatório.")) return;
+                if (!Validador.CampoObrigatorio(txtBairro, "O Bairro é obrigatório.")) return;
+                if (!Validador.ValidarEmail(txtEmail)) return;
+                if (!Validador.ValidarNumerico(txtNumEnd, "O número do endereço deve ser numérico.")) return;
 
-            if (cidadeSelecionadoId <= 0)
-            {
-                MessageBox.Show("Selecione uma cidade.");
-                return;
-            }
+                string tipoPessoa = cbTipo.Text.Trim();
+                string documento = new string(txtCPF.Text.Where(char.IsDigit).ToArray());
 
-            if (cidadeSelecionadoId > 0)
-            {
-                var cidade = cidadeController.BuscarPorId(cidadeSelecionadoId);
-                if (cidade != null)
+                if (tipoPessoa == "Físico")
                 {
-                    var estado = estadoController.BuscarPorId(cidade.EstadoId);
-                    if (estado != null)
+                    if (!Validador.ValidarCPF(documento))
                     {
-                        var pais = paisController.BuscarPorId(estado.PaisId);
-                        if (pais != null && pais.NomePais.Trim().Equals("Brasil", StringComparison.OrdinalIgnoreCase))
+                        MessageBox.Show("CPF inválido.");
+                        txtCPF.Focus();
+                        return;
+                    }
+                }
+                else if (tipoPessoa == "Jurídico")
+                {
+                    if (!Validador.ValidarCNPJ(documento))
+                    {
+                        MessageBox.Show("CNPJ inválido.");
+                        txtCPF.Focus();
+                        return;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Tipo de pessoa inválido.");
+                    cbTipo.Focus();
+                    return;
+                }
+
+                if (cidadeSelecionadoId <= 0)
+                {
+                    MessageBox.Show("Selecione uma cidade.");
+                    return;
+                }
+
+                if (cidadeSelecionadoId > 0)
+                {
+                    var cidade = cidadeController.BuscarPorId(cidadeSelecionadoId);
+                    if (cidade != null)
+                    {
+                        var estado = estadoController.BuscarPorId(cidade.EstadoId);
+                        if (estado != null)
                         {
-                            if (string.IsNullOrWhiteSpace(txtRG.Text))
+                            var pais = paisController.BuscarPorId(estado.PaisId);
+                            if (pais != null && pais.NomePais.Trim().Equals("Brasil", StringComparison.OrdinalIgnoreCase))
                             {
-                                MessageBox.Show("O campo RG é obrigatório para clientes brasileiros.", "Validação", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                                txtRG.Focus();
-                                return;
+                                if (string.IsNullOrWhiteSpace(txtRG.Text))
+                                {
+                                    MessageBox.Show("O campo RG é obrigatório para clientes brasileiros.", "Validação", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                    txtRG.Focus();
+                                    return;
+                                }
                             }
                         }
                     }
                 }
-            }
 
-
-            if (condicaoSelecionadoId <= 0)
-            {
-                MessageBox.Show("Selecione uma condição de pagamento.");
-                return;
-            }
-
-            string genero = "";
-            if (cbGenero.SelectedItem != null)
-            {
-                string generoSelecionado = cbGenero.SelectedItem.ToString();
-                genero = generoSelecionado.StartsWith("M", StringComparison.OrdinalIgnoreCase) ? "M" : "F";
-            }
-            else
-            {
-                MessageBox.Show("Selecione o gênero.");
-                return;
-            }
-
-            try
-            {
-                int id = string.IsNullOrWhiteSpace(txtCodigo.Text) ? 0 : Convert.ToInt32(txtCodigo.Text);
-                DateTime dataCriacao = id == 0
-                    ? DateTime.Now
-                    : DateTime.Parse(lblDataCriacao.Text.Replace("Criado em: ", ""));
-
-                DateTime dataModificacao = DateTime.Now;
-
-
-                string cpfCnpjLimpo = new string(txtCPF.Text.Where(char.IsDigit).ToArray());
-
-                List<Cliente> clientes = controller.ListarCliente();
-                bool existeDuplicado = clientes.Exists(c =>
-                    new string(c.CPF_CNPJ.Where(char.IsDigit).ToArray()).Equals(cpfCnpjLimpo, StringComparison.OrdinalIgnoreCase)
-                    && c.Id != id);
-
-                if (existeDuplicado)
+                if (condicaoSelecionadoId <= 0)
                 {
-                    MessageBox.Show("Já existe um cliente cadastrado com este CPF/CNPJ.", "Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    txtCPF.Focus();
+                    MessageBox.Show("Selecione uma condição de pagamento.");
                     return;
                 }
 
-                Cliente cliente = new Cliente
+                string genero = "";
+                if (cbGenero.SelectedItem != null)
                 {
-                    Id = id,
-                    Nome = txtNome.Text,
-                    CPF_CNPJ = txtCPF.Text,
-                    Email = txtEmail.Text,
-                    Endereco = txtEndereco.Text,
-                    NumeroEndereco = string.IsNullOrWhiteSpace(txtNumEnd.Text) ? 0 : Convert.ToInt32(txtNumEnd.Text),
-                    Bairro = txtBairro.Text,
-                    Complemento = txtComplemento.Text,
-                    Telefone = txtTelefone.Text,
-                    Tipo = cbTipo.Text,
-                    Genero = genero,
-                    CEP = txtCEP.Text,
-                    IdCidade = cidadeSelecionadoId,
-                    IdCondicao = condicaoSelecionadoId,
-                    Ativo = !chkInativo.Checked,
-                    Rg = txtRG.Text,
-                    DataCadastro = dataCriacao,
-                    DataAlteracao = dataModificacao
-                };
+                    string generoSelecionado = cbGenero.SelectedItem.ToString();
+                    genero = generoSelecionado.StartsWith("M", StringComparison.OrdinalIgnoreCase) ? "M" : "F";
+                }
+                else
+                {
+                    MessageBox.Show("Selecione o gênero.");
+                    return;
+                }
 
-                controller.Salvar(cliente);
-                MessageBox.Show("Cliente salvo com sucesso!");
-                this.Close();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Erro ao salvar cliente: " + ex.Message);
+                try
+                {
+                    int id = string.IsNullOrWhiteSpace(txtCodigo.Text) ? 0 : Convert.ToInt32(txtCodigo.Text);
+                    DateTime dataCriacao = id == 0
+                        ? DateTime.Now
+                        : DateTime.Parse(lblDataCriacao.Text.Replace("Criado em: ", ""));
+
+                    DateTime dataModificacao = DateTime.Now;
+
+                    string cpfCnpjLimpo = new string(txtCPF.Text.Where(char.IsDigit).ToArray());
+
+                    List<Cliente> clientes = controller.ListarCliente();
+                    bool existeDuplicado = clientes.Exists(c =>
+                        new string(c.CPF_CNPJ.Where(char.IsDigit).ToArray()).Equals(cpfCnpjLimpo, StringComparison.OrdinalIgnoreCase)
+                        && c.Id != id);
+
+                    if (existeDuplicado)
+                    {
+                        MessageBox.Show("Já existe um cliente cadastrado com este CPF/CNPJ.", "Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        txtCPF.Focus();
+                        return;
+                    }
+
+                    Cliente cliente = new Cliente
+                    {
+                        Id = id,
+                        Nome = txtNome.Text,
+                        CPF_CNPJ = txtCPF.Text,
+                        Email = txtEmail.Text,
+                        Endereco = txtEndereco.Text,
+                        NumeroEndereco = string.IsNullOrWhiteSpace(txtNumEnd.Text) ? 0 : Convert.ToInt32(txtNumEnd.Text),
+                        Bairro = txtBairro.Text,
+                        Complemento = txtComplemento.Text,
+                        Telefone = txtTelefone.Text,
+                        Tipo = cbTipo.Text,
+                        Genero = genero,
+                        CEP = txtCEP.Text,
+                        IdCidade = cidadeSelecionadoId,
+                        IdCondicao = condicaoSelecionadoId,
+                        Ativo = !chkInativo.Checked,
+                        Rg = txtRG.Text,
+                        DataCadastro = dataCriacao,
+                        DataAlteracao = dataModificacao
+                    };
+
+                    controller.Salvar(cliente);
+                    MessageBox.Show("Cliente salvo com sucesso!");
+                    this.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Erro ao salvar cliente: " + ex.Message);
+                }
             }
         }
 
@@ -223,14 +243,33 @@ namespace Projeto.Views
         {
             cbTipo.SelectedIndexChanged += cbTipo_SelectedIndexChanged;
 
-
-            if (modoEdicao)
+            if (modoExclusao)
+            {
+                btnSalvar.Text = "Deletar";
+                cbTipo.Enabled = false;
+                txtNome.Enabled = false;
+                cbGenero.Enabled = false;
+                txtEndereco.Enabled = false;
+                txtNumEnd.Enabled = false;
+                txtBairro.Enabled = false;
+                txtComplemento.Enabled = false;
+                txtCEP.Enabled = false;
+                txtIdCidade.Enabled = false;
+                btnBuscar.Enabled = false;
+                txtEmail.Enabled = false;
+                txtTelefone.Enabled = false;
+                txtCPF.Enabled = false;
+                txtRG.Enabled = false;
+                btnBuscarCond.Enabled = false;
+                chkInativo.Enabled = false;
+            }
+            else if (modoEdicao)
             {
                 cbTipo.Enabled = false;
             }
             else
             {
-                txtCodigo.Text = "0"; 
+                txtCodigo.Text = "0";
 
                 DateTime agora = DateTime.Now;
 

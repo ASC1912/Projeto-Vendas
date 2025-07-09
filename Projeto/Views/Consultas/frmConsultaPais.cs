@@ -159,42 +159,34 @@ namespace Projeto.Views
                 var itemSelecionado = listView1.SelectedItems[0];
                 int id = int.Parse(itemSelecionado.SubItems[0].Text);
 
-                var confirmacao = MessageBox.Show("Tem certeza que deseja excluir esse País?", "Confirmação", MessageBoxButtons.YesNo);
-                if (confirmacao == DialogResult.Yes)
-                {
-                    try
-                    {
-                        controller.Excluir(id);
-                        listView1.Items.Remove(itemSelecionado);
-                        MessageBox.Show("País excluído com sucesso!");
-                    }
-                    catch (Exception ex)
-                    {
-                        if (ex.Message.Contains("Cannot delete or update a parent row"))
-                        {
-                            MessageBox.Show(
-                                "Não é possível excluir este item, pois existem registros vinculados a ele.",
-                                "Erro ao excluir",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Warning
-                            );
-                        }
-                        else
-                        {
-                            MessageBox.Show(
-                                $"Erro ao excluir: {ex.Message}",
-                                "Erro ao excluir",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Error
-                            );
-                        }
-                    }
+                Pais pais = controller.BuscarPorId(id);
 
+                if (pais != null)
+                {
+                    var formCadastro = new frmCadastroPais
+                    {
+                        modoExclusao = true 
+                    };
+
+                    formCadastro.CarregarPais(
+                        pais.Id,
+                        pais.NomePais,
+                        pais.Ativo,
+                        pais.DataCadastro,
+                        pais.DataAlteracao
+                    );
+
+                    formCadastro.FormClosed += (s, args) => CarregarPaises();
+                    formCadastro.ShowDialog();
+                }
+                else
+                {
+                    MessageBox.Show("País não encontrado.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
             {
-                MessageBox.Show("Por favor, selecione um país para excluir.");
+                MessageBox.Show("Por favor, selecione um país para excluir.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 

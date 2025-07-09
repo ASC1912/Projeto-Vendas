@@ -10,6 +10,7 @@ namespace Projeto.Views.Cadastros
     public partial class frmCadastroGrupo : Projeto.frmBase
     {
         public bool modoEdicao = false;
+        public bool modoExclusao = false;
         private GrupoController controller = new GrupoController();
 
         public frmCadastroGrupo()
@@ -37,55 +38,95 @@ namespace Projeto.Views.Cadastros
 
         private async void btnSalvar_Click(object sender, EventArgs e)
         {
-            if (!Validador.CampoObrigatorio(txtNome, "O nome é obrigatório.")) return;
-
-            try
+            if (modoExclusao)
             {
-                int id = string.IsNullOrEmpty(txtCodigo.Text) ? 0 : int.Parse(txtCodigo.Text);
-                string nome = txtNome.Text;
-
-                var grupos = await controller.ListarGrupos();
-                bool existeDuplicado = grupos.Exists(g =>
-                    g.NomeGrupo.Trim().Equals(nome, StringComparison.OrdinalIgnoreCase)
-                    && g.Id != id);
-
-                if (existeDuplicado)
+                var confirmacao = MessageBox.Show("Tem certeza que deseja excluir este grupo?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (confirmacao == DialogResult.Yes)
                 {
-                    MessageBox.Show("Já existe um grupo cadastrado com este nome.", "Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    txtNome.Focus();
-                    return;
+                    try
+                    {
+                        int id = int.Parse(txtCodigo.Text);
+                        await controller.Excluir(id);
+                        MessageBox.Show("Grupo excluído com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        this.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        if (ex.Message.Contains("Cannot delete or update a parent row"))
+                        {
+                            MessageBox.Show(
+                                "Não é possível excluir este item, pois existem produtos vinculados a ele.",
+                                "Erro ao excluir",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Warning
+                            );
+                        }
+                        else
+                        {
+                            MessageBox.Show($"Erro ao excluir: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
                 }
-
-                DateTime dataCriacao = id == 0
-                    ? DateTime.Now
-                    : DateTime.Parse(lblDataCriacao.Text.Replace("Criado em: ", ""));
-
-                DateTime dataModificacao = DateTime.Now;
-
-                Grupo grupo = new Grupo
-                {
-                    Id = id,
-                    NomeGrupo = nome,
-                    Descricao = txtDescricao.Text,
-                    Ativo = !chkInativo.Checked,
-                    DataCadastro = dataCriacao,
-                    DataAlteracao = dataModificacao
-                };
-
-                await controller.Salvar(grupo);
-
-                MessageBox.Show("Grupo salvo com sucesso!");
-                this.Close();
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show("Erro: " + ex.Message);
+                if (!Validador.CampoObrigatorio(txtNome, "O nome é obrigatório.")) return;
+
+                try
+                {
+                    int id = string.IsNullOrEmpty(txtCodigo.Text) ? 0 : int.Parse(txtCodigo.Text);
+                    string nome = txtNome.Text;
+
+                    var grupos = await controller.ListarGrupos();
+                    bool existeDuplicado = grupos.Exists(g =>
+                        g.NomeGrupo.Trim().Equals(nome, StringComparison.OrdinalIgnoreCase)
+                        && g.Id != id);
+
+                    if (existeDuplicado)
+                    {
+                        MessageBox.Show("Já existe um grupo cadastrado com este nome.", "Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        txtNome.Focus();
+                        return;
+                    }
+
+                    DateTime dataCriacao = id == 0
+                        ? DateTime.Now
+                        : DateTime.Parse(lblDataCriacao.Text.Replace("Criado em: ", ""));
+
+                    DateTime dataModificacao = DateTime.Now;
+
+                    Grupo grupo = new Grupo
+                    {
+                        Id = id,
+                        NomeGrupo = nome,
+                        Descricao = txtDescricao.Text,
+                        Ativo = !chkInativo.Checked,
+                        DataCadastro = dataCriacao,
+                        DataAlteracao = dataModificacao
+                    };
+
+                    await controller.Salvar(grupo);
+
+                    MessageBox.Show("Grupo salvo com sucesso!");
+                    this.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Erro: " + ex.Message);
+                }
             }
         }
 
         private void frmCadastroGrupo_Load(object sender, EventArgs e)
         {
-            if (modoEdicao == false)
+            if (modoExclusao)
+            {
+                btnSalvar.Text = "Deletar";
+                txtNome.Enabled = false;
+                txtDescricao.Enabled = false;
+                chkInativo.Enabled = false;
+            }
+            else if (modoEdicao == false)
             {
                 txtCodigo.Text = "0";
                 DateTime agora = DateTime.Now;

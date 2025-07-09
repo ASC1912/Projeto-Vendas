@@ -192,24 +192,57 @@ namespace Projeto.Views
                 var itemSelecionado = listView1.SelectedItems[0];
                 int id = int.Parse(itemSelecionado.SubItems[0].Text);
 
-                var confirmacao = MessageBox.Show("Tem certeza que deseja excluir esse Funcionário?", "Confirmação", MessageBoxButtons.YesNo);
-                if (confirmacao == DialogResult.Yes)
+                Funcionario funcionario = controller.BuscarPorId(id);
+
+                if (funcionario != null)
                 {
-                    try
+                    Cidade cidade = funcionario.IdCidade.HasValue
+                        ? new CidadeController().BuscarPorId(funcionario.IdCidade.Value)
+                        : null;
+
+                    var formCadastro = new frmCadastroFuncionario
                     {
-                        controller.Excluir(id);
-                        listView1.Items.Remove(itemSelecionado);
-                        MessageBox.Show("Funcionário excluído com sucesso!");
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"Erro ao excluir: {ex.Message}");
-                    }
+                        modoExclusao = true 
+                    };
+
+                    formCadastro.CarregarFuncionario(
+                        funcionario.Id,
+                        funcionario.Nome,
+                        funcionario.Apelido,
+                        funcionario.CPF_CNPJ,
+                        funcionario.Telefone,
+                        funcionario.Email,
+                        funcionario.Endereco,
+                        funcionario.NumeroEndereco ?? 0,
+                        funcionario.Bairro,
+                        funcionario.Complemento,
+                        funcionario.CEP,
+                        funcionario.Cargo,
+                        funcionario.Salario,
+                        funcionario.Matricula,
+                        funcionario.Genero,
+                        funcionario.Tipo,
+                        cidade?.NomeCidade ?? "Não encontrado",
+                        funcionario.IdCidade ?? 0,
+                        funcionario.Ativo,
+                        funcionario.DataAdmissao,
+                        funcionario.DataDemissao,
+                        funcionario.Rg,
+                        funcionario.DataCadastro,
+                        funcionario.DataAlteracao
+                    );
+
+                    formCadastro.FormClosed += (s, args) => CarregarFuncionarios();
+                    formCadastro.ShowDialog();
+                }
+                else
+                {
+                    MessageBox.Show("Funcionário não encontrado.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
             {
-                MessageBox.Show("Por favor, selecione um funcionário para excluir.");
+                MessageBox.Show("Por favor, selecione um funcionário para excluir.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
