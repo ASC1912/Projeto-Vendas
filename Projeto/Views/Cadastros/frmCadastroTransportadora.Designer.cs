@@ -93,18 +93,18 @@
             this.lblTipo.AutoSize = true;
             this.lblTipo.Location = new System.Drawing.Point(161, 11);
             this.lblTipo.Name = "lblTipo";
-            this.lblTipo.Size = new System.Drawing.Size(35, 16);
+            this.lblTipo.Size = new System.Drawing.Size(40, 16);
             this.lblTipo.TabIndex = 68;
-            this.lblTipo.Text = "Tipo";
+            this.lblTipo.Text = "Tipo*";
             // 
             // lblNome
             // 
             this.lblNome.AutoSize = true;
             this.lblNome.Location = new System.Drawing.Point(318, 11);
             this.lblNome.Name = "lblNome";
-            this.lblNome.Size = new System.Drawing.Size(101, 16);
+            this.lblNome.Size = new System.Drawing.Size(106, 16);
             this.lblNome.TabIndex = 67;
-            this.lblNome.Text = "Transportadora";
+            this.lblNome.Text = "Transportadora*";
             // 
             // txtNome
             // 
@@ -163,9 +163,9 @@
             this.lblCondPgto.AutoSize = true;
             this.lblCondPgto.Location = new System.Drawing.Point(512, 243);
             this.lblCondPgto.Name = "lblCondPgto";
-            this.lblCondPgto.Size = new System.Drawing.Size(138, 16);
+            this.lblCondPgto.Size = new System.Drawing.Size(143, 16);
             this.lblCondPgto.TabIndex = 98;
-            this.lblCondPgto.Text = "Condição Pagamento";
+            this.lblCondPgto.Text = "Condição Pagamento*";
             // 
             // lblComplemento
             // 
@@ -188,9 +188,9 @@
             this.lblNumEndereco.AutoSize = true;
             this.lblNumEndereco.Location = new System.Drawing.Point(230, 89);
             this.lblNumEndereco.Name = "lblNumEndereco";
-            this.lblNumEndereco.Size = new System.Drawing.Size(55, 16);
+            this.lblNumEndereco.Size = new System.Drawing.Size(60, 16);
             this.lblNumEndereco.TabIndex = 95;
-            this.lblNumEndereco.Text = "Número";
+            this.lblNumEndereco.Text = "Número*";
             // 
             // txtNumEnd
             // 
@@ -220,9 +220,9 @@
             this.lblEndereco.AutoSize = true;
             this.lblEndereco.Location = new System.Drawing.Point(9, 89);
             this.lblEndereco.Name = "lblEndereco";
-            this.lblEndereco.Size = new System.Drawing.Size(66, 16);
+            this.lblEndereco.Size = new System.Drawing.Size(71, 16);
             this.lblEndereco.TabIndex = 91;
-            this.lblEndereco.Text = "Endereço";
+            this.lblEndereco.Text = "Endereço*";
             // 
             // txtEndereco
             // 
@@ -252,9 +252,9 @@
             this.lblInscEst.AutoSize = true;
             this.lblInscEst.Location = new System.Drawing.Point(182, 245);
             this.lblInscEst.Name = "lblInscEst";
-            this.lblInscEst.Size = new System.Drawing.Size(117, 16);
+            this.lblInscEst.Size = new System.Drawing.Size(122, 16);
             this.lblInscEst.TabIndex = 87;
-            this.lblInscEst.Text = "Inscrição Estadual";
+            this.lblInscEst.Text = "Inscrição Estadual*";
             // 
             // txtInscEst
             // 
@@ -300,9 +300,9 @@
             this.lblEmail.AutoSize = true;
             this.lblEmail.Location = new System.Drawing.Point(512, 161);
             this.lblEmail.Name = "lblEmail";
-            this.lblEmail.Size = new System.Drawing.Size(41, 16);
+            this.lblEmail.Size = new System.Drawing.Size(46, 16);
             this.lblEmail.TabIndex = 81;
-            this.lblEmail.Text = "Email";
+            this.lblEmail.Text = "Email*";
             // 
             // txtEmail
             // 
@@ -316,9 +316,9 @@
             this.lblCPF.AutoSize = true;
             this.lblCPF.Location = new System.Drawing.Point(9, 243);
             this.lblCPF.Name = "lblCPF";
-            this.lblCPF.Size = new System.Drawing.Size(33, 16);
+            this.lblCPF.Size = new System.Drawing.Size(38, 16);
             this.lblCPF.TabIndex = 79;
-            this.lblCPF.Text = "CPF";
+            this.lblCPF.Text = "CPF*";
             // 
             // txtCPF
             // 
@@ -332,9 +332,9 @@
             this.lblCidade.AutoSize = true;
             this.lblCidade.Location = new System.Drawing.Point(99, 162);
             this.lblCidade.Name = "lblCidade";
-            this.lblCidade.Size = new System.Drawing.Size(51, 16);
+            this.lblCidade.Size = new System.Drawing.Size(56, 16);
             this.lblCidade.TabIndex = 77;
-            this.lblCidade.Text = "Cidade";
+            this.lblCidade.Text = "Cidade*";
             // 
             // btnSalvar
             // 
@@ -351,9 +351,9 @@
             this.IDCidade.AutoSize = true;
             this.IDCidade.Location = new System.Drawing.Point(9, 162);
             this.IDCidade.Name = "IDCidade";
-            this.IDCidade.Size = new System.Drawing.Size(67, 16);
+            this.IDCidade.Size = new System.Drawing.Size(72, 16);
             this.IDCidade.TabIndex = 105;
-            this.IDCidade.Text = "ID Cidade";
+            this.IDCidade.Text = "ID Cidade*";
             // 
             // txtIdCidade
             // 
@@ -365,8 +365,8 @@
             // 
             // frmCadastroTransportadora
             // 
-            //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            //this.ClientSize = new System.Drawing.Size(1342, 681);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.ClientSize = new System.Drawing.Size(1342, 681);
             this.Controls.Add(this.IDCidade);
             this.Controls.Add(this.txtIdCidade);
             this.Controls.Add(this.btnSalvar);

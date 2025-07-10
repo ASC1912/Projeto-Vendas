@@ -77,9 +77,9 @@
             this.lblDescricao.AutoSize = true;
             this.lblDescricao.Location = new System.Drawing.Point(12, 91);
             this.lblDescricao.Name = "lblDescricao";
-            this.lblDescricao.Size = new System.Drawing.Size(138, 16);
+            this.lblDescricao.Size = new System.Drawing.Size(143, 16);
             this.lblDescricao.TabIndex = 7;
-            this.lblDescricao.Text = "Forma de Pagamento";
+            this.lblDescricao.Text = "Forma de Pagamento*";
             // 
             // frmCadastroFrmPgto
             // 

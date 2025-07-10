@@ -78,9 +78,9 @@
             this.lblNome.AutoSize = true;
             this.lblNome.Location = new System.Drawing.Point(9, 71);
             this.lblNome.Name = "lblNome";
-            this.lblNome.Size = new System.Drawing.Size(44, 16);
+            this.lblNome.Size = new System.Drawing.Size(49, 16);
             this.lblNome.TabIndex = 70;
-            this.lblNome.Text = "Grupo";
+            this.lblNome.Text = "Grupo*";
             // 
             // txtNome
             // 

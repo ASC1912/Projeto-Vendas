@@ -50,18 +50,18 @@
             this.lblEstado.AutoSize = true;
             this.lblEstado.Location = new System.Drawing.Point(9, 207);
             this.lblEstado.Name = "lblEstado";
-            this.lblEstado.Size = new System.Drawing.Size(50, 16);
+            this.lblEstado.Size = new System.Drawing.Size(55, 16);
             this.lblEstado.TabIndex = 6;
-            this.lblEstado.Text = "Estado";
+            this.lblEstado.Text = "Estado*";
             // 
             // lblNome
             // 
             this.lblNome.AutoSize = true;
             this.lblNome.Location = new System.Drawing.Point(9, 101);
             this.lblNome.Name = "lblNome";
-            this.lblNome.Size = new System.Drawing.Size(51, 16);
+            this.lblNome.Size = new System.Drawing.Size(56, 16);
             this.lblNome.TabIndex = 19;
-            this.lblNome.Text = "Cidade";
+            this.lblNome.Text = "Cidade*";
             // 
             // txtNome
             // 

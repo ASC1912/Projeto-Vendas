@@ -107,9 +107,9 @@
             this.lblTipo.AutoSize = true;
             this.lblTipo.Location = new System.Drawing.Point(171, 17);
             this.lblTipo.Name = "lblTipo";
-            this.lblTipo.Size = new System.Drawing.Size(35, 16);
+            this.lblTipo.Size = new System.Drawing.Size(40, 16);
             this.lblTipo.TabIndex = 45;
-            this.lblTipo.Text = "Tipo";
+            this.lblTipo.Text = "Tipo*";
             // 
             // lblTelefone
             // 
@@ -148,9 +148,9 @@
             this.lblCPF.AutoSize = true;
             this.lblCPF.Location = new System.Drawing.Point(10, 234);
             this.lblCPF.Name = "lblCPF";
-            this.lblCPF.Size = new System.Drawing.Size(33, 16);
+            this.lblCPF.Size = new System.Drawing.Size(38, 16);
             this.lblCPF.TabIndex = 39;
-            this.lblCPF.Text = "CPF";
+            this.lblCPF.Text = "CPF*";
             // 
             // txtCPF
             // 
@@ -174,18 +174,18 @@
             this.lblCidade.AutoSize = true;
             this.lblCidade.Location = new System.Drawing.Point(93, 154);
             this.lblCidade.Name = "lblCidade";
-            this.lblCidade.Size = new System.Drawing.Size(51, 16);
+            this.lblCidade.Size = new System.Drawing.Size(56, 16);
             this.lblCidade.TabIndex = 36;
-            this.lblCidade.Text = "Cidade";
+            this.lblCidade.Text = "Cidade*";
             // 
             // lblNome
             // 
             this.lblNome.AutoSize = true;
             this.lblNome.Location = new System.Drawing.Point(313, 19);
             this.lblNome.Name = "lblNome";
-            this.lblNome.Size = new System.Drawing.Size(77, 16);
+            this.lblNome.Size = new System.Drawing.Size(82, 16);
             this.lblNome.TabIndex = 34;
-            this.lblNome.Text = "Funcionário";
+            this.lblNome.Text = "Funcionário*";
             // 
             // txtNome
             // 
@@ -199,9 +199,9 @@
             this.lblSalario.AutoSize = true;
             this.lblSalario.Location = new System.Drawing.Point(373, 308);
             this.lblSalario.Name = "lblSalario";
-            this.lblSalario.Size = new System.Drawing.Size(50, 16);
+            this.lblSalario.Size = new System.Drawing.Size(55, 16);
             this.lblSalario.TabIndex = 51;
-            this.lblSalario.Text = "Salário";
+            this.lblSalario.Text = "Salário*";
             // 
             // txtSalario
             // 
@@ -215,9 +215,9 @@
             this.lblCargo.AutoSize = true;
             this.lblCargo.Location = new System.Drawing.Point(201, 308);
             this.lblCargo.Name = "lblCargo";
-            this.lblCargo.Size = new System.Drawing.Size(44, 16);
+            this.lblCargo.Size = new System.Drawing.Size(49, 16);
             this.lblCargo.TabIndex = 49;
-            this.lblCargo.Text = "Cargo";
+            this.lblCargo.Text = "Cargo*";
             // 
             // txtCargo
             // 
@@ -240,9 +240,9 @@
             this.lblEndereco.AutoSize = true;
             this.lblEndereco.Location = new System.Drawing.Point(9, 81);
             this.lblEndereco.Name = "lblEndereco";
-            this.lblEndereco.Size = new System.Drawing.Size(66, 16);
+            this.lblEndereco.Size = new System.Drawing.Size(71, 16);
             this.lblEndereco.TabIndex = 54;
-            this.lblEndereco.Text = "Endereço";
+            this.lblEndereco.Text = "Endereço*";
             // 
             // txtEndereco
             // 
@@ -272,9 +272,9 @@
             this.lblNumEndereco.AutoSize = true;
             this.lblNumEndereco.Location = new System.Drawing.Point(221, 81);
             this.lblNumEndereco.Name = "lblNumEndereco";
-            this.lblNumEndereco.Size = new System.Drawing.Size(55, 16);
+            this.lblNumEndereco.Size = new System.Drawing.Size(60, 16);
             this.lblNumEndereco.TabIndex = 58;
-            this.lblNumEndereco.Text = "Número";
+            this.lblNumEndereco.Text = "Número*";
             // 
             // txtNumEnd
             // 
@@ -332,9 +332,9 @@
             this.lblDataAdmissao.AutoSize = true;
             this.lblDataAdmissao.Location = new System.Drawing.Point(535, 308);
             this.lblDataAdmissao.Name = "lblDataAdmissao";
-            this.lblDataAdmissao.Size = new System.Drawing.Size(119, 16);
+            this.lblDataAdmissao.Size = new System.Drawing.Size(124, 16);
             this.lblDataAdmissao.TabIndex = 67;
-            this.lblDataAdmissao.Text = "Data de Admissão";
+            this.lblDataAdmissao.Text = "Data de Admissão*";
             // 
             // lblDataDemissao
             // 
@@ -384,9 +384,9 @@
             this.IDCidade.AutoSize = true;
             this.IDCidade.Location = new System.Drawing.Point(9, 154);
             this.IDCidade.Name = "IDCidade";
-            this.IDCidade.Size = new System.Drawing.Size(67, 16);
+            this.IDCidade.Size = new System.Drawing.Size(72, 16);
             this.IDCidade.TabIndex = 80;
-            this.IDCidade.Text = "ID Cidade";
+            this.IDCidade.Text = "ID Cidade*";
             // 
             // txtIdCidade
             // 
@@ -401,9 +401,9 @@
             this.lblMatricula.AutoSize = true;
             this.lblMatricula.Location = new System.Drawing.Point(12, 308);
             this.lblMatricula.Name = "lblMatricula";
-            this.lblMatricula.Size = new System.Drawing.Size(61, 16);
+            this.lblMatricula.Size = new System.Drawing.Size(66, 16);
             this.lblMatricula.TabIndex = 84;
-            this.lblMatricula.Text = "Matrícula";
+            this.lblMatricula.Text = "Matrícula*";
             // 
             // txtMatricula
             // 
@@ -445,9 +445,9 @@
             this.lblGenero.AutoSize = true;
             this.lblGenero.Location = new System.Drawing.Point(743, 17);
             this.lblGenero.Name = "lblGenero";
-            this.lblGenero.Size = new System.Drawing.Size(52, 16);
+            this.lblGenero.Size = new System.Drawing.Size(57, 16);
             this.lblGenero.TabIndex = 85;
-            this.lblGenero.Text = "Gênero";
+            this.lblGenero.Text = "Gênero*";
             // 
             // frmCadastroFuncionario
             // 

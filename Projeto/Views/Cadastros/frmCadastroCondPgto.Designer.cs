@@ -77,9 +77,9 @@
             this.lblPrazo.AutoSize = true;
             this.lblPrazo.Location = new System.Drawing.Point(514, 123);
             this.lblPrazo.Name = "lblPrazo";
-            this.lblPrazo.Size = new System.Drawing.Size(133, 16);
+            this.lblPrazo.Size = new System.Drawing.Size(138, 16);
             this.lblPrazo.TabIndex = 10;
-            this.lblPrazo.Text = "Prazo de pagamento";
+            this.lblPrazo.Text = "Prazo de pagamento*";
             // 
             // txtPrazoDias
             // 
@@ -112,9 +112,9 @@
             this.lblDescricao.AutoSize = true;
             this.lblDescricao.Location = new System.Drawing.Point(12, 67);
             this.lblDescricao.Name = "lblDescricao";
-            this.lblDescricao.Size = new System.Drawing.Size(69, 16);
+            this.lblDescricao.Size = new System.Drawing.Size(74, 16);
             this.lblDescricao.TabIndex = 13;
-            this.lblDescricao.Text = "Descrição";
+            this.lblDescricao.Text = "Descrição*";
             // 
             // txtDescricao
             // 
@@ -128,9 +128,9 @@
             this.lblQtdParcelas.AutoSize = true;
             this.lblQtdParcelas.Location = new System.Drawing.Point(9, 131);
             this.lblQtdParcelas.Name = "lblQtdParcelas";
-            this.lblQtdParcelas.Size = new System.Drawing.Size(153, 16);
+            this.lblQtdParcelas.Size = new System.Drawing.Size(158, 16);
             this.lblQtdParcelas.TabIndex = 15;
-            this.lblQtdParcelas.Text = "Quantidade de Parcelas";
+            this.lblQtdParcelas.Text = "Quantidade de Parcelas*";
             // 
             // txtQtdParcelas
             // 
@@ -144,9 +144,9 @@
             this.lblFormaPagamento.AutoSize = true;
             this.lblFormaPagamento.Location = new System.Drawing.Point(515, 188);
             this.lblFormaPagamento.Name = "lblFormaPagamento";
-            this.lblFormaPagamento.Size = new System.Drawing.Size(138, 16);
+            this.lblFormaPagamento.Size = new System.Drawing.Size(143, 16);
             this.lblFormaPagamento.TabIndex = 17;
-            this.lblFormaPagamento.Text = "Forma de Pagamento";
+            this.lblFormaPagamento.Text = "Forma de Pagamento*";
             // 
             // listView1
             // 
@@ -190,9 +190,9 @@
             this.lblPorcentagem.AutoSize = true;
             this.lblPorcentagem.Location = new System.Drawing.Point(514, 66);
             this.lblPorcentagem.Name = "lblPorcentagem";
-            this.lblPorcentagem.Size = new System.Drawing.Size(88, 16);
+            this.lblPorcentagem.Size = new System.Drawing.Size(93, 16);
             this.lblPorcentagem.TabIndex = 20;
-            this.lblPorcentagem.Text = "Porcentagem";
+            this.lblPorcentagem.Text = "Porcentagem*";
             // 
             // txtPorcentagem
             // 

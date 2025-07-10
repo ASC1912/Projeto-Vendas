@@ -38,22 +38,22 @@
             // 
             this.txtCodigo.TabIndex = 0;
             // 
-            // chkInativo
-            // 
-            this.chkInativo.TabIndex = 2;
-            // 
             // btnSair
             // 
             this.btnSair.TabIndex = 4;
+            // 
+            // chkInativo
+            // 
+            this.chkInativo.TabIndex = 2;
             // 
             // lblNome
             // 
             this.lblNome.AutoSize = true;
             this.lblNome.Location = new System.Drawing.Point(13, 91);
             this.lblNome.Name = "lblNome";
-            this.lblNome.Size = new System.Drawing.Size(34, 16);
+            this.lblNome.Size = new System.Drawing.Size(39, 16);
             this.lblNome.TabIndex = 10;
-            this.lblNome.Text = "País";
+            this.lblNome.Text = "País*";
             // 
             // txtNome
             // 

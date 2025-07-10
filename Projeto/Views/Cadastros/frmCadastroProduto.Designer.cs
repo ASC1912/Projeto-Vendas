@@ -68,9 +68,9 @@
             this.lblNome.AutoSize = true;
             this.lblNome.Location = new System.Drawing.Point(9, 72);
             this.lblNome.Name = "lblNome";
-            this.lblNome.Size = new System.Drawing.Size(54, 16);
+            this.lblNome.Size = new System.Drawing.Size(59, 16);
             this.lblNome.TabIndex = 68;
-            this.lblNome.Text = "Produto";
+            this.lblNome.Text = "Produto*";
             // 
             // txtNome
             // 
@@ -118,9 +118,9 @@
             this.lblGrupo.AutoSize = true;
             this.lblGrupo.Location = new System.Drawing.Point(384, 137);
             this.lblGrupo.Name = "lblGrupo";
-            this.lblGrupo.Size = new System.Drawing.Size(44, 16);
+            this.lblGrupo.Size = new System.Drawing.Size(49, 16);
             this.lblGrupo.TabIndex = 72;
-            this.lblGrupo.Text = "Grupo";
+            this.lblGrupo.Text = "Grupo*";
             // 
             // txtMarca
             // 
@@ -154,9 +154,9 @@
             this.lblPreco.AutoSize = true;
             this.lblPreco.Location = new System.Drawing.Point(12, 209);
             this.lblPreco.Name = "lblPreco";
-            this.lblPreco.Size = new System.Drawing.Size(43, 16);
+            this.lblPreco.Size = new System.Drawing.Size(48, 16);
             this.lblPreco.TabIndex = 79;
-            this.lblPreco.Text = "Preço";
+            this.lblPreco.Text = "Preço*";
             // 
             // txtPreco
             // 
@@ -170,9 +170,9 @@
             this.lblEstoque.AutoSize = true;
             this.lblEstoque.Location = new System.Drawing.Point(12, 283);
             this.lblEstoque.Name = "lblEstoque";
-            this.lblEstoque.Size = new System.Drawing.Size(57, 16);
+            this.lblEstoque.Size = new System.Drawing.Size(62, 16);
             this.lblEstoque.TabIndex = 81;
-            this.lblEstoque.Text = "Estoque";
+            this.lblEstoque.Text = "Estoque*";
             // 
             // txtEstoque
             // 

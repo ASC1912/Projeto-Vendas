@@ -56,9 +56,9 @@
             this.lblNome.AutoSize = true;
             this.lblNome.Location = new System.Drawing.Point(9, 91);
             this.lblNome.Name = "lblNome";
-            this.lblNome.Size = new System.Drawing.Size(50, 16);
+            this.lblNome.Size = new System.Drawing.Size(55, 16);
             this.lblNome.TabIndex = 13;
-            this.lblNome.Text = "Estado";
+            this.lblNome.Text = "Estado*";
             // 
             // txtNome
             // 
@@ -91,9 +91,9 @@
             this.lblPais.AutoSize = true;
             this.lblPais.Location = new System.Drawing.Point(12, 164);
             this.lblPais.Name = "lblPais";
-            this.lblPais.Size = new System.Drawing.Size(34, 16);
+            this.lblPais.Size = new System.Drawing.Size(39, 16);
             this.lblPais.TabIndex = 16;
-            this.lblPais.Text = "País";
+            this.lblPais.Text = "País*";
             // 
             // btnBuscar
             // 

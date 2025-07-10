@@ -73,9 +73,9 @@
             this.lblPlaca.AutoSize = true;
             this.lblPlaca.Location = new System.Drawing.Point(9, 105);
             this.lblPlaca.Name = "lblPlaca";
-            this.lblPlaca.Size = new System.Drawing.Size(42, 16);
+            this.lblPlaca.Size = new System.Drawing.Size(47, 16);
             this.lblPlaca.TabIndex = 95;
-            this.lblPlaca.Text = "Placa";
+            this.lblPlaca.Text = "Placa*";
             // 
             // txtPlaca
             // 
@@ -89,18 +89,18 @@
             this.lblMarca.AutoSize = true;
             this.lblMarca.Location = new System.Drawing.Point(517, 105);
             this.lblMarca.Name = "lblMarca";
-            this.lblMarca.Size = new System.Drawing.Size(45, 16);
+            this.lblMarca.Size = new System.Drawing.Size(50, 16);
             this.lblMarca.TabIndex = 97;
-            this.lblMarca.Text = "Marca";
+            this.lblMarca.Text = "Marca*";
             // 
             // lblModelo
             // 
             this.lblModelo.AutoSize = true;
             this.lblModelo.Location = new System.Drawing.Point(257, 105);
             this.lblModelo.Name = "lblModelo";
-            this.lblModelo.Size = new System.Drawing.Size(53, 16);
+            this.lblModelo.Size = new System.Drawing.Size(58, 16);
             this.lblModelo.TabIndex = 99;
-            this.lblModelo.Text = "Modelo";
+            this.lblModelo.Text = "Modelo*";
             // 
             // txtModelo
             // 
@@ -130,9 +130,9 @@
             this.lblCapacidadeCarga.AutoSize = true;
             this.lblCapacidadeCarga.Location = new System.Drawing.Point(257, 186);
             this.lblCapacidadeCarga.Name = "lblCapacidadeCarga";
-            this.lblCapacidadeCarga.Size = new System.Drawing.Size(167, 16);
+            this.lblCapacidadeCarga.Size = new System.Drawing.Size(172, 16);
             this.lblCapacidadeCarga.TabIndex = 103;
-            this.lblCapacidadeCarga.Text = "Capacidade de Carga (kg)";
+            this.lblCapacidadeCarga.Text = "Capacidade de Carga (kg)*";
             // 
             // txtCapacidadeCarga
             // 
@@ -164,9 +164,9 @@
             this.lblTransportadora.AutoSize = true;
             this.lblTransportadora.Location = new System.Drawing.Point(517, 184);
             this.lblTransportadora.Name = "lblTransportadora";
-            this.lblTransportadora.Size = new System.Drawing.Size(101, 16);
+            this.lblTransportadora.Size = new System.Drawing.Size(106, 16);
             this.lblTransportadora.TabIndex = 104;
-            this.lblTransportadora.Text = "Transportadora";
+            this.lblTransportadora.Text = "Transportadora*";
             // 
             // txtMarca
             // 

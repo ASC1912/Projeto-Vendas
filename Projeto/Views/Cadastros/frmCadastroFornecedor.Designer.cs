@@ -99,9 +99,9 @@
             this.lblTipo.AutoSize = true;
             this.lblTipo.Location = new System.Drawing.Point(172, 23);
             this.lblTipo.Name = "lblTipo";
-            this.lblTipo.Size = new System.Drawing.Size(35, 16);
+            this.lblTipo.Size = new System.Drawing.Size(40, 16);
             this.lblTipo.TabIndex = 45;
-            this.lblTipo.Text = "Tipo";
+            this.lblTipo.Text = "Tipo*";
             // 
             // lblTelefone
             // 
@@ -124,9 +124,9 @@
             this.lblEmail.AutoSize = true;
             this.lblEmail.Location = new System.Drawing.Point(542, 157);
             this.lblEmail.Name = "lblEmail";
-            this.lblEmail.Size = new System.Drawing.Size(41, 16);
+            this.lblEmail.Size = new System.Drawing.Size(46, 16);
             this.lblEmail.TabIndex = 41;
-            this.lblEmail.Text = "Email";
+            this.lblEmail.Text = "Email*";
             // 
             // txtEmail
             // 
@@ -140,9 +140,9 @@
             this.lblCPF.AutoSize = true;
             this.lblCPF.Location = new System.Drawing.Point(12, 230);
             this.lblCPF.Name = "lblCPF";
-            this.lblCPF.Size = new System.Drawing.Size(33, 16);
+            this.lblCPF.Size = new System.Drawing.Size(38, 16);
             this.lblCPF.TabIndex = 39;
-            this.lblCPF.Text = "CPF";
+            this.lblCPF.Text = "CPF*";
             // 
             // txtCPF
             // 
@@ -166,18 +166,18 @@
             this.lblCidade.AutoSize = true;
             this.lblCidade.Location = new System.Drawing.Point(93, 158);
             this.lblCidade.Name = "lblCidade";
-            this.lblCidade.Size = new System.Drawing.Size(51, 16);
+            this.lblCidade.Size = new System.Drawing.Size(56, 16);
             this.lblCidade.TabIndex = 36;
-            this.lblCidade.Text = "Cidade";
+            this.lblCidade.Text = "Cidade*";
             // 
             // lblNome
             // 
             this.lblNome.AutoSize = true;
             this.lblNome.Location = new System.Drawing.Point(318, 22);
             this.lblNome.Name = "lblNome";
-            this.lblNome.Size = new System.Drawing.Size(77, 16);
+            this.lblNome.Size = new System.Drawing.Size(82, 16);
             this.lblNome.TabIndex = 34;
-            this.lblNome.Text = "Fornecedor";
+            this.lblNome.Text = "Fornecedor*";
             // 
             // txtNome
             // 
@@ -207,9 +207,9 @@
             this.lblInscEst.AutoSize = true;
             this.lblInscEst.Location = new System.Drawing.Point(172, 230);
             this.lblInscEst.Name = "lblInscEst";
-            this.lblInscEst.Size = new System.Drawing.Size(117, 16);
+            this.lblInscEst.Size = new System.Drawing.Size(122, 16);
             this.lblInscEst.TabIndex = 49;
-            this.lblInscEst.Text = "Inscrição Estadual";
+            this.lblInscEst.Text = "Inscrição Estadual*";
             // 
             // txtInscEst
             // 
@@ -232,9 +232,9 @@
             this.lblEndereco.AutoSize = true;
             this.lblEndereco.Location = new System.Drawing.Point(9, 86);
             this.lblEndereco.Name = "lblEndereco";
-            this.lblEndereco.Size = new System.Drawing.Size(66, 16);
+            this.lblEndereco.Size = new System.Drawing.Size(71, 16);
             this.lblEndereco.TabIndex = 54;
-            this.lblEndereco.Text = "Endereço";
+            this.lblEndereco.Text = "Endereço*";
             // 
             // txtEndereco
             // 
@@ -264,9 +264,9 @@
             this.lblNumEndereco.AutoSize = true;
             this.lblNumEndereco.Location = new System.Drawing.Point(223, 86);
             this.lblNumEndereco.Name = "lblNumEndereco";
-            this.lblNumEndereco.Size = new System.Drawing.Size(55, 16);
+            this.lblNumEndereco.Size = new System.Drawing.Size(60, 16);
             this.lblNumEndereco.TabIndex = 58;
-            this.lblNumEndereco.Text = "Número";
+            this.lblNumEndereco.Text = "Número*";
             // 
             // txtNumEnd
             // 
@@ -296,9 +296,9 @@
             this.lblCondPgto.AutoSize = true;
             this.lblCondPgto.Location = new System.Drawing.Point(542, 228);
             this.lblCondPgto.Name = "lblCondPgto";
-            this.lblCondPgto.Size = new System.Drawing.Size(138, 16);
+            this.lblCondPgto.Size = new System.Drawing.Size(143, 16);
             this.lblCondPgto.TabIndex = 62;
-            this.lblCondPgto.Text = "Condição Pagamento";
+            this.lblCondPgto.Text = "Condição Pagamento*";
             // 
             // cbTipo
             // 
@@ -353,9 +353,9 @@
             this.IDCidade.AutoSize = true;
             this.IDCidade.Location = new System.Drawing.Point(9, 158);
             this.IDCidade.Name = "IDCidade";
-            this.IDCidade.Size = new System.Drawing.Size(67, 16);
+            this.IDCidade.Size = new System.Drawing.Size(72, 16);
             this.IDCidade.TabIndex = 78;
-            this.IDCidade.Text = "ID Cidade";
+            this.IDCidade.Text = "ID Cidade*";
             // 
             // txtIdCidade
             // 
