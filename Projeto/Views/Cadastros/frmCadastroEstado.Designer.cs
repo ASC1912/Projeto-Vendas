@@ -118,9 +118,9 @@
             this.lblUF.AutoSize = true;
             this.lblUF.Location = new System.Drawing.Point(262, 91);
             this.lblUF.Name = "lblUF";
-            this.lblUF.Size = new System.Drawing.Size(25, 16);
+            this.lblUF.Size = new System.Drawing.Size(30, 16);
             this.lblUF.TabIndex = 68;
-            this.lblUF.Text = "UF";
+            this.lblUF.Text = "UF*";
             // 
             // txtUF
             // 

@@ -13,6 +13,5 @@ namespace Projeto.Models
         public int? IdCondicao { get; set; }
         public string DescricaoCondicao { get; set; } 
 
-
     }
 }

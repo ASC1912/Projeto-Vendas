@@ -317,6 +317,7 @@
             this.dtpAdmissao.Name = "dtpAdmissao";
             this.dtpAdmissao.Size = new System.Drawing.Size(160, 22);
             this.dtpAdmissao.TabIndex = 20;
+            this.dtpAdmissao.Value = new System.DateTime(2025, 7, 10, 0, 0, 0, 0);
             // 
             // dtpDemissao
             // 

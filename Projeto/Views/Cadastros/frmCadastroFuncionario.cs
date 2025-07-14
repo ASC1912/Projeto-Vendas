@@ -31,6 +31,8 @@ namespace Projeto.Views
             cbGenero.SelectedIndex = 0;
             dtpDemissao.Checked = false;
             cbGenero.SelectedIndex = 0;
+            dtpAdmissao.MaxDate = DateTime.Now;
+            dtpDemissao.MaxDate = DateTime.Now;
             cbTipo.SelectedIndexChanged += cbTipo_SelectedIndexChanged;
             cbTipo_SelectedIndexChanged(null, null);
         }
