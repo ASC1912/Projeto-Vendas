@@ -20,7 +20,7 @@ namespace Projeto.Views
         private CondicaoPagamentoController condicaoPagamentoController = new CondicaoPagamentoController();
         private ClienteController controller = new ClienteController();
         public bool modoEdicao = false;
-        public bool modoExclusao = false; 
+        public bool modoExclusao = false;
         private int cidadeSelecionadoId = -1;
         private int condicaoSelecionadoId = -1;
 
@@ -31,13 +31,14 @@ namespace Projeto.Views
             txtCodigo.Enabled = false;
             cbTipo.SelectedIndex = 0;
             cbGenero.SelectedIndex = 0;
+            dtpNascimento.MaxDate = DateTime.Now;
             cbTipo_SelectedIndexChanged(null, null);
         }
 
         public void CarregarCliente(int id, string nome, string cpfCnpj, string telefone, string email, string endereco,
-                 int numeroEndereco, string bairro, string complemento, string cep, string tipo, string genero, 
+                 int numeroEndereco, string bairro, string complemento, string cep, string tipo, string genero,
                  string nomeCidade, int idCidade, string descricaoCondicao, int idCondicao, bool ativo, string rg,
-                 DateTime? dataCadastro, DateTime? dataAlteracao)
+                 DateTime? dataNascimento, DateTime? dataCadastro, DateTime? dataAlteracao)
         {
             txtCodigo.Text = id.ToString();
             txtNome.Text = nome;
@@ -56,7 +57,9 @@ namespace Projeto.Views
             txtCondicao.Text = descricaoCondicao;
             condicaoSelecionadoId = idCondicao;
             chkInativo.Checked = !ativo;
-            txtRG.Text = rg; 
+            txtRG.Text = rg;
+            if (dataNascimento.HasValue)
+                dtpNascimento.Value = dataNascimento.Value;
 
             if (!string.IsNullOrWhiteSpace(genero))
             {
@@ -222,6 +225,7 @@ namespace Projeto.Views
                         IdCondicao = condicaoSelecionadoId,
                         Ativo = !chkInativo.Checked,
                         Rg = txtRG.Text,
+                        DataNascimento = dtpNascimento.Value,
                         DataCadastro = dataCriacao,
                         DataAlteracao = dataModificacao
                     };
@@ -262,6 +266,7 @@ namespace Projeto.Views
                 txtRG.Enabled = false;
                 btnBuscarCond.Enabled = false;
                 chkInativo.Enabled = false;
+                dtpNascimento.Enabled = false;
             }
             else if (modoEdicao)
             {

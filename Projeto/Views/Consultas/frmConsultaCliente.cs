@@ -50,6 +50,7 @@ namespace Projeto.Views
                     item.SubItems.Add(cliente.Email);
                     item.SubItems.Add(cliente.CPF_CNPJ);
                     item.SubItems.Add(cliente.Rg);
+                    item.SubItems.Add(cliente.DataNascimento?.ToShortDateString() ?? "");
                     item.SubItems.Add(cliente.Ativo ? "Ativo" : "Inativo");
 
                     listView1.Items.Add(item);
@@ -93,6 +94,7 @@ namespace Projeto.Views
                         item.SubItems.Add(cliente.Email);
                         item.SubItems.Add(cliente.CPF_CNPJ);
                         item.SubItems.Add(cliente.Rg);
+                        item.SubItems.Add(cliente.DataNascimento?.ToShortDateString() ?? "");
                         item.SubItems.Add(cliente.Ativo ? "Ativo" : "Inativo");
                         listView1.Items.Add(item);
                     }
@@ -144,6 +146,7 @@ namespace Projeto.Views
                         cliente.IdCondicao ?? 0,
                         cliente.Ativo,
                         cliente.Rg,
+                        cliente.DataNascimento,
                         cliente.DataCadastro,
                         cliente.DataAlteracao
                     );
@@ -176,7 +179,7 @@ namespace Projeto.Views
                 {
                     var formCadastro = new frmCadastroCliente
                     {
-                        modoExclusao = true 
+                        modoExclusao = true
                     };
 
                     formCadastro.CarregarCliente(
@@ -198,6 +201,7 @@ namespace Projeto.Views
                         cliente.IdCondicao ?? 0,
                         cliente.Ativo,
                         cliente.Rg,
+                        cliente.DataNascimento,
                         cliente.DataCadastro,
                         cliente.DataAlteracao
                     );

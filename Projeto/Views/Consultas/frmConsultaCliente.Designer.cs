@@ -44,6 +44,7 @@
             this.Genero = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.CPF_CNPJ = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.RG = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.DataNascimento = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // listView1
@@ -64,6 +65,7 @@
             this.Email,
             this.CPF_CNPJ,
             this.RG,
+            this.DataNascimento,
             this.Status});
             // 
             // btnDeletar
@@ -137,7 +139,6 @@
             // 
             // Status
             // 
-            this.Status.DisplayIndex = 13;
             this.Status.Text = "Ativo";
             // 
             // Genero
@@ -146,13 +147,16 @@
             // 
             // CPF_CNPJ
             // 
-            this.CPF_CNPJ.DisplayIndex = 14;
             this.CPF_CNPJ.Text = "CPF/CNPJ";
             // 
             // RG
             // 
-            this.RG.DisplayIndex = 15;
             this.RG.Text = "RG";
+            this.RG.Width = 67;
+            // 
+            // DataNascimento
+            // 
+            this.DataNascimento.Text = "DataNascimento";
             // 
             // frmConsultaCliente
             // 
@@ -184,5 +188,6 @@
         private System.Windows.Forms.ColumnHeader Genero;
         private System.Windows.Forms.ColumnHeader CPF_CNPJ;
         private System.Windows.Forms.ColumnHeader RG;
+        private System.Windows.Forms.ColumnHeader DataNascimento;
     }
 }

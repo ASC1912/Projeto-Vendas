@@ -71,6 +71,8 @@
             this.txtApelido = new System.Windows.Forms.TextBox();
             this.lblApelido = new System.Windows.Forms.Label();
             this.lblGenero = new System.Windows.Forms.Label();
+            this.lblDataNascimento = new System.Windows.Forms.Label();
+            this.dtpNascimento = new System.Windows.Forms.DateTimePicker();
             this.SuspendLayout();
             // 
             // txtCodigo
@@ -450,10 +452,30 @@
             this.lblGenero.TabIndex = 85;
             this.lblGenero.Text = "Gênero*";
             // 
+            // lblDataNascimento
+            // 
+            this.lblDataNascimento.AutoSize = true;
+            this.lblDataNascimento.Location = new System.Drawing.Point(921, 19);
+            this.lblDataNascimento.Name = "lblDataNascimento";
+            this.lblDataNascimento.Size = new System.Drawing.Size(130, 16);
+            this.lblDataNascimento.TabIndex = 91;
+            this.lblDataNascimento.Text = "Data de Nascimento";
+            // 
+            // dtpNascimento
+            // 
+            this.dtpNascimento.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpNascimento.Location = new System.Drawing.Point(924, 38);
+            this.dtpNascimento.Name = "dtpNascimento";
+            this.dtpNascimento.Size = new System.Drawing.Size(160, 22);
+            this.dtpNascimento.TabIndex = 90;
+            this.dtpNascimento.Value = new System.DateTime(2025, 7, 10, 0, 0, 0, 0);
+            // 
             // frmCadastroFuncionario
             // 
             //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             //this.ClientSize = new System.Drawing.Size(1342, 681);
+            this.Controls.Add(this.lblDataNascimento);
+            this.Controls.Add(this.dtpNascimento);
             this.Controls.Add(this.cbGenero);
             this.Controls.Add(this.lblGenero);
             this.Controls.Add(this.lblMatricula);
@@ -548,6 +570,8 @@
             this.Controls.SetChildIndex(this.lblDataCriacao, 0);
             this.Controls.SetChildIndex(this.btnSair, 0);
             this.Controls.SetChildIndex(this.txtCodigo, 0);
+            this.Controls.SetChildIndex(this.dtpNascimento, 0);
+            this.Controls.SetChildIndex(this.lblDataNascimento, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -598,5 +622,7 @@
         private System.Windows.Forms.TextBox txtApelido;
         private System.Windows.Forms.Label lblApelido;
         private System.Windows.Forms.Label lblGenero;
+        private System.Windows.Forms.Label lblDataNascimento;
+        private System.Windows.Forms.DateTimePicker dtpNascimento;
     }
 }
