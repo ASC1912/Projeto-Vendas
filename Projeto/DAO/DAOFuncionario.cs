@@ -21,12 +21,12 @@ namespace Projeto.DAO
                     if (funcionario.Id > 0)
                     {
                         query = @"
-                        UPDATE funcionarios SET 
+                        UPDATE funcionarios SET
                             funcionario = @funcionario, apelido = @apelido, cpf_cnpj = @cpf_cnpj, rg = @rg, telefone = @telefone, email = @email,
                             endereco = @endereco, numero_endereco = @numero_endereco, complemento = @complemento,
                             bairro = @bairro, cep = @cep, id_cidade = @id_cidade, tipo = @tipo, cargo = @cargo, salario = @salario,
                             matricula = @matricula, genero = @genero, data_admissao = @data_admissao, data_demissao = @data_demissao,
-                            ativo = @ativo, data_alteracao = @data_alteracao
+                            data_nascimento = @data_nascimento, ativo = @ativo, data_alteracao = @data_alteracao
                         WHERE id = @id";
                     }
                     else
@@ -35,12 +35,12 @@ namespace Projeto.DAO
                         INSERT INTO funcionarios (
                             funcionario, apelido, cpf_cnpj, rg, telefone, email, endereco, numero_endereco, complemento,
                             bairro, cep, id_cidade, tipo, cargo, salario, matricula, genero, data_admissao, data_demissao,
-                            ativo, data_cadastro, data_alteracao
+                            data_nascimento, ativo, data_cadastro, data_alteracao
                         )
                         VALUES (
                             @funcionario, @apelido, @cpf_cnpj, @rg, @telefone, @email, @endereco, @numero_endereco, @complemento,
                             @bairro, @cep, @id_cidade, @tipo, @cargo, @salario, @matricula, @genero, @data_admissao, @data_demissao,
-                            @ativo, @data_cadastro, @data_alteracao
+                            @data_nascimento, @ativo, @data_cadastro, @data_alteracao
                         )";
                     }
 
@@ -65,6 +65,7 @@ namespace Projeto.DAO
                         cmd.Parameters.AddWithValue("@genero", funcionario.Genero ?? (object)DBNull.Value);
                         cmd.Parameters.AddWithValue("@data_admissao", funcionario.DataAdmissao ?? (object)DBNull.Value);
                         cmd.Parameters.AddWithValue("@data_demissao", funcionario.DataDemissao ?? (object)DBNull.Value);
+                        cmd.Parameters.AddWithValue("@data_nascimento", funcionario.DataNascimento ?? (object)DBNull.Value);
                         cmd.Parameters.AddWithValue("@ativo", funcionario.Ativo);
                         cmd.Parameters.AddWithValue("@data_alteracao", funcionario.DataAlteracao ?? DateTime.Now);
 
@@ -111,7 +112,7 @@ namespace Projeto.DAO
                 SELECT f.id, f.funcionario, f.apelido, f.cpf_cnpj, f.rg, f.telefone, f.email,
                        f.endereco, f.numero_endereco, f.complemento, f.bairro,
                        f.cep, f.tipo, f.cargo, f.salario, f.matricula, f.genero, f.data_admissao, f.data_demissao,
-                       f.ativo, f.id_cidade, f.data_cadastro, f.data_alteracao,
+                       f.data_nascimento, f.ativo, f.id_cidade, f.data_cadastro, f.data_alteracao,
                        c.cidade AS cidade_nome
                 FROM funcionarios f
                 LEFT JOIN cidades c ON f.id_cidade = c.id
@@ -146,6 +147,7 @@ namespace Projeto.DAO
                                 Genero = reader.IsDBNull(reader.GetOrdinal("genero")) ? null : reader.GetString("genero"),
                                 DataAdmissao = reader.IsDBNull(reader.GetOrdinal("data_admissao")) ? (DateTime?)null : reader.GetDateTime("data_admissao"),
                                 DataDemissao = reader.IsDBNull(reader.GetOrdinal("data_demissao")) ? (DateTime?)null : reader.GetDateTime("data_demissao"),
+                                DataNascimento = reader.IsDBNull(reader.GetOrdinal("data_nascimento")) ? (DateTime?)null : reader.GetDateTime("data_nascimento"),
                                 Ativo = reader.GetBoolean("ativo"),
                                 IdCidade = reader.IsDBNull(reader.GetOrdinal("id_cidade")) ? (int?)null : reader.GetInt32("id_cidade"),
                                 NomeCidade = reader.IsDBNull(reader.GetOrdinal("cidade_nome")) ? null : reader.GetString("cidade_nome"),
@@ -170,7 +172,7 @@ namespace Projeto.DAO
                 SELECT f.id, f.funcionario, f.apelido, f.cpf_cnpj, f.rg, f.telefone, f.email,
                        f.endereco, f.numero_endereco, f.complemento, f.bairro,
                        f.cep, f.tipo, f.cargo, f.salario, f.matricula, f.genero, f.data_admissao, f.data_demissao,
-                       f.ativo, f.id_cidade, f.data_cadastro, f.data_alteracao,
+                       f.data_nascimento, f.ativo, f.id_cidade, f.data_cadastro, f.data_alteracao,
                        c.cidade AS cidade_nome
                 FROM funcionarios f
                 LEFT JOIN cidades c ON f.id_cidade = c.id
@@ -203,6 +205,7 @@ namespace Projeto.DAO
                                 Genero = reader.IsDBNull(reader.GetOrdinal("genero")) ? null : reader.GetString("genero"),
                                 DataAdmissao = reader.IsDBNull(reader.GetOrdinal("data_admissao")) ? (DateTime?)null : reader.GetDateTime("data_admissao"),
                                 DataDemissao = reader.IsDBNull(reader.GetOrdinal("data_demissao")) ? (DateTime?)null : reader.GetDateTime("data_demissao"),
+                                DataNascimento = reader.IsDBNull(reader.GetOrdinal("data_nascimento")) ? (DateTime?)null : reader.GetDateTime("data_nascimento"),
                                 Ativo = reader.GetBoolean("ativo"),
                                 IdCidade = reader.IsDBNull(reader.GetOrdinal("id_cidade")) ? (int?)null : reader.GetInt32("id_cidade"),
                                 NomeCidade = reader.IsDBNull(reader.GetOrdinal("cidade_nome")) ? null : reader.GetString("cidade_nome"),

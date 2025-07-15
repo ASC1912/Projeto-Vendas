@@ -33,6 +33,7 @@ namespace Projeto.Views
             cbGenero.SelectedIndex = 0;
             dtpAdmissao.MaxDate = DateTime.Now;
             dtpDemissao.MaxDate = DateTime.Now;
+            dtpNascimento.MaxDate = DateTime.Now;
             cbTipo.SelectedIndexChanged += cbTipo_SelectedIndexChanged;
             cbTipo_SelectedIndexChanged(null, null);
         }
@@ -42,7 +43,7 @@ namespace Projeto.Views
                      string endereco, int numEndereco, string bairro, string complemento, string cep,
                      string cargo, decimal salario, string matricula, string genero, string tipo,
                      string nomeCidade, int idCidade, bool status, DateTime? dataAdmissao,
-                     DateTime? dataDemissao, string rg, DateTime? dataCriacao, DateTime? dataModificacao)
+                     DateTime? dataDemissao, DateTime? dataNascimento, string rg, DateTime? dataCriacao, DateTime? dataModificacao)
         {
             txtCodigo.Text = id.ToString();
             txtNome.Text = nome;
@@ -82,6 +83,9 @@ namespace Projeto.Views
                 dtpDemissao.Value = dataDemissao.Value;
                 dtpDemissao.Checked = true;
             }
+            if (dataNascimento.HasValue)
+                dtpNascimento.Value = dataNascimento.Value;
+
 
             lblDataCriacao.Text = dataCriacao.HasValue
                 ? $"Criado em: {dataCriacao:dd/MM/yyyy HH:mm}"
@@ -241,6 +245,7 @@ namespace Projeto.Views
                         Ativo = status,
                         DataAdmissao = dtpAdmissao.Value,
                         DataDemissao = dtpDemissao.Checked ? (DateTime?)dtpDemissao.Value : null,
+                        DataNascimento = dtpNascimento.Value,
                         Rg = txtRG.Text,
                         Genero = genero,
                         Apelido = txtApelido.Text,
@@ -286,6 +291,7 @@ namespace Projeto.Views
                 txtSalario.Enabled = false;
                 dtpAdmissao.Enabled = false;
                 dtpDemissao.Enabled = false;
+                dtpNascimento.Enabled = false;
                 chkInativo.Enabled = false;
             }
             else if (modoEdicao)

@@ -56,6 +56,7 @@ namespace Projeto.Views
                     item.SubItems.Add(funcionario.Rg);
                     item.SubItems.Add(funcionario.DataAdmissao?.ToShortDateString() ?? "");
                     item.SubItems.Add(funcionario.DataDemissao?.ToShortDateString() ?? "");
+                    item.SubItems.Add(funcionario.DataNascimento?.ToShortDateString() ?? "");
                     item.SubItems.Add(funcionario.Ativo ? "Ativo" : "Inativo");
 
                     listView1.Items.Add(item);
@@ -104,6 +105,7 @@ namespace Projeto.Views
                         item.SubItems.Add(funcionario.Rg);
                         item.SubItems.Add(funcionario.DataAdmissao?.ToShortDateString() ?? "");
                         item.SubItems.Add(funcionario.DataDemissao?.ToShortDateString() ?? "");
+                        item.SubItems.Add(funcionario.DataNascimento?.ToShortDateString() ?? "");
                         item.SubItems.Add(funcionario.Ativo ? "Ativo" : "Inativo");
 
                         listView1.Items.Add(item);
@@ -164,6 +166,7 @@ namespace Projeto.Views
                         funcionario.Ativo,
                         funcionario.DataAdmissao,
                         funcionario.DataDemissao,
+                        funcionario.DataNascimento,
                         funcionario.Rg,
                         funcionario.DataCadastro,
                         funcionario.DataAlteracao
@@ -202,7 +205,7 @@ namespace Projeto.Views
 
                     var formCadastro = new frmCadastroFuncionario
                     {
-                        modoExclusao = true 
+                        modoExclusao = true
                     };
 
                     formCadastro.CarregarFuncionario(
@@ -227,6 +230,7 @@ namespace Projeto.Views
                         funcionario.Ativo,
                         funcionario.DataAdmissao,
                         funcionario.DataDemissao,
+                        funcionario.DataNascimento,
                         funcionario.Rg,
                         funcionario.DataCadastro,
                         funcionario.DataAlteracao
@@ -261,13 +265,13 @@ namespace Projeto.Views
                 switch (column.Text)
                 {
                     case "ID":
-                        column.Width = 40; 
+                        column.Width = 40;
                         break;
                     case "Tipo":
                         column.Width = 60;
                         break;
                     case "Nome":
-                        column.Width = 200; 
+                        column.Width = 200;
                         break;
                     case "Gênero":
                         column.Width = 60;
@@ -288,22 +292,25 @@ namespace Projeto.Views
                         column.Width = 80;
                         break;
                     case "Cidade":
-                        column.Width = 150; 
+                        column.Width = 150;
                         break;
                     case "Cargo":
                         column.Width = 130;
                         break;
                     case "Telefone":
-                        column.Width = 120; 
+                        column.Width = 120;
                         break;
                     case "Email":
                         column.Width = 200;
                         break;
                     case "Status":
-                        column.Width = 60; 
+                        column.Width = 60;
                         break;
                     case "CPF/CNPJ":
                         column.Width = 130;
+                        break;
+                    case "DataNascimento":
+                        column.Width = 120;
                         break;
                     default:
                         column.Width = 100;

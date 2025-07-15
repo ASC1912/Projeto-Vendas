@@ -49,6 +49,7 @@
             this.Matricula = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.CPF_CNPJ = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.RG = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.DataNascimento = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // listView1
@@ -74,6 +75,7 @@
             this.RG,
             this.DataAdmissao,
             this.DataDemissao,
+            this.DataNascimento,
             this.Status});
             // 
             // btnDeletar
@@ -183,6 +185,10 @@
             // 
             this.RG.Text = "RG";
             // 
+            // DataNascimento
+            // 
+            this.DataNascimento.Text = "DataNascimento";
+            // 
             // frmConsultaFuncionario
             // 
             //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -218,5 +224,6 @@
         private System.Windows.Forms.ColumnHeader Matricula;
         private System.Windows.Forms.ColumnHeader CPF_CNPJ;
         private System.Windows.Forms.ColumnHeader RG;
+        private System.Windows.Forms.ColumnHeader DataNascimento;
     }
 }

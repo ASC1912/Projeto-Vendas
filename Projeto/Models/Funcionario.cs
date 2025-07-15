@@ -16,6 +16,7 @@ namespace Projeto.Models
         public string Matricula { get; set; }
         public DateTime? DataAdmissao { get; set; }
         public DateTime? DataDemissao { get; set; }
+        public DateTime? DataNascimento { get; set; }
 
     }
 }
