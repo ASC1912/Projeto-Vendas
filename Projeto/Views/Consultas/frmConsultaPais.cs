@@ -2,30 +2,26 @@
 using Projeto.Models;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Projeto.Views
 {
     public partial class frmConsultaPais : Projeto.frmBaseConsulta
     {
-        private PaisController controller = new PaisController();
+        private readonly PaisController controller = new PaisController();
         public bool ModoSelecao { get; set; } = false;
         internal Pais PaisSelecionado { get; private set; }
-
 
         public frmConsultaPais() : base()
         {
             InitializeComponent();
         }
 
-        private void frmConsultaPais_Load(object sender, EventArgs e)
+        private async void frmConsultaPais_Load(object sender, EventArgs e)
         {
-            CarregarPaises();
             btnSelecionar.Visible = ModoSelecao;
+            await CarregarPaises();
 
             foreach (ColumnHeader column in listView1.Columns)
             {
@@ -47,19 +43,19 @@ namespace Projeto.Views
             }
         }
 
-        private void btnIncluir_Click(object sender, EventArgs e)
+        private async void btnIncluir_Click(object sender, EventArgs e)
         {
             frmCadastroPais formCadastroPais = new frmCadastroPais();
-            formCadastroPais.FormClosed += (s, args) => CarregarPaises();
+            formCadastroPais.FormClosed += async (s, args) => await CarregarPaises();
             formCadastroPais.ShowDialog();
         }
 
-        private void CarregarPaises()
+        private async Task CarregarPaises()
         {
             try
             {
                 listView1.Items.Clear();
-                List<Pais> paises = controller.ListarPais();
+                List<Pais> paises = await controller.ListarPais();
 
                 foreach (var pais in paises)
                 {
@@ -68,15 +64,14 @@ namespace Projeto.Views
                     item.SubItems.Add(pais.Ativo ? "Ativo" : "Inativo");
                     listView1.Items.Add(item);
                 }
-
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Erro ao carregar os paises: " + ex.Message);
+                MessageBox.Show("Erro ao carregar países. Verifique se a API está em execução.\n\nDetalhes: " + ex.Message, "Erro de Conexão", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private void btnPesquisar_Click(object sender, EventArgs e)
+        private async void btnPesquisar_Click(object sender, EventArgs e)
         {
             try
             {
@@ -85,12 +80,11 @@ namespace Projeto.Views
 
                 if (string.IsNullOrEmpty(texto))
                 {
-                    CarregarPaises(); 
+                    await CarregarPaises();
                 }
                 else if (int.TryParse(texto, out int id))
                 {
-                    Pais pais = controller.BuscarPorId(id);
-
+                    Pais pais = await controller.BuscarPorId(id);
                     if (pais != null)
                     {
                         ListViewItem item = new ListViewItem(pais.Id.ToString());
@@ -110,34 +104,23 @@ namespace Projeto.Views
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Erro ao pesquisar: " + ex.Message);
+                MessageBox.Show("Erro ao pesquisar: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private void btnEditar_Click(object sender, EventArgs e)
+        private async void btnEditar_Click(object sender, EventArgs e)
         {
             if (listView1.SelectedItems.Count > 0)
             {
                 var itemSelecionado = listView1.SelectedItems[0];
                 int id = int.Parse(itemSelecionado.SubItems[0].Text);
-
-                Pais pais = controller.BuscarPorId(id);
+                Pais pais = await controller.BuscarPorId(id);
 
                 if (pais != null)
                 {
-                    var formCadastro = new frmCadastroPais();
-                    formCadastro.modoEdicao = true;
-
-                    formCadastro.CarregarPais(
-                        pais.Id,
-                        pais.NomePais,
-                        pais.Ativo,
-                        pais.DataCadastro,
-                        pais.DataAlteracao
-                    );
-
-
-                    formCadastro.FormClosed += (s, args) => CarregarPaises();
+                    var formCadastro = new frmCadastroPais { modoEdicao = true };
+                    formCadastro.CarregarPais(pais.Id, pais.NomePais, pais.Ativo, pais.DataCadastro, pais.DataAlteracao);
+                    formCadastro.FormClosed += async (s, args) => await CarregarPaises();
                     formCadastro.ShowDialog();
                 }
                 else
@@ -151,32 +134,19 @@ namespace Projeto.Views
             }
         }
 
-
-        private void btnDeletar_Click(object sender, EventArgs e)
+        private async void btnDeletar_Click(object sender, EventArgs e)
         {
             if (listView1.SelectedItems.Count > 0)
             {
                 var itemSelecionado = listView1.SelectedItems[0];
                 int id = int.Parse(itemSelecionado.SubItems[0].Text);
-
-                Pais pais = controller.BuscarPorId(id);
+                Pais pais = await controller.BuscarPorId(id);
 
                 if (pais != null)
                 {
-                    var formCadastro = new frmCadastroPais
-                    {
-                        modoExclusao = true 
-                    };
-
-                    formCadastro.CarregarPais(
-                        pais.Id,
-                        pais.NomePais,
-                        pais.Ativo,
-                        pais.DataCadastro,
-                        pais.DataAlteracao
-                    );
-
-                    formCadastro.FormClosed += (s, args) => CarregarPaises();
+                    var formCadastro = new frmCadastroPais { modoExclusao = true };
+                    formCadastro.CarregarPais(pais.Id, pais.NomePais, pais.Ativo, pais.DataCadastro, pais.DataAlteracao);
+                    formCadastro.FormClosed += async (s, args) => await CarregarPaises();
                     formCadastro.ShowDialog();
                 }
                 else
@@ -190,21 +160,13 @@ namespace Projeto.Views
             }
         }
 
-        private void btnSelecionar_Click(object sender, EventArgs e)
+        private async void btnSelecionar_Click(object sender, EventArgs e)
         {
             if (listView1.SelectedItems.Count > 0)
             {
                 var itemSelecionado = listView1.SelectedItems[0];
                 int id = int.Parse(itemSelecionado.SubItems[0].Text);
-                string nome = itemSelecionado.SubItems[1].Text;
-
-                PaisSelecionado = new Pais
-                {
-                    Id = id,
-                    NomePais = nome
-                };
-
-
+                PaisSelecionado = await controller.BuscarPorId(id);
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
@@ -213,7 +175,5 @@ namespace Projeto.Views
                 MessageBox.Show("Por favor, selecione um nome.");
             }
         }
-
-        
     }
 }

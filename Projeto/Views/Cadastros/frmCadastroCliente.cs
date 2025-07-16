@@ -143,7 +143,7 @@ namespace Projeto.Views
                     MessageBox.Show("Selecione uma cidade.");
                     return;
                 }
-
+                /*
                 if (cidadeSelecionadoId > 0)
                 {
                     var cidade = cidadeController.BuscarPorId(cidadeSelecionadoId);
@@ -165,6 +165,7 @@ namespace Projeto.Views
                         }
                     }
                 }
+                */
 
                 if (condicaoSelecionadoId <= 0)
                 {

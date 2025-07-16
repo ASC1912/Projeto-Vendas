@@ -166,6 +166,7 @@ namespace Projeto.Views
                     return;
                 }
 
+                /*
                 if (cidadeSelecionadoId > 0)
                 {
                     var cidade = cidadeController.BuscarPorId(cidadeSelecionadoId);
@@ -187,6 +188,7 @@ namespace Projeto.Views
                         }
                     }
                 }
+                */
 
                 string genero = "";
                 if (cbGenero.SelectedItem != null)
