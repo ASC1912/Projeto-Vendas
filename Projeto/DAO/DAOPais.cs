@@ -20,32 +20,32 @@ namespace Projeto.DAO
 
                     if (pais.Id > 0)
                     {
-                        query = @"UPDATE paises 
-                                  SET pais = @pais, 
-                                      ativo = @ativo,
-                                      data_alteracao = @data_alteracao 
-                                  WHERE id = @id";
+                        query = @"UPDATE Paises 
+                                  SET Pais = @Pais, 
+                                      Ativo = @Ativo,
+                                      DataAlteracao = @DataAlteracao 
+                                  WHERE Id = @Id";
                     }
                     else
                     {
-                        query = @"INSERT INTO paises 
-                                  (pais, ativo, data_cadastro, data_alteracao) 
-                                  VALUES (@pais, @ativo, @data_cadastro, @data_alteracao)";
+                        query = @"INSERT INTO Paises 
+                                  (Pais, Ativo, DataCadastro, DataAlteracao) 
+                                  VALUES (@Pais, @Ativo, @DataCadastro, @DataAlteracao)";
                     }
 
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
-                        cmd.Parameters.AddWithValue("@pais", pais.NomePais);
-                        cmd.Parameters.AddWithValue("@ativo", pais.Ativo);
-                        cmd.Parameters.AddWithValue("@data_alteracao", pais.DataAlteracao);
+                        cmd.Parameters.AddWithValue("@Pais", pais.NomePais);
+                        cmd.Parameters.AddWithValue("@Ativo", pais.Ativo);
+                        cmd.Parameters.AddWithValue("@DataAlteracao", pais.DataAlteracao);
 
                         if (pais.Id > 0)
                         {
-                            cmd.Parameters.AddWithValue("@id", pais.Id);
+                            cmd.Parameters.AddWithValue("@Id", pais.Id);
                         }
                         else
                         {
-                            cmd.Parameters.AddWithValue("@data_cadastro", pais.DataCadastro);
+                            cmd.Parameters.AddWithValue("@DataCadastro", pais.DataCadastro);
                         }
 
                         cmd.ExecuteNonQuery();
@@ -63,11 +63,11 @@ namespace Projeto.DAO
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
-                string query = "DELETE FROM paises WHERE id = @id";
+                string query = "DELETE FROM Paises WHERE Id = @Id";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
-                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.Parameters.AddWithValue("@Id", id);
                     cmd.ExecuteNonQuery();
                 }
             }
@@ -78,11 +78,11 @@ namespace Projeto.DAO
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
-                string query = "SELECT id, pais, ativo, data_cadastro, data_alteracao FROM paises WHERE id = @id";
+                string query = "SELECT Id, Pais, Ativo, DataCadastro, DataAlteracao FROM Paises WHERE Id = @Id";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
-                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.Parameters.AddWithValue("@Id", id);
 
                     using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -90,11 +90,11 @@ namespace Projeto.DAO
                         {
                             return new Pais
                             {
-                                Id = reader.GetInt32("id"),
-                                NomePais = reader.GetString("pais"),
-                                Ativo = reader.GetBoolean("ativo"),
-                                DataCadastro = reader.IsDBNull(reader.GetOrdinal("data_cadastro")) ? (DateTime?)null : reader.GetDateTime("data_cadastro"),
-                                DataAlteracao = reader.IsDBNull(reader.GetOrdinal("data_alteracao")) ? (DateTime?)null : reader.GetDateTime("data_alteracao"),
+                                Id = reader.GetInt32("Id"),
+                                NomePais = reader.GetString("Pais"),
+                                Ativo = reader.GetBoolean("Ativo"),
+                                DataCadastro = reader.IsDBNull(reader.GetOrdinal("DataCadastro")) ? (DateTime?)null : reader.GetDateTime("DataCadastro"),
+                                DataAlteracao = reader.IsDBNull(reader.GetOrdinal("DataAlteracao")) ? (DateTime?)null : reader.GetDateTime("DataAlteracao"),
                             };
                         }
                     }
@@ -110,7 +110,7 @@ namespace Projeto.DAO
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
-                string query = "SELECT id, pais, ativo, data_cadastro, data_alteracao FROM paises ORDER BY id";
+                string query = "SELECT Id, Pais, Ativo, DataCadastro, DataAlteracao FROM Paises ORDER BY Id";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
@@ -120,11 +120,11 @@ namespace Projeto.DAO
                         {
                             lista.Add(new Pais
                             {
-                                Id = reader.GetInt32("id"),
-                                NomePais = reader.GetString("pais"),
-                                Ativo = reader.GetBoolean("ativo"),
-                                DataCadastro = reader.IsDBNull(reader.GetOrdinal("data_cadastro")) ? (DateTime?)null : reader.GetDateTime("data_cadastro"),
-                                DataAlteracao = reader.IsDBNull(reader.GetOrdinal("data_alteracao")) ? (DateTime?)null : reader.GetDateTime("data_alteracao"),
+                                Id = reader.GetInt32("Id"),
+                                NomePais = reader.GetString("Pais"),
+                                Ativo = reader.GetBoolean("Ativo"),
+                                DataCadastro = reader.IsDBNull(reader.GetOrdinal("DataCadastro")) ? (DateTime?)null : reader.GetDateTime("DataCadastro"),
+                                DataAlteracao = reader.IsDBNull(reader.GetOrdinal("DataAlteracao")) ? (DateTime?)null : reader.GetDateTime("DataAlteracao"),
                             });
                         }
                     }

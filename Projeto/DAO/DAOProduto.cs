@@ -21,45 +21,45 @@ namespace Projeto.DAO
                     if (produto.Id > 0)
                     {
                         query = @"
-                        UPDATE produtos SET 
-                            produto = @produto,
-                            descricao = @descricao,
-                            preco = @preco,
-                            estoque = @estoque,
-                            id_marca = @id_marca,
-                            grupo_id = @grupo_id,
-                            ativo = @ativo,
-                            data_alteracao = @data_alteracao
-                        WHERE id = @id";
+                        UPDATE Produtos SET 
+                            Produto = @Produto,
+                            Descricao = @Descricao,
+                            Preco = @Preco,
+                            Estoque = @Estoque,
+                            IdMarca = @IdMarca,
+                            GrupoId = @GrupoId,
+                            Ativo = @Ativo,
+                            DataAlteracao = @DataAlteracao
+                        WHERE Id = @Id";
                     }
                     else
                     {
                         query = @"
-                        INSERT INTO produtos (
-                            produto, descricao, preco, estoque, id_marca, grupo_id, ativo, data_cadastro, data_alteracao
+                        INSERT INTO Produtos (
+                            Produto, Descricao, Preco, Estoque, IdMarca, GrupoId, Ativo, DataCadastro, DataAlteracao
                         ) VALUES (
-                            @produto, @descricao, @preco, @estoque, @id_marca, @grupo_id, @ativo, @data_cadastro, @data_alteracao
+                            @Produto, @Descricao, @Preco, @Estoque, @IdMarca, @GrupoId, @Ativo, @DataCadastro, @DataAlteracao
                         )";
                     }
 
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
-                        cmd.Parameters.AddWithValue("@produto", produto.NomeProduto);
-                        cmd.Parameters.AddWithValue("@descricao", string.IsNullOrEmpty(produto.Descricao) ? (object)DBNull.Value : produto.Descricao);
-                        cmd.Parameters.AddWithValue("@preco", produto.Preco);
-                        cmd.Parameters.AddWithValue("@estoque", produto.Estoque);
-                        cmd.Parameters.AddWithValue("@id_marca", produto.IdMarca ?? (object)DBNull.Value);
-                        cmd.Parameters.AddWithValue("@grupo_id", produto.GrupoId ?? (object)DBNull.Value);
-                        cmd.Parameters.AddWithValue("@ativo", produto.Ativo);
-                        cmd.Parameters.AddWithValue("@data_alteracao", produto.DataAlteracao ?? DateTime.Now);
+                        cmd.Parameters.AddWithValue("@Produto", produto.NomeProduto);
+                        cmd.Parameters.AddWithValue("@Descricao", string.IsNullOrEmpty(produto.Descricao) ? (object)DBNull.Value : produto.Descricao);
+                        cmd.Parameters.AddWithValue("@Preco", produto.Preco);
+                        cmd.Parameters.AddWithValue("@Estoque", produto.Estoque);
+                        cmd.Parameters.AddWithValue("@IdMarca", produto.IdMarca ?? (object)DBNull.Value);
+                        cmd.Parameters.AddWithValue("@GrupoId", produto.GrupoId ?? (object)DBNull.Value);
+                        cmd.Parameters.AddWithValue("@Ativo", produto.Ativo);
+                        cmd.Parameters.AddWithValue("@DataAlteracao", produto.DataAlteracao ?? DateTime.Now);
 
                         if (produto.Id > 0)
                         {
-                            cmd.Parameters.AddWithValue("@id", produto.Id);
+                            cmd.Parameters.AddWithValue("@Id", produto.Id);
                         }
                         else
                         {
-                            cmd.Parameters.AddWithValue("@data_cadastro", produto.DataCadastro ?? DateTime.Now);
+                            cmd.Parameters.AddWithValue("@DataCadastro", produto.DataCadastro ?? DateTime.Now);
                         }
 
                         cmd.ExecuteNonQuery();
@@ -77,11 +77,11 @@ namespace Projeto.DAO
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
-                string query = "DELETE FROM produtos WHERE id = @id";
+                string query = "DELETE FROM Produtos WHERE Id = @Id";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
-                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.Parameters.AddWithValue("@Id", id);
                     cmd.ExecuteNonQuery();
                 }
             }
@@ -93,16 +93,16 @@ namespace Projeto.DAO
             {
                 conn.Open();
                 string query = @"
-                    SELECT p.id, p.produto, p.descricao, p.preco, p.estoque, p.id_marca, m.marca AS nome_marca,
-                           p.grupo_id, g.grupo AS nome_grupo, p.ativo, p.data_cadastro, p.data_alteracao
-                    FROM produtos p
-                    LEFT JOIN marcas m ON p.id_marca = m.id
-                    LEFT JOIN grupos g ON p.grupo_id = g.id
-                    WHERE p.id = @id";
+                    SELECT p.Id, p.Produto, p.Descricao, p.Preco, p.Estoque, p.IdMarca, m.Marca AS NomeMarca,
+                           p.GrupoId, g.Grupo AS NomeGrupo, p.Ativo, p.DataCadastro, p.DataAlteracao
+                    FROM Produtos p
+                    LEFT JOIN Marcas m ON p.IdMarca = m.Id
+                    LEFT JOIN Grupos g ON p.GrupoId = g.Id
+                    WHERE p.Id = @Id";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
-                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.Parameters.AddWithValue("@Id", id);
 
                     using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -110,18 +110,18 @@ namespace Projeto.DAO
                         {
                             return new Produto
                             {
-                                Id = reader.GetInt32("id"),
-                                NomeProduto = reader.GetString("produto"),
-                                Descricao = reader.IsDBNull(reader.GetOrdinal("descricao")) ? null : reader.GetString("descricao"),
-                                Preco = reader.GetDecimal("preco"),
-                                Estoque = reader.GetInt32("estoque"),
-                                IdMarca = reader.IsDBNull(reader.GetOrdinal("id_marca")) ? (int?)null : reader.GetInt32("id_marca"),
-                                NomeMarca = reader.IsDBNull(reader.GetOrdinal("nome_marca")) ? null : reader.GetString("nome_marca"),
-                                GrupoId = reader.IsDBNull(reader.GetOrdinal("grupo_id")) ? (int?)null : reader.GetInt32("grupo_id"),
-                                NomeGrupo = reader.IsDBNull(reader.GetOrdinal("nome_grupo")) ? null : reader.GetString("nome_grupo"),
-                                Ativo = reader.GetBoolean("ativo"),
-                                DataCadastro = reader.IsDBNull(reader.GetOrdinal("data_cadastro")) ? (DateTime?)null : reader.GetDateTime("data_cadastro"),
-                                DataAlteracao = reader.IsDBNull(reader.GetOrdinal("data_alteracao")) ? (DateTime?)null : reader.GetDateTime("data_alteracao")
+                                Id = reader.GetInt32("Id"),
+                                NomeProduto = reader.GetString("Produto"),
+                                Descricao = reader.IsDBNull(reader.GetOrdinal("Descricao")) ? null : reader.GetString("Descricao"),
+                                Preco = reader.GetDecimal("Preco"),
+                                Estoque = reader.GetInt32("Estoque"),
+                                IdMarca = reader.IsDBNull(reader.GetOrdinal("IdMarca")) ? (int?)null : reader.GetInt32("IdMarca"),
+                                NomeMarca = reader.IsDBNull(reader.GetOrdinal("NomeMarca")) ? null : reader.GetString("NomeMarca"),
+                                GrupoId = reader.IsDBNull(reader.GetOrdinal("GrupoId")) ? (int?)null : reader.GetInt32("GrupoId"),
+                                NomeGrupo = reader.IsDBNull(reader.GetOrdinal("NomeGrupo")) ? null : reader.GetString("NomeGrupo"),
+                                Ativo = reader.GetBoolean("Ativo"),
+                                DataCadastro = reader.IsDBNull(reader.GetOrdinal("DataCadastro")) ? (DateTime?)null : reader.GetDateTime("DataCadastro"),
+                                DataAlteracao = reader.IsDBNull(reader.GetOrdinal("DataAlteracao")) ? (DateTime?)null : reader.GetDateTime("DataAlteracao")
                             };
                         }
                     }
@@ -138,12 +138,12 @@ namespace Projeto.DAO
             {
                 conn.Open();
                 string query = @"
-                    SELECT p.id, p.produto, p.descricao, p.preco, p.estoque, p.id_marca, m.marca AS nome_marca,
-                           p.grupo_id, g.grupo AS nome_grupo, p.ativo, p.data_cadastro, p.data_alteracao
-                    FROM produtos p
-                    LEFT JOIN marcas m ON p.id_marca = m.id
-                    LEFT JOIN grupos g ON p.grupo_id = g.id
-                    ORDER BY p.id";
+                    SELECT p.Id, p.Produto, p.Descricao, p.Preco, p.Estoque, p.IdMarca, m.Marca AS NomeMarca,
+                           p.GrupoId, g.Grupo AS NomeGrupo, p.Ativo, p.DataCadastro, p.DataAlteracao
+                    FROM Produtos p
+                    LEFT JOIN Marcas m ON p.IdMarca = m.Id
+                    LEFT JOIN Grupos g ON p.GrupoId = g.Id
+                    ORDER BY p.Id";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
@@ -153,18 +153,18 @@ namespace Projeto.DAO
                         {
                             lista.Add(new Produto
                             {
-                                Id = reader.GetInt32("id"),
-                                NomeProduto = reader.GetString("produto"),
-                                Descricao = reader.IsDBNull(reader.GetOrdinal("descricao")) ? null : reader.GetString("descricao"),
-                                Preco = reader.GetDecimal("preco"),
-                                Estoque = reader.GetInt32("estoque"),
-                                IdMarca = reader.IsDBNull(reader.GetOrdinal("id_marca")) ? (int?)null : reader.GetInt32("id_marca"),
-                                NomeMarca = reader.IsDBNull(reader.GetOrdinal("nome_marca")) ? null : reader.GetString("nome_marca"),
-                                GrupoId = reader.IsDBNull(reader.GetOrdinal("grupo_id")) ? (int?)null : reader.GetInt32("grupo_id"),
-                                NomeGrupo = reader.IsDBNull(reader.GetOrdinal("nome_grupo")) ? null : reader.GetString("nome_grupo"),
-                                Ativo = reader.GetBoolean("ativo"),
-                                DataCadastro = reader.IsDBNull(reader.GetOrdinal("data_cadastro")) ? (DateTime?)null : reader.GetDateTime("data_cadastro"),
-                                DataAlteracao = reader.IsDBNull(reader.GetOrdinal("data_alteracao")) ? (DateTime?)null : reader.GetDateTime("data_alteracao")
+                                Id = reader.GetInt32("Id"),
+                                NomeProduto = reader.GetString("Produto"),
+                                Descricao = reader.IsDBNull(reader.GetOrdinal("Descricao")) ? null : reader.GetString("Descricao"),
+                                Preco = reader.GetDecimal("Preco"),
+                                Estoque = reader.GetInt32("Estoque"),
+                                IdMarca = reader.IsDBNull(reader.GetOrdinal("IdMarca")) ? (int?)null : reader.GetInt32("IdMarca"),
+                                NomeMarca = reader.IsDBNull(reader.GetOrdinal("NomeMarca")) ? null : reader.GetString("NomeMarca"),
+                                GrupoId = reader.IsDBNull(reader.GetOrdinal("GrupoId")) ? (int?)null : reader.GetInt32("GrupoId"),
+                                NomeGrupo = reader.IsDBNull(reader.GetOrdinal("NomeGrupo")) ? null : reader.GetString("NomeGrupo"),
+                                Ativo = reader.GetBoolean("Ativo"),
+                                DataCadastro = reader.IsDBNull(reader.GetOrdinal("DataCadastro")) ? (DateTime?)null : reader.GetDateTime("DataCadastro"),
+                                DataAlteracao = reader.IsDBNull(reader.GetOrdinal("DataAlteracao")) ? (DateTime?)null : reader.GetDateTime("DataAlteracao")
                             });
                         }
                     }

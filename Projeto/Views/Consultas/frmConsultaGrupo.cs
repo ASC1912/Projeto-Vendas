@@ -3,7 +3,6 @@ using Projeto.Models;
 using Projeto.Views.Cadastros;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks; // Importante
 using System.Windows.Forms;
 
 namespace Projeto.Views.Consultas
@@ -19,9 +18,9 @@ namespace Projeto.Views.Consultas
             InitializeComponent();
         }
 
-        private async void frmConsultaGrupo_Load(object sender, EventArgs e)
+        private void frmConsultaGrupo_Load(object sender, EventArgs e)
         {
-            await CarregarGrupos();
+            CarregarGrupos();
             btnSelecionar.Visible = ModoSelecao;
 
             foreach (ColumnHeader column in listView1.Columns)
@@ -47,12 +46,12 @@ namespace Projeto.Views.Consultas
             }
         }
 
-        private async Task CarregarGrupos()
+        private void CarregarGrupos()
         {
             try
             {
                 listView1.Items.Clear();
-                List<Grupo> grupos = await controller.ListarGrupos();
+                List<Grupo> grupos = controller.ListarGrupos();
 
                 foreach (var grupo in grupos)
                 {
@@ -69,7 +68,7 @@ namespace Projeto.Views.Consultas
             }
         }
 
-        private async void btnPesquisar_Click(object sender, EventArgs e)
+        private void btnPesquisar_Click(object sender, EventArgs e)
         {
             try
             {
@@ -78,11 +77,11 @@ namespace Projeto.Views.Consultas
 
                 if (string.IsNullOrEmpty(texto))
                 {
-                    await CarregarGrupos();
+                    CarregarGrupos();
                 }
                 else if (int.TryParse(texto, out int id))
                 {
-                    Grupo grupo = await controller.BuscarPorId(id);
+                    Grupo grupo = controller.BuscarPorId(id);
 
                     if (grupo != null)
                     {
@@ -111,18 +110,18 @@ namespace Projeto.Views.Consultas
         private void btnIncluir_Click(object sender, EventArgs e)
         {
             frmCadastroGrupo formCadastroGrupo = new frmCadastroGrupo();
-            formCadastroGrupo.FormClosed += async (s, args) => await CarregarGrupos();
+            formCadastroGrupo.FormClosed += (s, args) => CarregarGrupos();
             formCadastroGrupo.ShowDialog();
         }
 
-        private async void btnEditar_Click(object sender, EventArgs e)
+        private void btnEditar_Click(object sender, EventArgs e)
         {
             if (listView1.SelectedItems.Count > 0)
             {
                 var itemSelecionado = listView1.SelectedItems[0];
                 int id = int.Parse(itemSelecionado.SubItems[0].Text);
 
-                Grupo grupo = await controller.BuscarPorId(id);
+                Grupo grupo = controller.BuscarPorId(id);
 
                 if (grupo != null)
                 {
@@ -138,7 +137,7 @@ namespace Projeto.Views.Consultas
                         grupo.DataAlteracao
                     );
 
-                    formCadastro.FormClosed += async (s, args) => await CarregarGrupos();
+                    formCadastro.FormClosed += (s, args) => CarregarGrupos();
                     formCadastro.ShowDialog();
                 }
                 else
@@ -152,20 +151,20 @@ namespace Projeto.Views.Consultas
             }
         }
 
-        private async void btnDeletar_Click(object sender, EventArgs e)
+        private void btnDeletar_Click(object sender, EventArgs e)
         {
             if (listView1.SelectedItems.Count > 0)
             {
                 var itemSelecionado = listView1.SelectedItems[0];
                 int id = int.Parse(itemSelecionado.SubItems[0].Text);
 
-                Grupo grupo = await controller.BuscarPorId(id);
+                Grupo grupo = controller.BuscarPorId(id);
 
                 if (grupo != null)
                 {
                     var formCadastro = new frmCadastroGrupo
                     {
-                        modoExclusao = true 
+                        modoExclusao = true
                     };
 
                     formCadastro.CarregarGrupo(
@@ -177,7 +176,7 @@ namespace Projeto.Views.Consultas
                         grupo.DataAlteracao
                     );
 
-                    formCadastro.FormClosed += async (s, args) => await CarregarGrupos();
+                    formCadastro.FormClosed += (s, args) => CarregarGrupos();
                     formCadastro.ShowDialog();
                 }
                 else
@@ -191,14 +190,14 @@ namespace Projeto.Views.Consultas
             }
         }
 
-        private async void btnSelecionar_Click(object sender, EventArgs e)
+        private void btnSelecionar_Click(object sender, EventArgs e)
         {
             if (listView1.SelectedItems.Count > 0)
             {
                 var itemSelecionado = listView1.SelectedItems[0];
                 int id = int.Parse(itemSelecionado.SubItems[0].Text);
 
-                GrupoSelecionado = await controller.BuscarPorId(id);
+                GrupoSelecionado = controller.BuscarPorId(id);
 
                 if (GrupoSelecionado != null)
                 {

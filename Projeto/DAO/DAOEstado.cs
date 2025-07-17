@@ -20,36 +20,36 @@ namespace Projeto.DAO
 
                     if (estado.Id > 0)
                     {
-                        query = @"UPDATE estados 
-                                  SET estado = @estado, 
-                                      uf = @uf,
-                                      pais_id = @pais_id, 
-                                      ativo = @ativo, 
-                                      data_alteracao = @data_alteracao 
-                                  WHERE id = @id";
+                        query = @"UPDATE Estados 
+                                  SET Estado = @Estado, 
+                                      UF = @UF,
+                                      PaisId = @PaisId, 
+                                      Ativo = @Ativo, 
+                                      DataAlteracao = @DataAlteracao 
+                                  WHERE Id = @Id";
                     }
                     else
                     {
-                        query = @"INSERT INTO estados 
-                                  (estado, uf, pais_id, ativo, data_cadastro, data_alteracao) 
-                                  VALUES (@estado, @uf, @pais_id, @ativo, @data_cadastro, @data_alteracao)";
+                        query = @"INSERT INTO Estados 
+                                  (Estado, UF, PaisId, Ativo, DataCadastro, DataAlteracao) 
+                                  VALUES (@Estado, @UF, @PaisId, @Ativo, @DataCadastro, @DataAlteracao)";
                     }
 
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
-                        cmd.Parameters.AddWithValue("@estado", estado.NomeEstado);
-                        cmd.Parameters.AddWithValue("@uf", estado.UF);
-                        cmd.Parameters.AddWithValue("@pais_id", estado.PaisId);
-                        cmd.Parameters.AddWithValue("@ativo", estado.Ativo);
-                        cmd.Parameters.AddWithValue("@data_alteracao", estado.DataAlteracao);
+                        cmd.Parameters.AddWithValue("@Estado", estado.NomeEstado);
+                        cmd.Parameters.AddWithValue("@UF", estado.UF);
+                        cmd.Parameters.AddWithValue("@PaisId", estado.PaisId);
+                        cmd.Parameters.AddWithValue("@Ativo", estado.Ativo);
+                        cmd.Parameters.AddWithValue("@DataAlteracao", estado.DataAlteracao);
 
                         if (estado.Id > 0)
                         {
-                            cmd.Parameters.AddWithValue("@id", estado.Id);
+                            cmd.Parameters.AddWithValue("@Id", estado.Id);
                         }
                         else
                         {
-                            cmd.Parameters.AddWithValue("@data_cadastro", estado.DataCadastro);
+                            cmd.Parameters.AddWithValue("@DataCadastro", estado.DataCadastro);
                         }
 
                         cmd.ExecuteNonQuery();
@@ -67,11 +67,11 @@ namespace Projeto.DAO
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
-                string query = "DELETE FROM estados WHERE id = @id";
+                string query = "DELETE FROM Estados WHERE Id = @Id";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
-                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.Parameters.AddWithValue("@Id", id);
                     cmd.ExecuteNonQuery();
                 }
             }
@@ -82,16 +82,16 @@ namespace Projeto.DAO
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
-                string query = @"SELECT e.id, e.estado, e.uf, e.pais_id, e.ativo, 
-                                        e.data_cadastro, e.data_alteracao, 
-                                        p.pais AS pais_nome 
-                                 FROM estados e
-                                 JOIN paises p ON e.pais_id = p.id
-                                 WHERE e.id = @id";
+                string query = @"SELECT e.Id, e.Estado, e.UF, e.PaisId, e.Ativo, 
+                                        e.DataCadastro, e.DataAlteracao, 
+                                        p.Pais AS PaisNome 
+                                 FROM Estados e
+                                 JOIN Paises p ON e.PaisId = p.Id
+                                 WHERE e.Id = @Id";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
-                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.Parameters.AddWithValue("@Id", id);
 
                     using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -99,14 +99,14 @@ namespace Projeto.DAO
                         {
                             return new Estado
                             {
-                                Id = reader.GetInt32("id"),
-                                NomeEstado = reader.GetString("estado"),
-                                UF = reader.GetString("uf"),
-                                PaisId = reader.GetInt32("pais_id"),
-                                PaisNome = reader.GetString("pais_nome"),
-                                Ativo = reader.GetBoolean("ativo"),
-                                DataCadastro = reader.IsDBNull(reader.GetOrdinal("data_cadastro")) ? (DateTime?)null : reader.GetDateTime("data_cadastro"),
-                                DataAlteracao = reader.IsDBNull(reader.GetOrdinal("data_alteracao")) ? (DateTime?)null : reader.GetDateTime("data_alteracao")
+                                Id = reader.GetInt32("Id"),
+                                NomeEstado = reader.GetString("Estado"),
+                                UF = reader.GetString("UF"),
+                                PaisId = reader.GetInt32("PaisId"),
+                                PaisNome = reader.GetString("PaisNome"),
+                                Ativo = reader.GetBoolean("Ativo"),
+                                DataCadastro = reader.IsDBNull(reader.GetOrdinal("DataCadastro")) ? (DateTime?)null : reader.GetDateTime("DataCadastro"),
+                                DataAlteracao = reader.IsDBNull(reader.GetOrdinal("DataAlteracao")) ? (DateTime?)null : reader.GetDateTime("DataAlteracao")
                             };
                         }
                     }
@@ -123,10 +123,10 @@ namespace Projeto.DAO
             {
                 conn.Open();
                 string query = @"
-                    SELECT e.id, e.estado, e.uf, e.pais_id, e.ativo, p.pais AS pais_nome 
-                    FROM estados e
-                    JOIN paises p ON e.pais_id = p.id
-                    ORDER BY e.id";
+                    SELECT e.Id, e.Estado, e.UF, e.PaisId, e.Ativo, p.Pais AS PaisNome 
+                    FROM Estados e
+                    JOIN Paises p ON e.PaisId = p.Id
+                    ORDER BY e.Id";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
@@ -136,12 +136,12 @@ namespace Projeto.DAO
                         {
                             lista.Add(new Estado
                             {
-                                Id = reader.GetInt32("id"),
-                                NomeEstado = reader.GetString("estado"),
-                                UF = reader.GetString("uf"),
-                                PaisId = reader.GetInt32("pais_id"),
-                                PaisNome = reader.GetString("pais_nome"),
-                                Ativo = reader.GetBoolean("ativo"),
+                                Id = reader.GetInt32("Id"),
+                                NomeEstado = reader.GetString("Estado"),
+                                UF = reader.GetString("UF"),
+                                PaisId = reader.GetInt32("PaisId"),
+                                PaisNome = reader.GetString("PaisNome"),
+                                Ativo = reader.GetBoolean("Ativo"),
                             });
                         }
                     }

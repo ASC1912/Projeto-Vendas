@@ -20,32 +20,32 @@ namespace Projeto.DAO
 
                     if (cidade.Id > 0)
                     {
-                        query = @"UPDATE cidades 
-                                  SET cidade = @cidade, estado_id = @estado_id, ativo = @ativo, 
-                                      data_alteracao = @data_alteracao 
-                                  WHERE id = @id";
+                        query = @"UPDATE Cidades 
+                                  SET Cidade = @Cidade, EstadoId = @EstadoId, Ativo = @Ativo, 
+                                      DataAlteracao = @DataAlteracao 
+                                  WHERE Id = @Id";
                     }
                     else
                     {
-                        query = @"INSERT INTO cidades 
-                                  (cidade, estado_id, ativo, data_cadastro, data_alteracao) 
-                                  VALUES (@cidade, @estado_id, @ativo, @data_cadastro, @data_alteracao)";
+                        query = @"INSERT INTO Cidades 
+                                  (Cidade, EstadoId, Ativo, DataCadastro, DataAlteracao) 
+                                  VALUES (@Cidade, @EstadoId, @Ativo, @DataCadastro, @DataAlteracao)";
                     }
 
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
-                        cmd.Parameters.AddWithValue("@cidade", cidade.NomeCidade);
-                        cmd.Parameters.AddWithValue("@estado_id", cidade.EstadoId);
-                        cmd.Parameters.AddWithValue("@ativo", cidade.Ativo);
-                        cmd.Parameters.AddWithValue("@data_alteracao", cidade.DataAlteracao);
+                        cmd.Parameters.AddWithValue("@Cidade", cidade.NomeCidade);
+                        cmd.Parameters.AddWithValue("@EstadoId", cidade.EstadoId);
+                        cmd.Parameters.AddWithValue("@Ativo", cidade.Ativo);
+                        cmd.Parameters.AddWithValue("@DataAlteracao", cidade.DataAlteracao);
 
                         if (cidade.Id > 0)
                         {
-                            cmd.Parameters.AddWithValue("@id", cidade.Id);
+                            cmd.Parameters.AddWithValue("@Id", cidade.Id);
                         }
                         else
                         {
-                            cmd.Parameters.AddWithValue("@data_cadastro", cidade.DataCadastro);
+                            cmd.Parameters.AddWithValue("@DataCadastro", cidade.DataCadastro);
                         }
 
                         cmd.ExecuteNonQuery();
@@ -63,11 +63,11 @@ namespace Projeto.DAO
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
-                string query = "DELETE FROM cidades WHERE id = @id";
+                string query = "DELETE FROM Cidades WHERE Id = @Id";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
-                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.Parameters.AddWithValue("@Id", id);
                     cmd.ExecuteNonQuery();
                 }
             }
@@ -79,16 +79,16 @@ namespace Projeto.DAO
             {
                 conn.Open();
                 string query = @"
-                    SELECT c.id, c.cidade, c.estado_id, c.ativo, 
-                           c.data_cadastro, c.data_alteracao, 
-                           e.estado AS estado_nome 
-                    FROM cidades c
-                    JOIN estados e ON c.estado_id = e.id
-                    WHERE c.id = @id";
+                    SELECT c.Id, c.Cidade, c.EstadoId, c.Ativo, 
+                           c.DataCadastro, c.DataAlteracao, 
+                           e.Estado AS EstadoNome 
+                    FROM Cidades c
+                    JOIN Estados e ON c.EstadoId = e.Id
+                    WHERE c.Id = @Id";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
-                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.Parameters.AddWithValue("@Id", id);
 
                     using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -96,13 +96,13 @@ namespace Projeto.DAO
                         {
                             return new Cidade
                             {
-                                Id = reader.GetInt32("id"),
-                                NomeCidade = reader.GetString("cidade"),
-                                EstadoId = reader.GetInt32("estado_id"),
-                                EstadoNome = reader.GetString("estado_nome"),
-                                Ativo = reader.GetBoolean("ativo"),
-                                DataCadastro = reader.IsDBNull(reader.GetOrdinal("data_cadastro")) ? (DateTime?)null : reader.GetDateTime("data_cadastro"),
-                                DataAlteracao = reader.IsDBNull(reader.GetOrdinal("data_alteracao")) ? (DateTime?)null : reader.GetDateTime("data_alteracao")
+                                Id = reader.GetInt32("Id"),
+                                NomeCidade = reader.GetString("Cidade"),
+                                EstadoId = reader.GetInt32("EstadoId"),
+                                EstadoNome = reader.GetString("EstadoNome"),
+                                Ativo = reader.GetBoolean("Ativo"),
+                                DataCadastro = reader.IsDBNull(reader.GetOrdinal("DataCadastro")) ? (DateTime?)null : reader.GetDateTime("DataCadastro"),
+                                DataAlteracao = reader.IsDBNull(reader.GetOrdinal("DataAlteracao")) ? (DateTime?)null : reader.GetDateTime("DataAlteracao")
                             };
                         }
                     }
@@ -119,10 +119,10 @@ namespace Projeto.DAO
             {
                 conn.Open();
                 string query = @"
-                    SELECT c.id, c.cidade, c.estado_id, c.ativo, e.estado AS estado_nome 
-                    FROM cidades c
-                    JOIN estados e ON c.estado_id = e.id
-                    ORDER BY c.id";
+                    SELECT c.Id, c.Cidade, c.EstadoId, c.Ativo, e.Estado AS EstadoNome 
+                    FROM Cidades c
+                    JOIN Estados e ON c.EstadoId = e.Id
+                    ORDER BY c.Id";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
@@ -132,11 +132,11 @@ namespace Projeto.DAO
                         {
                             lista.Add(new Cidade
                             {
-                                Id = reader.GetInt32("id"),
-                                NomeCidade = reader.GetString("cidade"),
-                                EstadoId = reader.GetInt32("estado_id"),
-                                EstadoNome = reader.GetString("estado_nome"),
-                                Ativo = reader.GetBoolean("ativo"),
+                                Id = reader.GetInt32("Id"),
+                                NomeCidade = reader.GetString("Cidade"),
+                                EstadoId = reader.GetInt32("EstadoId"),
+                                EstadoNome = reader.GetString("EstadoNome"),
+                                Ativo = reader.GetBoolean("Ativo"),
                             });
                         }
                     }

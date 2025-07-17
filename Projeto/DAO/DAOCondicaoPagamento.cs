@@ -24,44 +24,44 @@ namespace Projeto.DAO
                     if (condicao.Id > 0)
                     {
                         query = @"
-                        UPDATE condicoes_pagamento SET 
-                            descricao = @descricao, qtd_parcelas = @qtd_parcelas, juros = @juros, 
-                            multa = @multa, desconto = @desconto, ativo = @ativo, 
-                            data_alteracao = @data_alteracao
-                        WHERE id = @id";
+                        UPDATE CondicoesPagamento SET 
+                            Descricao = @Descricao, QtdParcelas = @QtdParcelas, Juros = @Juros, 
+                            Multa = @Multa, Desconto = @Desconto, Ativo = @Ativo, 
+                            DataAlteracao = @DataAlteracao
+                        WHERE Id = @Id";
                     }
                     else
                     {
                         query = @"
-                        INSERT INTO condicoes_pagamento (
-                            descricao, qtd_parcelas, juros, multa, desconto, ativo, 
-                            data_cadastro, data_alteracao
+                        INSERT INTO CondicoesPagamento (
+                            Descricao, QtdParcelas, Juros, Multa, Desconto, Ativo, 
+                            DataCadastro, DataAlteracao
                         )
                         VALUES (
-                            @descricao, @qtd_parcelas, @juros, @multa, @desconto, @ativo, 
-                            @data_cadastro, @data_alteracao
+                            @Descricao, @QtdParcelas, @Juros, @Multa, @Desconto, @Ativo, 
+                            @DataCadastro, @DataAlteracao
                         )";
                     }
 
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
-                        cmd.Parameters.AddWithValue("@descricao", condicao.Descricao);
-                        cmd.Parameters.AddWithValue("@qtd_parcelas", condicao.QtdParcelas);
-                        cmd.Parameters.AddWithValue("@juros", condicao.Juros);
-                        cmd.Parameters.AddWithValue("@multa", condicao.Multa);
-                        cmd.Parameters.AddWithValue("@desconto", condicao.Desconto);
-                        cmd.Parameters.AddWithValue("@ativo", condicao.Ativo);
-                        cmd.Parameters.AddWithValue("@data_alteracao", condicao.DataAlteracao ?? DateTime.Now);
+                        cmd.Parameters.AddWithValue("@Descricao", condicao.Descricao);
+                        cmd.Parameters.AddWithValue("@QtdParcelas", condicao.QtdParcelas);
+                        cmd.Parameters.AddWithValue("@Juros", condicao.Juros);
+                        cmd.Parameters.AddWithValue("@Multa", condicao.Multa);
+                        cmd.Parameters.AddWithValue("@Desconto", condicao.Desconto);
+                        cmd.Parameters.AddWithValue("@Ativo", condicao.Ativo);
+                        cmd.Parameters.AddWithValue("@DataAlteracao", condicao.DataAlteracao ?? DateTime.Now);
 
                         if (condicao.Id > 0)
                         {
-                            cmd.Parameters.AddWithValue("@id", condicao.Id);
+                            cmd.Parameters.AddWithValue("@Id", condicao.Id);
                             cmd.ExecuteNonQuery();
                             condicaoId = condicao.Id;
                         }
                         else
                         {
-                            cmd.Parameters.AddWithValue("@data_cadastro", condicao.DataCadastro ?? DateTime.Now);
+                            cmd.Parameters.AddWithValue("@DataCadastro", condicao.DataCadastro ?? DateTime.Now);
                             cmd.ExecuteNonQuery();
                             condicaoId = (int)cmd.LastInsertedId;
                         }
@@ -81,11 +81,11 @@ namespace Projeto.DAO
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
-                string query = "DELETE FROM condicoes_pagamento WHERE id = @id";
+                string query = "DELETE FROM CondicoesPagamento WHERE Id = @Id";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
-                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.Parameters.AddWithValue("@Id", id);
                     cmd.ExecuteNonQuery();
                 }
             }
@@ -97,14 +97,14 @@ namespace Projeto.DAO
             {
                 conn.Open();
                 string query = @"
-                SELECT id, descricao, qtd_parcelas, juros, multa, desconto, ativo,
-                       data_cadastro, data_alteracao
-                FROM condicoes_pagamento
-                WHERE id = @id";
+                SELECT Id, Descricao, QtdParcelas, Juros, Multa, Desconto, Ativo,
+                       DataCadastro, DataAlteracao
+                FROM CondicoesPagamento
+                WHERE Id = @Id";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
-                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.Parameters.AddWithValue("@Id", id);
 
                     using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -112,15 +112,15 @@ namespace Projeto.DAO
                         {
                             return new CondicaoPagamento
                             {
-                                Id = reader.GetInt32("id"),
-                                Descricao = reader.GetString("descricao"),
-                                QtdParcelas = reader.GetInt32("qtd_parcelas"),
-                                Juros = reader.GetDecimal("juros"),
-                                Multa = reader.GetDecimal("multa"),
-                                Desconto = reader.GetDecimal("desconto"),
-                                Ativo = reader.GetBoolean("ativo"),
-                                DataCadastro = reader.IsDBNull(reader.GetOrdinal("data_cadastro")) ? (DateTime?)null : reader.GetDateTime("data_cadastro"),
-                                DataAlteracao = reader.IsDBNull(reader.GetOrdinal("data_alteracao")) ? (DateTime?)null : reader.GetDateTime("data_alteracao"),
+                                Id = reader.GetInt32("Id"),
+                                Descricao = reader.GetString("Descricao"),
+                                QtdParcelas = reader.GetInt32("QtdParcelas"),
+                                Juros = reader.GetDecimal("Juros"),
+                                Multa = reader.GetDecimal("Multa"),
+                                Desconto = reader.GetDecimal("Desconto"),
+                                Ativo = reader.GetBoolean("Ativo"),
+                                DataCadastro = reader.IsDBNull(reader.GetOrdinal("DataCadastro")) ? (DateTime?)null : reader.GetDateTime("DataCadastro"),
+                                DataAlteracao = reader.IsDBNull(reader.GetOrdinal("DataAlteracao")) ? (DateTime?)null : reader.GetDateTime("DataAlteracao"),
                             };
                         }
                     }
@@ -137,10 +137,10 @@ namespace Projeto.DAO
             {
                 conn.Open();
                 string query = @"
-                SELECT id, descricao, qtd_parcelas, juros, multa, desconto, ativo,
-                       data_cadastro, data_alteracao
-                FROM condicoes_pagamento
-                ORDER BY id";
+                SELECT Id, Descricao, QtdParcelas, Juros, Multa, Desconto, Ativo,
+                       DataCadastro, DataAlteracao
+                FROM CondicoesPagamento
+                ORDER BY Id";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
@@ -150,15 +150,15 @@ namespace Projeto.DAO
                         {
                             lista.Add(new CondicaoPagamento
                             {
-                                Id = reader.GetInt32("id"),
-                                Descricao = reader.GetString("descricao"),
-                                QtdParcelas = reader.GetInt32("qtd_parcelas"),
-                                Juros = reader.GetDecimal("juros"),
-                                Multa = reader.GetDecimal("multa"),
-                                Desconto = reader.GetDecimal("desconto"),
-                                Ativo = reader.GetBoolean("ativo"),
-                                DataCadastro = reader.IsDBNull(reader.GetOrdinal("data_cadastro")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("data_cadastro")),
-                                DataAlteracao = reader.IsDBNull(reader.GetOrdinal("data_alteracao")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("data_alteracao"))
+                                Id = reader.GetInt32("Id"),
+                                Descricao = reader.GetString("Descricao"),
+                                QtdParcelas = reader.GetInt32("QtdParcelas"),
+                                Juros = reader.GetDecimal("Juros"),
+                                Multa = reader.GetDecimal("Multa"),
+                                Desconto = reader.GetDecimal("Desconto"),
+                                Ativo = reader.GetBoolean("Ativo"),
+                                DataCadastro = reader.IsDBNull(reader.GetOrdinal("DataCadastro")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("DataCadastro")),
+                                DataAlteracao = reader.IsDBNull(reader.GetOrdinal("DataAlteracao")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("DataAlteracao"))
                             });
                         }
                     }

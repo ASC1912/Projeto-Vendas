@@ -1,165 +1,149 @@
 ﻿using MySql.Data.MySqlClient;
 using Projeto.Models;
-using Projeto.Services; 
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks; 
 
 namespace Projeto.DAO
 {
-    internal class DAOGrupo : IGrupoService
+    internal class DAOGrupo
     {
         private string connectionString = "Server=localhost;Database=sistema;Uid=root;Pwd=12345678;";
 
-
-        public Task Salvar(Grupo grupo)
+        public void Salvar(Grupo grupo)
         {
-            return Task.Run(() =>
+            try
             {
-                try
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
                 {
-                    using (MySqlConnection conn = new MySqlConnection(connectionString))
+                    conn.Open();
+                    string query;
+
+                    if (grupo.Id > 0)
                     {
-                        conn.Open();
-                        string query;
+                        query = @"
+                        UPDATE Grupos SET 
+                            Grupo = @Grupo,
+                            Descricao = @Descricao,
+                            Ativo = @Ativo,
+                            DataAlteracao = @DataAlteracao
+                        WHERE Id = @Id";
+                    }
+                    else
+                    {
+                        query = @"
+                        INSERT INTO Grupos (
+                            Grupo, Descricao, Ativo, DataCadastro, DataAlteracao
+                        ) VALUES (
+                            @Grupo, @Descricao, @Ativo, @DataCadastro, @DataAlteracao
+                        )";
+                    }
+
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@Grupo", grupo.NomeGrupo);
+                        cmd.Parameters.AddWithValue("@Descricao", string.IsNullOrEmpty(grupo.Descricao) ? (object)DBNull.Value : grupo.Descricao);
+                        cmd.Parameters.AddWithValue("@Ativo", grupo.Ativo);
+                        cmd.Parameters.AddWithValue("@DataAlteracao", grupo.DataAlteracao ?? DateTime.Now);
 
                         if (grupo.Id > 0)
                         {
-                            query = @"
-                            UPDATE grupos SET 
-                                grupo = @grupo,
-                                descricao = @descricao,
-                                ativo = @ativo,
-                                data_alteracao = @data_alteracao
-                            WHERE id = @id";
+                            cmd.Parameters.AddWithValue("@Id", grupo.Id);
                         }
                         else
                         {
-                            query = @"
-                            INSERT INTO grupos (
-                                grupo, descricao, ativo, data_cadastro, data_alteracao
-                            ) VALUES (
-                                @grupo, @descricao, @ativo, @data_cadastro, @data_alteracao
-                            )";
+                            cmd.Parameters.AddWithValue("@DataCadastro", grupo.DataCadastro ?? DateTime.Now);
                         }
 
-                        using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                        {
-                            cmd.Parameters.AddWithValue("@grupo", grupo.NomeGrupo);
-                            cmd.Parameters.AddWithValue("@descricao", string.IsNullOrEmpty(grupo.Descricao) ? (object)DBNull.Value : grupo.Descricao);
-                            cmd.Parameters.AddWithValue("@ativo", grupo.Ativo);
-                            cmd.Parameters.AddWithValue("@data_alteracao", grupo.DataAlteracao ?? DateTime.Now);
-
-                            if (grupo.Id > 0)
-                            {
-                                cmd.Parameters.AddWithValue("@id", grupo.Id);
-                            }
-                            else
-                            {
-                                cmd.Parameters.AddWithValue("@data_cadastro", grupo.DataCadastro ?? DateTime.Now);
-                            }
-
-                            cmd.ExecuteNonQuery();
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception("Erro ao salvar grupo: " + ex.Message);
-                }
-            });
-        }
-
-        // O mesmo padrão é aplicado aos outros métodos
-        public Task Excluir(int id)
-        {
-            return Task.Run(() =>
-            {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
-                {
-                    conn.Open();
-                    string query = "DELETE FROM grupos WHERE id = @id";
-
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@id", id);
                         cmd.ExecuteNonQuery();
                     }
                 }
-            });
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erro ao salvar grupo: " + ex.Message);
+            }
         }
 
-        public Task<Grupo> BuscarPorId(int id)
+        public void Excluir(int id)
         {
-            return Task.Run(() =>
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                conn.Open();
+                string query = "DELETE FROM Grupos WHERE Id = @Id";
+
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
-                    conn.Open();
-                    string query = @"
-                        SELECT id, grupo, descricao, ativo, data_cadastro, data_alteracao
-                        FROM grupos 
-                        WHERE id = @id";
+                    cmd.Parameters.AddWithValue("@Id", id);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
 
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+        public Grupo BuscarPorId(int id)
+        {
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = @"
+                    SELECT Id, Grupo, Descricao, Ativo, DataCadastro, DataAlteracao
+                    FROM Grupos 
+                    WHERE Id = @Id";
+
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@Id", id);
+
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
-                        cmd.Parameters.AddWithValue("@id", id);
-
-                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        if (reader.Read())
                         {
-                            if (reader.Read())
+                            return new Grupo
                             {
-                                return new Grupo
-                                {
-                                    Id = reader.GetInt32(reader.GetOrdinal("id")),
-                                    NomeGrupo = reader.GetString(reader.GetOrdinal("grupo")),
-                                    Descricao = reader.IsDBNull(reader.GetOrdinal("descricao")) ? null : reader.GetString(reader.GetOrdinal("descricao")),
-                                    Ativo = reader.GetBoolean(reader.GetOrdinal("ativo")),
-                                    DataCadastro = reader.IsDBNull(reader.GetOrdinal("data_cadastro")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("data_cadastro")),
-                                    DataAlteracao = reader.IsDBNull(reader.GetOrdinal("data_alteracao")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("data_alteracao"))
-                                };
-                            }
+                                Id = reader.GetInt32("Id"),
+                                NomeGrupo = reader.GetString("Grupo"),
+                                Descricao = reader.IsDBNull(reader.GetOrdinal("Descricao")) ? null : reader.GetString("Descricao"),
+                                Ativo = reader.GetBoolean("Ativo"),
+                                DataCadastro = reader.IsDBNull(reader.GetOrdinal("DataCadastro")) ? (DateTime?)null : reader.GetDateTime("DataCadastro"),
+                                DataAlteracao = reader.IsDBNull(reader.GetOrdinal("DataAlteracao")) ? (DateTime?)null : reader.GetDateTime("DataAlteracao")
+                            };
                         }
                     }
                 }
-                return null;
-            });
+            }
+            return null;
         }
 
-        public Task<List<Grupo>> ListarGrupos()
+        public List<Grupo> ListarGrupos()
         {
-            return Task.Run(() =>
+            List<Grupo> lista = new List<Grupo>();
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
-                List<Grupo> lista = new List<Grupo>();
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
-                {
-                    conn.Open();
-                    string query = @"
-                        SELECT id, grupo, descricao, ativo, data_cadastro, data_alteracao
-                        FROM grupos 
-                        ORDER BY id";
+                conn.Open();
+                string query = @"
+                    SELECT Id, Grupo, Descricao, Ativo, DataCadastro, DataAlteracao
+                    FROM Grupos 
+                    ORDER BY Id";
 
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
-                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        while (reader.Read())
                         {
-                            while (reader.Read())
+                            lista.Add(new Grupo
                             {
-                                lista.Add(new Grupo
-                                {
-                                    Id = reader.GetInt32(reader.GetOrdinal("id")),
-                                    NomeGrupo = reader.GetString(reader.GetOrdinal("grupo")),
-                                    Descricao = reader.IsDBNull(reader.GetOrdinal("descricao")) ? null : reader.GetString(reader.GetOrdinal("descricao")),
-                                    Ativo = reader.GetBoolean(reader.GetOrdinal("ativo")),
-                                    DataCadastro = reader.IsDBNull(reader.GetOrdinal("data_cadastro")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("data_cadastro")),
-                                    DataAlteracao = reader.IsDBNull(reader.GetOrdinal("data_alteracao")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("data_alteracao"))
-                                });
-                            }
+                                Id = reader.GetInt32("Id"),
+                                NomeGrupo = reader.GetString("Grupo"),
+                                Descricao = reader.IsDBNull(reader.GetOrdinal("Descricao")) ? null : reader.GetString("Descricao"),
+                                Ativo = reader.GetBoolean("Ativo"),
+                                DataCadastro = reader.IsDBNull(reader.GetOrdinal("DataCadastro")) ? (DateTime?)null : reader.GetDateTime("DataCadastro"),
+                                DataAlteracao = reader.IsDBNull(reader.GetOrdinal("DataAlteracao")) ? (DateTime?)null : reader.GetDateTime("DataAlteracao")
+                            });
                         }
                     }
                 }
-                return lista;
-            });
+            }
+            return lista;
         }
     }
 }

@@ -2,7 +2,6 @@
 using Projeto.Models;
 using Projeto.Utils;
 using System;
-using System.Threading.Tasks; // Importante
 using System.Windows.Forms;
 
 namespace Projeto.Views.Cadastros
@@ -36,7 +35,7 @@ namespace Projeto.Views.Cadastros
                 : "Modificado em: -";
         }
 
-        private async void btnSalvar_Click(object sender, EventArgs e)
+        private void btnSalvar_Click(object sender, EventArgs e)
         {
             if (modoExclusao)
             {
@@ -46,7 +45,7 @@ namespace Projeto.Views.Cadastros
                     try
                     {
                         int id = int.Parse(txtCodigo.Text);
-                        await controller.Excluir(id);
+                        controller.Excluir(id);
                         MessageBox.Show("Grupo excluído com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         this.Close();
                     }
@@ -77,7 +76,7 @@ namespace Projeto.Views.Cadastros
                     int id = string.IsNullOrEmpty(txtCodigo.Text) ? 0 : int.Parse(txtCodigo.Text);
                     string nome = txtNome.Text;
 
-                    var grupos = await controller.ListarGrupos();
+                    var grupos = controller.ListarGrupos();
                     bool existeDuplicado = grupos.Exists(g =>
                         g.NomeGrupo.Trim().Equals(nome, StringComparison.OrdinalIgnoreCase)
                         && g.Id != id);
@@ -105,7 +104,7 @@ namespace Projeto.Views.Cadastros
                         DataAlteracao = dataModificacao
                     };
 
-                    await controller.Salvar(grupo);
+                    controller.Salvar(grupo);
 
                     MessageBox.Show("Grupo salvo com sucesso!");
                     this.Close();

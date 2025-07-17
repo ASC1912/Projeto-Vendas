@@ -21,43 +21,43 @@ namespace Projeto.DAO
                     if (veiculo.Id > 0)
                     {
                         query = @"
-                        UPDATE veiculos SET 
-                            transportadora_id = @transportadora_id, id_marca = @id_marca, placa = @placa, 
-                            modelo = @modelo, ano_fabricacao = @ano_fabricacao, 
-                            capacidade_carga_kg = @capacidade_carga_kg, ativo = @ativo,
-                            data_alteracao = @data_alteracao
-                        WHERE id = @id";
+                        UPDATE Veiculos SET 
+                            TransportadoraId = @TransportadoraId, IdMarca = @IdMarca, Placa = @Placa, 
+                            Modelo = @Modelo, AnoFabricacao = @AnoFabricacao, 
+                            CapacidadeCargaKg = @CapacidadeCargaKg, Ativo = @Ativo,
+                            DataAlteracao = @DataAlteracao
+                        WHERE Id = @Id";
                     }
                     else
                     {
                         query = @"
-                        INSERT INTO veiculos (
-                            transportadora_id, id_marca, placa, modelo, ano_fabricacao, 
-                            capacidade_carga_kg, ativo, data_cadastro, data_alteracao
+                        INSERT INTO Veiculos (
+                            TransportadoraId, IdMarca, Placa, Modelo, AnoFabricacao, 
+                            CapacidadeCargaKg, Ativo, DataCadastro, DataAlteracao
                         ) VALUES (
-                            @transportadora_id, @id_marca, @placa, @modelo, @ano_fabricacao, 
-                            @capacidade_carga_kg, @ativo, @data_cadastro, @data_alteracao
+                            @TransportadoraId, @IdMarca, @Placa, @Modelo, @AnoFabricacao, 
+                            @CapacidadeCargaKg, @Ativo, @DataCadastro, @DataAlteracao
                         )";
                     }
 
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
-                        cmd.Parameters.AddWithValue("@transportadora_id", veiculo.TransportadoraId);
-                        cmd.Parameters.AddWithValue("@id_marca", veiculo.IdMarca); // ALTERADO
-                        cmd.Parameters.AddWithValue("@placa", veiculo.Placa);
-                        cmd.Parameters.AddWithValue("@modelo", veiculo.Modelo);
-                        cmd.Parameters.AddWithValue("@ano_fabricacao", veiculo.AnoFabricacao);
-                        cmd.Parameters.AddWithValue("@capacidade_carga_kg", veiculo.CapacidadeCargaKg);
-                        cmd.Parameters.AddWithValue("@ativo", veiculo.Ativo);
-                        cmd.Parameters.AddWithValue("@data_alteracao", veiculo.DataAlteracao ?? DateTime.Now);
+                        cmd.Parameters.AddWithValue("@TransportadoraId", veiculo.TransportadoraId);
+                        cmd.Parameters.AddWithValue("@IdMarca", veiculo.IdMarca ?? (object)DBNull.Value);
+                        cmd.Parameters.AddWithValue("@Placa", veiculo.Placa);
+                        cmd.Parameters.AddWithValue("@Modelo", veiculo.Modelo);
+                        cmd.Parameters.AddWithValue("@AnoFabricacao", veiculo.AnoFabricacao);
+                        cmd.Parameters.AddWithValue("@CapacidadeCargaKg", veiculo.CapacidadeCargaKg);
+                        cmd.Parameters.AddWithValue("@Ativo", veiculo.Ativo);
+                        cmd.Parameters.AddWithValue("@DataAlteracao", veiculo.DataAlteracao ?? DateTime.Now);
 
                         if (veiculo.Id > 0)
                         {
-                            cmd.Parameters.AddWithValue("@id", veiculo.Id);
+                            cmd.Parameters.AddWithValue("@Id", veiculo.Id);
                         }
                         else
                         {
-                            cmd.Parameters.AddWithValue("@data_cadastro", veiculo.DataCadastro ?? DateTime.Now);
+                            cmd.Parameters.AddWithValue("@DataCadastro", veiculo.DataCadastro ?? DateTime.Now);
                         }
 
                         cmd.ExecuteNonQuery();
@@ -70,22 +70,64 @@ namespace Projeto.DAO
             }
         }
 
-        // ... (o método Excluir(int id) continua o mesmo)
         public void Excluir(int id)
         {
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
-                string query = "DELETE FROM veiculos WHERE id = @id";
+                string query = "DELETE FROM Veiculos WHERE Id = @Id";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
-                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.Parameters.AddWithValue("@Id", id);
                     cmd.ExecuteNonQuery();
                 }
             }
         }
 
+        public Veiculo BuscarPorId(int id)
+        {
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = @"
+                    SELECT v.Id, v.Placa, v.Modelo, v.AnoFabricacao, v.CapacidadeCargaKg, v.Ativo, 
+                           v.TransportadoraId, t.Transportadora AS NomeTransportadora,
+                           v.IdMarca, m.Marca AS NomeMarca, v.DataCadastro, v.DataAlteracao
+                    FROM Veiculos v
+                    JOIN Transportadoras t ON v.TransportadoraId = t.Id
+                    LEFT JOIN Marcas m ON v.IdMarca = m.Id
+                    WHERE v.Id = @Id";
+
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@Id", id);
+
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            return new Veiculo
+                            {
+                                Id = reader.GetInt32("Id"),
+                                Placa = reader.GetString("Placa"),
+                                Modelo = reader.IsDBNull(reader.GetOrdinal("Modelo")) ? null : reader.GetString("Modelo"),
+                                AnoFabricacao = reader.IsDBNull(reader.GetOrdinal("AnoFabricacao")) ? (int?)null : reader.GetInt32("AnoFabricacao"),
+                                CapacidadeCargaKg = reader.IsDBNull(reader.GetOrdinal("CapacidadeCargaKg")) ? (decimal?)null : reader.GetDecimal("CapacidadeCargaKg"),
+                                Ativo = reader.GetBoolean("Ativo"),
+                                TransportadoraId = reader.GetInt32("TransportadoraId"),
+                                NomeTransportadora = reader.GetString("NomeTransportadora"),
+                                IdMarca = reader.IsDBNull(reader.GetOrdinal("IdMarca")) ? (int?)null : reader.GetInt32("IdMarca"),
+                                NomeMarca = reader.IsDBNull(reader.GetOrdinal("NomeMarca")) ? null : reader.GetString("NomeMarca"),
+                                DataCadastro = reader.IsDBNull(reader.GetOrdinal("DataCadastro")) ? (DateTime?)null : reader.GetDateTime("DataCadastro"),
+                                DataAlteracao = reader.IsDBNull(reader.GetOrdinal("DataAlteracao")) ? (DateTime?)null : reader.GetDateTime("DataAlteracao")
+                            };
+                        }
+                    }
+                }
+            }
+            return null;
+        }
 
         public List<Veiculo> ListarVeiculos()
         {
@@ -95,13 +137,13 @@ namespace Projeto.DAO
             {
                 conn.Open();
                 string query = @"
-                    SELECT v.id, v.placa, v.modelo, v.ano_fabricacao, v.capacidade_carga_kg, v.ativo, 
-                           v.transportadora_id, t.transportadora AS nome_transportadora,
-                           v.id_marca, m.marca AS nome_marca
-                    FROM veiculos v
-                    JOIN transportadoras t ON v.transportadora_id = t.id
-                    LEFT JOIN marcas m ON v.id_marca = m.id
-                    ORDER BY v.id";
+                    SELECT v.Id, v.Placa, v.Modelo, v.AnoFabricacao, v.CapacidadeCargaKg, v.Ativo, 
+                           v.TransportadoraId, t.Transportadora AS NomeTransportadora,
+                           v.IdMarca, m.Marca AS NomeMarca
+                    FROM Veiculos v
+                    JOIN Transportadoras t ON v.TransportadoraId = t.Id
+                    LEFT JOIN Marcas m ON v.IdMarca = m.Id
+                    ORDER BY v.Id";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
@@ -111,66 +153,22 @@ namespace Projeto.DAO
                         {
                             lista.Add(new Veiculo
                             {
-                                Id = reader.GetInt32("id"),
-                                Placa = reader.GetString("placa"),
-                                Modelo = reader.IsDBNull(reader.GetOrdinal("modelo")) ? null : reader.GetString("modelo"),
-                                AnoFabricacao = reader.IsDBNull(reader.GetOrdinal("ano_fabricacao")) ? (int?)null : reader.GetInt32("ano_fabricacao"),
-                                CapacidadeCargaKg = reader.IsDBNull(reader.GetOrdinal("capacidade_carga_kg")) ? (decimal?)null : reader.GetDecimal("capacidade_carga_kg"),
-                                Ativo = reader.GetBoolean("ativo"),
-                                TransportadoraId = reader.GetInt32("transportadora_id"),
-                                NomeTransportadora = reader.GetString("nome_transportadora"),
-                                IdMarca = reader.IsDBNull(reader.GetOrdinal("id_marca")) ? (int?)null : reader.GetInt32("id_marca"),
-                                NomeMarca = reader.IsDBNull(reader.GetOrdinal("nome_marca")) ? null : reader.GetString("nome_marca")
+                                Id = reader.GetInt32("Id"),
+                                Placa = reader.GetString("Placa"),
+                                Modelo = reader.IsDBNull(reader.GetOrdinal("Modelo")) ? null : reader.GetString("Modelo"),
+                                AnoFabricacao = reader.IsDBNull(reader.GetOrdinal("AnoFabricacao")) ? (int?)null : reader.GetInt32("AnoFabricacao"),
+                                CapacidadeCargaKg = reader.IsDBNull(reader.GetOrdinal("CapacidadeCargaKg")) ? (decimal?)null : reader.GetDecimal("CapacidadeCargaKg"),
+                                Ativo = reader.GetBoolean("Ativo"),
+                                TransportadoraId = reader.GetInt32("TransportadoraId"),
+                                NomeTransportadora = reader.GetString("NomeTransportadora"),
+                                IdMarca = reader.IsDBNull(reader.GetOrdinal("IdMarca")) ? (int?)null : reader.GetInt32("IdMarca"),
+                                NomeMarca = reader.IsDBNull(reader.GetOrdinal("NomeMarca")) ? null : reader.GetString("NomeMarca")
                             });
                         }
                     }
                 }
             }
             return lista;
-        }
-
-        public Veiculo BuscarPorId(int id)
-        {
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
-            {
-                conn.Open();
-                string query = @"
-                    SELECT v.id, v.placa, v.modelo, v.ano_fabricacao, v.capacidade_carga_kg, v.ativo, 
-                           v.transportadora_id, t.transportadora AS nome_transportadora,
-                           v.id_marca, m.marca AS nome_marca, v.data_cadastro, v.data_alteracao
-                    FROM veiculos v
-                    JOIN transportadoras t ON v.transportadora_id = t.id
-                    LEFT JOIN marcas m ON v.id_marca = m.id
-                    WHERE v.id = @id";
-
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                {
-                    cmd.Parameters.AddWithValue("@id", id);
-
-                    using (MySqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        if (reader.Read())
-                        {
-                            return new Veiculo
-                            {
-                                Id = reader.GetInt32("id"),
-                                Placa = reader.GetString("placa"),
-                                Modelo = reader.IsDBNull(reader.GetOrdinal("modelo")) ? null : reader.GetString("modelo"),
-                                AnoFabricacao = reader.IsDBNull(reader.GetOrdinal("ano_fabricacao")) ? (int?)null : reader.GetInt32("ano_fabricacao"),
-                                CapacidadeCargaKg = reader.IsDBNull(reader.GetOrdinal("capacidade_carga_kg")) ? (decimal?)null : reader.GetDecimal("capacidade_carga_kg"),
-                                Ativo = reader.GetBoolean("ativo"),
-                                TransportadoraId = reader.GetInt32("transportadora_id"),
-                                NomeTransportadora = reader.GetString("nome_transportadora"),
-                                IdMarca = reader.IsDBNull(reader.GetOrdinal("id_marca")) ? (int?)null : reader.GetInt32("id_marca"),
-                                NomeMarca = reader.IsDBNull(reader.GetOrdinal("nome_marca")) ? null : reader.GetString("nome_marca"),
-                                DataCadastro = reader.IsDBNull(reader.GetOrdinal("data_cadastro")) ? (DateTime?)null : reader.GetDateTime("data_cadastro"),
-                                DataAlteracao = reader.IsDBNull(reader.GetOrdinal("data_alteracao")) ? (DateTime?)null : reader.GetDateTime("data_alteracao")
-                            };
-                        }
-                    }
-                }
-            }
-            return null;
         }
     }
 }
