@@ -24,7 +24,7 @@ namespace Projeto.DAO
                         UPDATE Funcionarios SET
                             Funcionario = @Funcionario, Apelido = @Apelido, CpfCnpj = @CpfCnpj, Rg = @Rg, Telefone = @Telefone, Email = @Email,
                             Endereco = @Endereco, NumeroEndereco = @NumeroEndereco, Complemento = @Complemento,
-                            Bairro = @Bairro, Cep = @Cep, IdCidade = @IdCidade, Tipo = @Tipo, Cargo = @Cargo, Salario = @Salario,
+                            Bairro = @Bairro, Cep = @Cep, CidadeId = @CidadeId, Tipo = @Tipo, Cargo = @Cargo, Salario = @Salario,
                             Matricula = @Matricula, Genero = @Genero, DataAdmissao = @DataAdmissao, DataDemissao = @DataDemissao,
                             DataNascimento = @DataNascimento, Ativo = @Ativo, DataAlteracao = @DataAlteracao
                         WHERE Id = @Id";
@@ -34,12 +34,12 @@ namespace Projeto.DAO
                         query = @"
                         INSERT INTO Funcionarios (
                             Funcionario, Apelido, CpfCnpj, Rg, Telefone, Email, Endereco, NumeroEndereco, Complemento,
-                            Bairro, Cep, IdCidade, Tipo, Cargo, Salario, Matricula, Genero, DataAdmissao, DataDemissao,
+                            Bairro, Cep, CidadeId, Tipo, Cargo, Salario, Matricula, Genero, DataAdmissao, DataDemissao,
                             DataNascimento, Ativo, DataCadastro, DataAlteracao
                         )
                         VALUES (
                             @Funcionario, @Apelido, @CpfCnpj, @Rg, @Telefone, @Email, @Endereco, @NumeroEndereco, @Complemento,
-                            @Bairro, @Cep, @IdCidade, @Tipo, @Cargo, @Salario, @Matricula, @Genero, @DataAdmissao, @DataDemissao,
+                            @Bairro, @Cep, @CidadeId, @Tipo, @Cargo, @Salario, @Matricula, @Genero, @DataAdmissao, @DataDemissao,
                             @DataNascimento, @Ativo, @DataCadastro, @DataAlteracao
                         )";
                     }
@@ -57,7 +57,7 @@ namespace Projeto.DAO
                         cmd.Parameters.AddWithValue("@Complemento", funcionario.Complemento ?? (object)DBNull.Value);
                         cmd.Parameters.AddWithValue("@Bairro", funcionario.Bairro ?? (object)DBNull.Value);
                         cmd.Parameters.AddWithValue("@Cep", funcionario.CEP ?? (object)DBNull.Value);
-                        cmd.Parameters.AddWithValue("@IdCidade", funcionario.IdCidade ?? (object)DBNull.Value);
+                        cmd.Parameters.AddWithValue("@CidadeId", funcionario.CidadeId ?? (object)DBNull.Value);
                         cmd.Parameters.AddWithValue("@Tipo", funcionario.Tipo ?? (object)DBNull.Value);
                         cmd.Parameters.AddWithValue("@Cargo", funcionario.Cargo ?? (object)DBNull.Value);
                         cmd.Parameters.AddWithValue("@Salario", funcionario.Salario);
@@ -112,10 +112,10 @@ namespace Projeto.DAO
                 SELECT f.Id, f.Funcionario, f.Apelido, f.CpfCnpj, f.Rg, f.Telefone, f.Email,
                        f.Endereco, f.NumeroEndereco, f.Complemento, f.Bairro,
                        f.Cep, f.Tipo, f.Cargo, f.Salario, f.Matricula, f.Genero, f.DataAdmissao, f.DataDemissao,
-                       f.DataNascimento, f.Ativo, f.IdCidade, f.DataCadastro, f.DataAlteracao,
+                       f.DataNascimento, f.Ativo, f.CidadeId, f.DataCadastro, f.DataAlteracao,
                        c.Cidade AS NomeCidade
                 FROM Funcionarios f
-                LEFT JOIN Cidades c ON f.IdCidade = c.Id
+                LEFT JOIN Cidades c ON f.CidadeId = c.Id
                 WHERE f.Id = @Id";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
@@ -149,7 +149,7 @@ namespace Projeto.DAO
                                 DataDemissao = reader.IsDBNull(reader.GetOrdinal("DataDemissao")) ? (DateTime?)null : reader.GetDateTime("DataDemissao"),
                                 DataNascimento = reader.IsDBNull(reader.GetOrdinal("DataNascimento")) ? (DateTime?)null : reader.GetDateTime("DataNascimento"),
                                 Ativo = reader.GetBoolean("Ativo"),
-                                IdCidade = reader.IsDBNull(reader.GetOrdinal("IdCidade")) ? (int?)null : reader.GetInt32("IdCidade"),
+                                CidadeId = reader.IsDBNull(reader.GetOrdinal("CidadeId")) ? (int?)null : reader.GetInt32("CidadeId"),
                                 NomeCidade = reader.IsDBNull(reader.GetOrdinal("NomeCidade")) ? null : reader.GetString("NomeCidade"),
                                 DataCadastro = reader.IsDBNull(reader.GetOrdinal("DataCadastro")) ? (DateTime?)null : reader.GetDateTime("DataCadastro"),
                                 DataAlteracao = reader.IsDBNull(reader.GetOrdinal("DataAlteracao")) ? (DateTime?)null : reader.GetDateTime("DataAlteracao")
@@ -164,7 +164,6 @@ namespace Projeto.DAO
         public List<Funcionario> ListarFuncionarios()
         {
             List<Funcionario> lista = new List<Funcionario>();
-
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
@@ -172,10 +171,10 @@ namespace Projeto.DAO
                 SELECT f.Id, f.Funcionario, f.Apelido, f.CpfCnpj, f.Rg, f.Telefone, f.Email,
                        f.Endereco, f.NumeroEndereco, f.Complemento, f.Bairro,
                        f.Cep, f.Tipo, f.Cargo, f.Salario, f.Matricula, f.Genero, f.DataAdmissao, f.DataDemissao,
-                       f.DataNascimento, f.Ativo, f.IdCidade, f.DataCadastro, f.DataAlteracao,
+                       f.DataNascimento, f.Ativo, f.CidadeId, f.DataCadastro, f.DataAlteracao,
                        c.Cidade AS NomeCidade
                 FROM Funcionarios f
-                LEFT JOIN Cidades c ON f.IdCidade = c.Id
+                LEFT JOIN Cidades c ON f.CidadeId = c.Id
                 ORDER BY f.Id";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
@@ -207,7 +206,7 @@ namespace Projeto.DAO
                                 DataDemissao = reader.IsDBNull(reader.GetOrdinal("DataDemissao")) ? (DateTime?)null : reader.GetDateTime("DataDemissao"),
                                 DataNascimento = reader.IsDBNull(reader.GetOrdinal("DataNascimento")) ? (DateTime?)null : reader.GetDateTime("DataNascimento"),
                                 Ativo = reader.GetBoolean("Ativo"),
-                                IdCidade = reader.IsDBNull(reader.GetOrdinal("IdCidade")) ? (int?)null : reader.GetInt32("IdCidade"),
+                                CidadeId = reader.IsDBNull(reader.GetOrdinal("CidadeId")) ? (int?)null : reader.GetInt32("CidadeId"),
                                 NomeCidade = reader.IsDBNull(reader.GetOrdinal("NomeCidade")) ? null : reader.GetString("NomeCidade"),
                                 DataCadastro = reader.IsDBNull(reader.GetOrdinal("DataCadastro")) ? (DateTime?)null : reader.GetDateTime("DataCadastro"),
                                 DataAlteracao = reader.IsDBNull(reader.GetOrdinal("DataAlteracao")) ? (DateTime?)null : reader.GetDateTime("DataAlteracao")

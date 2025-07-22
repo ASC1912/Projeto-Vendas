@@ -123,8 +123,8 @@ namespace Projeto.Views.Consultas
 
                 if (transportadora != null)
                 {
-                    Cidade cidade = transportadora.IdCidade.HasValue
-                        ? new CidadeController().BuscarPorId(transportadora.IdCidade.Value)
+                    Cidade cidade = transportadora.CidadeId.HasValue
+                        ? new CidadeController().BuscarPorId(transportadora.CidadeId.Value)
                         : null;
 
                     var formCadastro = new frmCadastroTransportadora();
@@ -144,7 +144,7 @@ namespace Projeto.Views.Consultas
                         transportadora.InscricaoEstadualSubTrib,
                         transportadora.Tipo,
                         cidade?.NomeCidade ?? "Não encontrado",
-                        transportadora.IdCidade ?? 0,
+                        transportadora.CidadeId ?? 0,
                         transportadora.DescricaoCondicao ?? "Não encontrado",
                         transportadora.IdCondicao ?? 0,
                         transportadora.Ativo,
@@ -197,7 +197,7 @@ namespace Projeto.Views.Consultas
                         transportadora.InscricaoEstadualSubTrib,
                         transportadora.Tipo,
                         transportadora.NomeCidade ?? "Não encontrado",
-                        transportadora.IdCidade ?? 0,
+                        transportadora.CidadeId ?? 0,
                         transportadora.DescricaoCondicao ?? "Não encontrado",
                         transportadora.IdCondicao ?? 0,
                         transportadora.Ativo,

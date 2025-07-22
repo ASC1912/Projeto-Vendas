@@ -243,7 +243,7 @@ namespace Projeto.Views
                         CEP = txtCEP.Text,
                         Cargo = txtCargo.Text,
                         Salario = Convert.ToDecimal(txtSalario.Text),
-                        IdCidade = cidadeSelecionadoId,
+                        CidadeId = cidadeSelecionadoId,
                         Ativo = status,
                         DataAdmissao = dtpAdmissao.Value,
                         DataDemissao = dtpDemissao.Checked ? (DateTime?)dtpDemissao.Value : null,

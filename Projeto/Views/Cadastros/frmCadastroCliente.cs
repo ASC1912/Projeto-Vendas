@@ -222,7 +222,7 @@ namespace Projeto.Views
                         Tipo = cbTipo.Text,
                         Genero = genero,
                         CEP = txtCEP.Text,
-                        IdCidade = cidadeSelecionadoId,
+                        CidadeId = cidadeSelecionadoId,
                         IdCondicao = condicaoSelecionadoId,
                         Ativo = !chkInativo.Checked,
                         Rg = txtRG.Text,

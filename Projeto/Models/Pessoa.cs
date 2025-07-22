@@ -19,7 +19,7 @@ namespace Projeto.Models
         public string Bairro { get; set; }
         public int? NumeroEndereco { get; set; }
         public string Complemento { get; set; }
-        public int? IdCidade { get; set; }
+        public int? CidadeId { get; set; }
         public string NomeCidade { get; set; }
         public bool Ativo { get; set; }
         public DateTime? DataCadastro { get; set; }

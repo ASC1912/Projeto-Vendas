@@ -25,7 +25,7 @@ namespace Projeto.DAO
                         SET Transportadora = @Transportadora, CpfCnpj = @CpfCnpj, Telefone = @Telefone, Email = @Email, 
                             Endereco = @Endereco, NumeroEndereco = @NumeroEndereco, Complemento = @Complemento, 
                             Bairro = @Bairro, Cep = @Cep, InscricaoEstadual = @InscricaoEstadual, 
-                            InscricaoEstadualSubtrib = @InscricaoEstadualSubtrib, IdCidade = @IdCidade, 
+                            InscricaoEstadualSubtrib = @InscricaoEstadualSubtrib, CidadeId = @CidadeId, 
                             Tipo = @Tipo, IdCondicaoPagamento = @IdCondicaoPagamento, Ativo = @Ativo,
                             DataAlteracao = @DataAlteracao
                         WHERE Id = @Id";
@@ -35,12 +35,12 @@ namespace Projeto.DAO
                         query = @"
                         INSERT INTO Transportadoras (
                             Transportadora, CpfCnpj, Telefone, Email, Endereco, NumeroEndereco, Complemento, 
-                            Bairro, Cep, InscricaoEstadual, InscricaoEstadualSubtrib, IdCidade, Tipo, IdCondicaoPagamento,
+                            Bairro, Cep, InscricaoEstadual, InscricaoEstadualSubtrib, CidadeId, Tipo, IdCondicaoPagamento,
                             Ativo, DataCadastro, DataAlteracao
                         ) 
                         VALUES (
                             @Transportadora, @CpfCnpj, @Telefone, @Email, @Endereco, @NumeroEndereco, @Complemento, 
-                            @Bairro, @Cep, @InscricaoEstadual, @InscricaoEstadualSubtrib, @IdCidade, @Tipo, @IdCondicaoPagamento,
+                            @Bairro, @Cep, @InscricaoEstadual, @InscricaoEstadualSubtrib, @CidadeId, @Tipo, @IdCondicaoPagamento,
                             @Ativo, @DataCadastro, @DataAlteracao
                         )";
                     }
@@ -58,7 +58,7 @@ namespace Projeto.DAO
                         cmd.Parameters.AddWithValue("@Cep", transportadora.CEP ?? (object)DBNull.Value);
                         cmd.Parameters.AddWithValue("@InscricaoEstadual", transportadora.InscricaoEstadual ?? (object)DBNull.Value);
                         cmd.Parameters.AddWithValue("@InscricaoEstadualSubtrib", transportadora.InscricaoEstadualSubTrib ?? (object)DBNull.Value);
-                        cmd.Parameters.AddWithValue("@IdCidade", transportadora.IdCidade ?? (object)DBNull.Value);
+                        cmd.Parameters.AddWithValue("@CidadeId", transportadora.CidadeId ?? (object)DBNull.Value);
                         cmd.Parameters.AddWithValue("@Tipo", transportadora.Tipo ?? (object)DBNull.Value);
                         cmd.Parameters.AddWithValue("@IdCondicaoPagamento", transportadora.IdCondicao ?? (object)DBNull.Value);
                         cmd.Parameters.AddWithValue("@Ativo", transportadora.Ativo);
@@ -106,10 +106,10 @@ namespace Projeto.DAO
                 string query = @"
                     SELECT t.Id, t.Transportadora, t.CpfCnpj, t.Telefone, t.Email, t.Endereco, t.NumeroEndereco, 
                            t.Complemento, t.Bairro, t.Cep, t.InscricaoEstadual, t.InscricaoEstadualSubtrib, 
-                           t.IdCidade, ci.Cidade AS NomeCidade, t.Tipo, t.IdCondicaoPagamento,
+                           t.CidadeId, ci.Cidade AS NomeCidade, t.Tipo, t.IdCondicaoPagamento,
                            cp.Descricao AS DescricaoCondicao, t.Ativo, t.DataCadastro, t.DataAlteracao
                     FROM Transportadoras t
-                    LEFT JOIN Cidades ci ON t.IdCidade = ci.Id
+                    LEFT JOIN Cidades ci ON t.CidadeId = ci.Id
                     LEFT JOIN CondicoesPagamento cp ON t.IdCondicaoPagamento = cp.Id
                     WHERE t.Id = @Id";
 
@@ -135,7 +135,7 @@ namespace Projeto.DAO
                                 CEP = reader.IsDBNull(reader.GetOrdinal("Cep")) ? null : reader.GetString("Cep"),
                                 InscricaoEstadual = reader.IsDBNull(reader.GetOrdinal("InscricaoEstadual")) ? null : reader.GetString("InscricaoEstadual"),
                                 InscricaoEstadualSubTrib = reader.IsDBNull(reader.GetOrdinal("InscricaoEstadualSubtrib")) ? null : reader.GetString("InscricaoEstadualSubtrib"),
-                                IdCidade = reader.IsDBNull(reader.GetOrdinal("IdCidade")) ? (int?)null : reader.GetInt32("IdCidade"),
+                                CidadeId = reader.IsDBNull(reader.GetOrdinal("CidadeId")) ? (int?)null : reader.GetInt32("CidadeId"),
                                 NomeCidade = reader.IsDBNull(reader.GetOrdinal("NomeCidade")) ? null : reader.GetString("NomeCidade"),
                                 Tipo = reader.GetString("Tipo"),
                                 IdCondicao = reader.IsDBNull(reader.GetOrdinal("IdCondicaoPagamento")) ? (int?)null : reader.GetInt32("IdCondicaoPagamento"),
@@ -154,17 +154,16 @@ namespace Projeto.DAO
         public List<Transportadora> ListarTransportadoras()
         {
             List<Transportadora> lista = new List<Transportadora>();
-
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
                 string query = @"
                     SELECT t.Id, t.Transportadora, t.CpfCnpj, t.Telefone, t.Email, t.Endereco, t.NumeroEndereco, 
                            t.Complemento, t.Bairro, t.Cep, t.InscricaoEstadual, t.InscricaoEstadualSubtrib, 
-                           t.IdCidade, ci.Cidade AS NomeCidade, t.Tipo, t.IdCondicaoPagamento,
+                           t.CidadeId, ci.Cidade AS NomeCidade, t.Tipo, t.IdCondicaoPagamento,
                            cp.Descricao AS DescricaoCondicao, t.Ativo, t.DataCadastro, t.DataAlteracao
                     FROM Transportadoras t
-                    LEFT JOIN Cidades ci ON t.IdCidade = ci.Id
+                    LEFT JOIN Cidades ci ON t.CidadeId = ci.Id
                     LEFT JOIN CondicoesPagamento cp ON t.IdCondicaoPagamento = cp.Id
                     ORDER BY t.Id";
 
@@ -188,7 +187,7 @@ namespace Projeto.DAO
                                 CEP = reader.IsDBNull(reader.GetOrdinal("Cep")) ? null : reader.GetString("Cep"),
                                 InscricaoEstadual = reader.IsDBNull(reader.GetOrdinal("InscricaoEstadual")) ? null : reader.GetString("InscricaoEstadual"),
                                 InscricaoEstadualSubTrib = reader.IsDBNull(reader.GetOrdinal("InscricaoEstadualSubtrib")) ? null : reader.GetString("InscricaoEstadualSubtrib"),
-                                IdCidade = reader.IsDBNull(reader.GetOrdinal("IdCidade")) ? (int?)null : reader.GetInt32("IdCidade"),
+                                CidadeId = reader.IsDBNull(reader.GetOrdinal("CidadeId")) ? (int?)null : reader.GetInt32("CidadeId"),
                                 NomeCidade = reader.IsDBNull(reader.GetOrdinal("NomeCidade")) ? null : reader.GetString("NomeCidade"),
                                 Tipo = reader.GetString("Tipo"),
                                 IdCondicao = reader.IsDBNull(reader.GetOrdinal("IdCondicaoPagamento")) ? (int?)null : reader.GetInt32("IdCondicaoPagamento"),

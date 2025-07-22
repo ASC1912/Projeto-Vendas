@@ -21,12 +21,12 @@ namespace Projeto.DAO
                 RemoverParcelasExtras(condicaoPagamentoId, parcelas.Count);
 
                 string query = @"
-                    INSERT INTO Parcelamentos (NumeroParcela, CondicaoPagamentoId, FormaPagamentoId, PrazoDias, Porcentagem) 
-                    VALUES (@NumeroParcela, @CondicaoPagamentoId, @FormaPagamentoId, @PrazoDias, @Porcentagem)
+                    INSERT INTO Parcelamentos (NumeroParcela, CondicaoPagamentoId, FormaPagamentoId, PrazoDias, PorcentagemValor) 
+                    VALUES (@NumeroParcela, @CondicaoPagamentoId, @FormaPagamentoId, @PrazoDias, @PorcentagemValor)
                     ON DUPLICATE KEY UPDATE
                     FormaPagamentoId = VALUES(FormaPagamentoId),
                     PrazoDias = VALUES(PrazoDias),
-                    Porcentagem = VALUES(Porcentagem)";
+                    PorcentagemValor = VALUES(PorcentagemValor)";
 
                 using (var cmd = new MySqlCommand(query, conexao))
                 {
@@ -37,8 +37,7 @@ namespace Projeto.DAO
                         cmd.Parameters.AddWithValue("@CondicaoPagamentoId", condicaoPagamentoId);
                         cmd.Parameters.AddWithValue("@FormaPagamentoId", parcela.FormaPagamentoId);
                         cmd.Parameters.AddWithValue("@PrazoDias", parcela.PrazoDias);
-                        cmd.Parameters.AddWithValue("@Porcentagem", parcela.Porcentagem);
-                        cmd.ExecuteNonQuery();
+                        cmd.Parameters.AddWithValue("@PorcentagemValor", parcela.Porcentagem); 
                     }
                 }
             }
@@ -54,7 +53,7 @@ namespace Projeto.DAO
                 using (MySqlConnection conn = new MySqlConnection(connectionString))
                 {
                     conn.Open();
-                    string query = "SELECT NumeroParcela, PrazoDias, Porcentagem, CondicaoPagamentoId, FormaPagamentoId " +
+                    string query = "SELECT NumeroParcela, PrazoDias, PorcentagemValor, CondicaoPagamentoId, FormaPagamentoId " +
                                    "FROM Parcelamentos WHERE CondicaoPagamentoId = @CondicaoPagamentoId";
 
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
@@ -69,7 +68,7 @@ namespace Projeto.DAO
                                 {
                                     NumParcela = reader.GetInt32("NumeroParcela"),
                                     PrazoDias = reader.GetInt32("PrazoDias"),
-                                    Porcentagem = reader.GetDecimal("Porcentagem"),
+                                    Porcentagem = reader.GetDecimal("PorcentagemValor"), 
                                     CondicaoId = reader.GetInt32("CondicaoPagamentoId"),
                                     FormaPagamentoId = reader.GetInt32("FormaPagamentoId")
                                 };

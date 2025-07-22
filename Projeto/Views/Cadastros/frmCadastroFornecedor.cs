@@ -189,7 +189,7 @@ namespace Projeto.Views
                         CEP = txtCEP.Text,
                         InscricaoEstadual = txtInscEst.Text,
                         InscricaoEstadualSubTrib = txtInscEstSubTrib.Text,
-                        IdCidade = cidadeSelecionadoId,
+                        CidadeId = cidadeSelecionadoId,
                         IdCondicao = condicaoSelecionadoId > 0 ? (int?)condicaoSelecionadoId : null,
                         Ativo = !chkInativo.Checked,
                         DataCadastro = dataCriacao,

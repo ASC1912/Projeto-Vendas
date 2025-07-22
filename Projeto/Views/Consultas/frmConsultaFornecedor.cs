@@ -124,8 +124,8 @@ namespace Projeto.Views
 
                 if (fornecedor != null)
                 {
-                    Cidade cidade = fornecedor.IdCidade.HasValue
-                        ? new CidadeController().BuscarPorId(fornecedor.IdCidade.Value)
+                    Cidade cidade = fornecedor.CidadeId.HasValue
+                        ? new CidadeController().BuscarPorId(fornecedor.CidadeId.Value)
                         : null;
 
                     var formCadastro = new frmCadastroFornecedor();
@@ -145,7 +145,7 @@ namespace Projeto.Views
                         fornecedor.InscricaoEstadualSubTrib,
                         fornecedor.Tipo,
                         cidade?.NomeCidade ?? "Não encontrado",
-                        fornecedor.IdCidade ?? 0,
+                        fornecedor.CidadeId ?? 0,
                         fornecedor.DescricaoCondicao ?? "Não encontrada",
                         fornecedor.IdCondicao ?? 0,
                         fornecedor.Ativo,
@@ -200,7 +200,7 @@ namespace Projeto.Views
                         fornecedor.InscricaoEstadualSubTrib,
                         fornecedor.Tipo,
                         fornecedor.NomeCidade ?? "Não encontrado",
-                        fornecedor.IdCidade ?? 0,
+                        fornecedor.CidadeId ?? 0,
                         fornecedor.DescricaoCondicao ?? "Não encontrada",
                         fornecedor.IdCondicao ?? 0,
                         fornecedor.Ativo,

@@ -138,8 +138,8 @@ namespace Projeto.Views
 
                 if (funcionario != null)
                 {
-                    Cidade cidade = funcionario.IdCidade.HasValue
-                        ? new CidadeController().BuscarPorId(funcionario.IdCidade.Value)
+                    Cidade cidade = funcionario.CidadeId.HasValue
+                        ? new CidadeController().BuscarPorId(funcionario.CidadeId.Value)
                         : null;
 
                     var formCadastro = new frmCadastroFuncionario();
@@ -162,7 +162,7 @@ namespace Projeto.Views
                         funcionario.Genero,
                         funcionario.Tipo,
                         cidade?.NomeCidade ?? "Não encontrado",
-                        funcionario.IdCidade ?? 0,
+                        funcionario.CidadeId ?? 0,
                         funcionario.Ativo,
                         funcionario.DataAdmissao,
                         funcionario.DataDemissao,
@@ -199,8 +199,8 @@ namespace Projeto.Views
 
                 if (funcionario != null)
                 {
-                    Cidade cidade = funcionario.IdCidade.HasValue
-                        ? new CidadeController().BuscarPorId(funcionario.IdCidade.Value)
+                    Cidade cidade = funcionario.CidadeId.HasValue
+                        ? new CidadeController().BuscarPorId(funcionario.CidadeId.Value)
                         : null;
 
                     var formCadastro = new frmCadastroFuncionario
@@ -226,7 +226,7 @@ namespace Projeto.Views
                         funcionario.Genero,
                         funcionario.Tipo,
                         cidade?.NomeCidade ?? "Não encontrado",
-                        funcionario.IdCidade ?? 0,
+                        funcionario.CidadeId ?? 0,
                         funcionario.Ativo,
                         funcionario.DataAdmissao,
                         funcionario.DataDemissao,
