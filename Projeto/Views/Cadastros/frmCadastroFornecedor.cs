@@ -163,15 +163,13 @@ namespace Projeto.Views
                     string cpfCnpjLimpo = new string(txtCPF.Text.Where(char.IsDigit).ToArray());
 
                     List<Fornecedor> fornecedores = controller.ListarFornecedor();
-                    bool existeDuplicado = fornecedores.Exists(f =>
-                        new string(f.CPF_CNPJ.Where(char.IsDigit).ToArray()).Equals(cpfCnpjLimpo, StringComparison.OrdinalIgnoreCase)
-                        && f.Id != id);
 
-                    if (existeDuplicado)
+                    if (Validador.VerificarDuplicidade(fornecedores, f =>
+                       new string(f.CPF_CNPJ.Where(char.IsDigit).ToArray()).Equals(cpfCnpjLimpo, StringComparison.OrdinalIgnoreCase)
+                       && f.Id != id, "Já existe um fornecedor cadastrado com este CPF/CNPJ."))
                     {
-                        MessageBox.Show("Já existe um fornecedor cadastrado com este CPF/CNPJ.", "Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         txtCPF.Focus();
-                        return;
+                        return; 
                     }
 
                     Fornecedor fornecedor = new Fornecedor

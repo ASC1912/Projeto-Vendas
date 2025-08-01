@@ -36,8 +36,8 @@ namespace Projeto.Views.Consultas
                     case "Modelo":
                         column.Width = 150;
                         break;
-                    case "Ano":
-                        column.Width = 70;
+                    case "Ano de Fabricação":
+                        column.Width = 130;
                         break;
                     case "Capacidade (kg)":
                         column.Width = 100;

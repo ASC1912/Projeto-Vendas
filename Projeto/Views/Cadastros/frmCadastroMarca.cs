@@ -79,15 +79,12 @@ namespace Projeto.Views.Cadastros
                     bool ativo = !chkInativo.Checked;
 
                     var marcas = controller.ListarMarcas();
-                    bool existeDuplicado = marcas.Exists(m =>
-                        m.NomeMarca.Trim().Equals(marcaNome, StringComparison.OrdinalIgnoreCase)
-                        && m.Id != id);
-
-                    if (existeDuplicado)
+                    if (Validador.VerificarDuplicidade(marcas, m =>
+                       m.NomeMarca.Trim().Equals(marcaNome, StringComparison.OrdinalIgnoreCase)
+                       && m.Id != id, "Já existe uma marca cadastrada com este nome."))
                     {
-                        MessageBox.Show("Já existe uma marca cadastrada com este nome.", "Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         txtNome.Focus();
-                        return;
+                        return; 
                     }
 
                     DateTime dataCadastro = id == 0

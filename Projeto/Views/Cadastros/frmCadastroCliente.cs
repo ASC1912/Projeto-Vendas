@@ -143,7 +143,8 @@ namespace Projeto.Views
                     MessageBox.Show("Selecione uma cidade.");
                     return;
                 }
-                /*
+
+                // Mudar depois para assíncrono
                 if (cidadeSelecionadoId > 0)
                 {
                     var cidade = cidadeController.BuscarPorId(cidadeSelecionadoId);
@@ -152,12 +153,13 @@ namespace Projeto.Views
                         var estado = estadoController.BuscarPorId(cidade.EstadoId);
                         if (estado != null)
                         {
-                            var pais = paisController.BuscarPorId(estado.PaisId);
+                            // .Result força a espera pela conclusão da tarefa
+                            var pais = paisController.BuscarPorId(estado.PaisId).Result;
                             if (pais != null && pais.NomePais.Trim().Equals("Brasil", StringComparison.OrdinalIgnoreCase))
                             {
                                 if (string.IsNullOrWhiteSpace(txtRG.Text))
                                 {
-                                    MessageBox.Show("O campo RG é obrigatório para clientes brasileiros.", "Validação", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                    MessageBox.Show("O campo RG é obrigatório para funcionários brasileiros.", "Validação", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                     txtRG.Focus();
                                     return;
                                 }
@@ -165,7 +167,6 @@ namespace Projeto.Views
                         }
                     }
                 }
-                */
 
                 if (condicaoSelecionadoId <= 0)
                 {
@@ -197,15 +198,13 @@ namespace Projeto.Views
                     string cpfCnpjLimpo = new string(txtCPF.Text.Where(char.IsDigit).ToArray());
 
                     List<Cliente> clientes = controller.ListarCliente();
-                    bool existeDuplicado = clientes.Exists(c =>
-                        new string(c.CPF_CNPJ.Where(char.IsDigit).ToArray()).Equals(cpfCnpjLimpo, StringComparison.OrdinalIgnoreCase)
-                        && c.Id != id);
 
-                    if (existeDuplicado)
+                    if (Validador.VerificarDuplicidade(clientes, c =>
+                        new string(c.CPF_CNPJ.Where(char.IsDigit).ToArray()).Equals(cpfCnpjLimpo, StringComparison.OrdinalIgnoreCase)
+                        && c.Id != id, "Já existe um cliente cadastrado com este CPF/CNPJ."))
                     {
-                        MessageBox.Show("Já existe um cliente cadastrado com este CPF/CNPJ.", "Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         txtCPF.Focus();
-                        return;
+                        return; 
                     }
 
                     Cliente cliente = new Cliente

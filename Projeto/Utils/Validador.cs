@@ -146,5 +146,15 @@ namespace Projeto.Utils
             return true;
         }
 
+        public static bool VerificarDuplicidade<T>(IEnumerable<T> lista, Func<T, bool> condicao, string mensagem)
+        {
+            if (lista.Any(condicao))
+            {
+                MessageBox.Show(mensagem, "Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return true; 
+            }
+            return false; 
+        }
+
     }
 }

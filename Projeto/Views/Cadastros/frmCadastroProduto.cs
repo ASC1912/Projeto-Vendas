@@ -85,15 +85,13 @@ namespace Projeto.Views.Cadastros
                     bool ativo = !chkInativo.Checked;
 
                     var produtos = controller.ListarProdutos();
-                    bool existeDuplicado = produtos.Exists(p =>
+
+                    if (Validador.VerificarDuplicidade(produtos, p =>
                         p.NomeProduto.Trim().Equals(nomeProduto, StringComparison.OrdinalIgnoreCase) &&
                         p.GrupoId == grupoSelecionadoId &&
                         p.IdMarca == marcaSelecionadoId &&
-                        p.Id != id);
-
-                    if (existeDuplicado)
+                        p.Id != id, "Já existe um produto com este nome cadastrado para este grupo e marca."))
                     {
-                        MessageBox.Show("Já existe um produto com este nome cadastrado para este grupo e marca.", "Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         txtNome.Focus();
                         return;
                     }

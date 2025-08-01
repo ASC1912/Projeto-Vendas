@@ -121,6 +121,8 @@ namespace Projeto.Views
             }
             else
             {
+
+
                 if (!Validador.CampoObrigatorio(txtNome, "O nome é obrigatório.")) return;
                 if (!Validador.CampoObrigatorio(txtCPF, "O CPF/CNPJ é obrigatório.")) return;
                 if (!Validador.CampoObrigatorio(txtEndereco, "O Endereço é obrigatório.")) return;
@@ -166,7 +168,7 @@ namespace Projeto.Views
                     return;
                 }
 
-                /*
+                // Mudar depois para assíncrono
                 if (cidadeSelecionadoId > 0)
                 {
                     var cidade = cidadeController.BuscarPorId(cidadeSelecionadoId);
@@ -175,12 +177,13 @@ namespace Projeto.Views
                         var estado = estadoController.BuscarPorId(cidade.EstadoId);
                         if (estado != null)
                         {
-                            var pais = paisController.BuscarPorId(estado.PaisId);
+                            // .Result força a espera pela conclusão da tarefa
+                            var pais = paisController.BuscarPorId(estado.PaisId).Result;
                             if (pais != null && pais.NomePais.Trim().Equals("Brasil", StringComparison.OrdinalIgnoreCase))
                             {
                                 if (string.IsNullOrWhiteSpace(txtRG.Text))
                                 {
-                                    MessageBox.Show("O campo RG é obrigatório para funcionarios brasileiros.", "Validação", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                    MessageBox.Show("O campo RG é obrigatório para funcionários brasileiros.", "Validação", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                     txtRG.Focus();
                                     return;
                                 }
@@ -188,7 +191,6 @@ namespace Projeto.Views
                         }
                     }
                 }
-                */
 
                 string genero = "";
                 if (cbGenero.SelectedItem != null)
@@ -217,15 +219,12 @@ namespace Projeto.Views
                     string cpfCnpjLimpo = new string(txtCPF.Text.Where(char.IsDigit).ToArray());
 
                     List<Funcionario> funcionarios = controller.ListarFuncionario();
-                    bool existeDuplicado = funcionarios.Exists(f =>
+                    if (Validador.VerificarDuplicidade(funcionarios, f =>
                         new string(f.CPF_CNPJ.Where(char.IsDigit).ToArray()).Equals(cpfCnpjLimpo, StringComparison.OrdinalIgnoreCase)
-                        && f.Id != id);
-
-                    if (existeDuplicado)
+                        && f.Id != id, "Já existe um funcionário cadastrado com este CPF/CNPJ."))
                     {
-                        MessageBox.Show("Já existe um funcionário cadastrado com este CPF/CNPJ.", "Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         txtCPF.Focus();
-                        return;
+                        return; 
                     }
 
                     Funcionario funcionario = new Funcionario

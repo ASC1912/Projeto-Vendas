@@ -121,23 +121,16 @@ namespace Projeto.Views
                     }
 
                     List<Cidade> cidades = controller.ListarCidade();
-                    bool existeDuplicado = cidades.Exists(item =>
-                    {
-                        var estadoCidade = estadoController.BuscarPorId(item.EstadoId);
-                        return
-                            item.NomeCidade.Trim().Equals(nome, StringComparison.OrdinalIgnoreCase) &&
-                            item.EstadoId == estadoSelecionadoId &&
-                            estadoCidade != null &&
-                            estadoCidade.PaisId == estadoSelecionado.PaisId &&
-                            item.Id != id;
-                    });
 
-                    if (existeDuplicado)
+                    if (Validador.VerificarDuplicidade(cidades, item =>
+                        item.NomeCidade.Trim().Equals(nome, StringComparison.OrdinalIgnoreCase) &&
+                        item.EstadoId == estadoSelecionadoId &&
+                        item.Id != id, "Já existe uma cidade com este nome cadastrada para este estado."))
                     {
-                        MessageBox.Show("Já existe uma cidade com este nome cadastrada para este estado e país.", "Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         txtNome.Focus();
                         return;
                     }
+
 
                     DateTime dataCriacao = id == 0
                         ? DateTime.Now

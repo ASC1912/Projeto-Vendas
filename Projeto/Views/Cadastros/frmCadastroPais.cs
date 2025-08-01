@@ -59,6 +59,16 @@ namespace Projeto.Views
                 {
                     int id = string.IsNullOrEmpty(txtCodigo.Text) ? 0 : int.Parse(txtCodigo.Text);
                     string nome = txtNome.Text;
+
+                    var paises = await controller.ListarPais();
+                    if (Validador.VerificarDuplicidade(paises, p =>
+                        p.NomePais.Trim().Equals(nome, StringComparison.OrdinalIgnoreCase)
+                        && p.Id != id, "Já existe um país cadastrado com este nome."))
+                    {
+                        txtNome.Focus();
+                        return;
+                    }
+
                     bool status = !chkInativo.Checked;
 
                     DateTime dataCriacao = id == 0 ? DateTime.Now : DateTime.Parse(lblDataCriacao.Text.Replace("Criado em: ", ""));

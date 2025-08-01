@@ -77,15 +77,12 @@ namespace Projeto.Views.Cadastros
                     string nome = txtNome.Text;
 
                     var grupos = controller.ListarGrupos();
-                    bool existeDuplicado = grupos.Exists(g =>
+                    if (Validador.VerificarDuplicidade(grupos, g =>
                         g.NomeGrupo.Trim().Equals(nome, StringComparison.OrdinalIgnoreCase)
-                        && g.Id != id);
-
-                    if (existeDuplicado)
+                        && g.Id != id, "Já existe um grupo cadastrado com este nome."))
                     {
-                        MessageBox.Show("Já existe um grupo cadastrado com este nome.", "Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         txtNome.Focus();
-                        return;
+                        return; 
                     }
 
                     DateTime dataCriacao = id == 0

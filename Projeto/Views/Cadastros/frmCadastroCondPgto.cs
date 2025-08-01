@@ -143,6 +143,18 @@ namespace Projeto
                 {
                     int id = string.IsNullOrEmpty(txtCodigo.Text) ? 0 : int.Parse(txtCodigo.Text);
                     string descricao = txtDescricao.Text;
+
+                    CondicaoPagamentoController controller = new CondicaoPagamentoController();
+                    var condicoes = controller.ListarCondicaoPagamento();
+
+                    if (Validador.VerificarDuplicidade(condicoes, c =>
+                        c.Descricao.Trim().Equals(descricao.Trim(), StringComparison.OrdinalIgnoreCase)
+                        && c.Id != id, "Já existe uma condição de pagamento com esta descrição."))
+                    {
+                        txtDescricao.Focus();
+                        return;
+                    }
+
                     decimal juros = string.IsNullOrWhiteSpace(txtJuros.Text) ? 0 : Convert.ToDecimal(txtJuros.Text);
                     decimal multa = string.IsNullOrWhiteSpace(txtMulta.Text) ? 0 : Convert.ToDecimal(txtMulta.Text);
                     bool status = !chkInativo.Checked;
@@ -187,7 +199,6 @@ namespace Projeto
                         parcelas.Add(parcela);
                     }
 
-                    CondicaoPagamentoController controller = new CondicaoPagamentoController();
                     controller.Salvar(condicao, parcelas);
 
                     MessageBox.Show("Condição de pagamento e parcelas salvas com sucesso!");

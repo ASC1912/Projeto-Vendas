@@ -85,11 +85,10 @@ namespace Projeto.Views.Cadastros
                     int id = string.IsNullOrEmpty(txtCodigo.Text) ? 0 : int.Parse(txtCodigo.Text);
 
                     var veiculos = controller.ListarVeiculos();
-                    bool placaDuplicada = veiculos.Exists(v => v.Placa.Trim().Equals(txtPlaca.Text.Trim(), StringComparison.OrdinalIgnoreCase) && v.Id != id);
-
-                    if (placaDuplicada)
+                    if (Validador.VerificarDuplicidade(veiculos, v =>
+                        v.Placa.Trim().Equals(txtPlaca.Text.Trim(), StringComparison.OrdinalIgnoreCase) && v.Id != id,
+                        "Já existe um veículo cadastrado com esta placa."))
                     {
-                        MessageBox.Show("Já existe um veículo cadastrado com esta placa.", "Placa Duplicada", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         txtPlaca.Focus();
                         return;
                     }

@@ -81,6 +81,18 @@ namespace Projeto
                 {
                     int id = string.IsNullOrEmpty(txtCodigo.Text) ? 0 : int.Parse(txtCodigo.Text);
                     string descricao = txtDescricao.Text;
+
+                    FormaPagamentoController controller = new FormaPagamentoController();
+                    var formasPagamento = controller.ListarFormaPagamento();
+
+                    if (Validador.VerificarDuplicidade(formasPagamento, f =>
+                        f.Descricao.Trim().Equals(descricao.Trim(), StringComparison.OrdinalIgnoreCase)
+                        && f.Id != id, "Já existe uma forma de pagamento com esta descrição."))
+                    {
+                        txtDescricao.Focus();
+                        return;
+                    }
+
                     bool status = !chkInativo.Checked;
 
                     DateTime dataCriacao = id == 0
@@ -98,7 +110,6 @@ namespace Projeto
                         DataAlteracao = dataModificacao
                     };
 
-                    FormaPagamentoController controller = new FormaPagamentoController();
                     controller.Salvar(forma);
 
                     MessageBox.Show("Forma de pagamento salva com sucesso!");
