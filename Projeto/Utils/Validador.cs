@@ -156,5 +156,15 @@ namespace Projeto.Utils
             return false; 
         }
 
+        public static bool ValidarIdSelecionado(int id, string mensagem)
+        {
+            if (id <= 0)
+            {
+                MessageBox.Show(mensagem, "Seleção Inválida", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
+            return true;
+        }
+
     }
 }

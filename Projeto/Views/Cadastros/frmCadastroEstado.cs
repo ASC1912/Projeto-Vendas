@@ -104,11 +104,8 @@ namespace Projeto.Views
             {
                 if (!Validador.CampoObrigatorio(txtNome, "O nome do estado é obrigatório.")) return;
 
-                if (paisSelecionadoId <= 0)
-                {
-                    MessageBox.Show("Selecione um país!");
-                    return;
-                }
+                if (!Validador.ValidarIdSelecionado(paisSelecionadoId, "Selecione um país!")) return;
+
 
                 try
                 {
