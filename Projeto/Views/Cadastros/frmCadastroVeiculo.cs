@@ -69,16 +69,9 @@ namespace Projeto.Views.Cadastros
             else
             {
                 if (!Validador.CampoObrigatorio(txtPlaca, "A placa é obrigatória.")) return;
-                if (transportadoraSelecionadaId <= 0)
-                {
-                    MessageBox.Show("Selecione uma transportadora.");
-                    return;
-                }
-                if (marcaSelecionadaId <= 0)
-                {
-                    MessageBox.Show("Selecione uma marca.");
-                    return;
-                }
+                if (!Validador.ValidarIdSelecionado(transportadoraSelecionadaId, "Selecione uma transportadora.")) return;
+                if (!Validador.ValidarIdSelecionado(marcaSelecionadaId, "Selecione uma marca.")) return;
+
 
                 try
                 {

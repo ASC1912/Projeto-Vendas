@@ -161,6 +161,7 @@ namespace Projeto.Utils
             if (id <= 0)
             {
                 MessageBox.Show(mensagem, "Seleção Inválida", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
             }
 
             return true;

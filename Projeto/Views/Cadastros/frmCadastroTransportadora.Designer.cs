@@ -243,6 +243,7 @@
             // txtInscEstSubTrib
             // 
             this.txtInscEstSubTrib.Location = new System.Drawing.Point(341, 264);
+            this.txtInscEstSubTrib.MaxLength = 30;
             this.txtInscEstSubTrib.Name = "txtInscEstSubTrib";
             this.txtInscEstSubTrib.Size = new System.Drawing.Size(150, 22);
             this.txtInscEstSubTrib.TabIndex = 15;
@@ -259,6 +260,7 @@
             // txtInscEst
             // 
             this.txtInscEst.Location = new System.Drawing.Point(185, 264);
+            this.txtInscEst.MaxLength = 30;
             this.txtInscEst.Name = "txtInscEst";
             this.txtInscEst.Size = new System.Drawing.Size(150, 22);
             this.txtInscEst.TabIndex = 14;
@@ -275,6 +277,7 @@
             // txtCEP
             // 
             this.txtCEP.Location = new System.Drawing.Point(708, 108);
+            this.txtCEP.MaxLength = 9;
             this.txtCEP.Name = "txtCEP";
             this.txtCEP.Size = new System.Drawing.Size(150, 22);
             this.txtCEP.TabIndex = 7;
@@ -323,6 +326,7 @@
             // txtCPF
             // 
             this.txtCPF.Location = new System.Drawing.Point(12, 262);
+            this.txtCPF.MaxLength = 18;
             this.txtCPF.Name = "txtCPF";
             this.txtCPF.Size = new System.Drawing.Size(150, 22);
             this.txtCPF.TabIndex = 13;

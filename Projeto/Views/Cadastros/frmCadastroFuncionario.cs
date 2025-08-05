@@ -162,11 +162,7 @@ namespace Projeto.Views
                     return;
                 }
 
-                if (cidadeSelecionadoId <= 0)
-                {
-                    MessageBox.Show("Selecione uma cidade.");
-                    return;
-                }
+                if (!Validador.ValidarIdSelecionado(cidadeSelecionadoId, "Selecione uma cidade.")) return;
 
                 // Mudar depois para assíncrono
                 if (cidadeSelecionadoId > 0)

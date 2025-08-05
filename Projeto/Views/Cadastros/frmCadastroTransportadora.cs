@@ -151,11 +151,10 @@ namespace Projeto.Views.Cadastros
                     return;
                 }
 
-                if (cidadeSelecionadoId <= 0)
-                {
-                    MessageBox.Show("Selecione uma cidade antes de salvar!");
-                    return;
-                }
+                if (!Validador.ValidarIdSelecionado(cidadeSelecionadoId, "Selecione uma cidade.")) return;
+
+                if (!Validador.ValidarIdSelecionado(condicaoSelecionadoId, "Selecione uma condição de pagamento.")) return;
+
 
                 try
                 {

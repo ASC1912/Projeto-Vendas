@@ -138,11 +138,7 @@ namespace Projeto.Views
                     return;
                 }
 
-                if (cidadeSelecionadoId <= 0)
-                {
-                    MessageBox.Show("Selecione uma cidade.");
-                    return;
-                }
+                if (!Validador.ValidarIdSelecionado(cidadeSelecionadoId, "Selecione uma cidade.")) return;
 
                 // Mudar depois para assíncrono
                 if (cidadeSelecionadoId > 0)
@@ -168,11 +164,7 @@ namespace Projeto.Views
                     }
                 }
 
-                if (condicaoSelecionadoId <= 0)
-                {
-                    MessageBox.Show("Selecione uma condição de pagamento.");
-                    return;
-                }
+                if (!Validador.ValidarIdSelecionado(condicaoSelecionadoId, "Selecione uma condição de pagamento")) return;
 
                 string genero = "";
                 if (cbGenero.SelectedItem != null)

@@ -80,6 +80,7 @@
             // txtPlaca
             // 
             this.txtPlaca.Location = new System.Drawing.Point(12, 124);
+            this.txtPlaca.MaxLength = 10;
             this.txtPlaca.Name = "txtPlaca";
             this.txtPlaca.Size = new System.Drawing.Size(200, 22);
             this.txtPlaca.TabIndex = 1;

@@ -125,6 +125,7 @@
             // txtUF
             // 
             this.txtUF.Location = new System.Drawing.Point(265, 110);
+            this.txtUF.MaxLength = 2;
             this.txtUF.Name = "txtUF";
             this.txtUF.Size = new System.Drawing.Size(70, 22);
             this.txtUF.TabIndex = 2;

@@ -71,8 +71,8 @@ namespace Projeto.Views.Cadastros
             {
                 if (!Validador.CampoObrigatorio(txtNome, "O nome é obrigatório.")) return;
                 if (!Validador.CampoObrigatorio(txtPreco, "O preço é obrigatório.")) return;
-                if (!Validador.CampoObrigatorio(txtMarca, "A marca é obrigatória.")) return;
-                if (!Validador.CampoObrigatorio(txtGrupo, "O grupo é obrigatório.")) return;
+                if (!Validador.ValidarIdSelecionado(grupoSelecionadoId, "Selecione um grupo.")) return;
+                if (!Validador.ValidarIdSelecionado(marcaSelecionadoId, "Selecione uma marca.")) return;
                 if (!Validador.ValidarNumerico(txtEstoque, "O estoque deve ser um número válido.")) return;
 
                 try

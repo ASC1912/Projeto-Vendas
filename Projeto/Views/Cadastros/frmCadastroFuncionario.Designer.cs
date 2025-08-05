@@ -100,6 +100,7 @@
             // txtCEP
             // 
             this.txtCEP.Location = new System.Drawing.Point(746, 100);
+            this.txtCEP.MaxLength = 9;
             this.txtCEP.Name = "txtCEP";
             this.txtCEP.Size = new System.Drawing.Size(150, 22);
             this.txtCEP.TabIndex = 10;
@@ -157,6 +158,7 @@
             // txtCPF
             // 
             this.txtCPF.Location = new System.Drawing.Point(13, 253);
+            this.txtCPF.MaxLength = 18;
             this.txtCPF.Name = "txtCPF";
             this.txtCPF.Size = new System.Drawing.Size(150, 22);
             this.txtCPF.TabIndex = 16;
@@ -360,6 +362,7 @@
             // txtRG
             // 
             this.txtRG.Location = new System.Drawing.Point(204, 253);
+            this.txtRG.MaxLength = 20;
             this.txtRG.Name = "txtRG";
             this.txtRG.Size = new System.Drawing.Size(150, 22);
             this.txtRG.TabIndex = 17;
@@ -411,6 +414,7 @@
             // txtMatricula
             // 
             this.txtMatricula.Location = new System.Drawing.Point(15, 327);
+            this.txtMatricula.MaxLength = 20;
             this.txtMatricula.Name = "txtMatricula";
             this.txtMatricula.Size = new System.Drawing.Size(150, 22);
             this.txtMatricula.TabIndex = 18;
