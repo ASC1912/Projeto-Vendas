@@ -8,6 +8,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks; 
 using System.Windows.Forms;
 
 namespace Projeto.Views.Cadastros
@@ -21,6 +22,7 @@ namespace Projeto.Views.Cadastros
         public bool modoExclusao = false;
         private int cidadeSelecionadoId = -1;
         private int condicaoSelecionadoId = -1;
+
         public frmCadastroTransportadora() : base()
         {
             InitializeComponent();
@@ -42,9 +44,9 @@ namespace Projeto.Views.Cadastros
             }
         }
         public void CarregarTransportadora(int id, string nome, string cpf_cnpj, string telefone, string email, string endereco,
-                                int numEndereco, string bairro, string complemento, string cep, string inscEst,
-                                string inscEstSubTrib, string tipo, string nomeCidade, int idCidade,  string descricaoCondicao, int idCondicao,
-                                bool status, DateTime? dataCriacao, DateTime? dataModificacao)
+                                        int numEndereco, string bairro, string complemento, string cep, string inscEst,
+                                        string inscEstSubTrib, string tipo, string nomeCidade, int idCidade, string descricaoCondicao, int idCondicao,
+                                        bool status, DateTime? dataCriacao, DateTime? dataModificacao)
         {
             txtCodigo.Text = id.ToString();
             txtNome.Text = nome;
@@ -155,13 +157,10 @@ namespace Projeto.Views.Cadastros
 
                 if (!Validador.ValidarIdSelecionado(condicaoSelecionadoId, "Selecione uma condição de pagamento.")) return;
 
-
                 try
                 {
                     int id = string.IsNullOrWhiteSpace(txtCodigo.Text) ? 0 : Convert.ToInt32(txtCodigo.Text);
-                    DateTime dataCriacao = id == 0
-                        ? DateTime.Now
-                        : DateTime.Parse(lblDataCriacao.Text.Replace("Criado em: ", ""));
+                    DateTime dataCriacao = id == 0 ? DateTime.Now : DateTime.Parse(lblDataCriacao.Text.Replace("Criado em: ", ""));
                     DateTime dataModificacao = DateTime.Now;
                     string cpfCnpjLimpo = new string(txtCPF.Text.Where(char.IsDigit).ToArray());
 
@@ -272,7 +271,7 @@ namespace Projeto.Views.Cadastros
             }
         }
 
-        private void txtIdCidade_Leave(object sender, EventArgs e)
+        private async void txtIdCidade_Leave(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtIdCidade.Text))
             {
@@ -289,7 +288,7 @@ namespace Projeto.Views.Cadastros
             }
 
             int id = int.Parse(txtIdCidade.Text);
-            var cidade = cidadeController.BuscarPorId(id);
+            var cidade = await cidadeController.BuscarPorId(id);
 
             if (cidade != null)
             {

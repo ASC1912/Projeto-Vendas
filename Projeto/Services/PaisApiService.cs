@@ -1,18 +1,22 @@
-﻿using System;
+﻿using Projeto.Models;
+using Projeto.Services.Interfaces;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Text;
 using System.Threading.Tasks;
-using Projeto.Models;
+using System.Windows.Forms;
 
 namespace Projeto.Services
 {
-    public class ApiClient
+    public class PaisApiService : IPaisApiService
     {
         private readonly HttpClient _httpClient;
         private const string BaseUrl = "https://localhost:7170/api/";
 
-        public ApiClient()
+        public PaisApiService()
         {
             var handler = new HttpClientHandler
             {
@@ -21,10 +25,17 @@ namespace Projeto.Services
             _httpClient = new HttpClient(handler) { BaseAddress = new Uri(BaseUrl) };
         }
 
-
-        public Task<List<Pais>> GetPaisesAsync()
+        public async Task<List<Pais>> GetPaisesAsync()
         {
-            return _httpClient.GetFromJsonAsync<List<Pais>>("Paises");
+            try
+            {
+                return await _httpClient.GetFromJsonAsync<List<Pais>>("Paises");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao conectar com a API: " + ex.Message, "Erro de Conexão", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return new List<Pais>();
+            }
         }
 
         public Task<Pais> GetPaisByIdAsync(int id)
@@ -51,7 +62,5 @@ namespace Projeto.Services
             var response = await _httpClient.DeleteAsync($"Paises/{id}");
             response.EnsureSuccessStatusCode();
         }
-
-        // --- FUTUROS MÉTODOS 
     }
 }

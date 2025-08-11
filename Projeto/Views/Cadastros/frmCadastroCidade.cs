@@ -2,13 +2,9 @@
 using Projeto.Models;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Projeto.Utils;
-
 
 namespace Projeto.Views
 {
@@ -18,7 +14,7 @@ namespace Projeto.Views
         private CidadeController controller = new CidadeController();
         private int estadoSelecionadoId = -1;
         public bool modoEdicao = false;
-        public bool modoExclusao = false; 
+        public bool modoExclusao = false;
 
         public frmCadastroCidade() : base()
         {
@@ -29,22 +25,14 @@ namespace Projeto.Views
         public void CarregarCidade(int id, string nomeCidade, string nomeEstado, int estadoId, bool ativo, DateTime? dataCadastro, DateTime? dataAlteracao)
         {
             modoEdicao = true;
-
             txtCodigo.Text = id.ToString();
             txtNome.Text = nomeCidade;
             txtEstado.Text = nomeEstado;
             estadoSelecionadoId = estadoId;
             chkInativo.Checked = !ativo;
-
-            lblDataCriacao.Text = dataCadastro.HasValue
-                ? $"Criado em: {dataCadastro.Value:dd/MM/yyyy HH:mm}"
-                : "Criado em: -";
-
-            lblDataModificacao.Text = dataAlteracao.HasValue
-                ? $"Modificado em: {dataAlteracao.Value:dd/MM/yyyy HH:mm}"
-                : "Modificado em: -";
+            lblDataCriacao.Text = dataCadastro.HasValue ? $"Criado em: {dataCadastro.Value:dd/MM/yyyy HH:mm}" : "Criado em: -";
+            lblDataModificacao.Text = dataAlteracao.HasValue ? $"Modificado em: {dataAlteracao.Value:dd/MM/yyyy HH:mm}" : "Modificado em: -";
         }
-
 
         private void frmCadastroCidade_Load(object sender, EventArgs e)
         {
@@ -63,7 +51,8 @@ namespace Projeto.Views
                 lblDataModificacao.Text = $"Modificado em: {agora:dd/MM/yyyy HH:mm}";
             }
         }
-        private void btnSalvar_Click(object sender, EventArgs e)
+
+        private async void btnSalvar_Click(object sender, EventArgs e)
         {
             if (modoExclusao)
             {
@@ -73,7 +62,7 @@ namespace Projeto.Views
                     try
                     {
                         int id = int.Parse(txtCodigo.Text);
-                        controller.Excluir(id);
+                        await controller.Excluir(id);
                         MessageBox.Show("Cidade excluída com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         this.Close();
                     }
@@ -81,12 +70,7 @@ namespace Projeto.Views
                     {
                         if (ex.Message.Contains("Cannot delete or update a parent row"))
                         {
-                            MessageBox.Show(
-                                "Não é possível excluir este item, pois existem registros vinculados a ele.",
-                                "Erro ao excluir",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Warning
-                            );
+                            MessageBox.Show("Não é possível excluir este item, pois existem registros vinculados a ele.", "Erro ao excluir", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         }
                         else
                         {
@@ -98,25 +82,14 @@ namespace Projeto.Views
             else
             {
                 if (!Validador.CampoObrigatorio(txtNome, "O nome da cidade é obrigatório.")) return;
-
                 if (!Validador.ValidarIdSelecionado(estadoSelecionadoId, "Selecione um estado!")) return;
 
                 try
                 {
                     int id = string.IsNullOrWhiteSpace(txtCodigo.Text) ? 0 : Convert.ToInt32(txtCodigo.Text);
                     string nome = txtNome.Text;
-                    int idEstado = estadoSelecionadoId;
-                    bool status = !chkInativo.Checked;
 
-                    var estadoSelecionado = estadoController.BuscarPorId(estadoSelecionadoId);
-
-                    if (estadoSelecionado == null)
-                    {
-                        MessageBox.Show("Estado selecionado não encontrado. Selecione novamente.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-
-                    List<Cidade> cidades = controller.ListarCidade();
+                    List<Cidade> cidades = await controller.ListarCidade();
 
                     if (Validador.VerificarDuplicidade(cidades, item =>
                         item.NomeCidade.Trim().Equals(nome, StringComparison.OrdinalIgnoreCase) &&
@@ -127,24 +100,20 @@ namespace Projeto.Views
                         return;
                     }
 
-
-                    DateTime dataCriacao = id == 0
-                        ? DateTime.Now
-                        : DateTime.Parse(lblDataCriacao.Text.Replace("Criado em: ", ""));
-
+                    DateTime dataCriacao = id == 0 ? DateTime.Now : DateTime.Parse(lblDataCriacao.Text.Replace("Criado em: ", ""));
                     DateTime dataModificacao = DateTime.Now;
 
                     Cidade cidade = new Cidade
                     {
                         Id = id,
                         NomeCidade = nome,
-                        EstadoId = idEstado,
-                        Ativo = status,
+                        EstadoId = estadoSelecionadoId,
+                        Ativo = !chkInativo.Checked,
                         DataCadastro = dataCriacao,
                         DataAlteracao = dataModificacao
                     };
 
-                    controller.Salvar(cidade);
+                    await controller.Salvar(cidade);
                     MessageBox.Show("Cidade salva com sucesso!");
                     this.Close();
                 }
@@ -168,6 +137,5 @@ namespace Projeto.Views
                 estadoSelecionadoId = consultaEstado.EstadoSelecionado.Id;
             }
         }
-
     }
 }

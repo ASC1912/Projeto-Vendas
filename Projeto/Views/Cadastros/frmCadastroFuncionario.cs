@@ -3,11 +3,8 @@ using Projeto.Models;
 using Projeto.Utils;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Projeto.Views
@@ -22,7 +19,6 @@ namespace Projeto.Views
         public bool modoExclusao = false;
         private int cidadeSelecionadoId = -1;
 
-
         public frmCadastroFuncionario() : base()
         {
             InitializeComponent();
@@ -30,7 +26,6 @@ namespace Projeto.Views
             cbTipo.SelectedIndex = 0;
             cbGenero.SelectedIndex = 0;
             dtpDemissao.Checked = false;
-            cbGenero.SelectedIndex = 0;
             dtpAdmissao.MaxDate = DateTime.Now;
             dtpDemissao.MaxDate = DateTime.Now;
             dtpNascimento.MaxDate = DateTime.Now;
@@ -39,11 +34,11 @@ namespace Projeto.Views
         }
 
         public void CarregarFuncionario(
-                     int id, string nome, string apelido, string cpf_cnpj, string telefone, string email,
-                     string endereco, int numEndereco, string bairro, string complemento, string cep,
-                     string cargo, decimal salario, string matricula, string genero, string tipo,
-                     string nomeCidade, int idCidade, bool status, DateTime? dataAdmissao,
-                     DateTime? dataDemissao, DateTime? dataNascimento, string rg, DateTime? dataCriacao, DateTime? dataModificacao)
+                         int id, string nome, string apelido, string cpf_cnpj, string telefone, string email,
+                         string endereco, int numEndereco, string bairro, string complemento, string cep,
+                         string cargo, decimal salario, string matricula, string genero, string tipo,
+                         string nomeCidade, int idCidade, bool status, DateTime? dataAdmissao,
+                         DateTime? dataDemissao, DateTime? dataNascimento, string rg, DateTime? dataCriacao, DateTime? dataModificacao)
         {
             txtCodigo.Text = id.ToString();
             txtNome.Text = nome;
@@ -96,10 +91,7 @@ namespace Projeto.Views
                 : "Modificado em: -";
         }
 
-
-
-
-        private void btnSalvar_Click(object sender, EventArgs e)
+        private async void btnSalvar_Click(object sender, EventArgs e)
         {
             if (modoExclusao)
             {
@@ -121,8 +113,6 @@ namespace Projeto.Views
             }
             else
             {
-
-
                 if (!Validador.CampoObrigatorio(txtNome, "O nome é obrigatório.")) return;
                 if (!Validador.CampoObrigatorio(txtCPF, "O CPF/CNPJ é obrigatório.")) return;
                 if (!Validador.CampoObrigatorio(txtEndereco, "O Endereço é obrigatório.")) return;
@@ -164,17 +154,15 @@ namespace Projeto.Views
 
                 if (!Validador.ValidarIdSelecionado(cidadeSelecionadoId, "Selecione uma cidade.")) return;
 
-                // Mudar depois para assíncrono
                 if (cidadeSelecionadoId > 0)
                 {
-                    var cidade = cidadeController.BuscarPorId(cidadeSelecionadoId);
+                    var cidade = await cidadeController.BuscarPorId(cidadeSelecionadoId);
                     if (cidade != null)
                     {
-                        var estado = estadoController.BuscarPorId(cidade.EstadoId);
+                        var estado = await estadoController.BuscarPorId(cidade.EstadoId);
                         if (estado != null)
                         {
-                            // .Result força a espera pela conclusão da tarefa
-                            var pais = paisController.BuscarPorId(estado.PaisId).Result;
+                            var pais = await paisController.BuscarPorId(estado.PaisId);
                             if (pais != null && pais.NomePais.Trim().Equals("Brasil", StringComparison.OrdinalIgnoreCase))
                             {
                                 if (string.IsNullOrWhiteSpace(txtRG.Text))
@@ -220,7 +208,7 @@ namespace Projeto.Views
                         && f.Id != id, "Já existe um funcionário cadastrado com este CPF/CNPJ."))
                     {
                         txtCPF.Focus();
-                        return; 
+                        return;
                     }
 
                     Funcionario funcionario = new Funcionario
@@ -230,7 +218,7 @@ namespace Projeto.Views
                         CPF_CNPJ = txtCPF.Text,
                         Email = txtEmail.Text,
                         Endereco = txtEndereco.Text,
-                        NumeroEndereco = string.IsNullOrWhiteSpace(txtNumEnd.Text) ? 0 : Convert.ToInt32(txtNumEnd.Text),
+                        NumeroEndereco = string.IsNullOrWhiteSpace(txtNumEnd.Text) ? (int?)null : Convert.ToInt32(txtNumEnd.Text),
                         Bairro = txtBairro.Text,
                         Complemento = txtComplemento.Text,
                         Telefone = txtTelefone.Text,
@@ -319,7 +307,7 @@ namespace Projeto.Views
             }
         }
 
-        private void txtIdCidade_Leave(object sender, EventArgs e)
+        private async void txtIdCidade_Leave(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtIdCidade.Text))
             {
@@ -328,15 +316,15 @@ namespace Projeto.Views
                 return;
             }
 
-            if (!Validador.ValidarNumerico(txtIdCidade, "O campo ID Cidade deve conter apenas números."))
+            if (!int.TryParse(txtIdCidade.Text, out int id))
             {
+                MessageBox.Show("O campo ID Cidade deve conter apenas números.");
                 txtCidade.Text = "";
                 cidadeSelecionadoId = -1;
                 return;
             }
 
-            int id = int.Parse(txtIdCidade.Text);
-            var cidade = cidadeController.BuscarPorId(id);
+            var cidade = await cidadeController.BuscarPorId(id);
 
             if (cidade != null)
             {

@@ -1,12 +1,8 @@
-﻿using MySqlX.XDevAPI;
-using Projeto.Controller;
+﻿using Projeto.Controller;
 using Projeto.Models;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
+using System.Threading.Tasks; // Adicionado
 using System.Windows.Forms;
 
 namespace Projeto.Views
@@ -22,10 +18,9 @@ namespace Projeto.Views
             InitializeComponent();
         }
 
-        private void frmConsultaCidade_Load(object sender, EventArgs e)
+        private async void frmConsultaCidade_Load(object sender, EventArgs e)
         {
-            CarregarCidades();
-
+            await CarregarCidades();
             btnSelecionar.Visible = ModoSelecao;
 
             foreach (ColumnHeader column in listView1.Columns)
@@ -33,37 +28,37 @@ namespace Projeto.Views
                 switch (column.Text)
                 {
                     case "ID":
-                        column.Width = 40; 
+                        column.Width = 40;
                         break;
                     case "Cidade":
-                        column.Width = 170; 
+                        column.Width = 170;
                         break;
                     case "Estado":
-                        column.Width = 150; 
+                        column.Width = 150;
                         break;
                     case "Ativo":
-                        column.Width = 50; 
+                        column.Width = 50;
                         break;
                     default:
-                        column.Width = 100; 
+                        column.Width = 100;
                         break;
                 }
             }
         }
 
-        private void btnIncluir_Click(object sender, EventArgs e)
+        private async void btnIncluir_Click(object sender, EventArgs e)
         {
             frmCadastroCidade formCadastroCidade = new frmCadastroCidade();
-            formCadastroCidade.FormClosed += (s, args) => CarregarCidades();
+            formCadastroCidade.FormClosed += async (s, args) => await CarregarCidades();
             formCadastroCidade.ShowDialog();
         }
 
-        private void CarregarCidades()
+        private async Task CarregarCidades()
         {
             try
             {
                 listView1.Items.Clear();
-                List<Cidade> cidades = controller.ListarCidade();
+                List<Cidade> cidades = await controller.ListarCidade();
 
                 foreach (var cidade in cidades)
                 {
@@ -71,7 +66,6 @@ namespace Projeto.Views
                     item.SubItems.Add(cidade.NomeCidade);
                     item.SubItems.Add(cidade.EstadoNome);
                     item.SubItems.Add(cidade.Ativo ? "Ativo" : "Inativo");
-
                     listView1.Items.Add(item);
                 }
             }
@@ -81,7 +75,7 @@ namespace Projeto.Views
             }
         }
 
-        private void btnPesquisar_Click(object sender, EventArgs e)
+        private async void btnPesquisar_Click(object sender, EventArgs e)
         {
             try
             {
@@ -90,11 +84,11 @@ namespace Projeto.Views
 
                 if (string.IsNullOrEmpty(texto))
                 {
-                    CarregarCidades();
+                    await CarregarCidades();
                 }
                 else if (int.TryParse(texto, out int id))
                 {
-                    Cidade cidade = new CidadeController().BuscarPorId(id);
+                    Cidade cidade = await controller.BuscarPorId(id);
 
                     if (cidade != null)
                     {
@@ -102,7 +96,6 @@ namespace Projeto.Views
                         item.SubItems.Add(cidade.NomeCidade);
                         item.SubItems.Add(cidade.EstadoNome);
                         item.SubItems.Add(cidade.Ativo ? "Ativo" : "Inativo");
-
                         listView1.Items.Add(item);
                     }
                     else
@@ -121,32 +114,19 @@ namespace Projeto.Views
             }
         }
 
-
-        private void btnEditar_Click(object sender, EventArgs e)
+        private async void btnEditar_Click(object sender, EventArgs e)
         {
             if (listView1.SelectedItems.Count > 0)
             {
                 var itemSelecionado = listView1.SelectedItems[0];
                 int id = int.Parse(itemSelecionado.SubItems[0].Text);
-
-                Cidade cidade = controller.BuscarPorId(id);
+                Cidade cidade = await controller.BuscarPorId(id);
 
                 if (cidade != null)
                 {
-                    var formCadastro = new frmCadastroCidade();
-                    formCadastro.modoEdicao = true;
-
-                    formCadastro.CarregarCidade(
-                         cidade.Id,
-                         cidade.NomeCidade,
-                         cidade.EstadoNome,
-                         cidade.EstadoId,
-                         cidade.Ativo,
-                         cidade.DataCadastro,
-                         cidade.DataAlteracao
-                     );
-
-                    formCadastro.FormClosed += (s, args) => CarregarCidades();
+                    var formCadastro = new frmCadastroCidade { modoEdicao = true };
+                    formCadastro.CarregarCidade(cidade.Id, cidade.NomeCidade, cidade.EstadoNome, cidade.EstadoId, cidade.Ativo, cidade.DataCadastro, cidade.DataAlteracao);
+                    formCadastro.FormClosed += async (s, args) => await CarregarCidades();
                     formCadastro.ShowDialog();
                 }
                 else
@@ -160,34 +140,19 @@ namespace Projeto.Views
             }
         }
 
-
-        private void btnDeletar_Click(object sender, EventArgs e)
+        private async void btnDeletar_Click(object sender, EventArgs e)
         {
             if (listView1.SelectedItems.Count > 0)
             {
                 var itemSelecionado = listView1.SelectedItems[0];
                 int id = int.Parse(itemSelecionado.SubItems[0].Text);
-
-                Cidade cidade = controller.BuscarPorId(id);
+                Cidade cidade = await controller.BuscarPorId(id);
 
                 if (cidade != null)
                 {
-                    var formCadastro = new frmCadastroCidade
-                    {
-                        modoExclusao = true // Ativa o modo de exclusão
-                    };
-
-                    formCadastro.CarregarCidade(
-                         cidade.Id,
-                         cidade.NomeCidade,
-                         cidade.EstadoNome,
-                         cidade.EstadoId,
-                         cidade.Ativo,
-                         cidade.DataCadastro,
-                         cidade.DataAlteracao
-                     );
-
-                    formCadastro.FormClosed += (s, args) => CarregarCidades();
+                    var formCadastro = new frmCadastroCidade { modoExclusao = true };
+                    formCadastro.CarregarCidade(cidade.Id, cidade.NomeCidade, cidade.EstadoNome, cidade.EstadoId, cidade.Ativo, cidade.DataCadastro, cidade.DataAlteracao);
+                    formCadastro.FormClosed += async (s, args) => await CarregarCidades();
                     formCadastro.ShowDialog();
                 }
                 else
@@ -201,23 +166,13 @@ namespace Projeto.Views
             }
         }
 
-        private void btnSelecionar_Click(object sender, EventArgs e)
+        private async void btnSelecionar_Click(object sender, EventArgs e)
         {
             if (listView1.SelectedItems.Count > 0)
             {
                 var itemSelecionado = listView1.SelectedItems[0];
                 int id = int.Parse(itemSelecionado.SubItems[0].Text);
-                string nome = itemSelecionado.SubItems[1].Text;
-                string estado = itemSelecionado.SubItems[2].Text;
-
-                CidadeSelecionado = new Cidade
-                {
-                    Id = id,
-                    NomeCidade = nome,
-                    EstadoNome = estado,
-                };
-
-
+                CidadeSelecionado = await controller.BuscarPorId(id);
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }

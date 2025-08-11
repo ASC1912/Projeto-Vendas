@@ -3,6 +3,7 @@ using Projeto.Models;
 using Projeto.Views.Cadastros;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks; // Adicionado
 using System.Windows.Forms;
 
 namespace Projeto.Views.Consultas
@@ -10,8 +11,9 @@ namespace Projeto.Views.Consultas
     public partial class frmConsultaTransportadora : Projeto.frmBaseConsulta
     {
         private TransportadoraController controller = new TransportadoraController();
-        public bool ModoSelecao { get; set; } = false; 
-        internal Transportadora TransportadoraSelecionada { get; private set; } 
+        private CidadeController cidadeController = new CidadeController(); 
+        public bool ModoSelecao { get; set; } = false;
+        internal Transportadora TransportadoraSelecionada { get; private set; }
 
         public frmConsultaTransportadora() : base()
         {
@@ -93,7 +95,6 @@ namespace Projeto.Views.Consultas
                         item.SubItems.Add(transportadora.InscricaoEstadual);
                         item.SubItems.Add(transportadora.InscricaoEstadualSubTrib);
                         item.SubItems.Add(transportadora.Ativo ? "Ativo" : "Inativo");
-
                         listView1.Items.Add(item);
                     }
                     else
@@ -112,20 +113,22 @@ namespace Projeto.Views.Consultas
             }
         }
 
-        private void btnEditar_Click(object sender, EventArgs e)
+        private async void btnEditar_Click(object sender, EventArgs e)
         {
             if (listView1.SelectedItems.Count > 0)
             {
                 var itemSelecionado = listView1.SelectedItems[0];
                 int id = int.Parse(itemSelecionado.SubItems[0].Text);
 
-                Transportadora transportadora = controller.BuscarPorId(id);
+                Transportadora transportadora = controller.BuscarPorId(id); 
 
                 if (transportadora != null)
                 {
-                    Cidade cidade = transportadora.CidadeId.HasValue
-                        ? new CidadeController().BuscarPorId(transportadora.CidadeId.Value)
-                        : null;
+                    Cidade cidade = null;
+                    if (transportadora.CidadeId.HasValue)
+                    {
+                        cidade = await cidadeController.BuscarPorId(transportadora.CidadeId.Value);
+                    }
 
                     var formCadastro = new frmCadastroTransportadora();
                     formCadastro.modoEdicao = true;
@@ -166,20 +169,26 @@ namespace Projeto.Views.Consultas
             }
         }
 
-        private void btnDeletar_Click(object sender, EventArgs e)
+        private async void btnDeletar_Click(object sender, EventArgs e)
         {
             if (listView1.SelectedItems.Count > 0)
             {
                 var itemSelecionado = listView1.SelectedItems[0];
                 int id = int.Parse(itemSelecionado.SubItems[0].Text);
 
-                Transportadora transportadora = controller.BuscarPorId(id);
+                Transportadora transportadora = controller.BuscarPorId(id); 
 
                 if (transportadora != null)
                 {
+                    Cidade cidade = null;
+                    if (transportadora.CidadeId.HasValue)
+                    {
+                        cidade = await cidadeController.BuscarPorId(transportadora.CidadeId.Value);
+                    }
+
                     var formCadastro = new frmCadastroTransportadora
                     {
-                        modoExclusao = true 
+                        modoExclusao = true
                     };
 
                     formCadastro.CarregarTransportadora(
@@ -196,7 +205,7 @@ namespace Projeto.Views.Consultas
                         transportadora.InscricaoEstadual,
                         transportadora.InscricaoEstadualSubTrib,
                         transportadora.Tipo,
-                        transportadora.NomeCidade ?? "Não encontrado",
+                        cidade?.NomeCidade ?? "Não encontrado",
                         transportadora.CidadeId ?? 0,
                         transportadora.DescricaoCondicao ?? "Não encontrado",
                         transportadora.IdCondicao ?? 0,
@@ -232,51 +241,21 @@ namespace Projeto.Views.Consultas
             {
                 switch (column.Text)
                 {
-                    case "ID":
-                        column.Width = 40;
-                        break;
-                    case "Tipo":
-                        column.Width = 60;
-                        break;
-                    case "Transportadora":
-                        column.Width = 200;
-                        break;
-                    case "Endereço":
-                        column.Width = 200;
-                        break;
-                    case "Número":
-                        column.Width = 60;
-                        break;
-                    case "Bairro":
-                        column.Width = 150;
-                        break;
-                    case "Complemento":
-                        column.Width = 130; 
-                        break;
-                    case "CEP":
-                        column.Width = 80;
-                        break;
-                    case "Cidade":
-                        column.Width = 150;
-                        break;
-                    case "Telefone":
-                        column.Width = 120;
-                        break;
-                    case "Email":
-                        column.Width = 200;
-                        break;
-                    case "CondPgto":
-                        column.Width = 150;
-                        break;
-                    case "Status":
-                        column.Width = 60;
-                        break;
-                    case "CPF/CNPJ":
-                        column.Width = 130;
-                        break;
-                    default:
-                        column.Width = 100;
-                        break;
+                    case "ID": column.Width = 40; break;
+                    case "Tipo": column.Width = 60; break;
+                    case "Transportadora": column.Width = 200; break;
+                    case "Endereço": column.Width = 200; break;
+                    case "Número": column.Width = 60; break;
+                    case "Bairro": column.Width = 150; break;
+                    case "Complemento": column.Width = 130; break;
+                    case "CEP": column.Width = 80; break;
+                    case "Cidade": column.Width = 150; break;
+                    case "Telefone": column.Width = 120; break;
+                    case "Email": column.Width = 200; break;
+                    case "CondPgto": column.Width = 150; break;
+                    case "Status": column.Width = 60; break;
+                    case "CPF/CNPJ": column.Width = 130; break;
+                    default: column.Width = 100; break;
                 }
             }
         }

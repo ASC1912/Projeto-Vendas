@@ -1,7 +1,8 @@
 ﻿using Projeto.DAO;
 using Projeto.Models;
 using Projeto.Services;
-using Projeto.Utils; // Adicione este using
+using Projeto.Utils;
+using Projeto.Services.Interfaces; 
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -10,7 +11,7 @@ namespace Projeto.Controller
     internal class PaisController
     {
         private readonly bool _useApi;
-        private readonly ApiClient _apiClient;
+        private readonly IPaisApiService _apiService; 
         private readonly DAOPais _dao;
 
         public PaisController()
@@ -19,7 +20,7 @@ namespace Projeto.Controller
 
             if (_useApi)
             {
-                _apiClient = new ApiClient();
+                _apiService = new PaisApiService(); 
             }
             else
             {
@@ -31,7 +32,7 @@ namespace Projeto.Controller
         {
             if (_useApi)
             {
-                return _apiClient.SavePaisAsync(pais);
+                return _apiService.SavePaisAsync(pais); 
             }
             else
             {
@@ -43,7 +44,7 @@ namespace Projeto.Controller
         {
             if (_useApi)
             {
-                return _apiClient.GetPaisByIdAsync(id);
+                return _apiService.GetPaisByIdAsync(id); 
             }
             else
             {
@@ -55,7 +56,7 @@ namespace Projeto.Controller
         {
             if (_useApi)
             {
-                return _apiClient.GetPaisesAsync();
+                return _apiService.GetPaisesAsync();
             }
             else
             {
@@ -67,7 +68,7 @@ namespace Projeto.Controller
         {
             if (_useApi)
             {
-                return _apiClient.DeletePaisAsync(id);
+                return _apiService.DeletePaisAsync(id); 
             }
             else
             {

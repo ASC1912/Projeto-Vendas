@@ -3,11 +3,8 @@ using Projeto.Models;
 using Projeto.Utils;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
+using System.Threading.Tasks; // Adicionado
 using System.Windows.Forms;
 
 namespace Projeto.Views
@@ -24,7 +21,6 @@ namespace Projeto.Views
         private int cidadeSelecionadoId = -1;
         private int condicaoSelecionadoId = -1;
 
-
         public frmCadastroCliente() : base()
         {
             InitializeComponent();
@@ -32,13 +28,14 @@ namespace Projeto.Views
             cbTipo.SelectedIndex = 0;
             cbGenero.SelectedIndex = 0;
             dtpNascimento.MaxDate = DateTime.Now;
+            cbTipo.SelectedIndexChanged += cbTipo_SelectedIndexChanged;
             cbTipo_SelectedIndexChanged(null, null);
         }
 
         public void CarregarCliente(int id, string nome, string cpfCnpj, string telefone, string email, string endereco,
-                 int numeroEndereco, string bairro, string complemento, string cep, string tipo, string genero,
-                 string nomeCidade, int idCidade, string descricaoCondicao, int idCondicao, bool ativo, string rg,
-                 DateTime? dataNascimento, DateTime? dataCadastro, DateTime? dataAlteracao)
+                                 int numeroEndereco, string bairro, string complemento, string cep, string tipo, string genero,
+                                 string nomeCidade, int idCidade, string descricaoCondicao, int idCondicao, bool ativo, string rg,
+                                 DateTime? dataNascimento, DateTime? dataCadastro, DateTime? dataAlteracao)
         {
             txtCodigo.Text = id.ToString();
             txtNome.Text = nome;
@@ -79,8 +76,7 @@ namespace Projeto.Views
                 : "Modificado em: -";
         }
 
-
-        private void btnSalvar_Click(object sender, EventArgs e)
+        private async void btnSalvar_Click(object sender, EventArgs e)
         {
             if (modoExclusao)
             {
@@ -90,6 +86,8 @@ namespace Projeto.Views
                     try
                     {
                         int id = int.Parse(txtCodigo.Text);
+                        // NOTA: O controller de Cliente ainda não foi refatorado.
+                        // Quando for, esta linha precisará de 'await'.
                         controller.Excluir(id);
                         MessageBox.Show("Cliente excluído com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         this.Close();
@@ -140,22 +138,21 @@ namespace Projeto.Views
 
                 if (!Validador.ValidarIdSelecionado(cidadeSelecionadoId, "Selecione uma cidade.")) return;
 
-                // Mudar depois para assíncrono
+                // Bloco de validação de RG agora assíncrono
                 if (cidadeSelecionadoId > 0)
                 {
-                    var cidade = cidadeController.BuscarPorId(cidadeSelecionadoId);
+                    var cidade = await cidadeController.BuscarPorId(cidadeSelecionadoId);
                     if (cidade != null)
                     {
-                        var estado = estadoController.BuscarPorId(cidade.EstadoId);
+                        var estado = await estadoController.BuscarPorId(cidade.EstadoId);
                         if (estado != null)
                         {
-                            // .Result força a espera pela conclusão da tarefa
-                            var pais = paisController.BuscarPorId(estado.PaisId).Result;
+                            var pais = await paisController.BuscarPorId(estado.PaisId);
                             if (pais != null && pais.NomePais.Trim().Equals("Brasil", StringComparison.OrdinalIgnoreCase))
                             {
                                 if (string.IsNullOrWhiteSpace(txtRG.Text))
                                 {
-                                    MessageBox.Show("O campo RG é obrigatório para funcionários brasileiros.", "Validação", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                    MessageBox.Show("O campo RG é obrigatório para clientes brasileiros.", "Validação", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                     txtRG.Focus();
                                     return;
                                 }
@@ -181,14 +178,12 @@ namespace Projeto.Views
                 try
                 {
                     int id = string.IsNullOrWhiteSpace(txtCodigo.Text) ? 0 : Convert.ToInt32(txtCodigo.Text);
-                    DateTime dataCriacao = id == 0
-                        ? DateTime.Now
-                        : DateTime.Parse(lblDataCriacao.Text.Replace("Criado em: ", ""));
-
+                    DateTime dataCriacao = id == 0 ? DateTime.Now : DateTime.Parse(lblDataCriacao.Text.Replace("Criado em: ", ""));
                     DateTime dataModificacao = DateTime.Now;
-
                     string cpfCnpjLimpo = new string(txtCPF.Text.Where(char.IsDigit).ToArray());
 
+                    // NOTA: O controller de Cliente ainda não foi refatorado.
+                    // Quando for, esta linha precisará de 'await'.
                     List<Cliente> clientes = controller.ListarCliente();
 
                     if (Validador.VerificarDuplicidade(clientes, c =>
@@ -196,7 +191,7 @@ namespace Projeto.Views
                         && c.Id != id, "Já existe um cliente cadastrado com este CPF/CNPJ."))
                     {
                         txtCPF.Focus();
-                        return; 
+                        return;
                     }
 
                     Cliente cliente = new Cliente
@@ -222,6 +217,8 @@ namespace Projeto.Views
                         DataAlteracao = dataModificacao
                     };
 
+                    // NOTA: O controller de Cliente ainda não foi refatorado.
+                    // Quando for, esta linha precisará de 'await'.
                     controller.Salvar(cliente);
                     MessageBox.Show("Cliente salvo com sucesso!");
                     this.Close();
@@ -232,8 +229,6 @@ namespace Projeto.Views
                 }
             }
         }
-
-
 
         private void frmCadastroCliente_Load(object sender, EventArgs e)
         {
@@ -267,9 +262,7 @@ namespace Projeto.Views
             else
             {
                 txtCodigo.Text = "0";
-
                 DateTime agora = DateTime.Now;
-
                 lblDataCriacao.Text = $"Criado em: {agora:dd/MM/yyyy HH:mm}";
                 lblDataModificacao.Text = $"Modificado em: {agora:dd/MM/yyyy HH:mm}";
             }
@@ -304,7 +297,7 @@ namespace Projeto.Views
             }
         }
 
-        private void txtIdCidade_Leave(object sender, EventArgs e)
+        private async void txtIdCidade_Leave(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtIdCidade.Text))
             {
@@ -321,7 +314,7 @@ namespace Projeto.Views
             }
 
             int id = int.Parse(txtIdCidade.Text);
-            var cidade = cidadeController.BuscarPorId(id);
+            var cidade = await cidadeController.BuscarPorId(id);
 
             if (cidade != null)
             {
@@ -336,7 +329,6 @@ namespace Projeto.Views
             }
         }
 
-
         private void cbTipo_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cbTipo.Text == "Jurídico")
@@ -348,6 +340,5 @@ namespace Projeto.Views
                 lblCPF.Text = "CPF";
             }
         }
-
     }
 }

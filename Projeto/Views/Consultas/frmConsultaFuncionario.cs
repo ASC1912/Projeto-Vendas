@@ -2,10 +2,7 @@
 using Projeto.Models;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Projeto.Views
@@ -13,6 +10,7 @@ namespace Projeto.Views
     public partial class frmConsultaFuncionario : Projeto.frmBaseConsulta
     {
         private FuncionarioController controller = new FuncionarioController();
+        private CidadeController cidadeController = new CidadeController(); 
 
         public frmConsultaFuncionario() : base()
         {
@@ -126,50 +124,32 @@ namespace Projeto.Views
             }
         }
 
-
-        private void btnEditar_Click(object sender, EventArgs e)
+        private async void btnEditar_Click(object sender, EventArgs e)
         {
             if (listView1.SelectedItems.Count > 0)
             {
                 var itemSelecionado = listView1.SelectedItems[0];
                 int id = int.Parse(itemSelecionado.SubItems[0].Text);
 
-                Funcionario funcionario = controller.BuscarPorId(id);
+                Funcionario funcionario = controller.BuscarPorId(id); 
 
                 if (funcionario != null)
                 {
-                    Cidade cidade = funcionario.CidadeId.HasValue
-                        ? new CidadeController().BuscarPorId(funcionario.CidadeId.Value)
-                        : null;
+                    Cidade cidade = null;
+                    if (funcionario.CidadeId.HasValue)
+                    {
+                        cidade = await cidadeController.BuscarPorId(funcionario.CidadeId.Value);
+                    }
 
                     var formCadastro = new frmCadastroFuncionario();
                     formCadastro.modoEdicao = true;
                     formCadastro.CarregarFuncionario(
-                        funcionario.Id,
-                        funcionario.Nome,
-                        funcionario.Apelido,
-                        funcionario.CPF_CNPJ,
-                        funcionario.Telefone,
-                        funcionario.Email,
-                        funcionario.Endereco,
-                        funcionario.NumeroEndereco ?? 0,
-                        funcionario.Bairro,
-                        funcionario.Complemento,
-                        funcionario.CEP,
-                        funcionario.Cargo,
-                        funcionario.Salario,
-                        funcionario.Matricula,
-                        funcionario.Genero,
-                        funcionario.Tipo,
-                        cidade?.NomeCidade ?? "Não encontrado",
-                        funcionario.CidadeId ?? 0,
-                        funcionario.Ativo,
-                        funcionario.DataAdmissao,
-                        funcionario.DataDemissao,
-                        funcionario.DataNascimento,
-                        funcionario.Rg,
-                        funcionario.DataCadastro,
-                        funcionario.DataAlteracao
+                        funcionario.Id, funcionario.Nome, funcionario.Apelido, funcionario.CPF_CNPJ, funcionario.Telefone, funcionario.Email,
+                        funcionario.Endereco, funcionario.NumeroEndereco ?? 0, funcionario.Bairro, funcionario.Complemento, funcionario.CEP,
+                        funcionario.Cargo, funcionario.Salario, funcionario.Matricula, funcionario.Genero, funcionario.Tipo,
+                        cidade?.NomeCidade ?? "Não encontrado", funcionario.CidadeId ?? 0, funcionario.Ativo,
+                        funcionario.DataAdmissao, funcionario.DataDemissao, funcionario.DataNascimento, funcionario.Rg,
+                        funcionario.DataCadastro, funcionario.DataAlteracao
                     );
 
                     formCadastro.FormClosed += (s, args) => CarregarFuncionarios();
@@ -186,56 +166,32 @@ namespace Projeto.Views
             }
         }
 
-
-
-        private void btnDeletar_Click(object sender, EventArgs e)
+        private async void btnDeletar_Click(object sender, EventArgs e)
         {
             if (listView1.SelectedItems.Count > 0)
             {
                 var itemSelecionado = listView1.SelectedItems[0];
                 int id = int.Parse(itemSelecionado.SubItems[0].Text);
 
-                Funcionario funcionario = controller.BuscarPorId(id);
+                Funcionario funcionario = controller.BuscarPorId(id); 
 
                 if (funcionario != null)
                 {
-                    Cidade cidade = funcionario.CidadeId.HasValue
-                        ? new CidadeController().BuscarPorId(funcionario.CidadeId.Value)
-                        : null;
-
-                    var formCadastro = new frmCadastroFuncionario
+                    Cidade cidade = null;
+                    if (funcionario.CidadeId.HasValue)
                     {
-                        modoExclusao = true
-                    };
+                        cidade = await cidadeController.BuscarPorId(funcionario.CidadeId.Value);
+                    }
 
+                    var formCadastro = new frmCadastroFuncionario { modoExclusao = true };
                     formCadastro.CarregarFuncionario(
-                        funcionario.Id,
-                        funcionario.Nome,
-                        funcionario.Apelido,
-                        funcionario.CPF_CNPJ,
-                        funcionario.Telefone,
-                        funcionario.Email,
-                        funcionario.Endereco,
-                        funcionario.NumeroEndereco ?? 0,
-                        funcionario.Bairro,
-                        funcionario.Complemento,
-                        funcionario.CEP,
-                        funcionario.Cargo,
-                        funcionario.Salario,
-                        funcionario.Matricula,
-                        funcionario.Genero,
-                        funcionario.Tipo,
-                        cidade?.NomeCidade ?? "Não encontrado",
-                        funcionario.CidadeId ?? 0,
-                        funcionario.Ativo,
-                        funcionario.DataAdmissao,
-                        funcionario.DataDemissao,
-                        funcionario.DataNascimento,
-                        funcionario.Rg,
-                        funcionario.DataCadastro,
-                        funcionario.DataAlteracao
+                        funcionario.Id, funcionario.Nome, funcionario.Apelido, funcionario.CPF_CNPJ, funcionario.Telefone, funcionario.Email,
+                        funcionario.Endereco, funcionario.NumeroEndereco ?? 0, funcionario.Bairro, funcionario.Complemento, funcionario.CEP,
+                        funcionario.Cargo, funcionario.Salario, funcionario.Matricula, funcionario.Genero, funcionario.Tipo,
+                        cidade?.NomeCidade ?? "Não encontrado", funcionario.CidadeId ?? 0, funcionario.Ativo,
+                        funcionario.DataAdmissao, funcionario.DataDemissao, funcionario.DataNascimento, funcionario.Rg,
+                        funcionario.DataCadastro, funcionario.DataAlteracao
                     );
-
                     formCadastro.FormClosed += (s, args) => CarregarFuncionarios();
                     formCadastro.ShowDialog();
                 }
@@ -250,10 +206,8 @@ namespace Projeto.Views
             }
         }
 
-
         private void frmConsultaFuncionario_Shown(object sender, EventArgs e)
         {
-
         }
 
         private void frmConsultaFuncionario_Load(object sender, EventArgs e)
@@ -264,60 +218,25 @@ namespace Projeto.Views
             {
                 switch (column.Text)
                 {
-                    case "ID":
-                        column.Width = 40;
-                        break;
-                    case "Tipo":
-                        column.Width = 60;
-                        break;
-                    case "Nome":
-                        column.Width = 200;
-                        break;
-                    case "Gênero":
-                        column.Width = 60;
-                        break;
-                    case "Endereço":
-                        column.Width = 200;
-                        break;
-                    case "Número":
-                        column.Width = 60;
-                        break;
-                    case "Bairro":
-                        column.Width = 150;
-                        break;
-                    case "Complemento":
-                        column.Width = 130;
-                        break;
-                    case "CEP":
-                        column.Width = 80;
-                        break;
-                    case "Cidade":
-                        column.Width = 150;
-                        break;
-                    case "Cargo":
-                        column.Width = 130;
-                        break;
-                    case "Telefone":
-                        column.Width = 120;
-                        break;
-                    case "Email":
-                        column.Width = 200;
-                        break;
-                    case "Status":
-                        column.Width = 60;
-                        break;
-                    case "CPF/CNPJ":
-                        column.Width = 130;
-                        break;
-                    case "DataNascimento":
-                        column.Width = 120;
-                        break;
-                    default:
-                        column.Width = 100;
-                        break;
+                    case "ID": column.Width = 40; break;
+                    case "Tipo": column.Width = 60; break;
+                    case "Nome": column.Width = 200; break;
+                    case "Gênero": column.Width = 60; break;
+                    case "Endereço": column.Width = 200; break;
+                    case "Número": column.Width = 60; break;
+                    case "Bairro": column.Width = 150; break;
+                    case "Complemento": column.Width = 130; break;
+                    case "CEP": column.Width = 80; break;
+                    case "Cidade": column.Width = 150; break;
+                    case "Cargo": column.Width = 130; break;
+                    case "Telefone": column.Width = 120; break;
+                    case "Email": column.Width = 200; break;
+                    case "Status": column.Width = 60; break;
+                    case "CPF/CNPJ": column.Width = 130; break;
+                    case "DataNascimento": column.Width = 120; break;
+                    default: column.Width = 100; break;
                 }
             }
         }
-
     }
 }

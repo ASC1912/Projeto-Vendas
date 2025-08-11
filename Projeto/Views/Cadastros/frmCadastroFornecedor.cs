@@ -9,6 +9,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks; 
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
@@ -20,11 +21,9 @@ namespace Projeto.Views
         private CondicaoPagamentoController condicaoPagamentoController = new CondicaoPagamentoController();
         private FornecedorController controller = new FornecedorController();
         public bool modoEdicao = false;
-        public bool modoExclusao = false; 
+        public bool modoExclusao = false;
         private int cidadeSelecionadoId = -1;
         private int condicaoSelecionadoId = -1;
-
-
 
         public frmCadastroFornecedor() : base()
         {
@@ -47,9 +46,9 @@ namespace Projeto.Views
             }
         }
         public void CarregarFornecedor(int id, string nome, string cpf_cnpj, string telefone, string email, string endereco,
-                                int numEndereco, string bairro, string complemento, string cep, string inscEst,
-                                string inscEstSubTrib, string tipo, string nomeCidade, int idCidade, string descricaoCondicao, int idCondicao,
-                                bool status, DateTime? dataCriacao, DateTime? dataModificacao)
+                                        int numEndereco, string bairro, string complemento, string cep, string inscEst,
+                                        string inscEstSubTrib, string tipo, string nomeCidade, int idCidade, string descricaoCondicao, int idCondicao,
+                                        bool status, DateTime? dataCriacao, DateTime? dataModificacao)
         {
             txtCodigo.Text = id.ToString();
             txtNome.Text = nome;
@@ -67,7 +66,7 @@ namespace Projeto.Views
             txtCidade.Text = nomeCidade;
             txtIdCidade.Text = idCidade > 0 ? idCidade.ToString() : "";
             cidadeSelecionadoId = idCidade;
-            txtCondicao.Text =descricaoCondicao;
+            txtCondicao.Text = descricaoCondicao;
             condicaoSelecionadoId = idCondicao;
             chkInativo.Checked = !status;
 
@@ -80,11 +79,9 @@ namespace Projeto.Views
                 : "Modificado em: -";
         }
 
-
-
-
         private void btnSalvar_Click(object sender, EventArgs e)
         {
+            // NOTA: Este método só precisará se tornar 'async' quando o 'FornecedorController' for refatorado.
             if (modoExclusao)
             {
                 var confirmacao = MessageBox.Show("Tem certeza que deseja excluir este Fornecedor?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
@@ -148,16 +145,12 @@ namespace Projeto.Views
                 }
 
                 if (!Validador.ValidarIdSelecionado(cidadeSelecionadoId, "Selecione uma cidade.")) return;
-
                 if (!Validador.ValidarIdSelecionado(condicaoSelecionadoId, "Selecione uma condição de pagamento.")) return;
-
 
                 try
                 {
                     int id = string.IsNullOrWhiteSpace(txtCodigo.Text) ? 0 : Convert.ToInt32(txtCodigo.Text);
-                    DateTime dataCriacao = id == 0
-                        ? DateTime.Now
-                        : DateTime.Parse(lblDataCriacao.Text.Replace("Criado em: ", ""));
+                    DateTime dataCriacao = id == 0 ? DateTime.Now : DateTime.Parse(lblDataCriacao.Text.Replace("Criado em: ", ""));
                     DateTime dataModificacao = DateTime.Now;
                     string cpfCnpjLimpo = new string(txtCPF.Text.Where(char.IsDigit).ToArray());
 
@@ -168,7 +161,7 @@ namespace Projeto.Views
                        && f.Id != id, "Já existe um fornecedor cadastrado com este CPF/CNPJ."))
                     {
                         txtCPF.Focus();
-                        return; 
+                        return;
                     }
 
                     Fornecedor fornecedor = new Fornecedor
@@ -203,8 +196,6 @@ namespace Projeto.Views
                 }
             }
         }
-
-
 
         private void frmCadastroFornecedor_Load(object sender, EventArgs e)
         {
@@ -270,7 +261,7 @@ namespace Projeto.Views
             }
         }
 
-        private void txtIdCidade_Leave(object sender, EventArgs e)
+        private async void txtIdCidade_Leave(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtIdCidade.Text))
             {
@@ -287,7 +278,7 @@ namespace Projeto.Views
             }
 
             int id = int.Parse(txtIdCidade.Text);
-            var cidade = cidadeController.BuscarPorId(id);
+            var cidade = await cidadeController.BuscarPorId(id);
 
             if (cidade != null)
             {
