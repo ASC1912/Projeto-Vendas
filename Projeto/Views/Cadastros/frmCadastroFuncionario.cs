@@ -34,11 +34,11 @@ namespace Projeto.Views
         }
 
         public void CarregarFuncionario(
-                         int id, string nome, string apelido, string cpf_cnpj, string telefone, string email,
-                         string endereco, int numEndereco, string bairro, string complemento, string cep,
-                         string cargo, decimal salario, string matricula, string genero, string tipo,
-                         string nomeCidade, int idCidade, bool status, DateTime? dataAdmissao,
-                         DateTime? dataDemissao, DateTime? dataNascimento, string rg, DateTime? dataCriacao, DateTime? dataModificacao)
+                                 int id, string nome, string apelido, string cpf_cnpj, string telefone, string email,
+                                 string endereco, int numEndereco, string bairro, string complemento, string cep,
+                                 string cargo, decimal salario, string matricula, string genero, string tipo,
+                                 string nomeCidade, int idCidade, bool status, DateTime? dataAdmissao,
+                                 DateTime? dataDemissao, DateTime? dataNascimento, string rg, DateTime? dataCriacao, DateTime? dataModificacao)
         {
             txtCodigo.Text = id.ToString();
             txtNome.Text = nome;
@@ -83,11 +83,11 @@ namespace Projeto.Views
 
 
             lblDataCriacao.Text = dataCriacao.HasValue
-                ? $"Criado em: {dataCriacao:dd/MM/yyyy HH:mm}"
+                ? $"Criado em: {dataCriacao.Value:dd/MM/yyyy HH:mm}"
                 : "Criado em: -";
 
             lblDataModificacao.Text = dataModificacao.HasValue
-                ? $"Modificado em: {dataModificacao:dd/MM/yyyy HH:mm}"
+                ? $"Modificado em: {dataModificacao.Value:dd/MM/yyyy HH:mm}"
                 : "Modificado em: -";
         }
 
@@ -101,7 +101,7 @@ namespace Projeto.Views
                     try
                     {
                         int id = int.Parse(txtCodigo.Text);
-                        controller.Excluir(id);
+                        await controller.Excluir(id);
                         MessageBox.Show("Funcionário excluído com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         this.Close();
                     }
@@ -127,50 +127,24 @@ namespace Projeto.Views
                 string tipoPessoa = cbTipo.Text.Trim();
                 string documento = new string(txtCPF.Text.Where(char.IsDigit).ToArray());
 
-                if (tipoPessoa == "Físico")
-                {
-                    if (!Validador.ValidarCPF(documento))
-                    {
-                        MessageBox.Show("CPF inválido.");
-                        txtCPF.Focus();
-                        return;
-                    }
-                }
-                else if (tipoPessoa == "Jurídico")
-                {
-                    if (!Validador.ValidarCNPJ(documento))
-                    {
-                        MessageBox.Show("CNPJ inválido.");
-                        txtCPF.Focus();
-                        return;
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Tipo de pessoa inválido.");
-                    cbTipo.Focus();
-                    return;
-                }
+                if (tipoPessoa == "Físico") { if (!Validador.ValidarCPF(documento)) { MessageBox.Show("CPF inválido."); txtCPF.Focus(); return; } }
+                else if (tipoPessoa == "Jurídico") { if (!Validador.ValidarCNPJ(documento)) { MessageBox.Show("CNPJ inválido."); txtCPF.Focus(); return; } }
+                else { MessageBox.Show("Tipo de pessoa inválido."); cbTipo.Focus(); return; }
 
                 if (!Validador.ValidarIdSelecionado(cidadeSelecionadoId, "Selecione uma cidade.")) return;
 
                 if (cidadeSelecionadoId > 0)
                 {
                     var cidade = await cidadeController.BuscarPorId(cidadeSelecionadoId);
-                    if (cidade != null)
+                    if (cidade != null && cidade.oEstado != null && cidade.oEstado.oPais != null)
                     {
-                        var estado = await estadoController.BuscarPorId(cidade.EstadoId);
-                        if (estado != null)
+                        if (cidade.oEstado.oPais.NomePais.Trim().Equals("Brasil", StringComparison.OrdinalIgnoreCase))
                         {
-                            var pais = await paisController.BuscarPorId(estado.PaisId);
-                            if (pais != null && pais.NomePais.Trim().Equals("Brasil", StringComparison.OrdinalIgnoreCase))
+                            if (string.IsNullOrWhiteSpace(txtRG.Text))
                             {
-                                if (string.IsNullOrWhiteSpace(txtRG.Text))
-                                {
-                                    MessageBox.Show("O campo RG é obrigatório para funcionários brasileiros.", "Validação", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                                    txtRG.Focus();
-                                    return;
-                                }
+                                MessageBox.Show("O campo RG é obrigatório para funcionários brasileiros.", "Validação", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                txtRG.Focus();
+                                return;
                             }
                         }
                     }
@@ -191,21 +165,10 @@ namespace Projeto.Views
                 try
                 {
                     int id = string.IsNullOrWhiteSpace(txtCodigo.Text) ? 0 : Convert.ToInt32(txtCodigo.Text);
-                    string nome = txtNome.Text;
-                    bool status = !chkInativo.Checked;
-
-                    DateTime dataCriacao = id == 0
-                        ? DateTime.Now
-                        : DateTime.Parse(lblDataCriacao.Text.Replace("Criado em: ", ""));
-
-                    DateTime dataModificacao = DateTime.Now;
-
                     string cpfCnpjLimpo = new string(txtCPF.Text.Where(char.IsDigit).ToArray());
 
-                    List<Funcionario> funcionarios = controller.ListarFuncionario();
-                    if (Validador.VerificarDuplicidade(funcionarios, f =>
-                        new string(f.CPF_CNPJ.Where(char.IsDigit).ToArray()).Equals(cpfCnpjLimpo, StringComparison.OrdinalIgnoreCase)
-                        && f.Id != id, "Já existe um funcionário cadastrado com este CPF/CNPJ."))
+                    List<Funcionario> funcionarios = await controller.ListarFuncionarios();
+                    if (Validador.VerificarDuplicidade(funcionarios, f => new string(f.CPF_CNPJ.Where(char.IsDigit).ToArray()).Equals(cpfCnpjLimpo, StringComparison.OrdinalIgnoreCase) && f.Id != id, "Já existe um funcionário cadastrado com este CPF/CNPJ."))
                     {
                         txtCPF.Focus();
                         return;
@@ -214,7 +177,7 @@ namespace Projeto.Views
                     Funcionario funcionario = new Funcionario
                     {
                         Id = id,
-                        Nome = nome,
+                        Nome = txtNome.Text,
                         CPF_CNPJ = txtCPF.Text,
                         Email = txtEmail.Text,
                         Endereco = txtEndereco.Text,
@@ -226,8 +189,7 @@ namespace Projeto.Views
                         CEP = txtCEP.Text,
                         Cargo = txtCargo.Text,
                         Salario = Convert.ToDecimal(txtSalario.Text),
-                        CidadeId = cidadeSelecionadoId,
-                        Ativo = status,
+                        Ativo = !chkInativo.Checked,
                         DataAdmissao = dtpAdmissao.Value,
                         DataDemissao = dtpDemissao.Checked ? (DateTime?)dtpDemissao.Value : null,
                         DataNascimento = dtpNascimento.Value,
@@ -235,11 +197,15 @@ namespace Projeto.Views
                         Genero = genero,
                         Apelido = txtApelido.Text,
                         Matricula = txtMatricula.Text,
-                        DataCadastro = dataCriacao,
-                        DataAlteracao = dataModificacao
+                        DataCadastro = id == 0 ? DateTime.Now : (DateTime?)null,
+                        DataAlteracao = id > 0 ? DateTime.Now : (DateTime?)null,
+
+                        // Propriedades para o DAO e API
+                        CidadeId = cidadeSelecionadoId,
+                        oCidade = new Cidade { Id = cidadeSelecionadoId }
                     };
 
-                    controller.Salvar(funcionario);
+                    await controller.Salvar(funcionario);
                     MessageBox.Show("Funcionário salvo com sucesso!");
                     this.Close();
                 }
@@ -249,7 +215,6 @@ namespace Projeto.Views
                 }
             }
         }
-
 
         private void frmCadastroFuncionario_Load(object sender, EventArgs e)
         {

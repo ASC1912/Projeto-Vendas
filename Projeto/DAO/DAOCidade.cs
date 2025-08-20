@@ -8,7 +8,6 @@ namespace Projeto.DAO
     internal class DAOCidade
     {
         private string connectionString = "Server=localhost;Database=sistema;Uid=root;Pwd=12345678;";
-
         public void Salvar(Cidade cidade)
         {
             try
@@ -64,7 +63,6 @@ namespace Projeto.DAO
             {
                 conn.Open();
                 string query = "DELETE FROM Cidades WHERE Id = @Id";
-
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@Id", id);
@@ -79,31 +77,22 @@ namespace Projeto.DAO
             {
                 conn.Open();
                 string query = @"
-                    SELECT c.Id, c.Cidade, c.EstadoId, c.Ativo, 
-                           c.DataCadastro, c.DataAlteracao, 
-                           e.Estado AS EstadoNome 
+                    SELECT c.Id, c.Cidade, c.EstadoId, c.Ativo, c.DataCadastro, c.DataAlteracao,
+                           e.Id AS EstadoObjId, e.Estado AS EstadoObjNome, e.UF,
+                           p.Id AS PaisObjId, p.Pais AS PaisObjNome
                     FROM Cidades c
                     JOIN Estados e ON c.EstadoId = e.Id
+                    JOIN Paises p ON e.PaisId = p.Id
                     WHERE c.Id = @Id";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@Id", id);
-
                     using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
                         if (reader.Read())
                         {
-                            return new Cidade
-                            {
-                                Id = reader.GetInt32("Id"),
-                                NomeCidade = reader.GetString("Cidade"),
-                                EstadoId = reader.GetInt32("EstadoId"),
-                                EstadoNome = reader.GetString("EstadoNome"),
-                                Ativo = reader.GetBoolean("Ativo"),
-                                DataCadastro = reader.IsDBNull(reader.GetOrdinal("DataCadastro")) ? (DateTime?)null : reader.GetDateTime("DataCadastro"),
-                                DataAlteracao = reader.IsDBNull(reader.GetOrdinal("DataAlteracao")) ? (DateTime?)null : reader.GetDateTime("DataAlteracao")
-                            };
+                            return MontarObjetoCidade(reader);
                         }
                     }
                 }
@@ -114,14 +103,16 @@ namespace Projeto.DAO
         public List<Cidade> ListarCidade()
         {
             List<Cidade> lista = new List<Cidade>();
-
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
                 string query = @"
-                    SELECT c.Id, c.Cidade, c.EstadoId, c.Ativo, e.Estado AS EstadoNome 
+                    SELECT c.Id, c.Cidade, c.EstadoId, c.Ativo, c.DataCadastro, c.DataAlteracao,
+                           e.Id AS EstadoObjId, e.Estado AS EstadoObjNome, e.UF,
+                           p.Id AS PaisObjId, p.Pais AS PaisObjNome
                     FROM Cidades c
                     JOIN Estados e ON c.EstadoId = e.Id
+                    JOIN Paises p ON e.PaisId = p.Id
                     ORDER BY c.Id";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
@@ -130,19 +121,43 @@ namespace Projeto.DAO
                     {
                         while (reader.Read())
                         {
-                            lista.Add(new Cidade
-                            {
-                                Id = reader.GetInt32("Id"),
-                                NomeCidade = reader.GetString("Cidade"),
-                                EstadoId = reader.GetInt32("EstadoId"),
-                                EstadoNome = reader.GetString("EstadoNome"),
-                                Ativo = reader.GetBoolean("Ativo"),
-                            });
+                            lista.Add(MontarObjetoCidade(reader));
                         }
                     }
                 }
             }
             return lista;
+        }
+
+        // Método auxiliar para não repetir código
+        private Cidade MontarObjetoCidade(MySqlDataReader reader)
+        {
+            var pais = new Pais
+            {
+                Id = reader.GetInt32("PaisObjId"),
+                NomePais = reader.GetString("PaisObjNome")
+            };
+
+            var estado = new Estado
+            {
+                Id = reader.GetInt32("EstadoObjId"),
+                NomeEstado = reader.GetString("EstadoObjNome"),
+                UF = reader.GetString("UF"),
+                oPais = pais 
+            };
+
+            var cidade = new Cidade
+            {
+                Id = reader.GetInt32("Id"),
+                NomeCidade = reader.GetString("Cidade"),
+                EstadoId = reader.GetInt32("EstadoId"),
+                Ativo = reader.GetBoolean("Ativo"),
+                DataCadastro = reader.IsDBNull(reader.GetOrdinal("DataCadastro")) ? (DateTime?)null : reader.GetDateTime("DataCadastro"),
+                DataAlteracao = reader.IsDBNull(reader.GetOrdinal("DataAlteracao")) ? (DateTime?)null : reader.GetDateTime("DataAlteracao"),
+                oEstado = estado 
+            };
+
+            return cidade;
         }
     }
 }

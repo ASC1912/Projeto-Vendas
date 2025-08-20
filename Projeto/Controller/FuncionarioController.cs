@@ -1,36 +1,78 @@
 ﻿using Projeto.DAO;
 using Projeto.Models;
-using System;
+using Projeto.Services;
+using Projeto.Services.Interfaces;
+using Projeto.Utils;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Projeto.Controller
 {
     internal class FuncionarioController
     {
-        private DAOFuncionario dao = new DAOFuncionario();
+        private readonly bool _useApi;
+        private readonly IFuncionarioApiService _apiService;
+        private readonly DAOFuncionario _dao;
 
-        public void Salvar(Funcionario funcionario)
+        public FuncionarioController()
         {
-            dao.Salvar(funcionario);
+            _useApi = ConfigHelper.UseApi();
+            if (_useApi)
+            {
+                _apiService = new FuncionarioApiService();
+            }
+            else
+            {
+                _dao = new DAOFuncionario();
+            }
         }
 
-        public Funcionario BuscarPorId(int id)
+        public Task Salvar(Funcionario funcionario)
         {
-            return dao.BuscarPorId(id);
+            if (_useApi)
+            {
+                return _apiService.SaveFuncionarioAsync(funcionario);
+            }
+            else
+            {
+                return Task.Run(() => _dao.Salvar(funcionario));
+            }
         }
 
-        public List<Funcionario> ListarFuncionario()
+        public Task<Funcionario> BuscarPorId(int id)
         {
-            return dao.ListarFuncionarios();
+            if (_useApi)
+            {
+                return _apiService.GetFuncionarioByIdAsync(id);
+            }
+            else
+            {
+                return Task.FromResult(_dao.BuscarPorId(id));
+            }
         }
 
-        public void Excluir(int id)
+        public Task<List<Funcionario>> ListarFuncionarios()
         {
-            dao.Excluir(id);
+            if (_useApi)
+            {
+                return _apiService.GetFuncionariosAsync();
+            }
+            else
+            {
+                return Task.FromResult(_dao.ListarFuncionarios());
+            }
+        }
+
+        public Task Excluir(int id)
+        {
+            if (_useApi)
+            {
+                return _apiService.DeleteFuncionarioAsync(id);
+            }
+            else
+            {
+                return Task.Run(() => _dao.Excluir(id));
+            }
         }
     }
 }

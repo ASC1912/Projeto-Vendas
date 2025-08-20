@@ -9,6 +9,7 @@ namespace Projeto.DAO
     {
         private string connectionString = "Server=localhost;Database=sistema;Uid=root;Pwd=12345678;";
 
+        // O método Salvar não precisa de grandes mudanças
         public void Salvar(Transportadora transportadora)
         {
             try
@@ -17,61 +18,51 @@ namespace Projeto.DAO
                 {
                     conn.Open();
                     string query;
-
                     if (transportadora.Id > 0)
                     {
                         query = @"
-                        UPDATE Transportadoras 
-                        SET Transportadora = @Transportadora, CpfCnpj = @CpfCnpj, Telefone = @Telefone, Email = @Email, 
-                            Endereco = @Endereco, NumeroEndereco = @NumeroEndereco, Complemento = @Complemento, 
-                            Bairro = @Bairro, Cep = @Cep, InscricaoEstadual = @InscricaoEstadual, 
-                            InscricaoEstadualSubtrib = @InscricaoEstadualSubtrib, CidadeId = @CidadeId, 
-                            Tipo = @Tipo, IdCondicaoPagamento = @IdCondicaoPagamento, Ativo = @Ativo,
-                            DataAlteracao = @DataAlteracao
-                        WHERE Id = @Id";
+                            UPDATE Transportadoras 
+                            SET Transportadora = @Nome, CpfCnpj = @CPF_CNPJ, Telefone = @Telefone, Email = @Email, 
+                                Endereco = @Endereco, NumeroEndereco = @NumeroEndereco, Complemento = @Complemento, 
+                                Bairro = @Bairro, Cep = @CEP, InscricaoEstadual = @InscricaoEstadual, 
+                                InscricaoEstadualSubtrib = @InscricaoEstadualSubTrib, CidadeId = @CidadeId, 
+                                Tipo = @Tipo, IdCondicaoPagamento = @IdCondicao, Ativo = @Ativo,
+                                DataAlteracao = @DataAlteracao
+                            WHERE Id = @Id";
                     }
                     else
                     {
                         query = @"
-                        INSERT INTO Transportadoras (
-                            Transportadora, CpfCnpj, Telefone, Email, Endereco, NumeroEndereco, Complemento, 
-                            Bairro, Cep, InscricaoEstadual, InscricaoEstadualSubtrib, CidadeId, Tipo, IdCondicaoPagamento,
-                            Ativo, DataCadastro, DataAlteracao
-                        ) 
-                        VALUES (
-                            @Transportadora, @CpfCnpj, @Telefone, @Email, @Endereco, @NumeroEndereco, @Complemento, 
-                            @Bairro, @Cep, @InscricaoEstadual, @InscricaoEstadualSubtrib, @CidadeId, @Tipo, @IdCondicaoPagamento,
-                            @Ativo, @DataCadastro, @DataAlteracao
-                        )";
+                            INSERT INTO Transportadoras (
+                                Transportadora, CpfCnpj, Telefone, Email, Endereco, NumeroEndereco, Complemento, 
+                                Bairro, Cep, InscricaoEstadual, InscricaoEstadualSubtrib, CidadeId, Tipo, IdCondicaoPagamento,
+                                Ativo, DataCadastro, DataAlteracao
+                            ) VALUES (
+                                @Nome, @CPF_CNPJ, @Telefone, @Email, @Endereco, @NumeroEndereco, @Complemento, 
+                                @Bairro, @CEP, @InscricaoEstadual, @InscricaoEstadualSubTrib, @CidadeId, @Tipo, @IdCondicao,
+                                @Ativo, @DataCadastro, @DataAlteracao
+                            )";
                     }
-
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
-                        cmd.Parameters.AddWithValue("@Transportadora", transportadora.Nome);
-                        cmd.Parameters.AddWithValue("@CpfCnpj", transportadora.CPF_CNPJ);
-                        cmd.Parameters.AddWithValue("@Telefone", transportadora.Telefone ?? (object)DBNull.Value);
-                        cmd.Parameters.AddWithValue("@Email", transportadora.Email ?? (object)DBNull.Value);
-                        cmd.Parameters.AddWithValue("@Endereco", transportadora.Endereco ?? (object)DBNull.Value);
-                        cmd.Parameters.AddWithValue("@NumeroEndereco", transportadora.NumeroEndereco ?? (object)DBNull.Value);
-                        cmd.Parameters.AddWithValue("@Complemento", transportadora.Complemento ?? (object)DBNull.Value);
-                        cmd.Parameters.AddWithValue("@Bairro", transportadora.Bairro ?? (object)DBNull.Value);
-                        cmd.Parameters.AddWithValue("@Cep", transportadora.CEP ?? (object)DBNull.Value);
-                        cmd.Parameters.AddWithValue("@InscricaoEstadual", transportadora.InscricaoEstadual ?? (object)DBNull.Value);
-                        cmd.Parameters.AddWithValue("@InscricaoEstadualSubtrib", transportadora.InscricaoEstadualSubTrib ?? (object)DBNull.Value);
-                        cmd.Parameters.AddWithValue("@CidadeId", transportadora.CidadeId ?? (object)DBNull.Value);
-                        cmd.Parameters.AddWithValue("@Tipo", transportadora.Tipo ?? (object)DBNull.Value);
-                        cmd.Parameters.AddWithValue("@IdCondicaoPagamento", transportadora.IdCondicao ?? (object)DBNull.Value);
+                        cmd.Parameters.AddWithValue("@Id", transportadora.Id);
+                        cmd.Parameters.AddWithValue("@Nome", transportadora.Nome);
+                        cmd.Parameters.AddWithValue("@CPF_CNPJ", transportadora.CPF_CNPJ);
+                        cmd.Parameters.AddWithValue("@Telefone", transportadora.Telefone);
+                        cmd.Parameters.AddWithValue("@Email", transportadora.Email);
+                        cmd.Parameters.AddWithValue("@Endereco", transportadora.Endereco);
+                        cmd.Parameters.AddWithValue("@NumeroEndereco", transportadora.NumeroEndereco);
+                        cmd.Parameters.AddWithValue("@Complemento", transportadora.Complemento);
+                        cmd.Parameters.AddWithValue("@Bairro", transportadora.Bairro);
+                        cmd.Parameters.AddWithValue("@CEP", transportadora.CEP);
+                        cmd.Parameters.AddWithValue("@InscricaoEstadual", transportadora.InscricaoEstadual);
+                        cmd.Parameters.AddWithValue("@InscricaoEstadualSubTrib", transportadora.InscricaoEstadualSubTrib);
+                        cmd.Parameters.AddWithValue("@CidadeId", transportadora.CidadeId);
+                        cmd.Parameters.AddWithValue("@Tipo", transportadora.Tipo);
+                        cmd.Parameters.AddWithValue("@IdCondicao", transportadora.IdCondicao);
                         cmd.Parameters.AddWithValue("@Ativo", transportadora.Ativo);
-                        cmd.Parameters.AddWithValue("@DataAlteracao", transportadora.DataAlteracao ?? DateTime.Now);
-
-                        if (transportadora.Id > 0)
-                        {
-                            cmd.Parameters.AddWithValue("@Id", transportadora.Id);
-                        }
-                        else
-                        {
-                            cmd.Parameters.AddWithValue("@DataCadastro", transportadora.DataCadastro ?? DateTime.Now);
-                        }
+                        cmd.Parameters.AddWithValue("@DataCadastro", transportadora.DataCadastro);
+                        cmd.Parameters.AddWithValue("@DataAlteracao", transportadora.DataAlteracao);
 
                         cmd.ExecuteNonQuery();
                     }
@@ -89,7 +80,6 @@ namespace Projeto.DAO
             {
                 conn.Open();
                 string query = "DELETE FROM Transportadoras WHERE Id = @Id";
-
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@Id", id);
@@ -104,46 +94,27 @@ namespace Projeto.DAO
             {
                 conn.Open();
                 string query = @"
-                    SELECT t.Id, t.Transportadora, t.CpfCnpj, t.Telefone, t.Email, t.Endereco, t.NumeroEndereco, 
-                           t.Complemento, t.Bairro, t.Cep, t.InscricaoEstadual, t.InscricaoEstadualSubtrib, 
-                           t.CidadeId, ci.Cidade AS NomeCidade, t.Tipo, t.IdCondicaoPagamento,
-                           cp.Descricao AS DescricaoCondicao, t.Ativo, t.DataCadastro, t.DataAlteracao
+                    SELECT 
+                        t.*,
+                        c.Id AS CidadeObjId, c.Cidade AS CidadeObjNome,
+                        e.Id AS EstadoObjId, e.Estado AS EstadoObjNome, e.UF,
+                        p.Id AS PaisObjId, p.Pais AS PaisObjNome
+                        -- , cp.Id as CondicaoObjId, cp.Descricao as CondicaoObjDescricao
                     FROM Transportadoras t
-                    LEFT JOIN Cidades ci ON t.CidadeId = ci.Id
-                    LEFT JOIN CondicoesPagamento cp ON t.IdCondicaoPagamento = cp.Id
+                    LEFT JOIN Cidades c ON t.CidadeId = c.Id
+                    LEFT JOIN Estados e ON c.EstadoId = e.Id
+                    LEFT JOIN Paises p ON e.PaisId = p.Id
+                    -- LEFT JOIN CondicoesPagamento cp ON t.IdCondicaoPagamento = cp.Id
                     WHERE t.Id = @Id";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@Id", id);
-
                     using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
                         if (reader.Read())
                         {
-                            return new Transportadora
-                            {
-                                Id = reader.GetInt32("Id"),
-                                Nome = reader.GetString("Transportadora"),
-                                CPF_CNPJ = reader.GetString("CpfCnpj"),
-                                Telefone = reader.IsDBNull(reader.GetOrdinal("Telefone")) ? null : reader.GetString("Telefone"),
-                                Email = reader.IsDBNull(reader.GetOrdinal("Email")) ? null : reader.GetString("Email"),
-                                Endereco = reader.IsDBNull(reader.GetOrdinal("Endereco")) ? null : reader.GetString("Endereco"),
-                                NumeroEndereco = reader.IsDBNull(reader.GetOrdinal("NumeroEndereco")) ? (int?)null : reader.GetInt32("NumeroEndereco"),
-                                Complemento = reader.IsDBNull(reader.GetOrdinal("Complemento")) ? null : reader.GetString("Complemento"),
-                                Bairro = reader.IsDBNull(reader.GetOrdinal("Bairro")) ? null : reader.GetString("Bairro"),
-                                CEP = reader.IsDBNull(reader.GetOrdinal("Cep")) ? null : reader.GetString("Cep"),
-                                InscricaoEstadual = reader.IsDBNull(reader.GetOrdinal("InscricaoEstadual")) ? null : reader.GetString("InscricaoEstadual"),
-                                InscricaoEstadualSubTrib = reader.IsDBNull(reader.GetOrdinal("InscricaoEstadualSubtrib")) ? null : reader.GetString("InscricaoEstadualSubtrib"),
-                                CidadeId = reader.IsDBNull(reader.GetOrdinal("CidadeId")) ? (int?)null : reader.GetInt32("CidadeId"),
-                                NomeCidade = reader.IsDBNull(reader.GetOrdinal("NomeCidade")) ? null : reader.GetString("NomeCidade"),
-                                Tipo = reader.GetString("Tipo"),
-                                IdCondicao = reader.IsDBNull(reader.GetOrdinal("IdCondicaoPagamento")) ? (int?)null : reader.GetInt32("IdCondicaoPagamento"),
-                                DescricaoCondicao = reader.IsDBNull(reader.GetOrdinal("DescricaoCondicao")) ? null : reader.GetString("DescricaoCondicao"),
-                                Ativo = reader.GetBoolean("Ativo"),
-                                DataCadastro = reader.IsDBNull(reader.GetOrdinal("DataCadastro")) ? (DateTime?)null : reader.GetDateTime("DataCadastro"),
-                                DataAlteracao = reader.IsDBNull(reader.GetOrdinal("DataAlteracao")) ? (DateTime?)null : reader.GetDateTime("DataAlteracao")
-                            };
+                            return MontarObjetoTransportadora(reader);
                         }
                     }
                 }
@@ -151,20 +122,24 @@ namespace Projeto.DAO
             return null;
         }
 
-        public List<Transportadora> ListarTransportadoras()
+        public List<Transportadora> ListarTransportadoras() // Corrigido nome do método
         {
             List<Transportadora> lista = new List<Transportadora>();
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
                 string query = @"
-                    SELECT t.Id, t.Transportadora, t.CpfCnpj, t.Telefone, t.Email, t.Endereco, t.NumeroEndereco, 
-                           t.Complemento, t.Bairro, t.Cep, t.InscricaoEstadual, t.InscricaoEstadualSubtrib, 
-                           t.CidadeId, ci.Cidade AS NomeCidade, t.Tipo, t.IdCondicaoPagamento,
-                           cp.Descricao AS DescricaoCondicao, t.Ativo, t.DataCadastro, t.DataAlteracao
+                    SELECT 
+                        t.*,
+                        c.Id AS CidadeObjId, c.Cidade AS CidadeObjNome,
+                        e.Id AS EstadoObjId, e.Estado AS EstadoObjNome, e.UF,
+                        p.Id AS PaisObjId, p.Pais AS PaisObjNome
+                        -- , cp.Id as CondicaoObjId, cp.Descricao as CondicaoObjDescricao
                     FROM Transportadoras t
-                    LEFT JOIN Cidades ci ON t.CidadeId = ci.Id
-                    LEFT JOIN CondicoesPagamento cp ON t.IdCondicaoPagamento = cp.Id
+                    LEFT JOIN Cidades c ON t.CidadeId = c.Id
+                    LEFT JOIN Estados e ON c.EstadoId = e.Id
+                    LEFT JOIN Paises p ON e.PaisId = p.Id
+                    -- LEFT JOIN CondicoesPagamento cp ON t.IdCondicaoPagamento = cp.Id
                     ORDER BY t.Id";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
@@ -173,34 +148,86 @@ namespace Projeto.DAO
                     {
                         while (reader.Read())
                         {
-                            lista.Add(new Transportadora
-                            {
-                                Id = reader.GetInt32("Id"),
-                                Nome = reader.GetString("Transportadora"),
-                                CPF_CNPJ = reader.GetString("CpfCnpj"),
-                                Telefone = reader.IsDBNull(reader.GetOrdinal("Telefone")) ? null : reader.GetString("Telefone"),
-                                Email = reader.IsDBNull(reader.GetOrdinal("Email")) ? null : reader.GetString("Email"),
-                                Endereco = reader.IsDBNull(reader.GetOrdinal("Endereco")) ? null : reader.GetString("Endereco"),
-                                NumeroEndereco = reader.IsDBNull(reader.GetOrdinal("NumeroEndereco")) ? (int?)null : reader.GetInt32("NumeroEndereco"),
-                                Complemento = reader.IsDBNull(reader.GetOrdinal("Complemento")) ? null : reader.GetString("Complemento"),
-                                Bairro = reader.IsDBNull(reader.GetOrdinal("Bairro")) ? null : reader.GetString("Bairro"),
-                                CEP = reader.IsDBNull(reader.GetOrdinal("Cep")) ? null : reader.GetString("Cep"),
-                                InscricaoEstadual = reader.IsDBNull(reader.GetOrdinal("InscricaoEstadual")) ? null : reader.GetString("InscricaoEstadual"),
-                                InscricaoEstadualSubTrib = reader.IsDBNull(reader.GetOrdinal("InscricaoEstadualSubtrib")) ? null : reader.GetString("InscricaoEstadualSubtrib"),
-                                CidadeId = reader.IsDBNull(reader.GetOrdinal("CidadeId")) ? (int?)null : reader.GetInt32("CidadeId"),
-                                NomeCidade = reader.IsDBNull(reader.GetOrdinal("NomeCidade")) ? null : reader.GetString("NomeCidade"),
-                                Tipo = reader.GetString("Tipo"),
-                                IdCondicao = reader.IsDBNull(reader.GetOrdinal("IdCondicaoPagamento")) ? (int?)null : reader.GetInt32("IdCondicaoPagamento"),
-                                DescricaoCondicao = reader.IsDBNull(reader.GetOrdinal("DescricaoCondicao")) ? null : reader.GetString("DescricaoCondicao"),
-                                Ativo = reader.GetBoolean("Ativo"),
-                                DataCadastro = reader.IsDBNull(reader.GetOrdinal("DataCadastro")) ? (DateTime?)null : reader.GetDateTime("DataCadastro"),
-                                DataAlteracao = reader.IsDBNull(reader.GetOrdinal("DataAlteracao")) ? (DateTime?)null : reader.GetDateTime("DataAlteracao")
-                            });
+                            lista.Add(MontarObjetoTransportadora(reader));
                         }
                     }
                 }
             }
             return lista;
+        }
+
+        private Transportadora MontarObjetoTransportadora(MySqlDataReader reader)
+        {
+            Pais pais = null;
+            if (reader["PaisObjId"] != DBNull.Value)
+            {
+                pais = new Pais
+                {
+                    Id = Convert.ToInt32(reader["PaisObjId"]),
+                    NomePais = Convert.ToString(reader["PaisObjNome"])
+                };
+            }
+
+            Estado estado = null;
+            if (reader["EstadoObjId"] != DBNull.Value)
+            {
+                estado = new Estado
+                {
+                    Id = Convert.ToInt32(reader["EstadoObjId"]),
+                    NomeEstado = Convert.ToString(reader["EstadoObjNome"]),
+                    UF = Convert.ToString(reader["UF"]),
+                    oPais = pais
+                };
+            }
+
+            Cidade cidade = null;
+            if (reader["CidadeObjId"] != DBNull.Value)
+            {
+                cidade = new Cidade
+                {
+                    Id = Convert.ToInt32(reader["CidadeObjId"]),
+                    NomeCidade = Convert.ToString(reader["CidadeObjNome"]),
+                    oEstado = estado
+                };
+            }
+
+            /*
+            CondicaoPagamento condicao = null;
+            if (reader.HasRows && reader.GetSchemaTable().Columns.Contains("CondicaoObjId") && reader["CondicaoObjId"] != DBNull.Value)
+            {
+                condicao = new CondicaoPagamento
+                {
+                    Id = Convert.ToInt32(reader["CondicaoObjId"]),
+                    Descricao = Convert.ToString(reader["CondicaoObjDescricao"])
+                };
+            }
+            */
+
+            var transportadora = new Transportadora
+            {
+                Id = Convert.ToInt32(reader["Id"]),
+                Nome = Convert.ToString(reader["Transportadora"]),
+                CPF_CNPJ = Convert.ToString(reader["CpfCnpj"]),
+                Telefone = reader["Telefone"] == DBNull.Value ? null : Convert.ToString(reader["Telefone"]),
+                Email = reader["Email"] == DBNull.Value ? null : Convert.ToString(reader["Email"]),
+                Endereco = reader["Endereco"] == DBNull.Value ? null : Convert.ToString(reader["Endereco"]),
+                NumeroEndereco = reader["NumeroEndereco"] == DBNull.Value ? (int?)null : Convert.ToInt32(reader["NumeroEndereco"]),
+                Complemento = reader["Complemento"] == DBNull.Value ? null : Convert.ToString(reader["Complemento"]),
+                Bairro = reader["Bairro"] == DBNull.Value ? null : Convert.ToString(reader["Bairro"]),
+                CEP = reader["Cep"] == DBNull.Value ? null : Convert.ToString(reader["Cep"]),
+                Tipo = Convert.ToString(reader["Tipo"]),
+                InscricaoEstadual = reader["InscricaoEstadual"] == DBNull.Value ? null : Convert.ToString(reader["InscricaoEstadual"]),
+                InscricaoEstadualSubTrib = reader["InscricaoEstadualSubtrib"] == DBNull.Value ? null : Convert.ToString(reader["InscricaoEstadualSubtrib"]),
+                IdCondicao = reader["IdCondicaoPagamento"] == DBNull.Value ? (int?)null : Convert.ToInt32(reader["IdCondicaoPagamento"]),
+                Ativo = Convert.ToBoolean(reader["Ativo"]),
+                DataCadastro = reader["DataCadastro"] == DBNull.Value ? (DateTime?)null : Convert.ToDateTime(reader["DataCadastro"]),
+                DataAlteracao = reader["DataAlteracao"] == DBNull.Value ? (DateTime?)null : Convert.ToDateTime(reader["DataAlteracao"]),
+                CidadeId = reader["CidadeId"] == DBNull.Value ? (int?)null : Convert.ToInt32(reader["CidadeId"]),
+                oCidade = cidade
+                // oCondicaoPagamento = condicao
+            };
+
+            return transportadora;
         }
     }
 }

@@ -153,15 +153,26 @@
     <Compile Include="Models\Produto.cs" />
     <Compile Include="Models\Transportadora.cs" />
     <Compile Include="Models\Veiculo.cs" />
-    <Compile Include="Services\ApiClient.cs" />
     <Compile Include="Services\CidadeApiService.cs" />
+    <Compile Include="Services\ClienteApiService.cs" />
     <Compile Include="Services\EstadoApiService.cs" />
+    <Compile Include="Services\FornecedorApiService.cs" />
+    <Compile Include="Services\FuncionarioApiService.cs" />
     <Compile Include="Services\Interfaces\ICidadeApiService.cs" />
+    <Compile Include="Services\Interfaces\IClienteApiService.cs" />
     <Compile Include="Services\Interfaces\IEstadoApiService.cs" />
+    <Compile Include="Services\Interfaces\IFornecedorApiService.cs" />
+    <Compile Include="Services\Interfaces\IFuncionarioApiService.cs" />
     <Compile Include="Services\Interfaces\IPaisApiService.cs" />
     <Compile Include="Services\PaisApiService.cs" />
     <Compile Include="Utils\ConfigHelper.cs" />
     <Compile Include="Utils\Validador.cs" />
+    <Compile Include="Views\Cadastros\frmCadastroCompras2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Cadastros\frmCadastroCompras2.Designer.cs">
+      <DependentUpon>frmCadastroCompras2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\Cadastros\frmCadastroGrupo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -338,6 +349,9 @@
     <Compile Include="Views\Consultas\frmConsultaPais.Designer.cs">
       <DependentUpon>frmConsultaPais.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Views\Cadastros\frmCadastroCompras2.resx">
+      <DependentUpon>frmCadastroCompras2.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\Cadastros\frmCadastroGrupo.resx">
       <DependentUpon>frmCadastroGrupo.cs</DependentUpon>
     </EmbeddedResource>

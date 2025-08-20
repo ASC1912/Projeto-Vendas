@@ -21,57 +21,50 @@ namespace Projeto.DAO
                     if (cliente.Id > 0)
                     {
                         query = @"
-                        UPDATE Clientes SET
-                            Cliente = @Cliente, CpfCnpj = @CpfCnpj, Rg = @Rg, Telefone = @Telefone, Email = @Email,
-                            Endereco = @Endereco, NumeroEndereco = @NumeroEndereco, Complemento = @Complemento,
-                            Bairro = @Bairro, Cep = @Cep, CidadeId = @CidadeId, Tipo = @Tipo, Genero = @Genero,
-                            IdCondicaoPagamento = @IdCondicaoPagamento, Ativo = @Ativo,
-                            DataNascimento = @DataNascimento, DataAlteracao = @DataAlteracao
-                        WHERE Id = @Id";
+                            UPDATE Clientes SET
+                                Cliente = @Nome, CpfCnpj = @CPF_CNPJ, Rg = @Rg, Telefone = @Telefone, Email = @Email,
+                                Endereco = @Endereco, NumeroEndereco = @NumeroEndereco, Complemento = @Complemento,
+                                Bairro = @Bairro, Cep = @CEP, CidadeId = @CidadeId, Tipo = @Tipo, Genero = @Genero,
+                                IdCondicaoPagamento = @IdCondicao, Ativo = @Ativo,
+                                DataNascimento = @DataNascimento, DataAlteracao = @DataAlteracao
+                            WHERE Id = @Id";
                     }
                     else
                     {
                         query = @"
-                        INSERT INTO Clientes (
-                            Cliente, CpfCnpj, Rg, Telefone, Email, Endereco, NumeroEndereco, Complemento,
-                            Bairro, Cep, CidadeId, Tipo, Genero, IdCondicaoPagamento, Ativo,
-                            DataNascimento, DataCadastro, DataAlteracao
-                        ) VALUES (
-                            @Cliente, @CpfCnpj, @Rg, @Telefone, @Email, @Endereco, @NumeroEndereco, @Complemento,
-                            @Bairro, @Cep, @CidadeId, @Tipo, @Genero, @IdCondicaoPagamento, @Ativo,
-                            @DataNascimento, @DataCadastro, @DataAlteracao
-                        )";
+                            INSERT INTO Clientes (
+                                Cliente, CpfCnpj, Rg, Telefone, Email, Endereco, NumeroEndereco, Complemento,
+                                Bairro, Cep, CidadeId, Tipo, Genero, IdCondicaoPagamento, Ativo,
+                                DataNascimento, DataCadastro, DataAlteracao
+                            ) VALUES (
+                                @Nome, @CPF_CNPJ, @Rg, @Telefone, @Email, @Endereco, @NumeroEndereco, @Complemento,
+                                @Bairro, @CEP, @CidadeId, @Tipo, @Genero, @IdCondicao, @Ativo,
+                                @DataNascimento, @DataCadastro, @DataAlteracao
+                            )";
                     }
 
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
-                        cmd.Parameters.AddWithValue("@Cliente", cliente.Nome);
-                        cmd.Parameters.AddWithValue("@CpfCnpj", cliente.CPF_CNPJ);
-                        cmd.Parameters.AddWithValue("@Rg", cliente.Rg ?? (object)DBNull.Value);
-                        cmd.Parameters.AddWithValue("@Telefone", cliente.Telefone ?? (object)DBNull.Value);
-                        cmd.Parameters.AddWithValue("@Email", cliente.Email ?? (object)DBNull.Value);
-                        cmd.Parameters.AddWithValue("@Endereco", cliente.Endereco ?? (object)DBNull.Value);
-                        cmd.Parameters.AddWithValue("@NumeroEndereco", cliente.NumeroEndereco ?? (object)DBNull.Value);
-                        cmd.Parameters.AddWithValue("@Complemento", cliente.Complemento ?? (object)DBNull.Value);
-                        cmd.Parameters.AddWithValue("@Bairro", cliente.Bairro ?? (object)DBNull.Value);
-                        cmd.Parameters.AddWithValue("@Cep", cliente.CEP ?? (object)DBNull.Value);
-                        cmd.Parameters.AddWithValue("@CidadeId", cliente.CidadeId ?? (object)DBNull.Value);
-                        cmd.Parameters.AddWithValue("@Tipo", cliente.Tipo ?? (object)DBNull.Value);
-                        cmd.Parameters.AddWithValue("@Genero", string.IsNullOrEmpty(cliente.Genero) ? (object)DBNull.Value : cliente.Genero);
-                        cmd.Parameters.AddWithValue("@IdCondicaoPagamento", cliente.IdCondicao > 0 ? (object)cliente.IdCondicao : DBNull.Value);
+                        cmd.Parameters.AddWithValue("@Id", cliente.Id);
+                        cmd.Parameters.AddWithValue("@Nome", cliente.Nome);
+                        cmd.Parameters.AddWithValue("@CPF_CNPJ", cliente.CPF_CNPJ);
+                        cmd.Parameters.AddWithValue("@Rg", cliente.Rg);
+                        cmd.Parameters.AddWithValue("@Telefone", cliente.Telefone);
+                        cmd.Parameters.AddWithValue("@Email", cliente.Email);
+                        cmd.Parameters.AddWithValue("@Endereco", cliente.Endereco);
+                        cmd.Parameters.AddWithValue("@NumeroEndereco", cliente.NumeroEndereco);
+                        cmd.Parameters.AddWithValue("@Complemento", cliente.Complemento);
+                        cmd.Parameters.AddWithValue("@Bairro", cliente.Bairro);
+                        cmd.Parameters.AddWithValue("@CEP", cliente.CEP);
+                        cmd.Parameters.AddWithValue("@CidadeId", cliente.CidadeId);
+                        cmd.Parameters.AddWithValue("@Tipo", cliente.Tipo);
+                        cmd.Parameters.AddWithValue("@Genero", cliente.Genero);
+                        cmd.Parameters.AddWithValue("@IdCondicao", cliente.IdCondicao);
                         cmd.Parameters.AddWithValue("@Ativo", cliente.Ativo);
-                        cmd.Parameters.AddWithValue("@DataNascimento", cliente.DataNascimento ?? (object)DBNull.Value);
-                        cmd.Parameters.AddWithValue("@DataAlteracao", cliente.DataAlteracao ?? DateTime.Now);
-
-                        if (cliente.Id > 0)
-                        {
-                            cmd.Parameters.AddWithValue("@Id", cliente.Id);
-                        }
-                        else
-                        {
-                            cmd.Parameters.AddWithValue("@DataCadastro", cliente.DataCadastro ?? DateTime.Now);
-                        }
-
+                        cmd.Parameters.AddWithValue("@DataNascimento", cliente.DataNascimento);
+                        cmd.Parameters.AddWithValue("@DataCadastro", cliente.DataCadastro);
+                        cmd.Parameters.AddWithValue("@DataAlteracao", cliente.DataAlteracao);
+                        
                         cmd.ExecuteNonQuery();
                     }
                 }
@@ -88,7 +81,6 @@ namespace Projeto.DAO
             {
                 conn.Open();
                 string query = "DELETE FROM Clientes WHERE Id = @Id";
-
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@Id", id);
@@ -103,47 +95,27 @@ namespace Projeto.DAO
             {
                 conn.Open();
                 string query = @"
-                SELECT c.Id, c.Cliente, c.CpfCnpj, c.Rg, c.Telefone, c.Email, c.Endereco, c.NumeroEndereco,
-                       c.Complemento, c.Bairro, c.Cep, c.CidadeId, ci.Cidade AS NomeCidade,
-                       c.Tipo, c.Genero, c.IdCondicaoPagamento, cp.Descricao AS DescricaoCondicao, c.Ativo,
-                       c.DataNascimento, c.DataCadastro, c.DataAlteracao
-                FROM Clientes c
-                LEFT JOIN Cidades ci ON c.CidadeId = ci.Id
-                LEFT JOIN CondicoesPagamento cp ON c.IdCondicaoPagamento = cp.Id
-                WHERE c.Id = @Id";
+                    SELECT 
+                        cl.*,
+                        c.Id AS CidadeObjId, c.Cidade AS CidadeObjNome,
+                        e.Id AS EstadoObjId, e.Estado AS EstadoObjNome, e.UF,
+                        p.Id AS PaisObjId, p.Pais AS PaisObjNome,
+                        cp.Id as CondicaoObjId, cp.Descricao as CondicaoObjDescricao
+                    FROM Clientes cl
+                    LEFT JOIN Cidades c ON cl.CidadeId = c.Id
+                    LEFT JOIN Estados e ON c.EstadoId = e.Id
+                    LEFT JOIN Paises p ON e.PaisId = p.Id
+                    LEFT JOIN CondicoesPagamento cp ON cl.IdCondicaoPagamento = cp.Id
+                    WHERE cl.Id = @Id";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@Id", id);
-
                     using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
                         if (reader.Read())
                         {
-                            return new Cliente
-                            {
-                                Id = reader.GetInt32("Id"),
-                                Nome = reader.GetString("Cliente"),
-                                CPF_CNPJ = reader.GetString("CpfCnpj"),
-                                Rg = reader.IsDBNull(reader.GetOrdinal("Rg")) ? null : reader.GetString("Rg"),
-                                Telefone = reader.IsDBNull(reader.GetOrdinal("Telefone")) ? null : reader.GetString("Telefone"),
-                                Email = reader.IsDBNull(reader.GetOrdinal("Email")) ? null : reader.GetString("Email"),
-                                Endereco = reader.IsDBNull(reader.GetOrdinal("Endereco")) ? null : reader.GetString("Endereco"),
-                                NumeroEndereco = reader.IsDBNull(reader.GetOrdinal("NumeroEndereco")) ? (int?)null : reader.GetInt32("NumeroEndereco"),
-                                Complemento = reader.IsDBNull(reader.GetOrdinal("Complemento")) ? null : reader.GetString("Complemento"),
-                                Bairro = reader.IsDBNull(reader.GetOrdinal("Bairro")) ? null : reader.GetString("Bairro"),
-                                CEP = reader.IsDBNull(reader.GetOrdinal("Cep")) ? null : reader.GetString("Cep"),
-                                CidadeId = reader.IsDBNull(reader.GetOrdinal("CidadeId")) ? (int?)null : reader.GetInt32("CidadeId"),
-                                NomeCidade = reader.IsDBNull(reader.GetOrdinal("NomeCidade")) ? null : reader.GetString("NomeCidade"),
-                                Tipo = reader.GetString("Tipo"),
-                                Genero = reader.IsDBNull(reader.GetOrdinal("Genero")) ? null : reader.GetString("Genero"),
-                                IdCondicao = reader.IsDBNull(reader.GetOrdinal("IdCondicaoPagamento")) ? (int?)null : reader.GetInt32("IdCondicaoPagamento"),
-                                DescricaoCondicao = reader.IsDBNull(reader.GetOrdinal("DescricaoCondicao")) ? null : reader.GetString("DescricaoCondicao"),
-                                Ativo = reader.GetBoolean("Ativo"),
-                                DataNascimento = reader.IsDBNull(reader.GetOrdinal("DataNascimento")) ? (DateTime?)null : reader.GetDateTime("DataNascimento"),
-                                DataCadastro = reader.IsDBNull(reader.GetOrdinal("DataCadastro")) ? (DateTime?)null : reader.GetDateTime("DataCadastro"),
-                                DataAlteracao = reader.IsDBNull(reader.GetOrdinal("DataAlteracao")) ? (DateTime?)null : reader.GetDateTime("DataAlteracao")
-                            };
+                            return MontarObjetoCliente(reader);
                         }
                     }
                 }
@@ -151,21 +123,25 @@ namespace Projeto.DAO
             return null;
         }
 
-        public List<Cliente> ListarClientes()
+        public List<Cliente> ListarClientes() // Corrigido nome do método
         {
             List<Cliente> lista = new List<Cliente>();
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
                 string query = @"
-                SELECT c.Id, c.Cliente, c.CpfCnpj, c.Rg, c.Telefone, c.Email, c.Endereco, c.NumeroEndereco,
-                       c.Complemento, c.Bairro, c.Cep, c.CidadeId, ci.Cidade AS NomeCidade,
-                       c.Tipo, c.Genero, c.IdCondicaoPagamento, cp.Descricao AS DescricaoCondicao, c.Ativo,
-                       c.DataNascimento, c.DataCadastro, c.DataAlteracao
-                FROM Clientes c
-                LEFT JOIN Cidades ci ON c.CidadeId = ci.Id
-                LEFT JOIN CondicoesPagamento cp ON c.IdCondicaoPagamento = cp.Id
-                ORDER BY c.Id";
+                    SELECT 
+                        cl.*,
+                        c.Id AS CidadeObjId, c.Cidade AS CidadeObjNome,
+                        e.Id AS EstadoObjId, e.Estado AS EstadoObjNome, e.UF,
+                        p.Id AS PaisObjId, p.Pais AS PaisObjNome,
+                        cp.Id as CondicaoObjId, cp.Descricao as CondicaoObjDescricao
+                    FROM Clientes cl
+                    LEFT JOIN Cidades c ON cl.CidadeId = c.Id
+                    LEFT JOIN Estados e ON c.EstadoId = e.Id
+                    LEFT JOIN Paises p ON e.PaisId = p.Id
+                    LEFT JOIN CondicoesPagamento cp ON cl.IdCondicaoPagamento = cp.Id
+                    ORDER BY cl.Id";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
@@ -173,35 +149,85 @@ namespace Projeto.DAO
                     {
                         while (reader.Read())
                         {
-                            lista.Add(new Cliente
-                            {
-                                Id = reader.GetInt32("Id"),
-                                Nome = reader.GetString("Cliente"),
-                                CPF_CNPJ = reader.GetString("CpfCnpj"),
-                                Rg = reader.IsDBNull(reader.GetOrdinal("Rg")) ? null : reader.GetString("Rg"),
-                                Telefone = reader.IsDBNull(reader.GetOrdinal("Telefone")) ? null : reader.GetString("Telefone"),
-                                Email = reader.IsDBNull(reader.GetOrdinal("Email")) ? null : reader.GetString("Email"),
-                                Endereco = reader.IsDBNull(reader.GetOrdinal("Endereco")) ? null : reader.GetString("Endereco"),
-                                NumeroEndereco = reader.IsDBNull(reader.GetOrdinal("NumeroEndereco")) ? (int?)null : reader.GetInt32("NumeroEndereco"),
-                                Complemento = reader.IsDBNull(reader.GetOrdinal("Complemento")) ? null : reader.GetString("Complemento"),
-                                Bairro = reader.IsDBNull(reader.GetOrdinal("Bairro")) ? null : reader.GetString("Bairro"),
-                                CEP = reader.IsDBNull(reader.GetOrdinal("Cep")) ? null : reader.GetString("Cep"),
-                                CidadeId = reader.IsDBNull(reader.GetOrdinal("CidadeId")) ? (int?)null : reader.GetInt32("CidadeId"),
-                                NomeCidade = reader.IsDBNull(reader.GetOrdinal("NomeCidade")) ? null : reader.GetString("NomeCidade"),
-                                Tipo = reader.GetString("Tipo"),
-                                Genero = reader.IsDBNull(reader.GetOrdinal("Genero")) ? null : reader.GetString("Genero"),
-                                IdCondicao = reader.IsDBNull(reader.GetOrdinal("IdCondicaoPagamento")) ? (int?)null : reader.GetInt32("IdCondicaoPagamento"),
-                                DescricaoCondicao = reader.IsDBNull(reader.GetOrdinal("DescricaoCondicao")) ? null : reader.GetString("DescricaoCondicao"),
-                                Ativo = reader.GetBoolean("Ativo"),
-                                DataNascimento = reader.IsDBNull(reader.GetOrdinal("DataNascimento")) ? (DateTime?)null : reader.GetDateTime("DataNascimento"),
-                                DataCadastro = reader.IsDBNull(reader.GetOrdinal("DataCadastro")) ? (DateTime?)null : reader.GetDateTime("DataCadastro"),
-                                DataAlteracao = reader.IsDBNull(reader.GetOrdinal("DataAlteracao")) ? (DateTime?)null : reader.GetDateTime("DataAlteracao")
-                            });
+                            lista.Add(MontarObjetoCliente(reader));
                         }
                     }
                 }
             }
             return lista;
+        }
+
+        private Cliente MontarObjetoCliente(MySqlDataReader reader)
+        {
+            Pais pais = null;
+            if (reader["PaisObjId"] != DBNull.Value)
+            {
+                pais = new Pais
+                {
+                    Id = Convert.ToInt32(reader["PaisObjId"]),
+                    NomePais = Convert.ToString(reader["PaisObjNome"])
+                };
+            }
+            
+            Estado estado = null;
+            if (reader["EstadoObjId"] != DBNull.Value)
+            {
+                estado = new Estado
+                {
+                    Id = Convert.ToInt32(reader["EstadoObjId"]),
+                    NomeEstado = Convert.ToString(reader["EstadoObjNome"]),
+                    UF = Convert.ToString(reader["UF"]),
+                    oPais = pais
+                };
+            }
+
+            Cidade cidade = null;
+            if (reader["CidadeObjId"] != DBNull.Value)
+            {
+                cidade = new Cidade
+                {
+                    Id = Convert.ToInt32(reader["CidadeObjId"]),
+                    NomeCidade = Convert.ToString(reader["CidadeObjNome"]),
+                    oEstado = estado
+                };
+            }
+
+            CondicaoPagamento condicao = null;
+            if (reader["CondicaoObjId"] != DBNull.Value)
+            {
+                condicao = new CondicaoPagamento
+                {
+                    Id = Convert.ToInt32(reader["CondicaoObjId"]),
+                    Descricao = Convert.ToString(reader["CondicaoObjDescricao"])
+                };
+            }
+
+            var cliente = new Cliente
+            {
+                Id = Convert.ToInt32(reader["Id"]),
+                Nome = Convert.ToString(reader["Cliente"]),
+                CPF_CNPJ = Convert.ToString(reader["CpfCnpj"]),
+                Rg = reader["Rg"] == DBNull.Value ? null : Convert.ToString(reader["Rg"]),
+                Telefone = reader["Telefone"] == DBNull.Value ? null : Convert.ToString(reader["Telefone"]),
+                Email = reader["Email"] == DBNull.Value ? null : Convert.ToString(reader["Email"]),
+                Endereco = reader["Endereco"] == DBNull.Value ? null : Convert.ToString(reader["Endereco"]),
+                NumeroEndereco = reader["NumeroEndereco"] == DBNull.Value ? (int?)null : Convert.ToInt32(reader["NumeroEndereco"]),
+                Complemento = reader["Complemento"] == DBNull.Value ? null : Convert.ToString(reader["Complemento"]),
+                Bairro = reader["Bairro"] == DBNull.Value ? null : Convert.ToString(reader["Bairro"]),
+                CEP = reader["Cep"] == DBNull.Value ? null : Convert.ToString(reader["Cep"]),
+                Tipo = Convert.ToString(reader["Tipo"]),
+                Genero = reader["Genero"] == DBNull.Value ? null : Convert.ToString(reader["Genero"]),
+                IdCondicao = reader["IdCondicaoPagamento"] == DBNull.Value ? (int?)null : Convert.ToInt32(reader["IdCondicaoPagamento"]),
+                Ativo = Convert.ToBoolean(reader["Ativo"]),
+                DataNascimento = reader["DataNascimento"] == DBNull.Value ? (DateTime?)null : Convert.ToDateTime(reader["DataNascimento"]),
+                DataCadastro = reader["DataCadastro"] == DBNull.Value ? (DateTime?)null : Convert.ToDateTime(reader["DataCadastro"]),
+                DataAlteracao = reader["DataAlteracao"] == DBNull.Value ? (DateTime?)null : Convert.ToDateTime(reader["DataAlteracao"]),
+                CidadeId = reader["CidadeId"] == DBNull.Value ? (int?)null : Convert.ToInt32(reader["CidadeId"]),
+                oCidade = cidade,
+                //oCondicaoPagamento = condicao
+            };
+
+            return cliente;
         }
     }
 }

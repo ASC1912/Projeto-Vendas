@@ -1,22 +1,39 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.Json.Serialization;
 
 namespace Projeto.Models
 {
     public class Funcionario : Pessoa
     {
-        public string Cargo { get; set; }
-        public decimal Salario { get; set; }
-        public string Rg { get; set; }
+       
+        [JsonPropertyName("funcionario")]
+        public override string Nome { get; set; }
+
+        [JsonPropertyName("apelido")]
         public string Apelido { get; set; }
+
+        [JsonPropertyName("genero")]
         public string Genero { get; set; }
-        public string Matricula { get; set; }
-        public DateTime? DataAdmissao { get; set; }
-        public DateTime? DataDemissao { get; set; }
+
+        [JsonPropertyName("rg")]
+        public string Rg { get; set; }
+
+        [JsonPropertyName("dataNascimento")]
         public DateTime? DataNascimento { get; set; }
 
+        [JsonPropertyName("matricula")]
+        public string Matricula { get; set; }
+
+        [JsonPropertyName("cargo")]
+        public string Cargo { get; set; }
+
+        [JsonPropertyName("salario")]
+        public decimal Salario { get; set; }
+
+        [JsonPropertyName("dataAdmissao")]
+        public DateTime? DataAdmissao { get; set; }
+
+        [JsonPropertyName("dataDemissao")]
+        public DateTime? DataDemissao { get; set; }
     }
 }

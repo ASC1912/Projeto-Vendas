@@ -107,10 +107,13 @@ namespace Projeto.Views
                     {
                         Id = id,
                         NomeCidade = nome,
-                        EstadoId = estadoSelecionadoId,
                         Ativo = !chkInativo.Checked,
                         DataCadastro = dataCriacao,
-                        DataAlteracao = dataModificacao
+                        DataAlteracao = dataModificacao,
+
+                        EstadoId = estadoSelecionadoId,
+
+                        oEstado = new Estado { Id = estadoSelecionadoId }
                     };
 
                     await controller.Salvar(cidade);

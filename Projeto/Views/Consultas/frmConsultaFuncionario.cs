@@ -10,7 +10,6 @@ namespace Projeto.Views
     public partial class frmConsultaFuncionario : Projeto.frmBaseConsulta
     {
         private FuncionarioController controller = new FuncionarioController();
-        private CidadeController cidadeController = new CidadeController(); 
 
         public frmConsultaFuncionario() : base()
         {
@@ -18,19 +17,19 @@ namespace Projeto.Views
             this.Shown += frmConsultaFuncionario_Shown;
         }
 
-        private void btnIncluir_Click(object sender, EventArgs e)
+        private async void btnIncluir_Click(object sender, EventArgs e)
         {
             frmCadastroFuncionario formCadastroFuncionario = new frmCadastroFuncionario();
-            formCadastroFuncionario.FormClosed += (s, args) => CarregarFuncionarios();
+            formCadastroFuncionario.FormClosed += async (s, args) => await CarregarFuncionarios();
             formCadastroFuncionario.ShowDialog();
         }
 
-        private void CarregarFuncionarios()
+        private async Task CarregarFuncionarios()
         {
             try
             {
                 listView1.Items.Clear();
-                List<Funcionario> funcionarios = controller.ListarFuncionario();
+                List<Funcionario> funcionarios = await controller.ListarFuncionarios();
 
                 foreach (var funcionario in funcionarios)
                 {
@@ -44,7 +43,7 @@ namespace Projeto.Views
                     item.SubItems.Add(funcionario.Bairro);
                     item.SubItems.Add(funcionario.Complemento);
                     item.SubItems.Add(funcionario.CEP);
-                    item.SubItems.Add(funcionario.NomeCidade ?? "-");
+                    item.SubItems.Add(funcionario.NomeCidade ?? "-"); 
                     item.SubItems.Add(funcionario.Email);
                     item.SubItems.Add(funcionario.Telefone);
                     item.SubItems.Add(funcionario.Matricula);
@@ -66,7 +65,7 @@ namespace Projeto.Views
             }
         }
 
-        private void btnPesquisar_Click(object sender, EventArgs e)
+        private async void btnPesquisar_Click(object sender, EventArgs e)
         {
             try
             {
@@ -75,11 +74,11 @@ namespace Projeto.Views
 
                 if (string.IsNullOrEmpty(texto))
                 {
-                    CarregarFuncionarios();
+                    await CarregarFuncionarios();
                 }
                 else if (int.TryParse(texto, out int id))
                 {
-                    Funcionario funcionario = controller.BuscarPorId(id);
+                    Funcionario funcionario = await controller.BuscarPorId(id);
 
                     if (funcionario != null)
                     {
@@ -105,7 +104,6 @@ namespace Projeto.Views
                         item.SubItems.Add(funcionario.DataDemissao?.ToShortDateString() ?? "");
                         item.SubItems.Add(funcionario.DataNascimento?.ToShortDateString() ?? "");
                         item.SubItems.Add(funcionario.Ativo ? "Ativo" : "Inativo");
-
                         listView1.Items.Add(item);
                     }
                     else
@@ -131,28 +129,24 @@ namespace Projeto.Views
                 var itemSelecionado = listView1.SelectedItems[0];
                 int id = int.Parse(itemSelecionado.SubItems[0].Text);
 
-                Funcionario funcionario = controller.BuscarPorId(id); 
+                Funcionario funcionario = await controller.BuscarPorId(id);
 
                 if (funcionario != null)
                 {
-                    Cidade cidade = null;
-                    if (funcionario.CidadeId.HasValue)
-                    {
-                        cidade = await cidadeController.BuscarPorId(funcionario.CidadeId.Value);
-                    }
-
                     var formCadastro = new frmCadastroFuncionario();
                     formCadastro.modoEdicao = true;
                     formCadastro.CarregarFuncionario(
                         funcionario.Id, funcionario.Nome, funcionario.Apelido, funcionario.CPF_CNPJ, funcionario.Telefone, funcionario.Email,
                         funcionario.Endereco, funcionario.NumeroEndereco ?? 0, funcionario.Bairro, funcionario.Complemento, funcionario.CEP,
                         funcionario.Cargo, funcionario.Salario, funcionario.Matricula, funcionario.Genero, funcionario.Tipo,
-                        cidade?.NomeCidade ?? "Não encontrado", funcionario.CidadeId ?? 0, funcionario.Ativo,
+                        funcionario.NomeCidade, // A propriedade de atalho já traz o nome correto
+                        funcionario.CidadeId ?? 0,
+                        funcionario.Ativo,
                         funcionario.DataAdmissao, funcionario.DataDemissao, funcionario.DataNascimento, funcionario.Rg,
                         funcionario.DataCadastro, funcionario.DataAlteracao
                     );
 
-                    formCadastro.FormClosed += (s, args) => CarregarFuncionarios();
+                    formCadastro.FormClosed += async (s, args) => await CarregarFuncionarios();
                     formCadastro.ShowDialog();
                 }
                 else
@@ -173,26 +167,22 @@ namespace Projeto.Views
                 var itemSelecionado = listView1.SelectedItems[0];
                 int id = int.Parse(itemSelecionado.SubItems[0].Text);
 
-                Funcionario funcionario = controller.BuscarPorId(id); 
+                Funcionario funcionario = await controller.BuscarPorId(id);
 
                 if (funcionario != null)
                 {
-                    Cidade cidade = null;
-                    if (funcionario.CidadeId.HasValue)
-                    {
-                        cidade = await cidadeController.BuscarPorId(funcionario.CidadeId.Value);
-                    }
-
                     var formCadastro = new frmCadastroFuncionario { modoExclusao = true };
                     formCadastro.CarregarFuncionario(
                         funcionario.Id, funcionario.Nome, funcionario.Apelido, funcionario.CPF_CNPJ, funcionario.Telefone, funcionario.Email,
                         funcionario.Endereco, funcionario.NumeroEndereco ?? 0, funcionario.Bairro, funcionario.Complemento, funcionario.CEP,
                         funcionario.Cargo, funcionario.Salario, funcionario.Matricula, funcionario.Genero, funcionario.Tipo,
-                        cidade?.NomeCidade ?? "Não encontrado", funcionario.CidadeId ?? 0, funcionario.Ativo,
+                        funcionario.NomeCidade, // A propriedade de atalho já traz o nome correto
+                        funcionario.CidadeId ?? 0,
+                        funcionario.Ativo,
                         funcionario.DataAdmissao, funcionario.DataDemissao, funcionario.DataNascimento, funcionario.Rg,
                         funcionario.DataCadastro, funcionario.DataAlteracao
                     );
-                    formCadastro.FormClosed += (s, args) => CarregarFuncionarios();
+                    formCadastro.FormClosed += async (s, args) => await CarregarFuncionarios();
                     formCadastro.ShowDialog();
                 }
                 else
@@ -210,9 +200,9 @@ namespace Projeto.Views
         {
         }
 
-        private void frmConsultaFuncionario_Load(object sender, EventArgs e)
+        private async void frmConsultaFuncionario_Load(object sender, EventArgs e)
         {
-            CarregarFuncionarios();
+            await CarregarFuncionarios();
 
             foreach (ColumnHeader column in listView1.Columns)
             {

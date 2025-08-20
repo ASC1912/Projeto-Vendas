@@ -77,14 +77,57 @@ namespace Projeto.DAO
             }
         }
 
+        public List<Estado> ListarEstado()
+        {
+            List<Estado> lista = new List<Estado>();
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = @"SELECT 
+                                     e.Id, e.Estado AS NomeEstado, e.UF, e.PaisId, e.Ativo, e.DataCadastro, e.DataAlteracao,
+                                     p.Id AS PaisObjId, p.Pais AS PaisObjNome 
+                                 FROM Estados e
+                                 JOIN Paises p ON e.PaisId = p.Id
+                                 ORDER BY e.Id";
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var pais = new Pais
+                            {
+                                Id = reader.GetInt32("PaisObjId"),
+                                NomePais = reader.GetString("PaisObjNome")
+                            };
+
+                            var estado = new Estado
+                            {
+                                Id = reader.GetInt32("Id"),
+                                NomeEstado = reader.GetString("NomeEstado"),
+                                UF = reader.GetString("UF"),
+                                PaisId = reader.GetInt32("PaisId"),
+                                Ativo = reader.GetBoolean("Ativo"),
+                                DataCadastro = reader.IsDBNull(reader.GetOrdinal("DataCadastro")) ? (DateTime?)null : reader.GetDateTime("DataCadastro"),
+                                DataAlteracao = reader.IsDBNull(reader.GetOrdinal("DataAlteracao")) ? (DateTime?)null : reader.GetDateTime("DataAlteracao"),
+                                oPais = pais
+                            };
+                            lista.Add(estado);
+                        }
+                    }
+                }
+            }
+            return lista;
+        }
+
         public Estado BuscarPorId(int id)
         {
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
-                string query = @"SELECT e.Id, e.Estado, e.UF, e.PaisId, e.Ativo, 
-                                        e.DataCadastro, e.DataAlteracao, 
-                                        p.Pais AS PaisNome 
+                string query = @"SELECT 
+                                     e.Id, e.Estado AS NomeEstado, e.UF, e.PaisId, e.Ativo, e.DataCadastro, e.DataAlteracao,
+                                     p.Id AS PaisObjId, p.Pais AS PaisObjNome 
                                  FROM Estados e
                                  JOIN Paises p ON e.PaisId = p.Id
                                  WHERE e.Id = @Id";
@@ -92,63 +135,32 @@ namespace Projeto.DAO
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@Id", id);
-
                     using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
                         if (reader.Read())
                         {
+                            var pais = new Pais
+                            {
+                                Id = reader.GetInt32("PaisObjId"),
+                                NomePais = reader.GetString("PaisObjNome")
+                            };
+
                             return new Estado
                             {
                                 Id = reader.GetInt32("Id"),
-                                NomeEstado = reader.GetString("Estado"),
+                                NomeEstado = reader.GetString("NomeEstado"),
                                 UF = reader.GetString("UF"),
                                 PaisId = reader.GetInt32("PaisId"),
-                                PaisNome = reader.GetString("PaisNome"),
                                 Ativo = reader.GetBoolean("Ativo"),
                                 DataCadastro = reader.IsDBNull(reader.GetOrdinal("DataCadastro")) ? (DateTime?)null : reader.GetDateTime("DataCadastro"),
-                                DataAlteracao = reader.IsDBNull(reader.GetOrdinal("DataAlteracao")) ? (DateTime?)null : reader.GetDateTime("DataAlteracao")
+                                DataAlteracao = reader.IsDBNull(reader.GetOrdinal("DataAlteracao")) ? (DateTime?)null : reader.GetDateTime("DataAlteracao"),
+                                oPais = pais
                             };
                         }
                     }
                 }
             }
             return null;
-        }
-
-        public List<Estado> ListarEstado()
-        {
-            List<Estado> lista = new List<Estado>();
-
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
-            {
-                conn.Open();
-                string query = @"
-                    SELECT e.Id, e.Estado, e.UF, e.PaisId, e.Ativo, p.Pais AS PaisNome 
-                    FROM Estados e
-                    JOIN Paises p ON e.PaisId = p.Id
-                    ORDER BY e.Id";
-
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                {
-                    using (MySqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            lista.Add(new Estado
-                            {
-                                Id = reader.GetInt32("Id"),
-                                NomeEstado = reader.GetString("Estado"),
-                                UF = reader.GetString("UF"),
-                                PaisId = reader.GetInt32("PaisId"),
-                                PaisNome = reader.GetString("PaisNome"),
-                                Ativo = reader.GetBoolean("Ativo"),
-                            });
-                        }
-                    }
-                }
-            }
-
-            return lista;
         }
     }
 }

@@ -2,6 +2,7 @@
 using Projeto.Controller;
 using Projeto.Models;
 using Projeto.Views;
+using Projeto.Views.Cadastros;
 using Projeto.Views.Consultas;
 using System;
 using System.Collections.Generic;
@@ -118,6 +119,12 @@ namespace Projeto
         {
             frmConsultaVeiculo formConsultaVeiculo = new frmConsultaVeiculo();
             formConsultaVeiculo.ShowDialog();
+        }
+
+        private void comprasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmCadastroCompras2 formCompra = new frmCadastroCompras2();
+            formCompra.ShowDialog();
         }
     }
 }
