@@ -1,45 +1,105 @@
-﻿using Projeto.Models;
-using Projeto.DAO;
-using System;
+﻿using Projeto.DAO;
+using Projeto.Models;
+using Projeto.Services;
+using Projeto.Services.Interfaces;
+using Projeto.Utils;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Linq; 
 using System.Threading.Tasks;
 
 namespace Projeto.Controller
 {
     internal class FormaPagamentoController
     {
-        private DAOFormaPagamento dao = new DAOFormaPagamento();
+        private readonly bool _useApi;
+        private readonly IFormaPagamentoApiService _apiService;
+        private readonly DAOFormaPagamento _dao;
 
-        public void Salvar(FormaPagamento forma)
+        public FormaPagamentoController()
         {
-            dao.Salvar(forma);
+            _useApi = ConfigHelper.UseApi();
+            if (_useApi)
+            {
+                _apiService = new FormaPagamentoApiService();
+            }
+            else
+            {
+                _dao = new DAOFormaPagamento();
+            }
         }
 
-        public List<FormaPagamento> ListarFormaPagamento()
+        public Task Salvar(FormaPagamento forma)
         {
-            return dao.ListarFormaPagamento();
+            if (_useApi)
+            {
+                return _apiService.SaveFormaPagamentoAsync(forma);
+            }
+            else
+            {
+                return Task.Run(() => _dao.Salvar(forma));
+            }
         }
 
-        public FormaPagamento BuscarPorId(int id)
+        public Task<List<FormaPagamento>> ListarFormaPagamento()
         {
-            return dao.BuscarPorId(id);
+            if (_useApi)
+            {
+                return _apiService.GetFormasPagamentoAsync();
+            }
+            else
+            {
+                return Task.FromResult(_dao.ListarFormaPagamento());
+            }
         }
 
-        public void Excluir(int id)
+        public Task<FormaPagamento> BuscarPorId(int id)
         {
-            dao.Excluir(id);
+            if (_useApi)
+            {
+                return _apiService.GetFormaPagamentoByIdAsync(id);
+            }
+            else
+            {
+                return Task.FromResult(_dao.BuscarPorId(id));
+            }
         }
 
-        public string ObterDescricaoFormaPagamento(int id)
+        public Task Excluir(int id)
         {
-            return dao.ObterDescricaoFormaPagamento(id);
+            if (_useApi)
+            {
+                return _apiService.DeleteFormaPagamentoAsync(id);
+            }
+            else
+            {
+                return Task.Run(() => _dao.Excluir(id));
+            }
         }
 
-        public int ObterIdFormaPagamento(string descricao)
+        public async Task<string> ObterDescricaoFormaPagamento(int id)
         {
-            return dao.ObterIdFormaPagamento(descricao);
+            if (_useApi)
+            {
+                var lista = await ListarFormaPagamento();
+                return lista.FirstOrDefault(f => f.Id == id)?.Descricao;
+            }
+            else
+            {
+                return _dao.ObterDescricaoFormaPagamento(id);
+            }
+        }
+
+        public async Task<int> ObterIdFormaPagamento(string descricao)
+        {
+            if (_useApi)
+            {
+                var lista = await ListarFormaPagamento();
+                return lista.FirstOrDefault(f => f.Descricao.Equals(descricao, System.StringComparison.OrdinalIgnoreCase))?.Id ?? 0;
+            }
+            else
+            {
+                return _dao.ObterIdFormaPagamento(descricao);
+            }
         }
     }
 }

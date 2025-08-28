@@ -2,7 +2,7 @@
 using Projeto.Models;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks; 
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Projeto.Views
@@ -20,16 +20,18 @@ namespace Projeto.Views
         private void btnIncluir_Click(object sender, EventArgs e)
         {
             frmCadastroFornecedor formCadastroFornecedor = new frmCadastroFornecedor();
-            formCadastroFornecedor.FormClosed += (s, args) => CarregarFornecedores();
+            // Atualizado para chamar a versão assíncrona do método de carregar
+            formCadastroFornecedor.FormClosed += async (s, args) => await CarregarFornecedores();
             formCadastroFornecedor.ShowDialog();
         }
 
-        private void CarregarFornecedores()
+        private async Task CarregarFornecedores()
         {
             try
             {
                 listView1.Items.Clear();
-                List<Fornecedor> fornecedores = controller.ListarFornecedor();
+                // A chamada ao controller agora usa 'await'
+                List<Fornecedor> fornecedores = await controller.ListarFornecedor();
 
                 foreach (var fornecedor in fornecedores)
                 {
@@ -37,12 +39,12 @@ namespace Projeto.Views
                     item.SubItems.Add(fornecedor.Tipo);
                     item.SubItems.Add(fornecedor.Nome);
                     item.SubItems.Add(fornecedor.Endereco);
-                    item.SubItems.Add(fornecedor.NumeroEndereco.ToString());
+                    item.SubItems.Add(fornecedor.NumeroEndereco?.ToString() ?? "");
                     item.SubItems.Add(fornecedor.Bairro);
                     item.SubItems.Add(fornecedor.Complemento);
                     item.SubItems.Add(fornecedor.CEP);
-                    item.SubItems.Add(fornecedor.NomeCidade);
-                    item.SubItems.Add(fornecedor.DescricaoCondicao);
+                    item.SubItems.Add(fornecedor.NomeCidade ?? "");
+                    item.SubItems.Add(fornecedor.DescricaoCondicao ?? "");
                     item.SubItems.Add(fornecedor.Telefone);
                     item.SubItems.Add(fornecedor.Email);
                     item.SubItems.Add(fornecedor.CPF_CNPJ);
@@ -58,7 +60,7 @@ namespace Projeto.Views
             }
         }
 
-        private void btnPesquisar_Click(object sender, EventArgs e)
+        private async void btnPesquisar_Click(object sender, EventArgs e)
         {
             try
             {
@@ -67,11 +69,11 @@ namespace Projeto.Views
 
                 if (string.IsNullOrEmpty(texto))
                 {
-                    CarregarFornecedores();
+                    await CarregarFornecedores();
                 }
                 else if (int.TryParse(texto, out int id))
                 {
-                    Fornecedor fornecedor = controller.BuscarPorId(id);
+                    Fornecedor fornecedor = await controller.BuscarPorId(id);
 
                     if (fornecedor != null)
                     {
@@ -79,12 +81,12 @@ namespace Projeto.Views
                         item.SubItems.Add(fornecedor.Tipo);
                         item.SubItems.Add(fornecedor.Nome);
                         item.SubItems.Add(fornecedor.Endereco);
-                        item.SubItems.Add(fornecedor.NumeroEndereco.ToString());
+                        item.SubItems.Add(fornecedor.NumeroEndereco?.ToString() ?? "");
                         item.SubItems.Add(fornecedor.Bairro);
                         item.SubItems.Add(fornecedor.Complemento);
                         item.SubItems.Add(fornecedor.CEP);
-                        item.SubItems.Add(fornecedor.NomeCidade);
-                        item.SubItems.Add(fornecedor.DescricaoCondicao);
+                        item.SubItems.Add(fornecedor.NomeCidade ?? "");
+                        item.SubItems.Add(fornecedor.DescricaoCondicao ?? "");
                         item.SubItems.Add(fornecedor.Telefone);
                         item.SubItems.Add(fornecedor.Email);
                         item.SubItems.Add(fornecedor.CPF_CNPJ);
@@ -116,28 +118,21 @@ namespace Projeto.Views
                 var itemSelecionado = listView1.SelectedItems[0];
                 int id = int.Parse(itemSelecionado.SubItems[0].Text);
 
-                Fornecedor fornecedor = controller.BuscarPorId(id); 
+                Fornecedor fornecedor = await controller.BuscarPorId(id);
 
                 if (fornecedor != null)
                 {
-                    Cidade cidade = null;
-                    if (fornecedor.CidadeId.HasValue)
-                    {
-                        cidade = await cidadeController.BuscarPorId(fornecedor.CidadeId.Value);
-                    }
-
-                    var formCadastro = new frmCadastroFornecedor();
-                    formCadastro.modoEdicao = true;
+                    var formCadastro = new frmCadastroFornecedor { modoEdicao = true };
                     formCadastro.CarregarFornecedor(
                         fornecedor.Id, fornecedor.Nome, fornecedor.CPF_CNPJ, fornecedor.Telefone, fornecedor.Email, fornecedor.Endereco,
                         fornecedor.NumeroEndereco ?? 0, fornecedor.Bairro, fornecedor.Complemento, fornecedor.CEP,
                         fornecedor.InscricaoEstadual, fornecedor.InscricaoEstadualSubTrib, fornecedor.Tipo,
-                        cidade?.NomeCidade ?? "Não encontrado", fornecedor.CidadeId ?? 0,
+                        fornecedor.NomeCidade ?? "Não encontrado", fornecedor.CidadeId ?? 0,
                         fornecedor.DescricaoCondicao ?? "Não encontrada", fornecedor.IdCondicao ?? 0,
                         fornecedor.Ativo, fornecedor.DataCadastro, fornecedor.DataAlteracao
                     );
 
-                    formCadastro.FormClosed += (s, args) => CarregarFornecedores();
+                    formCadastro.FormClosed += async (s, args) => await CarregarFornecedores();
                     formCadastro.ShowDialog();
                 }
                 else
@@ -158,27 +153,21 @@ namespace Projeto.Views
                 var itemSelecionado = listView1.SelectedItems[0];
                 int id = int.Parse(itemSelecionado.SubItems[0].Text);
 
-                Fornecedor fornecedor = controller.BuscarPorId(id); 
+                Fornecedor fornecedor = await controller.BuscarPorId(id);
 
                 if (fornecedor != null)
                 {
-                    Cidade cidade = null;
-                    if (fornecedor.CidadeId.HasValue)
-                    {
-                        cidade = await cidadeController.BuscarPorId(fornecedor.CidadeId.Value);
-                    }
-
                     var formCadastro = new frmCadastroFornecedor { modoExclusao = true };
                     formCadastro.CarregarFornecedor(
                         fornecedor.Id, fornecedor.Nome, fornecedor.CPF_CNPJ, fornecedor.Telefone, fornecedor.Email, fornecedor.Endereco,
                         fornecedor.NumeroEndereco ?? 0, fornecedor.Bairro, fornecedor.Complemento, fornecedor.CEP,
                         fornecedor.InscricaoEstadual, fornecedor.InscricaoEstadualSubTrib, fornecedor.Tipo,
-                        cidade?.NomeCidade ?? "Não encontrado", fornecedor.CidadeId ?? 0,
+                        fornecedor.NomeCidade ?? "Não encontrado", fornecedor.CidadeId ?? 0,
                         fornecedor.DescricaoCondicao ?? "Não encontrada", fornecedor.IdCondicao ?? 0,
                         fornecedor.Ativo, fornecedor.DataCadastro, fornecedor.DataAlteracao
                     );
 
-                    formCadastro.FormClosed += (s, args) => CarregarFornecedores();
+                    formCadastro.FormClosed += async (s, args) => await CarregarFornecedores();
                     formCadastro.ShowDialog();
                 }
                 else
@@ -192,9 +181,9 @@ namespace Projeto.Views
             }
         }
 
-        private void frmConsultaFornecedor_Load(object sender, EventArgs e)
+        private async void frmConsultaFornecedor_Load(object sender, EventArgs e)
         {
-            CarregarFornecedores();
+            await CarregarFornecedores();
 
             foreach (ColumnHeader column in listView1.Columns)
             {

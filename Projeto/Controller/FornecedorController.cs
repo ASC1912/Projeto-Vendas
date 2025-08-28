@@ -1,32 +1,78 @@
 ﻿using Projeto.DAO;
 using Projeto.Models;
-using System;
+using Projeto.Services;
+using Projeto.Services.Interfaces;
+using Projeto.Utils;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Projeto.Controller
 {
     internal class FornecedorController
     {
-        private DAOFornecedor dao = new DAOFornecedor();
+        private readonly bool _useApi;
+        private readonly IFornecedorApiService _apiService;
+        private readonly DAOFornecedor _dao;
 
-        public void Salvar(Fornecedor fornecedor)
+        public FornecedorController()
         {
-            dao.Salvar(fornecedor);
+            _useApi = ConfigHelper.UseApi();
+            if (_useApi)
+            {
+                _apiService = new FornecedorApiService();
+            }
+            else
+            {
+                _dao = new DAOFornecedor();
+            }
         }
-        public Fornecedor BuscarPorId(int id)
+
+        public Task Salvar(Fornecedor fornecedor)
         {
-            return dao.BuscarPorId(id);
+            if (_useApi)
+            {
+                return _apiService.SaveFornecedorAsync(fornecedor);
+            }
+            else
+            {
+                return Task.Run(() => _dao.Salvar(fornecedor));
+            }
         }
-        public List<Fornecedor> ListarFornecedor()
+
+        public Task<Fornecedor> BuscarPorId(int id)
         {
-            return dao.ListarFornecedores();
+            if (_useApi)
+            {
+                return _apiService.GetFornecedorByIdAsync(id);
+            }
+            else
+            {
+                return Task.FromResult(_dao.BuscarPorId(id));
+            }
         }
-        public void Excluir(int id)
+
+        public Task<List<Fornecedor>> ListarFornecedor()
         {
-            dao.Excluir(id);
+            if (_useApi)
+            {
+                return _apiService.GetFornecedoresAsync();
+            }
+            else
+            {
+                return Task.FromResult(_dao.ListarFornecedores());
+            }
+        }
+
+        public Task Excluir(int id)
+        {
+            if (_useApi)
+            {
+                return _apiService.DeleteFornecedorAsync(id);
+            }
+            else
+            {
+                return Task.Run(() => _dao.Excluir(id));
+            }
         }
     }
 }

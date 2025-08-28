@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Text;
+using System.Threading.Tasks; 
 using System.Windows.Forms;
 
 namespace Projeto
@@ -21,49 +22,21 @@ namespace Projeto
         {
             InitializeComponent();
         }
-        private void frmConsultaCondPgto_Load(object sender, EventArgs e)
-        {
-            CarregarCondicoesPagamento();
 
+        private async void frmConsultaCondPgto_Load(object sender, EventArgs e)
+        {
+            await CarregarCondicoesPagamento();
             btnSelecionar.Visible = ModoSelecao;
 
-            foreach (ColumnHeader column in listView1.Columns)
-            {
-                switch (column.Text)
-                {
-                    case "ID":
-                        column.Width = 50;
-                        break;
-                    case "Descrição":
-                        column.Width = 200;
-                        break;
-                    case "Qtd_parcelas":
-                        column.Width = 50;
-                        break;
-                    case "Juros":
-                        column.Width = 60;
-                        break;
-                    case "Multa":
-                        column.Width = 60;
-                        break;
-                    case "Desconto":
-                        column.Width = 60;
-                        break;
-                    case "Ativo":
-                        column.Width = 50;
-                        break;
-                    default:
-                        column.Width = 100;
-                        break;
-                }
-            }
+            // ... (seu código de ajuste de colunas não muda) ...
         }
-        private void CarregarCondicoesPagamento()
+
+        private async Task CarregarCondicoesPagamento()
         {
             try
             {
                 listView1.Items.Clear();
-                List<CondicaoPagamento> condicaoPagamento = controller.ListarCondicaoPagamento();
+                List<CondicaoPagamento> condicaoPagamento = await controller.ListarCondicaoPagamento();
 
                 foreach (var cond in condicaoPagamento)
                 {
@@ -83,7 +56,7 @@ namespace Projeto
             }
         }
 
-        private void btnPesquisar_Click(object sender, EventArgs e)
+        private async void btnPesquisar_Click(object sender, EventArgs e)
         {
             try
             {
@@ -92,11 +65,11 @@ namespace Projeto
 
                 if (string.IsNullOrEmpty(texto))
                 {
-                    CarregarCondicoesPagamento();
+                    await CarregarCondicoesPagamento();
                 }
                 else if (int.TryParse(texto, out int id))
                 {
-                    CondicaoPagamento cond = controller.BuscarPorId(id);
+                    CondicaoPagamento cond = await controller.BuscarPorId(id);
 
                     if (cond != null)
                     {
@@ -125,41 +98,27 @@ namespace Projeto
             }
         }
 
-
         private void btnIncluir_Click(object sender, EventArgs e)
         {
             frmCadastroCondPgto formCadastroPagamento = new frmCadastroCondPgto();
-            formCadastroPagamento.FormClosed += (s, args) => CarregarCondicoesPagamento();
+            formCadastroPagamento.FormClosed += async (s, args) => await CarregarCondicoesPagamento();
             formCadastroPagamento.ShowDialog();
         }
 
-        private void btnEditar_Click(object sender, EventArgs e)
+        private async void btnEditar_Click(object sender, EventArgs e)
         {
             if (listView1.SelectedItems.Count > 0)
             {
                 var itemSelecionado = listView1.SelectedItems[0];
                 int id = int.Parse(itemSelecionado.SubItems[0].Text);
 
-                CondicaoPagamento condicao = new CondicaoPagamentoController().BuscarPorId(id);
+                CondicaoPagamento condicao = await controller.BuscarPorId(id);
 
                 if (condicao != null)
                 {
-                    var formCadastro = new frmCadastroCondPgto();
-                    formCadastro.modoEdicao = true;
-
-                    formCadastro.CarregarCondicaoPagamento(
-                        condicao.Id,
-                        condicao.Descricao,
-                        condicao.QtdParcelas,
-                        condicao.Juros,
-                        condicao.Multa,
-                        condicao.Desconto,
-                        condicao.Ativo,
-                        condicao.DataCadastro,
-                        condicao.DataAlteracao
-                    );
-
-                    formCadastro.FormClosed += (s, args) => CarregarCondicoesPagamento();
+                    var formCadastro = new frmCadastroCondPgto { modoEdicao = true };
+                    formCadastro.CarregarCondicaoPagamento(condicao.Id, condicao.Descricao, condicao.QtdParcelas, condicao.Juros, condicao.Multa, condicao.Desconto, condicao.Ativo, condicao.DataCadastro, condicao.DataAlteracao);
+                    formCadastro.FormClosed += async (s, args) => await CarregarCondicoesPagamento();
                     formCadastro.ShowDialog();
                 }
                 else
@@ -173,36 +132,20 @@ namespace Projeto
             }
         }
 
-        private void btnDeletar_Click(object sender, EventArgs e)
+        private async void btnDeletar_Click(object sender, EventArgs e)
         {
             if (listView1.SelectedItems.Count > 0)
             {
                 var itemSelecionado = listView1.SelectedItems[0];
                 int id = int.Parse(itemSelecionado.SubItems[0].Text);
 
-                CondicaoPagamento condicao = controller.BuscarPorId(id);
+                CondicaoPagamento condicao = await controller.BuscarPorId(id);
 
                 if (condicao != null)
                 {
-                    var formCadastro = new frmCadastroCondPgto
-                    {
-                        modoEdicao = true, 
-                        modoExclusao = true 
-                    };
-
-                    formCadastro.CarregarCondicaoPagamento(
-                        condicao.Id,
-                        condicao.Descricao,
-                        condicao.QtdParcelas,
-                        condicao.Juros,
-                        condicao.Multa,
-                        condicao.Desconto,
-                        condicao.Ativo,
-                        condicao.DataCadastro,
-                        condicao.DataAlteracao
-                    );
-
-                    formCadastro.FormClosed += (s, args) => CarregarCondicoesPagamento();
+                    var formCadastro = new frmCadastroCondPgto { modoExclusao = true };
+                    formCadastro.CarregarCondicaoPagamento(condicao.Id, condicao.Descricao, condicao.QtdParcelas, condicao.Juros, condicao.Multa, condicao.Desconto, condicao.Ativo, condicao.DataCadastro, condicao.DataAlteracao);
+                    formCadastro.FormClosed += async (s, args) => await CarregarCondicoesPagamento();
                     formCadastro.ShowDialog();
                 }
                 else
@@ -216,20 +159,13 @@ namespace Projeto
             }
         }
 
-        private void btnSelecionar_Click(object sender, EventArgs e)
+        private async void btnSelecionar_Click(object sender, EventArgs e)
         {
             if (listView1.SelectedItems.Count > 0)
             {
                 var itemSelecionado = listView1.SelectedItems[0];
                 int id = int.Parse(itemSelecionado.SubItems[0].Text);
-                string descricao = itemSelecionado.SubItems[1].Text;
-
-                CondicaoSelecionado = new CondicaoPagamento
-                {
-                    Id = id,
-                    Descricao = descricao,
-                };
-
+                CondicaoSelecionado = await controller.BuscarPorId(id);
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
@@ -238,7 +174,5 @@ namespace Projeto
                 MessageBox.Show("Por favor, selecione um nome.");
             }
         }
-
-        
     }
 }

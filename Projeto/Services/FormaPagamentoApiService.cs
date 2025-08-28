@@ -11,12 +11,12 @@ using System.Windows.Forms;
 
 namespace Projeto.Services
 {
-    public class ClienteApiService : IClienteApiService
+    public class FormaPagamentoApiService : IFormaPagamentoApiService
     {
         private readonly HttpClient _httpClient;
-        private const string BaseUrl = "https://localhost:7170/api/";
+        private const string BaseUrl = "https://localhost:7170/api/"; 
 
-        public ClienteApiService()
+        public FormaPagamentoApiService()
         {
             var handler = new HttpClientHandler
             {
@@ -25,41 +25,40 @@ namespace Projeto.Services
             _httpClient = new HttpClient(handler) { BaseAddress = new Uri(BaseUrl) };
         }
 
-        public async Task<List<Cliente>> GetClientesAsync()
+        public async Task<List<FormaPagamento>> GetFormasPagamentoAsync()
         {
             try
             {
-                return await _httpClient.GetFromJsonAsync<List<Cliente>>("Clientes");
+                return await _httpClient.GetFromJsonAsync<List<FormaPagamento>>("FormasPagamento");
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Erro ao conectar com a API: " + ex.Message, "Erro de Conexão", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return new List<Cliente>();
+                return new List<FormaPagamento>();
             }
         }
-
-        public Task<Cliente> GetClienteByIdAsync(int id)
+        public Task<FormaPagamento> GetFormaPagamentoByIdAsync(int id)
         {
-            return _httpClient.GetFromJsonAsync<Cliente>($"Clientes/{id}");
+            return _httpClient.GetFromJsonAsync<FormaPagamento>($"FormasPagamento/{id}");
         }
 
-        public async Task SaveClienteAsync(Cliente cliente)
+        public async Task SaveFormaPagamentoAsync(FormaPagamento forma)
         {
             HttpResponseMessage response;
-            if (cliente.Id == 0)
+            if (forma.Id == 0)
             {
-                response = await _httpClient.PostAsJsonAsync("Clientes", cliente);
+                response = await _httpClient.PostAsJsonAsync("FormasPagamento", forma);
             }
             else
             {
-                response = await _httpClient.PutAsJsonAsync($"Clientes/{cliente.Id}", cliente);
+                response = await _httpClient.PutAsJsonAsync($"FormasPagamento/{forma.Id}", forma);
             }
-            response.EnsureSuccessStatusCode();
+            response.EnsureSuccessStatusCode(); 
         }
 
-        public async Task DeleteClienteAsync(int id)
+        public async Task DeleteFormaPagamentoAsync(int id)
         {
-            var response = await _httpClient.DeleteAsync($"Clientes/{id}");
+            var response = await _httpClient.DeleteAsync($"FormasPagamento/{id}");
             response.EnsureSuccessStatusCode();
         }
     }

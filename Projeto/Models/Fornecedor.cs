@@ -1,17 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.Json.Serialization;
 
 namespace Projeto.Models
 {
     public class Fornecedor : Pessoa
     {
-        public string InscricaoEstadual {  get; set; }
-        public string InscricaoEstadualSubTrib { get; set; }
-        public int? IdCondicao { get; set; }
-        public string DescricaoCondicao { get; set; }
+        [JsonPropertyName("fornecedor")]
+        public override string Nome { get; set; }
 
+        [JsonPropertyName("inscricaoEstadual")]
+        public string InscricaoEstadual { get; set; }
+
+        [JsonPropertyName("inscricaoEstadualSubTrib")]
+        public string InscricaoEstadualSubTrib { get; set; }
+
+        [JsonPropertyName("condicoesPagamentoId")]
+        public int? IdCondicao { get; set; }
+
+        [JsonPropertyName("condicaoPagamento")]
+        public CondicaoPagamento oCondicaoPagamento { get; set; }
+
+        [JsonIgnore]
+        public string DescricaoCondicao { get; set; }
     }
 }

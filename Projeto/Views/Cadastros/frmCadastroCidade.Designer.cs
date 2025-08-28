@@ -35,6 +35,8 @@
             this.lblCodigo = new System.Windows.Forms.Label();
             this.btnBuscar = new System.Windows.Forms.Button();
             this.txtEstado = new System.Windows.Forms.TextBox();
+            this.lblDDD = new System.Windows.Forms.Label();
+            this.txtDDD = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // btnSair
@@ -65,6 +67,7 @@
             // 
             // txtNome
             // 
+            this.txtNome.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtNome.Location = new System.Drawing.Point(12, 120);
             this.txtNome.Name = "txtNome";
             this.txtNome.Size = new System.Drawing.Size(181, 22);
@@ -107,10 +110,28 @@
             this.txtEstado.Size = new System.Drawing.Size(181, 22);
             this.txtEstado.TabIndex = 2;
             // 
+            // lblDDD
+            // 
+            this.lblDDD.AutoSize = true;
+            this.lblDDD.Location = new System.Drawing.Point(9, 305);
+            this.lblDDD.Name = "lblDDD";
+            this.lblDDD.Size = new System.Drawing.Size(37, 16);
+            this.lblDDD.TabIndex = 67;
+            this.lblDDD.Text = "DDD";
+            // 
+            // txtDDD
+            // 
+            this.txtDDD.Location = new System.Drawing.Point(12, 324);
+            this.txtDDD.Name = "txtDDD";
+            this.txtDDD.Size = new System.Drawing.Size(80, 22);
+            this.txtDDD.TabIndex = 66;
+            // 
             // frmCadastroCidade
             // 
             //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             //this.ClientSize = new System.Drawing.Size(1342, 681);
+            this.Controls.Add(this.lblDDD);
+            this.Controls.Add(this.txtDDD);
             this.Controls.Add(this.txtEstado);
             this.Controls.Add(this.btnBuscar);
             this.Controls.Add(this.lblCodigo);
@@ -133,6 +154,8 @@
             this.Controls.SetChildIndex(this.lblCodigo, 0);
             this.Controls.SetChildIndex(this.btnBuscar, 0);
             this.Controls.SetChildIndex(this.txtEstado, 0);
+            this.Controls.SetChildIndex(this.txtDDD, 0);
+            this.Controls.SetChildIndex(this.lblDDD, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -147,5 +170,7 @@
         private System.Windows.Forms.Label lblCodigo;
         private System.Windows.Forms.Button btnBuscar;
         private System.Windows.Forms.TextBox txtEstado;
+        private System.Windows.Forms.Label lblDDD;
+        private System.Windows.Forms.TextBox txtDDD;
     }
 }

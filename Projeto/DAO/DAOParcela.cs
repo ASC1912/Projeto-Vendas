@@ -37,7 +37,9 @@ namespace Projeto.DAO
                         cmd.Parameters.AddWithValue("@CondicaoPagamentoId", condicaoPagamentoId);
                         cmd.Parameters.AddWithValue("@FormaPagamentoId", parcela.FormaPagamentoId);
                         cmd.Parameters.AddWithValue("@PrazoDias", parcela.PrazoDias);
-                        cmd.Parameters.AddWithValue("@PorcentagemValor", parcela.Porcentagem); 
+                        cmd.Parameters.AddWithValue("@PorcentagemValor", parcela.Porcentagem);
+
+                        cmd.ExecuteNonQuery();
                     }
                 }
             }

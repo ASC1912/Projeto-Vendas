@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Projeto.Views
@@ -19,19 +20,19 @@ namespace Projeto.Views
             InitializeComponent();
         }
 
-        private void btnIncluir_Click(object sender, EventArgs e)
+        private async void btnIncluir_Click(object sender, EventArgs e)
         {
             frmCadastroCliente formCadastroCliente = new frmCadastroCliente();
-            formCadastroCliente.FormClosed += (s, args) => CarregarClientes();
+            formCadastroCliente.FormClosed += async (s, args) => await CarregarClientes();
             formCadastroCliente.ShowDialog();
         }
 
-        private void CarregarClientes()
+        private async Task CarregarClientes()
         {
             try
             {
                 listView1.Items.Clear();
-                List<Cliente> clientes = controller.ListarCliente();
+                List<Cliente> clientes = await controller.ListarCliente();
 
                 foreach (var cliente in clientes)
                 {
@@ -62,7 +63,7 @@ namespace Projeto.Views
             }
         }
 
-        private void btnPesquisar_Click(object sender, EventArgs e)
+        private async void btnPesquisar_Click(object sender, EventArgs e)
         {
             try
             {
@@ -71,11 +72,11 @@ namespace Projeto.Views
 
                 if (string.IsNullOrEmpty(texto))
                 {
-                    CarregarClientes();
+                    await CarregarClientes();
                 }
                 else if (int.TryParse(texto, out int id))
                 {
-                    Cliente cliente = controller.BuscarPorId(id);
+                    Cliente cliente = await controller.BuscarPorId(id);
 
                     if (cliente != null)
                     {
@@ -114,14 +115,14 @@ namespace Projeto.Views
             }
         }
 
-        private void btnEditar_Click(object sender, EventArgs e)
+        private async void btnEditar_Click(object sender, EventArgs e)
         {
             if (listView1.SelectedItems.Count > 0)
             {
                 var itemSelecionado = listView1.SelectedItems[0];
                 int id = int.Parse(itemSelecionado.SubItems[0].Text);
 
-                Cliente cliente = controller.BuscarPorId(id);
+                Cliente cliente = await controller.BuscarPorId(id);
 
                 if (cliente != null)
                 {
@@ -166,14 +167,14 @@ namespace Projeto.Views
         }
 
 
-        private void btnDeletar_Click(object sender, EventArgs e)
+        private async void btnDeletar_Click(object sender, EventArgs e)
         {
             if (listView1.SelectedItems.Count > 0)
             {
                 var itemSelecionado = listView1.SelectedItems[0];
                 int id = int.Parse(itemSelecionado.SubItems[0].Text);
 
-                Cliente cliente = controller.BuscarPorId(id);
+                Cliente cliente = await controller.BuscarPorId(id);
 
                 if (cliente != null)
                 {

@@ -1,17 +1,11 @@
 ﻿using Projeto.Controller;
-using Projeto.DAO;
 using Projeto.Models;
 using Projeto.Utils;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks; 
+using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Projeto.Views
 {
@@ -45,10 +39,11 @@ namespace Projeto.Views
                 lblCPF.Text = "CPF";
             }
         }
+
         public void CarregarFornecedor(int id, string nome, string cpf_cnpj, string telefone, string email, string endereco,
-                                        int numEndereco, string bairro, string complemento, string cep, string inscEst,
-                                        string inscEstSubTrib, string tipo, string nomeCidade, int idCidade, string descricaoCondicao, int idCondicao,
-                                        bool status, DateTime? dataCriacao, DateTime? dataModificacao)
+                                         int numEndereco, string bairro, string complemento, string cep, string inscEst,
+                                         string inscEstSubTrib, string tipo, string nomeCidade, int idCidade, string descricaoCondicao, int idCondicao,
+                                         bool status, DateTime? dataCriacao, DateTime? dataModificacao)
         {
             txtCodigo.Text = id.ToString();
             txtNome.Text = nome;
@@ -69,19 +64,12 @@ namespace Projeto.Views
             txtCondicao.Text = descricaoCondicao;
             condicaoSelecionadoId = idCondicao;
             chkInativo.Checked = !status;
-
-            lblDataCriacao.Text = dataCriacao.HasValue
-                ? $"Criado em: {dataCriacao:dd/MM/yyyy HH:mm}"
-                : "Criado em: -";
-
-            lblDataModificacao.Text = dataModificacao.HasValue
-                ? $"Modificado em: {dataModificacao:dd/MM/yyyy HH:mm}"
-                : "Modificado em: -";
+            lblDataCriacao.Text = dataCriacao.HasValue ? $"Criado em: {dataCriacao:dd/MM/yyyy HH:mm}" : "Criado em: -";
+            lblDataModificacao.Text = dataModificacao.HasValue ? $"Modificado em: {dataModificacao:dd/MM/yyyy HH:mm}" : "Modificado em: -";
         }
 
-        private void btnSalvar_Click(object sender, EventArgs e)
+        private async void btnSalvar_Click(object sender, EventArgs e)
         {
-            // NOTA: Este método só precisará se tornar 'async' quando o 'FornecedorController' for refatorado.
             if (modoExclusao)
             {
                 var confirmacao = MessageBox.Show("Tem certeza que deseja excluir este Fornecedor?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
@@ -90,7 +78,7 @@ namespace Projeto.Views
                     try
                     {
                         int id = int.Parse(txtCodigo.Text);
-                        controller.Excluir(id);
+                        await controller.Excluir(id);
                         MessageBox.Show("Fornecedor excluído com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         this.Close();
                     }
@@ -154,7 +142,7 @@ namespace Projeto.Views
                     DateTime dataModificacao = DateTime.Now;
                     string cpfCnpjLimpo = new string(txtCPF.Text.Where(char.IsDigit).ToArray());
 
-                    List<Fornecedor> fornecedores = controller.ListarFornecedor();
+                    List<Fornecedor> fornecedores = await controller.ListarFornecedor();
 
                     if (Validador.VerificarDuplicidade(fornecedores, f =>
                        new string(f.CPF_CNPJ.Where(char.IsDigit).ToArray()).Equals(cpfCnpjLimpo, StringComparison.OrdinalIgnoreCase)
@@ -186,7 +174,7 @@ namespace Projeto.Views
                         DataAlteracao = dataModificacao
                     };
 
-                    controller.Salvar(fornecedor);
+                    await controller.Salvar(fornecedor);
                     MessageBox.Show("Fornecedor salvo com sucesso!");
                     this.Close();
                 }
@@ -236,9 +224,7 @@ namespace Projeto.Views
         {
             frmConsultaCidade consultaCidade = new frmConsultaCidade();
             consultaCidade.ModoSelecao = true;
-
             var resultado = consultaCidade.ShowDialog();
-
             if (resultado == DialogResult.OK && consultaCidade.CidadeSelecionado != null)
             {
                 txtCidade.Text = consultaCidade.CidadeSelecionado.NomeCidade;
@@ -251,9 +237,7 @@ namespace Projeto.Views
         {
             frmConsultaCondPgto consultaCondicao = new frmConsultaCondPgto();
             consultaCondicao.ModoSelecao = true;
-
             var resultado = consultaCondicao.ShowDialog();
-
             if (resultado == DialogResult.OK && consultaCondicao.CondicaoSelecionado != null)
             {
                 txtCondicao.Text = consultaCondicao.CondicaoSelecionado.Descricao;
@@ -269,17 +253,14 @@ namespace Projeto.Views
                 cidadeSelecionadoId = -1;
                 return;
             }
-
             if (!Validador.ValidarNumerico(txtIdCidade, "O campo ID Cidade deve conter apenas números."))
             {
                 txtCidade.Text = "";
                 cidadeSelecionadoId = -1;
                 return;
             }
-
             int id = int.Parse(txtIdCidade.Text);
             var cidade = await cidadeController.BuscarPorId(id);
-
             if (cidade != null)
             {
                 txtCidade.Text = cidade.NomeCidade;

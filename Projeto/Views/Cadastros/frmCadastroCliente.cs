@@ -86,9 +86,8 @@ namespace Projeto.Views
                     try
                     {
                         int id = int.Parse(txtCodigo.Text);
-                        // NOTA: O controller de Cliente ainda não foi refatorado.
-                        // Quando for, esta linha precisará de 'await'.
-                        controller.Excluir(id);
+
+                        await controller.Excluir(id);
                         MessageBox.Show("Cliente excluído com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         this.Close();
                     }
@@ -182,9 +181,7 @@ namespace Projeto.Views
                     DateTime dataModificacao = DateTime.Now;
                     string cpfCnpjLimpo = new string(txtCPF.Text.Where(char.IsDigit).ToArray());
 
-                    // NOTA: O controller de Cliente ainda não foi refatorado.
-                    // Quando for, esta linha precisará de 'await'.
-                    List<Cliente> clientes = controller.ListarCliente();
+                    List<Cliente> clientes = await controller.ListarCliente();
 
                     if (Validador.VerificarDuplicidade(clientes, c =>
                         new string(c.CPF_CNPJ.Where(char.IsDigit).ToArray()).Equals(cpfCnpjLimpo, StringComparison.OrdinalIgnoreCase)
@@ -217,9 +214,8 @@ namespace Projeto.Views
                         DataAlteracao = dataModificacao
                     };
 
-                    // NOTA: O controller de Cliente ainda não foi refatorado.
-                    // Quando for, esta linha precisará de 'await'.
-                    controller.Salvar(cliente);
+
+                    await controller.Salvar(cliente);
                     MessageBox.Show("Cliente salvo com sucesso!");
                     this.Close();
                 }

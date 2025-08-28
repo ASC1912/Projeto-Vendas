@@ -1,5 +1,8 @@
 ﻿using Projeto.DAO;
 using Projeto.Models;
+using Projeto.Services;
+using Projeto.Services.Interfaces;
+using Projeto.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,23 +13,69 @@ namespace Projeto.Controller
 {
     internal class ClienteController
     {
-        private DAOCliente dao = new DAOCliente();
+        private readonly bool _useApi;
+        private readonly IClienteApiService _apiService;
+        private readonly DAOCliente _dao;
 
-        public void Salvar(Cliente cliente)
+        public ClienteController()
         {
-            dao.Salvar(cliente);
+            _useApi = ConfigHelper.UseApi();
+            if (_useApi)
+            {
+                _apiService = new ClienteApiService();
+            }
+            else
+            {
+                _dao = new DAOCliente();
+            }
         }
-        public Cliente BuscarPorId(int id)
+
+        public Task Salvar(Cliente cliente)
         {
-            return dao.BuscarPorId(id);
+            if (_useApi)
+            {
+                return _apiService.SaveClienteAsync(cliente);
+            }
+            else
+            {
+                return Task.Run(() => _dao.Salvar(cliente));
+            }
         }
-        public List<Cliente> ListarCliente()
+
+        public Task<Cliente> BuscarPorId(int id)
         {
-            return dao.ListarClientes();
+            if (_useApi)
+            {
+                return _apiService.GetClienteByIdAsync(id);
+            }
+            else
+            {
+                return Task.FromResult(_dao.BuscarPorId(id));
+            }
         }
-        public void Excluir(int id)
+
+        public Task<List<Cliente>> ListarCliente()
         {
-            dao.Excluir(id);
+            if (_useApi)
+            {
+                return _apiService.GetClientesAsync();
+            }
+            else
+            {
+                return Task.FromResult(_dao.ListarClientes());
+            }
+        }
+
+        public Task Excluir(int id)
+        {
+            if (_useApi)
+            {
+                return _apiService.DeleteClienteAsync(id);
+            }
+            else
+            {
+                return Task.Run(() => _dao.Excluir(id));
+            }
         }
     }
 }

@@ -1,49 +1,88 @@
 ﻿using Projeto.DAO;
 using Projeto.Models;
-using System;
+using Projeto.Services; 
+using Projeto.Services.Interfaces; 
+using Projeto.Utils; 
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Projeto.Controller
 {
     internal class CondicaoPagamentoController
     {
-        private DAOCondicaoPagamento dao = new DAOCondicaoPagamento();
-        private DAOParcela daoParcela = new DAOParcela();
+        private readonly bool _useApi;
+        private readonly ICondicaoPagamentoApiService _apiService;
+        private readonly DAOCondicaoPagamento _dao;
+        private readonly DAOParcela _daoParcela; 
 
-        public void Salvar(CondicaoPagamento condicao, List<Parcelamento> parcelas)
+        public CondicaoPagamentoController()
         {
-            int condicaoId = dao.SalvarCondicaoPagamento(condicao);
-
-            if (condicaoId > 0)
+            _useApi = ConfigHelper.UseApi();
+            if (_useApi)
             {
-                foreach (var parcela in parcelas)
-                {
-                    parcela.CondicaoId = condicaoId; 
-                }
-
-                daoParcela.SalvarParcelas(parcelas, condicaoId);
+                _apiService = new CondicaoPagamentoApiService();
+            }
+            else
+            {
+                _dao = new DAOCondicaoPagamento();
+                _daoParcela = new DAOParcela();
             }
         }
 
-        public CondicaoPagamento BuscarPorId(int id)
+        public Task Salvar(CondicaoPagamento condicao, List<Parcelamento> parcelas)
         {
-            return dao.BuscarPorId(id);
+            if (_useApi)
+            {
+                condicao.Parcelas = parcelas;
+                return _apiService.SaveCondicaoPagamentoAsync(condicao);
+            }
+            else
+            {
+                return Task.Run(() => {
+                    int condicaoId = _dao.SalvarCondicaoPagamento(condicao);
+                    if (condicaoId > 0 && parcelas != null)
+                    {
+                        foreach (var p in parcelas) { p.CondicaoId = condicaoId; }
+                        _daoParcela.SalvarParcelas(parcelas, condicaoId);
+                    }
+                });
+            }
         }
 
-
-        public List<CondicaoPagamento> ListarCondicaoPagamento()
+        public Task<CondicaoPagamento> BuscarPorId(int id)
         {
-            return dao.ListarCondicaoPagamento();
+            if (_useApi)
+            {
+                return _apiService.GetCondicaoPagamentoByIdAsync(id);
+            }
+            else
+            {
+                return Task.FromResult(_dao.BuscarPorId(id));
+            }
         }
 
-        public void Excluir(int id)
+        public Task<List<CondicaoPagamento>> ListarCondicaoPagamento()
         {
-            dao.Excluir(id);
+            if (_useApi)
+            {
+                return _apiService.GetCondicoesPagamentoAsync();
+            }
+            else
+            {
+                return Task.FromResult(_dao.ListarCondicaoPagamento());
+            }
         }
 
-        
+        public Task Excluir(int id)
+        {
+            if (_useApi)
+            {
+                return _apiService.DeleteCondicaoPagamentoAsync(id);
+            }
+            else
+            {
+                return Task.Run(() => _dao.Excluir(id));
+            }
+        }
     }
 }

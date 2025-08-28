@@ -1,12 +1,14 @@
-﻿using System;
+﻿using Projeto.Models;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Projeto.Services.Interfaces
 {
-    internal interface IFornecedorApiService
+    public interface IFornecedorApiService
     {
+        Task<List<Fornecedor>> GetFornecedoresAsync();
+        Task<Fornecedor> GetFornecedorByIdAsync(int id);
+        Task SaveFornecedorAsync(Fornecedor fornecedor);
+        Task DeleteFornecedorAsync(int id);
     }
 }

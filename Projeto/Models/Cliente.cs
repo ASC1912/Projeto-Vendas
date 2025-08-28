@@ -1,18 +1,29 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.Json.Serialization;
 
 namespace Projeto.Models
 {
     public class Cliente : Pessoa
     {
-        public string Rg { get; set; }
-        public string Genero { get; set; }
-        public int? IdCondicao { get; set; }
-        public string DescricaoCondicao { get; set; }
-        public DateTime? DataNascimento { get; set; }
+        [JsonPropertyName("cliente")]
+        public override string Nome { get; set; }
 
+        [JsonPropertyName("rg")]
+        public string Rg { get; set; }
+
+        [JsonPropertyName("genero")]
+        public string Genero { get; set; }
+
+        [JsonPropertyName("condicoesPagamentoId")]
+        public int? IdCondicao { get; set; }
+
+        [JsonPropertyName("condicaoPagamento")]
+        public CondicaoPagamento oCondicaoPagamento { get; set; }
+
+        [JsonIgnore]
+        public string DescricaoCondicao { get; set; }
+
+        [JsonPropertyName("dataNascimento")]
+        public DateTime? DataNascimento { get; set; }
     }
 }

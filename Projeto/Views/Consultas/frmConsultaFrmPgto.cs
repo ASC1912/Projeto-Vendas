@@ -1,12 +1,8 @@
-﻿using MySql.Data.MySqlClient;
-using Projeto.Controller;
+﻿using Projeto.Controller;
 using Projeto.Models;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
+using System.Threading.Tasks; 
 using System.Windows.Forms;
 
 namespace Projeto
@@ -23,38 +19,29 @@ namespace Projeto
             this.Text = "Consulta Forma de Pagamento";
         }
 
-        private void frmConsultaFrmPgto_Load(object sender, EventArgs e)
+        private async void frmConsultaFrmPgto_Load(object sender, EventArgs e)
         {
-            CarregarFormasPagamento();
-
+            await CarregarFormasPagamento();
             btnSelecionar.Visible = ModoSelecao;
 
             foreach (ColumnHeader column in listView1.Columns)
             {
                 switch (column.Text)
                 {
-                    case "ID":
-                        column.Width = 50;
-                        break;
-                    case "Descricao":
-                        column.Width = 200;
-                        break;
-                    case "Ativo":
-                        column.Width = 50;
-                        break;
-                    default:
-                        column.Width = 100;
-                        break;
+                    case "ID": column.Width = 50; break;
+                    case "Descricao": column.Width = 200; break;
+                    case "Ativo": column.Width = 50; break;
+                    default: column.Width = 100; break;
                 }
             }
         }
 
-        private void CarregarFormasPagamento()
+        private async Task CarregarFormasPagamento()
         {
             try
             {
                 listView1.Items.Clear();
-                List<FormaPagamento> formasPagamento = controller.ListarFormaPagamento();
+                List<FormaPagamento> formasPagamento = await controller.ListarFormaPagamento();
 
                 foreach (var forma in formasPagamento)
                 {
@@ -70,7 +57,7 @@ namespace Projeto
             }
         }
 
-        private void btnPesquisar_Click(object sender, EventArgs e)
+        private async void btnPesquisar_Click(object sender, EventArgs e)
         {
             try
             {
@@ -79,11 +66,11 @@ namespace Projeto
 
                 if (string.IsNullOrEmpty(texto))
                 {
-                    CarregarFormasPagamento();
+                    await CarregarFormasPagamento();
                 }
                 else if (int.TryParse(texto, out int id))
                 {
-                    FormaPagamento forma = controller.BuscarPorId(id);
+                    FormaPagamento forma = await controller.BuscarPorId(id);
 
                     if (forma != null)
                     {
@@ -96,7 +83,6 @@ namespace Projeto
                     {
                         MessageBox.Show("Forma de pagamento não encontrada.");
                     }
-
                 }
                 else
                 {
@@ -112,34 +98,23 @@ namespace Projeto
         private void btnIncluir_Click(object sender, EventArgs e)
         {
             frmCadastroFrmPgto formCadastroPagamento = new frmCadastroFrmPgto();
-            formCadastroPagamento.FormClosed += (s, args) => CarregarFormasPagamento();
+            formCadastroPagamento.FormClosed += async (s, args) => await CarregarFormasPagamento();
             formCadastroPagamento.ShowDialog();
         }
 
-        private void btnEditar_Click(object sender, EventArgs e)
+        private async void btnEditar_Click(object sender, EventArgs e)
         {
             if (listView1.SelectedItems.Count > 0)
             {
                 var itemSelecionado = listView1.SelectedItems[0];
                 int id = int.Parse(itemSelecionado.SubItems[0].Text);
-
-                FormaPagamento forma = controller.BuscarPorId(id);
+                FormaPagamento forma = await controller.BuscarPorId(id);
 
                 if (forma != null)
                 {
-                    var formCadastro = new frmCadastroFrmPgto();
-                    formCadastro.modoEdicao = true;
-
-                    formCadastro.CarregarFormaPagamento(
-                        forma.Id,
-                        forma.Descricao,
-                        forma.Ativo,
-                        forma.DataCadastro,
-                        forma.DataAlteracao
-                    );
-
-
-                    formCadastro.FormClosed += (s, args) => CarregarFormasPagamento();
+                    var formCadastro = new frmCadastroFrmPgto { modoEdicao = true };
+                    formCadastro.CarregarFormaPagamento(forma.Id, forma.Descricao, forma.Ativo, forma.DataCadastro, forma.DataAlteracao);
+                    formCadastro.FormClosed += async (s, args) => await CarregarFormasPagamento();
                     formCadastro.ShowDialog();
                 }
                 else
@@ -153,31 +128,19 @@ namespace Projeto
             }
         }
 
-        private void btnDeletar_Click(object sender, EventArgs e)
+        private async void btnDeletar_Click(object sender, EventArgs e)
         {
             if (listView1.SelectedItems.Count > 0)
             {
                 var itemSelecionado = listView1.SelectedItems[0];
                 int id = int.Parse(itemSelecionado.SubItems[0].Text);
-
-                FormaPagamento forma = controller.BuscarPorId(id);
+                FormaPagamento forma = await controller.BuscarPorId(id);
 
                 if (forma != null)
                 {
-                    var formCadastro = new frmCadastroFrmPgto
-                    {
-                        modoExclusao = true 
-                    };
-
-                    formCadastro.CarregarFormaPagamento(
-                        forma.Id,
-                        forma.Descricao,
-                        forma.Ativo,
-                        forma.DataCadastro,
-                        forma.DataAlteracao
-                    );
-
-                    formCadastro.FormClosed += (s, args) => CarregarFormasPagamento();
+                    var formCadastro = new frmCadastroFrmPgto { modoExclusao = true };
+                    formCadastro.CarregarFormaPagamento(forma.Id, forma.Descricao, forma.Ativo, forma.DataCadastro, forma.DataAlteracao);
+                    formCadastro.FormClosed += async (s, args) => await CarregarFormasPagamento();
                     formCadastro.ShowDialog();
                 }
                 else
@@ -191,14 +154,13 @@ namespace Projeto
             }
         }
 
-        private void btnSelecionar_Click(object sender, EventArgs e)
+        private async void btnSelecionar_Click(object sender, EventArgs e)
         {
             if (listView1.SelectedItems.Count > 0)
             {
                 var itemSelecionado = listView1.SelectedItems[0];
                 int id = int.Parse(itemSelecionado.SubItems[0].Text);
-
-                FormaSelecionada = controller.BuscarPorId(id);
+                FormaSelecionada = await controller.BuscarPorId(id);
 
                 if (FormaSelecionada != null)
                 {

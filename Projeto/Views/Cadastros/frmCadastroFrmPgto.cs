@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using MySql.Data.MySqlClient;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 using Projeto.Models;
 using Projeto.Controller;
@@ -16,6 +10,7 @@ namespace Projeto
     {
         public bool modoEdicao = false;
         public bool modoExclusao = false;
+        private readonly FormaPagamentoController controller = new FormaPagamentoController();
 
         public frmCadastroFrmPgto() : base()
         {
@@ -26,7 +21,6 @@ namespace Projeto
         public void CarregarFormaPagamento(int id, string descricao, bool ativo, DateTime? dataCadastro, DateTime? dataAlteracao)
         {
             modoEdicao = true;
-
             txtCodigo.Text = id.ToString();
             txtDescricao.Text = descricao;
             chkInativo.Checked = !ativo;
@@ -40,7 +34,7 @@ namespace Projeto
                 : "Modificado em: -";
         }
 
-        private void btnSalvar_Click(object sender, EventArgs e)
+        private async void btnSalvar_Click(object sender, EventArgs e)
         {
             if (modoExclusao)
             {
@@ -50,8 +44,7 @@ namespace Projeto
                     try
                     {
                         int id = int.Parse(txtCodigo.Text);
-                        FormaPagamentoController controller = new FormaPagamentoController();
-                        controller.Excluir(id);
+                        await controller.Excluir(id); // USA AWAIT
                         MessageBox.Show("Forma de pagamento excluída com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         this.Close();
                     }
@@ -82,9 +75,7 @@ namespace Projeto
                     int id = string.IsNullOrEmpty(txtCodigo.Text) ? 0 : int.Parse(txtCodigo.Text);
                     string descricao = txtDescricao.Text;
 
-                    FormaPagamentoController controller = new FormaPagamentoController();
-                    var formasPagamento = controller.ListarFormaPagamento();
-
+                    var formasPagamento = await controller.ListarFormaPagamento();
                     if (Validador.VerificarDuplicidade(formasPagamento, f =>
                         f.Descricao.Trim().Equals(descricao.Trim(), StringComparison.OrdinalIgnoreCase)
                         && f.Id != id, "Já existe uma forma de pagamento com esta descrição."))
@@ -94,11 +85,7 @@ namespace Projeto
                     }
 
                     bool status = !chkInativo.Checked;
-
-                    DateTime dataCriacao = id == 0
-                        ? DateTime.Now
-                        : DateTime.Parse(lblDataCriacao.Text.Replace("Criado em: ", ""));
-
+                    DateTime dataCriacao = id == 0 ? DateTime.Now : DateTime.Parse(lblDataCriacao.Text.Replace("Criado em: ", ""));
                     DateTime dataModificacao = DateTime.Now;
 
                     FormaPagamento forma = new FormaPagamento
@@ -110,7 +97,7 @@ namespace Projeto
                         DataAlteracao = dataModificacao
                     };
 
-                    controller.Salvar(forma);
+                    await controller.Salvar(forma); // USA AWAIT
 
                     MessageBox.Show("Forma de pagamento salva com sucesso!");
                     this.Close();
@@ -121,7 +108,6 @@ namespace Projeto
                 }
             }
         }
-
 
         private void frmCadastroFrmPgto_Load(object sender, EventArgs e)
         {
@@ -134,9 +120,7 @@ namespace Projeto
             else if (modoEdicao == false)
             {
                 txtCodigo.Text = "0";
-
                 DateTime agora = DateTime.Now;
-
                 lblDataCriacao.Text = $"Criado em: {agora:dd/MM/yyyy HH:mm}";
                 lblDataModificacao.Text = $"Modificado em: {agora:dd/MM/yyyy HH:mm}";
             }

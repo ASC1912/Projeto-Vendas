@@ -32,6 +32,7 @@
             this.Nome = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Status = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnSelecionar = new System.Windows.Forms.Button();
+            this.Sigla = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // listView1
@@ -39,6 +40,7 @@
             this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.ID,
             this.Nome,
+            this.Sigla,
             this.Status});
             // 
             // btnDeletar
@@ -79,6 +81,10 @@
             this.btnSelecionar.UseVisualStyleBackColor = true;
             this.btnSelecionar.Click += new System.EventHandler(this.btnSelecionar_Click);
             // 
+            // Sigla
+            // 
+            this.Sigla.Text = "Sigla";
+            // 
             // frmConsultaPais
             // 
             //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -106,5 +112,6 @@
         private System.Windows.Forms.ColumnHeader Nome;
         private System.Windows.Forms.ColumnHeader Status;
         private System.Windows.Forms.Button btnSelecionar;
+        private System.Windows.Forms.ColumnHeader Sigla;
     }
 }
