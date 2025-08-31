@@ -22,13 +22,14 @@ namespace Projeto.Views
             txtCodigo.Enabled = false;
         }
 
-        public void CarregarCidade(int id, string nomeCidade, string nomeEstado, int estadoId, bool ativo, DateTime? dataCadastro, DateTime? dataAlteracao)
+        public void CarregarCidade(int id, string nomeCidade, string nomeEstado, int estadoId, string ddd, bool ativo, DateTime? dataCadastro, DateTime? dataAlteracao)
         {
             modoEdicao = true;
             txtCodigo.Text = id.ToString();
             txtNome.Text = nomeCidade;
             txtEstado.Text = nomeEstado;
             estadoSelecionadoId = estadoId;
+            txtDDD.Text = ddd; // NOVO
             chkInativo.Checked = !ativo;
             lblDataCriacao.Text = dataCadastro.HasValue ? $"Criado em: {dataCadastro.Value:dd/MM/yyyy HH:mm}" : "Criado em: -";
             lblDataModificacao.Text = dataAlteracao.HasValue ? $"Modificado em: {dataAlteracao.Value:dd/MM/yyyy HH:mm}" : "Modificado em: -";
@@ -40,6 +41,7 @@ namespace Projeto.Views
             {
                 btnSalvar.Text = "Deletar";
                 txtNome.Enabled = false;
+                txtDDD.Enabled = false; 
                 btnBuscar.Enabled = false;
                 chkInativo.Enabled = false;
             }
@@ -107,12 +109,11 @@ namespace Projeto.Views
                     {
                         Id = id,
                         NomeCidade = nome,
+                        DDD = txtDDD.Text, 
                         Ativo = !chkInativo.Checked,
                         DataCadastro = dataCriacao,
                         DataAlteracao = dataModificacao,
-
                         EstadoId = estadoSelecionadoId,
-
                         oEstado = new Estado { Id = estadoSelecionadoId }
                     };
 

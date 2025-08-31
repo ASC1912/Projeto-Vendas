@@ -39,5 +39,22 @@ namespace Projeto
             this.MaximumSize = new Size(1360, 728);
             this.AutoSize = false;
         }
+
+        public virtual void ConhecaObj(object obj, object ctrl)
+        {
+        }
+
+        public virtual void LimparTxt()
+        {
+        }
+        public virtual void CarregaTxt()
+        {
+        }
+        public virtual void BloquearTxt()
+        {
+        }
+        public virtual void DesbloquearTxt()
+        {
+        }
     }
 }

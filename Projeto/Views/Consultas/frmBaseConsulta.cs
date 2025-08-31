@@ -23,11 +23,14 @@ namespace Projeto
             this.Close();
         }
 
-        protected virtual void ConhecaObj(object obj, object ctrl)
+        public virtual void ConhecaObj(object obj, object ctrl)
         {
 
         }
+        public virtual void setFrmCadastro(object obj)
+        {
 
+        }
         public virtual void ConfigurarFormularioBase()
         {
             this.AutoScaleMode = AutoScaleMode.Font;

@@ -46,11 +46,11 @@
             // 
             // btnSair
             // 
-            this.btnSair.TabIndex = 4;
+            this.btnSair.TabIndex = 7;
             // 
             // chkInativo
             // 
-            this.chkInativo.TabIndex = 2;
+            this.chkInativo.TabIndex = 5;
             // 
             // lblNome
             // 
@@ -63,6 +63,7 @@
             // 
             // txtNome
             // 
+            this.txtNome.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtNome.Location = new System.Drawing.Point(16, 110);
             this.txtNome.Name = "txtNome";
             this.txtNome.Size = new System.Drawing.Size(200, 22);
@@ -73,7 +74,7 @@
             this.btnSalvar.Location = new System.Drawing.Point(1113, 634);
             this.btnSalvar.Name = "btnSalvar";
             this.btnSalvar.Size = new System.Drawing.Size(80, 35);
-            this.btnSalvar.TabIndex = 3;
+            this.btnSalvar.TabIndex = 6;
             this.btnSalvar.Text = "Salvar";
             this.btnSalvar.UseVisualStyleBackColor = true;
             this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
@@ -98,10 +99,12 @@
             // 
             // txtSigla
             // 
+            this.txtSigla.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtSigla.Location = new System.Drawing.Point(253, 110);
+            this.txtSigla.MaxLength = 3;
             this.txtSigla.Name = "txtSigla";
             this.txtSigla.Size = new System.Drawing.Size(200, 22);
-            this.txtSigla.TabIndex = 66;
+            this.txtSigla.TabIndex = 2;
             // 
             // lblMoeda
             // 
@@ -114,10 +117,12 @@
             // 
             // txtMoeda
             // 
+            this.txtMoeda.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtMoeda.Location = new System.Drawing.Point(812, 110);
+            this.txtMoeda.MaxLength = 4;
             this.txtMoeda.Name = "txtMoeda";
             this.txtMoeda.Size = new System.Drawing.Size(200, 22);
-            this.txtMoeda.TabIndex = 68;
+            this.txtMoeda.TabIndex = 4;
             // 
             // lblDDI
             // 
@@ -131,9 +136,10 @@
             // txtDDI
             // 
             this.txtDDI.Location = new System.Drawing.Point(536, 110);
+            this.txtDDI.MaxLength = 5;
             this.txtDDI.Name = "txtDDI";
             this.txtDDI.Size = new System.Drawing.Size(200, 22);
-            this.txtDDI.TabIndex = 70;
+            this.txtDDI.TabIndex = 3;
             // 
             // frmCadastroPais
             // 

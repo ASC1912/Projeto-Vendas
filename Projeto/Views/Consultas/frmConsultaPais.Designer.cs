@@ -33,6 +33,8 @@
             this.Status = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnSelecionar = new System.Windows.Forms.Button();
             this.Sigla = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.DDI = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Moeda = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // listView1
@@ -41,6 +43,8 @@
             this.ID,
             this.Nome,
             this.Sigla,
+            this.DDI,
+            this.Moeda,
             this.Status});
             // 
             // btnDeletar
@@ -85,6 +89,14 @@
             // 
             this.Sigla.Text = "Sigla";
             // 
+            // DDI
+            // 
+            this.DDI.Text = "DDI";
+            // 
+            // Moeda
+            // 
+            this.Moeda.Text = "Moeda";
+            // 
             // frmConsultaPais
             // 
             //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -113,5 +125,7 @@
         private System.Windows.Forms.ColumnHeader Status;
         private System.Windows.Forms.Button btnSelecionar;
         private System.Windows.Forms.ColumnHeader Sigla;
+        private System.Windows.Forms.ColumnHeader DDI;
+        private System.Windows.Forms.ColumnHeader Moeda;
     }
 }

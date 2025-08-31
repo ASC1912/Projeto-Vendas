@@ -9,13 +9,35 @@ namespace Projeto.Views
 {
     public partial class frmConsultaPais : Projeto.frmBaseConsulta
     {
-        private readonly PaisController controller = new PaisController();
+        frmCadastroPais oFrmCadastroPais;
+        Pais oPais;
+        private PaisController controller = new PaisController();
         public bool ModoSelecao { get; set; } = false;
         internal Pais PaisSelecionado { get; private set; }
 
         public frmConsultaPais() : base()
         {
             InitializeComponent();
+        }
+
+        public override void ConhecaObj(object obj, object ctrl)
+        {
+            if (obj != null)
+            {
+                oPais = (Pais)obj;
+            }
+            if (ctrl != null)
+            {
+                controller = (PaisController)ctrl;
+            }
+        }
+
+        public override void setFrmCadastro(object obj)
+        {
+            if (obj != null)
+            {
+                oFrmCadastroPais = (frmCadastroPais)obj;
+            }
         }
 
         private async void frmConsultaPais_Load(object sender, EventArgs e)
@@ -33,6 +55,15 @@ namespace Projeto.Views
                     case "País":
                         column.Width = 150;
                         break;
+                    case "Sigla": 
+                        column.Width = 60;
+                        break;
+                    case "DDI": 
+                        column.Width = 60;
+                        break;
+                    case "Moeda": 
+                        column.Width = 70;
+                        break;
                     case "Ativo":
                         column.Width = 50;
                         break;
@@ -45,9 +76,15 @@ namespace Projeto.Views
 
         private async void btnIncluir_Click(object sender, EventArgs e)
         {
+            oFrmCadastroPais.FormClosed += async (s, args) => await CarregarPaises();
+            oFrmCadastroPais.ConhecaObj(oPais, controller);
+            oFrmCadastroPais.ShowDialog();
+
+            /*
             frmCadastroPais formCadastroPais = new frmCadastroPais();
             formCadastroPais.FormClosed += async (s, args) => await CarregarPaises();
             formCadastroPais.ShowDialog();
+            */
         }
 
         private async Task CarregarPaises()
@@ -61,6 +98,9 @@ namespace Projeto.Views
                 {
                     ListViewItem item = new ListViewItem(pais.Id.ToString());
                     item.SubItems.Add(pais.NomePais);
+                    item.SubItems.Add(pais.Sigla);      
+                    item.SubItems.Add(pais.DDI);        
+                    item.SubItems.Add(pais.Moeda);     
                     item.SubItems.Add(pais.Ativo ? "Ativo" : "Inativo");
                     listView1.Items.Add(item);
                 }
@@ -89,6 +129,9 @@ namespace Projeto.Views
                     {
                         ListViewItem item = new ListViewItem(pais.Id.ToString());
                         item.SubItems.Add(pais.NomePais);
+                        item.SubItems.Add(pais.Sigla);      
+                        item.SubItems.Add(pais.DDI);        
+                        item.SubItems.Add(pais.Moeda);      
                         item.SubItems.Add(pais.Ativo ? "Ativo" : "Inativo");
                         listView1.Items.Add(item);
                     }
@@ -118,10 +161,18 @@ namespace Projeto.Views
 
                 if (pais != null)
                 {
+                    oFrmCadastroPais.modoEdicao = true;
+                    oFrmCadastroPais.CarregarPais(pais.Id, pais.NomePais, pais.Sigla, pais.DDI, pais.Moeda, pais.Ativo, pais.DataCadastro, pais.DataAlteracao);
+                    oFrmCadastroPais.FormClosed += async (s, args) => await CarregarPaises();
+                    oFrmCadastroPais.ConhecaObj(oPais, controller);
+                    oFrmCadastroPais.ShowDialog();
+
+                    /*
                     var formCadastro = new frmCadastroPais { modoEdicao = true };
-                    formCadastro.CarregarPais(pais.Id, pais.NomePais, pais.Ativo, pais.DataCadastro, pais.DataAlteracao);
+                    formCadastro.CarregarPais(pais.Id, pais.NomePais, pais.Sigla, pais.DDI, pais.Moeda, pais.Ativo, pais.DataCadastro, pais.DataAlteracao);
                     formCadastro.FormClosed += async (s, args) => await CarregarPaises();
                     formCadastro.ShowDialog();
+                    */
                 }
                 else
                 {
@@ -144,10 +195,17 @@ namespace Projeto.Views
 
                 if (pais != null)
                 {
+                    oFrmCadastroPais.modoExclusao = true;
+                    oFrmCadastroPais.CarregarPais(pais.Id, pais.NomePais, pais.Sigla, pais.DDI, pais.Moeda, pais.Ativo, pais.DataCadastro, pais.DataAlteracao);
+                    oFrmCadastroPais.FormClosed += async (s, args) => await CarregarPaises();
+                    oFrmCadastroPais.ShowDialog();
+
+                    /*
                     var formCadastro = new frmCadastroPais { modoExclusao = true };
-                    formCadastro.CarregarPais(pais.Id, pais.NomePais, pais.Ativo, pais.DataCadastro, pais.DataAlteracao);
+                    formCadastro.CarregarPais(pais.Id, pais.NomePais, pais.Sigla, pais.DDI, pais.Moeda, pais.Ativo, pais.DataCadastro, pais.DataAlteracao);
                     formCadastro.FormClosed += async (s, args) => await CarregarPaises();
                     formCadastro.ShowDialog();
+                    */
                 }
                 else
                 {

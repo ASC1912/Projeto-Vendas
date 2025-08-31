@@ -2,13 +2,14 @@
 using Projeto.Models;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks; // Adicionado
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Projeto.Views
 {
     public partial class frmConsultaCidade : Projeto.frmBaseConsulta
     {
+        frmCadastroCidade oFrmCadastroCidade;
         private CidadeController controller = new CidadeController();
         public bool ModoSelecao { get; set; } = false;
         internal Cidade CidadeSelecionado { get; private set; }
@@ -18,6 +19,13 @@ namespace Projeto.Views
             InitializeComponent();
         }
 
+        public override void setFrmCadastro(object obj)
+        {
+            if (obj != null)
+            {
+                oFrmCadastroCidade = (frmCadastroCidade)obj;
+            }
+        }
         private async void frmConsultaCidade_Load(object sender, EventArgs e)
         {
             await CarregarCidades();
@@ -36,6 +44,9 @@ namespace Projeto.Views
                     case "Estado":
                         column.Width = 150;
                         break;
+                    case "DDD": 
+                        column.Width = 50;
+                        break;
                     case "Ativo":
                         column.Width = 50;
                         break;
@@ -48,9 +59,14 @@ namespace Projeto.Views
 
         private async void btnIncluir_Click(object sender, EventArgs e)
         {
+            oFrmCadastroCidade.FormClosed += async (s, args) => await CarregarCidades();
+            oFrmCadastroCidade.ShowDialog();
+
+            /*
             frmCadastroCidade formCadastroCidade = new frmCadastroCidade();
             formCadastroCidade.FormClosed += async (s, args) => await CarregarCidades();
             formCadastroCidade.ShowDialog();
+            */
         }
 
         private async Task CarregarCidades()
@@ -65,6 +81,7 @@ namespace Projeto.Views
                     ListViewItem item = new ListViewItem(cidade.Id.ToString());
                     item.SubItems.Add(cidade.NomeCidade);
                     item.SubItems.Add(cidade.EstadoNome);
+                    item.SubItems.Add(cidade.DDD); 
                     item.SubItems.Add(cidade.Ativo ? "Ativo" : "Inativo");
                     listView1.Items.Add(item);
                 }
@@ -95,6 +112,7 @@ namespace Projeto.Views
                         ListViewItem item = new ListViewItem(cidade.Id.ToString());
                         item.SubItems.Add(cidade.NomeCidade);
                         item.SubItems.Add(cidade.EstadoNome);
+                        item.SubItems.Add(cidade.DDD); 
                         item.SubItems.Add(cidade.Ativo ? "Ativo" : "Inativo");
                         listView1.Items.Add(item);
                     }
@@ -125,7 +143,7 @@ namespace Projeto.Views
                 if (cidade != null)
                 {
                     var formCadastro = new frmCadastroCidade { modoEdicao = true };
-                    formCadastro.CarregarCidade(cidade.Id, cidade.NomeCidade, cidade.EstadoNome, cidade.EstadoId, cidade.Ativo, cidade.DataCadastro, cidade.DataAlteracao);
+                    formCadastro.CarregarCidade(cidade.Id, cidade.NomeCidade, cidade.EstadoNome, cidade.EstadoId, cidade.DDD, cidade.Ativo, cidade.DataCadastro, cidade.DataAlteracao);
                     formCadastro.FormClosed += async (s, args) => await CarregarCidades();
                     formCadastro.ShowDialog();
                 }
@@ -151,7 +169,7 @@ namespace Projeto.Views
                 if (cidade != null)
                 {
                     var formCadastro = new frmCadastroCidade { modoExclusao = true };
-                    formCadastro.CarregarCidade(cidade.Id, cidade.NomeCidade, cidade.EstadoNome, cidade.EstadoId, cidade.Ativo, cidade.DataCadastro, cidade.DataAlteracao);
+                    formCadastro.CarregarCidade(cidade.Id, cidade.NomeCidade, cidade.EstadoNome, cidade.EstadoId, cidade.DDD, cidade.Ativo, cidade.DataCadastro, cidade.DataAlteracao);
                     formCadastro.FormClosed += async (s, args) => await CarregarCidades();
                     formCadastro.ShowDialog();
                 }

@@ -173,6 +173,12 @@
     <Compile Include="Utils\ConfigHelper.cs" />
     <Compile Include="Utils\Interfaces.cs" />
     <Compile Include="Utils\Validador.cs" />
+    <Compile Include="Views\Cadastros\frmCadastroCompras.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Cadastros\frmCadastroCompras.Designer.cs">
+      <DependentUpon>frmCadastroCompras.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\Cadastros\frmCadastroCompras2.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -355,6 +361,9 @@
     <Compile Include="Views\Consultas\frmConsultaPais.Designer.cs">
       <DependentUpon>frmConsultaPais.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Views\Cadastros\frmCadastroCompras.resx">
+      <DependentUpon>frmCadastroCompras.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\Cadastros\frmCadastroCompras2.resx">
       <DependentUpon>frmCadastroCompras2.cs</DependentUpon>
     </EmbeddedResource>

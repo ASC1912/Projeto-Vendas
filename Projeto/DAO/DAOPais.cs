@@ -22,6 +22,9 @@ namespace Projeto.DAO
                     {
                         query = @"UPDATE Paises 
                                   SET Pais = @Pais, 
+                                      Sigla = @Sigla,
+                                      DDI = @DDI,
+                                      Moeda = @Moeda,
                                       Ativo = @Ativo,
                                       DataAlteracao = @DataAlteracao 
                                   WHERE Id = @Id";
@@ -29,13 +32,16 @@ namespace Projeto.DAO
                     else
                     {
                         query = @"INSERT INTO Paises 
-                                  (Pais, Ativo, DataCadastro, DataAlteracao) 
-                                  VALUES (@Pais, @Ativo, @DataCadastro, @DataAlteracao)";
+                                  (Pais, Sigla, DDI, Moeda, Ativo, DataCadastro, DataAlteracao) 
+                                  VALUES (@Pais, @Sigla, @DDI, @Moeda, @Ativo, @DataCadastro, @DataAlteracao)";
                     }
 
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@Pais", pais.NomePais);
+                        cmd.Parameters.AddWithValue("@Sigla", pais.Sigla);
+                        cmd.Parameters.AddWithValue("@DDI", pais.DDI);
+                        cmd.Parameters.AddWithValue("@Moeda", pais.Moeda);
                         cmd.Parameters.AddWithValue("@Ativo", pais.Ativo);
                         cmd.Parameters.AddWithValue("@DataAlteracao", pais.DataAlteracao);
 
@@ -78,7 +84,7 @@ namespace Projeto.DAO
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
-                string query = "SELECT Id, Pais, Ativo, DataCadastro, DataAlteracao FROM Paises WHERE Id = @Id";
+                string query = "SELECT Id, Pais, Sigla, DDI, Moeda, Ativo, DataCadastro, DataAlteracao FROM Paises WHERE Id = @Id";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
@@ -92,6 +98,9 @@ namespace Projeto.DAO
                             {
                                 Id = reader.GetInt32("Id"),
                                 NomePais = reader.GetString("Pais"),
+                                Sigla = reader.IsDBNull(reader.GetOrdinal("Sigla")) ? null : reader.GetString("Sigla"),
+                                DDI = reader.IsDBNull(reader.GetOrdinal("DDI")) ? null : reader.GetString("DDI"),
+                                Moeda = reader.IsDBNull(reader.GetOrdinal("Moeda")) ? null : reader.GetString("Moeda"),
                                 Ativo = reader.GetBoolean("Ativo"),
                                 DataCadastro = reader.IsDBNull(reader.GetOrdinal("DataCadastro")) ? (DateTime?)null : reader.GetDateTime("DataCadastro"),
                                 DataAlteracao = reader.IsDBNull(reader.GetOrdinal("DataAlteracao")) ? (DateTime?)null : reader.GetDateTime("DataAlteracao"),
@@ -110,7 +119,7 @@ namespace Projeto.DAO
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
-                string query = "SELECT Id, Pais, Ativo, DataCadastro, DataAlteracao FROM Paises ORDER BY Id";
+                string query = "SELECT Id, Pais, Sigla, DDI, Moeda, Ativo, DataCadastro, DataAlteracao FROM Paises ORDER BY Id";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
@@ -122,6 +131,9 @@ namespace Projeto.DAO
                             {
                                 Id = reader.GetInt32("Id"),
                                 NomePais = reader.GetString("Pais"),
+                                Sigla = reader.IsDBNull(reader.GetOrdinal("Sigla")) ? null : reader.GetString("Sigla"),
+                                DDI = reader.IsDBNull(reader.GetOrdinal("DDI")) ? null : reader.GetString("DDI"),
+                                Moeda = reader.IsDBNull(reader.GetOrdinal("Moeda")) ? null : reader.GetString("Moeda"),
                                 Ativo = reader.GetBoolean("Ativo"),
                                 DataCadastro = reader.IsDBNull(reader.GetOrdinal("DataCadastro")) ? (DateTime?)null : reader.GetDateTime("DataCadastro"),
                                 DataAlteracao = reader.IsDBNull(reader.GetOrdinal("DataAlteracao")) ? (DateTime?)null : reader.GetDateTime("DataAlteracao"),

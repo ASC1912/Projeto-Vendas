@@ -11,6 +11,7 @@ namespace Projeto.Models
         [JsonPropertyName("cidade")]
         public string NomeCidade { get; set; }
         public int EstadoId { get; set; }
+        public string DDD { get; set; } 
         public bool Ativo { get; set; }
         public DateTime? DataCadastro { get; set; }
         public DateTime? DataAlteracao { get; set; }

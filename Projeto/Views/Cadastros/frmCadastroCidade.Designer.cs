@@ -39,13 +39,17 @@
             this.txtDDD = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
+            // txtCodigo
+            // 
+            this.txtCodigo.TabIndex = 0;
+            // 
             // btnSair
             // 
-            this.btnSair.TabIndex = 6;
+            this.btnSair.TabIndex = 7;
             // 
             // chkInativo
             // 
-            this.chkInativo.TabIndex = 4;
+            this.chkInativo.TabIndex = 5;
             // 
             // lblEstado
             // 
@@ -78,7 +82,7 @@
             this.btnSalvar.Location = new System.Drawing.Point(1117, 634);
             this.btnSalvar.Name = "btnSalvar";
             this.btnSalvar.Size = new System.Drawing.Size(80, 35);
-            this.btnSalvar.TabIndex = 5;
+            this.btnSalvar.TabIndex = 6;
             this.btnSalvar.Text = "Salvar";
             this.btnSalvar.UseVisualStyleBackColor = true;
             this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
@@ -122,9 +126,10 @@
             // txtDDD
             // 
             this.txtDDD.Location = new System.Drawing.Point(12, 324);
+            this.txtDDD.MaxLength = 5;
             this.txtDDD.Name = "txtDDD";
             this.txtDDD.Size = new System.Drawing.Size(80, 22);
-            this.txtDDD.TabIndex = 66;
+            this.txtDDD.TabIndex = 4;
             // 
             // frmCadastroCidade
             // 

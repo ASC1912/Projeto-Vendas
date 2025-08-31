@@ -20,21 +20,22 @@ namespace Projeto.DAO
                     if (cidade.Id > 0)
                     {
                         query = @"UPDATE Cidades 
-                                  SET Cidade = @Cidade, EstadoId = @EstadoId, Ativo = @Ativo, 
+                                  SET Cidade = @Cidade, EstadoId = @EstadoId, DDD = @DDD, Ativo = @Ativo, 
                                       DataAlteracao = @DataAlteracao 
                                   WHERE Id = @Id";
                     }
                     else
                     {
                         query = @"INSERT INTO Cidades 
-                                  (Cidade, EstadoId, Ativo, DataCadastro, DataAlteracao) 
-                                  VALUES (@Cidade, @EstadoId, @Ativo, @DataCadastro, @DataAlteracao)";
+                                  (Cidade, EstadoId, DDD, Ativo, DataCadastro, DataAlteracao) 
+                                  VALUES (@Cidade, @EstadoId, @DDD, @Ativo, @DataCadastro, @DataAlteracao)";
                     }
 
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@Cidade", cidade.NomeCidade);
                         cmd.Parameters.AddWithValue("@EstadoId", cidade.EstadoId);
+                        cmd.Parameters.AddWithValue("@DDD", cidade.DDD);
                         cmd.Parameters.AddWithValue("@Ativo", cidade.Ativo);
                         cmd.Parameters.AddWithValue("@DataAlteracao", cidade.DataAlteracao);
 
@@ -77,7 +78,7 @@ namespace Projeto.DAO
             {
                 conn.Open();
                 string query = @"
-                    SELECT c.Id, c.Cidade, c.EstadoId, c.Ativo, c.DataCadastro, c.DataAlteracao,
+                    SELECT c.Id, c.Cidade, c.EstadoId, c.DDD, c.Ativo, c.DataCadastro, c.DataAlteracao,
                            e.Id AS EstadoObjId, e.Estado AS EstadoObjNome, e.UF,
                            p.Id AS PaisObjId, p.Pais AS PaisObjNome
                     FROM Cidades c
@@ -107,7 +108,7 @@ namespace Projeto.DAO
             {
                 conn.Open();
                 string query = @"
-                    SELECT c.Id, c.Cidade, c.EstadoId, c.Ativo, c.DataCadastro, c.DataAlteracao,
+                    SELECT c.Id, c.Cidade, c.EstadoId, c.DDD, c.Ativo, c.DataCadastro, c.DataAlteracao,
                            e.Id AS EstadoObjId, e.Estado AS EstadoObjNome, e.UF,
                            p.Id AS PaisObjId, p.Pais AS PaisObjNome
                     FROM Cidades c
@@ -129,7 +130,6 @@ namespace Projeto.DAO
             return lista;
         }
 
-        // Método auxiliar para não repetir código
         private Cidade MontarObjetoCidade(MySqlDataReader reader)
         {
             var pais = new Pais
@@ -143,7 +143,7 @@ namespace Projeto.DAO
                 Id = reader.GetInt32("EstadoObjId"),
                 NomeEstado = reader.GetString("EstadoObjNome"),
                 UF = reader.GetString("UF"),
-                oPais = pais 
+                oPais = pais
             };
 
             var cidade = new Cidade
@@ -151,10 +151,11 @@ namespace Projeto.DAO
                 Id = reader.GetInt32("Id"),
                 NomeCidade = reader.GetString("Cidade"),
                 EstadoId = reader.GetInt32("EstadoId"),
+                DDD = reader.IsDBNull(reader.GetOrdinal("DDD")) ? null : reader.GetString("DDD"),
                 Ativo = reader.GetBoolean("Ativo"),
                 DataCadastro = reader.IsDBNull(reader.GetOrdinal("DataCadastro")) ? (DateTime?)null : reader.GetDateTime("DataCadastro"),
                 DataAlteracao = reader.IsDBNull(reader.GetOrdinal("DataAlteracao")) ? (DateTime?)null : reader.GetDateTime("DataAlteracao"),
-                oEstado = estado 
+                oEstado = estado
             };
 
             return cidade;

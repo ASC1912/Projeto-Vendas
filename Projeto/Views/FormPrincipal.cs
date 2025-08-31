@@ -1,6 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using Projeto.Controller;
 using Projeto.Models;
+using Projeto.Utils;
 using Projeto.Views;
 using Projeto.Views.Cadastros;
 using Projeto.Views.Consultas;
@@ -18,6 +19,11 @@ namespace Projeto
 {
     public partial class FormPrincipal : Form
     {
+        Interfaces aInter = new Interfaces();
+        Pais oPais = new Pais();
+        PaisController CtrlPais = new PaisController();
+
+        Pais oPais1 = new Pais();
         public FormPrincipal()
         {
             InitializeComponent();
@@ -57,20 +63,28 @@ namespace Projeto
 
         private void paísToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmConsultaPais formConsultaPais = new frmConsultaPais();
-            formConsultaPais.ShowDialog();
+            aInter.PecaPaises(oPais, CtrlPais);
+
+            //frmConsultaPais formConsultaPais = new frmConsultaPais();
+            //formConsultaPais.ShowDialog();
         }
 
         private void estadoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmConsultaEstado formConsultaEstado = new frmConsultaEstado();
-            formConsultaEstado.ShowDialog();
+
+            aInter.PecaEstados(oPais, oPais1);
+
+            //frmConsultaEstado formConsultaEstado = new frmConsultaEstado();
+            //formConsultaEstado.ShowDialog();
         }
 
         private void cidadeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmConsultaCidade formConsultaCidade = new frmConsultaCidade();
-            formConsultaCidade.ShowDialog();
+
+            aInter.PecaCidades(oPais, oPais1);
+
+            //frmConsultaCidade formConsultaCidade = new frmConsultaCidade();
+            //formConsultaCidade.ShowDialog();
         }
 
         private void clienteToolStripMenuItem_Click(object sender, EventArgs e)
