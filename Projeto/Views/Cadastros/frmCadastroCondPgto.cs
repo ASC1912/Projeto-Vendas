@@ -11,6 +11,7 @@ namespace Projeto
 {
     public partial class frmCadastroCondPgto : Projeto.frmBase
     {
+        frmConsultaFrmPgto oFrmConsultaFrmPgto;
         private ParcelaController parcelaController = new ParcelaController();
         private FormaPagamentoController formaPagamentoController = new FormaPagamentoController();
         private CondicaoPagamentoController condicaoPagamentoController = new CondicaoPagamentoController();
@@ -24,6 +25,75 @@ namespace Projeto
             txtCodigo.Enabled = false;
             txtFormaPagamento.ReadOnly = true;
         }
+
+        public void setFrmConsultaFormaPagamento(object obj)
+        {
+            if (obj != null)
+            {
+                oFrmConsultaFrmPgto = (frmConsultaFrmPgto)obj;
+            }
+        }
+
+        public override void BloquearTxt()
+        {
+            txtDescricao.Enabled = false;
+            txtQtdParcelas.Enabled = false;
+            txtJuros.Enabled = false;
+            txtMulta.Enabled = false;
+            txtDesconto.Enabled = false;
+            chkInativo.Enabled = false;
+
+            txtNumParcela.Enabled = false;
+            txtPorcentagem.Enabled = false;
+            txtPrazoDias.Enabled = false;
+            txtFormaPagamento.Enabled = false;
+            btnFormaPagamento.Enabled = false;
+            btnGerarParcelas.Enabled = false;
+            btnEditarParcela.Enabled = false;
+            btnRemoverParcela.Enabled = false;
+        }
+
+        public override void DesbloquearTxt()
+        {
+            txtDescricao.Enabled = true;
+            txtQtdParcelas.Enabled = true;
+            txtJuros.Enabled = true;
+            txtMulta.Enabled = true;
+            txtDesconto.Enabled = true;
+            chkInativo.Enabled = true;
+
+            txtNumParcela.Enabled = true;
+            txtPorcentagem.Enabled = true;
+            txtPrazoDias.Enabled = true;
+            txtFormaPagamento.Enabled = true;
+            btnFormaPagamento.Enabled = true;
+            btnGerarParcelas.Enabled = true;
+            btnEditarParcela.Enabled = true;
+            btnRemoverParcela.Enabled = true;
+        }
+
+        public override void LimparTxt()
+        {
+            txtCodigo.Text = "0";
+            txtDescricao.Clear();
+            txtQtdParcelas.Clear();
+            txtJuros.Clear();
+            txtMulta.Clear();
+            txtDesconto.Clear();
+            chkInativo.Checked = false;
+
+            txtNumParcela.Clear();
+            txtPorcentagem.Clear();
+            txtPrazoDias.Clear();
+            txtFormaPagamento.Clear();
+            formaPagamentoSelecionadaId = -1;
+            listView1.Items.Clear();
+
+            DateTime agora = DateTime.Now;
+            lblDataCriacao.Text = $"Criado em: {agora:dd/MM/yyyy HH:mm}";
+            lblDataModificacao.Text = $"Modificado em: {agora:dd/MM/yyyy HH:mm}";
+        }
+
 
         public async void CarregarCondicaoPagamento(int id, string descricao, int qtdParcelas, decimal juros, decimal multa, decimal desconto, bool ativo, DateTime? dataCadastro, DateTime? dataAlteracao)
         {
@@ -116,7 +186,7 @@ namespace Projeto
                     int id = string.IsNullOrEmpty(txtCodigo.Text) ? 0 : int.Parse(txtCodigo.Text);
                     string descricao = txtDescricao.Text;
 
-                    var condicoes = await condicaoPagamentoController.ListarCondicaoPagamento(); // **CORRIGIDO COM AWAIT**
+                    var condicoes = await condicaoPagamentoController.ListarCondicaoPagamento(); 
 
                     if (Validador.VerificarDuplicidade(condicoes, c => c.Descricao.Trim().Equals(descricao.Trim(), StringComparison.OrdinalIgnoreCase) && c.Id != id, "Já existe uma condição de pagamento com esta descrição."))
                     {
@@ -169,26 +239,6 @@ namespace Projeto
             }
         }
 
-        private async void AtualizarListViewParcelas(List<Parcelamento> parcelasTemp)
-        {
-            try
-            {
-                listView1.Items.Clear();
-                foreach (var parcela in parcelasTemp)
-                {
-                    string descricaoFormaPagamento = await formaPagamentoController.ObterDescricaoFormaPagamento(parcela.FormaPagamentoId); // **CORRIGIDO COM AWAIT**
-                    ListViewItem item = new ListViewItem(parcela.NumParcela.ToString());
-                    item.SubItems.Add(parcela.PrazoDias.ToString());
-                    item.SubItems.Add(parcela.Porcentagem.ToString("F2") + "%");
-                    item.SubItems.Add(descricaoFormaPagamento);
-                    listView1.Items.Add(item);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Erro ao atualizar a ListView: " + ex.Message);
-            }
-        }
 
         private void btnGerarParcelas_Click(object sender, EventArgs e)
         {
@@ -263,6 +313,14 @@ namespace Projeto
 
         private void btnFormaPagamento_Click(object sender, EventArgs e)
         {
+            oFrmConsultaFrmPgto.ModoSelecao = true;
+            if (oFrmConsultaFrmPgto.ShowDialog() == DialogResult.OK && oFrmConsultaFrmPgto.FormaSelecionada != null)
+            {
+                txtFormaPagamento.Text = oFrmConsultaFrmPgto.FormaSelecionada.Descricao;
+                formaPagamentoSelecionadaId = oFrmConsultaFrmPgto.FormaSelecionada.Id;
+            }
+
+            /*
             frmConsultaFrmPgto consultaFrmPgto = new frmConsultaFrmPgto();
             consultaFrmPgto.ModoSelecao = true;
             if (consultaFrmPgto.ShowDialog() == DialogResult.OK && consultaFrmPgto.FormaSelecionada != null)
@@ -270,6 +328,7 @@ namespace Projeto
                 txtFormaPagamento.Text = consultaFrmPgto.FormaSelecionada.Descricao;
                 formaPagamentoSelecionadaId = consultaFrmPgto.FormaSelecionada.Id;
             }
+            */
         }
 
         private void frmCadastroCondPgto_Load(object sender, EventArgs e)
@@ -277,27 +336,18 @@ namespace Projeto
             if (modoExclusao)
             {
                 btnSalvar.Text = "Deletar";
-                txtDescricao.Enabled = false;
-                txtQtdParcelas.Enabled = false;
-                txtJuros.Enabled = false;
-                txtMulta.Enabled = false;
-                txtDesconto.Enabled = false;
-                chkInativo.Enabled = false;
-                txtNumParcela.Enabled = false;
-                txtPorcentagem.Enabled = false;
-                txtPrazoDias.Enabled = false;
-                txtFormaPagamento.Enabled = false;
-                btnFormaPagamento.Enabled = false;
-                btnGerarParcelas.Enabled = false;
-                btnEditarParcela.Enabled = false;
-                btnRemoverParcela.Enabled = false;
+                BloquearTxt();
             }
-            else if (modoEdicao == false)
+            else if (modoEdicao)
             {
-                txtCodigo.Text = "0";
-                DateTime agora = DateTime.Now;
-                lblDataCriacao.Text = $"Criado em: {agora:dd/MM/yyyy HH:mm}";
-                lblDataModificacao.Text = $"Modificado em: {agora:dd/MM/yyyy HH:mm}";
+                btnSalvar.Text = "Salvar";
+                DesbloquearTxt();
+            }
+            else 
+            {
+                btnSalvar.Text = "Salvar";
+                DesbloquearTxt();
+                LimparTxt();
             }
         }
     }

@@ -9,6 +9,8 @@ namespace Projeto
 {
     public partial class frmConsultaFrmPgto : Projeto.frmBaseConsulta
     {
+        frmCadastroFrmPgto oFrmCadastroFrmPgto;
+
         private FormaPagamentoController controller = new FormaPagamentoController();
         public bool ModoSelecao { get; set; } = false;
         internal FormaPagamento FormaSelecionada { get; private set; }
@@ -19,6 +21,21 @@ namespace Projeto
             this.Text = "Consulta Forma de Pagamento";
         }
 
+        public override void setFrmCadastro(object obj)
+        {
+            if (obj != null)
+            {
+                oFrmCadastroFrmPgto = (frmCadastroFrmPgto)obj;
+            }
+        }
+
+        public override void ConhecaObj(object obj, object ctrl)
+        {
+            if (ctrl != null)
+            {
+                controller = (FormaPagamentoController)ctrl;
+            }
+        }
         private async void frmConsultaFrmPgto_Load(object sender, EventArgs e)
         {
             await CarregarFormasPagamento();
@@ -97,9 +114,16 @@ namespace Projeto
 
         private void btnIncluir_Click(object sender, EventArgs e)
         {
+            oFrmCadastroFrmPgto.modoEdicao = false;
+            oFrmCadastroFrmPgto.modoExclusao = false;
+            oFrmCadastroFrmPgto.FormClosed += async (s, args) => await CarregarFormasPagamento();
+            oFrmCadastroFrmPgto.ShowDialog();
+
+            /*
             frmCadastroFrmPgto formCadastroPagamento = new frmCadastroFrmPgto();
             formCadastroPagamento.FormClosed += async (s, args) => await CarregarFormasPagamento();
             formCadastroPagamento.ShowDialog();
+            */
         }
 
         private async void btnEditar_Click(object sender, EventArgs e)
@@ -112,10 +136,18 @@ namespace Projeto
 
                 if (forma != null)
                 {
+                    oFrmCadastroFrmPgto.modoEdicao = true;
+                    oFrmCadastroFrmPgto.modoExclusao = false;
+                    oFrmCadastroFrmPgto.CarregarFormaPagamento(forma.Id, forma.Descricao, forma.Ativo, forma.DataCadastro, forma.DataAlteracao);
+                    oFrmCadastroFrmPgto.FormClosed += async (s, args) => await CarregarFormasPagamento();
+                    oFrmCadastroFrmPgto.ShowDialog();
+                    
+                    /*
                     var formCadastro = new frmCadastroFrmPgto { modoEdicao = true };
                     formCadastro.CarregarFormaPagamento(forma.Id, forma.Descricao, forma.Ativo, forma.DataCadastro, forma.DataAlteracao);
                     formCadastro.FormClosed += async (s, args) => await CarregarFormasPagamento();
                     formCadastro.ShowDialog();
+                    */
                 }
                 else
                 {
@@ -138,10 +170,18 @@ namespace Projeto
 
                 if (forma != null)
                 {
+                    oFrmCadastroFrmPgto.modoExclusao = true;
+                    oFrmCadastroFrmPgto.modoEdicao = false;
+                    oFrmCadastroFrmPgto.CarregarFormaPagamento(forma.Id, forma.Descricao, forma.Ativo, forma.DataCadastro, forma.DataAlteracao);
+                    oFrmCadastroFrmPgto.FormClosed += async (s, args) => await CarregarFormasPagamento();
+                    oFrmCadastroFrmPgto.ShowDialog();
+
+                    /*
                     var formCadastro = new frmCadastroFrmPgto { modoExclusao = true };
                     formCadastro.CarregarFormaPagamento(forma.Id, forma.Descricao, forma.Ativo, forma.DataCadastro, forma.DataAlteracao);
                     formCadastro.FormClosed += async (s, args) => await CarregarFormasPagamento();
                     formCadastro.ShowDialog();
+                    */
                 }
                 else
                 {

@@ -11,11 +11,15 @@ namespace Projeto.Views
 {
     public partial class frmCadastroCliente : Projeto.frmBase
     {
+        frmConsultaCidade oFrmConsultaCidade;
+        frmConsultaCondPgto oFrmConsultaCondPgto;
+
         private CidadeController cidadeController = new CidadeController();
         private EstadoController estadoController = new EstadoController();
         private PaisController paisController = new PaisController();
         private CondicaoPagamentoController condicaoPagamentoController = new CondicaoPagamentoController();
         private ClienteController controller = new ClienteController();
+
         public bool modoEdicao = false;
         public bool modoExclusao = false;
         private int cidadeSelecionadoId = -1;
@@ -30,6 +34,95 @@ namespace Projeto.Views
             dtpNascimento.MaxDate = DateTime.Now;
             cbTipo.SelectedIndexChanged += cbTipo_SelectedIndexChanged;
             cbTipo_SelectedIndexChanged(null, null);
+        }
+
+        public void setFrmConsultaCidade(object obj)
+        {
+            if (obj != null)
+            {
+                oFrmConsultaCidade = (frmConsultaCidade)obj;
+            }
+        }
+
+        public void setFrmConsultaCondPgto(object obj)
+        {
+            if (obj != null)
+            {
+                oFrmConsultaCondPgto = (frmConsultaCondPgto)obj;
+            }
+        }
+
+        public override void BloquearTxt()
+        {
+            cbTipo.Enabled = false;
+            txtNome.Enabled = false;
+            cbGenero.Enabled = false;
+            dtpNascimento.Enabled = false;
+            txtEndereco.Enabled = false;
+            txtNumEnd.Enabled = false;
+            txtBairro.Enabled = false;
+            txtComplemento.Enabled = false;
+            txtCEP.Enabled = false;
+            txtIdCidade.Enabled = false;
+            btnBuscar.Enabled = false;
+            txtEmail.Enabled = false;
+            txtTelefone.Enabled = false;
+            txtCPF.Enabled = false;
+            txtRG.Enabled = false;
+            txtCondicao.Enabled = false;
+            btnBuscarCond.Enabled = false;
+            chkInativo.Enabled = false;
+        }
+
+        public override void DesbloquearTxt()
+        {
+            cbTipo.Enabled = !modoEdicao;
+
+            txtNome.Enabled = true;
+            cbGenero.Enabled = true;
+            dtpNascimento.Enabled = true;
+            txtEndereco.Enabled = true;
+            txtNumEnd.Enabled = true;
+            txtBairro.Enabled = true;
+            txtComplemento.Enabled = true;
+            txtCEP.Enabled = true;
+            txtIdCidade.Enabled = true;
+            btnBuscar.Enabled = true;
+            txtEmail.Enabled = true;
+            txtTelefone.Enabled = true;
+            txtCPF.Enabled = true;
+            txtRG.Enabled = true;
+            txtCondicao.Enabled = true;
+            btnBuscarCond.Enabled = true;
+            chkInativo.Enabled = true;
+        }
+
+        public override void LimparTxt()
+        {
+            txtCodigo.Text = "0";
+            cbTipo.SelectedIndex = 0;
+            txtNome.Clear();
+            cbGenero.SelectedIndex = 0;
+            dtpNascimento.Value = DateTime.Today;
+            txtEndereco.Clear();
+            txtNumEnd.Clear();
+            txtBairro.Clear();
+            txtComplemento.Clear();
+            txtCEP.Clear();
+            txtIdCidade.Clear();
+            txtCidade.Clear();
+            cidadeSelecionadoId = -1;
+            txtEmail.Clear();
+            txtTelefone.Clear();
+            txtCPF.Clear();
+            txtRG.Clear();
+            txtCondicao.Clear();
+            condicaoSelecionadoId = -1;
+            chkInativo.Checked = false;
+
+            DateTime agora = DateTime.Now;
+            lblDataCriacao.Text = $"Criado em: {agora:dd/MM/yyyy HH:mm}";
+            lblDataModificacao.Text = $"Modificado em: {agora:dd/MM/yyyy HH:mm}";
         }
 
         public void CarregarCliente(int id, string nome, string cpfCnpj, string telefone, string email, string endereco,
@@ -137,7 +230,6 @@ namespace Projeto.Views
 
                 if (!Validador.ValidarIdSelecionado(cidadeSelecionadoId, "Selecione uma cidade.")) return;
 
-                // Bloco de validação de RG agora assíncrono
                 if (cidadeSelecionadoId > 0)
                 {
                     var cidade = await cidadeController.BuscarPorId(cidadeSelecionadoId);
@@ -228,44 +320,37 @@ namespace Projeto.Views
 
         private void frmCadastroCliente_Load(object sender, EventArgs e)
         {
-            cbTipo.SelectedIndexChanged += cbTipo_SelectedIndexChanged;
-
             if (modoExclusao)
             {
                 btnSalvar.Text = "Deletar";
-                cbTipo.Enabled = false;
-                txtNome.Enabled = false;
-                cbGenero.Enabled = false;
-                txtEndereco.Enabled = false;
-                txtNumEnd.Enabled = false;
-                txtBairro.Enabled = false;
-                txtComplemento.Enabled = false;
-                txtCEP.Enabled = false;
-                txtIdCidade.Enabled = false;
-                btnBuscar.Enabled = false;
-                txtEmail.Enabled = false;
-                txtTelefone.Enabled = false;
-                txtCPF.Enabled = false;
-                txtRG.Enabled = false;
-                btnBuscarCond.Enabled = false;
-                chkInativo.Enabled = false;
-                dtpNascimento.Enabled = false;
+                BloquearTxt();
             }
             else if (modoEdicao)
             {
-                cbTipo.Enabled = false;
+                btnSalvar.Text = "Salvar";
+                DesbloquearTxt();
             }
             else
             {
-                txtCodigo.Text = "0";
-                DateTime agora = DateTime.Now;
-                lblDataCriacao.Text = $"Criado em: {agora:dd/MM/yyyy HH:mm}";
-                lblDataModificacao.Text = $"Modificado em: {agora:dd/MM/yyyy HH:mm}";
+                btnSalvar.Text = "Salvar";
+                DesbloquearTxt();
+                LimparTxt();
             }
         }
 
         private void btnBuscar_Click(object sender, EventArgs e)
         {
+            oFrmConsultaCidade.ModoSelecao = true;
+            var resultado = oFrmConsultaCidade.ShowDialog();
+
+            if (resultado == DialogResult.OK && oFrmConsultaCidade.CidadeSelecionado != null)
+            {
+                txtCidade.Text = oFrmConsultaCidade.CidadeSelecionado.NomeCidade;
+                cidadeSelecionadoId = oFrmConsultaCidade.CidadeSelecionado.Id;
+                txtIdCidade.Text = oFrmConsultaCidade.CidadeSelecionado.Id.ToString();
+            }
+
+            /*
             frmConsultaCidade consultaCidade = new frmConsultaCidade();
             consultaCidade.ModoSelecao = true;
 
@@ -277,10 +362,21 @@ namespace Projeto.Views
                 cidadeSelecionadoId = consultaCidade.CidadeSelecionado.Id;
                 txtIdCidade.Text = consultaCidade.CidadeSelecionado.Id.ToString();
             }
+            */
         }
 
         private void btnBuscarCond_Click(object sender, EventArgs e)
         {
+            oFrmConsultaCondPgto.ModoSelecao = true;
+            var resultado = oFrmConsultaCondPgto.ShowDialog();
+
+            if (resultado == DialogResult.OK && oFrmConsultaCondPgto.CondicaoSelecionado != null)
+            {
+                txtCondicao.Text = oFrmConsultaCondPgto.CondicaoSelecionado.Descricao;
+                condicaoSelecionadoId = oFrmConsultaCondPgto.CondicaoSelecionado.Id;
+            }
+
+            /*
             frmConsultaCondPgto consultaCondicao = new frmConsultaCondPgto();
             consultaCondicao.ModoSelecao = true;
 
@@ -291,6 +387,7 @@ namespace Projeto.Views
                 txtCondicao.Text = consultaCondicao.CondicaoSelecionado.Descricao;
                 condicaoSelecionadoId = consultaCondicao.CondicaoSelecionado.Id;
             }
+            */
         }
 
         private async void txtIdCidade_Leave(object sender, EventArgs e)

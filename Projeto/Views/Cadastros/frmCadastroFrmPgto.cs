@@ -18,6 +18,30 @@ namespace Projeto
             txtCodigo.Enabled = false;
         }
 
+        public override void BloquearTxt()
+        {
+            txtDescricao.Enabled = false;
+            chkInativo.Enabled = false;
+        }
+
+        public override void DesbloquearTxt()
+        {
+            txtDescricao.Enabled = true;
+            chkInativo.Enabled = true;
+        }
+
+        public override void LimparTxt()
+        {
+            txtCodigo.Text = "0";
+            txtDescricao.Clear();
+            chkInativo.Checked = false;
+
+            DateTime agora = DateTime.Now;
+            lblDataCriacao.Text = $"Criado em: {agora:dd/MM/yyyy HH:mm}";
+            lblDataModificacao.Text = $"Modificado em: {agora:dd/MM/yyyy HH:mm}";
+        }
+
+
         public void CarregarFormaPagamento(int id, string descricao, bool ativo, DateTime? dataCadastro, DateTime? dataAlteracao)
         {
             modoEdicao = true;
@@ -44,7 +68,7 @@ namespace Projeto
                     try
                     {
                         int id = int.Parse(txtCodigo.Text);
-                        await controller.Excluir(id); // USA AWAIT
+                        await controller.Excluir(id); 
                         MessageBox.Show("Forma de pagamento excluída com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         this.Close();
                     }
@@ -97,7 +121,7 @@ namespace Projeto
                         DataAlteracao = dataModificacao
                     };
 
-                    await controller.Salvar(forma); // USA AWAIT
+                    await controller.Salvar(forma); 
 
                     MessageBox.Show("Forma de pagamento salva com sucesso!");
                     this.Close();
@@ -114,15 +138,18 @@ namespace Projeto
             if (modoExclusao)
             {
                 btnSalvar.Text = "Deletar";
-                txtDescricao.Enabled = false;
-                chkInativo.Enabled = false;
+                BloquearTxt();
             }
-            else if (modoEdicao == false)
+            else if (modoEdicao)
             {
-                txtCodigo.Text = "0";
-                DateTime agora = DateTime.Now;
-                lblDataCriacao.Text = $"Criado em: {agora:dd/MM/yyyy HH:mm}";
-                lblDataModificacao.Text = $"Modificado em: {agora:dd/MM/yyyy HH:mm}";
+                btnSalvar.Text = "Salvar";
+                DesbloquearTxt();
+            }
+            else 
+            {
+                btnSalvar.Text = "Salvar";
+                DesbloquearTxt();
+                LimparTxt();
             }
         }
     }

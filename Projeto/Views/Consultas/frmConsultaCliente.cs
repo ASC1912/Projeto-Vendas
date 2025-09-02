@@ -14,6 +14,23 @@ namespace Projeto.Views
     public partial class frmConsultaCliente : Projeto.frmBaseConsulta
     {
         private ClienteController controller = new ClienteController();
+        frmCadastroCliente oFrmCadastroCliente;
+
+        public override void setFrmCadastro(object obj)
+        {
+            if (obj != null)
+            {
+                oFrmCadastroCliente = (frmCadastroCliente)obj;
+            }
+        }
+
+        public override void ConhecaObj(object obj, object ctrl)
+        {
+            if (ctrl != null)
+            {
+                controller = (ClienteController)ctrl;
+            }
+        }
 
         public frmConsultaCliente() : base()
         {
@@ -22,9 +39,16 @@ namespace Projeto.Views
 
         private async void btnIncluir_Click(object sender, EventArgs e)
         {
+            oFrmCadastroCliente.modoEdicao = false;
+            oFrmCadastroCliente.modoExclusao = false;
+            oFrmCadastroCliente.FormClosed += async (s, args) => await CarregarClientes();
+            oFrmCadastroCliente.ShowDialog();
+
+            /*
             frmCadastroCliente formCadastroCliente = new frmCadastroCliente();
             formCadastroCliente.FormClosed += async (s, args) => await CarregarClientes();
             formCadastroCliente.ShowDialog();
+            */
         }
 
         private async Task CarregarClientes()
@@ -126,6 +150,20 @@ namespace Projeto.Views
 
                 if (cliente != null)
                 {
+                    oFrmCadastroCliente.modoEdicao = true;
+                    oFrmCadastroCliente.modoExclusao = false;
+                    oFrmCadastroCliente.CarregarCliente(
+                        cliente.Id, cliente.Nome, cliente.CPF_CNPJ, cliente.Telefone, cliente.Email,
+                        cliente.Endereco, cliente.NumeroEndereco ?? 0, cliente.Bairro, cliente.Complemento, cliente.CEP,
+                        cliente.Tipo, cliente.Genero, cliente.NomeCidade ?? "Não encontrado", cliente.CidadeId ?? 0,
+                        cliente.DescricaoCondicao ?? "Não encontrada", cliente.IdCondicao ?? 0, cliente.Ativo, cliente.Rg,
+                        cliente.DataNascimento, cliente.DataCadastro, cliente.DataAlteracao
+                    );
+
+                    oFrmCadastroCliente.FormClosed += (s, args) => CarregarClientes();
+                    oFrmCadastroCliente.ShowDialog();
+
+                    /*
                     var formCadastro = new frmCadastroCliente();
                     formCadastro.modoEdicao = true;
                     formCadastro.CarregarCliente(
@@ -154,6 +192,8 @@ namespace Projeto.Views
 
                     formCadastro.FormClosed += (s, args) => CarregarClientes();
                     formCadastro.ShowDialog();
+
+                    */
                 }
                 else
                 {
@@ -178,6 +218,20 @@ namespace Projeto.Views
 
                 if (cliente != null)
                 {
+                    oFrmCadastroCliente.modoExclusao = true;
+                    oFrmCadastroCliente.modoEdicao = false;
+                    oFrmCadastroCliente.CarregarCliente(
+                        cliente.Id, cliente.Nome, cliente.CPF_CNPJ, cliente.Telefone, cliente.Email,
+                        cliente.Endereco, cliente.NumeroEndereco ?? 0, cliente.Bairro, cliente.Complemento, cliente.CEP,
+                        cliente.Tipo, cliente.Genero, cliente.NomeCidade ?? "Não encontrado", cliente.CidadeId ?? 0,
+                        cliente.DescricaoCondicao ?? "Não encontrada", cliente.IdCondicao ?? 0, cliente.Ativo, cliente.Rg,
+                        cliente.DataNascimento, cliente.DataCadastro, cliente.DataAlteracao
+                    );
+
+                    oFrmCadastroCliente.FormClosed += (s, args) => CarregarClientes();
+                    oFrmCadastroCliente.ShowDialog();
+
+                    /*
                     var formCadastro = new frmCadastroCliente
                     {
                         modoExclusao = true
@@ -209,6 +263,7 @@ namespace Projeto.Views
 
                     formCadastro.FormClosed += (s, args) => CarregarClientes();
                     formCadastro.ShowDialog();
+                    */
                 }
                 else
                 {

@@ -9,7 +9,6 @@ namespace Projeto.DAO
     {
         private string connectionString = "Server=localhost;Database=sistema;Uid=root;Pwd=12345678;";
 
-        // O método Salvar não precisa de grandes mudanças
         public void Salvar(Fornecedor fornecedor)
         {
             try
@@ -100,13 +99,13 @@ namespace Projeto.DAO
                         f.*,
                         c.Id AS CidadeObjId, c.Cidade AS CidadeObjNome,
                         e.Id AS EstadoObjId, e.Estado AS EstadoObjNome, e.UF,
-                        p.Id AS PaisObjId, p.Pais AS PaisObjNome
-                        -- , cp.Id as CondicaoObjId, cp.Descricao as CondicaoObjDescricao
+                        p.Id AS PaisObjId, p.Pais AS PaisObjNome,
+                        cp.Id as CondicaoObjId, cp.Descricao as CondicaoObjDescricao
                     FROM Fornecedores f
                     LEFT JOIN Cidades c ON f.CidadeId = c.Id
                     LEFT JOIN Estados e ON c.EstadoId = e.Id
                     LEFT JOIN Paises p ON e.PaisId = p.Id
-                    -- LEFT JOIN CondicoesPagamento cp ON f.IdCondicaoPagamento = cp.Id
+                    LEFT JOIN CondicoesPagamento cp ON f.IdCondicaoPagamento = cp.Id
                     WHERE f.Id = @Id";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
@@ -124,7 +123,7 @@ namespace Projeto.DAO
             return null;
         }
 
-        public List<Fornecedor> ListarFornecedores() // Corrigido nome do método
+        public List<Fornecedor> ListarFornecedores()
         {
             List<Fornecedor> lista = new List<Fornecedor>();
             using (MySqlConnection conn = new MySqlConnection(connectionString))
@@ -135,13 +134,13 @@ namespace Projeto.DAO
                         f.*,
                         c.Id AS CidadeObjId, c.Cidade AS CidadeObjNome,
                         e.Id AS EstadoObjId, e.Estado AS EstadoObjNome, e.UF,
-                        p.Id AS PaisObjId, p.Pais AS PaisObjNome
-                        -- , cp.Id as CondicaoObjId, cp.Descricao as CondicaoObjDescricao
+                        p.Id AS PaisObjId, p.Pais AS PaisObjNome,
+                        cp.Id as CondicaoObjId, cp.Descricao as CondicaoObjDescricao
                     FROM Fornecedores f
                     LEFT JOIN Cidades c ON f.CidadeId = c.Id
                     LEFT JOIN Estados e ON c.EstadoId = e.Id
                     LEFT JOIN Paises p ON e.PaisId = p.Id
-                    -- LEFT JOIN CondicoesPagamento cp ON f.IdCondicaoPagamento = cp.Id
+                    LEFT JOIN CondicoesPagamento cp ON f.IdCondicaoPagamento = cp.Id
                     ORDER BY f.Id";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
@@ -193,7 +192,7 @@ namespace Projeto.DAO
                 };
             }
 
-            /*
+            
             CondicaoPagamento condicao = null;
             if (reader.HasRows && reader.GetSchemaTable().Columns.Contains("CondicaoObjId") && reader["CondicaoObjId"] != DBNull.Value)
             {
@@ -203,7 +202,7 @@ namespace Projeto.DAO
                     Descricao = Convert.ToString(reader["CondicaoObjDescricao"])
                 };
             }
-            */
+            
 
             var fornecedor = new Fornecedor
             {
@@ -225,8 +224,9 @@ namespace Projeto.DAO
                 DataCadastro = reader["DataCadastro"] == DBNull.Value ? (DateTime?)null : Convert.ToDateTime(reader["DataCadastro"]),
                 DataAlteracao = reader["DataAlteracao"] == DBNull.Value ? (DateTime?)null : Convert.ToDateTime(reader["DataAlteracao"]),
                 CidadeId = reader["CidadeId"] == DBNull.Value ? (int?)null : Convert.ToInt32(reader["CidadeId"]),
-                oCidade = cidade
-                // oCondicaoPagamento = condicao
+                oCidade = cidade,
+                oCondicaoPagamento = condicao,
+                DescricaoCondicao = condicao?.Descricao
             };
 
             return fornecedor;

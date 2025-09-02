@@ -76,6 +76,8 @@ namespace Projeto.Views
 
         private async void btnIncluir_Click(object sender, EventArgs e)
         {
+            oFrmCadastroPais.modoEdicao = false;
+            oFrmCadastroPais.modoExclusao = false;
             oFrmCadastroPais.FormClosed += async (s, args) => await CarregarPaises();
             oFrmCadastroPais.ConhecaObj(oPais, controller);
             oFrmCadastroPais.ShowDialog();
@@ -162,6 +164,7 @@ namespace Projeto.Views
                 if (pais != null)
                 {
                     oFrmCadastroPais.modoEdicao = true;
+                    oFrmCadastroPais.modoExclusao = false; 
                     oFrmCadastroPais.CarregarPais(pais.Id, pais.NomePais, pais.Sigla, pais.DDI, pais.Moeda, pais.Ativo, pais.DataCadastro, pais.DataAlteracao);
                     oFrmCadastroPais.FormClosed += async (s, args) => await CarregarPaises();
                     oFrmCadastroPais.ConhecaObj(oPais, controller);
@@ -196,6 +199,7 @@ namespace Projeto.Views
                 if (pais != null)
                 {
                     oFrmCadastroPais.modoExclusao = true;
+                    oFrmCadastroPais.modoEdicao = false;
                     oFrmCadastroPais.CarregarPais(pais.Id, pais.NomePais, pais.Sigla, pais.DDI, pais.Moeda, pais.Ativo, pais.DataCadastro, pais.DataAlteracao);
                     oFrmCadastroPais.FormClosed += async (s, args) => await CarregarPaises();
                     oFrmCadastroPais.ShowDialog();

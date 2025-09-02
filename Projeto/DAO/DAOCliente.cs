@@ -224,7 +224,8 @@ namespace Projeto.DAO
                 DataAlteracao = reader["DataAlteracao"] == DBNull.Value ? (DateTime?)null : Convert.ToDateTime(reader["DataAlteracao"]),
                 CidadeId = reader["CidadeId"] == DBNull.Value ? (int?)null : Convert.ToInt32(reader["CidadeId"]),
                 oCidade = cidade,
-                //oCondicaoPagamento = condicao
+                oCondicaoPagamento = condicao, 
+                DescricaoCondicao = condicao?.Descricao
             };
 
             return cliente;

@@ -14,6 +14,7 @@ namespace Projeto
 {
     public partial class frmConsultaCondPgto : Projeto.frmBaseConsulta
     {
+        frmCadastroCondPgto oFrmCadastroCondPgto;
         private CondicaoPagamentoController controller = new CondicaoPagamentoController();
         public bool ModoSelecao { get; set; } = false;
         internal CondicaoPagamento CondicaoSelecionado { get; private set; }
@@ -23,12 +24,57 @@ namespace Projeto
             InitializeComponent();
         }
 
+        public override void setFrmCadastro(object obj)
+        {
+            if (obj != null)
+            {
+                oFrmCadastroCondPgto = (frmCadastroCondPgto)obj;
+            }
+        }
+
+        public override void ConhecaObj(object obj, object ctrl)
+        {
+            if (ctrl != null)
+            {
+                controller = (CondicaoPagamentoController)ctrl;
+            }
+        }
+
         private async void frmConsultaCondPgto_Load(object sender, EventArgs e)
         {
             await CarregarCondicoesPagamento();
             btnSelecionar.Visible = ModoSelecao;
 
-            // ... (seu código de ajuste de colunas não muda) ...
+            foreach (ColumnHeader column in listView1.Columns)
+            {
+                switch (column.Text)
+                {
+                    case "ID":
+                        column.Width = 50;
+                        break;
+                    case "Descrição":
+                        column.Width = 200;
+                        break;
+                    case "Qtd_parcelas":
+                        column.Width = 50;
+                        break;
+                    case "Juros":
+                        column.Width = 60;
+                        break;
+                    case "Multa":
+                        column.Width = 60;
+                        break;
+                    case "Desconto":
+                        column.Width = 60;
+                        break;
+                    case "Ativo":
+                        column.Width = 50;
+                        break;
+                    default:
+                        column.Width = 100;
+                        break;
+                }
+            }
         }
 
         private async Task CarregarCondicoesPagamento()
@@ -100,9 +146,16 @@ namespace Projeto
 
         private void btnIncluir_Click(object sender, EventArgs e)
         {
+            oFrmCadastroCondPgto.modoEdicao = false;
+            oFrmCadastroCondPgto.modoExclusao = false;
+            oFrmCadastroCondPgto.FormClosed += async (s, args) => await CarregarCondicoesPagamento();
+            oFrmCadastroCondPgto.ShowDialog();
+
+            /*
             frmCadastroCondPgto formCadastroPagamento = new frmCadastroCondPgto();
             formCadastroPagamento.FormClosed += async (s, args) => await CarregarCondicoesPagamento();
             formCadastroPagamento.ShowDialog();
+            */
         }
 
         private async void btnEditar_Click(object sender, EventArgs e)
@@ -116,10 +169,18 @@ namespace Projeto
 
                 if (condicao != null)
                 {
+                    oFrmCadastroCondPgto.modoEdicao = true;
+                    oFrmCadastroCondPgto.modoExclusao = false;
+                    oFrmCadastroCondPgto.CarregarCondicaoPagamento(condicao.Id, condicao.Descricao, condicao.QtdParcelas, condicao.Juros, condicao.Multa, condicao.Desconto, condicao.Ativo, condicao.DataCadastro, condicao.DataAlteracao);
+                    oFrmCadastroCondPgto.FormClosed += async (s, args) => await CarregarCondicoesPagamento();
+                    oFrmCadastroCondPgto.ShowDialog();
+
+                    /*
                     var formCadastro = new frmCadastroCondPgto { modoEdicao = true };
                     formCadastro.CarregarCondicaoPagamento(condicao.Id, condicao.Descricao, condicao.QtdParcelas, condicao.Juros, condicao.Multa, condicao.Desconto, condicao.Ativo, condicao.DataCadastro, condicao.DataAlteracao);
                     formCadastro.FormClosed += async (s, args) => await CarregarCondicoesPagamento();
                     formCadastro.ShowDialog();
+                    */
                 }
                 else
                 {
@@ -143,10 +204,18 @@ namespace Projeto
 
                 if (condicao != null)
                 {
+                    oFrmCadastroCondPgto.modoExclusao = true;
+                    oFrmCadastroCondPgto.modoEdicao = false;
+                    oFrmCadastroCondPgto.CarregarCondicaoPagamento(condicao.Id, condicao.Descricao, condicao.QtdParcelas, condicao.Juros, condicao.Multa, condicao.Desconto, condicao.Ativo, condicao.DataCadastro, condicao.DataAlteracao);
+                    oFrmCadastroCondPgto.FormClosed += async (s, args) => await CarregarCondicoesPagamento();
+                    oFrmCadastroCondPgto.ShowDialog();
+
+                    /*
                     var formCadastro = new frmCadastroCondPgto { modoExclusao = true };
                     formCadastro.CarregarCondicaoPagamento(condicao.Id, condicao.Descricao, condicao.QtdParcelas, condicao.Juros, condicao.Multa, condicao.Desconto, condicao.Ativo, condicao.DataCadastro, condicao.DataAlteracao);
                     formCadastro.FormClosed += async (s, args) => await CarregarCondicoesPagamento();
                     formCadastro.ShowDialog();
+                    */
                 }
                 else
                 {

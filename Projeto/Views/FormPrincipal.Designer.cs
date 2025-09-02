@@ -84,14 +84,14 @@
             this.formaDePagamentoToolStripMenuItem1.Name = "formaDePagamentoToolStripMenuItem1";
             this.formaDePagamentoToolStripMenuItem1.Size = new System.Drawing.Size(255, 26);
             this.formaDePagamentoToolStripMenuItem1.Text = "Forma de Pagamento";
-            this.formaDePagamentoToolStripMenuItem1.Click += new System.EventHandler(this.formaDePagamentoToolStripMenuItem1_Click);
+            this.formaDePagamentoToolStripMenuItem1.Click += new System.EventHandler(this.formaDePagamentoToolStripMenuItem_Click);
             // 
             // condiçãoDePagamentoToolStripMenuItem1
             // 
             this.condiçãoDePagamentoToolStripMenuItem1.Name = "condiçãoDePagamentoToolStripMenuItem1";
             this.condiçãoDePagamentoToolStripMenuItem1.Size = new System.Drawing.Size(255, 26);
             this.condiçãoDePagamentoToolStripMenuItem1.Text = "Condição de Pagamento";
-            this.condiçãoDePagamentoToolStripMenuItem1.Click += new System.EventHandler(this.condiçãoDePagamentoToolStripMenuItem1_Click);
+            this.condiçãoDePagamentoToolStripMenuItem1.Click += new System.EventHandler(this.condiçãoDePagamentoToolStripMenuItem_Click);
             // 
             // marcasToolStripMenuItem
             // 

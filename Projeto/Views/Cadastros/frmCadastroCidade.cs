@@ -10,6 +10,7 @@ namespace Projeto.Views
 {
     public partial class frmCadastroCidade : Projeto.frmBase
     {
+        frmConsultaEstado oFrmConsultaEstado;
         private EstadoController estadoController = new EstadoController();
         private CidadeController controller = new CidadeController();
         private int estadoSelecionadoId = -1;
@@ -22,6 +23,44 @@ namespace Projeto.Views
             txtCodigo.Enabled = false;
         }
 
+        public void setFrmConsultaEstado(object obj)
+        {
+            if (obj != null)
+            {
+                oFrmConsultaEstado = (frmConsultaEstado)obj;
+            }
+        }
+
+        public override void BloquearTxt()
+        {
+            txtNome.Enabled = false;
+            txtDDD.Enabled = false;
+            btnBuscar.Enabled = false;
+            chkInativo.Enabled = false;
+        }
+
+        public override void DesbloquearTxt()
+        {
+            txtNome.Enabled = true;
+            txtDDD.Enabled = true;
+            btnBuscar.Enabled = true;
+            chkInativo.Enabled = true;
+        }
+
+        public override void LimparTxt()
+        {
+            txtCodigo.Text = "0";
+            txtNome.Clear();
+            txtEstado.Clear();
+            txtDDD.Clear();
+            estadoSelecionadoId = -1;
+            chkInativo.Checked = false;
+
+            DateTime agora = DateTime.Now;
+            lblDataCriacao.Text = $"Criado em: {agora:dd/MM/yyyy HH:mm}";
+            lblDataModificacao.Text = $"Modificado em: {agora:dd/MM/yyyy HH:mm}";
+        }
+
         public void CarregarCidade(int id, string nomeCidade, string nomeEstado, int estadoId, string ddd, bool ativo, DateTime? dataCadastro, DateTime? dataAlteracao)
         {
             modoEdicao = true;
@@ -29,7 +68,7 @@ namespace Projeto.Views
             txtNome.Text = nomeCidade;
             txtEstado.Text = nomeEstado;
             estadoSelecionadoId = estadoId;
-            txtDDD.Text = ddd; // NOVO
+            txtDDD.Text = ddd; 
             chkInativo.Checked = !ativo;
             lblDataCriacao.Text = dataCadastro.HasValue ? $"Criado em: {dataCadastro.Value:dd/MM/yyyy HH:mm}" : "Criado em: -";
             lblDataModificacao.Text = dataAlteracao.HasValue ? $"Modificado em: {dataAlteracao.Value:dd/MM/yyyy HH:mm}" : "Modificado em: -";
@@ -40,17 +79,18 @@ namespace Projeto.Views
             if (modoExclusao)
             {
                 btnSalvar.Text = "Deletar";
-                txtNome.Enabled = false;
-                txtDDD.Enabled = false; 
-                btnBuscar.Enabled = false;
-                chkInativo.Enabled = false;
+                BloquearTxt();
             }
-            else if (modoEdicao == false)
+            else if (modoEdicao)
             {
-                txtCodigo.Text = "0";
-                DateTime agora = DateTime.Now;
-                lblDataCriacao.Text = $"Criado em: {agora:dd/MM/yyyy HH:mm}";
-                lblDataModificacao.Text = $"Modificado em: {agora:dd/MM/yyyy HH:mm}";
+                btnSalvar.Text = "Salvar";
+                DesbloquearTxt();
+            }
+            else 
+            {
+                btnSalvar.Text = "Salvar";
+                DesbloquearTxt();
+                LimparTxt();
             }
         }
 
@@ -130,15 +170,13 @@ namespace Projeto.Views
 
         private void btnBuscar_Click(object sender, EventArgs e)
         {
-            frmConsultaEstado consultaEstado = new frmConsultaEstado();
-            consultaEstado.ModoSelecao = true;
+            oFrmConsultaEstado.ModoSelecao = true;
+            var resultado = oFrmConsultaEstado.ShowDialog();
 
-            var resultado = consultaEstado.ShowDialog();
-
-            if (resultado == DialogResult.OK && consultaEstado.EstadoSelecionado != null)
+            if (resultado == DialogResult.OK && oFrmConsultaEstado.EstadoSelecionado != null)
             {
-                txtEstado.Text = consultaEstado.EstadoSelecionado.NomeEstado;
-                estadoSelecionadoId = consultaEstado.EstadoSelecionado.Id;
+                txtEstado.Text = oFrmConsultaEstado.EstadoSelecionado.NomeEstado;
+                estadoSelecionadoId = oFrmConsultaEstado.EstadoSelecionado.Id;
             }
         }
     }

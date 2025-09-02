@@ -42,6 +42,7 @@ namespace Projeto.Views
             DateTime agora = DateTime.Now;
             lblDataCriacao.Text = $"Criado em: {agora:dd/MM/yyyy HH:mm}";
             lblDataModificacao.Text = $"Modificado em: {agora:dd/MM/yyyy HH:mm}";
+            txtNome.Clear();
             txtSigla.Clear();
             txtDDI.Clear();
             txtMoeda.Clear();   
@@ -117,7 +118,7 @@ namespace Projeto.Views
 
                 try
                 {
-                    LimparTxt();
+                    //LimparTxt();
 
                     int id = string.IsNullOrEmpty(txtCodigo.Text) ? 0 : int.Parse(txtCodigo.Text);
                     string nome = txtNome.Text;
@@ -168,18 +169,18 @@ namespace Projeto.Views
             if (modoExclusao)
             {
                 btnSalvar.Text = "Deletar";
-                txtNome.Enabled = false;
-                txtSigla.Enabled = false;
-                txtDDI.Enabled = false;
-                txtMoeda.Enabled = false;
-                chkInativo.Enabled = false;
+                BloquearTxt(); 
             }
-            else if (modoEdicao == false)
+            else if (modoEdicao)
             {
-                txtCodigo.Text = "0";
-                DateTime agora = DateTime.Now;
-                lblDataCriacao.Text = $"Criado em: {agora:dd/MM/yyyy HH:mm}";
-                lblDataModificacao.Text = $"Modificado em: {agora:dd/MM/yyyy HH:mm}";
+                btnSalvar.Text = "Salvar";
+                DesbloquearTxt(); 
+            }
+            else 
+            {
+                btnSalvar.Text = "Salvar";
+                DesbloquearTxt(); 
+                LimparTxt();      
             }
         }
     }

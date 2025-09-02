@@ -21,9 +21,24 @@ namespace Projeto
     {
         Interfaces aInter = new Interfaces();
         Pais oPais = new Pais();
-        PaisController CtrlPais = new PaisController();
+        Estado oEstado = new Estado();
+        Cidade aCidade = new Cidade();
+        FormaPagamento aFrmPgot = new FormaPagamento();
+        CondicaoPagamento aCondPgto = new CondicaoPagamento();
+        Cliente oCliente = new Cliente();
+        Funcionario oFunc = new Funcionario();
+        Fornecedor oForn = new Fornecedor();
 
-        Pais oPais1 = new Pais();
+        PaisController CtrlPais = new PaisController();
+        EstadoController CtrlEstado = new EstadoController();
+        CidadeController CtrlCidade = new CidadeController();
+        FormaPagamentoController CtrlFormaPagamento = new FormaPagamentoController();
+        CondicaoPagamentoController CtrlCondicaoPagamento = new CondicaoPagamentoController();
+        ClienteController CtrlCliente = new ClienteController();
+        FuncionarioController CtrlFuncionario = new FuncionarioController();
+        FornecedorController CtrlFornecedor = new FornecedorController();
+
+
         public FormPrincipal()
         {
             InitializeComponent();
@@ -38,27 +53,19 @@ namespace Projeto
 
         private void formaDePagamentoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmCadastroFrmPgto formCadastroPagamento = new frmCadastroFrmPgto();
-            formCadastroPagamento.ShowDialog();
+            aInter.PecaFormaPagamento(aFrmPgot, CtrlFormaPagamento);
+
+            //frmCadastroFrmPgto formCadastroPagamento = new frmCadastroFrmPgto();
+            //formCadastroPagamento.ShowDialog();
         }
 
 
         private void condiçãoDePagamentoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmCadastroCondPgto formCadastroCondPgto = new frmCadastroCondPgto();
-            formCadastroCondPgto.ShowDialog();
-        }
+            aInter.PecaCondicaoPagamento(aCondPgto, CtrlCondicaoPagamento);
 
-        private void formaDePagamentoToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            frmConsultaFrmPgto formConsultaFrmPgto = new frmConsultaFrmPgto();
-            formConsultaFrmPgto.ShowDialog();
-        }
-
-        private void condiçãoDePagamentoToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            frmConsultaCondPgto formConsultaCondPgto = new frmConsultaCondPgto();
-            formConsultaCondPgto.ShowDialog();
+            //frmCadastroCondPgto formCadastroCondPgto = new frmCadastroCondPgto();
+            //formCadastroCondPgto.ShowDialog();
         }
 
         private void paísToolStripMenuItem_Click(object sender, EventArgs e)
@@ -72,7 +79,7 @@ namespace Projeto
         private void estadoToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
-            aInter.PecaEstados(oPais, oPais1);
+            aInter.PecaEstados(oEstado, CtrlEstado);
 
             //frmConsultaEstado formConsultaEstado = new frmConsultaEstado();
             //formConsultaEstado.ShowDialog();
@@ -81,7 +88,7 @@ namespace Projeto
         private void cidadeToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
-            aInter.PecaCidades(oPais, oPais1);
+            aInter.PecaCidades(aCidade, CtrlCidade);
 
             //frmConsultaCidade formConsultaCidade = new frmConsultaCidade();
             //formConsultaCidade.ShowDialog();
@@ -89,20 +96,30 @@ namespace Projeto
 
         private void clienteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmConsultaCliente formConsultaCliente = new frmConsultaCliente();
-            formConsultaCliente.ShowDialog();
+            aInter.PecaCliente(oCliente, CtrlCliente);
+
+            //frmConsultaCliente formConsultaCliente = new frmConsultaCliente();
+            //formConsultaCliente.ShowDialog();
         }
 
         private void funcionárioToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            aInter.PecaFuncionario(oFunc, CtrlFuncionario);
+
+            /*
             frmConsultaFuncionario formConsultaFuncionario = new frmConsultaFuncionario();
             formConsultaFuncionario.ShowDialog();
+            */
         }
 
         private void fornecedorToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            aInter.PecaFornecedor(oForn, CtrlFornecedor);
+
+            /*
             frmConsultaFornecedor formConsultaFornecedor = new frmConsultaFornecedor();
             formConsultaFornecedor.ShowDialog();
+            */
         }
 
         private void marcasToolStripMenuItem_Click(object sender, EventArgs e)

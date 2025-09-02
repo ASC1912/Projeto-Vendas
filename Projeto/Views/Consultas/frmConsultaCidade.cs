@@ -59,6 +59,9 @@ namespace Projeto.Views
 
         private async void btnIncluir_Click(object sender, EventArgs e)
         {
+            oFrmCadastroCidade.modoEdicao = false;
+            oFrmCadastroCidade.modoExclusao = false;
+
             oFrmCadastroCidade.FormClosed += async (s, args) => await CarregarCidades();
             oFrmCadastroCidade.ShowDialog();
 
@@ -142,10 +145,19 @@ namespace Projeto.Views
 
                 if (cidade != null)
                 {
+                    oFrmCadastroCidade.modoEdicao = true;
+                    oFrmCadastroCidade.modoExclusao = false;
+                    oFrmCadastroCidade.CarregarCidade(cidade.Id, cidade.NomeCidade, cidade.EstadoNome, cidade.EstadoId, cidade.DDD, cidade.Ativo, cidade.DataCadastro, cidade.DataAlteracao);
+
+                    oFrmCadastroCidade.FormClosed += async (s, args) => await CarregarCidades();
+                    oFrmCadastroCidade.ShowDialog();
+
+                    /*
                     var formCadastro = new frmCadastroCidade { modoEdicao = true };
                     formCadastro.CarregarCidade(cidade.Id, cidade.NomeCidade, cidade.EstadoNome, cidade.EstadoId, cidade.DDD, cidade.Ativo, cidade.DataCadastro, cidade.DataAlteracao);
                     formCadastro.FormClosed += async (s, args) => await CarregarCidades();
                     formCadastro.ShowDialog();
+                    */
                 }
                 else
                 {
@@ -168,10 +180,19 @@ namespace Projeto.Views
 
                 if (cidade != null)
                 {
+                    oFrmCadastroCidade.modoExclusao = true;
+                    oFrmCadastroCidade.modoEdicao = false;
+                    oFrmCadastroCidade.CarregarCidade(cidade.Id, cidade.NomeCidade, cidade.EstadoNome, cidade.EstadoId, cidade.DDD, cidade.Ativo, cidade.DataCadastro, cidade.DataAlteracao);
+
+                    oFrmCadastroCidade.FormClosed += async (s, args) => await CarregarCidades();
+                    oFrmCadastroCidade.ShowDialog();
+
+                    /*
                     var formCadastro = new frmCadastroCidade { modoExclusao = true };
                     formCadastro.CarregarCidade(cidade.Id, cidade.NomeCidade, cidade.EstadoNome, cidade.EstadoId, cidade.DDD, cidade.Ativo, cidade.DataCadastro, cidade.DataAlteracao);
                     formCadastro.FormClosed += async (s, args) => await CarregarCidades();
                     formCadastro.ShowDialog();
+                    */
                 }
                 else
                 {

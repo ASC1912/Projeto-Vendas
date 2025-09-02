@@ -9,7 +9,8 @@ namespace Projeto.Views
 {
     public partial class frmCadastroEstado : Projeto.frmBase
     {
-
+        frmConsultaPais oFrmConsultaPais;
+        Estado oEstado;
         private PaisController paisController = new PaisController();
         private EstadoController controller = new EstadoController();
         private int paisSelecionadoId = -1;
@@ -20,6 +21,50 @@ namespace Projeto.Views
         {
             InitializeComponent();
             txtCodigo.Enabled = false;
+        }
+
+        public void setFrmConsultaPais(object obj)
+        {
+            if (obj != null)
+            {
+                oFrmConsultaPais = (frmConsultaPais)obj;
+            }
+        }
+
+        public override void BloquearTxt()
+        {
+            txtNome.Enabled = false;
+            txtUF.Enabled = false;
+            btnBuscar.Enabled = false;
+            chkInativo.Enabled = false;
+        }
+
+        public override void DesbloquearTxt()
+        {
+            txtNome.Enabled = true;
+            txtUF.Enabled = true;
+            btnBuscar.Enabled = true;
+            chkInativo.Enabled = true;
+        }
+
+        public override void LimparTxt()
+        {
+            txtCodigo.Text = "0";
+            txtNome.Clear();
+            txtUF.Clear();
+            txtPais.Clear();
+            paisSelecionadoId = -1;
+            chkInativo.Checked = false;
+
+            DateTime agora = DateTime.Now;
+            lblDataCriacao.Text = $"Criado em: {agora:dd/MM/yyyy HH:mm}";
+            lblDataModificacao.Text = $"Modificado em: {agora:dd/MM/yyyy HH:mm}";
+        }
+
+        public override void ConhecaObj(object obj, object ctrl)
+        {
+            oEstado = (Estado)obj;
+            controller = (EstadoController)ctrl;
         }
 
         public void CarregarEstado(int id, string nomeEstado, string uf, string nomePais, int paisId, bool ativo, DateTime? dataCadastro, DateTime? dataAlteracao)
@@ -40,17 +85,18 @@ namespace Projeto.Views
             if (modoExclusao)
             {
                 btnSalvar.Text = "Deletar";
-                txtNome.Enabled = false;
-                txtUF.Enabled = false;
-                btnBuscar.Enabled = false;
-                chkInativo.Enabled = false;
+                BloquearTxt();
             }
-            else if (modoEdicao == false)
+            else if (modoEdicao)
             {
-                txtCodigo.Text = "0";
-                DateTime agora = DateTime.Now;
-                lblDataCriacao.Text = $"Criado em: {agora:dd/MM/yyyy HH:mm}";
-                lblDataModificacao.Text = $"Modificado em: {agora:dd/MM/yyyy HH:mm}";
+                btnSalvar.Text = "Salvar";
+                DesbloquearTxt();
+            }
+            else 
+            {
+                btnSalvar.Text = "Salvar";
+                DesbloquearTxt();
+                LimparTxt();
             }
         }
 
@@ -139,15 +185,14 @@ namespace Projeto.Views
 
         private void btnBuscar_Click(object sender, EventArgs e)
         {
-            frmConsultaPais consultaPais = new frmConsultaPais();
-            consultaPais.ModoSelecao = true;
+            oFrmConsultaPais.ModoSelecao = true;
 
-            var resultado = consultaPais.ShowDialog();
+            var resultado = oFrmConsultaPais.ShowDialog();
 
-            if (resultado == DialogResult.OK && consultaPais.PaisSelecionado != null)
+            if (resultado == DialogResult.OK && oFrmConsultaPais.PaisSelecionado != null)
             {
-                txtPais.Text = consultaPais.PaisSelecionado.NomePais;
-                paisSelecionadoId = consultaPais.PaisSelecionado.Id;
+                txtPais.Text = oFrmConsultaPais.PaisSelecionado.NomePais;
+                paisSelecionadoId = oFrmConsultaPais.PaisSelecionado.Id;
             }
         }
     }

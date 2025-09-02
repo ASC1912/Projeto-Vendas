@@ -60,6 +60,9 @@ namespace Projeto.Views
 
         private async void btnIncluir_Click(object sender, EventArgs e)
         {
+            oFrmCadastroEstado.modoEdicao = false;
+            oFrmCadastroEstado.modoExclusao = false;
+
             oFrmCadastroEstado.FormClosed += async (s, args) => await CarregarEstados();
             oFrmCadastroEstado.ShowDialog();
 
@@ -144,6 +147,7 @@ namespace Projeto.Views
                 if (estado != null)
                 {
                     oFrmCadastroEstado.modoEdicao = true;
+                    oFrmCadastroEstado.modoExclusao = false;
                     oFrmCadastroEstado.CarregarEstado(
                         estado.Id, estado.NomeEstado, estado.UF, estado.PaisNome,
                         estado.PaisId, estado.Ativo, estado.DataCadastro, estado.DataAlteracao
@@ -184,6 +188,7 @@ namespace Projeto.Views
                 if (estado != null)
                 {
                     oFrmCadastroEstado.modoExclusao = true;
+                    oFrmCadastroEstado.modoEdicao = false;
                     oFrmCadastroEstado.CarregarEstado(
                         estado.Id, estado.NomeEstado, estado.UF, estado.PaisNome,
                         estado.PaisId, estado.Ativo, estado.DataCadastro, estado.DataAlteracao
