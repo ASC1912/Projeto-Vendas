@@ -28,6 +28,11 @@ namespace Projeto
         Cliente oCliente = new Cliente();
         Funcionario oFunc = new Funcionario();
         Fornecedor oForn = new Fornecedor();
+        Transportadora oTransportadora = new Transportadora();
+        Marca aMarca = new Marca();
+        Grupo oGrupo = new Grupo();
+        Produto oProduto = new Produto();
+        Veiculo oVeiculo = new Veiculo();
 
         PaisController CtrlPais = new PaisController();
         EstadoController CtrlEstado = new EstadoController();
@@ -37,7 +42,11 @@ namespace Projeto
         ClienteController CtrlCliente = new ClienteController();
         FuncionarioController CtrlFuncionario = new FuncionarioController();
         FornecedorController CtrlFornecedor = new FornecedorController();
-
+        TransportadoraController CtrlTransportadora = new TransportadoraController();
+        MarcaController CtrlMarca = new MarcaController();
+        GrupoController CtrlGrupo = new GrupoController();
+        ProdutoController CtrlProduto = new ProdutoController();
+        VeiculoController CtrlVeiculo = new VeiculoController();
 
         public FormPrincipal()
         {
@@ -124,32 +133,52 @@ namespace Projeto
 
         private void marcasToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            aInter.PecaMarca(aMarca, CtrlMarca);
+
+            /*
             frmConsultaMarca formConsultaMarca = new frmConsultaMarca();
             formConsultaMarca.ShowDialog();
+            */
         }
 
         private void gruposToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            aInter.PecaGrupo(oGrupo, CtrlGrupo);
+
+            /*
             frmConsultaGrupo formConsultaGrupo = new frmConsultaGrupo();
             formConsultaGrupo.ShowDialog();
+            */
         }
 
         private void produtosToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            aInter.PecaProduto(oProduto, CtrlProduto);
+
+            /*
             frmConsultaProduto formConstulaProduto = new frmConsultaProduto();
             formConstulaProduto.ShowDialog();
+            */
         }
 
         private void transportadorasToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            aInter.PecaTransportadora(oTransportadora, CtrlTransportadora);
+
+            /*
             frmConsultaTransportadora formConsultaTransportadora = new frmConsultaTransportadora();
             formConsultaTransportadora.ShowDialog();
+            */
         }
 
         private void veículosToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            aInter.PecaVeiculo(oVeiculo, CtrlVeiculo);
+
+            /*
             frmConsultaVeiculo formConsultaVeiculo = new frmConsultaVeiculo();
             formConsultaVeiculo.ShowDialog();
+            */
         }
 
         private void comprasToolStripMenuItem_Click(object sender, EventArgs e)

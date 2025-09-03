@@ -19,6 +19,37 @@ namespace Projeto.Views.Cadastros
             txtCodigo.Enabled = false;
         }
 
+        public override void ConhecaObj(object obj, object ctrl)
+        {
+            if (ctrl != null)
+            {
+                controller = (MarcaController)ctrl;
+            }
+        }
+
+        public override void BloquearTxt()
+        {
+            txtNome.Enabled = false;
+            chkInativo.Enabled = false;
+        }
+
+        public override void DesbloquearTxt()
+        {
+            txtNome.Enabled = true;
+            chkInativo.Enabled = true;
+        }
+
+        public override void LimparTxt()
+        {
+            txtCodigo.Text = "0";
+            txtNome.Clear();
+            chkInativo.Checked = false;
+
+            DateTime agora = DateTime.Now;
+            lblDataCriacao.Text = $"Criado em: {agora:dd/MM/yyyy HH:mm}";
+            lblDataModificacao.Text = $"Modificado em: {agora:dd/MM/yyyy HH:mm}";
+        }
+
         public void CarregarMarca(int id, string nomeMarca, bool ativo, DateTime? dataCadastro, DateTime? dataAlteracao)
         {
             modoEdicao = true;
@@ -119,15 +150,18 @@ namespace Projeto.Views.Cadastros
             if (modoExclusao)
             {
                 btnSalvar.Text = "Deletar";
-                txtNome.Enabled = false;
-                chkInativo.Enabled = false;
+                BloquearTxt();
             }
-            else if (modoEdicao == false)
+            else if (modoEdicao)
             {
-                txtCodigo.Text = "0";
-                DateTime agora = DateTime.Now;
-                lblDataCriacao.Text = $"Criado em: {agora:dd/MM/yyyy HH:mm}";
-                lblDataModificacao.Text = $"Modificado em: {agora:dd/MM/yyyy HH:mm}";
+                btnSalvar.Text = "Salvar";
+                DesbloquearTxt();
+            }
+            else
+            {
+                btnSalvar.Text = "Salvar";
+                DesbloquearTxt();
+                LimparTxt();
             }
         }
     }

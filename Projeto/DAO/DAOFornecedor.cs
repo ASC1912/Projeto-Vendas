@@ -192,9 +192,9 @@ namespace Projeto.DAO
                 };
             }
 
-            
+
             CondicaoPagamento condicao = null;
-            if (reader.HasRows && reader.GetSchemaTable().Columns.Contains("CondicaoObjId") && reader["CondicaoObjId"] != DBNull.Value)
+            if (reader["CondicaoObjId"] != DBNull.Value)
             {
                 condicao = new CondicaoPagamento
                 {
@@ -202,7 +202,7 @@ namespace Projeto.DAO
                     Descricao = Convert.ToString(reader["CondicaoObjDescricao"])
                 };
             }
-            
+
 
             var fornecedor = new Fornecedor
             {

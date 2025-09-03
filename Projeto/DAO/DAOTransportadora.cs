@@ -9,7 +9,6 @@ namespace Projeto.DAO
     {
         private string connectionString = "Server=localhost;Database=sistema;Uid=root;Pwd=12345678;";
 
-        // O método Salvar não precisa de grandes mudanças
         public void Salvar(Transportadora transportadora)
         {
             try
@@ -98,13 +97,13 @@ namespace Projeto.DAO
                         t.*,
                         c.Id AS CidadeObjId, c.Cidade AS CidadeObjNome,
                         e.Id AS EstadoObjId, e.Estado AS EstadoObjNome, e.UF,
-                        p.Id AS PaisObjId, p.Pais AS PaisObjNome
-                        -- , cp.Id as CondicaoObjId, cp.Descricao as CondicaoObjDescricao
+                        p.Id AS PaisObjId, p.Pais AS PaisObjNome,
+                        cp.Id as CondicaoObjId, cp.Descricao as CondicaoObjDescricao
                     FROM Transportadoras t
                     LEFT JOIN Cidades c ON t.CidadeId = c.Id
                     LEFT JOIN Estados e ON c.EstadoId = e.Id
                     LEFT JOIN Paises p ON e.PaisId = p.Id
-                    -- LEFT JOIN CondicoesPagamento cp ON t.IdCondicaoPagamento = cp.Id
+                    LEFT JOIN CondicoesPagamento cp ON t.IdCondicaoPagamento = cp.Id
                     WHERE t.Id = @Id";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
@@ -133,13 +132,13 @@ namespace Projeto.DAO
                         t.*,
                         c.Id AS CidadeObjId, c.Cidade AS CidadeObjNome,
                         e.Id AS EstadoObjId, e.Estado AS EstadoObjNome, e.UF,
-                        p.Id AS PaisObjId, p.Pais AS PaisObjNome
-                        -- , cp.Id as CondicaoObjId, cp.Descricao as CondicaoObjDescricao
+                        p.Id AS PaisObjId, p.Pais AS PaisObjNome,
+                        cp.Id as CondicaoObjId, cp.Descricao as CondicaoObjDescricao
                     FROM Transportadoras t
                     LEFT JOIN Cidades c ON t.CidadeId = c.Id
                     LEFT JOIN Estados e ON c.EstadoId = e.Id
                     LEFT JOIN Paises p ON e.PaisId = p.Id
-                    -- LEFT JOIN CondicoesPagamento cp ON t.IdCondicaoPagamento = cp.Id
+                    LEFT JOIN CondicoesPagamento cp ON t.IdCondicaoPagamento = cp.Id
                     ORDER BY t.Id";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
@@ -191,9 +190,9 @@ namespace Projeto.DAO
                 };
             }
 
-            /*
+
             CondicaoPagamento condicao = null;
-            if (reader.HasRows && reader.GetSchemaTable().Columns.Contains("CondicaoObjId") && reader["CondicaoObjId"] != DBNull.Value)
+            if (reader["CondicaoObjId"] != DBNull.Value)
             {
                 condicao = new CondicaoPagamento
                 {
@@ -201,7 +200,6 @@ namespace Projeto.DAO
                     Descricao = Convert.ToString(reader["CondicaoObjDescricao"])
                 };
             }
-            */
 
             var transportadora = new Transportadora
             {
@@ -223,8 +221,9 @@ namespace Projeto.DAO
                 DataCadastro = reader["DataCadastro"] == DBNull.Value ? (DateTime?)null : Convert.ToDateTime(reader["DataCadastro"]),
                 DataAlteracao = reader["DataAlteracao"] == DBNull.Value ? (DateTime?)null : Convert.ToDateTime(reader["DataAlteracao"]),
                 CidadeId = reader["CidadeId"] == DBNull.Value ? (int?)null : Convert.ToInt32(reader["CidadeId"]),
-                oCidade = cidade
-                // oCondicaoPagamento = condicao
+                oCidade = cidade,
+                oCondicaoPagamento = condicao,
+                DescricaoCondicao = condicao?.Descricao
             };
 
             return transportadora;

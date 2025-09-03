@@ -9,6 +9,9 @@ namespace Projeto.Views.Cadastros
 {
     public partial class frmCadastroProduto : Projeto.frmBase
     {
+        private frmConsultaGrupo oFrmConsultaGrupo;
+        private frmConsultaMarca oFrmConsultaMarca;
+
         private ProdutoController controller = new ProdutoController();
         private GrupoController grupoController = new GrupoController();
         private MarcaController marcaController = new MarcaController();
@@ -21,6 +24,70 @@ namespace Projeto.Views.Cadastros
         {
             InitializeComponent();
             txtCodigo.Enabled = false;
+        }
+
+        public override void ConhecaObj(object obj, object ctrl)
+        {
+            if (ctrl != null)
+            {
+                controller = (ProdutoController)ctrl;
+            }
+        }
+
+        public void setFrmConsultaGrupo(object obj)
+        {
+            if (obj != null)
+            {
+                oFrmConsultaGrupo = (frmConsultaGrupo)obj;
+            }
+        }
+
+        public void setFrmConsultaMarca(object obj)
+        {
+            if (obj != null)
+            {
+                oFrmConsultaMarca = (frmConsultaMarca)obj;
+            }
+        }
+
+        public override void BloquearTxt()
+        {
+            txtNome.Enabled = false;
+            txtDescricao.Enabled = false;
+            txtPreco.Enabled = false;
+            txtEstoque.Enabled = false;
+            btnMarca.Enabled = false;
+            btnBuscarGrupo.Enabled = false;
+            chkInativo.Enabled = false;
+        }
+
+        public override void DesbloquearTxt()
+        {
+            txtNome.Enabled = true;
+            txtDescricao.Enabled = true;
+            txtPreco.Enabled = true;
+            txtEstoque.Enabled = true;
+            btnMarca.Enabled = true;
+            btnBuscarGrupo.Enabled = true;
+            chkInativo.Enabled = true;
+        }
+
+        public override void LimparTxt()
+        {
+            txtCodigo.Text = "0";
+            txtNome.Clear();
+            txtDescricao.Clear();
+            txtPreco.Clear();
+            txtEstoque.Clear();
+            txtMarca.Clear();
+            txtGrupo.Clear();
+            marcaSelecionadoId = -1;
+            grupoSelecionadoId = -1;
+            chkInativo.Checked = false;
+
+            DateTime agora = DateTime.Now;
+            lblDataCriacao.Text = $"Criado em: {agora:dd/MM/yyyy HH:mm}";
+            lblDataModificacao.Text = $"Modificado em: {agora:dd/MM/yyyy HH:mm}";
         }
 
         public void CarregarProduto(int id, string nomeProduto, string descricao, decimal preco, int estoque, int idMarca, string nomeMarca, int idGrupo, string nomeGrupo, bool ativo, DateTime? dataCadastro, DateTime? dataAlteracao)
@@ -133,25 +200,31 @@ namespace Projeto.Views.Cadastros
             if (modoExclusao)
             {
                 btnSalvar.Text = "Deletar";
-                txtNome.Enabled = false;
-                txtDescricao.Enabled = false;
-                txtPreco.Enabled = false;
-                txtEstoque.Enabled = false;
-                btnMarca.Enabled = false;
-                btnBuscarGrupo.Enabled = false;
-                chkInativo.Enabled = false;
+                BloquearTxt();
             }
-            else if (modoEdicao == false)
+            else if (modoEdicao)
             {
-                txtCodigo.Text = "0";
-                DateTime agora = DateTime.Now;
-                lblDataCriacao.Text = $"Criado em: {agora:dd/MM/yyyy HH:mm}";
-                lblDataModificacao.Text = $"Modificado em: {agora:dd/MM/yyyy HH:mm}";
+                btnSalvar.Text = "Salvar";
+                DesbloquearTxt();
+            }
+            else
+            {
+                btnSalvar.Text = "Salvar";
+                DesbloquearTxt();
+                LimparTxt();
             }
         }
 
         private void btnBuscarGrupo_Click(object sender, EventArgs e)
         {
+            oFrmConsultaGrupo.ModoSelecao = true;
+            if (oFrmConsultaGrupo.ShowDialog() == DialogResult.OK && oFrmConsultaGrupo.GrupoSelecionado != null)
+            {
+                txtGrupo.Text = oFrmConsultaGrupo.GrupoSelecionado.NomeGrupo;
+                grupoSelecionadoId = oFrmConsultaGrupo.GrupoSelecionado.Id;
+            }
+
+            /*
             frmConsultaGrupo consultaGrupo = new frmConsultaGrupo();
             consultaGrupo.ModoSelecao = true;
 
@@ -160,10 +233,19 @@ namespace Projeto.Views.Cadastros
                 txtGrupo.Text = consultaGrupo.GrupoSelecionado.NomeGrupo;
                 grupoSelecionadoId = consultaGrupo.GrupoSelecionado.Id;
             }
+            */
         }
 
         private void btnMarca_Click(object sender, EventArgs e)
         {
+            oFrmConsultaMarca.ModoSelecao = true;
+            if (oFrmConsultaMarca.ShowDialog() == DialogResult.OK && oFrmConsultaMarca.MarcaSelecionado != null)
+            {
+                txtMarca.Text = oFrmConsultaMarca.MarcaSelecionado.NomeMarca;
+                marcaSelecionadoId = oFrmConsultaMarca.MarcaSelecionado.Id;
+            }
+
+            /*
             frmConsultaMarca consultaMarca = new frmConsultaMarca();
             consultaMarca.ModoSelecao = true;
 
@@ -172,6 +254,7 @@ namespace Projeto.Views.Cadastros
                 txtMarca.Text = consultaMarca.MarcaSelecionado.NomeMarca;
                 marcaSelecionadoId = consultaMarca.MarcaSelecionado.Id;
             }
+            */
         }
     }
 }

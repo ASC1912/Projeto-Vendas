@@ -11,6 +11,9 @@ namespace Projeto.Views.Cadastros
 {
     public partial class frmCadastroVeiculo : Projeto.frmBase
     {
+        private frmConsultaTransportadora oFrmConsultaTransportadora;
+        private frmConsultaMarca oFrmConsultaMarca;
+
         private VeiculoController controller = new VeiculoController();
         private int transportadoraSelecionadaId = -1;
         private int marcaSelecionadaId = -1; 
@@ -23,6 +26,76 @@ namespace Projeto.Views.Cadastros
             txtCodigo.Enabled = false;
             txtTransportadora.ReadOnly = true; 
             txtMarca.ReadOnly = true; 
+        }
+
+        // Método para receber o controlador (seguindo o padrão)
+        public override void ConhecaObj(object obj, object ctrl)
+        {
+            if (ctrl != null)
+            {
+                controller = (VeiculoController)ctrl;
+            }
+        }
+
+        // Métodos para receber as instâncias dos formulários de consulta
+        public void setFrmConsultaTransportadora(object obj)
+        {
+            if (obj != null)
+            {
+                oFrmConsultaTransportadora = (frmConsultaTransportadora)obj;
+            }
+        }
+
+        public void setFrmConsultaMarca(object obj)
+        {
+            if (obj != null)
+            {
+                oFrmConsultaMarca = (frmConsultaMarca)obj;
+            }
+        }
+
+        public override void BloquearTxt()
+        {
+            txtPlaca.Enabled = false;
+            txtModelo.Enabled = false;
+            txtMarca.Enabled = false;
+            btnMarca.Enabled = false;
+            txtAnoFabricacao.Enabled = false;
+            txtCapacidadeCarga.Enabled = false;
+            txtTransportadora.Enabled = false;
+            btnTransportadora.Enabled = false;
+            chkInativo.Enabled = false;
+        }
+
+        public override void DesbloquearTxt()
+        {
+            txtPlaca.Enabled = true;
+            txtModelo.Enabled = true;
+            txtMarca.Enabled = true;
+            btnMarca.Enabled = true;
+            txtAnoFabricacao.Enabled = true;
+            txtCapacidadeCarga.Enabled = true;
+            txtTransportadora.Enabled = true;
+            btnTransportadora.Enabled = true;
+            chkInativo.Enabled = true;
+        }
+
+        public override void LimparTxt()
+        {
+            txtCodigo.Text = "0";
+            txtPlaca.Clear();
+            txtModelo.Clear();
+            txtMarca.Clear();
+            txtAnoFabricacao.Clear();
+            txtCapacidadeCarga.Clear();
+            txtTransportadora.Clear();
+            transportadoraSelecionadaId = -1;
+            marcaSelecionadaId = -1;
+            chkInativo.Checked = false;
+
+            DateTime agora = DateTime.Now;
+            lblDataCriacao.Text = $"Criado em: {agora:dd/MM/yyyy HH:mm}";
+            lblDataModificacao.Text = $"Modificado em: {agora:dd/MM/yyyy HH:mm}";
         }
 
         public void CarregarVeiculo(int id, string placa, string modelo, int? anoFabricacao, decimal? capacidadeCarga, bool ativo, int idTransportadora, string nomeTransportadora, int? idMarca, string nomeMarca, DateTime? dataCadastro, DateTime? dataAlteracao)
@@ -119,26 +192,29 @@ namespace Projeto.Views.Cadastros
             if (modoExclusao)
             {
                 btnSalvar.Text = "Deletar";
-                txtPlaca.Enabled = false;
-                txtModelo.Enabled = false;
-                txtMarca.Enabled = false;
-                btnMarca.Enabled = false;
-                txtAnoFabricacao.Enabled = false;
-                txtCapacidadeCarga.Enabled = false;
-                txtTransportadora.Enabled = false;
-                btnTransportadora.Enabled = false;
-                chkInativo.Enabled = false;
+                BloquearTxt();
             }
-            else if (modoEdicao == false)
+            else if (modoEdicao)
             {
-                txtCodigo.Text = "0";
-                DateTime agora = DateTime.Now;
-                lblDataCriacao.Text = $"Criado em: {agora:dd/MM/yyyy HH:mm}";
-                lblDataModificacao.Text = $"Modificado em: {agora:dd/MM/yyyy HH:mm}";
+                btnSalvar.Text = "Salvar";
+                DesbloquearTxt();
+            }
+            else
+            {
+                btnSalvar.Text = "Salvar";
+                DesbloquearTxt();
+                LimparTxt();
             }
         }
         private void btnBuscarTransportadora_Click(object sender, EventArgs e)
         {
+            oFrmConsultaTransportadora.ModoSelecao = true;
+            if (oFrmConsultaTransportadora.ShowDialog() == DialogResult.OK && oFrmConsultaTransportadora.TransportadoraSelecionada != null)
+            {
+                txtTransportadora.Text = oFrmConsultaTransportadora.TransportadoraSelecionada.Nome;
+                transportadoraSelecionadaId = oFrmConsultaTransportadora.TransportadoraSelecionada.Id;
+            }
+            /*
             frmConsultaTransportadora consulta = new frmConsultaTransportadora();
             consulta.ModoSelecao = true;
 
@@ -147,10 +223,19 @@ namespace Projeto.Views.Cadastros
                 txtTransportadora.Text = consulta.TransportadoraSelecionada.Nome;
                 transportadoraSelecionadaId = consulta.TransportadoraSelecionada.Id;
             }
+            */
         }
 
         private void btnBuscarMarca_Click(object sender, EventArgs e)
         {
+            oFrmConsultaMarca.ModoSelecao = true;
+            if (oFrmConsultaMarca.ShowDialog() == DialogResult.OK && oFrmConsultaMarca.MarcaSelecionado != null)
+            {
+                txtMarca.Text = oFrmConsultaMarca.MarcaSelecionado.NomeMarca;
+                marcaSelecionadaId = oFrmConsultaMarca.MarcaSelecionado.Id;
+            }
+
+            /*
             frmConsultaMarca consulta = new frmConsultaMarca();
             consulta.ModoSelecao = true;
 
@@ -159,6 +244,7 @@ namespace Projeto.Views.Cadastros
                 txtMarca.Text = consulta.MarcaSelecionado.NomeMarca;
                 marcaSelecionadaId = consulta.MarcaSelecionado.Id;
             }
+            */
         }
     }
 }

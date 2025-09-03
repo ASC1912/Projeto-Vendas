@@ -123,7 +123,7 @@ namespace Projeto.DAO
             return null;
         }
 
-        public List<Cliente> ListarClientes() // Corrigido nome do método
+        public List<Cliente> ListarClientes() 
         {
             List<Cliente> lista = new List<Cliente>();
             using (MySqlConnection conn = new MySqlConnection(connectionString))

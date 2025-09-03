@@ -12,12 +12,28 @@ namespace Projeto.Views.Consultas
         private MarcaController controller = new MarcaController();
         public bool ModoSelecao { get; set; } = false;
         internal Marca MarcaSelecionado { get; private set; }
+        private frmCadastroMarca oFrmCadastroMarca;
+
 
         public frmConsultaMarca()
         {
             InitializeComponent();
         }
+        public override void setFrmCadastro(object obj)
+        {
+            if (obj != null)
+            {
+                oFrmCadastroMarca = (frmCadastroMarca)obj;
+            }
+        }
 
+        public override void ConhecaObj(object obj, object ctrl)
+        {
+            if (ctrl != null)
+            {
+                controller = (MarcaController)ctrl;
+            }
+        }
         private void frmConsultaMarca_Load(object sender, EventArgs e)
         {
             CarregarMarcas();
@@ -107,9 +123,16 @@ namespace Projeto.Views.Consultas
 
         private void btnIncluir_Click(object sender, EventArgs e)
         {
+            oFrmCadastroMarca.modoEdicao = false;
+            oFrmCadastroMarca.modoExclusao = false;
+            oFrmCadastroMarca.FormClosed += (s, args) => CarregarMarcas();
+            oFrmCadastroMarca.ShowDialog();
+
+            /*
             frmCadastroMarca formCadastroMarca = new frmCadastroMarca();
             formCadastroMarca.FormClosed += (s, args) => CarregarMarcas();
             formCadastroMarca.ShowDialog();
+            */
         }
 
         private void btnEditar_Click(object sender, EventArgs e)
@@ -123,6 +146,20 @@ namespace Projeto.Views.Consultas
 
                 if (marca != null)
                 {
+                    oFrmCadastroMarca.modoEdicao = true;
+                    oFrmCadastroMarca.modoExclusao = false;
+                    oFrmCadastroMarca.CarregarMarca(
+                        marca.Id,
+                        marca.NomeMarca,
+                        marca.Ativo,
+                        marca.DataCadastro,
+                        marca.DataAlteracao
+                    );
+
+                    oFrmCadastroMarca.FormClosed += (s, args) => CarregarMarcas();
+                    oFrmCadastroMarca.ShowDialog();
+
+                    /*
                     var formCadastro = new frmCadastroMarca();
                     formCadastro.CarregarMarca(
                         marca.Id,
@@ -134,6 +171,7 @@ namespace Projeto.Views.Consultas
 
                     formCadastro.FormClosed += (s, args) => CarregarMarcas();
                     formCadastro.ShowDialog();
+                    */
                 }
                 else
                 {
@@ -157,6 +195,20 @@ namespace Projeto.Views.Consultas
 
                 if (marca != null)
                 {
+                    oFrmCadastroMarca.modoExclusao = true;
+                    oFrmCadastroMarca.modoEdicao = false;
+                    oFrmCadastroMarca.CarregarMarca(
+                        marca.Id,
+                        marca.NomeMarca,
+                        marca.Ativo,
+                        marca.DataCadastro,
+                        marca.DataAlteracao
+                    );
+
+                    oFrmCadastroMarca.FormClosed += (s, args) => CarregarMarcas();
+                    oFrmCadastroMarca.ShowDialog();
+
+                    /*
                     var formCadastro = new frmCadastroMarca
                     {
                         modoExclusao = true 
@@ -172,6 +224,7 @@ namespace Projeto.Views.Consultas
 
                     formCadastro.FormClosed += (s, args) => CarregarMarcas();
                     formCadastro.ShowDialog();
+                    */
                 }
                 else
                 {

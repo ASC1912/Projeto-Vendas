@@ -15,6 +15,9 @@ namespace Projeto.Views.Cadastros
 {
     public partial class frmCadastroTransportadora : Projeto.frmBase
     {
+        frmConsultaCidade oFrmConsultaCidade;
+        frmConsultaCondPgto oFrmConsultaCondPgto;
+
         private CidadeController cidadeController = new CidadeController();
         private CondicaoPagamentoController condicaoPagamentoController = new CondicaoPagamentoController();
         private TransportadoraController controller = new TransportadoraController();
@@ -30,6 +33,99 @@ namespace Projeto.Views.Cadastros
             cbTipo.SelectedIndex = 0;
             cbTipo.SelectedIndexChanged += cbTipo_SelectedIndexChanged;
             cbTipo_SelectedIndexChanged(null, null);
+        }
+
+        public override void ConhecaObj(object obj, object ctrl)
+        {
+            if (ctrl != null)
+            {
+                controller = (TransportadoraController)ctrl;
+            }
+        }
+
+        public void setFrmConsultaCidade(object obj)
+        {
+            if (obj != null)
+            {
+                oFrmConsultaCidade = (frmConsultaCidade)obj;
+            }
+        }
+
+        public void setFrmConsultaCondPgto(object obj)
+        {
+            if (obj != null)
+            {
+                oFrmConsultaCondPgto = (frmConsultaCondPgto)obj;
+            }
+        }
+
+        public override void BloquearTxt()
+        {
+            cbTipo.Enabled = false;
+            txtNome.Enabled = false;
+            txtEndereco.Enabled = false;
+            txtNumEnd.Enabled = false;
+            txtBairro.Enabled = false;
+            txtComplemento.Enabled = false;
+            txtCEP.Enabled = false;
+            txtIdCidade.Enabled = false;
+            btnBuscar.Enabled = false;
+            txtEmail.Enabled = false;
+            txtTelefone.Enabled = false;
+            txtCPF.Enabled = false;
+            txtInscEst.Enabled = false;
+            txtInscEstSubTrib.Enabled = false;
+            txtCondicao.Enabled = false;
+            btnBuscarCond.Enabled = false;
+            chkInativo.Enabled = false;
+        }
+
+        public override void DesbloquearTxt()
+        {
+            cbTipo.Enabled = !modoEdicao; 
+            txtNome.Enabled = true;
+            txtEndereco.Enabled = true;
+            txtNumEnd.Enabled = true;
+            txtBairro.Enabled = true;
+            txtComplemento.Enabled = true;
+            txtCEP.Enabled = true;
+            txtIdCidade.Enabled = true;
+            btnBuscar.Enabled = true;
+            txtEmail.Enabled = true;
+            txtTelefone.Enabled = true;
+            txtCPF.Enabled = true;
+            txtInscEst.Enabled = true;
+            txtInscEstSubTrib.Enabled = true;
+            txtCondicao.Enabled = true;
+            btnBuscarCond.Enabled = true;
+            chkInativo.Enabled = true;
+        }
+
+        public override void LimparTxt()
+        {
+            txtCodigo.Text = "0";
+            cbTipo.SelectedIndex = 0;
+            txtNome.Clear();
+            txtEndereco.Clear();
+            txtNumEnd.Clear();
+            txtBairro.Clear();
+            txtComplemento.Clear();
+            txtCEP.Clear();
+            txtIdCidade.Clear();
+            txtCidade.Clear();
+            cidadeSelecionadoId = -1;
+            txtEmail.Clear();
+            txtTelefone.Clear();
+            txtCPF.Clear();
+            txtInscEst.Clear();
+            txtInscEstSubTrib.Clear();
+            txtCondicao.Clear();
+            condicaoSelecionadoId = -1;
+            chkInativo.Checked = false;
+
+            DateTime agora = DateTime.Now;
+            lblDataCriacao.Text = $"Criado em: {agora:dd/MM/yyyy HH:mm}";
+            lblDataModificacao.Text = $"Modificado em: {agora:dd/MM/yyyy HH:mm}";
         }
 
         private void cbTipo_SelectedIndexChanged(object sender, EventArgs e)
@@ -212,38 +308,35 @@ namespace Projeto.Views.Cadastros
             if (modoExclusao)
             {
                 btnSalvar.Text = "Deletar";
-                cbTipo.Enabled = false;
-                txtNome.Enabled = false;
-                txtEndereco.Enabled = false;
-                txtNumEnd.Enabled = false;
-                txtBairro.Enabled = false;
-                txtComplemento.Enabled = false;
-                txtCEP.Enabled = false;
-                txtIdCidade.Enabled = false;
-                btnBuscar.Enabled = false;
-                txtEmail.Enabled = false;
-                txtTelefone.Enabled = false;
-                txtCPF.Enabled = false;
-                txtInscEst.Enabled = false;
-                txtInscEstSubTrib.Enabled = false;
-                btnBuscarCond.Enabled = false;
-                chkInativo.Enabled = false;
+                BloquearTxt();
             }
             else if (modoEdicao)
             {
-                cbTipo.Enabled = false;
+                btnSalvar.Text = "Salvar";
+                DesbloquearTxt();
             }
             else
             {
-                txtCodigo.Text = "0";
-                DateTime agora = DateTime.Now;
-                lblDataCriacao.Text = $"Criado em: {agora:dd/MM/yyyy HH:mm}";
-                lblDataModificacao.Text = $"Modificado em: {agora:dd/MM/yyyy HH:mm}";
+                btnSalvar.Text = "Salvar";
+                DesbloquearTxt();
+                LimparTxt();
             }
         }
 
+
         private void btnBuscar_Click(object sender, EventArgs e)
         {
+            oFrmConsultaCidade.ModoSelecao = true;
+            var resultado = oFrmConsultaCidade.ShowDialog();
+
+            if (resultado == DialogResult.OK && oFrmConsultaCidade.CidadeSelecionado != null)
+            {
+                txtCidade.Text = oFrmConsultaCidade.CidadeSelecionado.NomeCidade;
+                cidadeSelecionadoId = oFrmConsultaCidade.CidadeSelecionado.Id;
+                txtIdCidade.Text = oFrmConsultaCidade.CidadeSelecionado.Id.ToString();
+            }
+
+            /*
             frmConsultaCidade consultaCidade = new frmConsultaCidade();
             consultaCidade.ModoSelecao = true;
 
@@ -255,10 +348,21 @@ namespace Projeto.Views.Cadastros
                 cidadeSelecionadoId = consultaCidade.CidadeSelecionado.Id;
                 txtIdCidade.Text = consultaCidade.CidadeSelecionado.Id.ToString();
             }
+            */
         }
 
         private void btnBuscarCond_Click(object sender, EventArgs e)
         {
+            oFrmConsultaCondPgto.ModoSelecao = true;
+            var resultado = oFrmConsultaCondPgto.ShowDialog();
+
+            if (resultado == DialogResult.OK && oFrmConsultaCondPgto.CondicaoSelecionado != null)
+            {
+                txtCondicao.Text = oFrmConsultaCondPgto.CondicaoSelecionado.Descricao;
+                condicaoSelecionadoId = oFrmConsultaCondPgto.CondicaoSelecionado.Id;
+            }
+
+            /*
             frmConsultaCondPgto consultaCondicao = new frmConsultaCondPgto();
             consultaCondicao.ModoSelecao = true;
 
@@ -269,6 +373,7 @@ namespace Projeto.Views.Cadastros
                 txtCondicao.Text = consultaCondicao.CondicaoSelecionado.Descricao;
                 condicaoSelecionadoId = consultaCondicao.CondicaoSelecionado.Id;
             }
+            */
         }
 
         private async void txtIdCidade_Leave(object sender, EventArgs e)

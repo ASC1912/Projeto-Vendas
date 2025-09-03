@@ -11,10 +11,28 @@ namespace Projeto.Views.Consultas
     {
         private ProdutoController controller = new ProdutoController();
         public bool ModoSelecao { get; set; } = false;
+        private frmCadastroProduto oFrmCadastroProduto;
+
 
         public frmConsultaProduto() : base()
         {
             InitializeComponent();
+        }
+
+        public override void setFrmCadastro(object obj)
+        {
+            if (obj != null)
+            {
+                oFrmCadastroProduto = (frmCadastroProduto)obj;
+            }
+        }
+
+        public override void ConhecaObj(object obj, object ctrl)
+        {
+            if (ctrl != null)
+            {
+                controller = (ProdutoController)ctrl;
+            }
         }
 
         private void CarregarProdutos()
@@ -90,9 +108,16 @@ namespace Projeto.Views.Consultas
 
         private void btnIncluir_Click(object sender, EventArgs e)
         {
+            oFrmCadastroProduto.modoEdicao = false;
+            oFrmCadastroProduto.modoExclusao = false;
+            oFrmCadastroProduto.FormClosed += (s, args) => CarregarProdutos();
+            oFrmCadastroProduto.ShowDialog();
+
+            /*
             frmCadastroProduto formCadastroProduto = new frmCadastroProduto();
             formCadastroProduto.FormClosed += (s, args) => CarregarProdutos();
-            formCadastroProduto.ShowDialog();
+            formCadastroProduto.ShowDialog();4
+            */
         }
 
         private void btnEditar_Click(object sender, EventArgs e)
@@ -106,6 +131,28 @@ namespace Projeto.Views.Consultas
 
                 if (produto != null)
                 {
+
+                    oFrmCadastroProduto.modoEdicao = true;
+                    oFrmCadastroProduto.modoExclusao = false;
+                    oFrmCadastroProduto.CarregarProduto(
+                        produto.Id,
+                        produto.NomeProduto,
+                        produto.Descricao,
+                        produto.Preco,
+                        produto.Estoque,
+                        produto.IdMarca ?? 0,
+                        produto.NomeMarca,
+                        produto.GrupoId ?? 0,
+                        produto.NomeGrupo,
+                        produto.Ativo,
+                        produto.DataCadastro,
+                        produto.DataAlteracao
+                    );
+
+                    oFrmCadastroProduto.FormClosed += (s, args) => CarregarProdutos();
+                    oFrmCadastroProduto.ShowDialog();
+
+                    /*
                     var formCadastro = new frmCadastroProduto
                     {
                         modoEdicao = true
@@ -128,6 +175,7 @@ namespace Projeto.Views.Consultas
 
                     formCadastro.FormClosed += (s, args) => CarregarProdutos();
                     formCadastro.ShowDialog();
+                    */
                 }
                 else
                 {
@@ -151,6 +199,27 @@ namespace Projeto.Views.Consultas
 
                 if (produto != null)
                 {
+                    oFrmCadastroProduto.modoExclusao = true;
+                    oFrmCadastroProduto.modoEdicao = false;
+                    oFrmCadastroProduto.CarregarProduto(
+                        produto.Id,
+                        produto.NomeProduto,
+                        produto.Descricao,
+                        produto.Preco,
+                        produto.Estoque,
+                        produto.IdMarca ?? 0,
+                        produto.NomeMarca,
+                        produto.GrupoId ?? 0,
+                        produto.NomeGrupo,
+                        produto.Ativo,
+                        produto.DataCadastro,
+                        produto.DataAlteracao
+                    );
+
+                    oFrmCadastroProduto.FormClosed += (s, args) => CarregarProdutos();
+                    oFrmCadastroProduto.ShowDialog();
+
+                    /*
                     var formCadastro = new frmCadastroProduto
                     {
                         modoExclusao = true
@@ -173,6 +242,7 @@ namespace Projeto.Views.Consultas
 
                     formCadastro.FormClosed += (s, args) => CarregarProdutos();
                     formCadastro.ShowDialog();
+                    */
                 }
                 else
                 {

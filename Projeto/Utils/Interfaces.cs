@@ -1,4 +1,6 @@
 ﻿using Projeto.Views;
+using Projeto.Views.Cadastros;
+using Projeto.Views.Consultas;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +19,11 @@ namespace Projeto.Utils
         frmConsultaCliente oFrmConsultaCliente;
         frmConsultaFuncionario oFrmConsultaFuncionario;
         frmConsultaFornecedor oFrmConsultaFornecedor;
+        frmConsultaTransportadora oFrmConsultaTransportadora;
+        frmConsultaMarca oFrmConsultaMarca;
+        frmConsultaGrupo oFrmConsultaGrupo;
+        frmConsultaProduto oFrmConsultaProduto;
+        frmConsultaVeiculo oFrmConsultaVeiculo;
 
         frmCadastroPais oFrmCadastroPais;
         frmCadastroEstado oFrmCadastroEstado;
@@ -26,6 +33,11 @@ namespace Projeto.Utils
         frmCadastroCliente oFrmCadastroCliente;
         frmCadastroFuncionario oFrmCadastroFuncionario;
         frmCadastroFornecedor oFrmCadastroFornecedor;
+        frmCadastroTransportadora oFrmCadastroTransportadora;
+        frmCadastroMarca oFrmCadastroMarca;
+        frmCadastroGrupo oFrmCadastroGrupo;
+        frmCadastroProduto oFrmCadastroProduto;
+        frmCadastroVeiculo oFrmCadastroVeiculo;
 
 
         public Interfaces()
@@ -38,6 +50,11 @@ namespace Projeto.Utils
             oFrmConsultaCliente = new frmConsultaCliente();
             oFrmConsultaFuncionario = new frmConsultaFuncionario();
             oFrmConsultaFornecedor = new frmConsultaFornecedor();
+            oFrmConsultaTransportadora = new frmConsultaTransportadora();
+            oFrmConsultaMarca = new frmConsultaMarca();
+            oFrmConsultaGrupo = new frmConsultaGrupo();
+            oFrmConsultaProduto = new frmConsultaProduto();
+            oFrmConsultaVeiculo = new frmConsultaVeiculo();
 
             oFrmCadastroPais = new frmCadastroPais();
             oFrmCadastroEstado = new frmCadastroEstado();
@@ -47,6 +64,11 @@ namespace Projeto.Utils
             oFrmCadastroCliente = new frmCadastroCliente();
             oFrmCadastroFuncionario = new frmCadastroFuncionario();
             oFrmCadastroFornecedor = new frmCadastroFornecedor();
+            oFrmCadastroTransportadora = new frmCadastroTransportadora();
+            oFrmCadastroMarca = new frmCadastroMarca();
+            oFrmCadastroGrupo = new frmCadastroGrupo();
+            oFrmCadastroProduto = new frmCadastroProduto();
+            oFrmCadastroVeiculo = new frmCadastroVeiculo();
 
             oFrmConsultaPais.setFrmCadastro(oFrmCadastroPais);
             oFrmConsultaEstado.setFrmCadastro(oFrmCadastroEstado);
@@ -56,6 +78,11 @@ namespace Projeto.Utils
             oFrmConsultaCliente.setFrmCadastro(oFrmCadastroCliente);
             oFrmConsultaFuncionario.setFrmCadastro(oFrmCadastroFuncionario);
             oFrmConsultaFornecedor.setFrmCadastro(oFrmCadastroFornecedor);
+            oFrmConsultaTransportadora.setFrmCadastro(oFrmCadastroTransportadora);
+            oFrmConsultaMarca.setFrmCadastro(oFrmCadastroMarca);
+            oFrmConsultaGrupo.setFrmCadastro(oFrmCadastroGrupo);
+            oFrmConsultaProduto.setFrmCadastro(oFrmCadastroProduto);
+            oFrmConsultaVeiculo.setFrmCadastro(oFrmCadastroVeiculo);
 
             oFrmCadastroEstado.setFrmConsultaPais(oFrmConsultaPais);
             oFrmCadastroCidade.setFrmConsultaEstado(oFrmConsultaEstado);
@@ -65,6 +92,12 @@ namespace Projeto.Utils
             oFrmCadastroFuncionario.setFrmConsultaCidade(oFrmConsultaCidade);
             oFrmCadastroFornecedor.setFrmConsultaCidade(oFrmConsultaCidade);
             oFrmCadastroFornecedor.setFrmConsultaCondPgto(oFrmConsultaCondPgto);
+            oFrmCadastroTransportadora.setFrmConsultaCidade(oFrmConsultaCidade);
+            oFrmCadastroTransportadora.setFrmConsultaCondPgto(oFrmConsultaCondPgto);
+            oFrmCadastroProduto.setFrmConsultaMarca(oFrmConsultaMarca);
+            oFrmCadastroProduto.setFrmConsultaGrupo(oFrmConsultaGrupo);
+            oFrmCadastroVeiculo.setFrmConsultaMarca(oFrmConsultaMarca);
+            oFrmCadastroVeiculo.setFrmConsultaTransportadora(oFrmConsultaTransportadora);
 
         }
 
@@ -114,6 +147,36 @@ namespace Projeto.Utils
         {
             oFrmConsultaFornecedor.ConhecaObj(obj, ctrl);
             oFrmConsultaFornecedor.ShowDialog();
+        }
+
+        public void PecaTransportadora(object obj, object ctrl)
+        {
+            oFrmConsultaTransportadora.ConhecaObj(obj, ctrl);
+            oFrmConsultaTransportadora.ShowDialog();
+        }
+
+        public void PecaMarca(object obj, object ctrl)
+        {
+            oFrmConsultaMarca.ConhecaObj(obj, ctrl);
+            oFrmConsultaMarca.ShowDialog();
+        }
+
+        public void PecaGrupo(object obj, object ctrl)
+        {
+            oFrmConsultaGrupo.ConhecaObj(obj, ctrl);
+            oFrmConsultaGrupo.ShowDialog();
+        }
+
+        public void PecaProduto(object obj, object ctrl)
+        {
+            oFrmConsultaProduto.ConhecaObj(obj, ctrl);
+            oFrmConsultaProduto.ShowDialog();
+        }
+
+        public void PecaVeiculo(object obj, object ctrl)
+        {
+            oFrmConsultaVeiculo.ConhecaObj(obj, ctrl);
+            oFrmConsultaVeiculo.ShowDialog();
         }
     }
 }
