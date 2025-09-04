@@ -42,12 +42,6 @@ namespace Projeto.Views
             oFrmCadastroFuncionario.modoExclusao = false;
             oFrmCadastroFuncionario.FormClosed += async (s, args) => await CarregarFuncionarios();
             oFrmCadastroFuncionario.ShowDialog();
-
-            /*
-            frmCadastroFuncionario formCadastroFuncionario = new frmCadastroFuncionario();
-            formCadastroFuncionario.FormClosed += async (s, args) => await CarregarFuncionarios();
-            formCadastroFuncionario.ShowDialog();
-            */
         }
 
         private async Task CarregarFuncionarios()
@@ -161,37 +155,10 @@ namespace Projeto.Views
                 {
                     oFrmCadastroFuncionario.modoEdicao = true;
                     oFrmCadastroFuncionario.modoExclusao = false;
-                    oFrmCadastroFuncionario.CarregarFuncionario(
-                        funcionario.Id, funcionario.Nome, funcionario.Apelido, funcionario.CPF_CNPJ, funcionario.Telefone, funcionario.Email,
-                        funcionario.Endereco, funcionario.NumeroEndereco ?? 0, funcionario.Bairro, funcionario.Complemento, funcionario.CEP,
-                        funcionario.Cargo, funcionario.Salario, funcionario.Matricula, funcionario.Genero, funcionario.Tipo,
-                        funcionario.NomeCidade,
-                        funcionario.CidadeId ?? 0,
-                        funcionario.Ativo,
-                        funcionario.DataAdmissao, funcionario.DataDemissao, funcionario.DataNascimento, funcionario.Rg,
-                        funcionario.DataCadastro, funcionario.DataAlteracao
-                    );
+                    oFrmCadastroFuncionario.ConhecaObj(funcionario, controller);
+                    oFrmCadastroFuncionario.CarregaTxt();
                     oFrmCadastroFuncionario.FormClosed += async (s, args) => await CarregarFuncionarios();
                     oFrmCadastroFuncionario.ShowDialog();
-
-
-                    /*
-                    var formCadastro = new frmCadastroFuncionario();
-                    formCadastro.modoEdicao = true;
-                    formCadastro.CarregarFuncionario(
-                        funcionario.Id, funcionario.Nome, funcionario.Apelido, funcionario.CPF_CNPJ, funcionario.Telefone, funcionario.Email,
-                        funcionario.Endereco, funcionario.NumeroEndereco ?? 0, funcionario.Bairro, funcionario.Complemento, funcionario.CEP,
-                        funcionario.Cargo, funcionario.Salario, funcionario.Matricula, funcionario.Genero, funcionario.Tipo,
-                        funcionario.NomeCidade, 
-                        funcionario.CidadeId ?? 0,
-                        funcionario.Ativo,
-                        funcionario.DataAdmissao, funcionario.DataDemissao, funcionario.DataNascimento, funcionario.Rg,
-                        funcionario.DataCadastro, funcionario.DataAlteracao
-                    );
-
-                    formCadastro.FormClosed += async (s, args) => await CarregarFuncionarios();
-                    formCadastro.ShowDialog();
-                    */
                 }
                 else
                 {
@@ -217,34 +184,10 @@ namespace Projeto.Views
                 {
                     oFrmCadastroFuncionario.modoExclusao = true;
                     oFrmCadastroFuncionario.modoEdicao = false;
-                    oFrmCadastroFuncionario.CarregarFuncionario(
-                        funcionario.Id, funcionario.Nome, funcionario.Apelido, funcionario.CPF_CNPJ, funcionario.Telefone, funcionario.Email,
-                        funcionario.Endereco, funcionario.NumeroEndereco ?? 0, funcionario.Bairro, funcionario.Complemento, funcionario.CEP,
-                        funcionario.Cargo, funcionario.Salario, funcionario.Matricula, funcionario.Genero, funcionario.Tipo,
-                        funcionario.NomeCidade,
-                        funcionario.CidadeId ?? 0,
-                        funcionario.Ativo,
-                        funcionario.DataAdmissao, funcionario.DataDemissao, funcionario.DataNascimento, funcionario.Rg,
-                        funcionario.DataCadastro, funcionario.DataAlteracao
-                    );
+                    oFrmCadastroFuncionario.ConhecaObj(funcionario, controller);
+                    oFrmCadastroFuncionario.CarregaTxt();
                     oFrmCadastroFuncionario.FormClosed += async (s, args) => await CarregarFuncionarios();
                     oFrmCadastroFuncionario.ShowDialog();
-
-                    /*
-                    var formCadastro = new frmCadastroFuncionario { modoExclusao = true };
-                    formCadastro.CarregarFuncionario(
-                        funcionario.Id, funcionario.Nome, funcionario.Apelido, funcionario.CPF_CNPJ, funcionario.Telefone, funcionario.Email,
-                        funcionario.Endereco, funcionario.NumeroEndereco ?? 0, funcionario.Bairro, funcionario.Complemento, funcionario.CEP,
-                        funcionario.Cargo, funcionario.Salario, funcionario.Matricula, funcionario.Genero, funcionario.Tipo,
-                        funcionario.NomeCidade, 
-                        funcionario.CidadeId ?? 0,
-                        funcionario.Ativo,
-                        funcionario.DataAdmissao, funcionario.DataDemissao, funcionario.DataNascimento, funcionario.Rg,
-                        funcionario.DataCadastro, funcionario.DataAlteracao
-                    );
-                    formCadastro.FormClosed += async (s, args) => await CarregarFuncionarios();
-                    formCadastro.ShowDialog();
-                    */
                 }
                 else
                 {

@@ -10,7 +10,6 @@ namespace Projeto.Views.Consultas
     public partial class frmConsultaGrupo : Projeto.frmBaseConsulta
     {
         private GrupoController controller = new GrupoController();
-        public bool ModoSelecao { get; set; } = false;
         internal Grupo GrupoSelecionado { get; private set; }
         private frmCadastroGrupo oFrmCadastroGrupo;
 
@@ -131,12 +130,6 @@ namespace Projeto.Views.Consultas
             oFrmCadastroGrupo.modoExclusao = false;
             oFrmCadastroGrupo.FormClosed += (s, args) => CarregarGrupos();
             oFrmCadastroGrupo.ShowDialog();
-
-            /*
-            frmCadastroGrupo formCadastroGrupo = new frmCadastroGrupo();
-            formCadastroGrupo.FormClosed += (s, args) => CarregarGrupos();
-            formCadastroGrupo.ShowDialog();
-            */
         }
 
         private void btnEditar_Click(object sender, EventArgs e)
@@ -152,34 +145,10 @@ namespace Projeto.Views.Consultas
                 {
                     oFrmCadastroGrupo.modoEdicao = true;
                     oFrmCadastroGrupo.modoExclusao = false;
-                    oFrmCadastroGrupo.CarregarGrupo(
-                        grupo.Id,
-                        grupo.NomeGrupo,
-                        grupo.Descricao,
-                        grupo.Ativo,
-                        grupo.DataCadastro,
-                        grupo.DataAlteracao
-                    );
-
+                    oFrmCadastroGrupo.ConhecaObj(grupo, controller);
+                    oFrmCadastroGrupo.CarregaTxt();
                     oFrmCadastroGrupo.FormClosed += (s, args) => CarregarGrupos();
                     oFrmCadastroGrupo.ShowDialog();
-
-                    /*
-                    var formCadastro = new frmCadastroGrupo();
-                    formCadastro.modoEdicao = true;
-
-                    formCadastro.CarregarGrupo(
-                        grupo.Id,
-                        grupo.NomeGrupo,
-                        grupo.Descricao,
-                        grupo.Ativo,
-                        grupo.DataCadastro,
-                        grupo.DataAlteracao
-                    );
-
-                    formCadastro.FormClosed += (s, args) => CarregarGrupos();
-                    formCadastro.ShowDialog();
-                    */
                 }
                 else
                 {
@@ -205,36 +174,10 @@ namespace Projeto.Views.Consultas
                 {
                     oFrmCadastroGrupo.modoExclusao = true;
                     oFrmCadastroGrupo.modoEdicao = false;
-                    oFrmCadastroGrupo.CarregarGrupo(
-                        grupo.Id,
-                        grupo.NomeGrupo,
-                        grupo.Descricao,
-                        grupo.Ativo,
-                        grupo.DataCadastro,
-                        grupo.DataAlteracao
-                    );
-
+                    oFrmCadastroGrupo.ConhecaObj(grupo, controller);
+                    oFrmCadastroGrupo.CarregaTxt();
                     oFrmCadastroGrupo.FormClosed += (s, args) => CarregarGrupos();
                     oFrmCadastroGrupo.ShowDialog();
-
-                    /*
-                    var formCadastro = new frmCadastroGrupo
-                    {
-                        modoExclusao = true
-                    };
-
-                    formCadastro.CarregarGrupo(
-                        grupo.Id,
-                        grupo.NomeGrupo,
-                        grupo.Descricao,
-                        grupo.Ativo,
-                        grupo.DataCadastro,
-                        grupo.DataAlteracao
-                    );
-
-                    formCadastro.FormClosed += (s, args) => CarregarGrupos();
-                    formCadastro.ShowDialog();
-                    */
                 }
                 else
                 {

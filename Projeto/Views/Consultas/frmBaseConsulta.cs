@@ -12,10 +12,15 @@ namespace Projeto
 {
     public partial class frmBaseConsulta : Form
     {
+        public bool ModoSelecao { get; set; } = false;
+
         public frmBaseConsulta()
         {
             InitializeComponent();
             ConfigurarFormularioBase();
+
+            this.FormClosing += (s, args) => { if (this is frmBaseConsulta consultaForm) { consultaForm.ModoSelecao = false; } };
+
         }
 
         private void btnSair_Click(object sender, EventArgs e)

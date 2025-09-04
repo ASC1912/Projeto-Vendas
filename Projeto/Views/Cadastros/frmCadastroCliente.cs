@@ -84,7 +84,7 @@ namespace Projeto.Views
             txtCPF.Text = oCliente.CPF_CNPJ;
             txtRG.Text = oCliente.Rg;
             txtCondicao.Text = oCliente.DescricaoCondicao;
-            chkInativo.Checked = oCliente.Ativo;
+            chkInativo.Checked = !oCliente.Ativo;
             lblDataCriacao.Text = oCliente.DataCadastro.HasValue ? $"Criado em: {oCliente.DataCadastro.Value:dd/MM/yyyy HH:mm}" : "Criado em: -";
             lblDataModificacao.Text = oCliente.DataAlteracao.HasValue ? $"Modificado em: {oCliente.DataAlteracao.Value:dd/MM/yyyy HH:mm}" : "Modificado em: -";
         }

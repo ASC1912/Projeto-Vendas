@@ -83,7 +83,7 @@ namespace Projeto.Views.Cadastros
             txtInscEst.Text = aTransportadora.InscricaoEstadual;
             txtInscEstSubTrib.Text = aTransportadora.InscricaoEstadual;
             txtCondicao.Text = aTransportadora.DescricaoCondicao;
-            chkInativo.Checked = aTransportadora.Ativo;
+            chkInativo.Checked = !aTransportadora.Ativo;
             lblDataCriacao.Text = aTransportadora.DataCadastro.HasValue ? $"Criado em: {aTransportadora.DataCadastro.Value:dd/MM/yyyy HH:mm}" : "Criado em: -";
             lblDataModificacao.Text = aTransportadora.DataAlteracao.HasValue ? $"Modificado em: {aTransportadora.DataAlteracao.Value:dd/MM/yyyy HH:mm}" : "Modificado em: -";
         }

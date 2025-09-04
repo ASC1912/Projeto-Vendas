@@ -112,6 +112,7 @@
   <ItemGroup>
     <Compile Include="Controller\CidadeController.cs" />
     <Compile Include="Controller\ClienteController.cs" />
+    <Compile Include="Controller\CompraController.cs" />
     <Compile Include="Controller\CondicaoPagamentoController.cs" />
     <Compile Include="Controller\EstadoController.cs" />
     <Compile Include="Controller\FornecedorController.cs" />
@@ -173,11 +174,11 @@
     <Compile Include="Utils\ConfigHelper.cs" />
     <Compile Include="Utils\Interfaces.cs" />
     <Compile Include="Utils\Validador.cs" />
-    <Compile Include="Views\Cadastros\frmCadastroCompras.cs">
+    <Compile Include="Views\Cadastros\frmCadastroCompra.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\Cadastros\frmCadastroCompras.Designer.cs">
-      <DependentUpon>frmCadastroCompras.cs</DependentUpon>
+    <Compile Include="Views\Cadastros\frmCadastroCompra.Designer.cs">
+      <DependentUpon>frmCadastroCompra.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Cadastros\frmCadastroCompras2.cs">
       <SubType>Form</SubType>
@@ -214,6 +215,12 @@
     </Compile>
     <Compile Include="Views\Cadastros\frmCadastroVeiculo.Designer.cs">
       <DependentUpon>frmCadastroVeiculo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Consultas\frmConsultaCompra.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Consultas\frmConsultaCompra.Designer.cs">
+      <DependentUpon>frmConsultaCompra.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Consultas\frmConsultaGrupo.cs">
       <SubType>Form</SubType>
@@ -361,8 +368,8 @@
     <Compile Include="Views\Consultas\frmConsultaPais.Designer.cs">
       <DependentUpon>frmConsultaPais.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Views\Cadastros\frmCadastroCompras.resx">
-      <DependentUpon>frmCadastroCompras.cs</DependentUpon>
+    <EmbeddedResource Include="Views\Cadastros\frmCadastroCompra.resx">
+      <DependentUpon>frmCadastroCompra.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Cadastros\frmCadastroCompras2.resx">
       <DependentUpon>frmCadastroCompras2.cs</DependentUpon>
@@ -381,6 +388,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Cadastros\frmCadastroVeiculo.resx">
       <DependentUpon>frmCadastroVeiculo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Consultas\frmConsultaCompra.resx">
+      <DependentUpon>frmConsultaCompra.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Consultas\frmConsultaGrupo.resx">
       <DependentUpon>frmConsultaGrupo.cs</DependentUpon>

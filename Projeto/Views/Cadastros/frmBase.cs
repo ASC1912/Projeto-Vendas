@@ -18,10 +18,32 @@ namespace Projeto
             ConfigurarFormularioBase();
         }
 
+
+        private void frmBase_Load(object sender, EventArgs e)
+        {
+            SetUppercaseOnAllTextBoxes(this.Controls);
+        }
+
         private void btnSair_Click(object sender, EventArgs e)
         {
             this.Close();
         }
+
+        private void SetUppercaseOnAllTextBoxes(Control.ControlCollection controls)
+        {
+            foreach (Control control in controls)
+            {
+                if (control is TextBox textBox)
+                {
+                    textBox.CharacterCasing = CharacterCasing.Upper;
+                }
+                if (control.HasChildren)
+                {
+                    SetUppercaseOnAllTextBoxes(control.Controls);
+                }
+            }
+        }
+
 
         public virtual void ConfigurarFormularioBase()
         {
@@ -56,5 +78,6 @@ namespace Projeto
         public virtual void DesbloquearTxt()
         {
         }
+
     }
 }

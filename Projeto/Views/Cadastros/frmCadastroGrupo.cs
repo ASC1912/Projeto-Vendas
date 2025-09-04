@@ -37,7 +37,7 @@ namespace Projeto.Views.Cadastros
             txtCodigo.Text = oGrupo.Id.ToString();
             txtNome.Text = oGrupo.NomeGrupo;
             txtDescricao.Text = oGrupo.Descricao;
-            chkInativo.Checked = oGrupo.Ativo;
+            chkInativo.Checked = !oGrupo.Ativo;
             lblDataCriacao.Text = oGrupo.DataCadastro.HasValue ? $"Criado em: {oGrupo.DataCadastro.Value:dd/MM/yyyy HH:mm}" : "Criado em: -";
             lblDataModificacao.Text = oGrupo.DataAlteracao.HasValue ? $"Modificado em: {oGrupo.DataAlteracao.Value:dd/MM/yyyy HH:mm}" : "Modificado em: -";
         }
@@ -65,24 +65,6 @@ namespace Projeto.Views.Cadastros
             DateTime agora = DateTime.Now;
             lblDataCriacao.Text = $"Criado em: {agora:dd/MM/yyyy HH:mm}";
             lblDataModificacao.Text = $"Modificado em: {agora:dd/MM/yyyy HH:mm}";
-        }
-
-
-        public void CarregarGrupo(int id, string nomeGrupo, string descricao, bool ativo, DateTime? dataCadastro, DateTime? dataAlteracao)
-        {
-            modoEdicao = true;
-            txtCodigo.Text = id.ToString();
-            txtNome.Text = nomeGrupo;
-            txtDescricao.Text = descricao;
-            chkInativo.Checked = !ativo;
-
-            lblDataCriacao.Text = dataCadastro.HasValue
-                ? $"Criado em: {dataCadastro.Value:dd/MM/yyyy HH:mm}"
-                : "Criado em: -";
-
-            lblDataModificacao.Text = dataAlteracao.HasValue
-                ? $"Modificado em: {dataAlteracao.Value:dd/MM/yyyy HH:mm}"
-                : "Modificado em: -";
         }
 
         private void btnSalvar_Click(object sender, EventArgs e)

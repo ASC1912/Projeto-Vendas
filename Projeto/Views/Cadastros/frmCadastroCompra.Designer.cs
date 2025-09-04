@@ -1,6 +1,6 @@
 ﻿namespace Projeto.Views.Cadastros
 {
-    partial class frmCadastroCompras
+    partial class frmCadastroCompra
     {
         /// <summary>
         /// Variável de designer necessária.

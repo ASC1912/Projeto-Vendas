@@ -12,7 +12,6 @@ namespace Projeto.Views.Consultas
     {
         private TransportadoraController controller = new TransportadoraController();
         private CidadeController cidadeController = new CidadeController(); 
-        public bool ModoSelecao { get; set; } = false;
         internal Transportadora TransportadoraSelecionada { get; private set; }
 
         private frmCadastroTransportadora oFrmCadastroTransportadora;
@@ -45,12 +44,6 @@ namespace Projeto.Views.Consultas
             oFrmCadastroTransportadora.modoExclusao = false;
             oFrmCadastroTransportadora.FormClosed += (s, args) => CarregarTransportadoras();
             oFrmCadastroTransportadora.ShowDialog();
-
-            /*
-            frmCadastroTransportadora formCadastroTransportadora = new frmCadastroTransportadora();
-            formCadastroTransportadora.FormClosed += (s, args) => CarregarTransportadoras();
-            formCadastroTransportadora.ShowDialog();
-            */
         }
 
         private void CarregarTransportadoras()
@@ -158,61 +151,10 @@ namespace Projeto.Views.Consultas
 
                     oFrmCadastroTransportadora.modoEdicao = true;
                     oFrmCadastroTransportadora.modoExclusao = false;
-                    oFrmCadastroTransportadora.CarregarTransportadora(
-                        transportadora.Id,
-                        transportadora.Nome,
-                        transportadora.CPF_CNPJ,
-                        transportadora.Telefone,
-                        transportadora.Email,
-                        transportadora.Endereco,
-                        transportadora.NumeroEndereco ?? 0,
-                        transportadora.Bairro,
-                        transportadora.Complemento,
-                        transportadora.CEP,
-                        transportadora.InscricaoEstadual,
-                        transportadora.InscricaoEstadualSubTrib,
-                        transportadora.Tipo,
-                        cidade?.NomeCidade ?? "Não encontrado",
-                        transportadora.CidadeId ?? 0,
-                        transportadora.DescricaoCondicao ?? "Não encontrado",
-                        transportadora.IdCondicao ?? 0,
-                        transportadora.Ativo,
-                        transportadora.DataCadastro,
-                        transportadora.DataAlteracao
-                    );
-
+                    oFrmCadastroTransportadora.ConhecaObj(transportadora, controller);
+                    oFrmCadastroTransportadora.CarregaTxt();
                     oFrmCadastroTransportadora.FormClosed += (s, args) => CarregarTransportadoras();
                     oFrmCadastroTransportadora.ShowDialog();
-
-                    /*
-                    var formCadastro = new frmCadastroTransportadora();
-                    formCadastro.modoEdicao = true;
-                    formCadastro.CarregarTransportadora(
-                        transportadora.Id,
-                        transportadora.Nome,
-                        transportadora.CPF_CNPJ,
-                        transportadora.Telefone,
-                        transportadora.Email,
-                        transportadora.Endereco,
-                        transportadora.NumeroEndereco ?? 0,
-                        transportadora.Bairro,
-                        transportadora.Complemento,
-                        transportadora.CEP,
-                        transportadora.InscricaoEstadual,
-                        transportadora.InscricaoEstadualSubTrib,
-                        transportadora.Tipo,
-                        cidade?.NomeCidade ?? "Não encontrado",
-                        transportadora.CidadeId ?? 0,
-                        transportadora.DescricaoCondicao ?? "Não encontrado",
-                        transportadora.IdCondicao ?? 0,
-                        transportadora.Ativo,
-                        transportadora.DataCadastro,
-                        transportadora.DataAlteracao
-                    );
-
-                    formCadastro.FormClosed += (s, args) => CarregarTransportadoras();
-                    formCadastro.ShowDialog();
-                    */
                 }
                 else
                 {
@@ -242,66 +184,12 @@ namespace Projeto.Views.Consultas
                         cidade = await cidadeController.BuscarPorId(transportadora.CidadeId.Value);
                     }
 
-                    oFrmCadastroTransportadora.modoExclusao = true;
                     oFrmCadastroTransportadora.modoEdicao = false;
-                    oFrmCadastroTransportadora.CarregarTransportadora(
-                        transportadora.Id,
-                        transportadora.Nome,
-                        transportadora.CPF_CNPJ,
-                        transportadora.Telefone,
-                        transportadora.Email,
-                        transportadora.Endereco,
-                        transportadora.NumeroEndereco ?? 0,
-                        transportadora.Bairro,
-                        transportadora.Complemento,
-                        transportadora.CEP,
-                        transportadora.InscricaoEstadual,
-                        transportadora.InscricaoEstadualSubTrib,
-                        transportadora.Tipo,
-                        cidade?.NomeCidade ?? "Não encontrado",
-                        transportadora.CidadeId ?? 0,
-                        transportadora.DescricaoCondicao ?? "Não encontrado",
-                        transportadora.IdCondicao ?? 0,
-                        transportadora.Ativo,
-                        transportadora.DataCadastro,
-                        transportadora.DataAlteracao
-                    );
-
+                    oFrmCadastroTransportadora.modoExclusao = true;
+                    oFrmCadastroTransportadora.ConhecaObj(transportadora, controller);
+                    oFrmCadastroTransportadora.CarregaTxt();
                     oFrmCadastroTransportadora.FormClosed += (s, args) => CarregarTransportadoras();
                     oFrmCadastroTransportadora.ShowDialog();
-
-                    /*
-                    var formCadastro = new frmCadastroTransportadora
-                    {
-                        modoExclusao = true
-                    };
-
-                    formCadastro.CarregarTransportadora(
-                        transportadora.Id,
-                        transportadora.Nome,
-                        transportadora.CPF_CNPJ,
-                        transportadora.Telefone,
-                        transportadora.Email,
-                        transportadora.Endereco,
-                        transportadora.NumeroEndereco ?? 0,
-                        transportadora.Bairro,
-                        transportadora.Complemento,
-                        transportadora.CEP,
-                        transportadora.InscricaoEstadual,
-                        transportadora.InscricaoEstadualSubTrib,
-                        transportadora.Tipo,
-                        cidade?.NomeCidade ?? "Não encontrado",
-                        transportadora.CidadeId ?? 0,
-                        transportadora.DescricaoCondicao ?? "Não encontrado",
-                        transportadora.IdCondicao ?? 0,
-                        transportadora.Ativo,
-                        transportadora.DataCadastro,
-                        transportadora.DataAlteracao
-                    );
-
-                    formCadastro.FormClosed += (s, args) => CarregarTransportadoras();
-                    formCadastro.ShowDialog();
-                    */
                 }
                 else
                 {

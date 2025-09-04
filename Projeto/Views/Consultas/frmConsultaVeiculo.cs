@@ -108,12 +108,6 @@ namespace Projeto.Views.Consultas
             oFrmCadastroVeiculo.modoExclusao = false;
             oFrmCadastroVeiculo.FormClosed += (s, args) => CarregarVeiculos();
             oFrmCadastroVeiculo.ShowDialog();
-
-            /*
-            frmCadastroVeiculo formCadastro = new frmCadastroVeiculo();
-            formCadastro.FormClosed += (s, args) => CarregarVeiculos();
-            formCadastro.ShowDialog();
-            */
         }
 
         private void btnEditar_Click(object sender, EventArgs e)
@@ -129,45 +123,11 @@ namespace Projeto.Views.Consultas
                 {
                     oFrmCadastroVeiculo.modoEdicao = true;
                     oFrmCadastroVeiculo.modoExclusao = false;
-                    oFrmCadastroVeiculo.CarregarVeiculo(
-                        veiculo.Id,
-                        veiculo.Placa,
-                        veiculo.Modelo,
-                        veiculo.AnoFabricacao,
-                        veiculo.CapacidadeCargaKg,
-                        veiculo.Ativo,
-                        veiculo.TransportadoraId,
-                        veiculo.NomeTransportadora,
-                        veiculo.IdMarca,
-                        veiculo.NomeMarca,
-                        veiculo.DataCadastro,
-                        veiculo.DataAlteracao
-                    );
-
+                    oFrmCadastroVeiculo.ConhecaObj(veiculo, controller);
+                    oFrmCadastroVeiculo.CarregaTxt();
                     oFrmCadastroVeiculo.FormClosed += (s, args) => CarregarVeiculos();
                     oFrmCadastroVeiculo.ShowDialog();
 
-                    /*
-                    var formCadastro = new frmCadastroVeiculo();
-                    formCadastro.modoEdicao = true;
-                    formCadastro.CarregarVeiculo(
-                        veiculo.Id,
-                        veiculo.Placa,
-                        veiculo.Modelo,
-                        veiculo.AnoFabricacao,
-                        veiculo.CapacidadeCargaKg,
-                        veiculo.Ativo,
-                        veiculo.TransportadoraId,
-                        veiculo.NomeTransportadora,
-                        veiculo.IdMarca, 
-                        veiculo.NomeMarca, 
-                        veiculo.DataCadastro,
-                        veiculo.DataAlteracao
-                    );
-
-                    formCadastro.FormClosed += (s, args) => CarregarVeiculos();
-                    formCadastro.ShowDialog();
-                    */
                 }
                 else
                 {
@@ -193,48 +153,10 @@ namespace Projeto.Views.Consultas
                 {
                     oFrmCadastroVeiculo.modoExclusao = true;
                     oFrmCadastroVeiculo.modoEdicao = false;
-                    oFrmCadastroVeiculo.CarregarVeiculo(
-                        veiculo.Id,
-                        veiculo.Placa,
-                        veiculo.Modelo,
-                        veiculo.AnoFabricacao,
-                        veiculo.CapacidadeCargaKg,
-                        veiculo.Ativo,
-                        veiculo.TransportadoraId,
-                        veiculo.NomeTransportadora,
-                        veiculo.IdMarca,
-                        veiculo.NomeMarca,
-                        veiculo.DataCadastro,
-                        veiculo.DataAlteracao
-                    );
-
+                    oFrmCadastroVeiculo.ConhecaObj(veiculo, controller);
+                    oFrmCadastroVeiculo.CarregaTxt();
                     oFrmCadastroVeiculo.FormClosed += (s, args) => CarregarVeiculos();
                     oFrmCadastroVeiculo.ShowDialog();
-
-                    /*
-                    var formCadastro = new frmCadastroVeiculo
-                    {
-                        modoExclusao = true 
-                    };
-
-                    formCadastro.CarregarVeiculo(
-                        veiculo.Id,
-                        veiculo.Placa,
-                        veiculo.Modelo,
-                        veiculo.AnoFabricacao,
-                        veiculo.CapacidadeCargaKg,
-                        veiculo.Ativo,
-                        veiculo.TransportadoraId,
-                        veiculo.NomeTransportadora,
-                        veiculo.IdMarca,
-                        veiculo.NomeMarca,
-                        veiculo.DataCadastro,
-                        veiculo.DataAlteracao
-                    );
-
-                    formCadastro.FormClosed += (s, args) => CarregarVeiculos();
-                    formCadastro.ShowDialog();
-                    */
                 }
                 else
                 {

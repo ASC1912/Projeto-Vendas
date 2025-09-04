@@ -1,6 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using Projeto.Controller;
 using Projeto.Models;
+using Projeto.Views.Cadastros;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,7 +17,6 @@ namespace Projeto
     {
         frmCadastroCondPgto oFrmCadastroCondPgto;
         private CondicaoPagamentoController controller = new CondicaoPagamentoController();
-        public bool ModoSelecao { get; set; } = false;
         internal CondicaoPagamento CondicaoSelecionado { get; private set; }
 
         public frmConsultaCondPgto() : base()
@@ -150,12 +150,6 @@ namespace Projeto
             oFrmCadastroCondPgto.modoExclusao = false;
             oFrmCadastroCondPgto.FormClosed += async (s, args) => await CarregarCondicoesPagamento();
             oFrmCadastroCondPgto.ShowDialog();
-
-            /*
-            frmCadastroCondPgto formCadastroPagamento = new frmCadastroCondPgto();
-            formCadastroPagamento.FormClosed += async (s, args) => await CarregarCondicoesPagamento();
-            formCadastroPagamento.ShowDialog();
-            */
         }
 
         private async void btnEditar_Click(object sender, EventArgs e)
@@ -171,16 +165,10 @@ namespace Projeto
                 {
                     oFrmCadastroCondPgto.modoEdicao = true;
                     oFrmCadastroCondPgto.modoExclusao = false;
-                    oFrmCadastroCondPgto.CarregarCondicaoPagamento(condicao.Id, condicao.Descricao, condicao.QtdParcelas, condicao.Juros, condicao.Multa, condicao.Desconto, condicao.Ativo, condicao.DataCadastro, condicao.DataAlteracao);
+                    oFrmCadastroCondPgto.ConhecaObj(condicao, controller);
+                    oFrmCadastroCondPgto.CarregaTxt();
                     oFrmCadastroCondPgto.FormClosed += async (s, args) => await CarregarCondicoesPagamento();
                     oFrmCadastroCondPgto.ShowDialog();
-
-                    /*
-                    var formCadastro = new frmCadastroCondPgto { modoEdicao = true };
-                    formCadastro.CarregarCondicaoPagamento(condicao.Id, condicao.Descricao, condicao.QtdParcelas, condicao.Juros, condicao.Multa, condicao.Desconto, condicao.Ativo, condicao.DataCadastro, condicao.DataAlteracao);
-                    formCadastro.FormClosed += async (s, args) => await CarregarCondicoesPagamento();
-                    formCadastro.ShowDialog();
-                    */
                 }
                 else
                 {
@@ -206,16 +194,10 @@ namespace Projeto
                 {
                     oFrmCadastroCondPgto.modoExclusao = true;
                     oFrmCadastroCondPgto.modoEdicao = false;
-                    oFrmCadastroCondPgto.CarregarCondicaoPagamento(condicao.Id, condicao.Descricao, condicao.QtdParcelas, condicao.Juros, condicao.Multa, condicao.Desconto, condicao.Ativo, condicao.DataCadastro, condicao.DataAlteracao);
+                    oFrmCadastroCondPgto.ConhecaObj(condicao, controller);
+                    oFrmCadastroCondPgto.CarregaTxt();
                     oFrmCadastroCondPgto.FormClosed += async (s, args) => await CarregarCondicoesPagamento();
                     oFrmCadastroCondPgto.ShowDialog();
-
-                    /*
-                    var formCadastro = new frmCadastroCondPgto { modoExclusao = true };
-                    formCadastro.CarregarCondicaoPagamento(condicao.Id, condicao.Descricao, condicao.QtdParcelas, condicao.Juros, condicao.Multa, condicao.Desconto, condicao.Ativo, condicao.DataCadastro, condicao.DataAlteracao);
-                    formCadastro.FormClosed += async (s, args) => await CarregarCondicoesPagamento();
-                    formCadastro.ShowDialog();
-                    */
                 }
                 else
                 {

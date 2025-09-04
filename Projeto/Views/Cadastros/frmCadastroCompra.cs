@@ -8,9 +8,9 @@ using System.Windows.Forms;
 
 namespace Projeto.Views.Cadastros
 {
-    public partial class frmCadastroCompras : Projeto.frmBase
+    public partial class frmCadastroCompra : Projeto.frmBase
     {
-        public frmCadastroCompras()
+        public frmCadastroCompra()
         {
             InitializeComponent();
         }

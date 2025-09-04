@@ -36,7 +36,7 @@ namespace Projeto.Views.Cadastros
         {
             txtCodigo.Text = aMarca.Id.ToString();
             txtNome.Text = aMarca.NomeMarca;
-            chkInativo.Checked = aMarca.Ativo;
+            chkInativo.Checked = !aMarca.Ativo;
             lblDataCriacao.Text = aMarca.DataCadastro.HasValue ? $"Criado em: {aMarca.DataCadastro.Value:dd/MM/yyyy HH:mm}" : "Criado em: -";
             lblDataModificacao.Text = aMarca.DataAlteracao.HasValue ? $"Modificado em: {aMarca.DataAlteracao.Value:dd/MM/yyyy HH:mm}" : "Modificado em: -";
         }
@@ -62,23 +62,6 @@ namespace Projeto.Views.Cadastros
             DateTime agora = DateTime.Now;
             lblDataCriacao.Text = $"Criado em: {agora:dd/MM/yyyy HH:mm}";
             lblDataModificacao.Text = $"Modificado em: {agora:dd/MM/yyyy HH:mm}";
-        }
-
-        public void CarregarMarca(int id, string nomeMarca, bool ativo, DateTime? dataCadastro, DateTime? dataAlteracao)
-        {
-            modoEdicao = true;
-
-            txtCodigo.Text = id.ToString();
-            txtNome.Text = nomeMarca;
-            chkInativo.Checked = !ativo;
-
-            lblDataCriacao.Text = dataCadastro.HasValue
-                ? $"Criado em: {dataCadastro.Value:dd/MM/yyyy HH:mm}"
-                : "Criado em: -";
-
-            lblDataModificacao.Text = dataAlteracao.HasValue
-                ? $"Modificado em: {dataAlteracao.Value:dd/MM/yyyy HH:mm}"
-                : "Modificado em: -";
         }
 
         private void btnSalvar_Click(object sender, EventArgs e)

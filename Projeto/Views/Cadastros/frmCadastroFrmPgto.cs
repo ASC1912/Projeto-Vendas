@@ -36,7 +36,7 @@ namespace Projeto
         {
             txtCodigo.Text = oFormaPgto.Id.ToString();
             txtDescricao.Text = oFormaPgto.Descricao;
-            chkInativo.Checked = oFormaPgto.Ativo;
+            chkInativo.Checked = !oFormaPgto.Ativo;
             lblDataCriacao.Text = oFormaPgto.DataCadastro.HasValue ? $"Criado em: {oFormaPgto.DataCadastro.Value:dd/MM/yyyy HH:mm}" : "Criado em: -";
             lblDataModificacao.Text = oFormaPgto.DataAlteracao.HasValue ? $"Modificado em: {oFormaPgto.DataAlteracao.Value:dd/MM/yyyy HH:mm}" : "Modificado em: -";
         }
@@ -62,23 +62,6 @@ namespace Projeto
             DateTime agora = DateTime.Now;
             lblDataCriacao.Text = $"Criado em: {agora:dd/MM/yyyy HH:mm}";
             lblDataModificacao.Text = $"Modificado em: {agora:dd/MM/yyyy HH:mm}";
-        }
-
-       
-        public void CarregarFormaPagamento(int id, string descricao, bool ativo, DateTime? dataCadastro, DateTime? dataAlteracao)
-        {
-            modoEdicao = true;
-            txtCodigo.Text = id.ToString();
-            txtDescricao.Text = descricao;
-            chkInativo.Checked = !ativo;
-
-            lblDataCriacao.Text = dataCadastro.HasValue
-                ? $"Criado em: {dataCadastro.Value:dd/MM/yyyy HH:mm}"
-                : "Criado em: -";
-
-            lblDataModificacao.Text = dataAlteracao.HasValue
-                ? $"Modificado em: {dataAlteracao.Value:dd/MM/yyyy HH:mm}"
-                : "Modificado em: -";
         }
 
         private async void btnSalvar_Click(object sender, EventArgs e)

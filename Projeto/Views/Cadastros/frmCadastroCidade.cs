@@ -51,7 +51,7 @@ namespace Projeto.Views
             txtNome.Text = aCidade.NomeCidade;
             txtEstado.Text = aCidade.EstadoNome;
             txtDDD.Text = aCidade.DDD;
-            chkInativo.Checked = aCidade.Ativo;
+            chkInativo.Checked = !aCidade.Ativo;
             lblDataCriacao.Text = aCidade.DataCadastro.HasValue ? $"Criado em: {aCidade.DataCadastro.Value:dd/MM/yyyy HH:mm}" : "Criado em: -";
             lblDataModificacao.Text = aCidade.DataAlteracao.HasValue ? $"Modificado em: {aCidade.DataAlteracao.Value:dd/MM/yyyy HH:mm}" : "Modificado em: -";
         }
@@ -84,19 +84,6 @@ namespace Projeto.Views
             DateTime agora = DateTime.Now;
             lblDataCriacao.Text = $"Criado em: {agora:dd/MM/yyyy HH:mm}";
             lblDataModificacao.Text = $"Modificado em: {agora:dd/MM/yyyy HH:mm}";
-        }
-
-        public void CarregarCidade(int id, string nomeCidade, string nomeEstado, int estadoId, string ddd, bool ativo, DateTime? dataCadastro, DateTime? dataAlteracao)
-        {
-            modoEdicao = true;
-            txtCodigo.Text = id.ToString();
-            txtNome.Text = nomeCidade;
-            txtEstado.Text = nomeEstado;
-            estadoSelecionadoId = estadoId;
-            txtDDD.Text = ddd; 
-            chkInativo.Checked = !ativo;
-            lblDataCriacao.Text = dataCadastro.HasValue ? $"Criado em: {dataCadastro.Value:dd/MM/yyyy HH:mm}" : "Criado em: -";
-            lblDataModificacao.Text = dataAlteracao.HasValue ? $"Modificado em: {dataAlteracao.Value:dd/MM/yyyy HH:mm}" : "Modificado em: -";
         }
 
         private void frmCadastroCidade_Load(object sender, EventArgs e)

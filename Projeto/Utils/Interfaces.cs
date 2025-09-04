@@ -24,6 +24,7 @@ namespace Projeto.Utils
         frmConsultaGrupo oFrmConsultaGrupo;
         frmConsultaProduto oFrmConsultaProduto;
         frmConsultaVeiculo oFrmConsultaVeiculo;
+        frmConsultaCompra oFrmConsultaCompra;
 
         frmCadastroPais oFrmCadastroPais;
         frmCadastroEstado oFrmCadastroEstado;
@@ -38,6 +39,7 @@ namespace Projeto.Utils
         frmCadastroGrupo oFrmCadastroGrupo;
         frmCadastroProduto oFrmCadastroProduto;
         frmCadastroVeiculo oFrmCadastroVeiculo;
+        frmCadastroCompra oFrmCadastroCompra;
 
 
         public Interfaces()
@@ -55,6 +57,7 @@ namespace Projeto.Utils
             oFrmConsultaGrupo = new frmConsultaGrupo();
             oFrmConsultaProduto = new frmConsultaProduto();
             oFrmConsultaVeiculo = new frmConsultaVeiculo();
+            oFrmConsultaCompra = new frmConsultaCompra();
 
             oFrmCadastroPais = new frmCadastroPais();
             oFrmCadastroEstado = new frmCadastroEstado();
@@ -69,6 +72,7 @@ namespace Projeto.Utils
             oFrmCadastroGrupo = new frmCadastroGrupo();
             oFrmCadastroProduto = new frmCadastroProduto();
             oFrmCadastroVeiculo = new frmCadastroVeiculo();
+            oFrmCadastroCompra = new frmCadastroCompra();
 
             oFrmConsultaPais.setFrmCadastro(oFrmCadastroPais);
             oFrmConsultaEstado.setFrmCadastro(oFrmCadastroEstado);
@@ -177,6 +181,12 @@ namespace Projeto.Utils
         {
             oFrmConsultaVeiculo.ConhecaObj(obj, ctrl);
             oFrmConsultaVeiculo.ShowDialog();
+        }
+
+        public void PecaCompra(object obj, object ctrl)
+        {
+            oFrmConsultaCompra.ConhecaObj(obj, ctrl);
+            oFrmConsultaCompra.ShowDialog();
         }
     }
 }

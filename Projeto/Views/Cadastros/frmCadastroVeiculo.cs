@@ -67,7 +67,7 @@ namespace Projeto.Views.Cadastros
             txtAnoFabricacao.Text = oVeiculo.AnoFabricacao.ToString();
             txtCapacidadeCarga.Text = oVeiculo.CapacidadeCargaKg.ToString();
             txtTransportadora.Text = oVeiculo.NomeTransportadora;
-            chkInativo.Checked = oVeiculo.Ativo;
+            chkInativo.Checked = !oVeiculo.Ativo;
             lblDataCriacao.Text = oVeiculo.DataCadastro.HasValue ? $"Criado em: {oVeiculo.DataCadastro.Value:dd/MM/yyyy HH:mm}" : "Criado em: -";
             lblDataModificacao.Text = oVeiculo.DataAlteracao.HasValue ? $"Modificado em: {oVeiculo.DataAlteracao.Value:dd/MM/yyyy HH:mm}" : "Modificado em: -";
         }

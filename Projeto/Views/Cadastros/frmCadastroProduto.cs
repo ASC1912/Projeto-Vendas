@@ -61,11 +61,11 @@ namespace Projeto.Views.Cadastros
             txtCodigo.Text = oProduto.Id.ToString();
             txtNome.Text = oProduto.NomeProduto;
             txtDescricao.Text = oProduto.Descricao;
-            txtPreco.Text = oProduto.Preco.ToString();
+            txtPreco.Text = oProduto.Preco.ToString("F2");
             txtEstoque.Text = oProduto.Estoque.ToString();
             txtMarca.Text = oProduto.NomeMarca;
             txtGrupo.Text = oProduto.NomeGrupo;
-            chkInativo.Checked = oProduto.Ativo;
+            chkInativo.Checked = !oProduto.Ativo;
             lblDataCriacao.Text = oProduto.DataCadastro.HasValue ? $"Criado em: {oProduto.DataCadastro.Value:dd/MM/yyyy HH:mm}" : "Criado em: -";
             lblDataModificacao.Text = oProduto.DataAlteracao.HasValue ? $"Modificado em: {oProduto.DataAlteracao.Value:dd/MM/yyyy HH:mm}" : "Modificado em: -";
         }
@@ -110,29 +110,7 @@ namespace Projeto.Views.Cadastros
             lblDataModificacao.Text = $"Modificado em: {agora:dd/MM/yyyy HH:mm}";
         }
 
-        public void CarregarProduto(int id, string nomeProduto, string descricao, decimal preco, int estoque, int idMarca, string nomeMarca, int idGrupo, string nomeGrupo, bool ativo, DateTime? dataCadastro, DateTime? dataAlteracao)
-        {
-            modoEdicao = true;
 
-            txtCodigo.Text = id.ToString();
-            txtNome.Text = nomeProduto;
-            txtDescricao.Text = descricao;
-            txtPreco.Text = preco.ToString("F2");
-            txtEstoque.Text = estoque.ToString();
-            marcaSelecionadoId = idMarca;
-            txtMarca.Text = nomeMarca;
-            grupoSelecionadoId = idGrupo;
-            txtGrupo.Text = nomeGrupo;
-            chkInativo.Checked = !ativo;
-
-            lblDataCriacao.Text = dataCadastro.HasValue
-                ? $"Criado em: {dataCadastro.Value:dd/MM/yyyy HH:mm}"
-                : "Criado em: -";
-
-            lblDataModificacao.Text = dataAlteracao.HasValue
-                ? $"Modificado em: {dataAlteracao.Value:dd/MM/yyyy HH:mm}"
-                : "Modificado em: -";
-        }
 
         private void btnSalvar_Click(object sender, EventArgs e)
         {

@@ -11,7 +11,6 @@ namespace Projeto.Views
     {
         frmCadastroEstado oFrmCadastroEstado;
         private EstadoController controller = new EstadoController();
-        public bool ModoSelecao { get; set; } = false;
         internal Estado EstadoSelecionado { get; private set; }
 
         public frmConsultaEstado() : base()
@@ -65,12 +64,6 @@ namespace Projeto.Views
 
             oFrmCadastroEstado.FormClosed += async (s, args) => await CarregarEstados();
             oFrmCadastroEstado.ShowDialog();
-
-            /*
-            frmCadastroEstado formCadastroEstado = new frmCadastroEstado();
-            formCadastroEstado.FormClosed += async (s, args) => await CarregarEstados();
-            formCadastroEstado.ShowDialog();
-            */
         }
 
         private async Task CarregarEstados()
@@ -148,23 +141,10 @@ namespace Projeto.Views
                 {
                     oFrmCadastroEstado.modoEdicao = true;
                     oFrmCadastroEstado.modoExclusao = false;
-                    oFrmCadastroEstado.CarregarEstado(
-                        estado.Id, estado.NomeEstado, estado.UF, estado.PaisNome,
-                        estado.PaisId, estado.Ativo, estado.DataCadastro, estado.DataAlteracao
-                    );
+                    oFrmCadastroEstado.ConhecaObj(estado, controller);
+                    oFrmCadastroEstado.CarregaTxt();
                     oFrmCadastroEstado.FormClosed += async (s, args) => await CarregarEstados();
                     oFrmCadastroEstado.ShowDialog();
-
-                    /*
-                    var formCadastro = new frmCadastroEstado();
-                    formCadastro.modoEdicao = true;
-                    formCadastro.CarregarEstado(
-                        estado.Id, estado.NomeEstado, estado.UF, estado.PaisNome,
-                        estado.PaisId, estado.Ativo, estado.DataCadastro, estado.DataAlteracao
-                    );
-                    formCadastro.FormClosed += async (s, args) => await CarregarEstados();
-                    formCadastro.ShowDialog();
-                    */
                 }
                 else
                 {
@@ -189,22 +169,10 @@ namespace Projeto.Views
                 {
                     oFrmCadastroEstado.modoExclusao = true;
                     oFrmCadastroEstado.modoEdicao = false;
-                    oFrmCadastroEstado.CarregarEstado(
-                        estado.Id, estado.NomeEstado, estado.UF, estado.PaisNome,
-                        estado.PaisId, estado.Ativo, estado.DataCadastro, estado.DataAlteracao
-                    );
+                    oFrmCadastroEstado.ConhecaObj(estado, controller);
+                    oFrmCadastroEstado.CarregaTxt();
                     oFrmCadastroEstado.FormClosed += async (s, args) => await CarregarEstados();
                     oFrmCadastroEstado.ShowDialog();
-
-                    /*
-                    var formCadastro = new frmCadastroEstado { modoExclusao = true };
-                    formCadastro.CarregarEstado(
-                        estado.Id, estado.NomeEstado, estado.UF, estado.PaisNome,
-                        estado.PaisId, estado.Ativo, estado.DataCadastro, estado.DataAlteracao
-                    );
-                    formCadastro.FormClosed += async (s, args) => await CarregarEstados();
-                    formCadastro.ShowDialog();
-                    */
                 }
                 else
                 {

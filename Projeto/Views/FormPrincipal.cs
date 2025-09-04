@@ -33,6 +33,7 @@ namespace Projeto
         Grupo oGrupo = new Grupo();
         Produto oProduto = new Produto();
         Veiculo oVeiculo = new Veiculo();
+        Compra aCompra = new Compra();
 
         PaisController CtrlPais = new PaisController();
         EstadoController CtrlEstado = new EstadoController();
@@ -47,6 +48,7 @@ namespace Projeto
         GrupoController CtrlGrupo = new GrupoController();
         ProdutoController CtrlProduto = new ProdutoController();
         VeiculoController CtrlVeiculo = new VeiculoController();
+        CompraController CtrlCompra = new CompraController();
 
         public FormPrincipal()
         {
@@ -63,127 +65,74 @@ namespace Projeto
         private void formaDePagamentoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             aInter.PecaFormaPagamento(aFrmPgot, CtrlFormaPagamento);
-
-            //frmCadastroFrmPgto formCadastroPagamento = new frmCadastroFrmPgto();
-            //formCadastroPagamento.ShowDialog();
         }
 
 
         private void condiçãoDePagamentoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             aInter.PecaCondicaoPagamento(aCondPgto, CtrlCondicaoPagamento);
-
-            //frmCadastroCondPgto formCadastroCondPgto = new frmCadastroCondPgto();
-            //formCadastroCondPgto.ShowDialog();
         }
 
         private void paísToolStripMenuItem_Click(object sender, EventArgs e)
         {
             aInter.PecaPaises(oPais, CtrlPais);
-
-            //frmConsultaPais formConsultaPais = new frmConsultaPais();
-            //formConsultaPais.ShowDialog();
         }
 
         private void estadoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
             aInter.PecaEstados(oEstado, CtrlEstado);
-
-            //frmConsultaEstado formConsultaEstado = new frmConsultaEstado();
-            //formConsultaEstado.ShowDialog();
         }
 
         private void cidadeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
             aInter.PecaCidades(aCidade, CtrlCidade);
-
-            //frmConsultaCidade formConsultaCidade = new frmConsultaCidade();
-            //formConsultaCidade.ShowDialog();
         }
 
         private void clienteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             aInter.PecaCliente(oCliente, CtrlCliente);
-
-            //frmConsultaCliente formConsultaCliente = new frmConsultaCliente();
-            //formConsultaCliente.ShowDialog();
         }
 
         private void funcionárioToolStripMenuItem_Click(object sender, EventArgs e)
         {
             aInter.PecaFuncionario(oFunc, CtrlFuncionario);
-
-            /*
-            frmConsultaFuncionario formConsultaFuncionario = new frmConsultaFuncionario();
-            formConsultaFuncionario.ShowDialog();
-            */
         }
 
         private void fornecedorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             aInter.PecaFornecedor(oForn, CtrlFornecedor);
-
-            /*
-            frmConsultaFornecedor formConsultaFornecedor = new frmConsultaFornecedor();
-            formConsultaFornecedor.ShowDialog();
-            */
         }
 
         private void marcasToolStripMenuItem_Click(object sender, EventArgs e)
         {
             aInter.PecaMarca(aMarca, CtrlMarca);
-
-            /*
-            frmConsultaMarca formConsultaMarca = new frmConsultaMarca();
-            formConsultaMarca.ShowDialog();
-            */
         }
 
         private void gruposToolStripMenuItem_Click(object sender, EventArgs e)
         {
             aInter.PecaGrupo(oGrupo, CtrlGrupo);
-
-            /*
-            frmConsultaGrupo formConsultaGrupo = new frmConsultaGrupo();
-            formConsultaGrupo.ShowDialog();
-            */
         }
 
         private void produtosToolStripMenuItem_Click(object sender, EventArgs e)
         {
             aInter.PecaProduto(oProduto, CtrlProduto);
-
-            /*
-            frmConsultaProduto formConstulaProduto = new frmConsultaProduto();
-            formConstulaProduto.ShowDialog();
-            */
         }
 
         private void transportadorasToolStripMenuItem_Click(object sender, EventArgs e)
         {
             aInter.PecaTransportadora(oTransportadora, CtrlTransportadora);
-
-            /*
-            frmConsultaTransportadora formConsultaTransportadora = new frmConsultaTransportadora();
-            formConsultaTransportadora.ShowDialog();
-            */
         }
 
         private void veículosToolStripMenuItem_Click(object sender, EventArgs e)
         {
             aInter.PecaVeiculo(oVeiculo, CtrlVeiculo);
-
-            /*
-            frmConsultaVeiculo formConsultaVeiculo = new frmConsultaVeiculo();
-            formConsultaVeiculo.ShowDialog();
-            */
         }
 
         private void comprasToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmCadastroCompras formCompra = new frmCadastroCompras();
+            //aInter.PecaCompra(aCompra, CtrlCompra);
+
+            frmCadastroCompra formCompra = new frmCadastroCompra();
             formCompra.ShowDialog();
         }
     }

@@ -43,12 +43,6 @@ namespace Projeto.Views
             oFrmCadastroCliente.modoExclusao = false;
             oFrmCadastroCliente.FormClosed += async (s, args) => await CarregarClientes();
             oFrmCadastroCliente.ShowDialog();
-
-            /*
-            frmCadastroCliente formCadastroCliente = new frmCadastroCliente();
-            formCadastroCliente.FormClosed += async (s, args) => await CarregarClientes();
-            formCadastroCliente.ShowDialog();
-            */
         }
 
         private async Task CarregarClientes()
@@ -152,48 +146,10 @@ namespace Projeto.Views
                 {
                     oFrmCadastroCliente.modoEdicao = true;
                     oFrmCadastroCliente.modoExclusao = false;
-                    oFrmCadastroCliente.CarregarCliente(
-                        cliente.Id, cliente.Nome, cliente.CPF_CNPJ, cliente.Telefone, cliente.Email,
-                        cliente.Endereco, cliente.NumeroEndereco ?? 0, cliente.Bairro, cliente.Complemento, cliente.CEP,
-                        cliente.Tipo, cliente.Genero, cliente.NomeCidade ?? "Não encontrado", cliente.CidadeId ?? 0,
-                        cliente.DescricaoCondicao ?? "Não encontrada", cliente.IdCondicao ?? 0, cliente.Ativo, cliente.Rg,
-                        cliente.DataNascimento, cliente.DataCadastro, cliente.DataAlteracao
-                    );
-
-                    oFrmCadastroCliente.FormClosed += (s, args) => CarregarClientes();
+                    oFrmCadastroCliente.ConhecaObj(cliente, controller);
+                    oFrmCadastroCliente.CarregaTxt();
+                    oFrmCadastroCliente.FormClosed += async (s, args) => await CarregarClientes();
                     oFrmCadastroCliente.ShowDialog();
-
-                    /*
-                    var formCadastro = new frmCadastroCliente();
-                    formCadastro.modoEdicao = true;
-                    formCadastro.CarregarCliente(
-                        cliente.Id,
-                        cliente.Nome,
-                        cliente.CPF_CNPJ,
-                        cliente.Telefone,
-                        cliente.Email,
-                        cliente.Endereco,
-                        cliente.NumeroEndereco ?? 0,
-                        cliente.Bairro,
-                        cliente.Complemento,
-                        cliente.CEP,
-                        cliente.Tipo,
-                        cliente.Genero,
-                        cliente.NomeCidade ?? "Não encontrado",
-                        cliente.CidadeId ?? 0,
-                        cliente.DescricaoCondicao ?? "Não encontrada",
-                        cliente.IdCondicao ?? 0,
-                        cliente.Ativo,
-                        cliente.Rg,
-                        cliente.DataNascimento,
-                        cliente.DataCadastro,
-                        cliente.DataAlteracao
-                    );
-
-                    formCadastro.FormClosed += (s, args) => CarregarClientes();
-                    formCadastro.ShowDialog();
-
-                    */
                 }
                 else
                 {
@@ -220,50 +176,10 @@ namespace Projeto.Views
                 {
                     oFrmCadastroCliente.modoExclusao = true;
                     oFrmCadastroCliente.modoEdicao = false;
-                    oFrmCadastroCliente.CarregarCliente(
-                        cliente.Id, cliente.Nome, cliente.CPF_CNPJ, cliente.Telefone, cliente.Email,
-                        cliente.Endereco, cliente.NumeroEndereco ?? 0, cliente.Bairro, cliente.Complemento, cliente.CEP,
-                        cliente.Tipo, cliente.Genero, cliente.NomeCidade ?? "Não encontrado", cliente.CidadeId ?? 0,
-                        cliente.DescricaoCondicao ?? "Não encontrada", cliente.IdCondicao ?? 0, cliente.Ativo, cliente.Rg,
-                        cliente.DataNascimento, cliente.DataCadastro, cliente.DataAlteracao
-                    );
-
-                    oFrmCadastroCliente.FormClosed += (s, args) => CarregarClientes();
+                    oFrmCadastroCliente.ConhecaObj(cliente, controller);
+                    oFrmCadastroCliente.CarregaTxt();
+                    oFrmCadastroCliente.FormClosed += async (s, args) => await CarregarClientes();
                     oFrmCadastroCliente.ShowDialog();
-
-                    /*
-                    var formCadastro = new frmCadastroCliente
-                    {
-                        modoExclusao = true
-                    };
-
-                    formCadastro.CarregarCliente(
-                        cliente.Id,
-                        cliente.Nome,
-                        cliente.CPF_CNPJ,
-                        cliente.Telefone,
-                        cliente.Email,
-                        cliente.Endereco,
-                        cliente.NumeroEndereco ?? 0,
-                        cliente.Bairro,
-                        cliente.Complemento,
-                        cliente.CEP,
-                        cliente.Tipo,
-                        cliente.Genero,
-                        cliente.NomeCidade ?? "Não encontrado",
-                        cliente.CidadeId ?? 0,
-                        cliente.DescricaoCondicao ?? "Não encontrada",
-                        cliente.IdCondicao ?? 0,
-                        cliente.Ativo,
-                        cliente.Rg,
-                        cliente.DataNascimento,
-                        cliente.DataCadastro,
-                        cliente.DataAlteracao
-                    );
-
-                    formCadastro.FormClosed += (s, args) => CarregarClientes();
-                    formCadastro.ShowDialog();
-                    */
                 }
                 else
                 {
@@ -276,9 +192,9 @@ namespace Projeto.Views
             }
         }
 
-        private void frmConsultaCliente_Load(object sender, EventArgs e)
+        private async void frmConsultaCliente_Load(object sender, EventArgs e)
         {
-            CarregarClientes();
+            await CarregarClientes();
 
             foreach (ColumnHeader column in listView1.Columns)
             {

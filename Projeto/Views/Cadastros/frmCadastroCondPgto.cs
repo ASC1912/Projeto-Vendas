@@ -48,7 +48,7 @@ namespace Projeto
             }
         }
 
-        public override void CarregaTxt()
+        public async override void CarregaTxt()
         {
             txtCodigo.Text = aCondPgto.Id.ToString();
             txtDescricao.Text = aCondPgto.Descricao;
@@ -56,14 +56,11 @@ namespace Projeto
             txtJuros.Text = aCondPgto.Juros.ToString();
             txtMulta.Text = aCondPgto.Multa.ToString();
             txtDesconto.Text = aCondPgto.Desconto.ToString();
-
-            txtNumParcela.Text = aParcela.NumParcela.ToString();
-            txtPorcentagem.Text = aParcela.Porcentagem.ToString();
-            txtPrazoDias.Text = aParcela.PrazoDias.ToString();
-            txtFormaPagamento.Text = aParcela.FormaPagamento.ToString();
-            chkInativo.Checked = aCondPgto.Ativo;
+            chkInativo.Checked = !aCondPgto.Ativo;
             lblDataCriacao.Text = aCondPgto.DataCadastro.HasValue ? $"Criado em: {aCondPgto.DataCadastro.Value:dd/MM/yyyy HH:mm}" : "Criado em: -";
             lblDataModificacao.Text = aCondPgto.DataAlteracao.HasValue ? $"Modificado em: {aCondPgto.DataAlteracao.Value:dd/MM/yyyy HH:mm}" : "Modificado em: -";
+            await CarregarParcelas(aCondPgto.Id);
+
         }
 
         public override void BloquearTxt()
@@ -124,22 +121,6 @@ namespace Projeto
             DateTime agora = DateTime.Now;
             lblDataCriacao.Text = $"Criado em: {agora:dd/MM/yyyy HH:mm}";
             lblDataModificacao.Text = $"Modificado em: {agora:dd/MM/yyyy HH:mm}";
-        }
-
-      
-        public async void CarregarCondicaoPagamento(int id, string descricao, int qtdParcelas, decimal juros, decimal multa, decimal desconto, bool ativo, DateTime? dataCadastro, DateTime? dataAlteracao)
-        {
-            modoEdicao = true;
-            txtCodigo.Text = id.ToString();
-            txtDescricao.Text = descricao;
-            txtQtdParcelas.Text = qtdParcelas.ToString();
-            txtJuros.Text = juros.ToString("F2");
-            txtMulta.Text = multa.ToString("F2");
-            txtDesconto.Text = desconto.ToString("F2");
-            chkInativo.Checked = !ativo;
-            lblDataCriacao.Text = dataCadastro.HasValue ? $"Criado em: {dataCadastro.Value:dd/MM/yyyy HH:mm}" : "Criado em: -";
-            lblDataModificacao.Text = dataAlteracao.HasValue ? $"Modificado em: {dataAlteracao.Value:dd/MM/yyyy HH:mm}" : "Modificado em: -";
-            await CarregarParcelas(id);
         }
 
         private async void btnSalvar_Click(object sender, EventArgs e)

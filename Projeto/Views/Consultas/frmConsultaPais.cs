@@ -12,7 +12,6 @@ namespace Projeto.Views
         frmCadastroPais oFrmCadastroPais;
         Pais oPais;
         private PaisController controller = new PaisController();
-        public bool ModoSelecao { get; set; } = false;
         internal Pais PaisSelecionado { get; private set; }
 
         public frmConsultaPais() : base()
@@ -78,15 +77,9 @@ namespace Projeto.Views
         {
             oFrmCadastroPais.modoEdicao = false;
             oFrmCadastroPais.modoExclusao = false;
-            //oFrmCadastroPais.FormClosed += async (s, args) => await CarregarPaises();
+            oFrmCadastroPais.FormClosed += async (s, args) => await CarregarPaises();
             oFrmCadastroPais.ConhecaObj(oPais, controller);
             oFrmCadastroPais.ShowDialog();
-
-            /*
-            frmCadastroPais formCadastroPais = new frmCadastroPais();
-            formCadastroPais.FormClosed += async (s, args) => await CarregarPaises();
-            formCadastroPais.ShowDialog();
-            */
         }
 
         private async Task CarregarPaises()
@@ -164,18 +157,11 @@ namespace Projeto.Views
                 if (pais != null)
                 {
                     oFrmCadastroPais.modoEdicao = true;
-                    oFrmCadastroPais.modoExclusao = false; 
-                    //oFrmCadastroPais.CarregarPais(pais.Id, pais.NomePais, pais.Sigla, pais.DDI, pais.Moeda, pais.Ativo, pais.DataCadastro, pais.DataAlteracao);
-                    //oFrmCadastroPais.FormClosed += async (s, args) => await CarregarPaises();
-                    oFrmCadastroPais.ConhecaObj(oPais, controller);
+                    oFrmCadastroPais.modoExclusao = false;
+                    oFrmCadastroPais.ConhecaObj(pais, controller);
+                    oFrmCadastroPais.CarregaTxt();
+                    oFrmCadastroPais.FormClosed += async (s, args) => await CarregarPaises();
                     oFrmCadastroPais.ShowDialog();
-
-                    /*
-                    var formCadastro = new frmCadastroPais { modoEdicao = true };
-                    formCadastro.CarregarPais(pais.Id, pais.NomePais, pais.Sigla, pais.DDI, pais.Moeda, pais.Ativo, pais.DataCadastro, pais.DataAlteracao);
-                    formCadastro.FormClosed += async (s, args) => await CarregarPaises();
-                    formCadastro.ShowDialog();
-                    */
                 }
                 else
                 {
@@ -200,17 +186,11 @@ namespace Projeto.Views
                 {
                     oFrmCadastroPais.modoExclusao = true;
                     oFrmCadastroPais.modoEdicao = false;
-                    //oFrmCadastroPais.CarregarPais(pais.Id, pais.NomePais, pais.Sigla, pais.DDI, pais.Moeda, pais.Ativo, pais.DataCadastro, pais.DataAlteracao);
-                    //oFrmCadastroPais.FormClosed += async (s, args) => await CarregarPaises();
-                    oFrmCadastroPais.ConhecaObj(oPais, controller);
+                    oFrmCadastroPais.ConhecaObj(pais, controller);
+                    oFrmCadastroPais.CarregaTxt();
+                    oFrmCadastroPais.FormClosed += async (s, args) => await CarregarPaises();
                     oFrmCadastroPais.ShowDialog();
 
-                    /*
-                    var formCadastro = new frmCadastroPais { modoExclusao = true };
-                    formCadastro.CarregarPais(pais.Id, pais.NomePais, pais.Sigla, pais.DDI, pais.Moeda, pais.Ativo, pais.DataCadastro, pais.DataAlteracao);
-                    formCadastro.FormClosed += async (s, args) => await CarregarPaises();
-                    formCadastro.ShowDialog();
-                    */
                 }
                 else
                 {

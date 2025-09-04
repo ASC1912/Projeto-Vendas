@@ -55,7 +55,7 @@ namespace Projeto.Views
             txtSigla.Text = oPais.Sigla;
             txtDDI.Text = oPais.DDI;
             txtMoeda.Text = oPais.Moeda;
-            chkInativo.Checked = oPais.Ativo;
+            chkInativo.Checked = !oPais.Ativo;
             lblDataCriacao.Text = oPais.DataCadastro.HasValue ? $"Criado em: {oPais.DataCadastro.Value:dd/MM/yyyy HH:mm}" : "Criado em: -";
             lblDataModificacao.Text = oPais.DataAlteracao.HasValue ? $"Modificado em: {oPais.DataAlteracao.Value:dd/MM/yyyy HH:mm}" : "Modificado em: -";
         }
@@ -76,20 +76,6 @@ namespace Projeto.Views
             txtDDI.Enabled = true;
             txtMoeda.Enabled = true;
             chkInativo.Enabled = true;
-        }
-
-        public void CarregarPais(int id, string nome, string sigla, string ddi, string moeda, bool status, DateTime? dataCriacao, DateTime? dataModificacao)
-        {
-            modoEdicao = true;
-            txtCodigo.Text = id.ToString();
-            txtNome.Text = nome;
-            txtSigla.Text = sigla;
-            txtDDI.Text = ddi;
-            txtMoeda.Text = moeda;
-            chkInativo.Checked = !status;
-
-            lblDataCriacao.Text = dataCriacao.HasValue ? $"Criado em: {dataCriacao.Value:dd/MM/yyyy HH:mm}" : "Criado em: -";
-            lblDataModificacao.Text = dataModificacao.HasValue ? $"Modificado em: {dataModificacao.Value:dd/MM/yyyy HH:mm}" : "Modificado em: -";
         }
 
         private async void btnSalvar_Click(object sender, EventArgs e)
@@ -118,8 +104,6 @@ namespace Projeto.Views
 
                 try
                 {
-                    //LimparTxt();
-
                     int id = string.IsNullOrEmpty(txtCodigo.Text) ? 0 : int.Parse(txtCodigo.Text);
                     string nome = txtNome.Text;
                     string sigla = txtSigla.Text;

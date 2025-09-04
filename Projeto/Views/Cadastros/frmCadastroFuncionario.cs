@@ -78,9 +78,21 @@ namespace Projeto.Views
             txtMatricula.Text = oFunc.Matricula;
             txtCargo.Text = oFunc.Cargo;
             txtSalario.Text = oFunc.Salario.ToString();
-            chkInativo.Checked = oFunc.Ativo;
+            dtpAdmissao.Value = oFunc.DataAdmissao.Value;
+            chkInativo.Checked = !oFunc.Ativo;
             lblDataCriacao.Text = oFunc.DataCadastro.HasValue ? $"Criado em: {oFunc.DataCadastro.Value:dd/MM/yyyy HH:mm}" : "Criado em: -";
             lblDataModificacao.Text = oFunc.DataAlteracao.HasValue ? $"Modificado em: {oFunc.DataAlteracao.Value:dd/MM/yyyy HH:mm}" : "Modificado em: -";
+
+
+            if (oFunc.DataDemissao.HasValue)
+            {
+                dtpDemissao.Checked = true; 
+                dtpDemissao.Value = oFunc.DataDemissao.Value; 
+            }
+            else
+            {
+                dtpDemissao.Checked = false; 
+            }
         }
 
         public override void BloquearTxt()
@@ -337,7 +349,6 @@ namespace Projeto.Views
                         DataCadastro = id == 0 ? DateTime.Now : (DateTime?)null,
                         DataAlteracao = id > 0 ? DateTime.Now : (DateTime?)null,
 
-                        // Propriedades para o DAO e API
                         CidadeId = cidadeSelecionadoId,
                         oCidade = new Cidade { Id = cidadeSelecionadoId }
                     };
@@ -385,20 +396,6 @@ namespace Projeto.Views
                 cidadeSelecionadoId = oFrmConsultaCidade.CidadeSelecionado.Id;
                 txtIdCidade.Text = oFrmConsultaCidade.CidadeSelecionado.Id.ToString();
             }
-
-            /*
-            frmConsultaCidade consultaCidade = new frmConsultaCidade();
-            consultaCidade.ModoSelecao = true;
-
-            var resultado = consultaCidade.ShowDialog();
-
-            if (resultado == DialogResult.OK && consultaCidade.CidadeSelecionado != null)
-            {
-                txtCidade.Text = consultaCidade.CidadeSelecionado.NomeCidade;
-                cidadeSelecionadoId = consultaCidade.CidadeSelecionado.Id;
-                txtIdCidade.Text = consultaCidade.CidadeSelecionado.Id.ToString();
-            }
-            */
         }
 
         private async void txtIdCidade_Leave(object sender, EventArgs e)

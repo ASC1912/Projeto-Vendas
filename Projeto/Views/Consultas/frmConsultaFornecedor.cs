@@ -40,12 +40,6 @@ namespace Projeto.Views
             oFrmCadastroFornecedor.modoExclusao = false;
             oFrmCadastroFornecedor.FormClosed += async (s, args) => await CarregarFornecedores();
             oFrmCadastroFornecedor.ShowDialog();
-
-            /*
-            frmCadastroFornecedor formCadastroFornecedor = new frmCadastroFornecedor();
-            formCadastroFornecedor.FormClosed += async (s, args) => await CarregarFornecedores();
-            formCadastroFornecedor.ShowDialog();
-            */
         }
 
         private async Task CarregarFornecedores()
@@ -146,32 +140,10 @@ namespace Projeto.Views
                 {
                     oFrmCadastroFornecedor.modoEdicao = true;
                     oFrmCadastroFornecedor.modoExclusao = false;
-                    oFrmCadastroFornecedor.CarregarFornecedor(
-                        fornecedor.Id, fornecedor.Nome, fornecedor.CPF_CNPJ, fornecedor.Telefone, fornecedor.Email, fornecedor.Endereco,
-                        fornecedor.NumeroEndereco ?? 0, fornecedor.Bairro, fornecedor.Complemento, fornecedor.CEP,
-                        fornecedor.InscricaoEstadual, fornecedor.InscricaoEstadualSubTrib, fornecedor.Tipo,
-                        fornecedor.NomeCidade ?? "Não encontrado", fornecedor.CidadeId ?? 0,
-                        fornecedor.DescricaoCondicao ?? "Não encontrada", fornecedor.IdCondicao ?? 0,
-                        fornecedor.Ativo, fornecedor.DataCadastro, fornecedor.DataAlteracao
-                    );
-
+                    oFrmCadastroFornecedor.ConhecaObj(fornecedor, controller);
+                    oFrmCadastroFornecedor.CarregaTxt();
                     oFrmCadastroFornecedor.FormClosed += async (s, args) => await CarregarFornecedores();
                     oFrmCadastroFornecedor.ShowDialog();
-
-                    /*
-                    var formCadastro = new frmCadastroFornecedor { modoEdicao = true };
-                    formCadastro.CarregarFornecedor(
-                        fornecedor.Id, fornecedor.Nome, fornecedor.CPF_CNPJ, fornecedor.Telefone, fornecedor.Email, fornecedor.Endereco,
-                        fornecedor.NumeroEndereco ?? 0, fornecedor.Bairro, fornecedor.Complemento, fornecedor.CEP,
-                        fornecedor.InscricaoEstadual, fornecedor.InscricaoEstadualSubTrib, fornecedor.Tipo,
-                        fornecedor.NomeCidade ?? "Não encontrado", fornecedor.CidadeId ?? 0,
-                        fornecedor.DescricaoCondicao ?? "Não encontrada", fornecedor.IdCondicao ?? 0,
-                        fornecedor.Ativo, fornecedor.DataCadastro, fornecedor.DataAlteracao
-                    );
-
-                    formCadastro.FormClosed += async (s, args) => await CarregarFornecedores();
-                    formCadastro.ShowDialog();
-                    */
                 }
                 else
                 {
@@ -197,32 +169,10 @@ namespace Projeto.Views
                 {
                     oFrmCadastroFornecedor.modoExclusao = true;
                     oFrmCadastroFornecedor.modoEdicao = false;
-                    oFrmCadastroFornecedor.CarregarFornecedor(
-                        fornecedor.Id, fornecedor.Nome, fornecedor.CPF_CNPJ, fornecedor.Telefone, fornecedor.Email, fornecedor.Endereco,
-                        fornecedor.NumeroEndereco ?? 0, fornecedor.Bairro, fornecedor.Complemento, fornecedor.CEP,
-                        fornecedor.InscricaoEstadual, fornecedor.InscricaoEstadualSubTrib, fornecedor.Tipo,
-                        fornecedor.NomeCidade ?? "Não encontrado", fornecedor.CidadeId ?? 0,
-                        fornecedor.DescricaoCondicao ?? "Não encontrada", fornecedor.IdCondicao ?? 0,
-                        fornecedor.Ativo, fornecedor.DataCadastro, fornecedor.DataAlteracao
-                    );
-
+                    oFrmCadastroFornecedor.ConhecaObj(fornecedor, controller);
+                    oFrmCadastroFornecedor.CarregaTxt();
                     oFrmCadastroFornecedor.FormClosed += async (s, args) => await CarregarFornecedores();
                     oFrmCadastroFornecedor.ShowDialog();
-
-                    /*
-                    var formCadastro = new frmCadastroFornecedor { modoExclusao = true };
-                    formCadastro.CarregarFornecedor(
-                        fornecedor.Id, fornecedor.Nome, fornecedor.CPF_CNPJ, fornecedor.Telefone, fornecedor.Email, fornecedor.Endereco,
-                        fornecedor.NumeroEndereco ?? 0, fornecedor.Bairro, fornecedor.Complemento, fornecedor.CEP,
-                        fornecedor.InscricaoEstadual, fornecedor.InscricaoEstadualSubTrib, fornecedor.Tipo,
-                        fornecedor.NomeCidade ?? "Não encontrado", fornecedor.CidadeId ?? 0,
-                        fornecedor.DescricaoCondicao ?? "Não encontrada", fornecedor.IdCondicao ?? 0,
-                        fornecedor.Ativo, fornecedor.DataCadastro, fornecedor.DataAlteracao
-                    );
-
-                    formCadastro.FormClosed += async (s, args) => await CarregarFornecedores();
-                    formCadastro.ShowDialog();
-                    */
                 }
                 else
                 {

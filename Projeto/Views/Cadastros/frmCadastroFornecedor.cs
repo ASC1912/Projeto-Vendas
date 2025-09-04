@@ -80,7 +80,7 @@ namespace Projeto.Views
             txtInscEst.Text = oForn.InscricaoEstadual;
             txtInscEstSubTrib.Text = oForn.InscricaoEstadualSubTrib;
             txtCondicao.Text = oForn.DescricaoCondicao;
-            chkInativo.Checked = oForn.Ativo;
+            chkInativo.Checked = !oForn.Ativo;
             lblDataCriacao.Text = oForn.DataCadastro.HasValue ? $"Criado em: {oForn.DataCadastro.Value:dd/MM/yyyy HH:mm}" : "Criado em: -";
             lblDataModificacao.Text = oForn.DataAlteracao.HasValue ? $"Modificado em: {oForn.DataAlteracao.Value:dd/MM/yyyy HH:mm}" : "Modificado em: -";
         }
