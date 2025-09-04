@@ -1,4 +1,5 @@
 ﻿using Projeto.Controller;
+using Projeto.DAO;
 using Projeto.Models;
 using Projeto.Utils;
 using System;
@@ -8,10 +9,10 @@ namespace Projeto.Views.Cadastros
 {
     public partial class frmCadastroMarca : Projeto.frmBase
     {
+        Marca aMarca;
         public bool modoEdicao = false;
         public bool modoExclusao = false; 
         private MarcaController controller = new MarcaController();
-
 
         public frmCadastroMarca() : base()
         {
@@ -21,10 +22,23 @@ namespace Projeto.Views.Cadastros
 
         public override void ConhecaObj(object obj, object ctrl)
         {
+            if (obj != null)
+            {
+                aMarca = (Marca)obj;
+            }
             if (ctrl != null)
             {
                 controller = (MarcaController)ctrl;
             }
+        }
+
+        public override void CarregaTxt()
+        {
+            txtCodigo.Text = aMarca.Id.ToString();
+            txtNome.Text = aMarca.NomeMarca;
+            chkInativo.Checked = aMarca.Ativo;
+            lblDataCriacao.Text = aMarca.DataCadastro.HasValue ? $"Criado em: {aMarca.DataCadastro.Value:dd/MM/yyyy HH:mm}" : "Criado em: -";
+            lblDataModificacao.Text = aMarca.DataAlteracao.HasValue ? $"Modificado em: {aMarca.DataAlteracao.Value:dd/MM/yyyy HH:mm}" : "Modificado em: -";
         }
 
         public override void BloquearTxt()

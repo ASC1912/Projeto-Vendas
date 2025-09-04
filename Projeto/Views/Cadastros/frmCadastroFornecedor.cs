@@ -1,4 +1,6 @@
-﻿using Projeto.Controller;
+﻿using MySqlX.XDevAPI;
+using Projeto.Controller;
+using Projeto.DAO;
 using Projeto.Models;
 using Projeto.Utils;
 using System;
@@ -11,6 +13,7 @@ namespace Projeto.Views
 {
     public partial class frmCadastroFornecedor : Projeto.frmBase
     {
+        Fornecedor oForn;
         frmConsultaCidade oFrmConsultaCidade;
         frmConsultaCondPgto oFrmConsultaCondPgto;
 
@@ -31,6 +34,19 @@ namespace Projeto.Views
             cbTipo.SelectedIndexChanged += cbTipo_SelectedIndexChanged;
             cbTipo_SelectedIndexChanged(null, null);
         }
+
+        public override void ConhecaObj(object obj, object ctrl)
+        {
+            if (obj != null)
+            {
+                oForn = (Fornecedor)obj;
+            }
+            if (ctrl != null)
+            {
+                controller = (FornecedorController)ctrl;
+            }
+        }
+
         public void setFrmConsultaCidade(object obj)
         {
             if (obj != null)
@@ -45,6 +61,28 @@ namespace Projeto.Views
             {
                 oFrmConsultaCondPgto = (frmConsultaCondPgto)obj;
             }
+        }
+
+        public override void CarregaTxt()
+        {
+            txtCodigo.Text = oForn.Id.ToString();
+            txtNome.Text = oForn.Nome;
+            txtEndereco.Text = oForn.Endereco;
+            txtNumEnd.Text = oForn.NumeroEndereco.ToString();
+            txtBairro.Text = oForn.Bairro;
+            txtComplemento.Text = oForn.Complemento;
+            txtCEP.Text = oForn.CEP;
+            txtIdCidade.Text = oForn.CidadeId.ToString();
+            txtCidade.Text = oForn.NomeCidade;
+            txtEmail.Text = oForn.Email;
+            txtTelefone.Text = oForn.Telefone;
+            txtCPF.Text = oForn.CPF_CNPJ;
+            txtInscEst.Text = oForn.InscricaoEstadual;
+            txtInscEstSubTrib.Text = oForn.InscricaoEstadualSubTrib;
+            txtCondicao.Text = oForn.DescricaoCondicao;
+            chkInativo.Checked = oForn.Ativo;
+            lblDataCriacao.Text = oForn.DataCadastro.HasValue ? $"Criado em: {oForn.DataCadastro.Value:dd/MM/yyyy HH:mm}" : "Criado em: -";
+            lblDataModificacao.Text = oForn.DataAlteracao.HasValue ? $"Modificado em: {oForn.DataAlteracao.Value:dd/MM/yyyy HH:mm}" : "Modificado em: -";
         }
 
         public override void BloquearTxt()
@@ -115,6 +153,8 @@ namespace Projeto.Views
             lblDataCriacao.Text = $"Criado em: {agora:dd/MM/yyyy HH:mm}";
             lblDataModificacao.Text = $"Modificado em: {agora:dd/MM/yyyy HH:mm}";
         }
+
+    
 
         private void cbTipo_SelectedIndexChanged(object sender, EventArgs e)
         {

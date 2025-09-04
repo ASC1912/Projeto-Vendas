@@ -34,6 +34,8 @@
             this.Produto = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Unidade = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Quantidade = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.PrecoUnitario = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Total = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lblNumero = new System.Windows.Forms.Label();
             this.txtNumero = new System.Windows.Forms.TextBox();
             this.lblModelo = new System.Windows.Forms.Label();
@@ -62,8 +64,6 @@
             this.btnLimpar = new System.Windows.Forms.Button();
             this.lblValorTotal = new System.Windows.Forms.Label();
             this.txtValorTotal = new System.Windows.Forms.TextBox();
-            this.PrecoUnitario = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.Total = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lblFrete = new System.Windows.Forms.Label();
             this.txtFrete = new System.Windows.Forms.TextBox();
             this.lblSeguro = new System.Windows.Forms.Label();
@@ -120,6 +120,15 @@
             // 
             this.Quantidade.Text = "Qtd";
             this.Quantidade.Width = 48;
+            // 
+            // PrecoUnitario
+            // 
+            this.PrecoUnitario.Text = "Preço Unitário";
+            this.PrecoUnitario.Width = 111;
+            // 
+            // Total
+            // 
+            this.Total.Text = "Total";
             // 
             // lblNumero
             // 
@@ -349,15 +358,6 @@
             this.txtValorTotal.Size = new System.Drawing.Size(100, 22);
             this.txtValorTotal.TabIndex = 113;
             // 
-            // PrecoUnitario
-            // 
-            this.PrecoUnitario.Text = "Preço Unitário";
-            this.PrecoUnitario.Width = 111;
-            // 
-            // Total
-            // 
-            this.Total.Text = "Total";
-            // 
             // lblFrete
             // 
             this.lblFrete.AutoSize = true;
@@ -408,7 +408,9 @@
             // 
             // frmCadastroCompras2
             // 
-            this.ClientSize = new System.Drawing.Size(1342, 681);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(1419, 663);
             this.Controls.Add(this.lblOutrasDespesas);
             this.Controls.Add(this.txtOutrasDespesas);
             this.Controls.Add(this.lblSeguro);

@@ -78,7 +78,7 @@ namespace Projeto.Views
         {
             oFrmCadastroPais.modoEdicao = false;
             oFrmCadastroPais.modoExclusao = false;
-            oFrmCadastroPais.FormClosed += async (s, args) => await CarregarPaises();
+            //oFrmCadastroPais.FormClosed += async (s, args) => await CarregarPaises();
             oFrmCadastroPais.ConhecaObj(oPais, controller);
             oFrmCadastroPais.ShowDialog();
 
@@ -165,8 +165,8 @@ namespace Projeto.Views
                 {
                     oFrmCadastroPais.modoEdicao = true;
                     oFrmCadastroPais.modoExclusao = false; 
-                    oFrmCadastroPais.CarregarPais(pais.Id, pais.NomePais, pais.Sigla, pais.DDI, pais.Moeda, pais.Ativo, pais.DataCadastro, pais.DataAlteracao);
-                    oFrmCadastroPais.FormClosed += async (s, args) => await CarregarPaises();
+                    //oFrmCadastroPais.CarregarPais(pais.Id, pais.NomePais, pais.Sigla, pais.DDI, pais.Moeda, pais.Ativo, pais.DataCadastro, pais.DataAlteracao);
+                    //oFrmCadastroPais.FormClosed += async (s, args) => await CarregarPaises();
                     oFrmCadastroPais.ConhecaObj(oPais, controller);
                     oFrmCadastroPais.ShowDialog();
 
@@ -200,8 +200,9 @@ namespace Projeto.Views
                 {
                     oFrmCadastroPais.modoExclusao = true;
                     oFrmCadastroPais.modoEdicao = false;
-                    oFrmCadastroPais.CarregarPais(pais.Id, pais.NomePais, pais.Sigla, pais.DDI, pais.Moeda, pais.Ativo, pais.DataCadastro, pais.DataAlteracao);
-                    oFrmCadastroPais.FormClosed += async (s, args) => await CarregarPaises();
+                    //oFrmCadastroPais.CarregarPais(pais.Id, pais.NomePais, pais.Sigla, pais.DDI, pais.Moeda, pais.Ativo, pais.DataCadastro, pais.DataAlteracao);
+                    //oFrmCadastroPais.FormClosed += async (s, args) => await CarregarPaises();
+                    oFrmCadastroPais.ConhecaObj(oPais, controller);
                     oFrmCadastroPais.ShowDialog();
 
                     /*

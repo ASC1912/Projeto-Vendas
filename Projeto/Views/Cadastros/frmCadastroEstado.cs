@@ -1,9 +1,10 @@
 ﻿using Projeto.Controller;
+using Projeto.DAO;
 using Projeto.Models;
+using Projeto.Utils;
 using System;
 using System.Collections.Generic; 
 using System.Windows.Forms;
-using Projeto.Utils;
 
 namespace Projeto.Views
 {
@@ -23,12 +24,34 @@ namespace Projeto.Views
             txtCodigo.Enabled = false;
         }
 
+        public override void ConhecaObj(object obj, object ctrl)
+        {
+            if (obj != null)
+            {
+                oEstado = (Estado)obj;
+            }
+            if (ctrl != null)
+            {
+                controller = (EstadoController)ctrl;
+            }
+        }
         public void setFrmConsultaPais(object obj)
         {
             if (obj != null)
             {
                 oFrmConsultaPais = (frmConsultaPais)obj;
             }
+        }
+
+        public override void CarregaTxt()
+        {
+            txtCodigo.Text = oEstado.Id.ToString();
+            txtNome.Text = oEstado.NomeEstado;
+            txtUF.Text = oEstado.UF;
+            txtPais.Text = oEstado.PaisNome;
+            chkInativo.Checked = oEstado.Ativo;
+            lblDataCriacao.Text = oEstado.DataCadastro.HasValue ? $"Criado em: {oEstado.DataCadastro.Value:dd/MM/yyyy HH:mm}" : "Criado em: -";
+            lblDataModificacao.Text = oEstado.DataAlteracao.HasValue ? $"Modificado em: {oEstado.DataAlteracao.Value:dd/MM/yyyy HH:mm}" : "Modificado em: -";
         }
 
         public override void BloquearTxt()
@@ -59,12 +82,6 @@ namespace Projeto.Views
             DateTime agora = DateTime.Now;
             lblDataCriacao.Text = $"Criado em: {agora:dd/MM/yyyy HH:mm}";
             lblDataModificacao.Text = $"Modificado em: {agora:dd/MM/yyyy HH:mm}";
-        }
-
-        public override void ConhecaObj(object obj, object ctrl)
-        {
-            oEstado = (Estado)obj;
-            controller = (EstadoController)ctrl;
         }
 
         public void CarregarEstado(int id, string nomeEstado, string uf, string nomePais, int paisId, bool ativo, DateTime? dataCadastro, DateTime? dataAlteracao)

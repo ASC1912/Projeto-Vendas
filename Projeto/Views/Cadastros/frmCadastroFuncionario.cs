@@ -1,4 +1,6 @@
-﻿using Projeto.Controller;
+﻿using MySqlX.XDevAPI;
+using Projeto.Controller;
+using Projeto.DAO;
 using Projeto.Models;
 using Projeto.Utils;
 using System;
@@ -11,6 +13,7 @@ namespace Projeto.Views
 {
     public partial class frmCadastroFuncionario : Projeto.frmBase
     {
+        Funcionario oFunc;
         frmConsultaCidade oFrmConsultaCidade;
         private CidadeController cidadeController = new CidadeController();
         private EstadoController estadoController = new EstadoController();
@@ -35,12 +38,49 @@ namespace Projeto.Views
             cbTipo_SelectedIndexChanged(null, null);
         }
 
+        public override void ConhecaObj(object obj, object ctrl)
+        {
+            if (obj != null)
+            {
+                oFunc = (Funcionario)obj;
+            }
+            if (ctrl != null)
+            {
+                controller = (FuncionarioController)ctrl;
+            }
+        }
+
         public void setFrmConsultaCidade(object obj)
         {
             if (obj != null)
             {
                 oFrmConsultaCidade = (frmConsultaCidade)obj;
             }
+        }
+
+        public override void CarregaTxt()
+        {
+            txtCodigo.Text = oFunc.Id.ToString();
+            txtNome.Text = oFunc.Nome;
+            cbGenero.Text = oFunc.Genero;
+            dtpNascimento.Value = oFunc.DataNascimento.Value;
+            txtEndereco.Text = oFunc.Endereco;
+            txtNumEnd.Text = oFunc.NumeroEndereco.ToString();
+            txtBairro.Text = oFunc.Bairro;
+            txtComplemento.Text = oFunc.Complemento;
+            txtCEP.Text = oFunc.CEP;
+            txtIdCidade.Text = oFunc.CidadeId.ToString();
+            txtCidade.Text = oFunc.NomeCidade;
+            txtEmail.Text = oFunc.Email;
+            txtTelefone.Text = oFunc.Telefone;
+            txtCPF.Text = oFunc.CPF_CNPJ;
+            txtRG.Text = oFunc.Rg;
+            txtMatricula.Text = oFunc.Matricula;
+            txtCargo.Text = oFunc.Cargo;
+            txtSalario.Text = oFunc.Salario.ToString();
+            chkInativo.Checked = oFunc.Ativo;
+            lblDataCriacao.Text = oFunc.DataCadastro.HasValue ? $"Criado em: {oFunc.DataCadastro.Value:dd/MM/yyyy HH:mm}" : "Criado em: -";
+            lblDataModificacao.Text = oFunc.DataAlteracao.HasValue ? $"Modificado em: {oFunc.DataAlteracao.Value:dd/MM/yyyy HH:mm}" : "Modificado em: -";
         }
 
         public override void BloquearTxt()
@@ -127,6 +167,8 @@ namespace Projeto.Views
             lblDataCriacao.Text = $"Criado em: {agora:dd/MM/yyyy HH:mm}";
             lblDataModificacao.Text = $"Modificado em: {agora:dd/MM/yyyy HH:mm}";
         }
+
+     
 
         public void CarregarFuncionario(
                                  int id, string nome, string apelido, string cpf_cnpj, string telefone, string email,

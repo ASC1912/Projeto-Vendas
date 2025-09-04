@@ -1,16 +1,19 @@
 ﻿using Projeto.Controller;
+using Projeto.DAO;
 using Projeto.Models;
+using Projeto.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks; // Adicionado
+using System.Threading.Tasks; 
 using System.Windows.Forms;
-using Projeto.Utils;
 
 namespace Projeto
 {
     public partial class frmCadastroCondPgto : Projeto.frmBase
     {
+        Parcelamento aParcela;
+        CondicaoPagamento aCondPgto;
         frmConsultaFrmPgto oFrmConsultaFrmPgto;
         private ParcelaController parcelaController = new ParcelaController();
         private FormaPagamentoController formaPagamentoController = new FormaPagamentoController();
@@ -26,12 +29,41 @@ namespace Projeto
             txtFormaPagamento.ReadOnly = true;
         }
 
+        public override void ConhecaObj(object obj, object ctrl)
+        {
+            if (obj != null)
+            {
+                aCondPgto = (CondicaoPagamento)obj;
+            }
+            if (ctrl != null)
+            {
+                condicaoPagamentoController = (CondicaoPagamentoController)ctrl;
+            }
+        }
         public void setFrmConsultaFormaPagamento(object obj)
         {
             if (obj != null)
             {
                 oFrmConsultaFrmPgto = (frmConsultaFrmPgto)obj;
             }
+        }
+
+        public override void CarregaTxt()
+        {
+            txtCodigo.Text = aCondPgto.Id.ToString();
+            txtDescricao.Text = aCondPgto.Descricao;
+            txtQtdParcelas.Text = aCondPgto.QtdParcelas.ToString();
+            txtJuros.Text = aCondPgto.Juros.ToString();
+            txtMulta.Text = aCondPgto.Multa.ToString();
+            txtDesconto.Text = aCondPgto.Desconto.ToString();
+
+            txtNumParcela.Text = aParcela.NumParcela.ToString();
+            txtPorcentagem.Text = aParcela.Porcentagem.ToString();
+            txtPrazoDias.Text = aParcela.PrazoDias.ToString();
+            txtFormaPagamento.Text = aParcela.FormaPagamento.ToString();
+            chkInativo.Checked = aCondPgto.Ativo;
+            lblDataCriacao.Text = aCondPgto.DataCadastro.HasValue ? $"Criado em: {aCondPgto.DataCadastro.Value:dd/MM/yyyy HH:mm}" : "Criado em: -";
+            lblDataModificacao.Text = aCondPgto.DataAlteracao.HasValue ? $"Modificado em: {aCondPgto.DataAlteracao.Value:dd/MM/yyyy HH:mm}" : "Modificado em: -";
         }
 
         public override void BloquearTxt()
@@ -94,7 +126,7 @@ namespace Projeto
             lblDataModificacao.Text = $"Modificado em: {agora:dd/MM/yyyy HH:mm}";
         }
 
-
+      
         public async void CarregarCondicaoPagamento(int id, string descricao, int qtdParcelas, decimal juros, decimal multa, decimal desconto, bool ativo, DateTime? dataCadastro, DateTime? dataAlteracao)
         {
             modoEdicao = true;

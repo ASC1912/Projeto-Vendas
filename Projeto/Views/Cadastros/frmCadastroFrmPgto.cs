@@ -1,21 +1,44 @@
-﻿using System;
-using System.Windows.Forms;
+﻿using Projeto.Controller;
+using Projeto.DAO;
 using Projeto.Models;
-using Projeto.Controller;
 using Projeto.Utils;
+using System;
+using System.Windows.Forms;
 
 namespace Projeto
 {
     public partial class frmCadastroFrmPgto : Projeto.frmBase
     {
+        FormaPagamento oFormaPgto;
         public bool modoEdicao = false;
         public bool modoExclusao = false;
-        private readonly FormaPagamentoController controller = new FormaPagamentoController();
+        private FormaPagamentoController controller = new FormaPagamentoController();
 
         public frmCadastroFrmPgto() : base()
         {
             InitializeComponent();
             txtCodigo.Enabled = false;
+        }
+
+        public override void ConhecaObj(object obj, object ctrl)
+        {
+            if (obj != null)
+            {
+                oFormaPgto = (FormaPagamento)obj;
+            }
+            if (ctrl != null)
+            {
+                controller = (FormaPagamentoController)ctrl;
+            }
+        }
+
+        public override void CarregaTxt()
+        {
+            txtCodigo.Text = oFormaPgto.Id.ToString();
+            txtDescricao.Text = oFormaPgto.Descricao;
+            chkInativo.Checked = oFormaPgto.Ativo;
+            lblDataCriacao.Text = oFormaPgto.DataCadastro.HasValue ? $"Criado em: {oFormaPgto.DataCadastro.Value:dd/MM/yyyy HH:mm}" : "Criado em: -";
+            lblDataModificacao.Text = oFormaPgto.DataAlteracao.HasValue ? $"Modificado em: {oFormaPgto.DataAlteracao.Value:dd/MM/yyyy HH:mm}" : "Modificado em: -";
         }
 
         public override void BloquearTxt()
@@ -41,7 +64,7 @@ namespace Projeto
             lblDataModificacao.Text = $"Modificado em: {agora:dd/MM/yyyy HH:mm}";
         }
 
-
+       
         public void CarregarFormaPagamento(int id, string descricao, bool ativo, DateTime? dataCadastro, DateTime? dataAlteracao)
         {
             modoEdicao = true;

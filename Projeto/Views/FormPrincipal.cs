@@ -183,7 +183,7 @@ namespace Projeto
 
         private void comprasToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmCadastroCompras2 formCompra = new frmCadastroCompras2();
+            frmCadastroCompras formCompra = new frmCadastroCompras();
             formCompra.ShowDialog();
         }
     }

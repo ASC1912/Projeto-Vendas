@@ -1,4 +1,6 @@
-﻿using Projeto.Controller;
+﻿using MySqlX.XDevAPI;
+using Projeto.Controller;
+using Projeto.DAO;
 using Projeto.Models;
 using Projeto.Utils;
 using System;
@@ -15,6 +17,7 @@ namespace Projeto.Views.Cadastros
 {
     public partial class frmCadastroTransportadora : Projeto.frmBase
     {
+        Transportadora aTransportadora;
         frmConsultaCidade oFrmConsultaCidade;
         frmConsultaCondPgto oFrmConsultaCondPgto;
 
@@ -37,6 +40,10 @@ namespace Projeto.Views.Cadastros
 
         public override void ConhecaObj(object obj, object ctrl)
         {
+            if (obj != null)
+            {
+                aTransportadora = (Transportadora)obj;
+            }
             if (ctrl != null)
             {
                 controller = (TransportadoraController)ctrl;
@@ -57,6 +64,28 @@ namespace Projeto.Views.Cadastros
             {
                 oFrmConsultaCondPgto = (frmConsultaCondPgto)obj;
             }
+        }
+
+        public override void CarregaTxt()
+        {
+            txtCodigo.Text = aTransportadora.Id.ToString();
+            txtNome.Text = aTransportadora.Nome;
+            txtEndereco.Text = aTransportadora.Endereco;
+            txtNumEnd.Text = aTransportadora.NumeroEndereco.ToString();
+            txtBairro.Text = aTransportadora.Bairro;
+            txtComplemento.Text = aTransportadora.Complemento;
+            txtCEP.Text = aTransportadora.CEP;
+            txtIdCidade.Text = aTransportadora.CidadeId.ToString();
+            txtCidade.Text = aTransportadora.NomeCidade;
+            txtEmail.Text = aTransportadora.Email;
+            txtTelefone.Text = aTransportadora.Telefone;
+            txtCPF.Text = aTransportadora.CPF_CNPJ;
+            txtInscEst.Text = aTransportadora.InscricaoEstadual;
+            txtInscEstSubTrib.Text = aTransportadora.InscricaoEstadual;
+            txtCondicao.Text = aTransportadora.DescricaoCondicao;
+            chkInativo.Checked = aTransportadora.Ativo;
+            lblDataCriacao.Text = aTransportadora.DataCadastro.HasValue ? $"Criado em: {aTransportadora.DataCadastro.Value:dd/MM/yyyy HH:mm}" : "Criado em: -";
+            lblDataModificacao.Text = aTransportadora.DataAlteracao.HasValue ? $"Modificado em: {aTransportadora.DataAlteracao.Value:dd/MM/yyyy HH:mm}" : "Modificado em: -";
         }
 
         public override void BloquearTxt()

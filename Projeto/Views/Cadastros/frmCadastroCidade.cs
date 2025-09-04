@@ -1,15 +1,17 @@
 ﻿using Projeto.Controller;
+using Projeto.DAO;
 using Projeto.Models;
+using Projeto.Utils;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Projeto.Utils;
 
 namespace Projeto.Views
 {
     public partial class frmCadastroCidade : Projeto.frmBase
     {
+        Cidade aCidade;
         frmConsultaEstado oFrmConsultaEstado;
         private EstadoController estadoController = new EstadoController();
         private CidadeController controller = new CidadeController();
@@ -23,12 +25,35 @@ namespace Projeto.Views
             txtCodigo.Enabled = false;
         }
 
+        public override void ConhecaObj(object obj, object ctrl)
+        {
+            if (obj != null)
+            {
+                aCidade = (Cidade)obj;
+            }
+            if (ctrl != null)
+            {
+                controller = (CidadeController)ctrl;
+            }
+        }
+
         public void setFrmConsultaEstado(object obj)
         {
             if (obj != null)
             {
                 oFrmConsultaEstado = (frmConsultaEstado)obj;
             }
+        }
+
+        public override void CarregaTxt()
+        {
+            txtCodigo.Text = aCidade.Id.ToString();
+            txtNome.Text = aCidade.NomeCidade;
+            txtEstado.Text = aCidade.EstadoNome;
+            txtDDD.Text = aCidade.DDD;
+            chkInativo.Checked = aCidade.Ativo;
+            lblDataCriacao.Text = aCidade.DataCadastro.HasValue ? $"Criado em: {aCidade.DataCadastro.Value:dd/MM/yyyy HH:mm}" : "Criado em: -";
+            lblDataModificacao.Text = aCidade.DataAlteracao.HasValue ? $"Modificado em: {aCidade.DataAlteracao.Value:dd/MM/yyyy HH:mm}" : "Modificado em: -";
         }
 
         public override void BloquearTxt()

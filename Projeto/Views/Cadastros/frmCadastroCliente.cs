@@ -1,4 +1,5 @@
 ﻿using Projeto.Controller;
+using Projeto.DAO;
 using Projeto.Models;
 using Projeto.Utils;
 using System;
@@ -11,6 +12,7 @@ namespace Projeto.Views
 {
     public partial class frmCadastroCliente : Projeto.frmBase
     {
+        Cliente oCliente;
         frmConsultaCidade oFrmConsultaCidade;
         frmConsultaCondPgto oFrmConsultaCondPgto;
 
@@ -36,6 +38,18 @@ namespace Projeto.Views
             cbTipo_SelectedIndexChanged(null, null);
         }
 
+        public override void ConhecaObj(object obj, object ctrl)
+        {
+            if (obj != null)
+            {
+                oCliente = (Cliente)obj;
+            }
+            if (ctrl != null)
+            {
+                controller = (ClienteController)ctrl;
+            }
+        }
+
         public void setFrmConsultaCidade(object obj)
         {
             if (obj != null)
@@ -50,6 +64,29 @@ namespace Projeto.Views
             {
                 oFrmConsultaCondPgto = (frmConsultaCondPgto)obj;
             }
+        }
+
+        public override void CarregaTxt()
+        {
+            txtCodigo.Text = oCliente.Id.ToString();
+            txtNome.Text = oCliente.Nome;
+            cbGenero.Text = oCliente.Genero;
+            dtpNascimento.Value = oCliente.DataNascimento.Value;
+            txtEndereco.Text = oCliente.Endereco;
+            txtNumEnd.Text = oCliente.NumeroEndereco.ToString();
+            txtBairro.Text = oCliente.Bairro;
+            txtComplemento.Text = oCliente.Complemento;
+            txtCEP.Text = oCliente.CEP;
+            txtIdCidade.Text = oCliente.CidadeId.ToString();
+            txtCidade.Text = oCliente.NomeCidade;
+            txtEmail.Text = oCliente.Email;
+            txtTelefone.Text = oCliente.Telefone;
+            txtCPF.Text = oCliente.CPF_CNPJ;
+            txtRG.Text = oCliente.Rg;
+            txtCondicao.Text = oCliente.DescricaoCondicao;
+            chkInativo.Checked = oCliente.Ativo;
+            lblDataCriacao.Text = oCliente.DataCadastro.HasValue ? $"Criado em: {oCliente.DataCadastro.Value:dd/MM/yyyy HH:mm}" : "Criado em: -";
+            lblDataModificacao.Text = oCliente.DataAlteracao.HasValue ? $"Modificado em: {oCliente.DataAlteracao.Value:dd/MM/yyyy HH:mm}" : "Modificado em: -";
         }
 
         public override void BloquearTxt()
@@ -124,6 +161,8 @@ namespace Projeto.Views
             lblDataCriacao.Text = $"Criado em: {agora:dd/MM/yyyy HH:mm}";
             lblDataModificacao.Text = $"Modificado em: {agora:dd/MM/yyyy HH:mm}";
         }
+
+      
 
         public void CarregarCliente(int id, string nome, string cpfCnpj, string telefone, string email, string endereco,
                                  int numeroEndereco, string bairro, string complemento, string cep, string tipo, string genero,

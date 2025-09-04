@@ -1,4 +1,5 @@
 ﻿using Projeto.Controller;
+using Projeto.DAO;
 using Projeto.Models;
 using Projeto.Utils;
 using System;
@@ -8,6 +9,7 @@ namespace Projeto.Views.Cadastros
 {
     public partial class frmCadastroGrupo : Projeto.frmBase
     {
+        Grupo oGrupo;
         public bool modoEdicao = false;
         public bool modoExclusao = false;
         private GrupoController controller = new GrupoController();
@@ -20,10 +22,24 @@ namespace Projeto.Views.Cadastros
 
         public override void ConhecaObj(object obj, object ctrl)
         {
+            if (obj != null)
+            {
+                oGrupo = (Grupo)obj;
+            }
             if (ctrl != null)
             {
                 controller = (GrupoController)ctrl;
             }
+        }
+
+        public override void CarregaTxt()
+        {
+            txtCodigo.Text = oGrupo.Id.ToString();
+            txtNome.Text = oGrupo.NomeGrupo;
+            txtDescricao.Text = oGrupo.Descricao;
+            chkInativo.Checked = oGrupo.Ativo;
+            lblDataCriacao.Text = oGrupo.DataCadastro.HasValue ? $"Criado em: {oGrupo.DataCadastro.Value:dd/MM/yyyy HH:mm}" : "Criado em: -";
+            lblDataModificacao.Text = oGrupo.DataAlteracao.HasValue ? $"Modificado em: {oGrupo.DataAlteracao.Value:dd/MM/yyyy HH:mm}" : "Modificado em: -";
         }
         public override void BloquearTxt()
         {
@@ -50,6 +66,7 @@ namespace Projeto.Views.Cadastros
             lblDataCriacao.Text = $"Criado em: {agora:dd/MM/yyyy HH:mm}";
             lblDataModificacao.Text = $"Modificado em: {agora:dd/MM/yyyy HH:mm}";
         }
+
 
         public void CarregarGrupo(int id, string nomeGrupo, string descricao, bool ativo, DateTime? dataCadastro, DateTime? dataAlteracao)
         {

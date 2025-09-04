@@ -1,4 +1,5 @@
 ﻿using Projeto.Controller;
+using Projeto.DAO;
 using Projeto.Models;
 using Projeto.Utils;
 using Projeto.Views.Consultas;
@@ -11,6 +12,7 @@ namespace Projeto.Views.Cadastros
 {
     public partial class frmCadastroVeiculo : Projeto.frmBase
     {
+        Veiculo oVeiculo;
         private frmConsultaTransportadora oFrmConsultaTransportadora;
         private frmConsultaMarca oFrmConsultaMarca;
 
@@ -28,16 +30,18 @@ namespace Projeto.Views.Cadastros
             txtMarca.ReadOnly = true; 
         }
 
-        // Método para receber o controlador (seguindo o padrão)
         public override void ConhecaObj(object obj, object ctrl)
         {
+            if (obj != null)
+            {
+                oVeiculo = (Veiculo)obj;
+            }
             if (ctrl != null)
             {
                 controller = (VeiculoController)ctrl;
             }
         }
 
-        // Métodos para receber as instâncias dos formulários de consulta
         public void setFrmConsultaTransportadora(object obj)
         {
             if (obj != null)
@@ -52,6 +56,20 @@ namespace Projeto.Views.Cadastros
             {
                 oFrmConsultaMarca = (frmConsultaMarca)obj;
             }
+        }
+
+        public override void CarregaTxt()
+        {
+            txtCodigo.Text = oVeiculo.Id.ToString();
+            txtPlaca.Text = oVeiculo.Placa;
+            txtModelo.Text = oVeiculo.Modelo;
+            txtMarca.Text = oVeiculo.NomeMarca;
+            txtAnoFabricacao.Text = oVeiculo.AnoFabricacao.ToString();
+            txtCapacidadeCarga.Text = oVeiculo.CapacidadeCargaKg.ToString();
+            txtTransportadora.Text = oVeiculo.NomeTransportadora;
+            chkInativo.Checked = oVeiculo.Ativo;
+            lblDataCriacao.Text = oVeiculo.DataCadastro.HasValue ? $"Criado em: {oVeiculo.DataCadastro.Value:dd/MM/yyyy HH:mm}" : "Criado em: -";
+            lblDataModificacao.Text = oVeiculo.DataAlteracao.HasValue ? $"Modificado em: {oVeiculo.DataAlteracao.Value:dd/MM/yyyy HH:mm}" : "Modificado em: -";
         }
 
         public override void BloquearTxt()

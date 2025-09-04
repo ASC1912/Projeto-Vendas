@@ -1,4 +1,5 @@
 ﻿using Projeto.Controller;
+using Projeto.DAO;
 using Projeto.Models;
 using Projeto.Utils;
 using Projeto.Views.Consultas;
@@ -9,6 +10,7 @@ namespace Projeto.Views.Cadastros
 {
     public partial class frmCadastroProduto : Projeto.frmBase
     {
+        Produto oProduto;
         private frmConsultaGrupo oFrmConsultaGrupo;
         private frmConsultaMarca oFrmConsultaMarca;
 
@@ -28,6 +30,10 @@ namespace Projeto.Views.Cadastros
 
         public override void ConhecaObj(object obj, object ctrl)
         {
+            if (obj != null)
+            {
+                oProduto = (Produto)obj;
+            }
             if (ctrl != null)
             {
                 controller = (ProdutoController)ctrl;
@@ -48,6 +54,20 @@ namespace Projeto.Views.Cadastros
             {
                 oFrmConsultaMarca = (frmConsultaMarca)obj;
             }
+        }
+
+        public override void CarregaTxt()
+        {
+            txtCodigo.Text = oProduto.Id.ToString();
+            txtNome.Text = oProduto.NomeProduto;
+            txtDescricao.Text = oProduto.Descricao;
+            txtPreco.Text = oProduto.Preco.ToString();
+            txtEstoque.Text = oProduto.Estoque.ToString();
+            txtMarca.Text = oProduto.NomeMarca;
+            txtGrupo.Text = oProduto.NomeGrupo;
+            chkInativo.Checked = oProduto.Ativo;
+            lblDataCriacao.Text = oProduto.DataCadastro.HasValue ? $"Criado em: {oProduto.DataCadastro.Value:dd/MM/yyyy HH:mm}" : "Criado em: -";
+            lblDataModificacao.Text = oProduto.DataAlteracao.HasValue ? $"Modificado em: {oProduto.DataAlteracao.Value:dd/MM/yyyy HH:mm}" : "Modificado em: -";
         }
 
         public override void BloquearTxt()
