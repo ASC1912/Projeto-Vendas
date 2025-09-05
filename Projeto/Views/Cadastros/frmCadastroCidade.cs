@@ -50,6 +50,7 @@ namespace Projeto.Views
             txtCodigo.Text = aCidade.Id.ToString();
             txtNome.Text = aCidade.NomeCidade;
             txtEstado.Text = aCidade.EstadoNome;
+            estadoSelecionadoId = aCidade.EstadoId;
             txtDDD.Text = aCidade.DDD;
             chkInativo.Checked = !aCidade.Ativo;
             lblDataCriacao.Text = aCidade.DataCadastro.HasValue ? $"Criado em: {aCidade.DataCadastro.Value:dd/MM/yyyy HH:mm}" : "Criado em: -";

@@ -70,6 +70,7 @@ namespace Projeto.Views
             txtComplemento.Text = oFunc.Complemento;
             txtCEP.Text = oFunc.CEP;
             txtIdCidade.Text = oFunc.CidadeId.ToString();
+            cidadeSelecionadoId = oFunc.CidadeId ?? -1;
             txtCidade.Text = oFunc.NomeCidade;
             txtEmail.Text = oFunc.Email;
             txtTelefone.Text = oFunc.Telefone;

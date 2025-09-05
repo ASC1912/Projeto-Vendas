@@ -73,6 +73,7 @@ namespace Projeto.Views
             txtComplemento.Text = oForn.Complemento;
             txtCEP.Text = oForn.CEP;
             txtIdCidade.Text = oForn.CidadeId.ToString();
+            cidadeSelecionadoId = oForn.CidadeId ?? -1; 
             txtCidade.Text = oForn.NomeCidade;
             txtEmail.Text = oForn.Email;
             txtTelefone.Text = oForn.Telefone;
@@ -80,6 +81,7 @@ namespace Projeto.Views
             txtInscEst.Text = oForn.InscricaoEstadual;
             txtInscEstSubTrib.Text = oForn.InscricaoEstadualSubTrib;
             txtCondicao.Text = oForn.DescricaoCondicao;
+            condicaoSelecionadoId = oForn.IdCondicao ?? -1;
             chkInativo.Checked = !oForn.Ativo;
             lblDataCriacao.Text = oForn.DataCadastro.HasValue ? $"Criado em: {oForn.DataCadastro.Value:dd/MM/yyyy HH:mm}" : "Criado em: -";
             lblDataModificacao.Text = oForn.DataAlteracao.HasValue ? $"Modificado em: {oForn.DataAlteracao.Value:dd/MM/yyyy HH:mm}" : "Modificado em: -";

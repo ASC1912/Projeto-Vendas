@@ -109,8 +109,8 @@ namespace Projeto.Views.Consultas
         {
             oFrmCadastroProduto.modoEdicao = false;
             oFrmCadastroProduto.modoExclusao = false;
-            oFrmCadastroProduto.FormClosed += (s, args) => CarregarProdutos();
             oFrmCadastroProduto.ShowDialog();
+            CarregarProdutos();
         }
 
         private void btnEditar_Click(object sender, EventArgs e)
@@ -129,8 +129,8 @@ namespace Projeto.Views.Consultas
                     oFrmCadastroProduto.modoExclusao = false;
                     oFrmCadastroProduto.ConhecaObj(produto, controller);
                     oFrmCadastroProduto.CarregaTxt();
-                    oFrmCadastroProduto.FormClosed += (s, args) => CarregarProdutos();
                     oFrmCadastroProduto.ShowDialog();
+                    CarregarProdutos();
                 }
                 else
                 {
@@ -158,8 +158,8 @@ namespace Projeto.Views.Consultas
                     oFrmCadastroProduto.modoEdicao = false;
                     oFrmCadastroProduto.ConhecaObj(produto, controller);
                     oFrmCadastroProduto.CarregaTxt();
-                    oFrmCadastroProduto.FormClosed += (s, args) => CarregarProdutos();
                     oFrmCadastroProduto.ShowDialog();
+                    CarregarProdutos();
                 }
                 else
                 {

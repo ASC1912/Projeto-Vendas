@@ -40,8 +40,8 @@ namespace Projeto.Views
         {
             oFrmCadastroFuncionario.modoEdicao = false;
             oFrmCadastroFuncionario.modoExclusao = false;
-            oFrmCadastroFuncionario.FormClosed += async (s, args) => await CarregarFuncionarios();
             oFrmCadastroFuncionario.ShowDialog();
+            await CarregarFuncionarios();
         }
 
         private async Task CarregarFuncionarios()
@@ -157,8 +157,8 @@ namespace Projeto.Views
                     oFrmCadastroFuncionario.modoExclusao = false;
                     oFrmCadastroFuncionario.ConhecaObj(funcionario, controller);
                     oFrmCadastroFuncionario.CarregaTxt();
-                    oFrmCadastroFuncionario.FormClosed += async (s, args) => await CarregarFuncionarios();
                     oFrmCadastroFuncionario.ShowDialog();
+                    await CarregarFuncionarios();
                 }
                 else
                 {
@@ -186,8 +186,8 @@ namespace Projeto.Views
                     oFrmCadastroFuncionario.modoEdicao = false;
                     oFrmCadastroFuncionario.ConhecaObj(funcionario, controller);
                     oFrmCadastroFuncionario.CarregaTxt();
-                    oFrmCadastroFuncionario.FormClosed += async (s, args) => await CarregarFuncionarios();
                     oFrmCadastroFuncionario.ShowDialog();
+                    await CarregarFuncionarios();
                 }
                 else
                 {

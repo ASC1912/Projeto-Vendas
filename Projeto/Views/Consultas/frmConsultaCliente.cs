@@ -41,8 +41,8 @@ namespace Projeto.Views
         {
             oFrmCadastroCliente.modoEdicao = false;
             oFrmCadastroCliente.modoExclusao = false;
-            oFrmCadastroCliente.FormClosed += async (s, args) => await CarregarClientes();
             oFrmCadastroCliente.ShowDialog();
+            await CarregarClientes();
         }
 
         private async Task CarregarClientes()
@@ -148,8 +148,8 @@ namespace Projeto.Views
                     oFrmCadastroCliente.modoExclusao = false;
                     oFrmCadastroCliente.ConhecaObj(cliente, controller);
                     oFrmCadastroCliente.CarregaTxt();
-                    oFrmCadastroCliente.FormClosed += async (s, args) => await CarregarClientes();
                     oFrmCadastroCliente.ShowDialog();
+                    await CarregarClientes();
                 }
                 else
                 {
@@ -178,8 +178,8 @@ namespace Projeto.Views
                     oFrmCadastroCliente.modoEdicao = false;
                     oFrmCadastroCliente.ConhecaObj(cliente, controller);
                     oFrmCadastroCliente.CarregaTxt();
-                    oFrmCadastroCliente.FormClosed += async (s, args) => await CarregarClientes();
                     oFrmCadastroCliente.ShowDialog();
+                    await CarregarClientes();
                 }
                 else
                 {

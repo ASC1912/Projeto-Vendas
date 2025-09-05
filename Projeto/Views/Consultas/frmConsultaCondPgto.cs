@@ -144,12 +144,12 @@ namespace Projeto
             }
         }
 
-        private void btnIncluir_Click(object sender, EventArgs e)
+        private async void btnIncluir_Click(object sender, EventArgs e)
         {
             oFrmCadastroCondPgto.modoEdicao = false;
             oFrmCadastroCondPgto.modoExclusao = false;
-            oFrmCadastroCondPgto.FormClosed += async (s, args) => await CarregarCondicoesPagamento();
             oFrmCadastroCondPgto.ShowDialog();
+            await CarregarCondicoesPagamento();
         }
 
         private async void btnEditar_Click(object sender, EventArgs e)
@@ -167,8 +167,8 @@ namespace Projeto
                     oFrmCadastroCondPgto.modoExclusao = false;
                     oFrmCadastroCondPgto.ConhecaObj(condicao, controller);
                     oFrmCadastroCondPgto.CarregaTxt();
-                    oFrmCadastroCondPgto.FormClosed += async (s, args) => await CarregarCondicoesPagamento();
                     oFrmCadastroCondPgto.ShowDialog();
+                    await CarregarCondicoesPagamento();
                 }
                 else
                 {
@@ -196,8 +196,8 @@ namespace Projeto
                     oFrmCadastroCondPgto.modoEdicao = false;
                     oFrmCadastroCondPgto.ConhecaObj(condicao, controller);
                     oFrmCadastroCondPgto.CarregaTxt();
-                    oFrmCadastroCondPgto.FormClosed += async (s, args) => await CarregarCondicoesPagamento();
                     oFrmCadastroCondPgto.ShowDialog();
+                    await CarregarCondicoesPagamento();
                 }
                 else
                 {

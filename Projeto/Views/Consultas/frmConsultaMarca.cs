@@ -124,8 +124,8 @@ namespace Projeto.Views.Consultas
         {
             oFrmCadastroMarca.modoEdicao = false;
             oFrmCadastroMarca.modoExclusao = false;
-            oFrmCadastroMarca.FormClosed += (s, args) => CarregarMarcas();
             oFrmCadastroMarca.ShowDialog();
+            CarregarMarcas();
         }
 
         private void btnEditar_Click(object sender, EventArgs e)
@@ -143,8 +143,8 @@ namespace Projeto.Views.Consultas
                     oFrmCadastroMarca.modoExclusao = false;
                     oFrmCadastroMarca.ConhecaObj(marca, controller);
                     oFrmCadastroMarca.CarregaTxt();
-                    oFrmCadastroMarca.FormClosed += (s, args) => CarregarMarcas();
                     oFrmCadastroMarca.ShowDialog();
+                    CarregarMarcas();
                 }
                 else
                 {
@@ -172,8 +172,8 @@ namespace Projeto.Views.Consultas
                     oFrmCadastroMarca.modoEdicao = false;
                     oFrmCadastroMarca.ConhecaObj(marca, controller);
                     oFrmCadastroMarca.CarregaTxt();
-                    oFrmCadastroMarca.FormClosed += (s, args) => CarregarMarcas();
                     oFrmCadastroMarca.ShowDialog();
+                    CarregarMarcas();
                 }
                 else
                 {

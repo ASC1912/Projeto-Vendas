@@ -78,12 +78,14 @@ namespace Projeto.Views
             txtComplemento.Text = oCliente.Complemento;
             txtCEP.Text = oCliente.CEP;
             txtIdCidade.Text = oCliente.CidadeId.ToString();
+            cidadeSelecionadoId = oCliente.CidadeId ?? -1; 
             txtCidade.Text = oCliente.NomeCidade;
             txtEmail.Text = oCliente.Email;
             txtTelefone.Text = oCliente.Telefone;
             txtCPF.Text = oCliente.CPF_CNPJ;
             txtRG.Text = oCliente.Rg;
             txtCondicao.Text = oCliente.DescricaoCondicao;
+            condicaoSelecionadoId = oCliente.IdCondicao ?? -1;
             chkInativo.Checked = !oCliente.Ativo;
             lblDataCriacao.Text = oCliente.DataCadastro.HasValue ? $"Criado em: {oCliente.DataCadastro.Value:dd/MM/yyyy HH:mm}" : "Criado em: -";
             lblDataModificacao.Text = oCliente.DataAlteracao.HasValue ? $"Modificado em: {oCliente.DataAlteracao.Value:dd/MM/yyyy HH:mm}" : "Modificado em: -";

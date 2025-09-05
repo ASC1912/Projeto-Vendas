@@ -64,7 +64,9 @@ namespace Projeto.Views.Cadastros
             txtPreco.Text = oProduto.Preco.ToString("F2");
             txtEstoque.Text = oProduto.Estoque.ToString();
             txtMarca.Text = oProduto.NomeMarca;
+            marcaSelecionadoId = oProduto.IdMarca ?? -1; 
             txtGrupo.Text = oProduto.NomeGrupo;
+            grupoSelecionadoId = oProduto.GrupoId ?? -1; 
             chkInativo.Checked = !oProduto.Ativo;
             lblDataCriacao.Text = oProduto.DataCadastro.HasValue ? $"Criado em: {oProduto.DataCadastro.Value:dd/MM/yyyy HH:mm}" : "Criado em: -";
             lblDataModificacao.Text = oProduto.DataAlteracao.HasValue ? $"Modificado em: {oProduto.DataAlteracao.Value:dd/MM/yyyy HH:mm}" : "Modificado em: -";

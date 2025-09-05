@@ -61,9 +61,8 @@ namespace Projeto.Views
         {
             oFrmCadastroEstado.modoEdicao = false;
             oFrmCadastroEstado.modoExclusao = false;
-
-            oFrmCadastroEstado.FormClosed += async (s, args) => await CarregarEstados();
             oFrmCadastroEstado.ShowDialog();
+            await CarregarEstados();
         }
 
         private async Task CarregarEstados()
@@ -143,8 +142,8 @@ namespace Projeto.Views
                     oFrmCadastroEstado.modoExclusao = false;
                     oFrmCadastroEstado.ConhecaObj(estado, controller);
                     oFrmCadastroEstado.CarregaTxt();
-                    oFrmCadastroEstado.FormClosed += async (s, args) => await CarregarEstados();
                     oFrmCadastroEstado.ShowDialog();
+                    await CarregarEstados();
                 }
                 else
                 {
@@ -171,8 +170,8 @@ namespace Projeto.Views
                     oFrmCadastroEstado.modoEdicao = false;
                     oFrmCadastroEstado.ConhecaObj(estado, controller);
                     oFrmCadastroEstado.CarregaTxt();
-                    oFrmCadastroEstado.FormClosed += async (s, args) => await CarregarEstados();
                     oFrmCadastroEstado.ShowDialog();
+                    await CarregarEstados();
                 }
                 else
                 {

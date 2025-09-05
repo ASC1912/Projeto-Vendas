@@ -34,12 +34,12 @@ namespace Projeto.Views
                 controller = (FornecedorController)ctrl;
             }
         }
-        private void btnIncluir_Click(object sender, EventArgs e)
+        private async void btnIncluir_Click(object sender, EventArgs e)
         {
             oFrmCadastroFornecedor.modoEdicao = false;
             oFrmCadastroFornecedor.modoExclusao = false;
-            oFrmCadastroFornecedor.FormClosed += async (s, args) => await CarregarFornecedores();
             oFrmCadastroFornecedor.ShowDialog();
+            await CarregarFornecedores();
         }
 
         private async Task CarregarFornecedores()
@@ -142,8 +142,8 @@ namespace Projeto.Views
                     oFrmCadastroFornecedor.modoExclusao = false;
                     oFrmCadastroFornecedor.ConhecaObj(fornecedor, controller);
                     oFrmCadastroFornecedor.CarregaTxt();
-                    oFrmCadastroFornecedor.FormClosed += async (s, args) => await CarregarFornecedores();
                     oFrmCadastroFornecedor.ShowDialog();
+                    await CarregarFornecedores();
                 }
                 else
                 {
@@ -171,8 +171,8 @@ namespace Projeto.Views
                     oFrmCadastroFornecedor.modoEdicao = false;
                     oFrmCadastroFornecedor.ConhecaObj(fornecedor, controller);
                     oFrmCadastroFornecedor.CarregaTxt();
-                    oFrmCadastroFornecedor.FormClosed += async (s, args) => await CarregarFornecedores();
                     oFrmCadastroFornecedor.ShowDialog();
+                    await CarregarFornecedores();
                 }
                 else
                 {

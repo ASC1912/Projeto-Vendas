@@ -60,8 +60,8 @@ namespace Projeto.Views
         {
             oFrmCadastroCidade.modoEdicao = false;
             oFrmCadastroCidade.modoExclusao = false;
-            oFrmCadastroCidade.FormClosed += async (s, args) => await CarregarCidades();
             oFrmCadastroCidade.ShowDialog();
+            await CarregarCidades();
         }
 
         private async Task CarregarCidades()
@@ -141,8 +141,8 @@ namespace Projeto.Views
                     oFrmCadastroCidade.modoExclusao = false;
                     oFrmCadastroCidade.ConhecaObj(cidade, controller);
                     oFrmCadastroCidade.CarregaTxt();
-                    oFrmCadastroCidade.FormClosed += async (s, args) => await CarregarCidades();
                     oFrmCadastroCidade.ShowDialog();
+                    await CarregarCidades();
                 }
                 else
                 {
@@ -169,8 +169,8 @@ namespace Projeto.Views
                     oFrmCadastroCidade.modoEdicao = false;
                     oFrmCadastroCidade.ConhecaObj(cidade, controller);
                     oFrmCadastroCidade.CarregaTxt();
-                    oFrmCadastroCidade.FormClosed += async (s, args) => await CarregarCidades();
                     oFrmCadastroCidade.ShowDialog();
+                    await CarregarCidades();
                 }
                 else
                 {

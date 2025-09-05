@@ -49,6 +49,7 @@ namespace Projeto.Views
             txtNome.Text = oEstado.NomeEstado;
             txtUF.Text = oEstado.UF;
             txtPais.Text = oEstado.PaisNome;
+            paisSelecionadoId = oEstado.PaisId; 
             chkInativo.Checked = !oEstado.Ativo;
             lblDataCriacao.Text = oEstado.DataCadastro.HasValue ? $"Criado em: {oEstado.DataCadastro.Value:dd/MM/yyyy HH:mm}" : "Criado em: -";
             lblDataModificacao.Text = oEstado.DataAlteracao.HasValue ? $"Modificado em: {oEstado.DataAlteracao.Value:dd/MM/yyyy HH:mm}" : "Modificado em: -";

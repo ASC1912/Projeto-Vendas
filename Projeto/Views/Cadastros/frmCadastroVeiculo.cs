@@ -64,9 +64,11 @@ namespace Projeto.Views.Cadastros
             txtPlaca.Text = oVeiculo.Placa;
             txtModelo.Text = oVeiculo.Modelo;
             txtMarca.Text = oVeiculo.NomeMarca;
+            marcaSelecionadaId = oVeiculo.IdMarca ?? -1; 
             txtAnoFabricacao.Text = oVeiculo.AnoFabricacao.ToString();
             txtCapacidadeCarga.Text = oVeiculo.CapacidadeCargaKg.ToString();
             txtTransportadora.Text = oVeiculo.NomeTransportadora;
+            transportadoraSelecionadaId = oVeiculo.TransportadoraId; 
             chkInativo.Checked = !oVeiculo.Ativo;
             lblDataCriacao.Text = oVeiculo.DataCadastro.HasValue ? $"Criado em: {oVeiculo.DataCadastro.Value:dd/MM/yyyy HH:mm}" : "Criado em: -";
             lblDataModificacao.Text = oVeiculo.DataAlteracao.HasValue ? $"Modificado em: {oVeiculo.DataAlteracao.Value:dd/MM/yyyy HH:mm}" : "Modificado em: -";
@@ -232,16 +234,7 @@ namespace Projeto.Views.Cadastros
                 txtTransportadora.Text = oFrmConsultaTransportadora.TransportadoraSelecionada.Nome;
                 transportadoraSelecionadaId = oFrmConsultaTransportadora.TransportadoraSelecionada.Id;
             }
-            /*
-            frmConsultaTransportadora consulta = new frmConsultaTransportadora();
-            consulta.ModoSelecao = true;
 
-            if (consulta.ShowDialog() == DialogResult.OK && consulta.TransportadoraSelecionada != null)
-            {
-                txtTransportadora.Text = consulta.TransportadoraSelecionada.Nome;
-                transportadoraSelecionadaId = consulta.TransportadoraSelecionada.Id;
-            }
-            */
         }
 
         private void btnBuscarMarca_Click(object sender, EventArgs e)
@@ -252,17 +245,6 @@ namespace Projeto.Views.Cadastros
                 txtMarca.Text = oFrmConsultaMarca.MarcaSelecionado.NomeMarca;
                 marcaSelecionadaId = oFrmConsultaMarca.MarcaSelecionado.Id;
             }
-
-            /*
-            frmConsultaMarca consulta = new frmConsultaMarca();
-            consulta.ModoSelecao = true;
-
-            if (consulta.ShowDialog() == DialogResult.OK && consulta.MarcaSelecionado != null)
-            {
-                txtMarca.Text = consulta.MarcaSelecionado.NomeMarca;
-                marcaSelecionadaId = consulta.MarcaSelecionado.Id;
-            }
-            */
         }
     }
 }

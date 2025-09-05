@@ -77,9 +77,9 @@ namespace Projeto.Views
         {
             oFrmCadastroPais.modoEdicao = false;
             oFrmCadastroPais.modoExclusao = false;
-            oFrmCadastroPais.FormClosed += async (s, args) => await CarregarPaises();
             oFrmCadastroPais.ConhecaObj(oPais, controller);
             oFrmCadastroPais.ShowDialog();
+            await CarregarPaises();
         }
 
         private async Task CarregarPaises()
@@ -160,8 +160,9 @@ namespace Projeto.Views
                     oFrmCadastroPais.modoExclusao = false;
                     oFrmCadastroPais.ConhecaObj(pais, controller);
                     oFrmCadastroPais.CarregaTxt();
-                    oFrmCadastroPais.FormClosed += async (s, args) => await CarregarPaises();
                     oFrmCadastroPais.ShowDialog();
+                    await CarregarPaises();
+
                 }
                 else
                 {
@@ -188,8 +189,9 @@ namespace Projeto.Views
                     oFrmCadastroPais.modoEdicao = false;
                     oFrmCadastroPais.ConhecaObj(pais, controller);
                     oFrmCadastroPais.CarregaTxt();
-                    oFrmCadastroPais.FormClosed += async (s, args) => await CarregarPaises();
                     oFrmCadastroPais.ShowDialog();
+                    await CarregarPaises();
+
 
                 }
                 else

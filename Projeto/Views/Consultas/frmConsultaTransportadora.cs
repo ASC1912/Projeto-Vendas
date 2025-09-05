@@ -42,8 +42,8 @@ namespace Projeto.Views.Consultas
         {
             oFrmCadastroTransportadora.modoEdicao = false;
             oFrmCadastroTransportadora.modoExclusao = false;
-            oFrmCadastroTransportadora.FormClosed += (s, args) => CarregarTransportadoras();
             oFrmCadastroTransportadora.ShowDialog();
+            CarregarTransportadoras();
         }
 
         private void CarregarTransportadoras()
@@ -153,8 +153,8 @@ namespace Projeto.Views.Consultas
                     oFrmCadastroTransportadora.modoExclusao = false;
                     oFrmCadastroTransportadora.ConhecaObj(transportadora, controller);
                     oFrmCadastroTransportadora.CarregaTxt();
-                    oFrmCadastroTransportadora.FormClosed += (s, args) => CarregarTransportadoras();
                     oFrmCadastroTransportadora.ShowDialog();
+                    CarregarTransportadoras();
                 }
                 else
                 {
@@ -188,8 +188,8 @@ namespace Projeto.Views.Consultas
                     oFrmCadastroTransportadora.modoExclusao = true;
                     oFrmCadastroTransportadora.ConhecaObj(transportadora, controller);
                     oFrmCadastroTransportadora.CarregaTxt();
-                    oFrmCadastroTransportadora.FormClosed += (s, args) => CarregarTransportadoras();
                     oFrmCadastroTransportadora.ShowDialog();
+                    CarregarTransportadoras();
                 }
                 else
                 {

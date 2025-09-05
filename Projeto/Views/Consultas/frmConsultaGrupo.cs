@@ -128,8 +128,8 @@ namespace Projeto.Views.Consultas
         {
             oFrmCadastroGrupo.modoEdicao = false;
             oFrmCadastroGrupo.modoExclusao = false;
-            oFrmCadastroGrupo.FormClosed += (s, args) => CarregarGrupos();
             oFrmCadastroGrupo.ShowDialog();
+            CarregarGrupos();
         }
 
         private void btnEditar_Click(object sender, EventArgs e)
@@ -147,8 +147,8 @@ namespace Projeto.Views.Consultas
                     oFrmCadastroGrupo.modoExclusao = false;
                     oFrmCadastroGrupo.ConhecaObj(grupo, controller);
                     oFrmCadastroGrupo.CarregaTxt();
-                    oFrmCadastroGrupo.FormClosed += (s, args) => CarregarGrupos();
                     oFrmCadastroGrupo.ShowDialog();
+                    CarregarGrupos();
                 }
                 else
                 {
@@ -176,8 +176,8 @@ namespace Projeto.Views.Consultas
                     oFrmCadastroGrupo.modoEdicao = false;
                     oFrmCadastroGrupo.ConhecaObj(grupo, controller);
                     oFrmCadastroGrupo.CarregaTxt();
-                    oFrmCadastroGrupo.FormClosed += (s, args) => CarregarGrupos();
                     oFrmCadastroGrupo.ShowDialog();
+                    CarregarGrupos();
                 }
                 else
                 {
