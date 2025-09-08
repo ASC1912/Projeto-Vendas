@@ -361,22 +361,6 @@ namespace Projeto.Views
 
         private void frmCadastroCliente_Load(object sender, EventArgs e)
         {
-            if (modoExclusao)
-            {
-                btnSalvar.Text = "Deletar";
-                BloquearTxt();
-            }
-            else if (modoEdicao)
-            {
-                btnSalvar.Text = "Salvar";
-                DesbloquearTxt();
-            }
-            else
-            {
-                btnSalvar.Text = "Salvar";
-                DesbloquearTxt();
-                LimparTxt();
-            }
         }
 
         private void btnBuscar_Click(object sender, EventArgs e)
@@ -390,20 +374,6 @@ namespace Projeto.Views
                 cidadeSelecionadoId = oFrmConsultaCidade.CidadeSelecionado.Id;
                 txtIdCidade.Text = oFrmConsultaCidade.CidadeSelecionado.Id.ToString();
             }
-
-            /*
-            frmConsultaCidade consultaCidade = new frmConsultaCidade();
-            consultaCidade.ModoSelecao = true;
-
-            var resultado = consultaCidade.ShowDialog();
-
-            if (resultado == DialogResult.OK && consultaCidade.CidadeSelecionado != null)
-            {
-                txtCidade.Text = consultaCidade.CidadeSelecionado.NomeCidade;
-                cidadeSelecionadoId = consultaCidade.CidadeSelecionado.Id;
-                txtIdCidade.Text = consultaCidade.CidadeSelecionado.Id.ToString();
-            }
-            */
         }
 
         private void btnBuscarCond_Click(object sender, EventArgs e)
@@ -416,19 +386,6 @@ namespace Projeto.Views
                 txtCondicao.Text = oFrmConsultaCondPgto.CondicaoSelecionado.Descricao;
                 condicaoSelecionadoId = oFrmConsultaCondPgto.CondicaoSelecionado.Id;
             }
-
-            /*
-            frmConsultaCondPgto consultaCondicao = new frmConsultaCondPgto();
-            consultaCondicao.ModoSelecao = true;
-
-            var resultado = consultaCondicao.ShowDialog();
-
-            if (resultado == DialogResult.OK && consultaCondicao.CondicaoSelecionado != null)
-            {
-                txtCondicao.Text = consultaCondicao.CondicaoSelecionado.Descricao;
-                condicaoSelecionadoId = consultaCondicao.CondicaoSelecionado.Id;
-            }
-            */
         }
 
         private async void txtIdCidade_Leave(object sender, EventArgs e)

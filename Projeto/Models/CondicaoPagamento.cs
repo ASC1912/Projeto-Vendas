@@ -27,9 +27,7 @@ namespace Projeto.Models
         [JsonPropertyName("ativo")]
         public bool Ativo { get; set; }
 
-        [JsonIgnore]
         public DateTime? DataCadastro { get; set; }
-        [JsonIgnore]
         public DateTime? DataAlteracao { get; set; }
 
         [JsonPropertyName("parcelamentos")]

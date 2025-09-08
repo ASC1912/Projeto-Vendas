@@ -142,6 +142,7 @@ namespace Projeto.Views
                     oFrmCadastroCidade.ConhecaObj(cidade, controller);
                     oFrmCadastroCidade.CarregaTxt();
                     oFrmCadastroCidade.ShowDialog();
+                    oFrmCadastroCidade.LimparTxt();
                     await CarregarCidades();
                 }
                 else
@@ -169,7 +170,10 @@ namespace Projeto.Views
                     oFrmCadastroCidade.modoEdicao = false;
                     oFrmCadastroCidade.ConhecaObj(cidade, controller);
                     oFrmCadastroCidade.CarregaTxt();
+                    oFrmCadastroCidade.BloquearTxt();
                     oFrmCadastroCidade.ShowDialog();
+                    oFrmCadastroCidade.DesbloquearTxt();
+                    oFrmCadastroCidade.LimparTxt();
                     await CarregarCidades();
                 }
                 else

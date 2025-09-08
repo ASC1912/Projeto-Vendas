@@ -168,6 +168,7 @@ namespace Projeto
                     oFrmCadastroCondPgto.ConhecaObj(condicao, controller);
                     oFrmCadastroCondPgto.CarregaTxt();
                     oFrmCadastroCondPgto.ShowDialog();
+                    oFrmCadastroCondPgto.LimparTxt();
                     await CarregarCondicoesPagamento();
                 }
                 else
@@ -196,7 +197,10 @@ namespace Projeto
                     oFrmCadastroCondPgto.modoEdicao = false;
                     oFrmCadastroCondPgto.ConhecaObj(condicao, controller);
                     oFrmCadastroCondPgto.CarregaTxt();
+                    oFrmCadastroCondPgto.BloquearTxt();
                     oFrmCadastroCondPgto.ShowDialog();
+                    oFrmCadastroCondPgto.DesbloquearTxt();
+                    oFrmCadastroCondPgto.LimparTxt();
                     await CarregarCondicoesPagamento();
                 }
                 else

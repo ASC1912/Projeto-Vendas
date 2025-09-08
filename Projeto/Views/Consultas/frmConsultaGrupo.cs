@@ -148,6 +148,7 @@ namespace Projeto.Views.Consultas
                     oFrmCadastroGrupo.ConhecaObj(grupo, controller);
                     oFrmCadastroGrupo.CarregaTxt();
                     oFrmCadastroGrupo.ShowDialog();
+                    oFrmCadastroGrupo.LimparTxt();
                     CarregarGrupos();
                 }
                 else
@@ -176,7 +177,10 @@ namespace Projeto.Views.Consultas
                     oFrmCadastroGrupo.modoEdicao = false;
                     oFrmCadastroGrupo.ConhecaObj(grupo, controller);
                     oFrmCadastroGrupo.CarregaTxt();
+                    oFrmCadastroGrupo.BloquearTxt();
                     oFrmCadastroGrupo.ShowDialog();
+                    oFrmCadastroGrupo.DesbloquearTxt();
+                    oFrmCadastroGrupo.LimparTxt();
                     CarregarGrupos();
                 }
                 else

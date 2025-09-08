@@ -143,6 +143,7 @@ namespace Projeto.Views
                     oFrmCadastroEstado.ConhecaObj(estado, controller);
                     oFrmCadastroEstado.CarregaTxt();
                     oFrmCadastroEstado.ShowDialog();
+                    oFrmCadastroEstado.LimparTxt();
                     await CarregarEstados();
                 }
                 else
@@ -170,7 +171,10 @@ namespace Projeto.Views
                     oFrmCadastroEstado.modoEdicao = false;
                     oFrmCadastroEstado.ConhecaObj(estado, controller);
                     oFrmCadastroEstado.CarregaTxt();
+                    oFrmCadastroEstado.BloquearTxt();
                     oFrmCadastroEstado.ShowDialog();
+                    oFrmCadastroEstado.DesbloquearTxt();
+                    oFrmCadastroEstado.LimparTxt();
                     await CarregarEstados();
                 }
                 else

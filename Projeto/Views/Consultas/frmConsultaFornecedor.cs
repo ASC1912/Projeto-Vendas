@@ -143,6 +143,7 @@ namespace Projeto.Views
                     oFrmCadastroFornecedor.ConhecaObj(fornecedor, controller);
                     oFrmCadastroFornecedor.CarregaTxt();
                     oFrmCadastroFornecedor.ShowDialog();
+                    oFrmCadastroFornecedor.LimparTxt();
                     await CarregarFornecedores();
                 }
                 else
@@ -171,7 +172,10 @@ namespace Projeto.Views
                     oFrmCadastroFornecedor.modoEdicao = false;
                     oFrmCadastroFornecedor.ConhecaObj(fornecedor, controller);
                     oFrmCadastroFornecedor.CarregaTxt();
+                    oFrmCadastroFornecedor.BloquearTxt();
                     oFrmCadastroFornecedor.ShowDialog();
+                    oFrmCadastroFornecedor.DesbloquearTxt();
+                    oFrmCadastroFornecedor.LimparTxt();
                     await CarregarFornecedores();
                 }
                 else

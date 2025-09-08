@@ -144,6 +144,7 @@ namespace Projeto.Views.Consultas
                     oFrmCadastroMarca.ConhecaObj(marca, controller);
                     oFrmCadastroMarca.CarregaTxt();
                     oFrmCadastroMarca.ShowDialog();
+                    oFrmCadastroMarca.LimparTxt();
                     CarregarMarcas();
                 }
                 else
@@ -172,7 +173,10 @@ namespace Projeto.Views.Consultas
                     oFrmCadastroMarca.modoEdicao = false;
                     oFrmCadastroMarca.ConhecaObj(marca, controller);
                     oFrmCadastroMarca.CarregaTxt();
+                    oFrmCadastroMarca.BloquearTxt();
                     oFrmCadastroMarca.ShowDialog();
+                    oFrmCadastroMarca.DesbloquearTxt();
+                    oFrmCadastroMarca.LimparTxt();
                     CarregarMarcas();
                 }
                 else

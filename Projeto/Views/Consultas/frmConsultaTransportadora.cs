@@ -154,6 +154,7 @@ namespace Projeto.Views.Consultas
                     oFrmCadastroTransportadora.ConhecaObj(transportadora, controller);
                     oFrmCadastroTransportadora.CarregaTxt();
                     oFrmCadastroTransportadora.ShowDialog();
+                    oFrmCadastroTransportadora.LimparTxt();
                     CarregarTransportadoras();
                 }
                 else
@@ -188,7 +189,10 @@ namespace Projeto.Views.Consultas
                     oFrmCadastroTransportadora.modoExclusao = true;
                     oFrmCadastroTransportadora.ConhecaObj(transportadora, controller);
                     oFrmCadastroTransportadora.CarregaTxt();
+                    oFrmCadastroTransportadora.BloquearTxt();
                     oFrmCadastroTransportadora.ShowDialog();
+                    oFrmCadastroTransportadora.DesbloquearTxt();
+                    oFrmCadastroTransportadora.LimparTxt();
                     CarregarTransportadoras();
                 }
                 else

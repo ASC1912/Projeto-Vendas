@@ -43,7 +43,6 @@ namespace Projeto.Services
             return _httpClient.GetFromJsonAsync<CondicaoPagamento>($"CondicoesPagamento/{id}");
         }
 
-
         public async Task SaveCondicaoPagamentoAsync(CondicaoPagamento condicao)
         {
             HttpResponseMessage response;
@@ -55,12 +54,41 @@ namespace Projeto.Services
             {
                 response = await _httpClient.PutAsJsonAsync($"CondicoesPagamento/{condicao.Id}", condicao);
             }
+
+            if (!response.IsSuccessStatusCode)
+            {
+                string erro = await response.Content.ReadAsStringAsync();
+
+                MessageBox.Show(
+                    $"A API retornou um erro:\n\n" +
+                    $"Código: {(int)response.StatusCode} ({response.ReasonPhrase})\n\n" +
+                    $"Detalhes: {erro}",
+                    "Erro da API",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+            }
+
             response.EnsureSuccessStatusCode();
         }
 
+
         public async Task DeleteCondicaoPagamentoAsync(int id)
         {
-            var response = await _httpClient.DeleteAsync($"CondicoesPagmento/{id}");
+            var response = await _httpClient.DeleteAsync($"CondicoesPagamento/{id}");
+
+            if (!response.IsSuccessStatusCode)
+            {
+                string erro = await response.Content.ReadAsStringAsync();
+                MessageBox.Show(
+                    $"A API retornou um erro:\n\n" +
+                    $"Código: {(int)response.StatusCode} ({response.ReasonPhrase})\n\n" +
+                    $"Detalhes: {erro}",
+                    "Erro da API",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+            }
             response.EnsureSuccessStatusCode();
         }
     }

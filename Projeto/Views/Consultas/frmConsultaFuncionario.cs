@@ -158,6 +158,7 @@ namespace Projeto.Views
                     oFrmCadastroFuncionario.ConhecaObj(funcionario, controller);
                     oFrmCadastroFuncionario.CarregaTxt();
                     oFrmCadastroFuncionario.ShowDialog();
+                    oFrmCadastroFuncionario.LimparTxt();
                     await CarregarFuncionarios();
                 }
                 else
@@ -186,7 +187,10 @@ namespace Projeto.Views
                     oFrmCadastroFuncionario.modoEdicao = false;
                     oFrmCadastroFuncionario.ConhecaObj(funcionario, controller);
                     oFrmCadastroFuncionario.CarregaTxt();
+                    oFrmCadastroFuncionario.BloquearTxt();
                     oFrmCadastroFuncionario.ShowDialog();
+                    oFrmCadastroFuncionario.DesbloquearTxt();
+                    oFrmCadastroFuncionario.LimparTxt();
                     await CarregarFuncionarios();
                 }
                 else

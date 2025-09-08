@@ -150,6 +150,7 @@ namespace Projeto.Views
 
         private void frmCadastroPais_Load(object sender, EventArgs e)
         {
+            /*
             if (modoExclusao)
             {
                 btnSalvar.Text = "Deletar";
@@ -166,6 +167,7 @@ namespace Projeto.Views
                 DesbloquearTxt(); 
                 LimparTxt();      
             }
+            */
         }
     }
 }

@@ -147,22 +147,7 @@ namespace Projeto.Views.Cadastros
 
         private void frmCadastroGrupo_Load(object sender, EventArgs e)
         {
-            if (modoExclusao)
-            {
-                btnSalvar.Text = "Deletar";
-                BloquearTxt();
-            }
-            else if (modoEdicao)
-            {
-                btnSalvar.Text = "Salvar";
-                DesbloquearTxt();
-            }
-            else
-            {
-                btnSalvar.Text = "Salvar";
-                DesbloquearTxt();
-                LimparTxt();
-            }
+           
         }
     }
 }

@@ -332,36 +332,10 @@ namespace Projeto
                 txtFormaPagamento.Text = oFrmConsultaFrmPgto.FormaSelecionada.Descricao;
                 formaPagamentoSelecionadaId = oFrmConsultaFrmPgto.FormaSelecionada.Id;
             }
-
-            /*
-            frmConsultaFrmPgto consultaFrmPgto = new frmConsultaFrmPgto();
-            consultaFrmPgto.ModoSelecao = true;
-            if (consultaFrmPgto.ShowDialog() == DialogResult.OK && consultaFrmPgto.FormaSelecionada != null)
-            {
-                txtFormaPagamento.Text = consultaFrmPgto.FormaSelecionada.Descricao;
-                formaPagamentoSelecionadaId = consultaFrmPgto.FormaSelecionada.Id;
-            }
-            */
         }
 
         private void frmCadastroCondPgto_Load(object sender, EventArgs e)
         {
-            if (modoExclusao)
-            {
-                btnSalvar.Text = "Deletar";
-                BloquearTxt();
-            }
-            else if (modoEdicao)
-            {
-                btnSalvar.Text = "Salvar";
-                DesbloquearTxt();
-            }
-            else 
-            {
-                btnSalvar.Text = "Salvar";
-                DesbloquearTxt();
-                LimparTxt();
-            }
         }
     }
 }

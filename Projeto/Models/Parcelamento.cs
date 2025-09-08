@@ -13,7 +13,7 @@ namespace Projeto.Models
         [JsonPropertyName("porcentagemValor")]
         public decimal Porcentagem { get; set; }
 
-        [JsonIgnore] 
+        [JsonIgnore]
         public int CondicaoId { get; set; }
 
         [JsonPropertyName("formaPagamento")]

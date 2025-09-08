@@ -130,6 +130,7 @@ namespace Projeto.Views.Consultas
                     oFrmCadastroProduto.ConhecaObj(produto, controller);
                     oFrmCadastroProduto.CarregaTxt();
                     oFrmCadastroProduto.ShowDialog();
+                    oFrmCadastroProduto.LimparTxt();
                     CarregarProdutos();
                 }
                 else
@@ -158,7 +159,10 @@ namespace Projeto.Views.Consultas
                     oFrmCadastroProduto.modoEdicao = false;
                     oFrmCadastroProduto.ConhecaObj(produto, controller);
                     oFrmCadastroProduto.CarregaTxt();
+                    oFrmCadastroProduto.BloquearTxt();
                     oFrmCadastroProduto.ShowDialog();
+                    oFrmCadastroProduto.DesbloquearTxt();
+                    oFrmCadastroProduto.LimparTxt();
                     CarregarProdutos();
                 }
                 else

@@ -135,6 +135,7 @@ namespace Projeto
                     oFrmCadastroFrmPgto.ConhecaObj(forma, controller);
                     oFrmCadastroFrmPgto.CarregaTxt();
                     oFrmCadastroFrmPgto.ShowDialog();
+                    oFrmCadastroFrmPgto.LimparTxt();
                     await CarregarFormasPagamento();
                 }
                 else
@@ -162,7 +163,10 @@ namespace Projeto
                     oFrmCadastroFrmPgto.modoEdicao = false;
                     oFrmCadastroFrmPgto.ConhecaObj(forma, controller);
                     oFrmCadastroFrmPgto.CarregaTxt();
+                    oFrmCadastroFrmPgto.BloquearTxt();
                     oFrmCadastroFrmPgto.ShowDialog();
+                    oFrmCadastroFrmPgto.DesbloquearTxt();
+                    oFrmCadastroFrmPgto.LimparTxt();
                     await CarregarFormasPagamento();
                 }
                 else

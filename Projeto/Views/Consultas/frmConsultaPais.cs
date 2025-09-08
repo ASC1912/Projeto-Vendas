@@ -161,6 +161,7 @@ namespace Projeto.Views
                     oFrmCadastroPais.ConhecaObj(pais, controller);
                     oFrmCadastroPais.CarregaTxt();
                     oFrmCadastroPais.ShowDialog();
+                    oFrmCadastroPais.LimparTxt();
                     await CarregarPaises();
 
                 }
@@ -189,7 +190,10 @@ namespace Projeto.Views
                     oFrmCadastroPais.modoEdicao = false;
                     oFrmCadastroPais.ConhecaObj(pais, controller);
                     oFrmCadastroPais.CarregaTxt();
+                    oFrmCadastroPais.BloquearTxt();
                     oFrmCadastroPais.ShowDialog();
+                    oFrmCadastroPais.DesbloquearTxt();
+                    oFrmCadastroPais.LimparTxt();
                     await CarregarPaises();
 
 

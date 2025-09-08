@@ -197,22 +197,7 @@ namespace Projeto.Views.Cadastros
 
         private void frmCadastroProduto_Load(object sender, EventArgs e)
         {
-            if (modoExclusao)
-            {
-                btnSalvar.Text = "Deletar";
-                BloquearTxt();
-            }
-            else if (modoEdicao)
-            {
-                btnSalvar.Text = "Salvar";
-                DesbloquearTxt();
-            }
-            else
-            {
-                btnSalvar.Text = "Salvar";
-                DesbloquearTxt();
-                LimparTxt();
-            }
+          
         }
 
         private void btnBuscarGrupo_Click(object sender, EventArgs e)
@@ -224,16 +209,7 @@ namespace Projeto.Views.Cadastros
                 grupoSelecionadoId = oFrmConsultaGrupo.GrupoSelecionado.Id;
             }
 
-            /*
-            frmConsultaGrupo consultaGrupo = new frmConsultaGrupo();
-            consultaGrupo.ModoSelecao = true;
 
-            if (consultaGrupo.ShowDialog() == DialogResult.OK && consultaGrupo.GrupoSelecionado != null)
-            {
-                txtGrupo.Text = consultaGrupo.GrupoSelecionado.NomeGrupo;
-                grupoSelecionadoId = consultaGrupo.GrupoSelecionado.Id;
-            }
-            */
         }
 
         private void btnMarca_Click(object sender, EventArgs e)
@@ -244,17 +220,6 @@ namespace Projeto.Views.Cadastros
                 txtMarca.Text = oFrmConsultaMarca.MarcaSelecionado.NomeMarca;
                 marcaSelecionadoId = oFrmConsultaMarca.MarcaSelecionado.Id;
             }
-
-            /*
-            frmConsultaMarca consultaMarca = new frmConsultaMarca();
-            consultaMarca.ModoSelecao = true;
-
-            if (consultaMarca.ShowDialog() == DialogResult.OK && consultaMarca.MarcaSelecionado != null)
-            {
-                txtMarca.Text = consultaMarca.MarcaSelecionado.NomeMarca;
-                marcaSelecionadoId = consultaMarca.MarcaSelecionado.Id;
-            }
-            */
         }
     }
 }

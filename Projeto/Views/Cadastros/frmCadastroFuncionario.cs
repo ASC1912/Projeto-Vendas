@@ -368,22 +368,6 @@ namespace Projeto.Views
 
         private void frmCadastroFuncionario_Load(object sender, EventArgs e)
         {
-            if (modoExclusao)
-            {
-                btnSalvar.Text = "Deletar";
-                BloquearTxt();
-            }
-            else if (modoEdicao)
-            {
-                btnSalvar.Text = "Salvar";
-                DesbloquearTxt();
-            }
-            else 
-            {
-                btnSalvar.Text = "Salvar";
-                DesbloquearTxt();
-                LimparTxt();
-            }
         }
 
         private void btnBuscar_Click(object sender, EventArgs e)

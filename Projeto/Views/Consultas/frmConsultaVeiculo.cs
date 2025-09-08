@@ -125,8 +125,9 @@ namespace Projeto.Views.Consultas
                     oFrmCadastroVeiculo.modoExclusao = false;
                     oFrmCadastroVeiculo.ConhecaObj(veiculo, controller);
                     oFrmCadastroVeiculo.CarregaTxt();
-                    oFrmCadastroVeiculo.FormClosed += (s, args) => CarregarVeiculos();
                     oFrmCadastroVeiculo.ShowDialog();
+                    oFrmCadastroVeiculo.LimparTxt();
+                    CarregarVeiculos();
 
                 }
                 else
@@ -155,8 +156,11 @@ namespace Projeto.Views.Consultas
                     oFrmCadastroVeiculo.modoEdicao = false;
                     oFrmCadastroVeiculo.ConhecaObj(veiculo, controller);
                     oFrmCadastroVeiculo.CarregaTxt();
-                    oFrmCadastroVeiculo.FormClosed += (s, args) => CarregarVeiculos();
+                    oFrmCadastroVeiculo.BloquearTxt();
                     oFrmCadastroVeiculo.ShowDialog();
+                    oFrmCadastroVeiculo.DesbloquearTxt();
+                    oFrmCadastroVeiculo.LimparTxt();
+                    CarregarVeiculos();
                 }
                 else
                 {
