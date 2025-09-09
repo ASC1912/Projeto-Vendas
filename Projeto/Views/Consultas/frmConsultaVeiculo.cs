@@ -106,8 +106,9 @@ namespace Projeto.Views.Consultas
 
             oFrmCadastroVeiculo.modoEdicao = false;
             oFrmCadastroVeiculo.modoExclusao = false;
-            oFrmCadastroVeiculo.FormClosed += (s, args) => CarregarVeiculos();
+            oFrmCadastroVeiculo.LimparTxt();
             oFrmCadastroVeiculo.ShowDialog();
+            CarregarVeiculos();
         }
 
         private void btnEditar_Click(object sender, EventArgs e)
@@ -124,9 +125,9 @@ namespace Projeto.Views.Consultas
                     oFrmCadastroVeiculo.modoEdicao = true;
                     oFrmCadastroVeiculo.modoExclusao = false;
                     oFrmCadastroVeiculo.ConhecaObj(veiculo, controller);
+                    oFrmCadastroVeiculo.LimparTxt();
                     oFrmCadastroVeiculo.CarregaTxt();
                     oFrmCadastroVeiculo.ShowDialog();
-                    oFrmCadastroVeiculo.LimparTxt();
                     CarregarVeiculos();
 
                 }
@@ -155,11 +156,11 @@ namespace Projeto.Views.Consultas
                     oFrmCadastroVeiculo.modoExclusao = true;
                     oFrmCadastroVeiculo.modoEdicao = false;
                     oFrmCadastroVeiculo.ConhecaObj(veiculo, controller);
+                    oFrmCadastroVeiculo.LimparTxt();
                     oFrmCadastroVeiculo.CarregaTxt();
                     oFrmCadastroVeiculo.BloquearTxt();
                     oFrmCadastroVeiculo.ShowDialog();
                     oFrmCadastroVeiculo.DesbloquearTxt();
-                    oFrmCadastroVeiculo.LimparTxt();
                     CarregarVeiculos();
                 }
                 else

@@ -124,6 +124,7 @@ namespace Projeto.Views.Consultas
         {
             oFrmCadastroMarca.modoEdicao = false;
             oFrmCadastroMarca.modoExclusao = false;
+            oFrmCadastroMarca.LimparTxt();
             oFrmCadastroMarca.ShowDialog();
             CarregarMarcas();
         }
@@ -142,9 +143,9 @@ namespace Projeto.Views.Consultas
                     oFrmCadastroMarca.modoEdicao = true;
                     oFrmCadastroMarca.modoExclusao = false;
                     oFrmCadastroMarca.ConhecaObj(marca, controller);
+                    oFrmCadastroMarca.LimparTxt();
                     oFrmCadastroMarca.CarregaTxt();
                     oFrmCadastroMarca.ShowDialog();
-                    oFrmCadastroMarca.LimparTxt();
                     CarregarMarcas();
                 }
                 else
@@ -172,11 +173,11 @@ namespace Projeto.Views.Consultas
                     oFrmCadastroMarca.modoExclusao = true;
                     oFrmCadastroMarca.modoEdicao = false;
                     oFrmCadastroMarca.ConhecaObj(marca, controller);
+                    oFrmCadastroMarca.LimparTxt();
                     oFrmCadastroMarca.CarregaTxt();
                     oFrmCadastroMarca.BloquearTxt();
                     oFrmCadastroMarca.ShowDialog();
                     oFrmCadastroMarca.DesbloquearTxt();
-                    oFrmCadastroMarca.LimparTxt();
                     CarregarMarcas();
                 }
                 else

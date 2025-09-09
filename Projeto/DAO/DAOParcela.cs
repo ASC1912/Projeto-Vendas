@@ -45,7 +45,6 @@ namespace Projeto.DAO
             }
         }
 
-
         public List<Parcelamento> ListarParcelas(int condicaoId)
         {
             List<Parcelamento> parcelas = new List<Parcelamento>();
@@ -55,8 +54,18 @@ namespace Projeto.DAO
                 using (MySqlConnection conn = new MySqlConnection(connectionString))
                 {
                     conn.Open();
-                    string query = "SELECT NumeroParcela, PrazoDias, PorcentagemValor, CondicaoPagamentoId, FormaPagamentoId " +
-                                   "FROM Parcelamentos WHERE CondicaoPagamentoId = @CondicaoPagamentoId";
+
+                    string query = @"
+                        SELECT 
+                            p.NumeroParcela, 
+                            p.PrazoDias, 
+                            p.PorcentagemValor, 
+                            p.CondicaoPagamentoId, 
+                            p.FormaPagamentoId,
+                            fp.Descricao AS FormaPagamentoDescricao
+                        FROM Parcelamentos p
+                        JOIN FormasPagamento fp ON p.FormaPagamentoId = fp.Id
+                        WHERE p.CondicaoPagamentoId = @CondicaoPagamentoId";
 
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
@@ -70,9 +79,14 @@ namespace Projeto.DAO
                                 {
                                     NumParcela = reader.GetInt32("NumeroParcela"),
                                     PrazoDias = reader.GetInt32("PrazoDias"),
-                                    Porcentagem = reader.GetDecimal("PorcentagemValor"), 
+                                    Porcentagem = reader.GetDecimal("PorcentagemValor"),
                                     CondicaoId = reader.GetInt32("CondicaoPagamentoId"),
-                                    FormaPagamentoId = reader.GetInt32("FormaPagamentoId")
+                                    FormaPagamentoId = reader.GetInt32("FormaPagamentoId"),
+                                    FormaPagamento = new FormaPagamento
+                                    {
+                                        Id = reader.GetInt32("FormaPagamentoId"),
+                                        Descricao = reader.GetString("FormaPagamentoDescricao")
+                                    }
                                 };
 
                                 parcelas.Add(parcela);

@@ -116,6 +116,7 @@ namespace Projeto
         {
             oFrmCadastroFrmPgto.modoEdicao = false;
             oFrmCadastroFrmPgto.modoExclusao = false;
+            oFrmCadastroFrmPgto.LimparTxt();
             oFrmCadastroFrmPgto.ShowDialog();
             await CarregarFormasPagamento();
         }
@@ -133,9 +134,9 @@ namespace Projeto
                     oFrmCadastroFrmPgto.modoEdicao = true;
                     oFrmCadastroFrmPgto.modoExclusao = false;
                     oFrmCadastroFrmPgto.ConhecaObj(forma, controller);
+                    oFrmCadastroFrmPgto.LimparTxt();
                     oFrmCadastroFrmPgto.CarregaTxt();
                     oFrmCadastroFrmPgto.ShowDialog();
-                    oFrmCadastroFrmPgto.LimparTxt();
                     await CarregarFormasPagamento();
                 }
                 else
@@ -162,11 +163,11 @@ namespace Projeto
                     oFrmCadastroFrmPgto.modoExclusao = true;
                     oFrmCadastroFrmPgto.modoEdicao = false;
                     oFrmCadastroFrmPgto.ConhecaObj(forma, controller);
+                    oFrmCadastroFrmPgto.LimparTxt();
                     oFrmCadastroFrmPgto.CarregaTxt();
                     oFrmCadastroFrmPgto.BloquearTxt();
                     oFrmCadastroFrmPgto.ShowDialog();
                     oFrmCadastroFrmPgto.DesbloquearTxt();
-                    oFrmCadastroFrmPgto.LimparTxt();
                     await CarregarFormasPagamento();
                 }
                 else

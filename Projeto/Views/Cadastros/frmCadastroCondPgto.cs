@@ -48,21 +48,35 @@ namespace Projeto
             }
         }
 
-        public async override void CarregaTxt()
+        public override async void CarregaTxt()
         {
             txtCodigo.Text = aCondPgto.Id.ToString();
             txtDescricao.Text = aCondPgto.Descricao;
             txtQtdParcelas.Text = aCondPgto.QtdParcelas.ToString();
-            txtJuros.Text = aCondPgto.Juros.ToString();
-            txtMulta.Text = aCondPgto.Multa.ToString();
-            txtDesconto.Text = aCondPgto.Desconto.ToString();
-            chkInativo.Checked = !aCondPgto.Ativo;
+            txtJuros.Text = aCondPgto.Juros.ToString("F2");
+            txtMulta.Text = aCondPgto.Multa.ToString("F2");
+            txtDesconto.Text = aCondPgto.Desconto.ToString("F2");
+            chkInativo.Checked = !aCondPgto.Ativo; 
             lblDataCriacao.Text = aCondPgto.DataCadastro.HasValue ? $"Criado em: {aCondPgto.DataCadastro.Value:dd/MM/yyyy HH:mm}" : "Criado em: -";
             lblDataModificacao.Text = aCondPgto.DataAlteracao.HasValue ? $"Modificado em: {aCondPgto.DataAlteracao.Value:dd/MM/yyyy HH:mm}" : "Modificado em: -";
-            await CarregarParcelas(aCondPgto.Id);
 
+            listView1.Items.Clear();
+
+            if (aCondPgto.Parcelas != null)
+            {
+                foreach (var parcela in aCondPgto.Parcelas)
+                {
+                    ListViewItem item = new ListViewItem(parcela.NumParcela.ToString());
+                    item.SubItems.Add(parcela.PrazoDias.ToString());
+                    item.SubItems.Add(parcela.Porcentagem.ToString("N2") + "%");
+
+                    string descricaoFormaPagamento = parcela.FormaPagamento?.Descricao ?? "N/D";
+                    item.SubItems.Add(descricaoFormaPagamento);
+
+                    listView1.Items.Add(item);
+                }
+            }
         }
-
         public override void BloquearTxt()
         {
             txtDescricao.Enabled = false;

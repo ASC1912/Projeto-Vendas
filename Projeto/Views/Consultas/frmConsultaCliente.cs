@@ -41,6 +41,7 @@ namespace Projeto.Views
         {
             oFrmCadastroCliente.modoEdicao = false;
             oFrmCadastroCliente.modoExclusao = false;
+            oFrmCadastroCliente.LimparTxt();
             oFrmCadastroCliente.ShowDialog();
             await CarregarClientes();
         }
@@ -147,9 +148,9 @@ namespace Projeto.Views
                     oFrmCadastroCliente.modoEdicao = true;
                     oFrmCadastroCliente.modoExclusao = false;
                     oFrmCadastroCliente.ConhecaObj(cliente, controller);
+                    oFrmCadastroCliente.LimparTxt();
                     oFrmCadastroCliente.CarregaTxt();
                     oFrmCadastroCliente.ShowDialog();
-                    oFrmCadastroCliente.LimparTxt();
                     await CarregarClientes();
                 }
                 else
@@ -178,11 +179,11 @@ namespace Projeto.Views
                     oFrmCadastroCliente.modoExclusao = true;
                     oFrmCadastroCliente.modoEdicao = false;
                     oFrmCadastroCliente.ConhecaObj(cliente, controller);
+                    oFrmCadastroCliente.LimparTxt();
                     oFrmCadastroCliente.CarregaTxt();
                     oFrmCadastroCliente.BloquearTxt();
                     oFrmCadastroCliente.ShowDialog();
                     oFrmCadastroCliente.DesbloquearTxt();
-                    oFrmCadastroCliente.LimparTxt();
                     await CarregarClientes();
                 }
                 else

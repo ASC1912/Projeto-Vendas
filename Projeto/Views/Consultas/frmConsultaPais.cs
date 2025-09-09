@@ -78,6 +78,7 @@ namespace Projeto.Views
             oFrmCadastroPais.modoEdicao = false;
             oFrmCadastroPais.modoExclusao = false;
             oFrmCadastroPais.ConhecaObj(oPais, controller);
+            oFrmCadastroPais.LimparTxt();
             oFrmCadastroPais.ShowDialog();
             await CarregarPaises();
         }
@@ -159,9 +160,9 @@ namespace Projeto.Views
                     oFrmCadastroPais.modoEdicao = true;
                     oFrmCadastroPais.modoExclusao = false;
                     oFrmCadastroPais.ConhecaObj(pais, controller);
+                    oFrmCadastroPais.LimparTxt();
                     oFrmCadastroPais.CarregaTxt();
                     oFrmCadastroPais.ShowDialog();
-                    oFrmCadastroPais.LimparTxt();
                     await CarregarPaises();
 
                 }
@@ -188,12 +189,12 @@ namespace Projeto.Views
                 {
                     oFrmCadastroPais.modoExclusao = true;
                     oFrmCadastroPais.modoEdicao = false;
+                    oFrmCadastroPais.LimparTxt();
                     oFrmCadastroPais.ConhecaObj(pais, controller);
                     oFrmCadastroPais.CarregaTxt();
                     oFrmCadastroPais.BloquearTxt();
                     oFrmCadastroPais.ShowDialog();
                     oFrmCadastroPais.DesbloquearTxt();
-                    oFrmCadastroPais.LimparTxt();
                     await CarregarPaises();
 
 

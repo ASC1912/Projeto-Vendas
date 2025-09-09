@@ -128,6 +128,7 @@ namespace Projeto.Views.Consultas
         {
             oFrmCadastroGrupo.modoEdicao = false;
             oFrmCadastroGrupo.modoExclusao = false;
+            oFrmCadastroGrupo.LimparTxt();
             oFrmCadastroGrupo.ShowDialog();
             CarregarGrupos();
         }
@@ -146,9 +147,9 @@ namespace Projeto.Views.Consultas
                     oFrmCadastroGrupo.modoEdicao = true;
                     oFrmCadastroGrupo.modoExclusao = false;
                     oFrmCadastroGrupo.ConhecaObj(grupo, controller);
+                    oFrmCadastroGrupo.LimparTxt();
                     oFrmCadastroGrupo.CarregaTxt();
                     oFrmCadastroGrupo.ShowDialog();
-                    oFrmCadastroGrupo.LimparTxt();
                     CarregarGrupos();
                 }
                 else
@@ -176,11 +177,11 @@ namespace Projeto.Views.Consultas
                     oFrmCadastroGrupo.modoExclusao = true;
                     oFrmCadastroGrupo.modoEdicao = false;
                     oFrmCadastroGrupo.ConhecaObj(grupo, controller);
+                    oFrmCadastroGrupo.LimparTxt();
                     oFrmCadastroGrupo.CarregaTxt();
                     oFrmCadastroGrupo.BloquearTxt();
                     oFrmCadastroGrupo.ShowDialog();
                     oFrmCadastroGrupo.DesbloquearTxt();
-                    oFrmCadastroGrupo.LimparTxt();
                     CarregarGrupos();
                 }
                 else

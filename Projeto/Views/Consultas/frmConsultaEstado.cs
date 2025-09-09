@@ -61,6 +61,7 @@ namespace Projeto.Views
         {
             oFrmCadastroEstado.modoEdicao = false;
             oFrmCadastroEstado.modoExclusao = false;
+            oFrmCadastroEstado.LimparTxt();
             oFrmCadastroEstado.ShowDialog();
             await CarregarEstados();
         }
@@ -141,9 +142,9 @@ namespace Projeto.Views
                     oFrmCadastroEstado.modoEdicao = true;
                     oFrmCadastroEstado.modoExclusao = false;
                     oFrmCadastroEstado.ConhecaObj(estado, controller);
+                    oFrmCadastroEstado.LimparTxt();
                     oFrmCadastroEstado.CarregaTxt();
                     oFrmCadastroEstado.ShowDialog();
-                    oFrmCadastroEstado.LimparTxt();
                     await CarregarEstados();
                 }
                 else
@@ -170,11 +171,11 @@ namespace Projeto.Views
                     oFrmCadastroEstado.modoExclusao = true;
                     oFrmCadastroEstado.modoEdicao = false;
                     oFrmCadastroEstado.ConhecaObj(estado, controller);
+                    oFrmCadastroEstado.LimparTxt();
                     oFrmCadastroEstado.CarregaTxt();
                     oFrmCadastroEstado.BloquearTxt();
                     oFrmCadastroEstado.ShowDialog();
                     oFrmCadastroEstado.DesbloquearTxt();
-                    oFrmCadastroEstado.LimparTxt();
                     await CarregarEstados();
                 }
                 else

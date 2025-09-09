@@ -40,6 +40,7 @@ namespace Projeto.Views
         {
             oFrmCadastroFuncionario.modoEdicao = false;
             oFrmCadastroFuncionario.modoExclusao = false;
+            oFrmCadastroFuncionario.LimparTxt();
             oFrmCadastroFuncionario.ShowDialog();
             await CarregarFuncionarios();
         }
@@ -156,9 +157,9 @@ namespace Projeto.Views
                     oFrmCadastroFuncionario.modoEdicao = true;
                     oFrmCadastroFuncionario.modoExclusao = false;
                     oFrmCadastroFuncionario.ConhecaObj(funcionario, controller);
+                    oFrmCadastroFuncionario.LimparTxt();
                     oFrmCadastroFuncionario.CarregaTxt();
                     oFrmCadastroFuncionario.ShowDialog();
-                    oFrmCadastroFuncionario.LimparTxt();
                     await CarregarFuncionarios();
                 }
                 else
@@ -186,11 +187,11 @@ namespace Projeto.Views
                     oFrmCadastroFuncionario.modoExclusao = true;
                     oFrmCadastroFuncionario.modoEdicao = false;
                     oFrmCadastroFuncionario.ConhecaObj(funcionario, controller);
+                    oFrmCadastroFuncionario.LimparTxt();
                     oFrmCadastroFuncionario.CarregaTxt();
                     oFrmCadastroFuncionario.BloquearTxt();
                     oFrmCadastroFuncionario.ShowDialog();
                     oFrmCadastroFuncionario.DesbloquearTxt();
-                    oFrmCadastroFuncionario.LimparTxt();
                     await CarregarFuncionarios();
                 }
                 else

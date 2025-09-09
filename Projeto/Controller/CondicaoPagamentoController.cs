@@ -57,7 +57,17 @@ namespace Projeto.Controller
             }
             else
             {
-                return Task.FromResult(_dao.BuscarPorId(id));
+                return Task.Run(() =>
+                {
+                    var condicao = _dao.BuscarPorId(id);
+
+                    if (condicao != null)
+                    {
+                        condicao.Parcelas = _daoParcela.ListarParcelas(id);
+                    }
+
+                    return condicao;
+                });
             }
         }
 

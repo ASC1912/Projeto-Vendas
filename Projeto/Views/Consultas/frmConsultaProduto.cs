@@ -109,6 +109,7 @@ namespace Projeto.Views.Consultas
         {
             oFrmCadastroProduto.modoEdicao = false;
             oFrmCadastroProduto.modoExclusao = false;
+            oFrmCadastroProduto.LimparTxt();
             oFrmCadastroProduto.ShowDialog();
             CarregarProdutos();
         }
@@ -128,9 +129,9 @@ namespace Projeto.Views.Consultas
                     oFrmCadastroProduto.modoEdicao = true;
                     oFrmCadastroProduto.modoExclusao = false;
                     oFrmCadastroProduto.ConhecaObj(produto, controller);
+                    oFrmCadastroProduto.LimparTxt();
                     oFrmCadastroProduto.CarregaTxt();
                     oFrmCadastroProduto.ShowDialog();
-                    oFrmCadastroProduto.LimparTxt();
                     CarregarProdutos();
                 }
                 else
@@ -158,11 +159,11 @@ namespace Projeto.Views.Consultas
                     oFrmCadastroProduto.modoExclusao = true;
                     oFrmCadastroProduto.modoEdicao = false;
                     oFrmCadastroProduto.ConhecaObj(produto, controller);
+                    oFrmCadastroProduto.LimparTxt();
                     oFrmCadastroProduto.CarregaTxt();
                     oFrmCadastroProduto.BloquearTxt();
                     oFrmCadastroProduto.ShowDialog();
                     oFrmCadastroProduto.DesbloquearTxt();
-                    oFrmCadastroProduto.LimparTxt();
                     CarregarProdutos();
                 }
                 else
