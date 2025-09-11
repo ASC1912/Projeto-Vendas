@@ -29,13 +29,13 @@
         private void InitializeComponent()
         {
             this.lblCodigo = new System.Windows.Forms.Label();
-            this.btnSalvar = new System.Windows.Forms.Button();
             this.txtDescricao = new System.Windows.Forms.TextBox();
             this.lblDescricao = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txtCodigo
             // 
+            this.txtCodigo.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtCodigo.TabIndex = 0;
             // 
             // btnSair
@@ -46,6 +46,11 @@
             // 
             this.chkInativo.TabIndex = 2;
             // 
+            // btnSalvar2
+            // 
+            this.btnSalvar.Location = new System.Drawing.Point(1114, 634);
+            this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
+            // 
             // lblCodigo
             // 
             this.lblCodigo.AutoSize = true;
@@ -54,16 +59,6 @@
             this.lblCodigo.Size = new System.Drawing.Size(51, 16);
             this.lblCodigo.TabIndex = 4;
             this.lblCodigo.Text = "Código";
-            // 
-            // btnSalvar
-            // 
-            this.btnSalvar.Location = new System.Drawing.Point(1115, 634);
-            this.btnSalvar.Name = "btnSalvar";
-            this.btnSalvar.Size = new System.Drawing.Size(80, 35);
-            this.btnSalvar.TabIndex = 3;
-            this.btnSalvar.Text = "Salvar";
-            this.btnSalvar.UseVisualStyleBackColor = true;
-            this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
             // 
             // txtDescricao
             // 
@@ -87,18 +82,17 @@
             //this.ClientSize = new System.Drawing.Size(1342, 681);
             this.Controls.Add(this.lblDescricao);
             this.Controls.Add(this.txtDescricao);
-            this.Controls.Add(this.btnSalvar);
             this.Controls.Add(this.lblCodigo);
             this.Name = "frmCadastroFrmPgto";
             this.Text = "Cadastro Formas de Pagamento";
             this.Load += new System.EventHandler(this.frmCadastroFrmPgto_Load);
+            this.Controls.SetChildIndex(this.btnSalvar, 0);
             this.Controls.SetChildIndex(this.lblDataModificacao, 0);
             this.Controls.SetChildIndex(this.chkInativo, 0);
             this.Controls.SetChildIndex(this.lblDataCriacao, 0);
             this.Controls.SetChildIndex(this.lblCodigo, 0);
             this.Controls.SetChildIndex(this.btnSair, 0);
             this.Controls.SetChildIndex(this.txtCodigo, 0);
-            this.Controls.SetChildIndex(this.btnSalvar, 0);
             this.Controls.SetChildIndex(this.txtDescricao, 0);
             this.Controls.SetChildIndex(this.lblDescricao, 0);
             this.ResumeLayout(false);
@@ -109,7 +103,6 @@
         #endregion
 
         private System.Windows.Forms.Label lblCodigo;
-        private System.Windows.Forms.Button btnSalvar;
         private System.Windows.Forms.TextBox txtDescricao;
         private System.Windows.Forms.Label lblDescricao;
     }

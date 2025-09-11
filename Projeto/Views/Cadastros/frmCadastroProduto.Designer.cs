@@ -43,8 +43,11 @@
             this.txtPreco = new System.Windows.Forms.TextBox();
             this.lblEstoque = new System.Windows.Forms.Label();
             this.txtEstoque = new System.Windows.Forms.TextBox();
-            this.btnSalvar = new System.Windows.Forms.Button();
             this.SuspendLayout();
+            // 
+            // txtCodigo
+            // 
+            this.txtCodigo.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             // 
             // btnSair
             // 
@@ -53,6 +56,11 @@
             // chkInativo
             // 
             this.chkInativo.TabIndex = 8;
+            // 
+            // btnSalvar2
+            // 
+            this.btnSalvar.Location = new System.Drawing.Point(1109, 634);
+            this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
             // 
             // lblCodigo
             // 
@@ -181,21 +189,10 @@
             this.txtEstoque.Size = new System.Drawing.Size(150, 22);
             this.txtEstoque.TabIndex = 7;
             // 
-            // btnSalvar
-            // 
-            this.btnSalvar.Location = new System.Drawing.Point(1108, 634);
-            this.btnSalvar.Name = "btnSalvar";
-            this.btnSalvar.Size = new System.Drawing.Size(80, 35);
-            this.btnSalvar.TabIndex = 9;
-            this.btnSalvar.Text = "Salvar";
-            this.btnSalvar.UseVisualStyleBackColor = true;
-            this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
-            // 
             // frmCadastroProduto
             // 
             //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             //this.ClientSize = new System.Drawing.Size(1342, 681);
-            this.Controls.Add(this.btnSalvar);
             this.Controls.Add(this.lblEstoque);
             this.Controls.Add(this.txtEstoque);
             this.Controls.Add(this.lblPreco);
@@ -214,6 +211,7 @@
             this.Name = "frmCadastroProduto";
             this.Text = "Cadastro Produtos";
             this.Load += new System.EventHandler(this.frmCadastroProduto_Load);
+            this.Controls.SetChildIndex(this.btnSalvar, 0);
             this.Controls.SetChildIndex(this.btnSair, 0);
             this.Controls.SetChildIndex(this.txtCodigo, 0);
             this.Controls.SetChildIndex(this.chkInativo, 0);
@@ -234,7 +232,6 @@
             this.Controls.SetChildIndex(this.lblPreco, 0);
             this.Controls.SetChildIndex(this.txtEstoque, 0);
             this.Controls.SetChildIndex(this.lblEstoque, 0);
-            this.Controls.SetChildIndex(this.btnSalvar, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -257,6 +254,5 @@
         private System.Windows.Forms.TextBox txtPreco;
         private System.Windows.Forms.Label lblEstoque;
         private System.Windows.Forms.TextBox txtEstoque;
-        private System.Windows.Forms.Button btnSalvar;
     }
 }

@@ -50,22 +50,34 @@ namespace Projeto.Views
                 {
                     case "ID":
                         column.Width = 50;
+                        column.TextAlign = HorizontalAlignment.Right;
                         break;
+
                     case "País":
                         column.Width = 150;
+                        column.TextAlign = HorizontalAlignment.Center;
                         break;
-                    case "Sigla": 
+
+                    case "Sigla":
                         column.Width = 60;
+                        column.TextAlign = HorizontalAlignment.Center;
                         break;
-                    case "DDI": 
+
+                    case "DDI":
                         column.Width = 60;
+                        column.TextAlign = HorizontalAlignment.Center;
                         break;
-                    case "Moeda": 
+
+                    case "Moeda":
                         column.Width = 70;
+                        column.TextAlign = HorizontalAlignment.Center;
                         break;
+
                     case "Ativo":
                         column.Width = 50;
+                        column.TextAlign = HorizontalAlignment.Center;
                         break;
+
                     default:
                         column.Width = 100;
                         break;
@@ -193,7 +205,9 @@ namespace Projeto.Views
                     oFrmCadastroPais.ConhecaObj(pais, controller);
                     oFrmCadastroPais.CarregaTxt();
                     oFrmCadastroPais.BloquearTxt();
+                    oFrmCadastroPais.btnSalvar.Text = "Excluir";
                     oFrmCadastroPais.ShowDialog();
+                    oFrmCadastroPais.btnSalvar.Text = "Salvar";
                     oFrmCadastroPais.DesbloquearTxt();
                     await CarregarPaises();
 

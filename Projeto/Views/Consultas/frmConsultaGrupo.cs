@@ -46,15 +46,19 @@ namespace Projeto.Views.Consultas
                 {
                     case "ID":
                         column.Width = 50;
+                        column.TextAlign = HorizontalAlignment.Right;
                         break;
                     case "Grupo":
                         column.Width = 150;
+                        column.TextAlign = HorizontalAlignment.Center;
                         break;
                     case "Descrição":
                         column.Width = 200;
+                        column.TextAlign = HorizontalAlignment.Center;
                         break;
                     case "Ativo":
                         column.Width = 50;
+                        column.TextAlign = HorizontalAlignment.Center;
                         break;
                     default:
                         column.Width = 100;
@@ -180,7 +184,9 @@ namespace Projeto.Views.Consultas
                     oFrmCadastroGrupo.LimparTxt();
                     oFrmCadastroGrupo.CarregaTxt();
                     oFrmCadastroGrupo.BloquearTxt();
+                    oFrmCadastroGrupo.btnSalvar.Text = "Excluir";
                     oFrmCadastroGrupo.ShowDialog();
+                    oFrmCadastroGrupo.btnSalvar.Text = "Salvar";
                     oFrmCadastroGrupo.DesbloquearTxt();
                     CarregarGrupos();
                 }

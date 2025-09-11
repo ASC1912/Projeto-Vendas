@@ -190,7 +190,9 @@ namespace Projeto.Views
                     oFrmCadastroFuncionario.LimparTxt();
                     oFrmCadastroFuncionario.CarregaTxt();
                     oFrmCadastroFuncionario.BloquearTxt();
+                    oFrmCadastroFuncionario.btnSalvar.Text = "Excluir";
                     oFrmCadastroFuncionario.ShowDialog();
+                    oFrmCadastroFuncionario.btnSalvar.Text = "Salvar";
                     oFrmCadastroFuncionario.DesbloquearTxt();
                     await CarregarFuncionarios();
                 }
@@ -215,25 +217,65 @@ namespace Projeto.Views
 
             foreach (ColumnHeader column in listView1.Columns)
             {
+                column.TextAlign = HorizontalAlignment.Center;
+
                 switch (column.Text)
                 {
-                    case "ID": column.Width = 40; break;
-                    case "Tipo": column.Width = 60; break;
-                    case "Nome": column.Width = 200; break;
-                    case "Gênero": column.Width = 60; break;
-                    case "Endereço": column.Width = 200; break;
-                    case "Número": column.Width = 60; break;
-                    case "Bairro": column.Width = 150; break;
-                    case "Complemento": column.Width = 130; break;
-                    case "CEP": column.Width = 80; break;
-                    case "Cidade": column.Width = 150; break;
-                    case "Cargo": column.Width = 130; break;
-                    case "Telefone": column.Width = 120; break;
-                    case "Email": column.Width = 200; break;
-                    case "Status": column.Width = 60; break;
-                    case "CPF/CNPJ": column.Width = 130; break;
-                    case "DataNascimento": column.Width = 120; break;
-                    default: column.Width = 100; break;
+                    case "ID":
+                        column.Width = 40;
+                        column.TextAlign = HorizontalAlignment.Right; 
+                        break;
+                    case "Salario":
+                        column.TextAlign = HorizontalAlignment.Right; 
+                        break;
+                    case "Tipo":
+                        column.Width = 60;
+                        break;
+                    case "Funcionário": 
+                        column.Width = 200;
+                        break;
+                    case "Gênero":
+                        column.Width = 60;
+                        break;
+                    case "Endereço":
+                        column.Width = 200;
+                        break;
+                    case "Número":
+                        column.Width = 60;
+                        break;
+                    case "Bairro":
+                        column.Width = 150;
+                        break;
+                    case "Complemento":
+                        column.Width = 130;
+                        break;
+                    case "CEP":
+                        column.Width = 80;
+                        break;
+                    case "Cidade":
+                        column.Width = 150;
+                        break;
+                    case "Cargo":
+                        column.Width = 130;
+                        break;
+                    case "Telefone":
+                        column.Width = 120;
+                        break;
+                    case "Email":
+                        column.Width = 200;
+                        break;
+                    case "Status":
+                        column.Width = 60;
+                        break;
+                    case "CPF/CNPJ":
+                        column.Width = 130;
+                        break;
+                    case "DataNascimento":
+                        column.Width = 120;
+                        break;
+                    default:
+                        column.Width = 100;
+                        break;
                 }
             }
         }

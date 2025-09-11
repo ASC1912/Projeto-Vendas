@@ -43,11 +43,11 @@
             this.lblTransportadora = new System.Windows.Forms.Label();
             this.txtMarca = new System.Windows.Forms.TextBox();
             this.btnMarca = new System.Windows.Forms.Button();
-            this.btnSalvar = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txtCodigo
             // 
+            this.txtCodigo.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtCodigo.Location = new System.Drawing.Point(12, 42);
             this.txtCodigo.TabIndex = 0;
             // 
@@ -58,6 +58,11 @@
             // chkInativo
             // 
             this.chkInativo.TabIndex = 9;
+            // 
+            // btnSalvar2
+            // 
+            this.btnSalvar.Location = new System.Drawing.Point(1113, 634);
+            this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
             // 
             // lblCodigo
             // 
@@ -187,21 +192,10 @@
             this.btnMarca.UseVisualStyleBackColor = true;
             this.btnMarca.Click += new System.EventHandler(this.btnBuscarMarca_Click);
             // 
-            // btnSalvar
-            // 
-            this.btnSalvar.Location = new System.Drawing.Point(1117, 634);
-            this.btnSalvar.Name = "btnSalvar";
-            this.btnSalvar.Size = new System.Drawing.Size(80, 35);
-            this.btnSalvar.TabIndex = 10;
-            this.btnSalvar.Text = "Salvar";
-            this.btnSalvar.UseVisualStyleBackColor = true;
-            this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
-            // 
             // frmCadastroVeiculo
             // 
             //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             //this.ClientSize = new System.Drawing.Size(1342, 681);
-            this.Controls.Add(this.btnSalvar);
             this.Controls.Add(this.btnMarca);
             this.Controls.Add(this.txtMarca);
             this.Controls.Add(this.txtTransportadora);
@@ -220,6 +214,7 @@
             this.Name = "frmCadastroVeiculo";
             this.Text = "Cadastro Veículo";
             this.Load += new System.EventHandler(this.frmCadastroVeiculo_Load);
+            this.Controls.SetChildIndex(this.btnSalvar, 0);
             this.Controls.SetChildIndex(this.btnSair, 0);
             this.Controls.SetChildIndex(this.txtCodigo, 0);
             this.Controls.SetChildIndex(this.chkInativo, 0);
@@ -240,7 +235,6 @@
             this.Controls.SetChildIndex(this.txtTransportadora, 0);
             this.Controls.SetChildIndex(this.txtMarca, 0);
             this.Controls.SetChildIndex(this.btnMarca, 0);
-            this.Controls.SetChildIndex(this.btnSalvar, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -263,6 +257,5 @@
         private System.Windows.Forms.Label lblTransportadora;
         private System.Windows.Forms.TextBox txtMarca;
         private System.Windows.Forms.Button btnMarca;
-        private System.Windows.Forms.Button btnSalvar;
     }
 }

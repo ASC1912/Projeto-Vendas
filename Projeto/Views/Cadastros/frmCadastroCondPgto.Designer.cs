@@ -30,7 +30,6 @@
         {
             this.lblPrazo = new System.Windows.Forms.Label();
             this.txtPrazoDias = new System.Windows.Forms.TextBox();
-            this.btnSalvar = new System.Windows.Forms.Button();
             this.lblCodigo = new System.Windows.Forms.Label();
             this.lblDescricao = new System.Windows.Forms.Label();
             this.txtDescricao = new System.Windows.Forms.TextBox();
@@ -62,6 +61,7 @@
             // 
             // txtCodigo
             // 
+            this.txtCodigo.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtCodigo.TabIndex = 0;
             // 
             // btnSair
@@ -71,6 +71,11 @@
             // chkInativo
             // 
             this.chkInativo.TabIndex = 13;
+            // 
+            // btnSalvar2
+            // 
+            this.btnSalvar.Location = new System.Drawing.Point(1134, 634);
+            this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
             // 
             // lblPrazo
             // 
@@ -87,16 +92,6 @@
             this.txtPrazoDias.Name = "txtPrazoDias";
             this.txtPrazoDias.Size = new System.Drawing.Size(100, 22);
             this.txtPrazoDias.TabIndex = 7;
-            // 
-            // btnSalvar
-            // 
-            this.btnSalvar.Location = new System.Drawing.Point(1119, 634);
-            this.btnSalvar.Name = "btnSalvar";
-            this.btnSalvar.Size = new System.Drawing.Size(80, 35);
-            this.btnSalvar.TabIndex = 14;
-            this.btnSalvar.Text = "Salvar";
-            this.btnSalvar.UseVisualStyleBackColor = true;
-            this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
             // 
             // lblCodigo
             // 
@@ -351,16 +346,15 @@
             this.Controls.Add(this.lblCodigo);
             this.Controls.Add(this.lblPrazo);
             this.Controls.Add(this.txtPrazoDias);
-            this.Controls.Add(this.btnSalvar);
             this.Name = "frmCadastroCondPgto";
             this.Text = "Cadastro Condições de Pagamento";
             this.Load += new System.EventHandler(this.frmCadastroCondPgto_Load);
+            this.Controls.SetChildIndex(this.btnSalvar, 0);
             this.Controls.SetChildIndex(this.lblDataModificacao, 0);
             this.Controls.SetChildIndex(this.chkInativo, 0);
             this.Controls.SetChildIndex(this.lblDataCriacao, 0);
             this.Controls.SetChildIndex(this.btnSair, 0);
             this.Controls.SetChildIndex(this.txtCodigo, 0);
-            this.Controls.SetChildIndex(this.btnSalvar, 0);
             this.Controls.SetChildIndex(this.txtPrazoDias, 0);
             this.Controls.SetChildIndex(this.lblPrazo, 0);
             this.Controls.SetChildIndex(this.lblCodigo, 0);
@@ -395,7 +389,6 @@
 
         private System.Windows.Forms.Label lblPrazo;
         private System.Windows.Forms.TextBox txtPrazoDias;
-        private System.Windows.Forms.Button btnSalvar;
         private System.Windows.Forms.Label lblCodigo;
         private System.Windows.Forms.Label lblDescricao;
         private System.Windows.Forms.TextBox txtDescricao;

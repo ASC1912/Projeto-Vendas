@@ -182,7 +182,9 @@ namespace Projeto.Views
                     oFrmCadastroCliente.LimparTxt();
                     oFrmCadastroCliente.CarregaTxt();
                     oFrmCadastroCliente.BloquearTxt();
+                    oFrmCadastroCliente.btnSalvar.Text = "Excluir";
                     oFrmCadastroCliente.ShowDialog();
+                    oFrmCadastroCliente.btnSalvar.Text = "Salvar";
                     oFrmCadastroCliente.DesbloquearTxt();
                     await CarregarClientes();
                 }
@@ -203,10 +205,12 @@ namespace Projeto.Views
 
             foreach (ColumnHeader column in listView1.Columns)
             {
+                column.TextAlign = HorizontalAlignment.Center; 
                 switch (column.Text)
                 {
                     case "ID":
                         column.Width = 40;
+                        column.TextAlign = HorizontalAlignment.Right; 
                         break;
                     case "Tipo":
                         column.Width = 60;

@@ -59,13 +59,13 @@
             this.lblCPF = new System.Windows.Forms.Label();
             this.txtCPF = new System.Windows.Forms.TextBox();
             this.lblCidade = new System.Windows.Forms.Label();
-            this.btnSalvar = new System.Windows.Forms.Button();
             this.IDCidade = new System.Windows.Forms.Label();
             this.txtIdCidade = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // txtCodigo
             // 
+            this.txtCodigo.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtCodigo.TabIndex = 0;
             // 
             // btnSair
@@ -75,6 +75,11 @@
             // chkInativo
             // 
             this.chkInativo.TabIndex = 18;
+            // 
+            // btnSalvar2
+            // 
+            this.btnSalvar.Location = new System.Drawing.Point(1113, 634);
+            this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
             // 
             // cbTipo
             // 
@@ -340,16 +345,6 @@
             this.lblCidade.TabIndex = 77;
             this.lblCidade.Text = "Cidade*";
             // 
-            // btnSalvar
-            // 
-            this.btnSalvar.Location = new System.Drawing.Point(1110, 634);
-            this.btnSalvar.Name = "btnSalvar";
-            this.btnSalvar.Size = new System.Drawing.Size(80, 35);
-            this.btnSalvar.TabIndex = 19;
-            this.btnSalvar.Text = "Salvar";
-            this.btnSalvar.UseVisualStyleBackColor = true;
-            this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
-            // 
             // IDCidade
             // 
             this.IDCidade.AutoSize = true;
@@ -373,7 +368,6 @@
             //this.ClientSize = new System.Drawing.Size(1342, 681);
             this.Controls.Add(this.IDCidade);
             this.Controls.Add(this.txtIdCidade);
-            this.Controls.Add(this.btnSalvar);
             this.Controls.Add(this.txtCondicao);
             this.Controls.Add(this.btnBuscarCond);
             this.Controls.Add(this.txtCidade);
@@ -408,6 +402,7 @@
             this.Name = "frmCadastroTransportadora";
             this.Text = "Cadastro Transportadoras";
             this.Load += new System.EventHandler(this.frmCadastroTransportadora_Load);
+            this.Controls.SetChildIndex(this.btnSalvar, 0);
             this.Controls.SetChildIndex(this.btnSair, 0);
             this.Controls.SetChildIndex(this.txtCodigo, 0);
             this.Controls.SetChildIndex(this.chkInativo, 0);
@@ -444,7 +439,6 @@
             this.Controls.SetChildIndex(this.txtCidade, 0);
             this.Controls.SetChildIndex(this.btnBuscarCond, 0);
             this.Controls.SetChildIndex(this.txtCondicao, 0);
-            this.Controls.SetChildIndex(this.btnSalvar, 0);
             this.Controls.SetChildIndex(this.txtIdCidade, 0);
             this.Controls.SetChildIndex(this.IDCidade, 0);
             this.ResumeLayout(false);
@@ -485,7 +479,6 @@
         private System.Windows.Forms.Label lblCPF;
         private System.Windows.Forms.TextBox txtCPF;
         private System.Windows.Forms.Label lblCidade;
-        private System.Windows.Forms.Button btnSalvar;
         private System.Windows.Forms.Label IDCidade;
         private System.Windows.Forms.TextBox txtIdCidade;
     }

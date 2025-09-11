@@ -33,6 +33,7 @@
             this.chkInativo = new System.Windows.Forms.CheckBox();
             this.lblDataCriacao = new System.Windows.Forms.Label();
             this.lblDataModificacao = new System.Windows.Forms.Label();
+            this.btnSalvar = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txtCodigo
@@ -82,9 +83,20 @@
             this.lblDataModificacao.TabIndex = 65;
             this.lblDataModificacao.Text = "Modificado em:";
             // 
+            // btnSalvar
+            // 
+            this.btnSalvar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnSalvar.Location = new System.Drawing.Point(1108, 634);
+            this.btnSalvar.Name = "btnSalvar";
+            this.btnSalvar.Size = new System.Drawing.Size(80, 35);
+            this.btnSalvar.TabIndex = 66;
+            this.btnSalvar.Text = "Salvar";
+            this.btnSalvar.UseVisualStyleBackColor = true;
+            // 
             // frmBase
             // 
             this.ClientSize = new System.Drawing.Size(1342, 681);
+            this.Controls.Add(this.btnSalvar);
             this.Controls.Add(this.lblDataModificacao);
             this.Controls.Add(this.lblDataCriacao);
             this.Controls.Add(this.chkInativo);
@@ -105,5 +117,6 @@
         protected System.Windows.Forms.CheckBox chkInativo;
         protected System.Windows.Forms.Label lblDataCriacao;
         protected System.Windows.Forms.Label lblDataModificacao;
+        public System.Windows.Forms.Button btnSalvar;
     }
 }

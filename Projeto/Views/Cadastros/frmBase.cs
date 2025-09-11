@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace Projeto
 {
-    public partial class frmBase : Form
+    public  partial class frmBase : Form
     {
         public frmBase()
         {
@@ -61,6 +61,8 @@ namespace Projeto
             this.MaximumSize = new Size(1360, 728);
             this.AutoSize = false;
         }
+
+
 
         public virtual void ConhecaObj(object obj, object ctrl)
         {

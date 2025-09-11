@@ -45,10 +45,21 @@ namespace Projeto
             {
                 switch (column.Text)
                 {
-                    case "ID": column.Width = 50; break;
-                    case "Descricao": column.Width = 200; break;
-                    case "Ativo": column.Width = 50; break;
-                    default: column.Width = 100; break;
+                    case "ID":
+                        column.Width = 50;
+                        column.TextAlign = HorizontalAlignment.Right;
+                        break;
+                    case "Descrição":
+                        column.Width = 200;
+                        column.TextAlign = HorizontalAlignment.Center;
+                        break;
+                    case "Ativo":
+                        column.Width = 50;
+                        column.TextAlign = HorizontalAlignment.Center;
+                        break;
+                    default:
+                        column.Width = 100;
+                        break;
                 }
             }
         }
@@ -166,7 +177,9 @@ namespace Projeto
                     oFrmCadastroFrmPgto.LimparTxt();
                     oFrmCadastroFrmPgto.CarregaTxt();
                     oFrmCadastroFrmPgto.BloquearTxt();
+                    oFrmCadastroFrmPgto.btnSalvar.Text = "Excluir";
                     oFrmCadastroFrmPgto.ShowDialog();
+                    oFrmCadastroFrmPgto.btnSalvar.Text = "Salvar";
                     oFrmCadastroFrmPgto.DesbloquearTxt();
                     await CarregarFormasPagamento();
                 }

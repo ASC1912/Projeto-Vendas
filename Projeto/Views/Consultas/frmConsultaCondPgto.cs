@@ -51,24 +51,31 @@ namespace Projeto
                 {
                     case "ID":
                         column.Width = 50;
+                        column.TextAlign = HorizontalAlignment.Right;
                         break;
                     case "Descrição":
                         column.Width = 200;
+                        column.TextAlign = HorizontalAlignment.Center;
                         break;
-                    case "Qtd_parcelas":
-                        column.Width = 50;
+                    case "Qtd_Parcelas":
+                        column.Width = 80;
+                        column.TextAlign = HorizontalAlignment.Center;
                         break;
                     case "Juros":
                         column.Width = 60;
+                        column.TextAlign = HorizontalAlignment.Center;
                         break;
                     case "Multa":
                         column.Width = 60;
+                        column.TextAlign = HorizontalAlignment.Center;
                         break;
                     case "Desconto":
                         column.Width = 60;
+                        column.TextAlign = HorizontalAlignment.Center;
                         break;
                     case "Ativo":
                         column.Width = 50;
+                        column.TextAlign = HorizontalAlignment.Center;
                         break;
                     default:
                         column.Width = 100;

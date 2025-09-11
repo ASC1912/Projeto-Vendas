@@ -30,10 +30,14 @@
         {
             this.SuspendLayout();
             // 
+            // btnIncluir
+            // 
+            this.btnIncluir.Click += new System.EventHandler(this.btnIncluir_Click);
+            // 
             // frmConsultaCompra
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.ClientSize = new System.Drawing.Size(1342, 681);
+            //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            //this.ClientSize = new System.Drawing.Size(1342, 681);
             this.Name = "frmConsultaCompra";
             this.Text = "Consulta Compra";
             this.ResumeLayout(false);

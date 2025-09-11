@@ -130,10 +130,10 @@ namespace Projeto
 
         private void comprasToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //aInter.PecaCompra(aCompra, CtrlCompra);
+            aInter.PecaCompra(aCompra, CtrlCompra);
 
-            frmCadastroCompra formCompra = new frmCadastroCompra();
-            formCompra.ShowDialog();
+            //frmCadastroCompra formCompra = new frmCadastroCompra();
+            //formCompra.ShowDialog();
         }
     }
 }

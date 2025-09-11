@@ -36,7 +36,6 @@ namespace Projeto.Views.Consultas
         private void frmConsultaMarca_Load(object sender, EventArgs e)
         {
             CarregarMarcas();
-
             btnSelecionar.Visible = ModoSelecao;
 
             foreach (ColumnHeader column in listView1.Columns)
@@ -45,20 +44,21 @@ namespace Projeto.Views.Consultas
                 {
                     case "ID":
                         column.Width = 50;
+                        column.TextAlign = HorizontalAlignment.Right;
                         break;
                     case "Marca":
                         column.Width = 150;
+                        column.TextAlign = HorizontalAlignment.Center;
                         break;
                     case "Ativo":
                         column.Width = 60;
+                        column.TextAlign = HorizontalAlignment.Center;
                         break;
                     default:
                         column.Width = 100;
                         break;
                 }
             }
-
-            CarregarMarcas();
         }
 
         private void CarregarMarcas()
@@ -176,7 +176,9 @@ namespace Projeto.Views.Consultas
                     oFrmCadastroMarca.LimparTxt();
                     oFrmCadastroMarca.CarregaTxt();
                     oFrmCadastroMarca.BloquearTxt();
+                    oFrmCadastroMarca.btnSalvar.Text = "Excluir";
                     oFrmCadastroMarca.ShowDialog();
+                    oFrmCadastroMarca.btnSalvar.Text = "Salvar";
                     oFrmCadastroMarca.DesbloquearTxt();
                     CarregarMarcas();
                 }

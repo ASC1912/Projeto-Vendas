@@ -162,7 +162,9 @@ namespace Projeto.Views.Consultas
                     oFrmCadastroProduto.LimparTxt();
                     oFrmCadastroProduto.CarregaTxt();
                     oFrmCadastroProduto.BloquearTxt();
+                    oFrmCadastroProduto.btnSalvar.Text = "Excluir";
                     oFrmCadastroProduto.ShowDialog();
+                    oFrmCadastroProduto.btnSalvar.Text = "Salvar";
                     oFrmCadastroProduto.DesbloquearTxt();
                     CarregarProdutos();
                 }
@@ -187,34 +189,41 @@ namespace Projeto.Views.Consultas
                 {
                     case "ID":
                         column.Width = 50;
-                        break;
-                    case "Produto":
-                        column.Width = 200;
-                        break;
-                    case "Descrição":
-                        column.Width = 200;
+                        column.TextAlign = HorizontalAlignment.Right;
                         break;
                     case "Preço":
                         column.Width = 80;
+                        column.TextAlign = HorizontalAlignment.Right;
                         break;
                     case "Estoque":
                         column.Width = 70;
+                        column.TextAlign = HorizontalAlignment.Right;
+                        break;
+                    case "Produto":
+                        column.Width = 200;
+                        column.TextAlign = HorizontalAlignment.Center;
+                        break;
+                    case "Descrição":
+                        column.Width = 200;
+                        column.TextAlign = HorizontalAlignment.Center;
                         break;
                     case "Marca":
                         column.Width = 100;
+                        column.TextAlign = HorizontalAlignment.Center;
                         break;
                     case "Grupo":
                         column.Width = 100;
+                        column.TextAlign = HorizontalAlignment.Center;
                         break;
                     case "Ativo":
                         column.Width = 60;
+                        column.TextAlign = HorizontalAlignment.Center;
                         break;
                     default:
                         column.Width = 100;
                         break;
                 }
             }
-
         }
     }
 }

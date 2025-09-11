@@ -42,7 +42,7 @@
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.lblDataEmissao = new System.Windows.Forms.Label();
             this.dtpNascimento = new System.Windows.Forms.DateTimePicker();
-            this.listView2 = new System.Windows.Forms.ListView();
+            this.listViewProdutos = new System.Windows.Forms.ListView();
             this.Codigo = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Produto = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Unidade = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -52,16 +52,16 @@
             this.lblProduto = new System.Windows.Forms.Label();
             this.txtProduto = new System.Windows.Forms.TextBox();
             this.btnPesquisarProduto = new System.Windows.Forms.Button();
-            this.lblTotal = new System.Windows.Forms.Label();
+            this.lblTotalProduto = new System.Windows.Forms.Label();
             this.txtTotal = new System.Windows.Forms.TextBox();
             this.lblValorUnitario = new System.Windows.Forms.Label();
             this.txtValorUnitario = new System.Windows.Forms.TextBox();
             this.lblQuantidade = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.btnAdicionar = new System.Windows.Forms.Button();
-            this.btnEditar = new System.Windows.Forms.Button();
-            this.btnRemover = new System.Windows.Forms.Button();
-            this.btnLimpar = new System.Windows.Forms.Button();
+            this.txtQuantidade = new System.Windows.Forms.TextBox();
+            this.btnAdicionarProduto = new System.Windows.Forms.Button();
+            this.btnEditarProduto = new System.Windows.Forms.Button();
+            this.btnRemoverProduto = new System.Windows.Forms.Button();
+            this.btnLimparProduto = new System.Windows.Forms.Button();
             this.lblDespesas = new System.Windows.Forms.Label();
             this.txtDespesas = new System.Windows.Forms.TextBox();
             this.lblSeguro = new System.Windows.Forms.Label();
@@ -71,22 +71,26 @@
             this.button1 = new System.Windows.Forms.Button();
             this.txtCondPgto = new System.Windows.Forms.TextBox();
             this.button2 = new System.Windows.Forms.Button();
-            this.listView1 = new System.Windows.Forms.ListView();
+            this.listViewCondPgto = new System.Windows.Forms.ListView();
             this.NumParcela = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Prazo = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Porcentagem = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.FormaPagamento = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lblFormaPagamento = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
+            this.lblTotalProdutos = new System.Windows.Forms.Label();
+            this.lblValorTotal = new System.Windows.Forms.Label();
+            this.txtValorTotal = new System.Windows.Forms.TextBox();
+            this.lblTotalCondiçãoPgto = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txtCodigo
             // 
+            this.txtCodigo.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtCodigo.Location = new System.Drawing.Point(12, 43);
             // 
             // btnSair
             // 
-            this.btnSair.Location = new System.Drawing.Point(1250, 620);
+            this.btnSair.Location = new System.Drawing.Point(1232, 637);
             // 
             // chkInativo
             // 
@@ -210,24 +214,24 @@
             this.dtpNascimento.TabIndex = 117;
             this.dtpNascimento.Value = new System.DateTime(2025, 7, 10, 0, 0, 0, 0);
             // 
-            // listView2
+            // listViewProdutos
             // 
-            this.listView2.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.listViewProdutos.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.Codigo,
             this.Produto,
             this.Unidade,
             this.Quantidade,
             this.PrecoUnitario,
             this.Total});
-            this.listView2.FullRowSelect = true;
-            this.listView2.GridLines = true;
-            this.listView2.HideSelection = false;
-            this.listView2.Location = new System.Drawing.Point(18, 171);
-            this.listView2.Name = "listView2";
-            this.listView2.Size = new System.Drawing.Size(1230, 163);
-            this.listView2.TabIndex = 121;
-            this.listView2.UseCompatibleStateImageBehavior = false;
-            this.listView2.View = System.Windows.Forms.View.Details;
+            this.listViewProdutos.FullRowSelect = true;
+            this.listViewProdutos.GridLines = true;
+            this.listViewProdutos.HideSelection = false;
+            this.listViewProdutos.Location = new System.Drawing.Point(18, 171);
+            this.listViewProdutos.Name = "listViewProdutos";
+            this.listViewProdutos.Size = new System.Drawing.Size(1230, 163);
+            this.listViewProdutos.TabIndex = 121;
+            this.listViewProdutos.UseCompatibleStateImageBehavior = false;
+            this.listViewProdutos.View = System.Windows.Forms.View.Details;
             // 
             // Codigo
             // 
@@ -283,14 +287,14 @@
             this.btnPesquisarProduto.Text = "Pesquisar";
             this.btnPesquisarProduto.UseVisualStyleBackColor = true;
             // 
-            // lblTotal
+            // lblTotalProduto
             // 
-            this.lblTotal.AutoSize = true;
-            this.lblTotal.Location = new System.Drawing.Point(640, 91);
-            this.lblTotal.Name = "lblTotal";
-            this.lblTotal.Size = new System.Drawing.Size(66, 16);
-            this.lblTotal.TabIndex = 130;
-            this.lblTotal.Text = "Total (R$)";
+            this.lblTotalProduto.AutoSize = true;
+            this.lblTotalProduto.Location = new System.Drawing.Point(640, 91);
+            this.lblTotalProduto.Name = "lblTotalProduto";
+            this.lblTotalProduto.Size = new System.Drawing.Size(66, 16);
+            this.lblTotalProduto.TabIndex = 130;
+            this.lblTotalProduto.Text = "Total (R$)";
             // 
             // txtTotal
             // 
@@ -324,48 +328,48 @@
             this.lblQuantidade.TabIndex = 126;
             this.lblQuantidade.Text = "Quantidade";
             // 
-            // textBox3
+            // txtQuantidade
             // 
-            this.textBox3.Location = new System.Drawing.Point(420, 111);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(100, 22);
-            this.textBox3.TabIndex = 125;
+            this.txtQuantidade.Location = new System.Drawing.Point(420, 111);
+            this.txtQuantidade.Name = "txtQuantidade";
+            this.txtQuantidade.Size = new System.Drawing.Size(100, 22);
+            this.txtQuantidade.TabIndex = 125;
             // 
-            // btnAdicionar
+            // btnAdicionarProduto
             // 
-            this.btnAdicionar.Location = new System.Drawing.Point(793, 111);
-            this.btnAdicionar.Name = "btnAdicionar";
-            this.btnAdicionar.Size = new System.Drawing.Size(91, 23);
-            this.btnAdicionar.TabIndex = 131;
-            this.btnAdicionar.Text = "Adicionar";
-            this.btnAdicionar.UseVisualStyleBackColor = true;
+            this.btnAdicionarProduto.Location = new System.Drawing.Point(793, 111);
+            this.btnAdicionarProduto.Name = "btnAdicionarProduto";
+            this.btnAdicionarProduto.Size = new System.Drawing.Size(91, 23);
+            this.btnAdicionarProduto.TabIndex = 131;
+            this.btnAdicionarProduto.Text = "Adicionar";
+            this.btnAdicionarProduto.UseVisualStyleBackColor = true;
             // 
-            // btnEditar
+            // btnEditarProduto
             // 
-            this.btnEditar.Location = new System.Drawing.Point(906, 111);
-            this.btnEditar.Name = "btnEditar";
-            this.btnEditar.Size = new System.Drawing.Size(91, 23);
-            this.btnEditar.TabIndex = 132;
-            this.btnEditar.Text = "Editar";
-            this.btnEditar.UseVisualStyleBackColor = true;
+            this.btnEditarProduto.Location = new System.Drawing.Point(906, 111);
+            this.btnEditarProduto.Name = "btnEditarProduto";
+            this.btnEditarProduto.Size = new System.Drawing.Size(91, 23);
+            this.btnEditarProduto.TabIndex = 132;
+            this.btnEditarProduto.Text = "Editar";
+            this.btnEditarProduto.UseVisualStyleBackColor = true;
             // 
-            // btnRemover
+            // btnRemoverProduto
             // 
-            this.btnRemover.Location = new System.Drawing.Point(1028, 109);
-            this.btnRemover.Name = "btnRemover";
-            this.btnRemover.Size = new System.Drawing.Size(91, 23);
-            this.btnRemover.TabIndex = 133;
-            this.btnRemover.Text = "Remover";
-            this.btnRemover.UseVisualStyleBackColor = true;
+            this.btnRemoverProduto.Location = new System.Drawing.Point(1028, 109);
+            this.btnRemoverProduto.Name = "btnRemoverProduto";
+            this.btnRemoverProduto.Size = new System.Drawing.Size(91, 23);
+            this.btnRemoverProduto.TabIndex = 133;
+            this.btnRemoverProduto.Text = "Remover";
+            this.btnRemoverProduto.UseVisualStyleBackColor = true;
             // 
-            // btnLimpar
+            // btnLimparProduto
             // 
-            this.btnLimpar.Location = new System.Drawing.Point(1140, 111);
-            this.btnLimpar.Name = "btnLimpar";
-            this.btnLimpar.Size = new System.Drawing.Size(91, 23);
-            this.btnLimpar.TabIndex = 134;
-            this.btnLimpar.Text = "Limpar";
-            this.btnLimpar.UseVisualStyleBackColor = true;
+            this.btnLimparProduto.Location = new System.Drawing.Point(1140, 111);
+            this.btnLimparProduto.Name = "btnLimparProduto";
+            this.btnLimparProduto.Size = new System.Drawing.Size(91, 23);
+            this.btnLimparProduto.TabIndex = 134;
+            this.btnLimparProduto.Text = "Limpar";
+            this.btnLimparProduto.UseVisualStyleBackColor = true;
             // 
             // lblDespesas
             // 
@@ -386,7 +390,7 @@
             // lblSeguro
             // 
             this.lblSeguro.AutoSize = true;
-            this.lblSeguro.Location = new System.Drawing.Point(144, 359);
+            this.lblSeguro.Location = new System.Drawing.Point(131, 359);
             this.lblSeguro.Name = "lblSeguro";
             this.lblSeguro.Size = new System.Drawing.Size(51, 16);
             this.lblSeguro.TabIndex = 138;
@@ -394,7 +398,7 @@
             // 
             // txtSeguro
             // 
-            this.txtSeguro.Location = new System.Drawing.Point(144, 378);
+            this.txtSeguro.Location = new System.Drawing.Point(131, 378);
             this.txtSeguro.Name = "txtSeguro";
             this.txtSeguro.Size = new System.Drawing.Size(88, 22);
             this.txtSeguro.TabIndex = 137;
@@ -440,22 +444,22 @@
             this.button2.Text = "Adicionar";
             this.button2.UseVisualStyleBackColor = true;
             // 
-            // listView1
+            // listViewCondPgto
             // 
-            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.listViewCondPgto.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.NumParcela,
             this.Prazo,
             this.Porcentagem,
             this.FormaPagamento});
-            this.listView1.FullRowSelect = true;
-            this.listView1.GridLines = true;
-            this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(18, 484);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(465, 121);
-            this.listView1.TabIndex = 144;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.Details;
+            this.listViewCondPgto.FullRowSelect = true;
+            this.listViewCondPgto.GridLines = true;
+            this.listViewCondPgto.HideSelection = false;
+            this.listViewCondPgto.Location = new System.Drawing.Point(18, 467);
+            this.listViewCondPgto.Name = "listViewCondPgto";
+            this.listViewCondPgto.Size = new System.Drawing.Size(1241, 121);
+            this.listViewCondPgto.TabIndex = 144;
+            this.listViewCondPgto.UseCompatibleStateImageBehavior = false;
+            this.listViewCondPgto.View = System.Windows.Forms.View.Details;
             // 
             // NumParcela
             // 
@@ -486,24 +490,52 @@
             this.lblFormaPagamento.TabIndex = 143;
             this.lblFormaPagamento.Text = "Condição de Pagamento*";
             // 
-            // label4
+            // lblTotalProdutos
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(968, 337);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(66, 16);
-            this.label4.TabIndex = 146;
-            this.label4.Text = "Total (R$)";
+            this.lblTotalProdutos.AutoSize = true;
+            this.lblTotalProdutos.Location = new System.Drawing.Point(968, 337);
+            this.lblTotalProdutos.Name = "lblTotalProdutos";
+            this.lblTotalProdutos.Size = new System.Drawing.Size(66, 16);
+            this.lblTotalProdutos.TabIndex = 146;
+            this.lblTotalProdutos.Text = "Total (R$)";
             // 
-            // frmCadastroCompras
+            // lblValorTotal
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.ClientSize = new System.Drawing.Size(1342, 681);
-            this.Controls.Add(this.label4);
+            this.lblValorTotal.AutoSize = true;
+            this.lblValorTotal.Location = new System.Drawing.Point(381, 358);
+            this.lblValorTotal.Name = "lblValorTotal";
+            this.lblValorTotal.Size = new System.Drawing.Size(73, 16);
+            this.lblValorTotal.TabIndex = 148;
+            this.lblValorTotal.Text = "Valor Total";
+            // 
+            // txtValorTotal
+            // 
+            this.txtValorTotal.Location = new System.Drawing.Point(381, 377);
+            this.txtValorTotal.Name = "txtValorTotal";
+            this.txtValorTotal.Size = new System.Drawing.Size(126, 22);
+            this.txtValorTotal.TabIndex = 147;
+            // 
+            // lblTotalCondiçãoPgto
+            // 
+            this.lblTotalCondiçãoPgto.AutoSize = true;
+            this.lblTotalCondiçãoPgto.Location = new System.Drawing.Point(968, 591);
+            this.lblTotalCondiçãoPgto.Name = "lblTotalCondiçãoPgto";
+            this.lblTotalCondiçãoPgto.Size = new System.Drawing.Size(66, 16);
+            this.lblTotalCondiçãoPgto.TabIndex = 149;
+            this.lblTotalCondiçãoPgto.Text = "Total (R$)";
+            // 
+            // frmCadastroCompra
+            // 
+            //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            //this.ClientSize = new System.Drawing.Size(1342, 681);
+            this.Controls.Add(this.lblTotalCondiçãoPgto);
+            this.Controls.Add(this.lblValorTotal);
+            this.Controls.Add(this.txtValorTotal);
+            this.Controls.Add(this.lblTotalProdutos);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.txtCondPgto);
             this.Controls.Add(this.button2);
-            this.Controls.Add(this.listView1);
+            this.Controls.Add(this.listViewCondPgto);
             this.Controls.Add(this.lblFormaPagamento);
             this.Controls.Add(this.lblDespesas);
             this.Controls.Add(this.txtDespesas);
@@ -511,20 +543,20 @@
             this.Controls.Add(this.txtSeguro);
             this.Controls.Add(this.lblFrete);
             this.Controls.Add(this.txtFrete);
-            this.Controls.Add(this.btnLimpar);
-            this.Controls.Add(this.btnRemover);
-            this.Controls.Add(this.btnEditar);
-            this.Controls.Add(this.btnAdicionar);
-            this.Controls.Add(this.lblTotal);
+            this.Controls.Add(this.btnLimparProduto);
+            this.Controls.Add(this.btnRemoverProduto);
+            this.Controls.Add(this.btnEditarProduto);
+            this.Controls.Add(this.btnAdicionarProduto);
+            this.Controls.Add(this.lblTotalProduto);
             this.Controls.Add(this.txtTotal);
             this.Controls.Add(this.lblValorUnitario);
             this.Controls.Add(this.txtValorUnitario);
             this.Controls.Add(this.lblQuantidade);
-            this.Controls.Add(this.textBox3);
+            this.Controls.Add(this.txtQuantidade);
             this.Controls.Add(this.btnPesquisarProduto);
             this.Controls.Add(this.lblProduto);
             this.Controls.Add(this.txtProduto);
-            this.Controls.Add(this.listView2);
+            this.Controls.Add(this.listViewProdutos);
             this.Controls.Add(this.lblDataChegada);
             this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.lblDataEmissao);
@@ -540,7 +572,8 @@
             this.Controls.Add(this.txtSerie);
             this.Controls.Add(this.lblModelo);
             this.MaximumSize = new System.Drawing.Size(1900, 1000);
-            this.Name = "frmCadastroCompras";
+            this.Name = "frmCadastroCompra";
+            this.Controls.SetChildIndex(this.btnSalvar, 0);
             this.Controls.SetChildIndex(this.btnSair, 0);
             this.Controls.SetChildIndex(this.txtCodigo, 0);
             this.Controls.SetChildIndex(this.chkInativo, 0);
@@ -560,20 +593,20 @@
             this.Controls.SetChildIndex(this.lblDataEmissao, 0);
             this.Controls.SetChildIndex(this.dateTimePicker1, 0);
             this.Controls.SetChildIndex(this.lblDataChegada, 0);
-            this.Controls.SetChildIndex(this.listView2, 0);
+            this.Controls.SetChildIndex(this.listViewProdutos, 0);
             this.Controls.SetChildIndex(this.txtProduto, 0);
             this.Controls.SetChildIndex(this.lblProduto, 0);
             this.Controls.SetChildIndex(this.btnPesquisarProduto, 0);
-            this.Controls.SetChildIndex(this.textBox3, 0);
+            this.Controls.SetChildIndex(this.txtQuantidade, 0);
             this.Controls.SetChildIndex(this.lblQuantidade, 0);
             this.Controls.SetChildIndex(this.txtValorUnitario, 0);
             this.Controls.SetChildIndex(this.lblValorUnitario, 0);
             this.Controls.SetChildIndex(this.txtTotal, 0);
-            this.Controls.SetChildIndex(this.lblTotal, 0);
-            this.Controls.SetChildIndex(this.btnAdicionar, 0);
-            this.Controls.SetChildIndex(this.btnEditar, 0);
-            this.Controls.SetChildIndex(this.btnRemover, 0);
-            this.Controls.SetChildIndex(this.btnLimpar, 0);
+            this.Controls.SetChildIndex(this.lblTotalProduto, 0);
+            this.Controls.SetChildIndex(this.btnAdicionarProduto, 0);
+            this.Controls.SetChildIndex(this.btnEditarProduto, 0);
+            this.Controls.SetChildIndex(this.btnRemoverProduto, 0);
+            this.Controls.SetChildIndex(this.btnLimparProduto, 0);
             this.Controls.SetChildIndex(this.txtFrete, 0);
             this.Controls.SetChildIndex(this.lblFrete, 0);
             this.Controls.SetChildIndex(this.txtSeguro, 0);
@@ -581,11 +614,14 @@
             this.Controls.SetChildIndex(this.txtDespesas, 0);
             this.Controls.SetChildIndex(this.lblDespesas, 0);
             this.Controls.SetChildIndex(this.lblFormaPagamento, 0);
-            this.Controls.SetChildIndex(this.listView1, 0);
+            this.Controls.SetChildIndex(this.listViewCondPgto, 0);
             this.Controls.SetChildIndex(this.button2, 0);
             this.Controls.SetChildIndex(this.txtCondPgto, 0);
             this.Controls.SetChildIndex(this.button1, 0);
-            this.Controls.SetChildIndex(this.label4, 0);
+            this.Controls.SetChildIndex(this.lblTotalProdutos, 0);
+            this.Controls.SetChildIndex(this.txtValorTotal, 0);
+            this.Controls.SetChildIndex(this.lblValorTotal, 0);
+            this.Controls.SetChildIndex(this.lblTotalCondiçãoPgto, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -607,7 +643,7 @@
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.Label lblDataEmissao;
         private System.Windows.Forms.DateTimePicker dtpNascimento;
-        protected System.Windows.Forms.ListView listView2;
+        protected System.Windows.Forms.ListView listViewProdutos;
         private System.Windows.Forms.ColumnHeader Codigo;
         private System.Windows.Forms.ColumnHeader Produto;
         private System.Windows.Forms.ColumnHeader Unidade;
@@ -617,16 +653,16 @@
         private System.Windows.Forms.Label lblProduto;
         private System.Windows.Forms.TextBox txtProduto;
         private System.Windows.Forms.Button btnPesquisarProduto;
-        private System.Windows.Forms.Label lblTotal;
+        private System.Windows.Forms.Label lblTotalProduto;
         private System.Windows.Forms.TextBox txtTotal;
         private System.Windows.Forms.Label lblValorUnitario;
         private System.Windows.Forms.TextBox txtValorUnitario;
         private System.Windows.Forms.Label lblQuantidade;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.Button btnAdicionar;
-        private System.Windows.Forms.Button btnEditar;
-        private System.Windows.Forms.Button btnRemover;
-        private System.Windows.Forms.Button btnLimpar;
+        private System.Windows.Forms.TextBox txtQuantidade;
+        private System.Windows.Forms.Button btnAdicionarProduto;
+        private System.Windows.Forms.Button btnEditarProduto;
+        private System.Windows.Forms.Button btnRemoverProduto;
+        private System.Windows.Forms.Button btnLimparProduto;
         private System.Windows.Forms.Label lblDespesas;
         private System.Windows.Forms.TextBox txtDespesas;
         private System.Windows.Forms.Label lblSeguro;
@@ -636,12 +672,15 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TextBox txtCondPgto;
         private System.Windows.Forms.Button button2;
-        protected System.Windows.Forms.ListView listView1;
+        protected System.Windows.Forms.ListView listViewCondPgto;
         private System.Windows.Forms.ColumnHeader NumParcela;
         private System.Windows.Forms.ColumnHeader Prazo;
         private System.Windows.Forms.ColumnHeader Porcentagem;
         private System.Windows.Forms.ColumnHeader FormaPagamento;
         private System.Windows.Forms.Label lblFormaPagamento;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label lblTotalProdutos;
+        private System.Windows.Forms.Label lblValorTotal;
+        private System.Windows.Forms.TextBox txtValorTotal;
+        private System.Windows.Forms.Label lblTotalCondiçãoPgto;
     }
 }

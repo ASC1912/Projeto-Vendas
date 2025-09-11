@@ -37,18 +37,23 @@ namespace Projeto.Views
                 {
                     case "ID":
                         column.Width = 50;
+                        column.TextAlign = HorizontalAlignment.Right;
                         break;
                     case "Estado":
                         column.Width = 150;
+                        column.TextAlign = HorizontalAlignment.Center;
                         break;
                     case "UF":
                         column.Width = 50;
+                        column.TextAlign = HorizontalAlignment.Center;
                         break;
                     case "País":
                         column.Width = 150;
+                        column.TextAlign = HorizontalAlignment.Center;
                         break;
                     case "Ativo":
                         column.Width = 50;
+                        column.TextAlign = HorizontalAlignment.Center;
                         break;
                     default:
                         column.Width = 100;
@@ -174,7 +179,9 @@ namespace Projeto.Views
                     oFrmCadastroEstado.LimparTxt();
                     oFrmCadastroEstado.CarregaTxt();
                     oFrmCadastroEstado.BloquearTxt();
+                    oFrmCadastroEstado.btnSalvar.Text = "Excluir";
                     oFrmCadastroEstado.ShowDialog();
+                    oFrmCadastroEstado.btnSalvar.Text = "Salvar";
                     oFrmCadastroEstado.DesbloquearTxt();
                     await CarregarEstados();
                 }

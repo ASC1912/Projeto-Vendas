@@ -14,5 +14,7 @@ namespace Projeto.Views.Cadastros
         {
             InitializeComponent();
         }
+
+
     }
 }

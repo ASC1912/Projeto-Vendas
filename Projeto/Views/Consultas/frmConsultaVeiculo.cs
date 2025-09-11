@@ -45,27 +45,35 @@ namespace Projeto.Views.Consultas
                 {
                     case "ID":
                         column.Width = 50;
-                        break;
-                    case "Placa":
-                        column.Width = 100;
-                        break;
-                    case "Marca":
-                        column.Width = 150;
-                        break;
-                    case "Modelo":
-                        column.Width = 150;
-                        break;
-                    case "Ano de Fabricação":
-                        column.Width = 130;
+                        column.TextAlign = HorizontalAlignment.Right;
                         break;
                     case "Capacidade (kg)":
                         column.Width = 100;
+                        column.TextAlign = HorizontalAlignment.Center;
+                        break;
+                    case "Placa":
+                        column.Width = 100;
+                        column.TextAlign = HorizontalAlignment.Center;
+                        break;
+                    case "Marca":
+                        column.Width = 150;
+                        column.TextAlign = HorizontalAlignment.Center;
+                        break;
+                    case "Modelo":
+                        column.Width = 150;
+                        column.TextAlign = HorizontalAlignment.Center;
+                        break;
+                    case "Ano de Fabricação":
+                        column.Width = 130;
+                        column.TextAlign = HorizontalAlignment.Center;
                         break;
                     case "Transportadora":
                         column.Width = 200;
+                        column.TextAlign = HorizontalAlignment.Center;
                         break;
                     case "Ativo":
                         column.Width = 60;
+                        column.TextAlign = HorizontalAlignment.Center;
                         break;
                     default:
                         column.Width = 100;
@@ -159,7 +167,9 @@ namespace Projeto.Views.Consultas
                     oFrmCadastroVeiculo.LimparTxt();
                     oFrmCadastroVeiculo.CarregaTxt();
                     oFrmCadastroVeiculo.BloquearTxt();
+                    oFrmCadastroVeiculo.btnSalvar.Text = "Excluir";
                     oFrmCadastroVeiculo.ShowDialog();
+                    oFrmCadastroVeiculo.btnSalvar.Text = "Incluir";
                     oFrmCadastroVeiculo.DesbloquearTxt();
                     CarregarVeiculos();
                 }

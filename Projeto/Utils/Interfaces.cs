@@ -87,6 +87,7 @@ namespace Projeto.Utils
             oFrmConsultaGrupo.setFrmCadastro(oFrmCadastroGrupo);
             oFrmConsultaProduto.setFrmCadastro(oFrmCadastroProduto);
             oFrmConsultaVeiculo.setFrmCadastro(oFrmCadastroVeiculo);
+            oFrmConsultaCompra.setFrmCadastro(oFrmCadastroCompra);
 
             oFrmCadastroEstado.setFrmConsultaPais(oFrmConsultaPais);
             oFrmCadastroCidade.setFrmConsultaEstado(oFrmConsultaEstado);

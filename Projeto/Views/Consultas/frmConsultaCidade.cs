@@ -1,5 +1,6 @@
 ﻿using Projeto.Controller;
 using Projeto.Models;
+using Projeto.Views.Cadastros;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -36,18 +37,23 @@ namespace Projeto.Views
                 {
                     case "ID":
                         column.Width = 40;
+                        column.TextAlign = HorizontalAlignment.Right; 
                         break;
                     case "Cidade":
                         column.Width = 170;
+                        column.TextAlign = HorizontalAlignment.Center; 
                         break;
                     case "Estado":
                         column.Width = 150;
+                        column.TextAlign = HorizontalAlignment.Center; 
                         break;
-                    case "DDD": 
+                    case "DDD":
                         column.Width = 50;
+                        column.TextAlign = HorizontalAlignment.Center; 
                         break;
                     case "Ativo":
                         column.Width = 50;
+                        column.TextAlign = HorizontalAlignment.Center; 
                         break;
                     default:
                         column.Width = 100;
@@ -173,7 +179,9 @@ namespace Projeto.Views
                     oFrmCadastroCidade.LimparTxt();
                     oFrmCadastroCidade.CarregaTxt();
                     oFrmCadastroCidade.BloquearTxt();
+                    oFrmCadastroCidade.btnSalvar.Text = "Excluir";
                     oFrmCadastroCidade.ShowDialog();
+                    oFrmCadastroCidade.btnSalvar.Text = "Salvar";
                     oFrmCadastroCidade.DesbloquearTxt();
                     await CarregarCidades();
                 }
