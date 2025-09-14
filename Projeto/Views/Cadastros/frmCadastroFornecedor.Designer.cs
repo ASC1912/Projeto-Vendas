@@ -78,7 +78,7 @@
             // 
             this.chkInativo.TabIndex = 18;
             // 
-            // btnSalvar2
+            // btnSalvar
             // 
             this.btnSalvar.Location = new System.Drawing.Point(1104, 634);
             this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
@@ -304,8 +304,8 @@
             this.cbTipo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbTipo.FormattingEnabled = true;
             this.cbTipo.Items.AddRange(new object[] {
-            "Físico",
-            "Jurídico"});
+            "FÍSICO",
+            "JURÍDICO"});
             this.cbTipo.Location = new System.Drawing.Point(175, 39);
             this.cbTipo.Name = "cbTipo";
             this.cbTipo.Size = new System.Drawing.Size(121, 24);
@@ -331,7 +331,7 @@
             // 
             // txtCondicao
             // 
-            this.txtCondicao.Location = new System.Drawing.Point(545, 249);
+            this.txtCondicao.Location = new System.Drawing.Point(545, 250);
             this.txtCondicao.Name = "txtCondicao";
             this.txtCondicao.ReadOnly = true;
             this.txtCondicao.Size = new System.Drawing.Size(200, 22);

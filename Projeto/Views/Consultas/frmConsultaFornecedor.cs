@@ -39,6 +39,7 @@ namespace Projeto.Views
             oFrmCadastroFornecedor.modoEdicao = false;
             oFrmCadastroFornecedor.modoExclusao = false;
             oFrmCadastroFornecedor.LimparTxt();
+            oFrmCadastroFornecedor.DesbloquearTxt();
             oFrmCadastroFornecedor.ShowDialog();
             await CarregarFornecedores();
         }
@@ -61,7 +62,7 @@ namespace Projeto.Views
                     item.SubItems.Add(fornecedor.Complemento);
                     item.SubItems.Add(fornecedor.CEP);
                     item.SubItems.Add(fornecedor.NomeCidade ?? "");
-                    item.SubItems.Add(fornecedor.DescricaoCondicao ?? "");
+                    item.SubItems.Add(fornecedor.oCondicaoPagamento?.Descricao ?? "");
                     item.SubItems.Add(fornecedor.Telefone);
                     item.SubItems.Add(fornecedor.Email);
                     item.SubItems.Add(fornecedor.CPF_CNPJ);
@@ -142,8 +143,8 @@ namespace Projeto.Views
                     oFrmCadastroFornecedor.modoEdicao = true;
                     oFrmCadastroFornecedor.modoExclusao = false;
                     oFrmCadastroFornecedor.ConhecaObj(fornecedor, controller);
-                    oFrmCadastroFornecedor.LimparTxt();
                     oFrmCadastroFornecedor.CarregaTxt();
+                    oFrmCadastroFornecedor.DesbloquearTxt();
                     oFrmCadastroFornecedor.ShowDialog();
                     await CarregarFornecedores();
                 }

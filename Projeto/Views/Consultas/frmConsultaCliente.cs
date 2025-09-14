@@ -42,6 +42,7 @@ namespace Projeto.Views
             oFrmCadastroCliente.modoEdicao = false;
             oFrmCadastroCliente.modoExclusao = false;
             oFrmCadastroCliente.LimparTxt();
+            oFrmCadastroCliente.DesbloquearTxt(); 
             oFrmCadastroCliente.ShowDialog();
             await CarregarClientes();
         }
@@ -65,7 +66,7 @@ namespace Projeto.Views
                     item.SubItems.Add(cliente.Complemento);
                     item.SubItems.Add(cliente.CEP);
                     item.SubItems.Add(cliente.NomeCidade);
-                    item.SubItems.Add(cliente.DescricaoCondicao ?? "");
+                    item.SubItems.Add(cliente.oCondicaoPagamento?.Descricao ?? "");
                     item.SubItems.Add(cliente.Telefone);
                     item.SubItems.Add(cliente.Email);
                     item.SubItems.Add(cliente.CPF_CNPJ);
@@ -148,8 +149,8 @@ namespace Projeto.Views
                     oFrmCadastroCliente.modoEdicao = true;
                     oFrmCadastroCliente.modoExclusao = false;
                     oFrmCadastroCliente.ConhecaObj(cliente, controller);
-                    oFrmCadastroCliente.LimparTxt();
                     oFrmCadastroCliente.CarregaTxt();
+                    oFrmCadastroCliente.DesbloquearTxt(); 
                     oFrmCadastroCliente.ShowDialog();
                     await CarregarClientes();
                 }

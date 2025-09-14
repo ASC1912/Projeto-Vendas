@@ -41,6 +41,7 @@ namespace Projeto.Views
             oFrmCadastroFuncionario.modoEdicao = false;
             oFrmCadastroFuncionario.modoExclusao = false;
             oFrmCadastroFuncionario.LimparTxt();
+            oFrmCadastroFuncionario.DesbloquearTxt();
             oFrmCadastroFuncionario.ShowDialog();
             await CarregarFuncionarios();
         }
@@ -157,8 +158,8 @@ namespace Projeto.Views
                     oFrmCadastroFuncionario.modoEdicao = true;
                     oFrmCadastroFuncionario.modoExclusao = false;
                     oFrmCadastroFuncionario.ConhecaObj(funcionario, controller);
-                    oFrmCadastroFuncionario.LimparTxt();
                     oFrmCadastroFuncionario.CarregaTxt();
+                    oFrmCadastroFuncionario.DesbloquearTxt();
                     oFrmCadastroFuncionario.ShowDialog();
                     await CarregarFuncionarios();
                 }

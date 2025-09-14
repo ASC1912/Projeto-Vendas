@@ -61,7 +61,9 @@ namespace Projeto.Views
         public override void CarregaTxt()
         {
             txtCodigo.Text = oFunc.Id.ToString();
+            cbTipo.Text = oFunc.Tipo;
             txtNome.Text = oFunc.Nome;
+            txtApelido.Text = oFunc.Apelido;
             cbGenero.Text = oFunc.Genero;
             dtpNascimento.Value = oFunc.DataNascimento.Value;
             txtEndereco.Text = oFunc.Endereco;
@@ -277,8 +279,8 @@ namespace Projeto.Views
                 string tipoPessoa = cbTipo.Text.Trim();
                 string documento = new string(txtCPF.Text.Where(char.IsDigit).ToArray());
 
-                if (tipoPessoa == "Físico") { if (!Validador.ValidarCPF(documento)) { MessageBox.Show("CPF inválido."); txtCPF.Focus(); return; } }
-                else if (tipoPessoa == "Jurídico") { if (!Validador.ValidarCNPJ(documento)) { MessageBox.Show("CNPJ inválido."); txtCPF.Focus(); return; } }
+                if (tipoPessoa == "FÍSICO") { if (!Validador.ValidarCPF(documento)) { MessageBox.Show("CPF inválido."); txtCPF.Focus(); return; } }
+                else if (tipoPessoa == "JURÍDICO") { if (!Validador.ValidarCNPJ(documento)) { MessageBox.Show("CNPJ inválido."); txtCPF.Focus(); return; } }
                 else { MessageBox.Show("Tipo de pessoa inválido."); cbTipo.Focus(); return; }
 
                 if (!Validador.ValidarIdSelecionado(cidadeSelecionadoId, "Selecione uma cidade.")) return;
@@ -417,7 +419,7 @@ namespace Projeto.Views
 
         private void cbTipo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cbTipo.Text == "Jurídico")
+            if (cbTipo.Text == "JURÍDICO")
             {
                 lblCPF.Text = "CNPJ";
             }

@@ -39,9 +39,9 @@
             this.txtNumero = new System.Windows.Forms.TextBox();
             this.txtSerie = new System.Windows.Forms.TextBox();
             this.lblDataChegada = new System.Windows.Forms.Label();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.dtpChegada = new System.Windows.Forms.DateTimePicker();
             this.lblDataEmissao = new System.Windows.Forms.Label();
-            this.dtpNascimento = new System.Windows.Forms.DateTimePicker();
+            this.dtpEmissao = new System.Windows.Forms.DateTimePicker();
             this.listViewProdutos = new System.Windows.Forms.ListView();
             this.Codigo = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Produto = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -68,9 +68,9 @@
             this.txtSeguro = new System.Windows.Forms.TextBox();
             this.lblFrete = new System.Windows.Forms.Label();
             this.txtFrete = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnLimparCondPgto = new System.Windows.Forms.Button();
             this.txtCondPgto = new System.Windows.Forms.TextBox();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btnAdicionarCondPgto = new System.Windows.Forms.Button();
             this.listViewCondPgto = new System.Windows.Forms.ListView();
             this.NumParcela = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Prazo = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -95,6 +95,10 @@
             // chkInativo
             // 
             this.chkInativo.Location = new System.Drawing.Point(1232, 12);
+            // 
+            // btnSalvar
+            // 
+            this.btnSalvar.Location = new System.Drawing.Point(1108, 637);
             // 
             // lblModelo
             // 
@@ -187,14 +191,14 @@
             this.lblDataChegada.TabIndex = 120;
             this.lblDataChegada.Text = "Data de Chegada";
             // 
-            // dateTimePicker1
+            // dtpChegada
             // 
-            this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateTimePicker1.Location = new System.Drawing.Point(1028, 44);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(160, 22);
-            this.dateTimePicker1.TabIndex = 119;
-            this.dateTimePicker1.Value = new System.DateTime(2025, 7, 10, 0, 0, 0, 0);
+            this.dtpChegada.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpChegada.Location = new System.Drawing.Point(1028, 44);
+            this.dtpChegada.Name = "dtpChegada";
+            this.dtpChegada.Size = new System.Drawing.Size(160, 22);
+            this.dtpChegada.TabIndex = 119;
+            this.dtpChegada.Value = new System.DateTime(2025, 7, 10, 0, 0, 0, 0);
             // 
             // lblDataEmissao
             // 
@@ -205,14 +209,14 @@
             this.lblDataEmissao.TabIndex = 118;
             this.lblDataEmissao.Text = "Data de Emissão";
             // 
-            // dtpNascimento
+            // dtpEmissao
             // 
-            this.dtpNascimento.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpNascimento.Location = new System.Drawing.Point(811, 44);
-            this.dtpNascimento.Name = "dtpNascimento";
-            this.dtpNascimento.Size = new System.Drawing.Size(160, 22);
-            this.dtpNascimento.TabIndex = 117;
-            this.dtpNascimento.Value = new System.DateTime(2025, 7, 10, 0, 0, 0, 0);
+            this.dtpEmissao.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpEmissao.Location = new System.Drawing.Point(811, 44);
+            this.dtpEmissao.Name = "dtpEmissao";
+            this.dtpEmissao.Size = new System.Drawing.Size(160, 22);
+            this.dtpEmissao.TabIndex = 117;
+            this.dtpEmissao.Value = new System.DateTime(2025, 7, 10, 0, 0, 0, 0);
             // 
             // listViewProdutos
             // 
@@ -419,14 +423,14 @@
             this.txtFrete.Size = new System.Drawing.Size(100, 22);
             this.txtFrete.TabIndex = 135;
             // 
-            // button1
+            // btnLimparCondPgto
             // 
-            this.button1.Location = new System.Drawing.Point(393, 438);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(150, 23);
-            this.button1.TabIndex = 145;
-            this.button1.Text = "Limpar";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnLimparCondPgto.Location = new System.Drawing.Point(393, 438);
+            this.btnLimparCondPgto.Name = "btnLimparCondPgto";
+            this.btnLimparCondPgto.Size = new System.Drawing.Size(150, 23);
+            this.btnLimparCondPgto.TabIndex = 145;
+            this.btnLimparCondPgto.Text = "Limpar";
+            this.btnLimparCondPgto.UseVisualStyleBackColor = true;
             // 
             // txtCondPgto
             // 
@@ -435,14 +439,14 @@
             this.txtCondPgto.Size = new System.Drawing.Size(200, 22);
             this.txtCondPgto.TabIndex = 141;
             // 
-            // button2
+            // btnAdicionarCondPgto
             // 
-            this.button2.Location = new System.Drawing.Point(225, 438);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(150, 23);
-            this.button2.TabIndex = 142;
-            this.button2.Text = "Adicionar";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnAdicionarCondPgto.Location = new System.Drawing.Point(225, 438);
+            this.btnAdicionarCondPgto.Name = "btnAdicionarCondPgto";
+            this.btnAdicionarCondPgto.Size = new System.Drawing.Size(150, 23);
+            this.btnAdicionarCondPgto.TabIndex = 142;
+            this.btnAdicionarCondPgto.Text = "Adicionar";
+            this.btnAdicionarCondPgto.UseVisualStyleBackColor = true;
             // 
             // listViewCondPgto
             // 
@@ -532,9 +536,9 @@
             this.Controls.Add(this.lblValorTotal);
             this.Controls.Add(this.txtValorTotal);
             this.Controls.Add(this.lblTotalProdutos);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnLimparCondPgto);
             this.Controls.Add(this.txtCondPgto);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.btnAdicionarCondPgto);
             this.Controls.Add(this.listViewCondPgto);
             this.Controls.Add(this.lblFormaPagamento);
             this.Controls.Add(this.lblDespesas);
@@ -558,9 +562,9 @@
             this.Controls.Add(this.txtProduto);
             this.Controls.Add(this.listViewProdutos);
             this.Controls.Add(this.lblDataChegada);
-            this.Controls.Add(this.dateTimePicker1);
+            this.Controls.Add(this.dtpChegada);
             this.Controls.Add(this.lblDataEmissao);
-            this.Controls.Add(this.dtpNascimento);
+            this.Controls.Add(this.dtpEmissao);
             this.Controls.Add(this.btnPesquisar);
             this.Controls.Add(this.lblFornecedor);
             this.Controls.Add(this.txtFornecedor);
@@ -589,9 +593,9 @@
             this.Controls.SetChildIndex(this.txtFornecedor, 0);
             this.Controls.SetChildIndex(this.lblFornecedor, 0);
             this.Controls.SetChildIndex(this.btnPesquisar, 0);
-            this.Controls.SetChildIndex(this.dtpNascimento, 0);
+            this.Controls.SetChildIndex(this.dtpEmissao, 0);
             this.Controls.SetChildIndex(this.lblDataEmissao, 0);
-            this.Controls.SetChildIndex(this.dateTimePicker1, 0);
+            this.Controls.SetChildIndex(this.dtpChegada, 0);
             this.Controls.SetChildIndex(this.lblDataChegada, 0);
             this.Controls.SetChildIndex(this.listViewProdutos, 0);
             this.Controls.SetChildIndex(this.txtProduto, 0);
@@ -615,9 +619,9 @@
             this.Controls.SetChildIndex(this.lblDespesas, 0);
             this.Controls.SetChildIndex(this.lblFormaPagamento, 0);
             this.Controls.SetChildIndex(this.listViewCondPgto, 0);
-            this.Controls.SetChildIndex(this.button2, 0);
+            this.Controls.SetChildIndex(this.btnAdicionarCondPgto, 0);
             this.Controls.SetChildIndex(this.txtCondPgto, 0);
-            this.Controls.SetChildIndex(this.button1, 0);
+            this.Controls.SetChildIndex(this.btnLimparCondPgto, 0);
             this.Controls.SetChildIndex(this.lblTotalProdutos, 0);
             this.Controls.SetChildIndex(this.txtValorTotal, 0);
             this.Controls.SetChildIndex(this.lblValorTotal, 0);
@@ -640,9 +644,9 @@
         private System.Windows.Forms.TextBox txtNumero;
         private System.Windows.Forms.TextBox txtSerie;
         private System.Windows.Forms.Label lblDataChegada;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.DateTimePicker dtpChegada;
         private System.Windows.Forms.Label lblDataEmissao;
-        private System.Windows.Forms.DateTimePicker dtpNascimento;
+        private System.Windows.Forms.DateTimePicker dtpEmissao;
         protected System.Windows.Forms.ListView listViewProdutos;
         private System.Windows.Forms.ColumnHeader Codigo;
         private System.Windows.Forms.ColumnHeader Produto;
@@ -669,9 +673,9 @@
         private System.Windows.Forms.TextBox txtSeguro;
         private System.Windows.Forms.Label lblFrete;
         private System.Windows.Forms.TextBox txtFrete;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnLimparCondPgto;
         private System.Windows.Forms.TextBox txtCondPgto;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnAdicionarCondPgto;
         protected System.Windows.Forms.ListView listViewCondPgto;
         private System.Windows.Forms.ColumnHeader NumParcela;
         private System.Windows.Forms.ColumnHeader Prazo;

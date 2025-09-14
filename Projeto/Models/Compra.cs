@@ -1,30 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Projeto.Models
 {
     public class Compra
     {
-        public string modelo { get; set; }
-        public string serie { get; set; }
-        public int numero { get; set; }
+        public string Modelo { get; set; }
+        public string Serie { get; set; }
+        public int NumeroNota { get; set; }
         public int FornecedorId { get; set; }
-        public Fornecedor oFornecedor { get; set; }
-        public string NomeFornecedor { get; set; }
-        public Produto oProduto { get; set; }
-        public string NomeProduto { get; set; }
-        public int qtdProduto { get; set; }
-        public float valorUnit { get; set; }
-        public float valorFrete { get; set; }
-        public float seguro { get; set; }
-        public float despesas { get; set; }
-        public CondicaoPagamento aCondPgto { get; set; }
-        public string NomeCondPgto { get; set; }
+
+        public int? CondicaoPagamentoId { get; set; }
+        public DateTime? DataEmissao { get; set; }
+        public DateTime? DataChegada { get; set; }
+        public decimal ValorFrete { get; set; }
+        public decimal Seguro { get; set; }
+        public decimal Despesas { get; set; }
+        public decimal ValorTotal { get; set; }
+        public string Observacao { get; set; }
+        public bool Ativo { get; set; }
         public DateTime? DataCadastro { get; set; }
         public DateTime? DataAlteracao { get; set; }
 
+        public List<ItemCompra> Itens { get; set; }
+
+        public string NomeFornecedor { get; set; }
+        public string NomeCondPgto { get; set; }
+
+        public Compra()
+        {
+            Itens = new List<ItemCompra>();
+        }
     }
 }

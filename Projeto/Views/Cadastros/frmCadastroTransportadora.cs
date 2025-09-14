@@ -69,6 +69,7 @@ namespace Projeto.Views.Cadastros
         public override void CarregaTxt()
         {
             txtCodigo.Text = aTransportadora.Id.ToString();
+            cbTipo.Text = aTransportadora.Tipo;
             txtNome.Text = aTransportadora.Nome;
             txtEndereco.Text = aTransportadora.Endereco;
             txtNumEnd.Text = aTransportadora.NumeroEndereco.ToString();
@@ -83,7 +84,7 @@ namespace Projeto.Views.Cadastros
             txtCPF.Text = aTransportadora.CPF_CNPJ;
             txtInscEst.Text = aTransportadora.InscricaoEstadual;
             txtInscEstSubTrib.Text = aTransportadora.InscricaoEstadual;
-            txtCondicao.Text = aTransportadora.DescricaoCondicao;
+            txtCondicao.Text = aTransportadora.oCondicaoPagamento?.Descricao;
             condicaoSelecionadoId = aTransportadora.IdCondicao ?? -1; 
             chkInativo.Checked = !aTransportadora.Ativo;
             lblDataCriacao.Text = aTransportadora.DataCadastro.HasValue ? $"Criado em: {aTransportadora.DataCadastro.Value:dd/MM/yyyy HH:mm}" : "Criado em: -";
@@ -161,7 +162,7 @@ namespace Projeto.Views.Cadastros
 
         private void cbTipo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cbTipo.Text == "Jurídico")
+            if (cbTipo.Text == "JURÍDICO")
             {
                 lblCPF.Text = "CNPJ";
             }
@@ -249,7 +250,7 @@ namespace Projeto.Views.Cadastros
                 string tipoPessoa = cbTipo.Text.Trim();
                 string documento = new string(txtCPF.Text.Where(char.IsDigit).ToArray());
 
-                if (tipoPessoa == "Físico")
+                if (tipoPessoa == "FÍSICO")
                 {
                     if (!Validador.ValidarCPF(documento))
                     {
@@ -258,7 +259,7 @@ namespace Projeto.Views.Cadastros
                         return;
                     }
                 }
-                else if (tipoPessoa == "Jurídico")
+                else if (tipoPessoa == "JURÍDICO")
                 {
                     if (!Validador.ValidarCNPJ(documento))
                     {

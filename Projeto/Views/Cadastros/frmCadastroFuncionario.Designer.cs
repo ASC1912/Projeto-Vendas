@@ -88,7 +88,7 @@
             // 
             this.chkInativo.TabIndex = 23;
             // 
-            // btnSalvar2
+            // btnSalvar
             // 
             this.btnSalvar.Location = new System.Drawing.Point(1114, 634);
             this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
@@ -303,7 +303,7 @@
             this.cbTipo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbTipo.FormattingEnabled = true;
             this.cbTipo.Items.AddRange(new object[] {
-            "Físico"});
+            "FÍSICO"});
             this.cbTipo.Location = new System.Drawing.Point(174, 36);
             this.cbTipo.Name = "cbTipo";
             this.cbTipo.Size = new System.Drawing.Size(121, 24);
@@ -419,8 +419,8 @@
             this.cbGenero.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbGenero.FormattingEnabled = true;
             this.cbGenero.Items.AddRange(new object[] {
-            "Masculino",
-            "Feminino"});
+            "MASCULINO",
+            "FEMININO"});
             this.cbGenero.Location = new System.Drawing.Point(746, 36);
             this.cbGenero.Name = "cbGenero";
             this.cbGenero.Size = new System.Drawing.Size(121, 24);

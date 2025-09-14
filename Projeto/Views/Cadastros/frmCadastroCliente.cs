@@ -69,6 +69,7 @@ namespace Projeto.Views
         public override void CarregaTxt()
         {
             txtCodigo.Text = oCliente.Id.ToString();
+            cbTipo.Text = oCliente.Tipo;
             txtNome.Text = oCliente.Nome;
             cbGenero.Text = oCliente.Genero;
             dtpNascimento.Value = oCliente.DataNascimento.Value;
@@ -84,7 +85,7 @@ namespace Projeto.Views
             txtTelefone.Text = oCliente.Telefone;
             txtCPF.Text = oCliente.CPF_CNPJ;
             txtRG.Text = oCliente.Rg;
-            txtCondicao.Text = oCliente.DescricaoCondicao;
+            txtCondicao.Text = oCliente.oCondicaoPagamento?.Descricao;
             condicaoSelecionadoId = oCliente.IdCondicao ?? -1;
             chkInativo.Checked = !oCliente.Ativo;
             lblDataCriacao.Text = oCliente.DataCadastro.HasValue ? $"Criado em: {oCliente.DataCadastro.Value:dd/MM/yyyy HH:mm}" : "Criado em: -";
@@ -164,51 +165,7 @@ namespace Projeto.Views
             lblDataModificacao.Text = $"Modificado em: {agora:dd/MM/yyyy HH:mm}";
         }
 
-      
-
-        public void CarregarCliente(int id, string nome, string cpfCnpj, string telefone, string email, string endereco,
-                                 int numeroEndereco, string bairro, string complemento, string cep, string tipo, string genero,
-                                 string nomeCidade, int idCidade, string descricaoCondicao, int idCondicao, bool ativo, string rg,
-                                 DateTime? dataNascimento, DateTime? dataCadastro, DateTime? dataAlteracao)
-        {
-            txtCodigo.Text = id.ToString();
-            txtNome.Text = nome;
-            txtCPF.Text = cpfCnpj;
-            txtTelefone.Text = telefone;
-            txtEmail.Text = email;
-            txtEndereco.Text = endereco;
-            txtNumEnd.Text = numeroEndereco.ToString();
-            txtBairro.Text = bairro;
-            txtComplemento.Text = complemento;
-            txtCEP.Text = cep;
-            cbTipo.Text = tipo;
-            txtCidade.Text = nomeCidade;
-            txtIdCidade.Text = idCidade > 0 ? idCidade.ToString() : "";
-            cidadeSelecionadoId = idCidade;
-            txtCondicao.Text = descricaoCondicao;
-            condicaoSelecionadoId = idCondicao;
-            chkInativo.Checked = !ativo;
-            txtRG.Text = rg;
-            if (dataNascimento.HasValue)
-                dtpNascimento.Value = dataNascimento.Value;
-
-            if (!string.IsNullOrWhiteSpace(genero))
-            {
-                cbGenero.SelectedItem = genero.Equals("M", StringComparison.OrdinalIgnoreCase) ? "Masculino" : "Feminino";
-            }
-            else
-            {
-                cbGenero.SelectedIndex = -1;
-            }
-
-            lblDataCriacao.Text = dataCadastro.HasValue
-                ? $"Criado em: {dataCadastro.Value:dd/MM/yyyy HH:mm}"
-                : "Criado em: -";
-
-            lblDataModificacao.Text = dataAlteracao.HasValue
-                ? $"Modificado em: {dataAlteracao.Value:dd/MM/yyyy HH:mm}"
-                : "Modificado em: -";
-        }
+     
 
         private async void btnSalvar_Click(object sender, EventArgs e)
         {
@@ -244,7 +201,7 @@ namespace Projeto.Views
                 string tipoPessoa = cbTipo.Text.Trim();
                 string documento = new string(txtCPF.Text.Where(char.IsDigit).ToArray());
 
-                if (tipoPessoa == "Físico")
+                if (tipoPessoa == "FÍSICO")
                 {
                     if (!Validador.ValidarCPF(documento))
                     {
@@ -253,7 +210,7 @@ namespace Projeto.Views
                         return;
                     }
                 }
-                else if (tipoPessoa == "Jurídico")
+                else if (tipoPessoa == "JURÍDICO")
                 {
                     if (!Validador.ValidarCNPJ(documento))
                     {
@@ -422,7 +379,7 @@ namespace Projeto.Views
 
         private void cbTipo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cbTipo.Text == "Jurídico")
+            if (cbTipo.Text == "JURÍDICO")
             {
                 lblCPF.Text = "CNPJ";
             }

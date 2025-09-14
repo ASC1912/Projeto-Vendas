@@ -66,6 +66,7 @@ namespace Projeto.Views
         public override void CarregaTxt()
         {
             txtCodigo.Text = oForn.Id.ToString();
+            cbTipo.Text = oForn.Tipo;
             txtNome.Text = oForn.Nome;
             txtEndereco.Text = oForn.Endereco;
             txtNumEnd.Text = oForn.NumeroEndereco.ToString();
@@ -80,7 +81,7 @@ namespace Projeto.Views
             txtCPF.Text = oForn.CPF_CNPJ;
             txtInscEst.Text = oForn.InscricaoEstadual;
             txtInscEstSubTrib.Text = oForn.InscricaoEstadualSubTrib;
-            txtCondicao.Text = oForn.DescricaoCondicao;
+            txtCondicao.Text = oForn.oCondicaoPagamento?.Descricao;
             condicaoSelecionadoId = oForn.IdCondicao ?? -1;
             chkInativo.Checked = !oForn.Ativo;
             lblDataCriacao.Text = oForn.DataCadastro.HasValue ? $"Criado em: {oForn.DataCadastro.Value:dd/MM/yyyy HH:mm}" : "Criado em: -";
@@ -160,7 +161,7 @@ namespace Projeto.Views
 
         private void cbTipo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cbTipo.Text == "Jurídico")
+            if (cbTipo.Text == "JURÍDICO")
             {
                 lblCPF.Text = "CNPJ";
             }
@@ -231,7 +232,7 @@ namespace Projeto.Views
                 string tipoPessoa = cbTipo.Text.Trim();
                 string documento = new string(txtCPF.Text.Where(char.IsDigit).ToArray());
 
-                if (tipoPessoa == "Físico")
+                if (tipoPessoa == "FÍSICO")
                 {
                     if (!Validador.ValidarCPF(documento))
                     {
@@ -240,7 +241,7 @@ namespace Projeto.Views
                         return;
                     }
                 }
-                else if (tipoPessoa == "Jurídico")
+                else if (tipoPessoa == "JURÍDICO")
                 {
                     if (!Validador.ValidarCNPJ(documento))
                     {

@@ -1,4 +1,5 @@
-﻿using Projeto.Controller;
+﻿using MySqlX.XDevAPI;
+using Projeto.Controller;
 using Projeto.Models;
 using Projeto.Views.Cadastros;
 using System;
@@ -43,6 +44,7 @@ namespace Projeto.Views.Consultas
             oFrmCadastroTransportadora.modoEdicao = false;
             oFrmCadastroTransportadora.modoExclusao = false;
             oFrmCadastroTransportadora.LimparTxt();
+            oFrmCadastroTransportadora.DesbloquearTxt();
             oFrmCadastroTransportadora.ShowDialog();
             CarregarTransportadoras();
         }
@@ -65,7 +67,7 @@ namespace Projeto.Views.Consultas
                     item.SubItems.Add(transportadora.Complemento);
                     item.SubItems.Add(transportadora.CEP);
                     item.SubItems.Add(transportadora.NomeCidade);
-                    item.SubItems.Add(transportadora.DescricaoCondicao);
+                    item.SubItems.Add(transportadora.oCondicaoPagamento?.Descricao ?? "");
                     item.SubItems.Add(transportadora.Telefone);
                     item.SubItems.Add(transportadora.Email);
                     item.SubItems.Add(transportadora.CPF_CNPJ);
@@ -153,8 +155,8 @@ namespace Projeto.Views.Consultas
                     oFrmCadastroTransportadora.modoEdicao = true;
                     oFrmCadastroTransportadora.modoExclusao = false;
                     oFrmCadastroTransportadora.ConhecaObj(transportadora, controller);
-                    oFrmCadastroTransportadora.LimparTxt();
                     oFrmCadastroTransportadora.CarregaTxt();
+                    oFrmCadastroTransportadora.DesbloquearTxt();
                     oFrmCadastroTransportadora.ShowDialog();
                     CarregarTransportadoras();
                 }

@@ -31,7 +31,7 @@ namespace Projeto.Models
         [JsonPropertyName("bairro")]
         public string Bairro { get; set; }
 
-        [JsonPropertyName("numero")]
+        [JsonPropertyName("numeroEndereco")]
         public int? NumeroEndereco { get; set; }
 
         [JsonPropertyName("complemento")]

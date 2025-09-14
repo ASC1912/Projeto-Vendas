@@ -8,7 +8,7 @@ namespace Projeto.Models
         [JsonPropertyName("fornecedor")]
         public override string Nome { get; set; }
 
-        [JsonPropertyName("inscricaoEstadual")]
+        [JsonPropertyName("inscEstadualRg")]
         public string InscricaoEstadual { get; set; }
 
         [JsonPropertyName("inscricaoEstadualSubTrib")]

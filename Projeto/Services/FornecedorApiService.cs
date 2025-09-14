@@ -52,6 +52,20 @@ namespace Projeto.Services
             {
                 response = await _httpClient.PutAsJsonAsync($"Fornecedores/{fornecedor.Id}", fornecedor);
             }
+
+            if (!response.IsSuccessStatusCode)
+            {
+                string erro = await response.Content.ReadAsStringAsync();
+                MessageBox.Show(
+                    $"A API retornou um erro ao salvar o Fornecedor:\n\n" +
+                    $"Código: {(int)response.StatusCode} ({response.ReasonPhrase})\n\n" +
+                    $"Detalhes: {erro}",
+                    "Erro da API",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+            }
+
             response.EnsureSuccessStatusCode();
         }
 

@@ -22,6 +22,7 @@ namespace Projeto
         private void frmBase_Load(object sender, EventArgs e)
         {
             SetUppercaseOnAllTextBoxes(this.Controls);
+            SetUppercaseOnAllComboBoxes(this.Controls); 
         }
 
         private void btnSair_Click(object sender, EventArgs e)
@@ -43,6 +44,28 @@ namespace Projeto
                 }
             }
         }
+
+        private void SetUppercaseOnAllComboBoxes(Control.ControlCollection controls)
+        {
+            foreach (Control control in controls)
+            {
+                if (control is ComboBox comboBox && comboBox.DropDownStyle != ComboBoxStyle.DropDownList)
+                {
+                    comboBox.KeyPress += ComboBox_KeyPress_ForceUppercase;
+                }
+
+                if (control.HasChildren)
+                {
+                    SetUppercaseOnAllComboBoxes(control.Controls);
+                }
+            }
+        }
+
+        private void ComboBox_KeyPress_ForceUppercase(object sender, KeyPressEventArgs e)
+        {
+            e.KeyChar = char.ToUpper(e.KeyChar);
+        }
+
 
 
         public virtual void ConfigurarFormularioBase()
