@@ -103,7 +103,8 @@ namespace Projeto.Utils
             oFrmCadastroProduto.setFrmConsultaGrupo(oFrmConsultaGrupo);
             oFrmCadastroVeiculo.setFrmConsultaMarca(oFrmConsultaMarca);
             oFrmCadastroVeiculo.setFrmConsultaTransportadora(oFrmConsultaTransportadora);
-
+            oFrmCadastroCompra.setFrmConsultaFornecedor(oFrmConsultaFornecedor);
+            oFrmCadastroCompra.setFrmConsultaProduto(oFrmConsultaProduto);
         }
 
         public void PecaPaises(object obj, object ctrl)

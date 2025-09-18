@@ -1,32 +1,79 @@
 ﻿using Projeto.DAO;
 using Projeto.Models;
-using System;
+using Projeto.Services;
+using Projeto.Services.Interfaces;
+using Projeto.Utils;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Projeto.Controller
 {
-    internal class VeiculoController
+    public class VeiculoController
     {
-        private DAOVeiculo dao = new DAOVeiculo();
+        private readonly bool _useApi;
+        private readonly IVeiculoApiService _apiService;
+        private readonly DAOVeiculo _dao;
 
-        public void Salvar(Veiculo veiculo)
+        public VeiculoController()
         {
-            dao.Salvar(veiculo);
+            _useApi = ConfigHelper.UseApi();
+
+            if (_useApi)
+            {
+                _apiService = new VeiculoApiService();
+            }
+            else
+            {
+                _dao = new DAOVeiculo();
+            }
         }
 
-        public Veiculo BuscarPorId(int id)
+        public Task Salvar(Veiculo veiculo)
         {
-            return dao.BuscarPorId(id);
+            if (_useApi)
+            {
+                return _apiService.SaveVeiculoAsync(veiculo);
+            }
+            else
+            {
+                return Task.Run(() => _dao.Salvar(veiculo));
+            }
         }
 
-        public List<Veiculo> ListarVeiculos()
+        public Task<Veiculo> BuscarPorId(int id)
         {
-            return dao.ListarVeiculos();
+            if (_useApi)
+            {
+                return _apiService.GetVeiculoByIdAsync(id);
+            }
+            else
+            {
+                return Task.FromResult(_dao.BuscarPorId(id));
+            }
         }
 
-        public void Excluir(int id)
+        public Task<List<Veiculo>> ListarVeiculos()
         {
-            dao.Excluir(id);
+            if (_useApi)
+            {
+                return _apiService.GetVeiculosAsync();
+            }
+            else
+            {
+                return Task.FromResult(_dao.ListarVeiculos());
+            }
+        }
+
+        public Task Excluir(int id)
+        {
+            if (_useApi)
+            {
+                return _apiService.DeleteVeiculoAsync(id);
+            }
+            else
+            {
+                return Task.Run(() => _dao.Excluir(id));
+            }
         }
     }
 }

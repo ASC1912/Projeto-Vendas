@@ -1,32 +1,79 @@
 ﻿using Projeto.DAO;
 using Projeto.Models;
-using System;
+using Projeto.Services;
+using Projeto.Services.Interfaces;
+using Projeto.Utils;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Projeto.Controller
 {
-    internal class TransportadoraController
+    public class TransportadoraController
     {
-        private DAOTransportadora dao = new DAOTransportadora();
+        private readonly bool _useApi;
+        private readonly ITransportadoraApiService _apiService;
+        private readonly DAOTransportadora _dao;
 
-        public void Salvar(Transportadora transportadora)
+        public TransportadoraController()
         {
-            dao.Salvar(transportadora);
+            _useApi = ConfigHelper.UseApi();
+
+            if (_useApi)
+            {
+                _apiService = new TransportadoraApiService();
+            }
+            else
+            {
+                _dao = new DAOTransportadora();
+            }
         }
-        public Transportadora BuscarPorId(int id)
+
+        public Task Salvar(Transportadora transportadora)
         {
-            return dao.BuscarPorId(id);
+            if (_useApi)
+            {
+                return _apiService.SaveTransportadoraAsync(transportadora);
+            }
+            else
+            {
+                return Task.Run(() => _dao.Salvar(transportadora));
+            }
         }
-        public List<Transportadora> ListarTransportadora()
+
+        public Task<Transportadora> BuscarPorId(int id)
         {
-            return dao.ListarTransportadoras();
+            if (_useApi)
+            {
+                return _apiService.GetTransportadoraByIdAsync(id);
+            }
+            else
+            {
+                return Task.FromResult(_dao.BuscarPorId(id));
+            }
         }
-        public void Excluir(int id)
+
+        public Task<List<Transportadora>> ListarTransportadoras()
         {
-            dao.Excluir(id);
+            if (_useApi)
+            {
+                return _apiService.GetTransportadorasAsync();
+            }
+            else
+            {
+                return Task.FromResult(_dao.ListarTransportadoras());
+            }
+        }
+
+        public Task Excluir(int id)
+        {
+            if (_useApi)
+            {
+                return _apiService.DeleteTransportadoraAsync(id);
+            }
+            else
+            {
+                return Task.Run(() => _dao.Excluir(id));
+            }
         }
     }
 }

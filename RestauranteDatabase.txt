@@ -1,0 +1,300 @@
+CREATE DATABASE Restaurante;
+GO
+USE Restaurante;
+GO
+
+-- Tabela: Paises
+CREATE TABLE Paises (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Pais VARCHAR(100),
+    Sigla VARCHAR(3) UNIQUE,
+    DDI VARCHAR(5),
+    Moeda VARCHAR(5),
+    Ativo BIT DEFAULT 1,
+    DataCadastro DATETIME DEFAULT GETDATE(),
+    DataAlteracao DATETIME
+);
+
+-- Tabela: Estados
+CREATE TABLE Estados (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Estado VARCHAR(100),
+    UF VARCHAR(5),
+    PaisId INT,
+    Ativo BIT DEFAULT 1,
+    DataCadastro DATETIME DEFAULT GETDATE(),
+    DataAlteracao DATETIME,
+    FOREIGN KEY (PaisId) REFERENCES Paises(Id)
+);
+
+-- Tabela: Cidades
+CREATE TABLE Cidades (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Cidade VARCHAR(100),
+    EstadoId INT,
+    DDD VARCHAR(4), 
+    Ativo BIT DEFAULT 1,
+    DataCadastro DATETIME DEFAULT GETDATE(),
+    DataAlteracao DATETIME,
+    FOREIGN KEY (EstadoId) REFERENCES Estados(Id)
+);
+
+-- Tabela: Marcas
+CREATE TABLE Marcas (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Marca VARCHAR(100) NOT NULL,
+    Ativo BIT NOT NULL DEFAULT 1,
+    DataCadastro DATETIME NOT NULL DEFAULT GETDATE(),
+    DataAlteracao DATETIME
+);
+
+-- Tabela: FormasPagamento
+CREATE TABLE FormasPagamento (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Descricao VARCHAR(100) NOT NULL,
+    Ativo BIT DEFAULT 1,
+    DataCadastro DATETIME DEFAULT GETDATE(),
+    DataAlteracao DATETIME
+);
+
+-- Tabela: CondicoesPagamento
+CREATE TABLE CondicoesPagamento (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Descricao VARCHAR(100) NOT NULL,
+    QuantidadeParcelas INT NOT NULL,
+    Juros DECIMAL(5,2) DEFAULT 0,
+    Multa DECIMAL(5,2) DEFAULT 0,
+    Desconto DECIMAL(5,2) DEFAULT 0,
+    Ativo BIT DEFAULT 1,
+    DataCadastro DATETIME DEFAULT GETDATE(),
+    DataAlteracao DATETIME
+);
+
+
+-- Tabela: Funcionarios
+CREATE TABLE Funcionarios (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Foto VARCHAR(255),
+    Funcionario VARCHAR(100) NOT NULL,
+    Apelido VARCHAR(50),
+    Genero CHAR(1),
+    Tipo VARCHAR(10),
+    CidadeId INT,
+    Endereco VARCHAR(200),
+    NumeroEndereco INT,
+    Bairro VARCHAR(100),
+    CEP VARCHAR(10),
+    Complemento VARCHAR(200),
+    CpfCnpj VARCHAR(18) NOT NULL UNIQUE,
+    RG VARCHAR(20),
+    DataNascimento DATE,
+    Telefone VARCHAR(20),
+    Email VARCHAR(100),
+    Matricula VARCHAR(20),
+    Cargo VARCHAR(50),
+    Salario DECIMAL(10,2),
+    Turno VARCHAR(20),
+    CargaHoraria INT,
+    DataAdmissao DATE,
+    DataDemissao DATE,
+    PorcentagemComissao DECIMAL(5,2),
+    EhAdministrador BIT DEFAULT 0,
+    Ativo BIT DEFAULT 1,
+    DataCadastro DATETIME DEFAULT GETDATE(),
+    DataAlteracao DATETIME,
+    FOREIGN KEY (CidadeId) REFERENCES Cidades(Id)
+);
+
+-- Tabela: Clientes
+CREATE TABLE Clientes (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Cliente VARCHAR(100) NOT NULL,
+    Apelido VARCHAR(50),
+    Genero CHAR(1),
+    Tipo VARCHAR(10),
+    CpfCnpj VARCHAR(18),
+    RG VARCHAR(20),
+    DataNascimento DATE,
+    CidadeId INT,
+    IdCondicaoPagamento INT,
+    Telefone VARCHAR(20),
+    Email VARCHAR(100), 
+    Endereco VARCHAR(200),
+    NumeroEndereco INT,
+    Bairro VARCHAR(100),
+    Complemento VARCHAR(200),
+    CEP VARCHAR(10),
+    Anotacao VARCHAR(255),
+    PratoPreferencial VARCHAR(100),
+    Ativo BIT DEFAULT 1,
+    DataCadastro DATETIME DEFAULT GETDATE(),
+    DataAlteracao DATETIME,
+    FOREIGN KEY (CidadeId) REFERENCES Cidades(Id),
+    FOREIGN KEY (IdCondicaoPagamento) REFERENCES CondicoesPagamento(Id)
+);
+
+-- Tabela: Fornecedores
+CREATE TABLE Fornecedores (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Fornecedor VARCHAR(100) NOT NULL,
+    Tipo VARCHAR(10),
+    CpfCnpj VARCHAR(18) NOT NULL,
+    InscEstadualRg VARCHAR(20),
+    DataFundacaoNascimento DATE,
+    CidadeId INT,
+    IdCondicaoPagamento INT, 
+    Endereco VARCHAR(200),
+    NumeroEndereco INT, 
+    Bairro VARCHAR(100),
+    CEP VARCHAR(10),
+    Complemento VARCHAR(200),
+    Telefone VARCHAR(20),
+    Email VARCHAR(100), 
+    Ativo BIT DEFAULT 1,
+    DataCadastro DATETIME DEFAULT GETDATE(),
+    DataAlteracao DATETIME,
+    FOREIGN KEY (CidadeId) REFERENCES Cidades(Id),
+    FOREIGN KEY (IdCondicaoPagamento) REFERENCES CondicoesPagamento(Id) 
+);
+
+-- Tabela: Transportadoras
+CREATE TABLE Transportadoras (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Transportadora VARCHAR(100) NOT NULL,
+    CpfCnpj VARCHAR(18) NOT NULL UNIQUE,
+    InscricaoEstadual VARCHAR(30),
+    InscricaoEstadualSubtrib VARCHAR(30),
+    CidadeId INT,
+    IdCondicaoPagamento INT,
+    Endereco VARCHAR(200),
+    NumeroEndereco INT,
+    Bairro VARCHAR(100),
+    Complemento VARCHAR(200),
+    CEP VARCHAR(10),
+    Telefone VARCHAR(20),
+    Email VARCHAR(100),
+    Tipo VARCHAR(10) NOT NULL,
+    Ativo BIT NOT NULL DEFAULT 1,
+    DataCadastro DATETIME DEFAULT GETDATE(),
+    DataAlteracao DATETIME,
+    FOREIGN KEY (CidadeId) REFERENCES Cidades(Id),
+    FOREIGN KEY (IdCondicaoPagamento) REFERENCES CondicoesPagamento(Id)
+);
+
+
+-- Tabela: Veiculos
+CREATE TABLE Veiculos (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    TransportadoraId INT NOT NULL,
+    IdMarca INT,
+    Placa VARCHAR(10) NOT NULL UNIQUE,
+    Modelo VARCHAR(50),
+    AnoFabricacao INT,
+    CapacidadeCargaKg DECIMAL(10,2),
+    Ativo BIT DEFAULT 1,
+    DataCadastro DATETIME DEFAULT GETDATE(),
+    DataAlteracao DATETIME,
+    FOREIGN KEY (TransportadoraId) REFERENCES Transportadoras(Id),
+    FOREIGN KEY (IdMarca) REFERENCES Marcas(Id)
+);
+
+
+-- Tabela: Parcelamentos
+CREATE TABLE Parcelamentos (
+    NumeroParcela INT NOT NULL,
+    CondicaoPagamentoId INT NOT NULL,
+    FormaPagamentoId INT NOT NULL,
+    PrazoDias INT NOT NULL,
+    PorcentagemValor DECIMAL(5,2) NOT NULL,
+    PRIMARY KEY (NumeroParcela, CondicaoPagamentoId),
+    FOREIGN KEY (CondicaoPagamentoId) REFERENCES CondicoesPagamento(Id),
+    FOREIGN KEY (FormaPagamentoId) REFERENCES FormasPagamento(Id)
+);
+
+-- Tabela: Grupos
+CREATE TABLE Grupos ( 
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Grupo VARCHAR(100) NOT NULL,
+    Descricao VARCHAR(255),
+    IpImpressora VARCHAR(50),
+    Imagem VARCHAR(255),
+    Ativo BIT DEFAULT 1,
+    DataCadastro DATETIME DEFAULT GETDATE(),
+    DataAlteracao DATETIME
+);
+
+
+-- Tabela: Produtos
+CREATE TABLE Produtos (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Produto VARCHAR(100) NOT NULL,
+    Imagem VARCHAR(255), 
+    Preco DECIMAL(10,2) NOT NULL,
+    Descricao VARCHAR(255),
+    Estoque INT,
+    TempoPreparo INT,
+    Ingredientes VARCHAR(255),
+    IdMarca INT, -- LINHA ADICIONADA
+    GrupoId INT NOT NULL,
+    Ativo BIT NOT NULL DEFAULT 1,
+    DataCadastro DATETIME DEFAULT GETDATE(),
+    DataAlteracao DATETIME,
+    FOREIGN KEY (GrupoId) REFERENCES Grupos(Id),
+    FOREIGN KEY (IdMarca) REFERENCES Marcas(Id) ON DELETE SET NULL 
+);
+
+
+-- Tabela: Mesas
+CREATE TABLE Mesas (
+    NumeroMesa INT PRIMARY KEY,
+    QuantidadeCadeiras INT,
+    Localizacao VARCHAR(20),
+    StatusMesa CHAR(1),
+    Ativo BIT DEFAULT 1,
+    DataCadastro DATETIME DEFAULT GETDATE(),
+    DataAlteracao DATETIME
+);
+
+-- Tabela: Vendas
+CREATE TABLE Vendas (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    ClienteId INT,
+    CondicaoPagamentoId INT,
+    DataVenda DATETIME DEFAULT GETDATE(),
+    ValorTotal DECIMAL(10,2),
+    Ativo BIT DEFAULT 1,
+    DataCadastro DATETIME DEFAULT GETDATE(),
+    DataAlteracao DATETIME,
+    FOREIGN KEY (ClienteId) REFERENCES Clientes(Id),
+    FOREIGN KEY (CondicaoPagamentoId) REFERENCES CondicoesPagamento(Id)
+);
+
+-- Tabela: Pedidos
+CREATE TABLE Pedidos (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    MesaNumero INT,
+    FuncionarioId INT,
+    VendaId INT,
+    Observacao VARCHAR(255),
+    DataPedido DATETIME DEFAULT GETDATE(),
+    Ativo BIT DEFAULT 1,
+    DataCadastro DATETIME DEFAULT GETDATE(),
+    DataAlteracao DATETIME,
+    FOREIGN KEY (MesaNumero) REFERENCES Mesas(NumeroMesa),
+    FOREIGN KEY (FuncionarioId) REFERENCES Funcionarios(Id),
+    FOREIGN KEY (VendaId) REFERENCES Vendas(Id)
+);
+
+-- Tabela: ItensPedidos
+CREATE TABLE ItensPedidos (
+    pedidos_id INT NOT NULL,
+    produto_id INT NOT NULL,
+    numero_mesa INT NOT NULL,
+    quantidade INT NOT NULL,
+    precoUnitario DECIMAL(10,2),
+    totalItem DECIMAL(10,2),
+    PRIMARY KEY (pedidos_id, produto_id),
+    FOREIGN KEY (pedidos_id) REFERENCES Pedidos(Id),
+    FOREIGN KEY (produto_id) REFERENCES Produtos(Id),
+    FOREIGN KEY (numero_mesa) REFERENCES Mesas(NumeroMesa)
+);

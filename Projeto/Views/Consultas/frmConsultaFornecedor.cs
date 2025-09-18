@@ -11,7 +11,7 @@ namespace Projeto.Views
     {
         private FornecedorController controller = new FornecedorController();
         private CidadeController cidadeController = new CidadeController();
-
+        internal Fornecedor FornecedorSelecionado { get; private set; } 
         frmCadastroFornecedor oFrmCadastroFornecedor;
 
 
@@ -192,9 +192,41 @@ namespace Projeto.Views
                 MessageBox.Show("Por favor, selecione um fornecedor para excluir.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
+        private async void btnSelecionar_Click(object sender, EventArgs e)
+        {
+            if (listView1.SelectedItems.Count > 0)
+            {
+                try
+                {
+                    var itemSelecionado = listView1.SelectedItems[0];
+                    int id = int.Parse(itemSelecionado.SubItems[0].Text);
+
+                    FornecedorSelecionado = await controller.BuscarPorId(id);
+
+                    if (FornecedorSelecionado != null)
+                    {
+                        this.DialogResult = DialogResult.OK;
+                        this.Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Não foi possível carregar os dados do fornecedor selecionado.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Erro ao selecionar o fornecedor: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Por favor, selecione um fornecedor na lista.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
 
         private async void frmConsultaFornecedor_Load(object sender, EventArgs e)
         {
+            btnSelecionar.Visible = ModoSelecao;
             await CarregarFornecedores();
 
             foreach (ColumnHeader column in listView1.Columns)

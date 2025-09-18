@@ -11,6 +11,7 @@ namespace Projeto.Views.Consultas
     {
         private ProdutoController controller = new ProdutoController();
         private frmCadastroProduto oFrmCadastroProduto;
+        internal Produto ProdutoSelecionado { get; private set; } 
 
 
         public frmConsultaProduto() : base()
@@ -179,8 +180,35 @@ namespace Projeto.Views.Consultas
             }
         }
 
+        private void btnSelecionar_Click(object sender, EventArgs e)
+        {
+            if (listView1.SelectedItems.Count > 0)
+            {
+                try
+                {
+                    int id = int.Parse(listView1.SelectedItems[0].SubItems[0].Text);
+                    ProdutoSelecionado = controller.BuscarPorId(id);
+
+                    if (ProdutoSelecionado != null)
+                    {
+                        this.DialogResult = DialogResult.OK;
+                        this.Close();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Erro ao selecionar o produto: " + ex.Message);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Por favor, selecione um produto.");
+            }
+        }
+
         private void frmConsultaProduto_Load(object sender, EventArgs e)
         {
+            btnSelecionar.Visible = ModoSelecao; 
             CarregarProdutos();
 
             foreach (ColumnHeader column in listView1.Columns)

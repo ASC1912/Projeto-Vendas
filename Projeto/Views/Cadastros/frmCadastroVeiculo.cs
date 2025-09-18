@@ -1,11 +1,11 @@
 ﻿using Projeto.Controller;
-using Projeto.DAO;
 using Projeto.Models;
 using Projeto.Utils;
 using Projeto.Views.Consultas;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Projeto.Views.Cadastros
@@ -18,16 +18,16 @@ namespace Projeto.Views.Cadastros
 
         private VeiculoController controller = new VeiculoController();
         private int transportadoraSelecionadaId = -1;
-        private int marcaSelecionadaId = -1; 
+        private int marcaSelecionadaId = -1;
         public bool modoEdicao = false;
-        public bool modoExclusao = false; 
+        public bool modoExclusao = false;
 
         public frmCadastroVeiculo() : base()
         {
             InitializeComponent();
             txtCodigo.Enabled = false;
-            txtTransportadora.ReadOnly = true; 
-            txtMarca.ReadOnly = true; 
+            txtTransportadora.ReadOnly = true;
+            txtMarca.ReadOnly = true;
         }
 
         public override void ConhecaObj(object obj, object ctrl)
@@ -64,11 +64,11 @@ namespace Projeto.Views.Cadastros
             txtPlaca.Text = oVeiculo.Placa;
             txtModelo.Text = oVeiculo.Modelo;
             txtMarca.Text = oVeiculo.NomeMarca;
-            marcaSelecionadaId = oVeiculo.IdMarca ?? -1; 
+            marcaSelecionadaId = oVeiculo.IdMarca ?? -1;
             txtAnoFabricacao.Text = oVeiculo.AnoFabricacao.ToString();
             txtCapacidadeCarga.Text = oVeiculo.CapacidadeCargaKg.ToString();
             txtTransportadora.Text = oVeiculo.NomeTransportadora;
-            transportadoraSelecionadaId = oVeiculo.TransportadoraId; 
+            transportadoraSelecionadaId = oVeiculo.TransportadoraId;
             chkInativo.Checked = !oVeiculo.Ativo;
             lblDataCriacao.Text = oVeiculo.DataCadastro.HasValue ? $"Criado em: {oVeiculo.DataCadastro.Value:dd/MM/yyyy HH:mm}" : "Criado em: -";
             lblDataModificacao.Text = oVeiculo.DataAlteracao.HasValue ? $"Modificado em: {oVeiculo.DataAlteracao.Value:dd/MM/yyyy HH:mm}" : "Modificado em: -";
@@ -112,34 +112,12 @@ namespace Projeto.Views.Cadastros
             transportadoraSelecionadaId = -1;
             marcaSelecionadaId = -1;
             chkInativo.Checked = false;
-
             DateTime agora = DateTime.Now;
             lblDataCriacao.Text = $"Criado em: {agora:dd/MM/yyyy HH:mm}";
             lblDataModificacao.Text = $"Modificado em: {agora:dd/MM/yyyy HH:mm}";
         }
 
-        public void CarregarVeiculo(int id, string placa, string modelo, int? anoFabricacao, decimal? capacidadeCarga, bool ativo, int idTransportadora, string nomeTransportadora, int? idMarca, string nomeMarca, DateTime? dataCadastro, DateTime? dataAlteracao)
-        {
-            modoEdicao = true;
-
-            txtCodigo.Text = id.ToString();
-            txtPlaca.Text = placa;
-            txtModelo.Text = modelo;
-            txtAnoFabricacao.Text = anoFabricacao?.ToString();
-            txtCapacidadeCarga.Text = capacidadeCarga?.ToString("F2");
-            chkInativo.Checked = !ativo;
-
-            transportadoraSelecionadaId = idTransportadora;
-            txtTransportadora.Text = nomeTransportadora;
-
-            marcaSelecionadaId = idMarca ?? -1;
-            txtMarca.Text = nomeMarca; 
-
-            lblDataCriacao.Text = dataCadastro.HasValue ? $"Criado em: {dataCadastro.Value:dd/MM/yyyy HH:mm}" : "Criado em: -";
-            lblDataModificacao.Text = dataAlteracao.HasValue ? $"Modificado em: {dataAlteracao.Value:dd/MM/yyyy HH:mm}" : "Modificado em: -";
-        }
-
-        private void btnSalvar_Click(object sender, EventArgs e)
+        private async void btnSalvar_Click(object sender, EventArgs e)
         {
             if (modoExclusao)
             {
@@ -149,7 +127,7 @@ namespace Projeto.Views.Cadastros
                     try
                     {
                         int id = int.Parse(txtCodigo.Text);
-                        controller.Excluir(id);
+                        await controller.Excluir(id);
                         MessageBox.Show("Veículo excluído com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         this.Close();
                     }
@@ -165,22 +143,16 @@ namespace Projeto.Views.Cadastros
                 if (!Validador.ValidarIdSelecionado(transportadoraSelecionadaId, "Selecione uma transportadora.")) return;
                 if (!Validador.ValidarIdSelecionado(marcaSelecionadaId, "Selecione uma marca.")) return;
 
-
                 try
                 {
                     int id = string.IsNullOrEmpty(txtCodigo.Text) ? 0 : int.Parse(txtCodigo.Text);
 
-                    var veiculos = controller.ListarVeiculos();
-                    if (Validador.VerificarDuplicidade(veiculos, v =>
-                        v.Placa.Trim().Equals(txtPlaca.Text.Trim(), StringComparison.OrdinalIgnoreCase) && v.Id != id,
-                        "Já existe um veículo cadastrado com esta placa."))
+                    var veiculos = await controller.ListarVeiculos();
+                    if (Validador.VerificarDuplicidade(veiculos, v => v.Placa.Trim().Equals(txtPlaca.Text.Trim(), StringComparison.OrdinalIgnoreCase) && v.Id != id, "Já existe um veículo cadastrado com esta placa."))
                     {
                         txtPlaca.Focus();
                         return;
                     }
-
-                    DateTime dataCriacao = id == 0 ? DateTime.Now : DateTime.Parse(lblDataCriacao.Text.Replace("Criado em: ", ""));
-                    DateTime dataModificacao = DateTime.Now;
 
                     Veiculo veiculo = new Veiculo
                     {
@@ -192,24 +164,21 @@ namespace Projeto.Views.Cadastros
                         Ativo = !chkInativo.Checked,
                         TransportadoraId = transportadoraSelecionadaId,
                         IdMarca = marcaSelecionadaId,
-                        DataCadastro = dataCriacao,
-                        DataAlteracao = dataModificacao
+                        DataCadastro = id == 0 ? DateTime.Now : oVeiculo.DataCadastro,
+                        DataAlteracao = id > 0 ? DateTime.Now : (DateTime?)null
                     };
 
-                    controller.Salvar(veiculo);
+                    await controller.Salvar(veiculo);
                     MessageBox.Show("Veículo salvo com sucesso!");
                     this.Close();
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Erro ao salvar veículo: " + ex.Message);
+                    MessageBox.Show("Erro ao salvar veículo: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
 
-        private void frmCadastroVeiculo_Load(object sender, EventArgs e)
-        {
-        }
         private void btnBuscarTransportadora_Click(object sender, EventArgs e)
         {
             oFrmConsultaTransportadora.ModoSelecao = true;
@@ -218,7 +187,6 @@ namespace Projeto.Views.Cadastros
                 txtTransportadora.Text = oFrmConsultaTransportadora.TransportadoraSelecionada.Nome;
                 transportadoraSelecionadaId = oFrmConsultaTransportadora.TransportadoraSelecionada.Id;
             }
-
         }
 
         private void btnBuscarMarca_Click(object sender, EventArgs e)
@@ -229,6 +197,10 @@ namespace Projeto.Views.Cadastros
                 txtMarca.Text = oFrmConsultaMarca.MarcaSelecionado.NomeMarca;
                 marcaSelecionadaId = oFrmConsultaMarca.MarcaSelecionado.Id;
             }
+        }
+
+        private void frmCadastroVeiculo_Load(object sender, EventArgs e)
+        {
         }
     }
 }

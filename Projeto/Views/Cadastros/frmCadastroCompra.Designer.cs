@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.lblModelo = new System.Windows.Forms.Label();
-            this.btnPesquisar = new System.Windows.Forms.Button();
+            this.btnPesquisarFornecedor = new System.Windows.Forms.Button();
             this.lblFornecedor = new System.Windows.Forms.Label();
             this.txtFornecedor = new System.Windows.Forms.TextBox();
             this.lblIdFornecedor = new System.Windows.Forms.Label();
@@ -99,6 +99,7 @@
             // btnSalvar
             // 
             this.btnSalvar.Location = new System.Drawing.Point(1108, 637);
+            this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
             // 
             // lblModelo
             // 
@@ -109,14 +110,15 @@
             this.lblModelo.TabIndex = 98;
             this.lblModelo.Text = "Modelo";
             // 
-            // btnPesquisar
+            // btnPesquisarFornecedor
             // 
-            this.btnPesquisar.Location = new System.Drawing.Point(699, 43);
-            this.btnPesquisar.Name = "btnPesquisar";
-            this.btnPesquisar.Size = new System.Drawing.Size(91, 23);
-            this.btnPesquisar.TabIndex = 116;
-            this.btnPesquisar.Text = "Pesquisar";
-            this.btnPesquisar.UseVisualStyleBackColor = true;
+            this.btnPesquisarFornecedor.Location = new System.Drawing.Point(699, 43);
+            this.btnPesquisarFornecedor.Name = "btnPesquisarFornecedor";
+            this.btnPesquisarFornecedor.Size = new System.Drawing.Size(91, 23);
+            this.btnPesquisarFornecedor.TabIndex = 116;
+            this.btnPesquisarFornecedor.Text = "Pesquisar";
+            this.btnPesquisarFornecedor.UseVisualStyleBackColor = true;
+            this.btnPesquisarFornecedor.Click += new System.EventHandler(this.btnPesquisarFornecedor_Click);
             // 
             // lblFornecedor
             // 
@@ -290,6 +292,7 @@
             this.btnPesquisarProduto.TabIndex = 124;
             this.btnPesquisarProduto.Text = "Pesquisar";
             this.btnPesquisarProduto.UseVisualStyleBackColor = true;
+            this.btnPesquisarProduto.Click += new System.EventHandler(this.btnPesquisarProduto_Click);
             // 
             // lblTotalProduto
             // 
@@ -359,7 +362,7 @@
             // 
             // btnRemoverProduto
             // 
-            this.btnRemoverProduto.Location = new System.Drawing.Point(1028, 109);
+            this.btnRemoverProduto.Location = new System.Drawing.Point(1028, 111);
             this.btnRemoverProduto.Name = "btnRemoverProduto";
             this.btnRemoverProduto.Size = new System.Drawing.Size(91, 23);
             this.btnRemoverProduto.TabIndex = 133;
@@ -530,8 +533,8 @@
             // 
             // frmCadastroCompra
             // 
-            //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            //this.ClientSize = new System.Drawing.Size(1342, 681);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.ClientSize = new System.Drawing.Size(1342, 681);
             this.Controls.Add(this.lblTotalCondiçãoPgto);
             this.Controls.Add(this.lblValorTotal);
             this.Controls.Add(this.txtValorTotal);
@@ -565,7 +568,7 @@
             this.Controls.Add(this.dtpChegada);
             this.Controls.Add(this.lblDataEmissao);
             this.Controls.Add(this.dtpEmissao);
-            this.Controls.Add(this.btnPesquisar);
+            this.Controls.Add(this.btnPesquisarFornecedor);
             this.Controls.Add(this.lblFornecedor);
             this.Controls.Add(this.txtFornecedor);
             this.Controls.Add(this.lblIdFornecedor);
@@ -592,7 +595,7 @@
             this.Controls.SetChildIndex(this.lblIdFornecedor, 0);
             this.Controls.SetChildIndex(this.txtFornecedor, 0);
             this.Controls.SetChildIndex(this.lblFornecedor, 0);
-            this.Controls.SetChildIndex(this.btnPesquisar, 0);
+            this.Controls.SetChildIndex(this.btnPesquisarFornecedor, 0);
             this.Controls.SetChildIndex(this.dtpEmissao, 0);
             this.Controls.SetChildIndex(this.lblDataEmissao, 0);
             this.Controls.SetChildIndex(this.dtpChegada, 0);
@@ -634,7 +637,7 @@
         #endregion
 
         private System.Windows.Forms.Label lblModelo;
-        private System.Windows.Forms.Button btnPesquisar;
+        private System.Windows.Forms.Button btnPesquisarFornecedor;
         private System.Windows.Forms.Label lblFornecedor;
         private System.Windows.Forms.TextBox txtFornecedor;
         private System.Windows.Forms.Label lblIdFornecedor;

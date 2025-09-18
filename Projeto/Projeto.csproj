@@ -172,7 +172,11 @@
     <Compile Include="Services\Interfaces\IFornecedorApiService.cs" />
     <Compile Include="Services\Interfaces\IFuncionarioApiService.cs" />
     <Compile Include="Services\Interfaces\IPaisApiService.cs" />
+    <Compile Include="Services\Interfaces\ITransportadoraApiService.cs" />
+    <Compile Include="Services\Interfaces\IVeiculoApiService.cs" />
     <Compile Include="Services\PaisApiService.cs" />
+    <Compile Include="Services\TransportadoraApiService.cs" />
+    <Compile Include="Services\VeiculoApiService.cs" />
     <Compile Include="Utils\ConfigHelper.cs" />
     <Compile Include="Utils\Interfaces.cs" />
     <Compile Include="Utils\Validador.cs" />
