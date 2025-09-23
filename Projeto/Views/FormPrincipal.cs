@@ -34,6 +34,8 @@ namespace Projeto
         Produto oProduto = new Produto();
         Veiculo oVeiculo = new Veiculo();
         Compra aCompra = new Compra();
+        Mesa aMesa = new Mesa(); 
+        Pedido oPedido = new Pedido(); 
 
         PaisController CtrlPais = new PaisController();
         EstadoController CtrlEstado = new EstadoController();
@@ -49,7 +51,8 @@ namespace Projeto
         ProdutoController CtrlProduto = new ProdutoController();
         VeiculoController CtrlVeiculo = new VeiculoController();
         CompraController CtrlCompra = new CompraController();
-
+        MesaController CtrlMesa = new MesaController(); 
+        PedidoController CtrlPedido = new PedidoController(); 
         public FormPrincipal()
         {
             InitializeComponent();
@@ -131,9 +134,16 @@ namespace Projeto
         private void comprasToolStripMenuItem_Click(object sender, EventArgs e)
         {
             aInter.PecaCompra(aCompra, CtrlCompra);
+        }
 
-            //frmCadastroCompra formCompra = new frmCadastroCompra();
-            //formCompra.ShowDialog();
+        private void mesasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            aInter.PecaMesa(aMesa, CtrlMesa);
+        }
+
+        private void pedidosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            aInter.PecaPedido(oPedido, CtrlPedido);
         }
     }
 }

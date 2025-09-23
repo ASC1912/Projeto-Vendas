@@ -25,6 +25,8 @@ namespace Projeto.Utils
         frmConsultaProduto oFrmConsultaProduto;
         frmConsultaVeiculo oFrmConsultaVeiculo;
         frmConsultaCompra oFrmConsultaCompra;
+        frmConsultaPedido oFrmConsultaPedido;
+        frmConsultaMesa oFrmConsultaMesa;
 
         frmCadastroPais oFrmCadastroPais;
         frmCadastroEstado oFrmCadastroEstado;
@@ -40,6 +42,8 @@ namespace Projeto.Utils
         frmCadastroProduto oFrmCadastroProduto;
         frmCadastroVeiculo oFrmCadastroVeiculo;
         frmCadastroCompra oFrmCadastroCompra;
+        frmCadastroPedido oFrmCadastroPedido;
+        frmCadastroMesa oFrmCadastroMesa;
 
 
         public Interfaces()
@@ -58,6 +62,8 @@ namespace Projeto.Utils
             oFrmConsultaProduto = new frmConsultaProduto();
             oFrmConsultaVeiculo = new frmConsultaVeiculo();
             oFrmConsultaCompra = new frmConsultaCompra();
+            oFrmConsultaMesa = new frmConsultaMesa();
+            oFrmConsultaPedido = new frmConsultaPedido();
 
             oFrmCadastroPais = new frmCadastroPais();
             oFrmCadastroEstado = new frmCadastroEstado();
@@ -73,6 +79,8 @@ namespace Projeto.Utils
             oFrmCadastroProduto = new frmCadastroProduto();
             oFrmCadastroVeiculo = new frmCadastroVeiculo();
             oFrmCadastroCompra = new frmCadastroCompra();
+            oFrmCadastroMesa = new frmCadastroMesa();
+            oFrmCadastroPedido = new frmCadastroPedido();
 
             oFrmConsultaPais.setFrmCadastro(oFrmCadastroPais);
             oFrmConsultaEstado.setFrmCadastro(oFrmCadastroEstado);
@@ -88,6 +96,8 @@ namespace Projeto.Utils
             oFrmConsultaProduto.setFrmCadastro(oFrmCadastroProduto);
             oFrmConsultaVeiculo.setFrmCadastro(oFrmCadastroVeiculo);
             oFrmConsultaCompra.setFrmCadastro(oFrmCadastroCompra);
+            oFrmConsultaMesa.setFrmCadastro(oFrmCadastroMesa);      
+            oFrmConsultaPedido.setFrmCadastro(oFrmCadastroPedido);
 
             oFrmCadastroEstado.setFrmConsultaPais(oFrmConsultaPais);
             oFrmCadastroCidade.setFrmConsultaEstado(oFrmConsultaEstado);
@@ -105,6 +115,9 @@ namespace Projeto.Utils
             oFrmCadastroVeiculo.setFrmConsultaTransportadora(oFrmConsultaTransportadora);
             oFrmCadastroCompra.setFrmConsultaFornecedor(oFrmConsultaFornecedor);
             oFrmCadastroCompra.setFrmConsultaProduto(oFrmConsultaProduto);
+            oFrmCadastroPedido.setFrmConsultaFuncionario(oFrmConsultaFuncionario);
+            oFrmCadastroPedido.setFrmConsultaMesa(oFrmConsultaMesa);
+            oFrmCadastroPedido.setFrmConsultaProduto(oFrmConsultaProduto);
         }
 
         public void PecaPaises(object obj, object ctrl)
@@ -189,6 +202,18 @@ namespace Projeto.Utils
         {
             oFrmConsultaCompra.ConhecaObj(obj, ctrl);
             oFrmConsultaCompra.ShowDialog();
+        }
+
+        public void PecaMesa(object obj, object ctrl)
+        {
+            oFrmConsultaMesa.ConhecaObj(obj, ctrl);
+            oFrmConsultaMesa.ShowDialog();
+        }
+
+        public void PecaPedido(object obj, object ctrl)
+        {
+            oFrmConsultaPedido.ConhecaObj(obj, ctrl);
+            oFrmConsultaPedido.ShowDialog();
         }
     }
 }

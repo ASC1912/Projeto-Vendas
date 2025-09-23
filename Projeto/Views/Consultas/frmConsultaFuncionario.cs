@@ -11,7 +11,7 @@ namespace Projeto.Views
     {
         private FuncionarioController controller = new FuncionarioController();
         frmCadastroFuncionario oFrmCadastroFuncionario;
-
+        internal Funcionario FuncionarioSelecionado { get; private set; } 
 
         public frmConsultaFuncionario() : base()
         {
@@ -216,6 +216,11 @@ namespace Projeto.Views
         {
             await CarregarFuncionarios();
 
+            if (btnSelecionar != null) 
+            {
+                btnSelecionar.Visible = ModoSelecao;
+            }
+
             foreach (ColumnHeader column in listView1.Columns)
             {
                 column.TextAlign = HorizontalAlignment.Center;
@@ -278,6 +283,31 @@ namespace Projeto.Views
                         column.Width = 100;
                         break;
                 }
+            }
+        }
+
+        private async void btnSelecionar_Click(object sender, EventArgs e)
+        {
+            if (listView1.SelectedItems.Count > 0)
+            {
+                var itemSelecionado = listView1.SelectedItems[0];
+                int id = int.Parse(itemSelecionado.SubItems[0].Text);
+
+                FuncionarioSelecionado = await controller.BuscarPorId(id);
+
+                if (FuncionarioSelecionado != null)
+                {
+                    this.DialogResult = DialogResult.OK;
+                    this.Close(); 
+                }
+                else
+                {
+                    MessageBox.Show("Erro ao carregar os dados do funcionário.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Por favor, selecione um funcionário.");
             }
         }
     }

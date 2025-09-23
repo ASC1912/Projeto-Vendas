@@ -9,8 +9,11 @@ namespace Projeto.Models
         public string Serie { get; set; }
         public int NumeroNota { get; set; }
         public int FornecedorId { get; set; }
+        public Fornecedor oFornecedor { get; set; } 
 
         public int? CondicaoPagamentoId { get; set; }
+        public CondicaoPagamento oCondicaoPagamento { get; set; }
+
         public DateTime? DataEmissao { get; set; }
         public DateTime? DataChegada { get; set; }
         public decimal ValorFrete { get; set; }
@@ -24,8 +27,8 @@ namespace Projeto.Models
 
         public List<ItemCompra> Itens { get; set; }
 
-        public string NomeFornecedor { get; set; }
-        public string NomeCondPgto { get; set; }
+        public string NomeFornecedor => oFornecedor?.Nome;
+        public string NomeCondPgto => oCondicaoPagamento?.Descricao;
 
         public Compra()
         {

@@ -88,7 +88,7 @@ namespace Projeto.Views.Cadastros
         private void ConfigurarEstadoInicial()
         {
             HabilitarControles(parte1Controles, true);
-            HabilitarControles(parte2Controles, false);
+            HabilitarControles(parte2Controles, true);
             HabilitarControles(parte3Controles, false);
             btnSalvar.Enabled = false;
         }
@@ -182,11 +182,19 @@ namespace Projeto.Views.Cadastros
                 txtCondPgto.Tag = aCompra.CondicaoPagamentoId.Value;
             }
 
+            //listViewCondPgto.Items.Clear();
             /*
-            listViewCondPgto.Items.Clear();
             if (aCompra.oCondicaoPagamento != null && aCompra.oCondicaoPagamento.Parcelas != null)
             {
-               // Lógica para carregar parcelas aqui...
+                // Esta lógica é idêntica à que você já tem no btnAdicionarCondPgto_Click
+                foreach (var parcela in aCompra.oCondicaoPagamento.Parcelas)
+                {
+                    ListViewItem item = new ListViewItem(parcela.NumParcela.ToString());
+                    item.SubItems.Add(parcela.PrazoDias.ToString());
+                    item.SubItems.Add(parcela.Porcentagem.ToString("N2") + "%");
+                    item.SubItems.Add(parcela.FormaPagamento?.Descricao ?? "N/D");
+                    listViewCondPgto.Items.Add(item);
+                }
             }
             */
 

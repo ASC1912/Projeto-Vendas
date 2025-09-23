@@ -8,9 +8,6 @@ namespace Projeto.DAO
     internal class DAOCompra
     {
         private string connectionString = "Server=localhost;Database=sistema;Uid=root;Pwd=12345678;";
-
-        /// Salva uma NOVA compra e seus itens. Lança uma exceção se a compra já existir.
-
         public void Salvar(Compra compra)
         {
             using (MySqlConnection conn = new MySqlConnection(connectionString))
@@ -20,7 +17,6 @@ namespace Projeto.DAO
 
                 try
                 {
-                    // Verifica se a compra já existe para evitar duplicidade
                     string checkQuery = "SELECT COUNT(1) FROM Compras WHERE Modelo = @Modelo AND Serie = @Serie AND NumeroNota = @NumeroNota AND FornecedorId = @FornecedorId";
                     using (MySqlCommand checkCmd = new MySqlCommand(checkQuery, conn, tran))
                     {
@@ -34,14 +30,13 @@ namespace Projeto.DAO
                         }
                     }
 
-                    // Insere o cabeçalho da Compra
                     string insertCompraQuery = @"
                         INSERT INTO Compras (
                             Modelo, Serie, NumeroNota, FornecedorId, CondicaoPagamentoId, DataEmissao, DataChegada,
-                            ValorFrete, ValorSeguro, OutrasDespesas, ValorTotal, Observacao, Ativo, DataCadastro, DataAlteracao
+                            ValorFrete, Seguro, Despesas, ValorTotal, Observacao, Ativo, DataCadastro, DataAlteracao
                         ) VALUES (
                             @Modelo, @Serie, @NumeroNota, @FornecedorId, @CondicaoPagamentoId, @DataEmissao, @DataChegada,
-                            @ValorFrete, @ValorSeguro, @OutrasDespesas, @ValorTotal, @Observacao, @Ativo, @DataCadastro, @DataAlteracao
+                            @ValorFrete, @Seguro, @Despesas, @ValorTotal, @Observacao, @Ativo, @DataCadastro, @DataAlteracao
                         )";
 
                     using (MySqlCommand cmdCompra = new MySqlCommand(insertCompraQuery, conn, tran))
@@ -54,17 +49,16 @@ namespace Projeto.DAO
                         cmdCompra.Parameters.AddWithValue("@DataEmissao", compra.DataEmissao);
                         cmdCompra.Parameters.AddWithValue("@DataChegada", compra.DataChegada);
                         cmdCompra.Parameters.AddWithValue("@ValorFrete", compra.ValorFrete);
-                        cmdCompra.Parameters.AddWithValue("@ValorSeguro", compra.Seguro);
-                        cmdCompra.Parameters.AddWithValue("@OutrasDespesas", compra.Despesas);
+                        cmdCompra.Parameters.AddWithValue("@Seguro", compra.Seguro);
+                        cmdCompra.Parameters.AddWithValue("@Despesas", compra.Despesas);
                         cmdCompra.Parameters.AddWithValue("@ValorTotal", compra.ValorTotal);
                         cmdCompra.Parameters.AddWithValue("@Observacao", compra.Observacao);
-                        cmdCompra.Parameters.AddWithValue("@Ativo", true); 
+                        cmdCompra.Parameters.AddWithValue("@Ativo", true);
                         cmdCompra.Parameters.AddWithValue("@DataCadastro", DateTime.Now);
                         cmdCompra.Parameters.AddWithValue("@DataAlteracao", DateTime.Now);
                         cmdCompra.ExecuteNonQuery();
                     }
 
-                    // Insere os Itens da Compra
                     if (compra.Itens != null && compra.Itens.Count > 0)
                     {
                         string insertItemQuery = @"
@@ -103,8 +97,6 @@ namespace Projeto.DAO
             }
         }
 
-        /// Cancela uma compra, definindo seu status como Inativo.
-
         public void Cancelar(Compra compra)
         {
             using (MySqlConnection conn = new MySqlConnection(connectionString))
@@ -126,7 +118,6 @@ namespace Projeto.DAO
                 }
             }
         }
-
 
         public List<Compra> Listar()
         {
@@ -158,14 +149,12 @@ namespace Projeto.DAO
             return lista;
         }
 
-        // --- NOVO MÉTODO PARA BUSCAR UMA COMPRA E SEUS ITENS ---
         public Compra BuscarPorChave(string modelo, string serie, int numeroNota, int fornecedorId)
         {
             Compra compra = null;
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
-                // 1. Busca o cabeçalho da compra
                 string queryCompra = @"
                     SELECT 
                         c.*,
@@ -192,7 +181,6 @@ namespace Projeto.DAO
                     }
                 }
 
-                // 2. Se encontrou a compra, busca seus itens
                 if (compra != null)
                 {
                     string queryItens = @"
@@ -223,7 +211,6 @@ namespace Projeto.DAO
             return compra;
         }
 
-        // --- NOVOS MÉTODOS AUXILIARES PARA MONTAR OS OBJETOS ---
         private Compra MontarObjetoCompra(MySqlDataReader reader)
         {
             return new Compra
@@ -236,15 +223,23 @@ namespace Projeto.DAO
                 DataEmissao = reader.IsDBNull(reader.GetOrdinal("DataEmissao")) ? (DateTime?)null : reader.GetDateTime("DataEmissao"),
                 DataChegada = reader.IsDBNull(reader.GetOrdinal("DataChegada")) ? (DateTime?)null : reader.GetDateTime("DataChegada"),
                 ValorFrete = reader.GetDecimal("ValorFrete"),
-                Seguro = reader.GetDecimal("ValorSeguro"),
-                Despesas = reader.GetDecimal("OutrasDespesas"),
+                Seguro = reader.GetDecimal("Seguro"),
+                Despesas = reader.GetDecimal("Despesas"),
                 ValorTotal = reader.GetDecimal("ValorTotal"),
                 Observacao = reader.IsDBNull(reader.GetOrdinal("Observacao")) ? null : reader.GetString("Observacao"),
                 Ativo = reader.GetBoolean("Ativo"),
                 DataCadastro = reader.GetDateTime("DataCadastro"),
                 DataAlteracao = reader.GetDateTime("DataAlteracao"),
-                NomeFornecedor = reader.IsDBNull(reader.GetOrdinal("NomeFornecedor")) ? "" : reader.GetString("NomeFornecedor"),
-                NomeCondPgto = reader.IsDBNull(reader.GetOrdinal("NomeCondPgto")) ? "" : reader.GetString("NomeCondPgto")
+                oFornecedor = new Fornecedor
+                {
+                    Id = reader.GetInt32("FornecedorId"),
+                    Nome = reader.IsDBNull(reader.GetOrdinal("NomeFornecedor")) ? "" : reader.GetString("NomeFornecedor")
+                },
+                oCondicaoPagamento = new CondicaoPagamento
+                {
+                    Id = reader.IsDBNull(reader.GetOrdinal("CondicaoPagamentoId")) ? 0 : reader.GetInt32("CondicaoPagamentoId"),
+                    Descricao = reader.IsDBNull(reader.GetOrdinal("NomeCondPgto")) ? "" : reader.GetString("NomeCondPgto")
+                }
             };
         }
 
@@ -263,6 +258,5 @@ namespace Projeto.DAO
                 NomeProduto = reader.IsDBNull(reader.GetOrdinal("NomeProduto")) ? "" : reader.GetString("NomeProduto")
             };
         }
-
     }
 }

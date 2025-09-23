@@ -119,14 +119,18 @@
     <Compile Include="Controller\FuncionarioController.cs" />
     <Compile Include="Controller\GrupoController.cs" />
     <Compile Include="Controller\MarcaController.cs" />
+    <Compile Include="Controller\MesaController.cs" />
     <Compile Include="Controller\PaisController.cs" />
     <Compile Include="Controller\FormaPagamentoController.cs" />
     <Compile Include="Controller\ParcelaController.cs" />
+    <Compile Include="Controller\PedidoController.cs" />
     <Compile Include="Controller\ProdutoController.cs" />
     <Compile Include="Controller\TransportadoraController.cs" />
     <Compile Include="Controller\VeiculoController.cs" />
     <Compile Include="DAO\DAOCompra.cs" />
     <Compile Include="DAO\DAOGrupo.cs" />
+    <Compile Include="DAO\DAOMesa.cs" />
+    <Compile Include="DAO\DAOPedido.cs" />
     <Compile Include="DAO\DAOProduto.cs" />
     <Compile Include="DAO\DAOCidade.cs" />
     <Compile Include="DAO\DAOCliente.cs" />
@@ -151,8 +155,10 @@
     <Compile Include="Models\Grupo.cs" />
     <Compile Include="Models\ItemCompra.cs" />
     <Compile Include="Models\Marca.cs" />
+    <Compile Include="Models\Mesa.cs" />
     <Compile Include="Models\Pais.cs" />
     <Compile Include="Models\Parcelamento.cs" />
+    <Compile Include="Models\Pedido.cs" />
     <Compile Include="Models\Pessoa.cs" />
     <Compile Include="Models\Produto.cs" />
     <Compile Include="Models\Transportadora.cs" />
@@ -198,6 +204,18 @@
     <Compile Include="Views\Cadastros\frmCadastroMarca.Designer.cs">
       <DependentUpon>frmCadastroMarca.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\Cadastros\frmCadastroMesa.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Cadastros\frmCadastroMesa.Designer.cs">
+      <DependentUpon>frmCadastroMesa.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Cadastros\frmCadastroPedido.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Cadastros\frmCadastroPedido.Designer.cs">
+      <DependentUpon>frmCadastroPedido.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\Cadastros\frmCadastroProduto.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -233,6 +251,18 @@
     </Compile>
     <Compile Include="Views\Consultas\frmConsultaMarca.Designer.cs">
       <DependentUpon>frmConsultaMarca.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Consultas\frmConsultaMesa.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Consultas\frmConsultaMesa.Designer.cs">
+      <DependentUpon>frmConsultaMesa.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Consultas\frmConsultaPedido.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Consultas\frmConsultaPedido.Designer.cs">
+      <DependentUpon>frmConsultaPedido.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Consultas\frmConsultaProduto.cs">
       <SubType>Form</SubType>
@@ -377,6 +407,12 @@
     <EmbeddedResource Include="Views\Cadastros\frmCadastroMarca.resx">
       <DependentUpon>frmCadastroMarca.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\Cadastros\frmCadastroMesa.resx">
+      <DependentUpon>frmCadastroMesa.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Cadastros\frmCadastroPedido.resx">
+      <DependentUpon>frmCadastroPedido.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\Cadastros\frmCadastroProduto.resx">
       <DependentUpon>frmCadastroProduto.cs</DependentUpon>
     </EmbeddedResource>
@@ -394,6 +430,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Consultas\frmConsultaMarca.resx">
       <DependentUpon>frmConsultaMarca.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Consultas\frmConsultaMesa.resx">
+      <DependentUpon>frmConsultaMesa.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Consultas\frmConsultaPedido.resx">
+      <DependentUpon>frmConsultaPedido.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Consultas\frmConsultaProduto.resx">
       <DependentUpon>frmConsultaProduto.cs</DependentUpon>
