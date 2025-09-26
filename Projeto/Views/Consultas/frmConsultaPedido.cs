@@ -138,24 +138,31 @@ namespace Projeto.Views.Consultas
                 var itemSelecionado = listView1.SelectedItems[0];
                 int id = int.Parse(itemSelecionado.SubItems[0].Text);
 
-                var confirmacao = MessageBox.Show("Tem certeza que deseja excluir este pedido e todos os seus itens?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                if (confirmacao == DialogResult.Yes)
+                Pedido pedido = await controller.BuscarPorId(id);
+
+                if (pedido != null)
                 {
-                    try
-                    {
-                        await controller.Excluir(id);
-                        MessageBox.Show("Pedido excluído com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        await CarregarPedidos();
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"Erro ao excluir o pedido: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+                    oFrmCadastroPedido.modoExclusao = true;
+                    oFrmCadastroPedido.modoEdicao = false;
+                    oFrmCadastroPedido.ConhecaObj(pedido, controller);
+                    oFrmCadastroPedido.CarregaTxt();      
+                    oFrmCadastroPedido.BloquearTxt();     
+                    oFrmCadastroPedido.btnSalvar.Text = "Excluir"; 
+
+                    oFrmCadastroPedido.ShowDialog();
+
+                    oFrmCadastroPedido.btnSalvar.Text = "Salvar";
+                    oFrmCadastroPedido.DesbloquearTxt();
+                    await CarregarPedidos();
+                }
+                else
+                {
+                    MessageBox.Show("Pedido não encontrado.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
             {
-                MessageBox.Show("Por favor, selecione um pedido para excluir.");
+                MessageBox.Show("Por favor, selecione um pedido para excluir.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 

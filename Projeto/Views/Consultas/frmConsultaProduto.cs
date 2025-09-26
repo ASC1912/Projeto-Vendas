@@ -3,6 +3,7 @@ using Projeto.Models;
 using Projeto.Views.Cadastros;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks; 
 using System.Windows.Forms;
 
 namespace Projeto.Views.Consultas
@@ -11,8 +12,7 @@ namespace Projeto.Views.Consultas
     {
         private ProdutoController controller = new ProdutoController();
         private frmCadastroProduto oFrmCadastroProduto;
-        internal Produto ProdutoSelecionado { get; private set; } 
-
+        internal Produto ProdutoSelecionado { get; private set; }
 
         public frmConsultaProduto() : base()
         {
@@ -35,12 +35,12 @@ namespace Projeto.Views.Consultas
             }
         }
 
-        private void CarregarProdutos()
+        private async Task CarregarProdutos()
         {
             try
             {
                 listView1.Items.Clear();
-                List<Produto> produtos = controller.ListarProdutos();
+                List<Produto> produtos = await controller.ListarProdutos();
 
                 foreach (var produto in produtos)
                 {
@@ -62,7 +62,7 @@ namespace Projeto.Views.Consultas
             }
         }
 
-        private void btnPesquisar_Click(object sender, EventArgs e)
+        private async void btnPesquisar_Click(object sender, EventArgs e)
         {
             try
             {
@@ -71,11 +71,11 @@ namespace Projeto.Views.Consultas
 
                 if (string.IsNullOrEmpty(texto))
                 {
-                    CarregarProdutos();
+                    await CarregarProdutos();
                 }
                 else if (int.TryParse(texto, out int id))
                 {
-                    Produto produto = controller.BuscarPorId(id);
+                    Produto produto = await controller.BuscarPorId(id);
 
                     if (produto != null)
                     {
@@ -106,34 +106,33 @@ namespace Projeto.Views.Consultas
             }
         }
 
-        private void btnIncluir_Click(object sender, EventArgs e)
+        private async void btnIncluir_Click(object sender, EventArgs e)
         {
             oFrmCadastroProduto.modoEdicao = false;
             oFrmCadastroProduto.modoExclusao = false;
             oFrmCadastroProduto.LimparTxt();
             oFrmCadastroProduto.ShowDialog();
-            CarregarProdutos();
+            await CarregarProdutos();
         }
 
-        private void btnEditar_Click(object sender, EventArgs e)
+        private async void btnEditar_Click(object sender, EventArgs e)
         {
             if (listView1.SelectedItems.Count > 0)
             {
                 var itemSelecionado = listView1.SelectedItems[0];
                 int id = int.Parse(itemSelecionado.SubItems[0].Text);
 
-                Produto produto = controller.BuscarPorId(id);
+                Produto produto = await controller.BuscarPorId(id);
 
                 if (produto != null)
                 {
-
                     oFrmCadastroProduto.modoEdicao = true;
                     oFrmCadastroProduto.modoExclusao = false;
                     oFrmCadastroProduto.ConhecaObj(produto, controller);
                     oFrmCadastroProduto.LimparTxt();
                     oFrmCadastroProduto.CarregaTxt();
                     oFrmCadastroProduto.ShowDialog();
-                    CarregarProdutos();
+                    await CarregarProdutos();
                 }
                 else
                 {
@@ -146,14 +145,14 @@ namespace Projeto.Views.Consultas
             }
         }
 
-        private void btnDeletar_Click(object sender, EventArgs e)
+        private async void btnDeletar_Click(object sender, EventArgs e)
         {
             if (listView1.SelectedItems.Count > 0)
             {
                 var itemSelecionado = listView1.SelectedItems[0];
                 int id = int.Parse(itemSelecionado.SubItems[0].Text);
 
-                Produto produto = controller.BuscarPorId(id);
+                Produto produto = await controller.BuscarPorId(id);
 
                 if (produto != null)
                 {
@@ -167,7 +166,7 @@ namespace Projeto.Views.Consultas
                     oFrmCadastroProduto.ShowDialog();
                     oFrmCadastroProduto.btnSalvar.Text = "Salvar";
                     oFrmCadastroProduto.DesbloquearTxt();
-                    CarregarProdutos();
+                    await CarregarProdutos();
                 }
                 else
                 {
@@ -180,14 +179,14 @@ namespace Projeto.Views.Consultas
             }
         }
 
-        private void btnSelecionar_Click(object sender, EventArgs e)
+        private async void btnSelecionar_Click(object sender, EventArgs e)
         {
             if (listView1.SelectedItems.Count > 0)
             {
                 try
                 {
                     int id = int.Parse(listView1.SelectedItems[0].SubItems[0].Text);
-                    ProdutoSelecionado = controller.BuscarPorId(id);
+                    ProdutoSelecionado = await controller.BuscarPorId(id);
 
                     if (ProdutoSelecionado != null)
                     {
@@ -206,10 +205,10 @@ namespace Projeto.Views.Consultas
             }
         }
 
-        private void frmConsultaProduto_Load(object sender, EventArgs e)
+        private async void frmConsultaProduto_Load(object sender, EventArgs e)
         {
-            btnSelecionar.Visible = ModoSelecao; 
-            CarregarProdutos();
+            btnSelecionar.Visible = ModoSelecao;
+            await CarregarProdutos();
 
             foreach (ColumnHeader column in listView1.Columns)
             {

@@ -3,6 +3,7 @@ using Projeto.Models;
 using Projeto.Views.Cadastros;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Projeto.Views.Consultas
@@ -13,11 +14,11 @@ namespace Projeto.Views.Consultas
         internal Marca MarcaSelecionado { get; private set; }
         private frmCadastroMarca oFrmCadastroMarca;
 
-
         public frmConsultaMarca()
         {
             InitializeComponent();
         }
+
         public override void setFrmCadastro(object obj)
         {
             if (obj != null)
@@ -33,9 +34,10 @@ namespace Projeto.Views.Consultas
                 controller = (MarcaController)ctrl;
             }
         }
-        private void frmConsultaMarca_Load(object sender, EventArgs e)
+
+        private async void frmConsultaMarca_Load(object sender, EventArgs e)
         {
-            CarregarMarcas();
+            await CarregarMarcas();
             btnSelecionar.Visible = ModoSelecao;
 
             foreach (ColumnHeader column in listView1.Columns)
@@ -61,12 +63,12 @@ namespace Projeto.Views.Consultas
             }
         }
 
-        private void CarregarMarcas()
+        private async Task CarregarMarcas()
         {
             try
             {
                 listView1.Items.Clear();
-                List<Marca> marcas = controller.ListarMarcas();
+                List<Marca> marcas = await controller.ListarMarcas();
 
                 foreach (var marca in marcas)
                 {
@@ -82,7 +84,7 @@ namespace Projeto.Views.Consultas
             }
         }
 
-        private void btnPesquisar_Click(object sender, EventArgs e)
+        private async void btnPesquisar_Click(object sender, EventArgs e)
         {
             try
             {
@@ -91,11 +93,11 @@ namespace Projeto.Views.Consultas
 
                 if (string.IsNullOrEmpty(texto))
                 {
-                    CarregarMarcas();
+                    await CarregarMarcas();
                 }
                 else if (int.TryParse(texto, out int id))
                 {
-                    Marca marca = controller.BuscarPorId(id);
+                    Marca marca = await controller.BuscarPorId(id);
 
                     if (marca != null)
                     {
@@ -120,23 +122,23 @@ namespace Projeto.Views.Consultas
             }
         }
 
-        private void btnIncluir_Click(object sender, EventArgs e)
+        private async void btnIncluir_Click(object sender, EventArgs e)
         {
             oFrmCadastroMarca.modoEdicao = false;
             oFrmCadastroMarca.modoExclusao = false;
             oFrmCadastroMarca.LimparTxt();
             oFrmCadastroMarca.ShowDialog();
-            CarregarMarcas();
+            await CarregarMarcas();
         }
 
-        private void btnEditar_Click(object sender, EventArgs e)
+        private async void btnEditar_Click(object sender, EventArgs e)
         {
             if (listView1.SelectedItems.Count > 0)
             {
                 var itemSelecionado = listView1.SelectedItems[0];
                 int id = int.Parse(itemSelecionado.SubItems[0].Text);
 
-                Marca marca = controller.BuscarPorId(id);
+                Marca marca = await controller.BuscarPorId(id);
 
                 if (marca != null)
                 {
@@ -146,7 +148,7 @@ namespace Projeto.Views.Consultas
                     oFrmCadastroMarca.LimparTxt();
                     oFrmCadastroMarca.CarregaTxt();
                     oFrmCadastroMarca.ShowDialog();
-                    CarregarMarcas();
+                    await CarregarMarcas();
                 }
                 else
                 {
@@ -159,14 +161,14 @@ namespace Projeto.Views.Consultas
             }
         }
 
-        private void btnDeletar_Click(object sender, EventArgs e)
+        private async void btnDeletar_Click(object sender, EventArgs e)
         {
             if (listView1.SelectedItems.Count > 0)
             {
                 var itemSelecionado = listView1.SelectedItems[0];
                 int id = int.Parse(itemSelecionado.SubItems[0].Text);
 
-                Marca marca = controller.BuscarPorId(id);
+                Marca marca = await controller.BuscarPorId(id);
 
                 if (marca != null)
                 {
@@ -180,7 +182,7 @@ namespace Projeto.Views.Consultas
                     oFrmCadastroMarca.ShowDialog();
                     oFrmCadastroMarca.btnSalvar.Text = "Salvar";
                     oFrmCadastroMarca.DesbloquearTxt();
-                    CarregarMarcas();
+                    await CarregarMarcas();
                 }
                 else
                 {
@@ -193,14 +195,14 @@ namespace Projeto.Views.Consultas
             }
         }
 
-        private void btnSelecionar_Click(object sender, EventArgs e)
+        private async void btnSelecionar_Click(object sender, EventArgs e)
         {
             if (listView1.SelectedItems.Count > 0)
             {
                 var itemSelecionado = listView1.SelectedItems[0];
                 int id = int.Parse(itemSelecionado.SubItems[0].Text);
 
-                MarcaSelecionado = controller.BuscarPorId(id);
+                MarcaSelecionado = await controller.BuscarPorId(id);
 
                 if (MarcaSelecionado != null)
                 {

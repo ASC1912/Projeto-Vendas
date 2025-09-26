@@ -4,6 +4,8 @@ using Projeto.Models;
 using Projeto.Utils;
 using Projeto.Views.Consultas;
 using System;
+using System.Collections.Generic; // Adicionado
+using System.Threading.Tasks;    // Adicionado
 using System.Windows.Forms;
 
 namespace Projeto.Views.Cadastros
@@ -64,9 +66,9 @@ namespace Projeto.Views.Cadastros
             txtPreco.Text = oProduto.Preco.ToString("F2");
             txtEstoque.Text = oProduto.Estoque.ToString();
             txtMarca.Text = oProduto.NomeMarca;
-            marcaSelecionadoId = oProduto.IdMarca ?? -1; 
+            marcaSelecionadoId = oProduto.IdMarca ?? -1;
             txtGrupo.Text = oProduto.NomeGrupo;
-            grupoSelecionadoId = oProduto.GrupoId ?? -1; 
+            grupoSelecionadoId = oProduto.GrupoId ?? -1;
             chkInativo.Checked = !oProduto.Ativo;
             lblDataCriacao.Text = oProduto.DataCadastro.HasValue ? $"Criado em: {oProduto.DataCadastro.Value:dd/MM/yyyy HH:mm}" : "Criado em: -";
             lblDataModificacao.Text = oProduto.DataAlteracao.HasValue ? $"Modificado em: {oProduto.DataAlteracao.Value:dd/MM/yyyy HH:mm}" : "Modificado em: -";
@@ -113,8 +115,7 @@ namespace Projeto.Views.Cadastros
         }
 
 
-
-        private void btnSalvar_Click(object sender, EventArgs e)
+        private async void btnSalvar_Click(object sender, EventArgs e)
         {
             if (modoExclusao)
             {
@@ -124,7 +125,7 @@ namespace Projeto.Views.Cadastros
                     try
                     {
                         int id = int.Parse(txtCodigo.Text);
-                        controller.Excluir(id);
+                        await controller.Excluir(id);
                         MessageBox.Show("Produto excluído com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         this.Close();
                     }
@@ -151,7 +152,7 @@ namespace Projeto.Views.Cadastros
                     int estoque = string.IsNullOrWhiteSpace(txtEstoque.Text) ? 0 : Convert.ToInt32(txtEstoque.Text);
                     bool ativo = !chkInativo.Checked;
 
-                    var produtos = controller.ListarProdutos();
+                    var produtos = await controller.ListarProdutos();
 
                     if (Validador.VerificarDuplicidade(produtos, p =>
                         p.NomeProduto.Trim().Equals(nomeProduto, StringComparison.OrdinalIgnoreCase) &&
@@ -165,7 +166,7 @@ namespace Projeto.Views.Cadastros
 
                     DateTime dataCadastro = id == 0
                         ? DateTime.Now
-                        : DateTime.Parse(lblDataCriacao.Text.Replace("Criado em: ", ""));
+                        : (oProduto?.DataCadastro ?? DateTime.Now);
 
                     DateTime dataAlteracao = DateTime.Now;
 
@@ -183,7 +184,7 @@ namespace Projeto.Views.Cadastros
                         DataAlteracao = dataAlteracao
                     };
 
-                    controller.Salvar(produto);
+                    await controller.Salvar(produto);
 
                     MessageBox.Show("Produto salvo com sucesso!");
                     this.Close();
@@ -197,7 +198,7 @@ namespace Projeto.Views.Cadastros
 
         private void frmCadastroProduto_Load(object sender, EventArgs e)
         {
-          
+
         }
 
         private void btnBuscarGrupo_Click(object sender, EventArgs e)
@@ -208,8 +209,6 @@ namespace Projeto.Views.Cadastros
                 txtGrupo.Text = oFrmConsultaGrupo.GrupoSelecionado.NomeGrupo;
                 grupoSelecionadoId = oFrmConsultaGrupo.GrupoSelecionado.Id;
             }
-
-
         }
 
         private void btnMarca_Click(object sender, EventArgs e)

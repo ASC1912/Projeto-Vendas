@@ -1,31 +1,79 @@
 ﻿using Projeto.DAO;
 using Projeto.Models;
+using Projeto.Services;
+using Projeto.Services.Interfaces;
+using Projeto.Utils;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Projeto.Controller
 {
-    internal class ProdutoController
+    public class ProdutoController
     {
-        private DAOProduto dao = new DAOProduto();
+        private readonly bool _useApi;
+        private readonly IProdutoApiService _apiService;
+        private readonly DAOProduto _dao;
 
-        public void Salvar(Produto produto)
+        public ProdutoController()
         {
-            dao.Salvar(produto);
+            _useApi = ConfigHelper.UseApi();
+
+            if (_useApi)
+            {
+                _apiService = new ProdutoApiService();
+            }
+            else
+            {
+                _dao = new DAOProduto();
+            }
         }
 
-        public Produto BuscarPorId(int id)
+        public Task Salvar(Produto produto)
         {
-            return dao.BuscarPorId(id);
+            if (_useApi)
+            {
+                return _apiService.SaveProdutoAsync(produto);
+            }
+            else
+            {
+                return Task.Run(() => _dao.Salvar(produto));
+            }
         }
 
-        public List<Produto> ListarProdutos()
+        public Task Excluir(int id)
         {
-            return dao.ListarProdutos();
+            if (_useApi)
+            {
+                return _apiService.DeleteProdutoAsync(id);
+            }
+            else
+            {
+                return Task.Run(() => _dao.Excluir(id));
+            }
         }
 
-        public void Excluir(int id)
+        public Task<Produto> BuscarPorId(int id)
         {
-            dao.Excluir(id);
+            if (_useApi)
+            {
+                return _apiService.GetProdutoByIdAsync(id);
+            }
+            else
+            {
+                return Task.FromResult(_dao.BuscarPorId(id));
+            }
+        }
+
+        public Task<List<Produto>> ListarProdutos()
+        {
+            if (_useApi)
+            {
+                return _apiService.GetProdutosAsync();
+            }
+            else
+            {
+                return Task.FromResult(_dao.ListarProdutos());
+            }
         }
     }
 }

@@ -54,6 +54,9 @@
     <Reference Include="MySql.Data, Version=9.2.0.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <HintPath>..\packages\MySql.Data.9.2.0\lib\net48\MySql.Data.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
@@ -170,6 +173,7 @@
     <Compile Include="Services\FormaPagamentoApiService.cs" />
     <Compile Include="Services\FornecedorApiService.cs" />
     <Compile Include="Services\FuncionarioApiService.cs" />
+    <Compile Include="Services\GrupoApiService.cs" />
     <Compile Include="Services\Interfaces\ICidadeApiService.cs" />
     <Compile Include="Services\Interfaces\IClienteApiService.cs" />
     <Compile Include="Services\Interfaces\ICondicaoPagamentoApiService.cs" />
@@ -177,10 +181,15 @@
     <Compile Include="Services\Interfaces\IFormaPagamentoApiService.cs" />
     <Compile Include="Services\Interfaces\IFornecedorApiService.cs" />
     <Compile Include="Services\Interfaces\IFuncionarioApiService.cs" />
+    <Compile Include="Services\Interfaces\IGrupoApiService.cs" />
+    <Compile Include="Services\Interfaces\IMarcaApiService.cs" />
     <Compile Include="Services\Interfaces\IPaisApiService.cs" />
+    <Compile Include="Services\Interfaces\IProdutoApiService.cs" />
     <Compile Include="Services\Interfaces\ITransportadoraApiService.cs" />
     <Compile Include="Services\Interfaces\IVeiculoApiService.cs" />
+    <Compile Include="Services\MarcaApiService.cs" />
     <Compile Include="Services\PaisApiService.cs" />
+    <Compile Include="Services\ProdutoApiService.cs" />
     <Compile Include="Services\TransportadoraApiService.cs" />
     <Compile Include="Services\VeiculoApiService.cs" />
     <Compile Include="Utils\ConfigHelper.cs" />

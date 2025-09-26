@@ -3,6 +3,7 @@ using Projeto.DAO;
 using Projeto.Models;
 using Projeto.Utils;
 using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace Projeto.Views.Cadastros
@@ -64,7 +65,7 @@ namespace Projeto.Views.Cadastros
             lblDataModificacao.Text = $"Modificado em: {agora:dd/MM/yyyy HH:mm}";
         }
 
-        private void btnSalvar_Click(object sender, EventArgs e)
+        private async void btnSalvar_Click(object sender, EventArgs e)
         {
             if (modoExclusao)
             {
@@ -74,7 +75,7 @@ namespace Projeto.Views.Cadastros
                     try
                     {
                         int id = int.Parse(txtCodigo.Text);
-                        controller.Excluir(id);
+                        await controller.Excluir(id);
                         MessageBox.Show("Marca excluída com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         this.Close();
                     }
@@ -106,7 +107,7 @@ namespace Projeto.Views.Cadastros
                     string marcaNome = txtNome.Text;
                     bool ativo = !chkInativo.Checked;
 
-                    var marcas = controller.ListarMarcas();
+                    List<Marca> marcas = await controller.ListarMarcas();
                     if (Validador.VerificarDuplicidade(marcas, m =>
                        m.NomeMarca.Trim().Equals(marcaNome, StringComparison.OrdinalIgnoreCase)
                        && m.Id != id, "Já existe uma marca cadastrada com este nome."))
@@ -130,7 +131,7 @@ namespace Projeto.Views.Cadastros
                         DataAlteracao = dataAlteracao
                     };
 
-                    controller.Salvar(marca);
+                    await controller.Salvar(marca);
 
                     MessageBox.Show("Marca salva com sucesso!");
                     this.Close();

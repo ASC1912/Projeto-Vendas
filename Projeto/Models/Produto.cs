@@ -1,20 +1,44 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 
 namespace Projeto.Models
 {
     public class Produto
     {
+        [JsonPropertyName("id")]
         public int Id { get; set; }
-        public string NomeProduto { get; set; }      
+
+        [JsonPropertyName("produto")]
+        public string NomeProduto { get; set; }
+
+        [JsonPropertyName("descricao")]
         public string Descricao { get; set; }
+
+        [JsonPropertyName("preco")]
         public decimal Preco { get; set; }
+
+        [JsonPropertyName("estoque")]
         public int Estoque { get; set; }
+
+        [JsonPropertyName("marcasId")]
         public int? IdMarca { get; set; }
-        public string NomeMarca { get; set; }
-        public int? GrupoId { get; set; }             
-        public string NomeGrupo { get; set; }
-        public bool Ativo { get; set; }               
-        public DateTime? DataCadastro { get; set; }   
+
+        [JsonPropertyName("grupoId")]
+        public int? GrupoId { get; set; }
+
+        [JsonPropertyName("ativo")]
+        public bool Ativo { get; set; }
+
+        [JsonPropertyName("dataCadastro")]
+        public DateTime? DataCadastro { get; set; }
+
+        [JsonPropertyName("dataAlteracao")]
         public DateTime? DataAlteracao { get; set; }
+
+        [JsonIgnore]
+        public string NomeMarca { get; set; }
+
+        [JsonIgnore]
+        public string NomeGrupo { get; set; }
     }
 }

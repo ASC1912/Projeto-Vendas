@@ -3,6 +3,7 @@ using Projeto.Models;
 using Projeto.Views.Cadastros;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks; 
 using System.Windows.Forms;
 
 namespace Projeto.Views.Consultas
@@ -12,7 +13,6 @@ namespace Projeto.Views.Consultas
         private GrupoController controller = new GrupoController();
         internal Grupo GrupoSelecionado { get; private set; }
         private frmCadastroGrupo oFrmCadastroGrupo;
-
 
         public frmConsultaGrupo()
         {
@@ -35,9 +35,9 @@ namespace Projeto.Views.Consultas
             }
         }
 
-        private void frmConsultaGrupo_Load(object sender, EventArgs e)
+        private async void frmConsultaGrupo_Load(object sender, EventArgs e)
         {
-            CarregarGrupos();
+            await CarregarGrupos();
             btnSelecionar.Visible = ModoSelecao;
 
             foreach (ColumnHeader column in listView1.Columns)
@@ -66,13 +66,12 @@ namespace Projeto.Views.Consultas
                 }
             }
         }
-
-        private void CarregarGrupos()
+        private async Task CarregarGrupos()
         {
             try
             {
                 listView1.Items.Clear();
-                List<Grupo> grupos = controller.ListarGrupos();
+                List<Grupo> grupos = await controller.ListarGrupos();
 
                 foreach (var grupo in grupos)
                 {
@@ -89,7 +88,7 @@ namespace Projeto.Views.Consultas
             }
         }
 
-        private void btnPesquisar_Click(object sender, EventArgs e)
+        private async void btnPesquisar_Click(object sender, EventArgs e)
         {
             try
             {
@@ -98,11 +97,11 @@ namespace Projeto.Views.Consultas
 
                 if (string.IsNullOrEmpty(texto))
                 {
-                    CarregarGrupos();
+                    await CarregarGrupos();
                 }
                 else if (int.TryParse(texto, out int id))
                 {
-                    Grupo grupo = controller.BuscarPorId(id);
+                    Grupo grupo = await controller.BuscarPorId(id);
 
                     if (grupo != null)
                     {
@@ -128,23 +127,23 @@ namespace Projeto.Views.Consultas
             }
         }
 
-        private void btnIncluir_Click(object sender, EventArgs e)
+        private async void btnIncluir_Click(object sender, EventArgs e)
         {
             oFrmCadastroGrupo.modoEdicao = false;
             oFrmCadastroGrupo.modoExclusao = false;
             oFrmCadastroGrupo.LimparTxt();
             oFrmCadastroGrupo.ShowDialog();
-            CarregarGrupos();
+            await CarregarGrupos();
         }
 
-        private void btnEditar_Click(object sender, EventArgs e)
+        private async void btnEditar_Click(object sender, EventArgs e)
         {
             if (listView1.SelectedItems.Count > 0)
             {
                 var itemSelecionado = listView1.SelectedItems[0];
                 int id = int.Parse(itemSelecionado.SubItems[0].Text);
 
-                Grupo grupo = controller.BuscarPorId(id);
+                Grupo grupo = await controller.BuscarPorId(id);
 
                 if (grupo != null)
                 {
@@ -154,7 +153,7 @@ namespace Projeto.Views.Consultas
                     oFrmCadastroGrupo.LimparTxt();
                     oFrmCadastroGrupo.CarregaTxt();
                     oFrmCadastroGrupo.ShowDialog();
-                    CarregarGrupos();
+                    await CarregarGrupos();
                 }
                 else
                 {
@@ -167,14 +166,14 @@ namespace Projeto.Views.Consultas
             }
         }
 
-        private void btnDeletar_Click(object sender, EventArgs e)
+        private async void btnDeletar_Click(object sender, EventArgs e)
         {
             if (listView1.SelectedItems.Count > 0)
             {
                 var itemSelecionado = listView1.SelectedItems[0];
                 int id = int.Parse(itemSelecionado.SubItems[0].Text);
 
-                Grupo grupo = controller.BuscarPorId(id);
+                Grupo grupo = await controller.BuscarPorId(id);
 
                 if (grupo != null)
                 {
@@ -188,7 +187,7 @@ namespace Projeto.Views.Consultas
                     oFrmCadastroGrupo.ShowDialog();
                     oFrmCadastroGrupo.btnSalvar.Text = "Salvar";
                     oFrmCadastroGrupo.DesbloquearTxt();
-                    CarregarGrupos();
+                    await CarregarGrupos();
                 }
                 else
                 {
@@ -201,14 +200,14 @@ namespace Projeto.Views.Consultas
             }
         }
 
-        private void btnSelecionar_Click(object sender, EventArgs e)
+        private async void btnSelecionar_Click(object sender, EventArgs e)
         {
             if (listView1.SelectedItems.Count > 0)
             {
                 var itemSelecionado = listView1.SelectedItems[0];
                 int id = int.Parse(itemSelecionado.SubItems[0].Text);
 
-                GrupoSelecionado = controller.BuscarPorId(id);
+                GrupoSelecionado = await controller.BuscarPorId(id);
 
                 if (GrupoSelecionado != null)
                 {

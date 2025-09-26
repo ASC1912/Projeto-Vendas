@@ -11,17 +11,14 @@ namespace Projeto.Views.Cadastros
 {
     public partial class frmCadastroPedido : frmBase
     {
-        // Controllers para acessar outros módulos
         private PedidoController controller = new PedidoController();
         private FuncionarioController funcionarioController = new FuncionarioController();
         private ProdutoController produtoController = new ProdutoController();
 
-        // Formulários de consulta que serão abertos
         private frmConsultaMesa oFrmConsultaMesa;
         private frmConsultaFuncionario oFrmConsultaFuncionario;
         private frmConsultaProduto oFrmConsultaProduto;
 
-        // Objeto principal e objetos selecionados
         private Pedido aPedido;
         private Mesa mesaSelecionada;
         private Funcionario funcionarioSelecionado;
@@ -33,21 +30,14 @@ namespace Projeto.Views.Cadastros
         public frmCadastroPedido()
         {
             InitializeComponent();
-            // Associa os eventos aos métodos
-            // Certifique-se de que os nomes dos botões aqui correspondem aos do seu designer
-            btnPesquisarMesa.Click += new EventHandler(btnPesquisarMesa_Click);
-            btnPesquisarFuncionario.Click += new EventHandler(btnPesquisarFuncionario_Click);
-            btnPesquisarProduto.Click += new EventHandler(btnPesquisarProduto_Click);
-            btnAdicionarProduto.Click += new EventHandler(btnAdicionar_Click);
-            btnEditarProduto.Click += new EventHandler(btnEditar_Click);
-            btnRemoverProduto.Click += new EventHandler(btnRemover_Click);
-            btnLimparProduto.Click += new EventHandler(btnLimpar_Click);
+            txtCodigo.Enabled = false;      
+            txtTotal.ReadOnly = true;
+
             listViewProdutos.SelectedIndexChanged += new EventHandler(listViewProdutos_SelectedIndexChanged);
             txtQuantidade.TextChanged += new EventHandler(CalcularTotalItem);
             txtValorUnitario.TextChanged += new EventHandler(CalcularTotalItem);
         }
 
-        // Métodos para receber os formulários de consulta da classe Interfaces
         public void setFrmConsultaMesa(object obj)
         {
             if (obj != null) oFrmConsultaMesa = (frmConsultaMesa)obj;
@@ -65,6 +55,46 @@ namespace Projeto.Views.Cadastros
         {
             if (obj != null) aPedido = (Pedido)obj;
             if (ctrl != null) controller = (PedidoController)ctrl;
+        }
+
+        public override void BloquearTxt()
+        {
+            txtMesa.Enabled = false;
+            txtFuncionario.Enabled = false;
+            txtObservacao.Enabled = false;
+            chkInativo.Enabled = false;
+            btnPesquisarMesa.Enabled = false;
+            btnPesquisarFuncionario.Enabled = false;
+
+            txtProduto.Enabled = false;
+            btnPesquisarProduto.Enabled = false;
+            txtQuantidade.Enabled = false;
+            txtValorUnitario.Enabled = false;
+            btnAdicionarProduto.Enabled = false;
+            btnEditarProduto.Enabled = false;
+            btnRemoverProduto.Enabled = false;
+            btnLimparProduto.Enabled = false;
+            listViewProdutos.Enabled = false;
+        }
+
+        public override void DesbloquearTxt()
+        {
+            txtMesa.Enabled = true;
+            txtFuncionario.Enabled = true;
+            txtObservacao.Enabled = true;
+            chkInativo.Enabled = true;
+            btnPesquisarMesa.Enabled = true;
+            btnPesquisarFuncionario.Enabled = true;
+
+            txtProduto.Enabled = true;
+            btnPesquisarProduto.Enabled = true;
+            txtQuantidade.Enabled = true;
+            txtValorUnitario.Enabled = true;
+            btnAdicionarProduto.Enabled = true;
+            btnEditarProduto.Enabled = true;
+            btnRemoverProduto.Enabled = true;
+            btnLimparProduto.Enabled = true;
+            listViewProdutos.Enabled = true;
         }
 
 
@@ -177,6 +207,26 @@ namespace Projeto.Views.Cadastros
 
         private async void btnSalvar_Click(object sender, EventArgs e)
         {
+            if (modoExclusao)
+            {
+                var confirmacao = MessageBox.Show("Tem certeza que deseja excluir este pedido?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (confirmacao == DialogResult.Yes)
+                {
+                    try
+                    {
+                        int id = int.Parse(txtCodigo.Text);
+                        await controller.Excluir(id);
+                        MessageBox.Show("Pedido excluído com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        this.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Erro ao excluir o pedido: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                return; 
+            }
+
             if (mesaSelecionada == null || funcionarioSelecionado == null)
             {
                 MessageBox.Show("É obrigatório selecionar uma mesa e um funcionário.", "Validação", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -268,7 +318,6 @@ namespace Projeto.Views.Cadastros
         {
             txtCodigo.Text = aPedido.Id.ToString();
 
-            // Await é correto aqui porque estes controllers retornam Task
             mesaSelecionada = await new MesaController().BuscarPorNumero(aPedido.MesaNumero);
             txtMesa.Text = mesaSelecionada?.NumeroMesa.ToString();
 

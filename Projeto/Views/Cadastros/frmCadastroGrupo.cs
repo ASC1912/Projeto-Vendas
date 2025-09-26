@@ -3,6 +3,8 @@ using Projeto.DAO;
 using Projeto.Models;
 using Projeto.Utils;
 using System;
+using System.Collections.Generic; 
+using System.Threading.Tasks;   
 using System.Windows.Forms;
 
 namespace Projeto.Views.Cadastros
@@ -67,7 +69,7 @@ namespace Projeto.Views.Cadastros
             lblDataModificacao.Text = $"Modificado em: {agora:dd/MM/yyyy HH:mm}";
         }
 
-        private void btnSalvar_Click(object sender, EventArgs e)
+        private async void btnSalvar_Click(object sender, EventArgs e)
         {
             if (modoExclusao)
             {
@@ -77,7 +79,7 @@ namespace Projeto.Views.Cadastros
                     try
                     {
                         int id = int.Parse(txtCodigo.Text);
-                        controller.Excluir(id);
+                        await controller.Excluir(id);
                         MessageBox.Show("Grupo excluído com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         this.Close();
                     }
@@ -108,18 +110,18 @@ namespace Projeto.Views.Cadastros
                     int id = string.IsNullOrEmpty(txtCodigo.Text) ? 0 : int.Parse(txtCodigo.Text);
                     string nome = txtNome.Text;
 
-                    var grupos = controller.ListarGrupos();
+                    List<Grupo> grupos = await controller.ListarGrupos();
                     if (Validador.VerificarDuplicidade(grupos, g =>
                         g.NomeGrupo.Trim().Equals(nome, StringComparison.OrdinalIgnoreCase)
                         && g.Id != id, "Já existe um grupo cadastrado com este nome."))
                     {
                         txtNome.Focus();
-                        return; 
+                        return;
                     }
 
                     DateTime dataCriacao = id == 0
                         ? DateTime.Now
-                        : DateTime.Parse(lblDataCriacao.Text.Replace("Criado em: ", ""));
+                        : (oGrupo?.DataCadastro ?? DateTime.Now);
 
                     DateTime dataModificacao = DateTime.Now;
 
@@ -133,7 +135,7 @@ namespace Projeto.Views.Cadastros
                         DataAlteracao = dataModificacao
                     };
 
-                    controller.Salvar(grupo);
+                    await controller.Salvar(grupo);
 
                     MessageBox.Show("Grupo salvo com sucesso!");
                     this.Close();
@@ -147,7 +149,7 @@ namespace Projeto.Views.Cadastros
 
         private void frmCadastroGrupo_Load(object sender, EventArgs e)
         {
-           
+
         }
     }
 }

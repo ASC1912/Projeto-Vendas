@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization; // Adicione este using
+using System.Text.Json.Serialization;
 
 namespace Projeto.Models
 {
