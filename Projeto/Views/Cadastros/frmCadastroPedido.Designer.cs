@@ -58,6 +58,9 @@
             this.txtObservacao = new System.Windows.Forms.TextBox();
             this.btnPesquisarMesa = new System.Windows.Forms.Button();
             this.btnPesquisarFuncionario = new System.Windows.Forms.Button();
+            this.lblQuantidadeClientes = new System.Windows.Forms.Label();
+            this.txtQuantidadeClientes = new System.Windows.Forms.TextBox();
+            this.chkFinalizado = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // txtCodigo
@@ -82,6 +85,7 @@
             this.txtFuncionario.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtFuncionario.Location = new System.Drawing.Point(392, 91);
             this.txtFuncionario.Name = "txtFuncionario";
+            this.txtFuncionario.ReadOnly = true;
             this.txtFuncionario.Size = new System.Drawing.Size(200, 22);
             this.txtFuncionario.TabIndex = 73;
             // 
@@ -99,6 +103,7 @@
             this.txtMesa.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtMesa.Location = new System.Drawing.Point(12, 91);
             this.txtMesa.Name = "txtMesa";
+            this.txtMesa.ReadOnly = true;
             this.txtMesa.Size = new System.Drawing.Size(200, 22);
             this.txtMesa.TabIndex = 72;
             // 
@@ -222,6 +227,7 @@
             // 
             this.txtProduto.Location = new System.Drawing.Point(12, 207);
             this.txtProduto.Name = "txtProduto";
+            this.txtProduto.ReadOnly = true;
             this.txtProduto.Size = new System.Drawing.Size(211, 22);
             this.txtProduto.TabIndex = 148;
             // 
@@ -319,10 +325,39 @@
             this.btnPesquisarFuncionario.UseVisualStyleBackColor = true;
             this.btnPesquisarFuncionario.Click += new System.EventHandler(this.btnPesquisarFuncionario_Click);
             // 
+            // lblQuantidadeClientes
+            // 
+            this.lblQuantidadeClientes.AutoSize = true;
+            this.lblQuantidadeClientes.Location = new System.Drawing.Point(392, 133);
+            this.lblQuantidadeClientes.Name = "lblQuantidadeClientes";
+            this.lblQuantidadeClientes.Size = new System.Drawing.Size(147, 16);
+            this.lblQuantidadeClientes.TabIndex = 168;
+            this.lblQuantidadeClientes.Text = "Quantidade de Clientes";
+            // 
+            // txtQuantidadeClientes
+            // 
+            this.txtQuantidadeClientes.Location = new System.Drawing.Point(392, 152);
+            this.txtQuantidadeClientes.Name = "txtQuantidadeClientes";
+            this.txtQuantidadeClientes.Size = new System.Drawing.Size(100, 22);
+            this.txtQuantidadeClientes.TabIndex = 167;
+            // 
+            // chkFinalizado
+            // 
+            this.chkFinalizado.AutoSize = true;
+            this.chkFinalizado.Location = new System.Drawing.Point(790, 94);
+            this.chkFinalizado.Name = "chkFinalizado";
+            this.chkFinalizado.Size = new System.Drawing.Size(91, 20);
+            this.chkFinalizado.TabIndex = 169;
+            this.chkFinalizado.Text = "Finalizado";
+            this.chkFinalizado.UseVisualStyleBackColor = true;
+            // 
             // frmCadastroPedido
             // 
             //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             //this.ClientSize = new System.Drawing.Size(1342, 681);
+            this.Controls.Add(this.chkFinalizado);
+            this.Controls.Add(this.lblQuantidadeClientes);
+            this.Controls.Add(this.txtQuantidadeClientes);
             this.Controls.Add(this.btnPesquisarFuncionario);
             this.Controls.Add(this.btnPesquisarMesa);
             this.Controls.Add(this.lblObservacao);
@@ -348,12 +383,6 @@
             this.Controls.Add(this.lblMesa);
             this.Controls.Add(this.txtMesa);
             this.Name = "frmCadastroPedido";
-            this.Controls.SetChildIndex(this.btnSair, 0);
-            this.Controls.SetChildIndex(this.txtCodigo, 0);
-            this.Controls.SetChildIndex(this.chkInativo, 0);
-            this.Controls.SetChildIndex(this.lblDataCriacao, 0);
-            this.Controls.SetChildIndex(this.lblDataModificacao, 0);
-            this.Controls.SetChildIndex(this.btnSalvar, 0);
             this.Controls.SetChildIndex(this.txtMesa, 0);
             this.Controls.SetChildIndex(this.lblMesa, 0);
             this.Controls.SetChildIndex(this.txtFuncionario, 0);
@@ -378,6 +407,15 @@
             this.Controls.SetChildIndex(this.lblObservacao, 0);
             this.Controls.SetChildIndex(this.btnPesquisarMesa, 0);
             this.Controls.SetChildIndex(this.btnPesquisarFuncionario, 0);
+            this.Controls.SetChildIndex(this.txtQuantidadeClientes, 0);
+            this.Controls.SetChildIndex(this.lblQuantidadeClientes, 0);
+            this.Controls.SetChildIndex(this.chkFinalizado, 0);
+            this.Controls.SetChildIndex(this.btnSair, 0);
+            this.Controls.SetChildIndex(this.txtCodigo, 0);
+            this.Controls.SetChildIndex(this.chkInativo, 0);
+            this.Controls.SetChildIndex(this.lblDataCriacao, 0);
+            this.Controls.SetChildIndex(this.lblDataModificacao, 0);
+            this.Controls.SetChildIndex(this.btnSalvar, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -414,5 +452,8 @@
         private System.Windows.Forms.TextBox txtObservacao;
         private System.Windows.Forms.Button btnPesquisarMesa;
         private System.Windows.Forms.Button btnPesquisarFuncionario;
+        private System.Windows.Forms.Label lblQuantidadeClientes;
+        private System.Windows.Forms.TextBox txtQuantidadeClientes;
+        private System.Windows.Forms.CheckBox chkFinalizado;
     }
 }

@@ -30,7 +30,7 @@ namespace Projeto.Views.Cadastros
         public frmCadastroPedido()
         {
             InitializeComponent();
-            txtCodigo.Enabled = false;      
+            txtCodigo.Enabled = false;
             txtTotal.ReadOnly = true;
 
             listViewProdutos.SelectedIndexChanged += new EventHandler(listViewProdutos_SelectedIndexChanged);
@@ -65,6 +65,8 @@ namespace Projeto.Views.Cadastros
             chkInativo.Enabled = false;
             btnPesquisarMesa.Enabled = false;
             btnPesquisarFuncionario.Enabled = false;
+            txtQuantidadeClientes.Enabled = false;
+            chkFinalizado.Enabled = false;
 
             txtProduto.Enabled = false;
             btnPesquisarProduto.Enabled = false;
@@ -85,6 +87,8 @@ namespace Projeto.Views.Cadastros
             chkInativo.Enabled = true;
             btnPesquisarMesa.Enabled = true;
             btnPesquisarFuncionario.Enabled = true;
+            txtQuantidadeClientes.Enabled = true;
+            chkFinalizado.Enabled = true;
 
             txtProduto.Enabled = true;
             btnPesquisarProduto.Enabled = true;
@@ -96,7 +100,6 @@ namespace Projeto.Views.Cadastros
             btnLimparProduto.Enabled = true;
             listViewProdutos.Enabled = true;
         }
-
 
         private void btnPesquisarMesa_Click(object sender, EventArgs e)
         {
@@ -224,7 +227,7 @@ namespace Projeto.Views.Cadastros
                         MessageBox.Show($"Erro ao excluir o pedido: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
-                return; 
+                return;
             }
 
             if (mesaSelecionada == null || funcionarioSelecionado == null)
@@ -246,9 +249,15 @@ namespace Projeto.Views.Cadastros
                     MesaNumero = mesaSelecionada.NumeroMesa,
                     FuncionarioId = funcionarioSelecionado.Id,
                     Observacao = txtObservacao.Text,
-                    Status = "Aberto",
+                    Status = chkFinalizado.Checked ? "Finalizado" : "Aberto",
                     Ativo = !chkInativo.Checked,
-                    DataPedido = DateTime.Now
+
+                    // --- ATUALIZAÇÃO DOS CAMPOS NOVOS ---
+                    QuantidadeClientes = int.TryParse(txtQuantidadeClientes.Text, out int qtd) ? qtd : 0,
+                    Finalizado = chkFinalizado.Checked,
+                    DataAberturaPedido = modoEdicao ? aPedido.DataAberturaPedido : DateTime.Now,
+                    DataConclusaoPedido = chkFinalizado.Checked ? (DateTime?)DateTime.Now : null
+                    // --- FIM DA ATUALIZAÇÃO ---
                 };
 
                 foreach (ListViewItem item in listViewProdutos.Items)
@@ -273,7 +282,6 @@ namespace Projeto.Views.Cadastros
             }
         }
 
-
         public override void LimparTxt()
         {
             base.LimparTxt();
@@ -284,6 +292,10 @@ namespace Projeto.Views.Cadastros
             listViewProdutos.Items.Clear();
             LimparCamposItem();
             CalcularTotalPedido();
+
+            // Limpeza dos novos campos
+            txtQuantidadeClientes.Clear();
+            chkFinalizado.Checked = false;
         }
 
         private void LimparCamposItem()
@@ -327,22 +339,31 @@ namespace Projeto.Views.Cadastros
             txtObservacao.Text = aPedido.Observacao;
             chkInativo.Checked = !aPedido.Ativo;
 
+            txtQuantidadeClientes.Text = aPedido.QuantidadeClientes.ToString();
+            chkFinalizado.Checked = aPedido.Finalizado;
+
             listViewProdutos.Items.Clear();
-            foreach (var item in aPedido.Itens)
+            if (aPedido.Itens != null)
             {
-                ListViewItem listItem = new ListViewItem(item.ProdutoId.ToString());
-                listItem.SubItems.Add(item.NomeProduto);
-                listItem.SubItems.Add("UN");
-                listItem.SubItems.Add(item.Quantidade.ToString());
-                listItem.SubItems.Add(item.PrecoUnitario.ToString("F2"));
-                listItem.SubItems.Add((item.Quantidade * item.PrecoUnitario).ToString("F2"));
+                foreach (var item in aPedido.Itens)
+                {
+                    ListViewItem listItem = new ListViewItem(item.ProdutoId.ToString());
+                    listItem.SubItems.Add(item.NomeProduto);
+                    listItem.SubItems.Add("UN");
+                    listItem.SubItems.Add(item.Quantidade.ToString());
+                    listItem.SubItems.Add(item.PrecoUnitario.ToString("F2"));
+                    listItem.SubItems.Add((item.Quantidade * item.PrecoUnitario).ToString("F2"));
 
-                listItem.Tag = produtoController.BuscarPorId(item.ProdutoId);
+                    var produtoDoItem = await produtoController.BuscarPorId(item.ProdutoId);
+                    if (produtoDoItem != null)
+                    {
+                        listItem.Tag = produtoDoItem;
+                    }
 
-                listViewProdutos.Items.Add(listItem);
+                    listViewProdutos.Items.Add(listItem);
+                }
             }
             CalcularTotalPedido();
         }
-
     }
 }

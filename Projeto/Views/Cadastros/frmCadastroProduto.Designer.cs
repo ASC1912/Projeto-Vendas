@@ -57,7 +57,7 @@
             // 
             this.chkInativo.TabIndex = 8;
             // 
-            // btnSalvar2
+            // btnSalvar
             // 
             this.btnSalvar.Location = new System.Drawing.Point(1109, 634);
             this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
@@ -92,9 +92,9 @@
             this.lblDescricao.AutoSize = true;
             this.lblDescricao.Location = new System.Drawing.Point(9, 138);
             this.lblDescricao.Name = "lblDescricao";
-            this.lblDescricao.Size = new System.Drawing.Size(69, 16);
+            this.lblDescricao.Size = new System.Drawing.Size(59, 16);
             this.lblDescricao.TabIndex = 70;
-            this.lblDescricao.Text = "Descrição";
+            this.lblDescricao.Text = "Unidade";
             // 
             // txtDescricao
             // 

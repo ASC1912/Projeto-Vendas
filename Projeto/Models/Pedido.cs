@@ -8,11 +8,16 @@ namespace Projeto.Models
         public int Id { get; set; }
         public int MesaNumero { get; set; }
         public int FuncionarioId { get; set; }
-        public int? VendaId { get; set; } // Aceita nulo por enquanto
+        public int? VendaId { get; set; }
         public string Observacao { get; set; }
         public string Status { get; set; }
-        public DateTime DataPedido { get; set; }
         public bool Ativo { get; set; }
+
+        public int QuantidadeClientes { get; set; } 
+        public bool Finalizado { get; set; } 
+        public DateTime DataAberturaPedido { get; set; } 
+        public DateTime? DataConclusaoPedido { get; set; } 
+
         public DateTime? DataCadastro { get; set; }
         public DateTime? DataAlteracao { get; set; }
 
@@ -22,6 +27,7 @@ namespace Projeto.Models
         public Pedido()
         {
             Itens = new List<ItemPedido>();
+            Finalizado = false; // Garante que todo novo pedido comece como "não finalizado".
         }
     }
 
@@ -33,8 +39,6 @@ namespace Projeto.Models
         public int Quantidade { get; set; }
         public decimal PrecoUnitario { get; set; }
         public string Status { get; set; }
-
-        // Propriedade para exibir o nome do produto
         public string NomeProduto { get; set; }
     }
 }

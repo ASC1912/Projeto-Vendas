@@ -35,7 +35,7 @@ namespace Projeto.Views.Consultas
 
         private void frmConsultaCompra_Load(object sender, EventArgs e)
         {
-            btnEditar.Enabled = false;
+            //btnEditar.Enabled = false;
             btnDeletar.Text = "Cancelar";
 
             CarregarCompras();
@@ -131,6 +131,39 @@ namespace Projeto.Views.Consultas
             oFrmCadastroCompra.LimparTxt(); 
             oFrmCadastroCompra.ShowDialog();
             CarregarCompras(); 
+        }
+
+
+        private void btnEditar_Click(object sender, EventArgs e)
+        {
+            if (listView1.SelectedItems.Count > 0)
+            {
+                var compraSelecionada = (Compra)listView1.SelectedItems[0].Tag;
+
+                Compra compraCompleta = controller.BuscarPorChave(
+                    compraSelecionada.Modelo,
+                    compraSelecionada.Serie,
+                    compraSelecionada.NumeroNota,
+                    compraSelecionada.FornecedorId
+                );
+
+                if (compraCompleta != null)
+                {
+                    oFrmCadastroCompra.ConhecaObj(compraCompleta, controller);
+                    oFrmCadastroCompra.CarregaTxt();      
+                    oFrmCadastroCompra.BloquearTxt();     
+                    oFrmCadastroCompra.btnSalvar.Enabled = false; 
+                    oFrmCadastroCompra.ShowDialog();
+                }
+                else
+                {
+                    MessageBox.Show("Não foi possível carregar os detalhes da compra.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Por favor, selecione uma compra para visualizar.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         private void btnDeletar_Click(object sender, EventArgs e) 

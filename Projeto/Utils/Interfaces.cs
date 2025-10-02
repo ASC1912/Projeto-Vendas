@@ -118,6 +118,7 @@ namespace Projeto.Utils
             oFrmCadastroPedido.setFrmConsultaFuncionario(oFrmConsultaFuncionario);
             oFrmCadastroPedido.setFrmConsultaMesa(oFrmConsultaMesa);
             oFrmCadastroPedido.setFrmConsultaProduto(oFrmConsultaProduto);
+            oFrmCadastroCompra.setFrmConsultaCondPgto(oFrmConsultaCondPgto);
         }
 
         public void PecaPaises(object obj, object ctrl)

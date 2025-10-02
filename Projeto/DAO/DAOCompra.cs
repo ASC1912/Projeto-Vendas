@@ -8,6 +8,7 @@ namespace Projeto.DAO
     internal class DAOCompra
     {
         private string connectionString = "Server=localhost;Database=sistema;Uid=root;Pwd=12345678;";
+
         public void Salvar(Compra compra)
         {
             using (MySqlConnection conn = new MySqlConnection(connectionString))
@@ -33,10 +34,10 @@ namespace Projeto.DAO
                     string insertCompraQuery = @"
                         INSERT INTO Compras (
                             Modelo, Serie, NumeroNota, FornecedorId, CondicaoPagamentoId, DataEmissao, DataChegada,
-                            ValorFrete, Seguro, Despesas, ValorTotal, Observacao, Ativo, DataCadastro, DataAlteracao
+                            ValorFrete, ValorSeguro, OutrasDespesas, ValorTotal, Observacao, Ativo, DataCadastro, DataAlteracao
                         ) VALUES (
                             @Modelo, @Serie, @NumeroNota, @FornecedorId, @CondicaoPagamentoId, @DataEmissao, @DataChegada,
-                            @ValorFrete, @Seguro, @Despesas, @ValorTotal, @Observacao, @Ativo, @DataCadastro, @DataAlteracao
+                            @ValorFrete, @ValorSeguro, @OutrasDespesas, @ValorTotal, @Observacao, @Ativo, @DataCadastro, @DataAlteracao
                         )";
 
                     using (MySqlCommand cmdCompra = new MySqlCommand(insertCompraQuery, conn, tran))
@@ -49,8 +50,8 @@ namespace Projeto.DAO
                         cmdCompra.Parameters.AddWithValue("@DataEmissao", compra.DataEmissao);
                         cmdCompra.Parameters.AddWithValue("@DataChegada", compra.DataChegada);
                         cmdCompra.Parameters.AddWithValue("@ValorFrete", compra.ValorFrete);
-                        cmdCompra.Parameters.AddWithValue("@Seguro", compra.Seguro);
-                        cmdCompra.Parameters.AddWithValue("@Despesas", compra.Despesas);
+                        cmdCompra.Parameters.AddWithValue("@ValorSeguro", compra.Seguro); 
+                        cmdCompra.Parameters.AddWithValue("@OutrasDespesas", compra.Despesas); 
                         cmdCompra.Parameters.AddWithValue("@ValorTotal", compra.ValorTotal);
                         cmdCompra.Parameters.AddWithValue("@Observacao", compra.Observacao);
                         cmdCompra.Parameters.AddWithValue("@Ativo", true);
@@ -223,8 +224,8 @@ namespace Projeto.DAO
                 DataEmissao = reader.IsDBNull(reader.GetOrdinal("DataEmissao")) ? (DateTime?)null : reader.GetDateTime("DataEmissao"),
                 DataChegada = reader.IsDBNull(reader.GetOrdinal("DataChegada")) ? (DateTime?)null : reader.GetDateTime("DataChegada"),
                 ValorFrete = reader.GetDecimal("ValorFrete"),
-                Seguro = reader.GetDecimal("Seguro"),
-                Despesas = reader.GetDecimal("Despesas"),
+                Seguro = reader.GetDecimal("ValorSeguro"), 
+                Despesas = reader.GetDecimal("OutrasDespesas"), 
                 ValorTotal = reader.GetDecimal("ValorTotal"),
                 Observacao = reader.IsDBNull(reader.GetOrdinal("Observacao")) ? null : reader.GetString("Observacao"),
                 Ativo = reader.GetBoolean("Ativo"),

@@ -81,7 +81,8 @@ namespace Projeto.Views.Consultas
                     ListViewItem item = new ListViewItem(pedido.Id.ToString());
                     item.SubItems.Add(pedido.MesaNumero.ToString());
                     item.SubItems.Add(pedido.NomeFuncionario);
-                    item.SubItems.Add(pedido.DataPedido.ToString("g")); 
+                    // --- CORREÇÃO APLICADA AQUI ---
+                    item.SubItems.Add(pedido.DataAberturaPedido.ToString("g"));
                     item.SubItems.Add(pedido.Status);
                     item.SubItems.Add(pedido.Ativo ? "Ativo" : "Inativo");
                     listView1.Items.Add(item);
@@ -145,9 +146,9 @@ namespace Projeto.Views.Consultas
                     oFrmCadastroPedido.modoExclusao = true;
                     oFrmCadastroPedido.modoEdicao = false;
                     oFrmCadastroPedido.ConhecaObj(pedido, controller);
-                    oFrmCadastroPedido.CarregaTxt();      
-                    oFrmCadastroPedido.BloquearTxt();     
-                    oFrmCadastroPedido.btnSalvar.Text = "Excluir"; 
+                    oFrmCadastroPedido.CarregaTxt();
+                    oFrmCadastroPedido.BloquearTxt();
+                    oFrmCadastroPedido.btnSalvar.Text = "Excluir";
 
                     oFrmCadastroPedido.ShowDialog();
 
@@ -186,7 +187,7 @@ namespace Projeto.Views.Consultas
                         ListViewItem item = new ListViewItem(pedido.Id.ToString());
                         item.SubItems.Add(pedido.MesaNumero.ToString());
                         item.SubItems.Add(pedido.NomeFuncionario);
-                        item.SubItems.Add(pedido.DataPedido.ToString("g"));
+                        item.SubItems.Add(pedido.DataAberturaPedido.ToString("g"));
                         item.SubItems.Add(pedido.Status);
                         item.SubItems.Add(pedido.Ativo ? "Ativo" : "Inativo");
                         listView1.Items.Add(item);

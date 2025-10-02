@@ -21,7 +21,6 @@ namespace Projeto.DAO
                     string queryPedido;
                     if (pedido.Id > 0)
                     {
-                        // Atualiza o pedido principal
                         queryPedido = @"UPDATE Pedidos SET 
                                             MesaNumero = @MesaNumero, 
                                             FuncionarioId = @FuncionarioId,
@@ -29,20 +28,23 @@ namespace Projeto.DAO
                                             Observacao = @Observacao,
                                             Status = @Status,
                                             Ativo = @Ativo,
-                                            DataAlteracao = @DataAlteracao
+                                            DataAlteracao = @DataAlteracao,
+                                            QuantidadeClientes = @QuantidadeClientes,
+                                            Finalizado = @Finalizado,
+                                            DataConclusaoPedido = @DataConclusaoPedido
                                         WHERE Id = @Id";
                     }
                     else
                     {
-                        // Insere um novo pedido
                         queryPedido = @"INSERT INTO Pedidos 
-                                      (MesaNumero, FuncionarioId, VendaId, Observacao, Status, Ativo, DataCadastro, DataAlteracao) 
-                                      VALUES (@MesaNumero, @FuncionarioId, @VendaId, @Observacao, @Status, @Ativo, @DataCadastro, @DataAlteracao);
+                                      (MesaNumero, FuncionarioId, VendaId, Observacao, Status, Ativo, DataAberturaPedido, DataAlteracao, QuantidadeClientes, Finalizado, DataConclusaoPedido, DataCadastro) 
+                                      VALUES (@MesaNumero, @FuncionarioId, @VendaId, @Observacao, @Status, @Ativo, @DataAberturaPedido, @DataAlteracao, @QuantidadeClientes, @Finalizado, @DataConclusaoPedido, @DataCadastro);
                                       SELECT LAST_INSERT_ID();";
                     }
 
                     using (MySqlCommand cmdPedido = new MySqlCommand(queryPedido, conn, transaction))
                     {
+                        // --- PARÂMETROS ATUALIZADOS ---
                         cmdPedido.Parameters.AddWithValue("@Id", pedido.Id);
                         cmdPedido.Parameters.AddWithValue("@MesaNumero", pedido.MesaNumero);
                         cmdPedido.Parameters.AddWithValue("@FuncionarioId", pedido.FuncionarioId);
@@ -51,10 +53,14 @@ namespace Projeto.DAO
                         cmdPedido.Parameters.AddWithValue("@Status", pedido.Status);
                         cmdPedido.Parameters.AddWithValue("@Ativo", pedido.Ativo);
                         cmdPedido.Parameters.AddWithValue("@DataAlteracao", DateTime.Now);
+                        cmdPedido.Parameters.AddWithValue("@QuantidadeClientes", pedido.QuantidadeClientes);
+                        cmdPedido.Parameters.AddWithValue("@Finalizado", pedido.Finalizado);
+                        cmdPedido.Parameters.AddWithValue("@DataConclusaoPedido", (object)pedido.DataConclusaoPedido ?? DBNull.Value);
 
                         if (pedido.Id == 0)
                         {
-                            cmdPedido.Parameters.AddWithValue("@DataCadastro", DateTime.Now);
+                            cmdPedido.Parameters.AddWithValue("@DataAberturaPedido", pedido.DataAberturaPedido);
+                            cmdPedido.Parameters.AddWithValue("@DataCadastro", DateTime.Now); // Adicionado DataCadastro
                             pedido.Id = Convert.ToInt32(cmdPedido.ExecuteScalar());
                         }
                         else
@@ -63,7 +69,6 @@ namespace Projeto.DAO
                         }
                     }
 
-                    // Deleta os itens existentes para reinseri-los (abordagem simples para atualização)
                     if (pedido.Id > 0)
                     {
                         string deleteItensQuery = "DELETE FROM ItensPedidos WHERE pedidos_id = @PedidoId";
@@ -74,7 +79,6 @@ namespace Projeto.DAO
                         }
                     }
 
-                    // Insere os novos itens do pedido
                     string queryItens = @"INSERT INTO ItensPedidos 
                                         (pedidos_id, produto_id, numero_mesa, quantidade, precoUnitario, Status) 
                                         VALUES (@PedidoId, @ProdutoId, @NumeroMesa, @Quantidade, @PrecoUnitario, @Status)";
@@ -110,7 +114,6 @@ namespace Projeto.DAO
                 MySqlTransaction transaction = conn.BeginTransaction();
                 try
                 {
-                    // Exclui os itens do pedido primeiro
                     string queryItens = "DELETE FROM ItensPedidos WHERE pedidos_id = @Id";
                     using (MySqlCommand cmdItens = new MySqlCommand(queryItens, conn, transaction))
                     {
@@ -118,7 +121,6 @@ namespace Projeto.DAO
                         cmdItens.ExecuteNonQuery();
                     }
 
-                    // Exclui o pedido principal
                     string queryPedido = "DELETE FROM Pedidos WHERE Id = @Id";
                     using (MySqlCommand cmdPedido = new MySqlCommand(queryPedido, conn, transaction))
                     {
@@ -142,6 +144,7 @@ namespace Projeto.DAO
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
+                // --- SELECT ATUALIZADO ---
                 string query = @"SELECT p.*, f.Funcionario AS NomeFuncionario FROM Pedidos p
                                  LEFT JOIN Funcionarios f ON p.FuncionarioId = f.Id
                                  WHERE p.Id = @Id";
@@ -161,9 +164,12 @@ namespace Projeto.DAO
                                 VendaId = reader.IsDBNull(reader.GetOrdinal("VendaId")) ? (int?)null : reader.GetInt32("VendaId"),
                                 Observacao = reader.GetString("Observacao"),
                                 Status = reader.GetString("Status"),
-                                DataPedido = reader.GetDateTime("DataPedido"),
                                 Ativo = reader.GetBoolean("Ativo"),
-                                NomeFuncionario = reader.GetString("NomeFuncionario")
+                                NomeFuncionario = reader.GetString("NomeFuncionario"),
+                                QuantidadeClientes = reader.IsDBNull(reader.GetOrdinal("QuantidadeClientes")) ? 0 : reader.GetInt32("QuantidadeClientes"),
+                                Finalizado = reader.GetBoolean("Finalizado"),
+                                DataAberturaPedido = reader.GetDateTime("DataAberturaPedido"),
+                                DataConclusaoPedido = reader.IsDBNull(reader.GetOrdinal("DataConclusaoPedido")) ? (DateTime?)null : reader.GetDateTime("DataConclusaoPedido")
                             };
                         }
                     }
@@ -207,7 +213,7 @@ namespace Projeto.DAO
                 conn.Open();
                 string query = @"SELECT p.*, f.Funcionario AS NomeFuncionario FROM Pedidos p
                                  LEFT JOIN Funcionarios f ON p.FuncionarioId = f.Id
-                                 ORDER BY p.DataPedido DESC";
+                                 ORDER BY p.DataAberturaPedido DESC";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
@@ -223,9 +229,12 @@ namespace Projeto.DAO
                                 VendaId = reader.IsDBNull(reader.GetOrdinal("VendaId")) ? (int?)null : reader.GetInt32("VendaId"),
                                 Observacao = reader.GetString("Observacao"),
                                 Status = reader.GetString("Status"),
-                                DataPedido = reader.GetDateTime("DataPedido"),
                                 Ativo = reader.GetBoolean("Ativo"),
-                                NomeFuncionario = reader.GetString("NomeFuncionario")
+                                NomeFuncionario = reader.GetString("NomeFuncionario"),
+                                QuantidadeClientes = reader.IsDBNull(reader.GetOrdinal("QuantidadeClientes")) ? 0 : reader.GetInt32("QuantidadeClientes"),
+                                Finalizado = reader.GetBoolean("Finalizado"),
+                                DataAberturaPedido = reader.GetDateTime("DataAberturaPedido"),
+                                DataConclusaoPedido = reader.IsDBNull(reader.GetOrdinal("DataConclusaoPedido")) ? (DateTime?)null : reader.GetDateTime("DataConclusaoPedido")
                             });
                         }
                     }

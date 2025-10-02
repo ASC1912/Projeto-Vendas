@@ -56,6 +56,10 @@
             // 
             this.btnDeletar.Click += new System.EventHandler(this.btnDeletar_Click);
             // 
+            // btnEditar
+            // 
+            this.btnEditar.Click += new System.EventHandler(this.btnEditar_Click);
+            // 
             // btnIncluir
             // 
             this.btnIncluir.Click += new System.EventHandler(this.btnIncluir_Click);
@@ -102,6 +106,7 @@
             //this.ClientSize = new System.Drawing.Size(1342, 681);
             this.Name = "frmConsultaCompra";
             this.Text = "Consulta Compra";
+            this.Load += new System.EventHandler(this.frmConsultaCompra_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

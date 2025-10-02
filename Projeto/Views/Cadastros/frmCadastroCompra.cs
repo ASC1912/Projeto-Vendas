@@ -16,11 +16,14 @@ namespace Projeto.Views.Cadastros
     {
         private Compra aCompra; 
         private CompraController controller = new CompraController();
+        private FornecedorController fornecedorController = new FornecedorController(); 
+        private ProdutoController produtoController = new ProdutoController();
+        private CondicaoPagamentoController condicaoPagamentoController = new CondicaoPagamentoController();
+
         private frmConsultaFornecedor oFrmConsultaFornecedor;
         private frmConsultaProduto oFrmConsultaProduto;
         private frmConsultaCondPgto oFrmConsultaCondPgto;
         private Produto produtoSelecionado; 
-
 
         private List<Control> parte1Controles;
         private List<Control> parte2Controles;
@@ -56,28 +59,31 @@ namespace Projeto.Views.Cadastros
             }
         }
 
+
         private void AgruparControles()
         {
             parte1Controles = new List<Control>
             {
-                txtCodigo, txtSerie, txtNumero, txtIDFornecedor,
+                txtCodigo, txtSerie, txtNumero, txtIDFornecedor, 
                 txtFornecedor, btnPesquisarFornecedor, dtpEmissao, dtpChegada
             };
 
             parte2Controles = new List<Control>
             {
+                txtIdProduto, 
                 txtProduto, btnPesquisarProduto, txtQuantidade,
                 txtValorUnitario, txtTotal, btnAdicionarProduto,
                 btnEditarProduto, btnRemoverProduto, btnLimparProduto,
-                listViewProdutos,
-                txtFrete,
-                txtSeguro,
-                txtDespesas,
-                txtValorTotal
+                listViewProdutos
             };
 
             parte3Controles = new List<Control>
             {
+                txtFrete,
+                txtSeguro,
+                txtDespesas,
+                txtValorTotal,
+                txtIdCondPgto, 
                 txtCondPgto,
                 btnAdicionarCondPgto,
                 btnLimparCondPgto,
@@ -124,6 +130,8 @@ namespace Projeto.Views.Cadastros
             dtpEmissao.Value = DateTime.Now;
             dtpChegada.Value = DateTime.Now;
 
+            txtIdProduto.Clear();
+
             txtProduto.Clear();
             txtQuantidade.Clear();
             txtValorUnitario.Clear();
@@ -134,6 +142,9 @@ namespace Projeto.Views.Cadastros
             txtSeguro.Clear();
             txtDespesas.Clear();
             txtValorTotal.Clear();
+
+            txtIdCondPgto.Clear();
+
             txtCondPgto.Clear();
             listViewCondPgto.Items.Clear();
 
@@ -163,7 +174,7 @@ namespace Projeto.Views.Cadastros
                 {
                     ListViewItem item = new ListViewItem(itemCompra.ProdutoId.ToString());
                     item.SubItems.Add(itemCompra.NomeProduto);
-                    item.SubItems.Add("UN"); // Unidade
+                    item.SubItems.Add("UN"); 
                     item.SubItems.Add(itemCompra.Quantidade.ToString());
                     item.SubItems.Add(itemCompra.ValorUnitario.ToString("F2"));
                     item.SubItems.Add(itemCompra.ValorTotalItem.ToString("F2"));
@@ -182,24 +193,114 @@ namespace Projeto.Views.Cadastros
                 txtCondPgto.Tag = aCompra.CondicaoPagamentoId.Value;
             }
 
-            //listViewCondPgto.Items.Clear();
-            /*
-            if (aCompra.oCondicaoPagamento != null && aCompra.oCondicaoPagamento.Parcelas != null)
-            {
-                // Esta lógica é idêntica à que você já tem no btnAdicionarCondPgto_Click
-                foreach (var parcela in aCompra.oCondicaoPagamento.Parcelas)
-                {
-                    ListViewItem item = new ListViewItem(parcela.NumParcela.ToString());
-                    item.SubItems.Add(parcela.PrazoDias.ToString());
-                    item.SubItems.Add(parcela.Porcentagem.ToString("N2") + "%");
-                    item.SubItems.Add(parcela.FormaPagamento?.Descricao ?? "N/D");
-                    listViewCondPgto.Items.Add(item);
-                }
-            }
-            */
-
             lblDataCriacao.Text = aCompra.DataCadastro.HasValue ? $"Criado em: {aCompra.DataCadastro.Value:dd/MM/yyyy HH:mm}" : "Criado em: -";
             lblDataModificacao.Text = aCompra.DataAlteracao.HasValue ? $"Modificado em: {aCompra.DataAlteracao.Value:dd/MM/yyyy HH:mm}" : "Modificado em: -";
+        }
+
+        private async void txtIDFornecedor_Leave(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtIDFornecedor.Text))
+            {
+                txtFornecedor.Clear();
+                return;
+            }
+
+            if (!int.TryParse(txtIDFornecedor.Text, out int id))
+            {
+                MessageBox.Show("O ID do Fornecedor deve ser um número.", "Inválido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            Fornecedor fornecedor = await fornecedorController.BuscarPorId(id);
+
+            if (fornecedor != null)
+            {
+                txtFornecedor.Text = fornecedor.Nome;
+            }
+            else
+            {
+                MessageBox.Show("Fornecedor não encontrado.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtFornecedor.Clear();
+            }
+        }
+
+        private async void txtIdProduto_Leave(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtIdProduto.Text))
+            {
+                txtProduto.Clear();
+                txtValorUnitario.Clear();
+                produtoSelecionado = null;
+                return;
+            }
+
+            if (!int.TryParse(txtIdProduto.Text, out int id))
+            {
+                MessageBox.Show("O ID do produto deve ser um número.", "Inválido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            Produto produto = await produtoController.BuscarPorId(id);
+
+            if (produto != null)
+            {
+                produtoSelecionado = produto;
+                txtProduto.Text = produto.NomeProduto;
+                txtValorUnitario.Text = produto.Preco.ToString("F2");
+                txtQuantidade.Focus();
+            }
+            else
+            {
+                MessageBox.Show("Produto não encontrado.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtProduto.Clear();
+                txtValorUnitario.Clear();
+                produtoSelecionado = null;
+            }
+        }
+
+        private async void txtIdCondPgto_Leave(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtIdCondPgto.Text))
+            {
+                txtCondPgto.Clear();
+                listViewCondPgto.Items.Clear();
+                txtCondPgto.Tag = null;
+                return;
+            }
+
+            if (!int.TryParse(txtIdCondPgto.Text, out int id))
+            {
+                MessageBox.Show("O ID da Condição de Pagamento deve ser um número.", "Inválido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            CondicaoPagamento condicao = await condicaoPagamentoController.BuscarPorId(id);
+
+            if (condicao != null)
+            {
+                txtCondPgto.Text = condicao.Descricao;
+                txtCondPgto.Tag = condicao.Id;
+
+                listViewCondPgto.Items.Clear();
+                if (condicao.Parcelas != null)
+                {
+                    foreach (var parcela in condicao.Parcelas)
+                    {
+                        ListViewItem item = new ListViewItem(parcela.NumParcela.ToString());
+                        item.SubItems.Add(parcela.PrazoDias.ToString());
+                        item.SubItems.Add(parcela.Porcentagem.ToString("N2") + "%");
+                        item.SubItems.Add(parcela.FormaPagamento?.Descricao ?? "N/D");
+                        listViewCondPgto.Items.Add(item);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Condição de Pagamento não encontrada.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtCondPgto.Clear();
+                listViewCondPgto.Items.Clear();
+                txtCondPgto.Tag = null;
+            }
         }
 
         public override void BloquearTxt()
@@ -240,6 +341,30 @@ namespace Projeto.Views.Cadastros
                     txtProduto.Focus(); 
                 }
             }
+        }
+
+        private void CalcularTotalItem()
+        {
+            if (decimal.TryParse(txtQuantidade.Text, out decimal quantidade) &&
+                decimal.TryParse(txtValorUnitario.Text, out decimal valorUnitario))
+            {
+                decimal totalItem = quantidade * valorUnitario;
+                txtTotal.Text = totalItem.ToString("F2");
+            }
+            else
+            {
+                txtTotal.Text = "0.00";
+            }
+        }
+
+        private void txtQuantidade_TextChanged(object sender, EventArgs e)
+        {
+            CalcularTotalItem();
+        }
+
+        private void txtValorUnitario_TextChanged(object sender, EventArgs e)
+        {
+            CalcularTotalItem();
         }
 
         private void btnAdicionarProduto_Click(object sender, EventArgs e)
@@ -348,6 +473,7 @@ namespace Projeto.Views.Cadastros
                 this.produtoSelecionado = oFrmConsultaProduto.ProdutoSelecionado;
 
                 txtProduto.Text = this.produtoSelecionado.NomeProduto;
+                txtIdProduto.Text = this.produtoSelecionado.Id.ToString();
                 txtValorUnitario.Text = this.produtoSelecionado.Preco.ToString("F2");
                 txtQuantidade.Focus();
             }
@@ -370,6 +496,7 @@ namespace Projeto.Views.Cadastros
             {
                 var condicao = oFrmConsultaCondPgto.CondicaoSelecionado;
 
+                txtIdCondPgto.Text = condicao.Id.ToString();
                 txtCondPgto.Text = condicao.Descricao;
                 txtCondPgto.Tag = condicao.Id; 
 
@@ -387,6 +514,12 @@ namespace Projeto.Views.Cadastros
                 }
 
                 HabilitarControles(parte2Controles, false);
+                btnLimparProduto.Enabled = true;
+
+                txtFrete.Enabled = false;
+                txtSeguro.Enabled = false;
+                txtDespesas.Enabled = false;
+                txtValorTotal.Enabled = false; 
             }
 
             oFrmConsultaCondPgto.ModoSelecao = false;
@@ -394,7 +527,7 @@ namespace Projeto.Views.Cadastros
 
         private void btnSalvar_Click(object sender, EventArgs e)
         {
-            if (!ValidarParte1()) 
+            if (!ValidarParte1())
             {
                 MessageBox.Show("Os dados do cabeçalho da nota (Modelo, Série, Número, Fornecedor) são obrigatórios.", "Validação", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -425,20 +558,25 @@ namespace Projeto.Views.Cadastros
 
                 foreach (ListViewItem item in listViewProdutos.Items)
                 {
-                    ItemCompra novoItem = new ItemCompra();
-
-                    novoItem.ProdutoId = int.Parse(item.SubItems[0].Text);
-                    novoItem.Quantidade = decimal.Parse(item.SubItems[3].Text);
-                    novoItem.ValorUnitario = decimal.Parse(item.SubItems[4].Text);
-                    novoItem.ValorTotalItem = decimal.Parse(item.SubItems[5].Text);
-
+                    ItemCompra novoItem = new ItemCompra
+                    {
+                        ProdutoId = int.Parse(item.SubItems[0].Text),
+                        Quantidade = decimal.Parse(item.SubItems[3].Text),
+                        ValorUnitario = decimal.Parse(item.SubItems[4].Text),
+                        ValorTotalItem = decimal.Parse(item.SubItems[5].Text)
+                    };
                     novaCompra.Itens.Add(novoItem);
+                }
+
+                if (txtCondPgto.Tag != null)
+                {
+                    novaCompra.CondicaoPagamentoId = (int)txtCondPgto.Tag;
                 }
 
                 controller.Salvar(novaCompra);
 
                 MessageBox.Show("Compra salva com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                this.Close(); 
+                this.Close();
             }
             catch (InvalidOperationException opEx)
             {
@@ -452,18 +590,22 @@ namespace Projeto.Views.Cadastros
 
         private void btnLimparProduto_Click(object sender, EventArgs e)
         {
-            listViewProdutos.Items.Clear();
-
-            ConfigurarEstadoInicial();
+            LimparTxt();
         }
 
         private void btnLimparCondPgto_Click(object sender, EventArgs e)
         {
             listViewCondPgto.Items.Clear();
             txtCondPgto.Clear();
-            txtCondPgto.Tag = null; 
+            txtIdCondPgto.Clear(); 
+            txtCondPgto.Tag = null;
 
             HabilitarControles(parte2Controles, true);
+
+            txtFrete.Enabled = true;
+            txtSeguro.Enabled = true;
+            txtDespesas.Enabled = true;
+            txtValorTotal.Enabled = true;
         }
     }
 }
