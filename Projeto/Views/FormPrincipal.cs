@@ -36,6 +36,7 @@ namespace Projeto
         Compra aCompra = new Compra();
         Mesa aMesa = new Mesa(); 
         Pedido oPedido = new Pedido(); 
+        UnidadeMedida aUnidadeMedida = new UnidadeMedida(); 
 
         PaisController CtrlPais = new PaisController();
         EstadoController CtrlEstado = new EstadoController();
@@ -53,6 +54,7 @@ namespace Projeto
         CompraController CtrlCompra = new CompraController();
         MesaController CtrlMesa = new MesaController(); 
         PedidoController CtrlPedido = new PedidoController(); 
+        UnidadeMedidaController CtrlUnidadeMedida = new UnidadeMedidaController();
         public FormPrincipal()
         {
             InitializeComponent();
@@ -144,6 +146,11 @@ namespace Projeto
         private void pedidosToolStripMenuItem_Click(object sender, EventArgs e)
         {
             aInter.PecaPedido(oPedido, CtrlPedido);
+        }
+
+        private void unidadesDeMedidaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            aInter.PecaUnidadeMedida(aUnidadeMedida, CtrlUnidadeMedida);
         }
     }
 }

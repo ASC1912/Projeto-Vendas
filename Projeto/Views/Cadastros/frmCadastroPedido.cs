@@ -128,7 +128,7 @@ namespace Projeto.Views.Cadastros
             {
                 produtoSelecionado = oFrmConsultaProduto.ProdutoSelecionado;
                 txtProduto.Text = produtoSelecionado.NomeProduto;
-                txtValorUnitario.Text = produtoSelecionado.Preco.ToString("F2");
+                txtValorUnitario.Text = produtoSelecionado.PrecoCusto.ToString("F2");
                 txtQuantidade.Focus();
             }
         }
@@ -252,12 +252,10 @@ namespace Projeto.Views.Cadastros
                     Status = chkFinalizado.Checked ? "Finalizado" : "Aberto",
                     Ativo = !chkInativo.Checked,
 
-                    // --- ATUALIZAÇÃO DOS CAMPOS NOVOS ---
                     QuantidadeClientes = int.TryParse(txtQuantidadeClientes.Text, out int qtd) ? qtd : 0,
                     Finalizado = chkFinalizado.Checked,
                     DataAberturaPedido = modoEdicao ? aPedido.DataAberturaPedido : DateTime.Now,
                     DataConclusaoPedido = chkFinalizado.Checked ? (DateTime?)DateTime.Now : null
-                    // --- FIM DA ATUALIZAÇÃO ---
                 };
 
                 foreach (ListViewItem item in listViewProdutos.Items)

@@ -14,8 +14,14 @@ namespace Projeto.Models
         [JsonPropertyName("descricao")]
         public string Descricao { get; set; }
 
-        [JsonPropertyName("preco")]
-        public decimal Preco { get; set; }
+        [JsonPropertyName("precoCusto")]
+        public decimal PrecoCusto { get; set; } 
+
+        [JsonPropertyName("precoVenda")]
+        public decimal PrecoVenda { get; set; } 
+
+        [JsonPropertyName("porcentagemLucro")]
+        public decimal PorcentagemLucro { get; set; } 
 
         [JsonPropertyName("estoque")]
         public int Estoque { get; set; }
@@ -25,6 +31,9 @@ namespace Projeto.Models
 
         [JsonPropertyName("grupoId")]
         public int? GrupoId { get; set; }
+
+        [JsonPropertyName("unidadeMedidaId")]
+        public int? UnidadeMedidaId { get; set; }
 
         [JsonPropertyName("ativo")]
         public bool Ativo { get; set; }
@@ -40,5 +49,8 @@ namespace Projeto.Models
 
         [JsonIgnore]
         public string NomeGrupo { get; set; }
+
+        [JsonIgnore]
+        public string NomeUnidadeMedida { get; set; }
     }
 }

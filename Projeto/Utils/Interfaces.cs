@@ -27,6 +27,7 @@ namespace Projeto.Utils
         frmConsultaCompra oFrmConsultaCompra;
         frmConsultaPedido oFrmConsultaPedido;
         frmConsultaMesa oFrmConsultaMesa;
+        frmConsultaUnidadeMedida oFrmConsultaUnidadeMedida;
 
         frmCadastroPais oFrmCadastroPais;
         frmCadastroEstado oFrmCadastroEstado;
@@ -44,6 +45,7 @@ namespace Projeto.Utils
         frmCadastroCompra oFrmCadastroCompra;
         frmCadastroPedido oFrmCadastroPedido;
         frmCadastroMesa oFrmCadastroMesa;
+        frmCadastroUnidadeMedida oFrmCadastroUnidadeMedida;
 
 
         public Interfaces()
@@ -64,6 +66,7 @@ namespace Projeto.Utils
             oFrmConsultaCompra = new frmConsultaCompra();
             oFrmConsultaMesa = new frmConsultaMesa();
             oFrmConsultaPedido = new frmConsultaPedido();
+            oFrmConsultaUnidadeMedida = new frmConsultaUnidadeMedida();
 
             oFrmCadastroPais = new frmCadastroPais();
             oFrmCadastroEstado = new frmCadastroEstado();
@@ -81,6 +84,7 @@ namespace Projeto.Utils
             oFrmCadastroCompra = new frmCadastroCompra();
             oFrmCadastroMesa = new frmCadastroMesa();
             oFrmCadastroPedido = new frmCadastroPedido();
+            oFrmCadastroUnidadeMedida = new frmCadastroUnidadeMedida();
 
             oFrmConsultaPais.setFrmCadastro(oFrmCadastroPais);
             oFrmConsultaEstado.setFrmCadastro(oFrmCadastroEstado);
@@ -98,6 +102,7 @@ namespace Projeto.Utils
             oFrmConsultaCompra.setFrmCadastro(oFrmCadastroCompra);
             oFrmConsultaMesa.setFrmCadastro(oFrmCadastroMesa);      
             oFrmConsultaPedido.setFrmCadastro(oFrmCadastroPedido);
+            oFrmConsultaUnidadeMedida.setFrmCadastro(oFrmCadastroUnidadeMedida);
 
             oFrmCadastroEstado.setFrmConsultaPais(oFrmConsultaPais);
             oFrmCadastroCidade.setFrmConsultaEstado(oFrmConsultaEstado);
@@ -119,6 +124,9 @@ namespace Projeto.Utils
             oFrmCadastroPedido.setFrmConsultaMesa(oFrmConsultaMesa);
             oFrmCadastroPedido.setFrmConsultaProduto(oFrmConsultaProduto);
             oFrmCadastroCompra.setFrmConsultaCondPgto(oFrmConsultaCondPgto);
+            oFrmCadastroProduto.setFrmConsultaUnidadeMedida(oFrmConsultaUnidadeMedida);
+            oFrmCadastroProduto.setFrmConsultaFornecedor(oFrmConsultaFornecedor);
+
         }
 
         public void PecaPaises(object obj, object ctrl)
@@ -215,6 +223,12 @@ namespace Projeto.Utils
         {
             oFrmConsultaPedido.ConhecaObj(obj, ctrl);
             oFrmConsultaPedido.ShowDialog();
+        }
+
+        public void PecaUnidadeMedida(object obj, object ctrl)
+        {
+            oFrmConsultaUnidadeMedida.ConhecaObj(obj, ctrl);
+            oFrmConsultaUnidadeMedida.ShowDialog();
         }
     }
 }

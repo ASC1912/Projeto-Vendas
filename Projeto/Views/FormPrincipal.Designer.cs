@@ -46,6 +46,7 @@
             this.comprasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mesasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pedidosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.unidadesDeMedidaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -78,7 +79,8 @@
             this.veículosToolStripMenuItem,
             this.comprasToolStripMenuItem,
             this.mesasToolStripMenuItem,
-            this.pedidosToolStripMenuItem});
+            this.pedidosToolStripMenuItem,
+            this.unidadesDeMedidaToolStripMenuItem});
             this.consultaToolStripMenuItem.Name = "consultaToolStripMenuItem";
             this.consultaToolStripMenuItem.Size = new System.Drawing.Size(80, 24);
             this.consultaToolStripMenuItem.Text = "Consulta";
@@ -195,6 +197,13 @@
             this.pedidosToolStripMenuItem.Text = "Pedidos";
             this.pedidosToolStripMenuItem.Click += new System.EventHandler(this.pedidosToolStripMenuItem_Click);
             // 
+            // unidadesDeMedidaToolStripMenuItem
+            // 
+            this.unidadesDeMedidaToolStripMenuItem.Name = "unidadesDeMedidaToolStripMenuItem";
+            this.unidadesDeMedidaToolStripMenuItem.Size = new System.Drawing.Size(255, 26);
+            this.unidadesDeMedidaToolStripMenuItem.Text = "Unidades de Medida";
+            this.unidadesDeMedidaToolStripMenuItem.Click += new System.EventHandler(this.unidadesDeMedidaToolStripMenuItem_Click);
+            // 
             // FormPrincipal
             // 
             this.ClientSize = new System.Drawing.Size(1342, 721);
@@ -230,6 +239,7 @@
         private System.Windows.Forms.ToolStripMenuItem comprasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mesasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pedidosToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem unidadesDeMedidaToolStripMenuItem;
     }
 }
 

@@ -47,7 +47,7 @@ namespace Projeto.Views.Consultas
                     ListViewItem item = new ListViewItem(produto.Id.ToString());
                     item.SubItems.Add(produto.NomeProduto);
                     item.SubItems.Add(produto.Descricao);
-                    item.SubItems.Add(produto.Preco.ToString("F2"));
+                    item.SubItems.Add(produto.PrecoCusto.ToString("F2"));
                     item.SubItems.Add(produto.Estoque.ToString());
                     item.SubItems.Add(produto.NomeMarca ?? "");
                     item.SubItems.Add(produto.NomeGrupo ?? "");
@@ -82,7 +82,7 @@ namespace Projeto.Views.Consultas
                         ListViewItem item = new ListViewItem(produto.Id.ToString());
                         item.SubItems.Add(produto.NomeProduto);
                         item.SubItems.Add(produto.Descricao);
-                        item.SubItems.Add(produto.Preco.ToString("F2"));
+                        item.SubItems.Add(produto.PrecoCusto.ToString("F2"));
                         item.SubItems.Add(produto.Estoque.ToString());
                         item.SubItems.Add(produto.NomeMarca ?? "");
                         item.SubItems.Add(produto.NomeGrupo ?? "");

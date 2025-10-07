@@ -246,7 +246,7 @@ namespace Projeto.Views.Cadastros
             {
                 produtoSelecionado = produto;
                 txtProduto.Text = produto.NomeProduto;
-                txtValorUnitario.Text = produto.Preco.ToString("F2");
+                txtValorUnitario.Text = produto.PrecoCusto.ToString("F2");
                 txtQuantidade.Focus();
             }
             else
@@ -474,7 +474,7 @@ namespace Projeto.Views.Cadastros
 
                 txtProduto.Text = this.produtoSelecionado.NomeProduto;
                 txtIdProduto.Text = this.produtoSelecionado.Id.ToString();
-                txtValorUnitario.Text = this.produtoSelecionado.Preco.ToString("F2");
+                txtValorUnitario.Text = this.produtoSelecionado.PrecoCusto.ToString("F2");
                 txtQuantidade.Focus();
             }
 

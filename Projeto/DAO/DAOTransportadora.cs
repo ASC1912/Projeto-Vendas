@@ -121,7 +121,7 @@ namespace Projeto.DAO
             return null;
         }
 
-        public List<Transportadora> ListarTransportadoras() // Corrigido nome do método
+        public List<Transportadora> ListarTransportadoras() 
         {
             List<Transportadora> lista = new List<Transportadora>();
             using (MySqlConnection conn = new MySqlConnection(connectionString))
