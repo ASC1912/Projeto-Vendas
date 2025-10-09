@@ -12,22 +12,18 @@ namespace Projeto.Views.Cadastros
 {
     public partial class frmCadastroProduto : frmBase
     {
-        // Declaração de Models e Controllers
         Produto oProduto;
         private ProdutoController controller = new ProdutoController();
         private ProdutoFornecedorController pfController = new ProdutoFornecedorController();
         private FornecedorController fornController = new FornecedorController();
 
-        // Formulários de Consulta
         private frmConsultaGrupo oFrmConsultaGrupo;
         private frmConsultaMarca oFrmConsultaMarca;
         private frmConsultaUnidadeMedida oFrmConsultaUnidadeMedida;
         private frmConsultaFornecedor oFrmConsultaFornecedor;
 
-        // Lista temporária para gerenciar os fornecedores na tela
         private List<ProdutoFornecedor> listaProdutoFornecedor = new List<ProdutoFornecedor>();
 
-        // IDs selecionados
         private int marcaSelecionadoId = -1;
         private int grupoSelecionadoId = -1;
         private int unidadeSelecionadaId = -1;
@@ -40,21 +36,19 @@ namespace Projeto.Views.Cadastros
             InitializeComponent();
             txtCodigo.Enabled = false;
 
-            // Configurações dos campos de texto
             txtUnidade.ReadOnly = true;
             txtMarca.ReadOnly = true;
             txtGrupo.ReadOnly = true;
             txtFornecedor.ReadOnly = true;
-            txtPrecoVenda.ReadOnly = true; // Renomeado de txtValorVenda
-            txtValorCompraAnterior.ReadOnly = true;
+            txtPrecoVenda.ReadOnly = true;
 
-            // Adiciona os eventos para o cálculo automático de preço
             txtPrecoCusto.TextChanged += CalcularPrecoVenda;
             txtPorcentagemLucro.TextChanged += CalcularPrecoVenda;
             txtPrecoVenda.Leave += CalcularPorcentagemLucro;
+
+            txtCodFornecedor.Leave += new System.EventHandler(this.txtCodFornecedor_Leave);
         }
 
-        #region Conexões com outros formulários
         public override void ConhecaObj(object obj, object ctrl)
         {
             if (obj != null) oProduto = (Produto)obj;
@@ -80,9 +74,7 @@ namespace Projeto.Views.Cadastros
         {
             if (obj != null) oFrmConsultaFornecedor = (frmConsultaFornecedor)obj;
         }
-        #endregion
-
-        #region Manipulação da Interface (UI)
+       
         public async override void CarregaTxt()
         {
             txtCodigo.Text = oProduto.Id.ToString();
@@ -143,9 +135,7 @@ namespace Projeto.Views.Cadastros
             lblDataCriacao.Text = $"Criado em: {agora:dd/MM/yyyy HH:mm}";
             lblDataModificacao.Text = $"Modificado em: {agora:dd/MM/yyyy HH:mm}";
         }
-        #endregion
 
-        #region Eventos de Clique dos Botões
         private async void btnSalvar_Click(object sender, EventArgs e)
         {
             if (modoExclusao)
@@ -155,14 +145,12 @@ namespace Projeto.Views.Cadastros
                 {
                     try
                     {
-                        // Antes de excluir o produto, removemos os vínculos
                         var fornecedoresVinculados = await pfController.ListarPorProduto(int.Parse(txtCodigo.Text));
                         foreach (var vinculo in fornecedoresVinculados)
                         {
                             await pfController.Excluir(vinculo);
                         }
 
-                        // Agora excluímos o produto
                         await controller.Excluir(int.Parse(txtCodigo.Text));
 
                         MessageBox.Show("Produto excluído com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -200,9 +188,6 @@ namespace Projeto.Views.Cadastros
 
                 await controller.Salvar(produto);
 
-                // AVISO: A lógica de sincronizar fornecedores para um NOVO produto precisaria
-                // de uma segunda busca para obter o ID. Deixaremos isso para um próximo passo.
-                // Por enquanto, a sincronização funcionará apenas na EDIÇÃO.
                 if (produto.Id > 0)
                 {
                     var fornecedoresNoBanco = await pfController.ListarPorProduto(produto.Id);
@@ -267,26 +252,60 @@ namespace Projeto.Views.Cadastros
             }
         }
 
-        private async void btnPesquisarFornecedor_Click(object sender, EventArgs e)
+        private void btnPesquisarFornecedor_Click(object sender, EventArgs e)
         {
             oFrmConsultaFornecedor.ModoSelecao = true;
             if (oFrmConsultaFornecedor.ShowDialog() == DialogResult.OK && oFrmConsultaFornecedor.FornecedorSelecionado != null)
             {
                 var fornecedor = oFrmConsultaFornecedor.FornecedorSelecionado;
-
-                if (listaProdutoFornecedor.Any(pf => pf.FornecedorId == fornecedor.Id))
-                {
-                    MessageBox.Show("Este fornecedor já foi adicionado.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-
-                listaProdutoFornecedor.Add(new ProdutoFornecedor { FornecedorId = fornecedor.Id });
-                await CarregarFornecedoresNaListView();
+                txtCodFornecedor.Text = fornecedor.Id.ToString();
+                txtFornecedor.Text = fornecedor.Nome;
             }
         }
-        #endregion
 
-        #region Lógica de Cálculo e Eventos de Leave
+        private async void btnAdicionarFornecedor_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtCodFornecedor.Text))
+            {
+                MessageBox.Show("Pesquise e selecione um fornecedor antes de adicionar.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            int fornecedorId = int.Parse(txtCodFornecedor.Text);
+
+            if (listaProdutoFornecedor.Any(pf => pf.FornecedorId == fornecedorId))
+            {
+                MessageBox.Show("Este fornecedor já foi adicionado.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            listaProdutoFornecedor.Add(new ProdutoFornecedor { FornecedorId = fornecedorId });
+            await CarregarFornecedoresNaListView();
+
+            txtCodFornecedor.Clear();
+            txtFornecedor.Clear();
+        }
+
+        private async void btnRemoverFornecedor_Click(object sender, EventArgs e)
+        {
+            if (listVFornecedores.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Selecione um fornecedor na lista para remover.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var itemSelecionado = listVFornecedores.SelectedItems[0];
+            int fornecedorId = int.Parse(itemSelecionado.SubItems[0].Text);
+
+            var itemParaRemover = listaProdutoFornecedor.FirstOrDefault(pf => pf.FornecedorId == fornecedorId);
+            if (itemParaRemover != null)
+            {
+                listaProdutoFornecedor.Remove(itemParaRemover);
+            }
+
+            await CarregarFornecedoresNaListView();
+        }
+
         private void CalcularPrecoVenda(object sender, EventArgs e)
         {
             if (decimal.TryParse(txtPrecoCusto.Text, out decimal precoCusto) &&
@@ -374,9 +393,35 @@ namespace Projeto.Views.Cadastros
                 grupoSelecionadoId = -1;
             }
         }
-        #endregion
 
-        #region Métodos Auxiliares
+        private async void txtCodFornecedor_Leave(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtCodFornecedor.Text))
+            {
+                txtFornecedor.Clear();
+                return;
+            }
+
+            if (int.TryParse(txtCodFornecedor.Text, out int id))
+            {
+                Fornecedor fornecedor = await fornController.BuscarPorId(id);
+                if (fornecedor != null)
+                {
+                    txtFornecedor.Text = fornecedor.Nome;
+                }
+                else
+                {
+                    MessageBox.Show("Fornecedor não encontrado.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtFornecedor.Clear();
+                }
+            }
+            else
+            {
+                MessageBox.Show("ID de Fornecedor inválido.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtFornecedor.Clear();
+            }
+        }
+
         private async Task CarregarFornecedoresNaListView()
         {
             listVFornecedores.Items.Clear();
@@ -395,8 +440,6 @@ namespace Projeto.Views.Cadastros
 
         private void frmCadastroProduto_Load(object sender, EventArgs e)
         {
-            // Este método pode ser usado para futuras inicializações.
         }
-        #endregion
     }
 }

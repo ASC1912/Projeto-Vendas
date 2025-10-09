@@ -3,7 +3,7 @@ using Projeto.Models;
 using Projeto.Views.Cadastros;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks; 
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Projeto.Views.Consultas
@@ -46,8 +46,8 @@ namespace Projeto.Views.Consultas
                 {
                     ListViewItem item = new ListViewItem(produto.Id.ToString());
                     item.SubItems.Add(produto.NomeProduto);
-                    item.SubItems.Add(produto.Descricao);
-                    item.SubItems.Add(produto.PrecoCusto.ToString("F2"));
+                    item.SubItems.Add(produto.PrecoCusto.ToString("F2")); // Alterado
+                    item.SubItems.Add(produto.PrecoVenda.ToString("F2")); // Adicionado
                     item.SubItems.Add(produto.Estoque.ToString());
                     item.SubItems.Add(produto.NomeMarca ?? "");
                     item.SubItems.Add(produto.NomeGrupo ?? "");
@@ -81,8 +81,8 @@ namespace Projeto.Views.Consultas
                     {
                         ListViewItem item = new ListViewItem(produto.Id.ToString());
                         item.SubItems.Add(produto.NomeProduto);
-                        item.SubItems.Add(produto.Descricao);
-                        item.SubItems.Add(produto.PrecoCusto.ToString("F2"));
+                        item.SubItems.Add(produto.PrecoCusto.ToString("F2")); // Alterado
+                        item.SubItems.Add(produto.PrecoVenda.ToString("F2")); // Adicionado
                         item.SubItems.Add(produto.Estoque.ToString());
                         item.SubItems.Add(produto.NomeMarca ?? "");
                         item.SubItems.Add(produto.NomeGrupo ?? "");
@@ -218,8 +218,12 @@ namespace Projeto.Views.Consultas
                         column.Width = 50;
                         column.TextAlign = HorizontalAlignment.Right;
                         break;
-                    case "Preço":
-                        column.Width = 80;
+                    case "Preço Custo": 
+                        column.Width = 90;
+                        column.TextAlign = HorizontalAlignment.Right;
+                        break;
+                    case "Preço Venda": 
+                        column.Width = 90;
                         column.TextAlign = HorizontalAlignment.Right;
                         break;
                     case "Estoque":
@@ -227,10 +231,6 @@ namespace Projeto.Views.Consultas
                         column.TextAlign = HorizontalAlignment.Right;
                         break;
                     case "Produto":
-                        column.Width = 200;
-                        column.TextAlign = HorizontalAlignment.Center;
-                        break;
-                    case "Descrição":
                         column.Width = 200;
                         column.TextAlign = HorizontalAlignment.Center;
                         break;

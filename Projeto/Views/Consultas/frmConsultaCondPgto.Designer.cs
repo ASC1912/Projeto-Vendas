@@ -68,20 +68,24 @@
             // ID
             // 
             this.ID.Text = "ID";
+            this.ID.Width = 50;
             // 
             // Descricao
             // 
             this.Descricao.Text = "Descrição";
-            this.Descricao.Width = 97;
+            this.Descricao.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.Descricao.Width = 200;
             // 
             // Qtd_parcelas
             // 
             this.Qtd_parcelas.Text = "Qtd_Parcelas";
-            this.Qtd_parcelas.Width = 139;
+            this.Qtd_parcelas.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.Qtd_parcelas.Width = 80;
             // 
             // Juros
             // 
             this.Juros.Text = "Juros";
+            this.Juros.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // Multa
             // 

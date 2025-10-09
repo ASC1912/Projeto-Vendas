@@ -165,6 +165,7 @@
     <Compile Include="Models\Mesa.cs" />
     <Compile Include="Models\Pais.cs" />
     <Compile Include="Models\Parcelamento.cs" />
+    <Compile Include="Models\ParcelaCompra.cs" />
     <Compile Include="Models\Pedido.cs" />
     <Compile Include="Models\Pessoa.cs" />
     <Compile Include="Models\Produto.cs" />

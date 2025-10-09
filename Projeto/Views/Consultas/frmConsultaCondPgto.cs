@@ -59,19 +59,19 @@ namespace Projeto
                         break;
                     case "Qtd_Parcelas":
                         column.Width = 80;
-                        column.TextAlign = HorizontalAlignment.Center;
+                        column.TextAlign = HorizontalAlignment.Right;
                         break;
                     case "Juros":
                         column.Width = 60;
-                        column.TextAlign = HorizontalAlignment.Center;
+                        column.TextAlign = HorizontalAlignment.Right;
                         break;
                     case "Multa":
                         column.Width = 60;
-                        column.TextAlign = HorizontalAlignment.Center;
+                        column.TextAlign = HorizontalAlignment.Right;
                         break;
                     case "Desconto":
                         column.Width = 60;
-                        column.TextAlign = HorizontalAlignment.Center;
+                        column.TextAlign = HorizontalAlignment.Right;
                         break;
                     case "Ativo":
                         column.Width = 50;

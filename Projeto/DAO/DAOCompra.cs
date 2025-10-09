@@ -39,7 +39,6 @@ namespace Projeto.DAO
                             @Modelo, @Serie, @NumeroNota, @FornecedorId, @CondicaoPagamentoId, @DataEmissao, @DataChegada,
                             @ValorFrete, @ValorSeguro, @OutrasDespesas, @ValorTotal, @Observacao, @Ativo, @DataCadastro, @DataAlteracao
                         )";
-
                     using (MySqlCommand cmdCompra = new MySqlCommand(insertCompraQuery, conn, tran))
                     {
                         cmdCompra.Parameters.AddWithValue("@Modelo", compra.Modelo);
@@ -50,8 +49,8 @@ namespace Projeto.DAO
                         cmdCompra.Parameters.AddWithValue("@DataEmissao", compra.DataEmissao);
                         cmdCompra.Parameters.AddWithValue("@DataChegada", compra.DataChegada);
                         cmdCompra.Parameters.AddWithValue("@ValorFrete", compra.ValorFrete);
-                        cmdCompra.Parameters.AddWithValue("@ValorSeguro", compra.Seguro); 
-                        cmdCompra.Parameters.AddWithValue("@OutrasDespesas", compra.Despesas); 
+                        cmdCompra.Parameters.AddWithValue("@ValorSeguro", compra.Seguro);
+                        cmdCompra.Parameters.AddWithValue("@OutrasDespesas", compra.Despesas);
                         cmdCompra.Parameters.AddWithValue("@ValorTotal", compra.ValorTotal);
                         cmdCompra.Parameters.AddWithValue("@Observacao", compra.Observacao);
                         cmdCompra.Parameters.AddWithValue("@Ativo", true);
@@ -62,14 +61,8 @@ namespace Projeto.DAO
 
                     if (compra.Itens != null && compra.Itens.Count > 0)
                     {
-                        string insertItemQuery = @"
-                            INSERT INTO ItensCompra (
-                                CompraModelo, CompraSerie, CompraNumeroNota, CompraFornecedorId, ProdutoId,
-                                Quantidade, ValorUnitario, ValorTotalItem
-                            ) VALUES (
-                                @CompraModelo, @CompraSerie, @CompraNumeroNota, @CompraFornecedorId, @ProdutoId,
-                                @Quantidade, @ValorUnitario, @ValorTotalItem
-                            )";
+                        string insertItemQuery = @"INSERT INTO ItensCompra (CompraModelo, CompraSerie, CompraNumeroNota, CompraFornecedorId, ProdutoId, Quantidade, ValorUnitario, ValorTotalItem) VALUES (@CompraModelo, @CompraSerie, @CompraNumeroNota, @CompraFornecedorId, @ProdutoId, @Quantidade, @ValorUnitario, @ValorTotalItem)";
+                        string updateEstoqueQuery = "UPDATE Produtos SET Estoque = Estoque + @Quantidade WHERE Id = @ProdutoId";
 
                         foreach (var item in compra.Itens)
                         {
@@ -84,6 +77,39 @@ namespace Projeto.DAO
                                 cmdItem.Parameters.AddWithValue("@ValorUnitario", item.ValorUnitario);
                                 cmdItem.Parameters.AddWithValue("@ValorTotalItem", item.ValorTotalItem);
                                 cmdItem.ExecuteNonQuery();
+                            }
+                            using (MySqlCommand cmdEstoque = new MySqlCommand(updateEstoqueQuery, conn, tran))
+                            {
+                                cmdEstoque.Parameters.AddWithValue("@Quantidade", item.Quantidade);
+                                cmdEstoque.Parameters.AddWithValue("@ProdutoId", item.ProdutoId);
+                                cmdEstoque.ExecuteNonQuery();
+                            }
+                        }
+                    }
+
+                    if (compra.ParcelasCompra != null && compra.ParcelasCompra.Count > 0)
+                    {
+                        string insertParcelaQuery = @"
+                            INSERT INTO ParcelasCompra (
+                                CompraModelo, CompraSerie, CompraNumeroNota, CompraFornecedorId, NumeroParcela, 
+                                ValorParcela, DataVencimento
+                            ) VALUES (
+                                @CompraModelo, @CompraSerie, @CompraNumeroNota, @CompraFornecedorId, @NumeroParcela, 
+                                @ValorParcela, @DataVencimento
+                            )";
+
+                        foreach (var parcela in compra.ParcelasCompra)
+                        {
+                            using (MySqlCommand cmdParcela = new MySqlCommand(insertParcelaQuery, conn, tran))
+                            {
+                                cmdParcela.Parameters.AddWithValue("@CompraModelo", parcela.CompraModelo);
+                                cmdParcela.Parameters.AddWithValue("@CompraSerie", parcela.CompraSerie);
+                                cmdParcela.Parameters.AddWithValue("@CompraNumeroNota", parcela.CompraNumeroNota);
+                                cmdParcela.Parameters.AddWithValue("@CompraFornecedorId", parcela.CompraFornecedorId);
+                                cmdParcela.Parameters.AddWithValue("@NumeroParcela", parcela.NumeroParcela);
+                                cmdParcela.Parameters.AddWithValue("@ValorParcela", parcela.ValorParcela);
+                                cmdParcela.Parameters.AddWithValue("@DataVencimento", parcela.DataVencimento);
+                                cmdParcela.ExecuteNonQuery();
                             }
                         }
                     }
@@ -103,19 +129,58 @@ namespace Projeto.DAO
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
-                string query = @"
-                    UPDATE Compras 
-                    SET Ativo = 0, DataAlteracao = @DataAlteracao 
-                    WHERE Modelo = @Modelo AND Serie = @Serie AND NumeroNota = @NumeroNota AND FornecedorId = @FornecedorId";
-
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                MySqlTransaction tran = conn.BeginTransaction();
+                try
                 {
-                    cmd.Parameters.AddWithValue("@DataAlteracao", DateTime.Now);
-                    cmd.Parameters.AddWithValue("@Modelo", compra.Modelo);
-                    cmd.Parameters.AddWithValue("@Serie", compra.Serie);
-                    cmd.Parameters.AddWithValue("@NumeroNota", compra.NumeroNota);
-                    cmd.Parameters.AddWithValue("@FornecedorId", compra.FornecedorId);
-                    cmd.ExecuteNonQuery();
+                    string selectItensQuery = "SELECT ProdutoId, Quantidade FROM ItensCompra WHERE CompraModelo = @Modelo AND CompraSerie = @Serie AND CompraNumeroNota = @NumeroNota AND CompraFornecedorId = @FornecedorId";
+                    var itensParaEstornar = new List<ItemCompra>();
+                    using (MySqlCommand cmdSelect = new MySqlCommand(selectItensQuery, conn, tran))
+                    {
+                        cmdSelect.Parameters.AddWithValue("@Modelo", compra.Modelo);
+                        cmdSelect.Parameters.AddWithValue("@Serie", compra.Serie);
+                        cmdSelect.Parameters.AddWithValue("@NumeroNota", compra.NumeroNota);
+                        cmdSelect.Parameters.AddWithValue("@FornecedorId", compra.FornecedorId);
+                        using (MySqlDataReader reader = cmdSelect.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                itensParaEstornar.Add(new ItemCompra
+                                {
+                                    ProdutoId = reader.GetInt32("ProdutoId"),
+                                    Quantidade = reader.GetDecimal("Quantidade")
+                                });
+                            }
+                        }
+                    }
+
+                    string updateEstoqueQuery = "UPDATE Produtos SET Estoque = Estoque - @Quantidade WHERE Id = @ProdutoId";
+                    foreach (var item in itensParaEstornar)
+                    {
+                        using (MySqlCommand cmdEstoque = new MySqlCommand(updateEstoqueQuery, conn, tran))
+                        {
+                            cmdEstoque.Parameters.AddWithValue("@Quantidade", item.Quantidade);
+                            cmdEstoque.Parameters.AddWithValue("@ProdutoId", item.ProdutoId);
+                            cmdEstoque.ExecuteNonQuery();
+                        }
+                    }
+
+                    string updateCompraQuery = @"UPDATE Compras SET Ativo = 0, DataAlteracao = @DataAlteracao WHERE Modelo = @Modelo AND Serie = @Serie AND NumeroNota = @NumeroNota AND FornecedorId = @FornecedorId";
+                    using (MySqlCommand cmd = new MySqlCommand(updateCompraQuery, conn, tran))
+                    {
+                        cmd.Parameters.AddWithValue("@DataAlteracao", DateTime.Now);
+                        cmd.Parameters.AddWithValue("@Modelo", compra.Modelo);
+                        cmd.Parameters.AddWithValue("@Serie", compra.Serie);
+                        cmd.Parameters.AddWithValue("@NumeroNota", compra.NumeroNota);
+                        cmd.Parameters.AddWithValue("@FornecedorId", compra.FornecedorId);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    tran.Commit();
+                }
+                catch (Exception)
+                {
+                    tran.Rollback();
+                    throw;
                 }
             }
         }
@@ -224,8 +289,8 @@ namespace Projeto.DAO
                 DataEmissao = reader.IsDBNull(reader.GetOrdinal("DataEmissao")) ? (DateTime?)null : reader.GetDateTime("DataEmissao"),
                 DataChegada = reader.IsDBNull(reader.GetOrdinal("DataChegada")) ? (DateTime?)null : reader.GetDateTime("DataChegada"),
                 ValorFrete = reader.GetDecimal("ValorFrete"),
-                Seguro = reader.GetDecimal("ValorSeguro"), 
-                Despesas = reader.GetDecimal("OutrasDespesas"), 
+                Seguro = reader.GetDecimal("ValorSeguro"),
+                Despesas = reader.GetDecimal("OutrasDespesas"),
                 ValorTotal = reader.GetDecimal("ValorTotal"),
                 Observacao = reader.IsDBNull(reader.GetOrdinal("Observacao")) ? null : reader.GetString("Observacao"),
                 Ativo = reader.GetBoolean("Ativo"),

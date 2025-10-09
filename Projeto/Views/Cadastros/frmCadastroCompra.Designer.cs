@@ -85,6 +85,7 @@
             this.txtIdProduto = new System.Windows.Forms.TextBox();
             this.lblIdCondicaoPgto = new System.Windows.Forms.Label();
             this.txtIdCondPgto = new System.Windows.Forms.TextBox();
+            this.Valor = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // txtCodigo
@@ -472,7 +473,8 @@
             this.NumParcela,
             this.Prazo,
             this.Porcentagem,
-            this.FormaPagamento});
+            this.FormaPagamento,
+            this.Valor});
             this.listViewCondPgto.FullRowSelect = true;
             this.listViewCondPgto.GridLines = true;
             this.listViewCondPgto.HideSelection = false;
@@ -534,6 +536,7 @@
             // 
             this.txtValorTotal.Location = new System.Drawing.Point(381, 377);
             this.txtValorTotal.Name = "txtValorTotal";
+            this.txtValorTotal.ReadOnly = true;
             this.txtValorTotal.Size = new System.Drawing.Size(126, 22);
             this.txtValorTotal.TabIndex = 147;
             // 
@@ -579,6 +582,11 @@
             this.txtIdCondPgto.Size = new System.Drawing.Size(48, 22);
             this.txtIdCondPgto.TabIndex = 152;
             this.txtIdCondPgto.Leave += new System.EventHandler(this.txtIdCondPgto_Leave);
+            // 
+            // Valor
+            // 
+            this.Valor.Text = "Valor";
+            this.Valor.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // frmCadastroCompra
             // 
@@ -750,5 +758,6 @@
         private System.Windows.Forms.TextBox txtIdProduto;
         private System.Windows.Forms.Label lblIdCondicaoPgto;
         private System.Windows.Forms.TextBox txtIdCondPgto;
+        private System.Windows.Forms.ColumnHeader Valor;
     }
 }

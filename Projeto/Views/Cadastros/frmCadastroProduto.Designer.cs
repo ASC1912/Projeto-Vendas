@@ -53,9 +53,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.txtIdMarca = new System.Windows.Forms.TextBox();
             this.lblPorcentagemLucro = new System.Windows.Forms.Label();
-            this.lblPrecoDeCustoAnterior = new System.Windows.Forms.Label();
             this.txtPorcentagemLucro = new System.Windows.Forms.TextBox();
-            this.txtValorCompraAnterior = new System.Windows.Forms.TextBox();
             this.txtCodFornecedor = new System.Windows.Forms.TextBox();
             this.listVFornecedores = new System.Windows.Forms.ListView();
             this.clmCodFornecedor = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -66,6 +64,7 @@
             this.lblFornecedor = new System.Windows.Forms.Label();
             this.btnRemoverFornecedor = new System.Windows.Forms.Button();
             this.btnAdicionarFornecedor = new System.Windows.Forms.Button();
+            this.lblIdFornecedor = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txtCodigo
@@ -297,44 +296,23 @@
             // lblPorcentagemLucro
             // 
             this.lblPorcentagemLucro.AutoSize = true;
-            this.lblPorcentagemLucro.Location = new System.Drawing.Point(8, 479);
+            this.lblPorcentagemLucro.Location = new System.Drawing.Point(215, 273);
             this.lblPorcentagemLucro.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblPorcentagemLucro.Name = "lblPorcentagemLucro";
             this.lblPorcentagemLucro.Size = new System.Drawing.Size(143, 16);
             this.lblPorcentagemLucro.TabIndex = 137;
             this.lblPorcentagemLucro.Text = "Margem de Lucro (%) *";
             // 
-            // lblPrecoDeCustoAnterior
-            // 
-            this.lblPrecoDeCustoAnterior.AutoSize = true;
-            this.lblPrecoDeCustoAnterior.Location = new System.Drawing.Point(8, 548);
-            this.lblPrecoDeCustoAnterior.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblPrecoDeCustoAnterior.Name = "lblPrecoDeCustoAnterior";
-            this.lblPrecoDeCustoAnterior.Size = new System.Drawing.Size(176, 16);
-            this.lblPrecoDeCustoAnterior.TabIndex = 138;
-            this.lblPrecoDeCustoAnterior.Text = "Preço de Custo Anterior (R$)";
-            // 
             // txtPorcentagemLucro
             // 
             this.txtPorcentagemLucro.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtPorcentagemLucro.Location = new System.Drawing.Point(12, 502);
+            this.txtPorcentagemLucro.Location = new System.Drawing.Point(219, 296);
             this.txtPorcentagemLucro.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.txtPorcentagemLucro.Name = "txtPorcentagemLucro";
             this.txtPorcentagemLucro.ShortcutsEnabled = false;
             this.txtPorcentagemLucro.Size = new System.Drawing.Size(257, 22);
             this.txtPorcentagemLucro.TabIndex = 135;
             this.txtPorcentagemLucro.Text = "0";
-            // 
-            // txtValorCompraAnterior
-            // 
-            this.txtValorCompraAnterior.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtValorCompraAnterior.Location = new System.Drawing.Point(12, 571);
-            this.txtValorCompraAnterior.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
-            this.txtValorCompraAnterior.Name = "txtValorCompraAnterior";
-            this.txtValorCompraAnterior.ShortcutsEnabled = false;
-            this.txtValorCompraAnterior.Size = new System.Drawing.Size(257, 22);
-            this.txtValorCompraAnterior.TabIndex = 136;
-            this.txtValorCompraAnterior.Text = "0";
             // 
             // txtCodFornecedor
             // 
@@ -402,12 +380,12 @@
             // lblFornecedor
             // 
             this.lblFornecedor.AutoSize = true;
-            this.lblFornecedor.Location = new System.Drawing.Point(570, 59);
+            this.lblFornecedor.Location = new System.Drawing.Point(659, 65);
             this.lblFornecedor.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblFornecedor.Name = "lblFornecedor";
-            this.lblFornecedor.Size = new System.Drawing.Size(100, 16);
+            this.lblFornecedor.Size = new System.Drawing.Size(85, 16);
             this.lblFornecedor.TabIndex = 141;
-            this.lblFornecedor.Text = "Fornecedores *";
+            this.lblFornecedor.Text = "Fornecedor *";
             // 
             // btnRemoverFornecedor
             // 
@@ -418,6 +396,7 @@
             this.btnRemoverFornecedor.TabIndex = 144;
             this.btnRemoverFornecedor.Text = "Remover";
             this.btnRemoverFornecedor.UseVisualStyleBackColor = true;
+            this.btnRemoverFornecedor.Click += new System.EventHandler(this.btnRemoverFornecedor_Click);
             // 
             // btnAdicionarFornecedor
             // 
@@ -428,11 +407,22 @@
             this.btnAdicionarFornecedor.TabIndex = 145;
             this.btnAdicionarFornecedor.Text = "Adicionar ";
             this.btnAdicionarFornecedor.UseVisualStyleBackColor = true;
+            this.btnAdicionarFornecedor.Click += new System.EventHandler(this.btnAdicionarFornecedor_Click);
+            // 
+            // lblIdFornecedor
+            // 
+            this.lblIdFornecedor.AutoSize = true;
+            this.lblIdFornecedor.Location = new System.Drawing.Point(571, 65);
+            this.lblIdFornecedor.Name = "lblIdFornecedor";
+            this.lblIdFornecedor.Size = new System.Drawing.Size(55, 16);
+            this.lblIdFornecedor.TabIndex = 146;
+            this.lblIdFornecedor.Text = "ID Forn*";
             // 
             // frmCadastroProduto
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.ClientSize = new System.Drawing.Size(1342, 681);
+            //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            //this.ClientSize = new System.Drawing.Size(1342, 681);
+            this.Controls.Add(this.lblIdFornecedor);
             this.Controls.Add(this.btnRemoverFornecedor);
             this.Controls.Add(this.btnAdicionarFornecedor);
             this.Controls.Add(this.txtCodFornecedor);
@@ -441,9 +431,7 @@
             this.Controls.Add(this.txtFornecedor);
             this.Controls.Add(this.lblFornecedor);
             this.Controls.Add(this.lblPorcentagemLucro);
-            this.Controls.Add(this.lblPrecoDeCustoAnterior);
             this.Controls.Add(this.txtPorcentagemLucro);
-            this.Controls.Add(this.txtValorCompraAnterior);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtIdMarca);
             this.Controls.Add(this.label1);
@@ -501,9 +489,7 @@
             this.Controls.SetChildIndex(this.label1, 0);
             this.Controls.SetChildIndex(this.txtIdMarca, 0);
             this.Controls.SetChildIndex(this.label2, 0);
-            this.Controls.SetChildIndex(this.txtValorCompraAnterior, 0);
             this.Controls.SetChildIndex(this.txtPorcentagemLucro, 0);
-            this.Controls.SetChildIndex(this.lblPrecoDeCustoAnterior, 0);
             this.Controls.SetChildIndex(this.lblPorcentagemLucro, 0);
             this.Controls.SetChildIndex(this.lblFornecedor, 0);
             this.Controls.SetChildIndex(this.txtFornecedor, 0);
@@ -512,6 +498,7 @@
             this.Controls.SetChildIndex(this.txtCodFornecedor, 0);
             this.Controls.SetChildIndex(this.btnAdicionarFornecedor, 0);
             this.Controls.SetChildIndex(this.btnRemoverFornecedor, 0);
+            this.Controls.SetChildIndex(this.lblIdFornecedor, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -544,9 +531,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtIdMarca;
         private System.Windows.Forms.Label lblPorcentagemLucro;
-        private System.Windows.Forms.Label lblPrecoDeCustoAnterior;
         private System.Windows.Forms.TextBox txtPorcentagemLucro;
-        private System.Windows.Forms.TextBox txtValorCompraAnterior;
         private System.Windows.Forms.TextBox txtCodFornecedor;
         private System.Windows.Forms.ListView listVFornecedores;
         private System.Windows.Forms.ColumnHeader clmCodFornecedor;
@@ -557,5 +542,6 @@
         private System.Windows.Forms.Label lblFornecedor;
         private System.Windows.Forms.Button btnRemoverFornecedor;
         private System.Windows.Forms.Button btnAdicionarFornecedor;
+        private System.Windows.Forms.Label lblIdFornecedor;
     }
 }

@@ -26,6 +26,8 @@ namespace Projeto.Models
         public DateTime? DataAlteracao { get; set; }
 
         public List<ItemCompra> Itens { get; set; }
+        public List<ParcelaCompra> ParcelasCompra { get; set; }
+
 
         public string NomeFornecedor => oFornecedor?.Nome;
         public string NomeCondPgto => oCondicaoPagamento?.Descricao;
@@ -33,6 +35,7 @@ namespace Projeto.Models
         public Compra()
         {
             Itens = new List<ItemCompra>();
+            ParcelasCompra = new List<ParcelaCompra>(); 
         }
     }
 }

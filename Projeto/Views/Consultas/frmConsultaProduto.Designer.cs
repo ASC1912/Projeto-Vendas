@@ -30,8 +30,8 @@
         {
             this.ID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Nome = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.Descricao = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.Preco = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.PrecoCusto = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.PrecoVenda = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Estoque = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Status = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Marca = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -44,8 +44,8 @@
             this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.ID,
             this.Nome,
-            this.Descricao,
-            this.Preco,
+            this.PrecoCusto,
+            this.PrecoVenda,
             this.Estoque,
             this.Marca,
             this.Grupo,
@@ -75,13 +75,14 @@
             // 
             this.Nome.Text = "Produto";
             // 
-            // Descricao
+            // PrecoCusto
             // 
-            this.Descricao.Text = "Descrição";
+            this.PrecoCusto.Text = "Preço Custo";
             // 
-            // Preco
+            // PrecoVenda
             // 
-            this.Preco.Text = "Preço";
+            this.PrecoVenda.Text = "PreçoVenda";
+            this.PrecoVenda.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // Estoque
             // 
@@ -134,8 +135,8 @@
 
         private System.Windows.Forms.ColumnHeader ID;
         private System.Windows.Forms.ColumnHeader Nome;
-        private System.Windows.Forms.ColumnHeader Descricao;
-        private System.Windows.Forms.ColumnHeader Preco;
+        private System.Windows.Forms.ColumnHeader PrecoCusto;
+        private System.Windows.Forms.ColumnHeader PrecoVenda;
         private System.Windows.Forms.ColumnHeader Estoque;
         private System.Windows.Forms.ColumnHeader Status;
         private System.Windows.Forms.ColumnHeader Marca;
