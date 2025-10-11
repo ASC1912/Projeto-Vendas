@@ -228,19 +228,20 @@ CREATE TABLE Grupos (
 CREATE TABLE Produtos (
     Id INT IDENTITY(1,1) PRIMARY KEY,
     Produto VARCHAR(100) NOT NULL,
-    Imagem VARCHAR(255), 
+    Imagem VARCHAR(255),
     Preco DECIMAL(10,2) NOT NULL,
     Descricao VARCHAR(255),
     Estoque INT,
     TempoPreparo INT,
     Ingredientes VARCHAR(255),
-    IdMarca INT, -- LINHA ADICIONADA
+    IdMarca INT,
     GrupoId INT NOT NULL,
+    EhPopular BIT NOT NULL DEFAULT 0,
     Ativo BIT NOT NULL DEFAULT 1,
     DataCadastro DATETIME DEFAULT GETDATE(),
     DataAlteracao DATETIME,
     FOREIGN KEY (GrupoId) REFERENCES Grupos(Id),
-    FOREIGN KEY (IdMarca) REFERENCES Marcas(Id) ON DELETE SET NULL 
+    FOREIGN KEY (IdMarca) REFERENCES Marcas(Id) ON DELETE SET NULL
 );
 
 
@@ -265,36 +266,53 @@ CREATE TABLE Vendas (
     Ativo BIT DEFAULT 1,
     DataCadastro DATETIME DEFAULT GETDATE(),
     DataAlteracao DATETIME,
+    PedidoId INT NULL,
+    FOREIGN KEY (PedidoId) REFERENCES Pedidos(Id),
     FOREIGN KEY (ClienteId) REFERENCES Clientes(Id),
     FOREIGN KEY (CondicaoPagamentoId) REFERENCES CondicoesPagamento(Id)
 );
 
--- Tabela: Pedidos
+-- Tabela: Pedidos 
 CREATE TABLE Pedidos (
     Id INT IDENTITY(1,1) PRIMARY KEY,
     MesaNumero INT,
     FuncionarioId INT,
-    VendaId INT,
     Observacao VARCHAR(255),
-    DataPedido DATETIME DEFAULT GETDATE(),
+    Status VARCHAR(20) NOT NULL DEFAULT 'Aberto',
     Ativo BIT DEFAULT 1,
+    DataAberturaPedido DATETIME DEFAULT GETDATE(),
+    DataConclusaoPedido DATETIME NULL,
+    Finalizado BIT NOT NULL DEFAULT 0,
+    QuantidadeClientes INT,
     DataCadastro DATETIME DEFAULT GETDATE(),
     DataAlteracao DATETIME,
     FOREIGN KEY (MesaNumero) REFERENCES Mesas(NumeroMesa),
-    FOREIGN KEY (FuncionarioId) REFERENCES Funcionarios(Id),
-    FOREIGN KEY (VendaId) REFERENCES Vendas(Id)
+    FOREIGN KEY (FuncionarioId) REFERENCES Funcionarios(Id)
 );
 
--- Tabela: ItensPedidos
+
+-- Tabela: ItensPedidos 
 CREATE TABLE ItensPedidos (
-    pedidos_id INT NOT NULL,
-    produto_id INT NOT NULL,
-    numero_mesa INT NOT NULL,
-    quantidade INT NOT NULL,
-    precoUnitario DECIMAL(10,2),
-    totalItem DECIMAL(10,2),
-    PRIMARY KEY (pedidos_id, produto_id),
-    FOREIGN KEY (pedidos_id) REFERENCES Pedidos(Id),
-    FOREIGN KEY (produto_id) REFERENCES Produtos(Id),
-    FOREIGN KEY (numero_mesa) REFERENCES Mesas(NumeroMesa)
+    pedidos_id INT NOT NULL,
+    produto_id INT NOT NULL,
+    numero_mesa INT NOT NULL,
+    quantidade INT NOT NULL,
+    precoUnitario DECIMAL(10,2),
+    Status VARCHAR(20) NOT NULL DEFAULT 'Pendente',
+    PRIMARY KEY (pedidos_id, produto_id),
+    FOREIGN KEY (pedidos_id) REFERENCES Pedidos(Id) ON DELETE CASCADE,
+    FOREIGN KEY (produto_id) REFERENCES Produtos(Id),
+    FOREIGN KEY (numero_mesa) REFERENCES Mesas(NumeroMesa)
+);
+
+
+CREATE TABLE Usuarios (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    FuncionarioId INT NOT NULL,
+    Usuario VARCHAR(50) NOT NULL UNIQUE,
+    Senha VARCHAR(255) NOT NULL,
+    Ativo BIT DEFAULT 1,
+    DataCadastro DATETIME DEFAULT GETDATE(),
+    DataAlteracao DATETIME,
+    FOREIGN KEY (FuncionarioId) REFERENCES Funcionarios(Id)
 );
