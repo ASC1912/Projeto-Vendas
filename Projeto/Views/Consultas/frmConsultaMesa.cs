@@ -96,10 +96,10 @@ namespace Projeto.Views.Consultas
                     switch (mesa.StatusMesa)
                     {
                         case 'O':
-                            status = "OCUPADA";
+                            status = "OCUPADO";
                             break;
                         case 'R':
-                            status = "RESERVADA";
+                            status = "RESERVADO";
                             break;
                         default:
                             status = "LIVRE";
@@ -168,15 +168,14 @@ namespace Projeto.Views.Consultas
 
                 if (mesa != null)
                 {
-                    // Define o formulário para o modo de exclusão
                     oFrmCadastroMesa.modoExclusao = true;
                     oFrmCadastroMesa.modoEdicao = false;
                     oFrmCadastroMesa.ConhecaObj(mesa, controller);
                     oFrmCadastroMesa.CarregaTxt();
-                    oFrmCadastroMesa.BloquearTxt(); // Bloqueia os campos
+                    oFrmCadastroMesa.BloquearTxt(); 
                     oFrmCadastroMesa.btnSalvar.Text = "Excluir"; 
 
-                    oFrmCadastroMesa.ShowDialog(); // Abre o formulário
+                    oFrmCadastroMesa.ShowDialog();
 
                     oFrmCadastroMesa.btnSalvar.Text = "Salvar";
                     oFrmCadastroMesa.DesbloquearTxt();

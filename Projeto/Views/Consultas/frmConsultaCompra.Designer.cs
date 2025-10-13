@@ -71,34 +71,45 @@
             // Serie
             // 
             this.Serie.Text = "Série";
+            this.Serie.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // Numero
             // 
             this.Numero.Text = "Número";
+            this.Numero.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // Fornecedor
             // 
             this.Fornecedor.Text = "Fornecedor";
+            this.Fornecedor.Width = 200;
             // 
             // DataEmissao
             // 
             this.DataEmissao.Text = "Data de Emissão";
+            this.DataEmissao.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.DataEmissao.Width = 120;
             // 
             // DataChegada
             // 
             this.DataChegada.Text = "Data de Chegada";
+            this.DataChegada.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.DataChegada.Width = 120;
             // 
             // ValorTotal
             // 
             this.ValorTotal.Text = "ValorTotal";
+            this.ValorTotal.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.ValorTotal.Width = 100;
             // 
             // CondPgto
             // 
             this.CondPgto.Text = "CondPgto";
+            this.CondPgto.Width = 150;
             // 
             // Status
             // 
             this.Status.Text = "Status";
+            this.Status.Width = 70;
             // 
             // frmConsultaCompra
             // 

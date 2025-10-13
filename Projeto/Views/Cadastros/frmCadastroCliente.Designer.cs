@@ -63,6 +63,8 @@
             this.lblGenero = new System.Windows.Forms.Label();
             this.lblDataNascimento = new System.Windows.Forms.Label();
             this.dtpNascimento = new System.Windows.Forms.DateTimePicker();
+            this.label1 = new System.Windows.Forms.Label();
+            this.txtIdCondPgto = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // txtCodigo
@@ -74,15 +76,16 @@
             // 
             // btnSair
             // 
-            this.btnSair.TabIndex = 21;
+            this.btnSair.TabIndex = 22;
             // 
             // chkInativo
             // 
-            this.chkInativo.TabIndex = 19;
+            this.chkInativo.TabIndex = 20;
             // 
             // btnSalvar
             // 
             this.btnSalvar.Location = new System.Drawing.Point(1117, 634);
+            this.btnSalvar.TabIndex = 21;
             this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
             // 
             // lblCidade
@@ -320,14 +323,14 @@
             this.txtCondicao.Name = "txtCondicao";
             this.txtCondicao.ReadOnly = true;
             this.txtCondicao.Size = new System.Drawing.Size(200, 22);
-            this.txtCondicao.TabIndex = 17;
+            this.txtCondicao.TabIndex = 18;
             // 
             // btnBuscarCond
             // 
             this.btnBuscarCond.Location = new System.Drawing.Point(687, 285);
             this.btnBuscarCond.Name = "btnBuscarCond";
             this.btnBuscarCond.Size = new System.Drawing.Size(150, 23);
-            this.btnBuscarCond.TabIndex = 18;
+            this.btnBuscarCond.TabIndex = 19;
             this.btnBuscarCond.Text = "Buscar Condição";
             this.btnBuscarCond.UseVisualStyleBackColor = true;
             this.btnBuscarCond.Click += new System.EventHandler(this.btnBuscarCond_Click);
@@ -389,10 +392,30 @@
             this.dtpNascimento.TabIndex = 4;
             this.dtpNascimento.Value = new System.DateTime(2025, 7, 10, 0, 0, 0, 0);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(359, 266);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(88, 16);
+            this.label1.TabIndex = 91;
+            this.label1.Text = "ID CongPgto*";
+            // 
+            // txtIdCondPgto
+            // 
+            this.txtIdCondPgto.Location = new System.Drawing.Point(362, 285);
+            this.txtIdCondPgto.Name = "txtIdCondPgto";
+            this.txtIdCondPgto.Size = new System.Drawing.Size(67, 22);
+            this.txtIdCondPgto.TabIndex = 17;
+            this.txtIdCondPgto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtIdCondPgto.Leave += new System.EventHandler(this.txtIdCondPgto_Leave);
+            // 
             // frmCadastroCliente
             // 
             //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             //this.ClientSize = new System.Drawing.Size(1342, 681);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.txtIdCondPgto);
             this.Controls.Add(this.lblDataNascimento);
             this.Controls.Add(this.dtpNascimento);
             this.Controls.Add(this.cbGenero);
@@ -472,6 +495,8 @@
             this.Controls.SetChildIndex(this.cbGenero, 0);
             this.Controls.SetChildIndex(this.dtpNascimento, 0);
             this.Controls.SetChildIndex(this.lblDataNascimento, 0);
+            this.Controls.SetChildIndex(this.txtIdCondPgto, 0);
+            this.Controls.SetChildIndex(this.label1, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -514,5 +539,7 @@
         private System.Windows.Forms.Label lblGenero;
         private System.Windows.Forms.Label lblDataNascimento;
         private System.Windows.Forms.DateTimePicker dtpNascimento;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox txtIdCondPgto;
     }
 }

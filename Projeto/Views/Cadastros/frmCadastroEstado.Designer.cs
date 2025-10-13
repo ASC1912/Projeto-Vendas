@@ -36,6 +36,8 @@
             this.txtPais = new System.Windows.Forms.TextBox();
             this.lblUF = new System.Windows.Forms.Label();
             this.txtUF = new System.Windows.Forms.TextBox();
+            this.lblIdFornecedor = new System.Windows.Forms.Label();
+            this.txtIdPais = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // txtCodigo
@@ -45,15 +47,16 @@
             // 
             // btnSair
             // 
-            this.btnSair.TabIndex = 7;
+            this.btnSair.TabIndex = 8;
             // 
             // chkInativo
             // 
-            this.chkInativo.TabIndex = 5;
+            this.chkInativo.TabIndex = 6;
             // 
-            // btnSalvar2
+            // btnSalvar
             // 
             this.btnSalvar.Location = new System.Drawing.Point(1111, 634);
+            this.btnSalvar.TabIndex = 7;
             this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
             // 
             // lblNome
@@ -84,7 +87,7 @@
             // lblPais
             // 
             this.lblPais.AutoSize = true;
-            this.lblPais.Location = new System.Drawing.Point(12, 164);
+            this.lblPais.Location = new System.Drawing.Point(92, 160);
             this.lblPais.Name = "lblPais";
             this.lblPais.Size = new System.Drawing.Size(39, 16);
             this.lblPais.TabIndex = 16;
@@ -92,21 +95,21 @@
             // 
             // btnBuscar
             // 
-            this.btnBuscar.Location = new System.Drawing.Point(265, 183);
+            this.btnBuscar.Location = new System.Drawing.Point(345, 179);
             this.btnBuscar.Name = "btnBuscar";
             this.btnBuscar.Size = new System.Drawing.Size(150, 23);
-            this.btnBuscar.TabIndex = 4;
+            this.btnBuscar.TabIndex = 5;
             this.btnBuscar.Text = "Buscar País";
             this.btnBuscar.UseVisualStyleBackColor = true;
             this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
             // 
             // txtPais
             // 
-            this.txtPais.Location = new System.Drawing.Point(12, 184);
+            this.txtPais.Location = new System.Drawing.Point(92, 180);
             this.txtPais.Name = "txtPais";
             this.txtPais.ReadOnly = true;
             this.txtPais.Size = new System.Drawing.Size(200, 22);
-            this.txtPais.TabIndex = 3;
+            this.txtPais.TabIndex = 4;
             // 
             // lblUF
             // 
@@ -125,10 +128,32 @@
             this.txtUF.Size = new System.Drawing.Size(70, 22);
             this.txtUF.TabIndex = 2;
             // 
+            // lblIdFornecedor
+            // 
+            this.lblIdFornecedor.AutoSize = true;
+            this.lblIdFornecedor.Location = new System.Drawing.Point(9, 162);
+            this.lblIdFornecedor.Name = "lblIdFornecedor";
+            this.lblIdFornecedor.Size = new System.Drawing.Size(55, 16);
+            this.lblIdFornecedor.TabIndex = 148;
+            this.lblIdFornecedor.Text = "ID País*";
+            // 
+            // txtIdPais
+            // 
+            this.txtIdPais.Location = new System.Drawing.Point(12, 180);
+            this.txtIdPais.Margin = new System.Windows.Forms.Padding(4);
+            this.txtIdPais.Name = "txtIdPais";
+            this.txtIdPais.ShortcutsEnabled = false;
+            this.txtIdPais.Size = new System.Drawing.Size(52, 22);
+            this.txtIdPais.TabIndex = 3;
+            this.txtIdPais.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtIdPais.Leave += new System.EventHandler(this.txtIdPais_Leave);
+            // 
             // frmCadastroEstado
             // 
             //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             //this.ClientSize = new System.Drawing.Size(1342, 681);
+            this.Controls.Add(this.lblIdFornecedor);
+            this.Controls.Add(this.txtIdPais);
             this.Controls.Add(this.lblUF);
             this.Controls.Add(this.txtUF);
             this.Controls.Add(this.txtPais);
@@ -154,6 +179,8 @@
             this.Controls.SetChildIndex(this.txtPais, 0);
             this.Controls.SetChildIndex(this.txtUF, 0);
             this.Controls.SetChildIndex(this.lblUF, 0);
+            this.Controls.SetChildIndex(this.txtIdPais, 0);
+            this.Controls.SetChildIndex(this.lblIdFornecedor, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -169,5 +196,7 @@
         private System.Windows.Forms.TextBox txtPais;
         private System.Windows.Forms.Label lblUF;
         private System.Windows.Forms.TextBox txtUF;
+        private System.Windows.Forms.Label lblIdFornecedor;
+        private System.Windows.Forms.TextBox txtIdPais;
     }
 }

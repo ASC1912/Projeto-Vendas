@@ -74,13 +74,14 @@ namespace Projeto.Views
             txtComplemento.Text = oForn.Complemento;
             txtCEP.Text = oForn.CEP;
             txtIdCidade.Text = oForn.CidadeId.ToString();
-            cidadeSelecionadoId = oForn.CidadeId ?? -1; 
+            cidadeSelecionadoId = oForn.CidadeId ?? -1;
             txtCidade.Text = oForn.NomeCidade;
             txtEmail.Text = oForn.Email;
             txtTelefone.Text = oForn.Telefone;
             txtCPF.Text = oForn.CPF_CNPJ;
             txtInscEst.Text = oForn.InscricaoEstadual;
             txtInscEstSubTrib.Text = oForn.InscricaoEstadualSubTrib;
+            txtIdCondPgto.Text = oForn.IdCondicao.ToString(); 
             txtCondicao.Text = oForn.oCondicaoPagamento?.Descricao;
             condicaoSelecionadoId = oForn.IdCondicao ?? -1;
             chkInativo.Checked = !oForn.Ativo;
@@ -104,6 +105,7 @@ namespace Projeto.Views
             txtCPF.Enabled = false;
             txtInscEst.Enabled = false;
             txtInscEstSubTrib.Enabled = false;
+            txtIdCondPgto.Enabled = false; 
             txtCondicao.Enabled = false;
             btnBuscarCond.Enabled = false;
             chkInativo.Enabled = false;
@@ -125,6 +127,7 @@ namespace Projeto.Views
             txtCPF.Enabled = true;
             txtInscEst.Enabled = true;
             txtInscEstSubTrib.Enabled = true;
+            txtIdCondPgto.Enabled = true; 
             txtCondicao.Enabled = true;
             btnBuscarCond.Enabled = true;
             chkInativo.Enabled = true;
@@ -148,6 +151,7 @@ namespace Projeto.Views
             txtCPF.Clear();
             txtInscEst.Clear();
             txtInscEstSubTrib.Clear();
+            txtIdCondPgto.Clear(); 
             txtCondicao.Clear();
             condicaoSelecionadoId = -1;
             chkInativo.Checked = false;
@@ -157,7 +161,7 @@ namespace Projeto.Views
             lblDataModificacao.Text = $"Modificado em: {agora:dd/MM/yyyy HH:mm}";
         }
 
-    
+
 
         private void cbTipo_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -192,6 +196,7 @@ namespace Projeto.Views
             txtCidade.Text = nomeCidade;
             txtIdCidade.Text = idCidade > 0 ? idCidade.ToString() : "";
             cidadeSelecionadoId = idCidade;
+            txtIdCondPgto.Text = idCondicao > 0 ? idCondicao.ToString() : ""; // Adicionado
             txtCondicao.Text = descricaoCondicao;
             condicaoSelecionadoId = idCondicao;
             chkInativo.Checked = !status;
@@ -318,7 +323,7 @@ namespace Projeto.Views
 
         private void frmCadastroFornecedor_Load(object sender, EventArgs e)
         {
-       
+
         }
 
         private void btnBuscar_Click(object sender, EventArgs e)
@@ -341,11 +346,11 @@ namespace Projeto.Views
             if (resultado == DialogResult.OK && oFrmConsultaCondPgto.CondicaoSelecionado != null)
             {
                 txtCondicao.Text = oFrmConsultaCondPgto.CondicaoSelecionado.Descricao;
+                txtIdCondPgto.Text = oFrmConsultaCondPgto.CondicaoSelecionado.Id.ToString(); // Adicionado
                 condicaoSelecionadoId = oFrmConsultaCondPgto.CondicaoSelecionado.Id;
             }
 
         }
-
         private async void txtIdCidade_Leave(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtIdCidade.Text))
@@ -372,6 +377,36 @@ namespace Projeto.Views
                 MessageBox.Show("Cidade não encontrada.");
                 txtCidade.Text = "";
                 cidadeSelecionadoId = -1;
+            }
+        }
+
+        private async void txtIdCondPgto_Leave(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtIdCondPgto.Text))
+            {
+                txtCondicao.Text = "";
+                condicaoSelecionadoId = -1;
+                return;
+            }
+            if (!Validador.ValidarNumerico(txtIdCondPgto, "O campo ID Cond. Pag. deve conter apenas números."))
+            {
+                txtCondicao.Text = "";
+                condicaoSelecionadoId = -1;
+                return;
+            }
+            int id = int.Parse(txtIdCondPgto.Text);
+            var condicao = await condicaoPagamentoController.BuscarPorId(id);
+
+            if (condicao != null)
+            {
+                txtCondicao.Text = condicao.Descricao;
+                condicaoSelecionadoId = condicao.Id;
+            }
+            else
+            {
+                MessageBox.Show("Condição de Pagamento não encontrada.");
+                txtCondicao.Text = "";
+                condicaoSelecionadoId = -1;
             }
         }
     }

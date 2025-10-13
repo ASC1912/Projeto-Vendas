@@ -91,6 +91,7 @@
             //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             //this.ClientSize = new System.Drawing.Size(1342, 681);
             this.Name = "frmConsultaPedido";
+            this.Text = "Consulta Pedidos";
             this.Load += new System.EventHandler(this.frmConsultaPedido_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

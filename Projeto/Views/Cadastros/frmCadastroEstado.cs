@@ -3,7 +3,8 @@ using Projeto.DAO;
 using Projeto.Models;
 using Projeto.Utils;
 using System;
-using System.Collections.Generic; 
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Projeto.Views
@@ -48,8 +49,9 @@ namespace Projeto.Views
             txtCodigo.Text = oEstado.Id.ToString();
             txtNome.Text = oEstado.NomeEstado;
             txtUF.Text = oEstado.UF;
+            txtIdPais.Text = oEstado.PaisId.ToString(); 
             txtPais.Text = oEstado.PaisNome;
-            paisSelecionadoId = oEstado.PaisId; 
+            paisSelecionadoId = oEstado.PaisId;
             chkInativo.Checked = !oEstado.Ativo;
             lblDataCriacao.Text = oEstado.DataCadastro.HasValue ? $"Criado em: {oEstado.DataCadastro.Value:dd/MM/yyyy HH:mm}" : "Criado em: -";
             lblDataModificacao.Text = oEstado.DataAlteracao.HasValue ? $"Modificado em: {oEstado.DataAlteracao.Value:dd/MM/yyyy HH:mm}" : "Modificado em: -";
@@ -59,6 +61,7 @@ namespace Projeto.Views
         {
             txtNome.Enabled = false;
             txtUF.Enabled = false;
+            txtIdPais.Enabled = false; 
             btnBuscar.Enabled = false;
             chkInativo.Enabled = false;
         }
@@ -67,6 +70,7 @@ namespace Projeto.Views
         {
             txtNome.Enabled = true;
             txtUF.Enabled = true;
+            txtIdPais.Enabled = true; 
             btnBuscar.Enabled = true;
             chkInativo.Enabled = true;
         }
@@ -76,6 +80,7 @@ namespace Projeto.Views
             txtCodigo.Text = "0";
             txtNome.Clear();
             txtUF.Clear();
+            txtIdPais.Clear(); // Adicionado
             txtPais.Clear();
             paisSelecionadoId = -1;
             chkInativo.Checked = false;
@@ -87,7 +92,7 @@ namespace Projeto.Views
 
         private void frmCadastroEstado_Load(object sender, EventArgs e)
         {
-      
+
         }
 
         private async void btnSalvar_Click(object sender, EventArgs e)
@@ -182,7 +187,40 @@ namespace Projeto.Views
             if (resultado == DialogResult.OK && oFrmConsultaPais.PaisSelecionado != null)
             {
                 txtPais.Text = oFrmConsultaPais.PaisSelecionado.NomePais;
+                txtIdPais.Text = oFrmConsultaPais.PaisSelecionado.Id.ToString(); 
                 paisSelecionadoId = oFrmConsultaPais.PaisSelecionado.Id;
+            }
+        }
+
+        private async void txtIdPais_Leave(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtIdPais.Text))
+            {
+                txtPais.Text = "";
+                paisSelecionadoId = -1;
+                return;
+            }
+
+            if (!int.TryParse(txtIdPais.Text, out int id))
+            {
+                MessageBox.Show("O campo ID País deve conter apenas números.");
+                txtPais.Text = "";
+                paisSelecionadoId = -1;
+                return;
+            }
+
+            var pais = await paisController.BuscarPorId(id);
+
+            if (pais != null)
+            {
+                txtPais.Text = pais.NomePais;
+                paisSelecionadoId = pais.Id;
+            }
+            else
+            {
+                MessageBox.Show("País não encontrado.");
+                txtPais.Text = "";
+                paisSelecionadoId = -1;
             }
         }
     }

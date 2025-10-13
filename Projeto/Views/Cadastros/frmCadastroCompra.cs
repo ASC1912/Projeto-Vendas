@@ -299,6 +299,12 @@ namespace Projeto.Views.Cadastros
 
         private void btnAdicionarProduto_Click(object sender, EventArgs e)
         {
+            if (!ValidarCabecalho())
+            {
+                MessageBox.Show("Por favor, preencha todos os dados do cabeçalho da nota (Modelo, Série, Número e Fornecedor) antes de adicionar produtos.", "Dados Incompletos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return; 
+            }
+
             if (produtoSelecionado == null)
             {
                 MessageBox.Show("Por favor, pesquise e selecione um produto válido.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -320,7 +326,7 @@ namespace Projeto.Views.Cadastros
             txtTotal.Text = totalItem.ToString("F2");
             ListViewItem item = new ListViewItem(produtoSelecionado.Id.ToString());
             item.SubItems.Add(produtoSelecionado.NomeProduto);
-            item.SubItems.Add("UN");
+            item.SubItems.Add(produtoSelecionado.NomeUnidadeMedida ?? "UN"); 
             item.SubItems.Add(quantidade.ToString());
             item.SubItems.Add(valorUnitario.ToString("F2"));
             item.SubItems.Add(totalItem.ToString("F2"));
@@ -416,45 +422,18 @@ namespace Projeto.Views.Cadastros
 
         private void btnSalvar_Click(object sender, EventArgs e)
         {
-            if (!int.TryParse(txtNumero.Text, out _) || !int.TryParse(txtIDFornecedor.Text, out _))
+            if (!ValidarDadosGerais())
             {
-                MessageBox.Show("Os dados do cabeçalho da nota (Modelo, Série, Número, Fornecedor) são obrigatórios e devem ser válidos.", "Validação", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            if (listViewProdutos.Items.Count == 0)
-            {
-                MessageBox.Show("É necessário adicionar pelo menos um produto à compra.", "Validação", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             try
             {
-                Compra novaCompra = new Compra
-                {
-                    Modelo = txtCodigo.Text,
-                    Serie = txtSerie.Text,
-                    NumeroNota = int.Parse(txtNumero.Text),
-                    FornecedorId = int.Parse(txtIDFornecedor.Text),
-                    DataEmissao = dtpEmissao.Value,
-                    DataChegada = dtpChegada.Value,
-                    Ativo = !chkInativo.Checked,
-                    ValorFrete = string.IsNullOrWhiteSpace(txtFrete.Text) ? 0 : Convert.ToDecimal(txtFrete.Text),
-                    Seguro = string.IsNullOrWhiteSpace(txtSeguro.Text) ? 0 : Convert.ToDecimal(txtSeguro.Text),
-                    Despesas = string.IsNullOrWhiteSpace(txtDespesas.Text) ? 0 : Convert.ToDecimal(txtDespesas.Text),
-                    ValorTotal = string.IsNullOrWhiteSpace(txtValorTotal.Text) ? 0 : Convert.ToDecimal(txtValorTotal.Text),
-                    CondicaoPagamentoId = condicaoSelecionadoId > 0 ? (int?)condicaoSelecionadoId : null
-                };
-                foreach (ListViewItem item in listViewProdutos.Items)
-                {
-                    novaCompra.Itens.Add(new ItemCompra
-                    {
-                        ProdutoId = int.Parse(item.SubItems[0].Text),
-                        Quantidade = decimal.Parse(item.SubItems[3].Text),
-                        ValorUnitario = decimal.Parse(item.SubItems[4].Text),
-                        ValorTotalItem = decimal.Parse(item.SubItems[5].Text)
-                    });
-                }
+                Compra novaCompra = MontarObjetoCompra();
+
                 GerarParcelas(novaCompra);
+
                 controller.Salvar(novaCompra);
+
                 MessageBox.Show("Compra salva com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();
             }
@@ -468,6 +447,7 @@ namespace Projeto.Views.Cadastros
             }
         }
 
+       
         private void btnLimparProduto_Click(object sender, EventArgs e) => LimparTxt();
 
         private void btnLimparCondPgto_Click(object sender, EventArgs e)
@@ -481,7 +461,67 @@ namespace Projeto.Views.Cadastros
 
 
 
-        #region Lógica de Cálculos
+        #region Lógica de Cálculos e Suporte
+
+        private bool ValidarCabecalho()
+        {
+            if (string.IsNullOrWhiteSpace(txtCodigo.Text) ||
+                string.IsNullOrWhiteSpace(txtSerie.Text) ||
+                string.IsNullOrWhiteSpace(txtNumero.Text) ||
+                string.IsNullOrWhiteSpace(txtIDFornecedor.Text))
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private bool ValidarDadosGerais()
+        {
+            if (!int.TryParse(txtNumero.Text, out _) || !int.TryParse(txtIDFornecedor.Text, out _))
+            {
+                MessageBox.Show("Os dados do cabeçalho da nota (Modelo, Série, Número, Fornecedor) são obrigatórios e devem ser válidos.", "Validação", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+            if (listViewProdutos.Items.Count == 0)
+            {
+                MessageBox.Show("É necessário adicionar pelo menos um produto à compra.", "Validação", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+            return true;
+        }
+
+
+        private Compra MontarObjetoCompra()
+        {
+            Compra compra = new Compra
+            {
+                Modelo = txtCodigo.Text,
+                Serie = txtSerie.Text,
+                NumeroNota = int.Parse(txtNumero.Text),
+                FornecedorId = int.Parse(txtIDFornecedor.Text),
+                DataEmissao = dtpEmissao.Value,
+                DataChegada = dtpChegada.Value,
+                Ativo = !chkInativo.Checked,
+                ValorFrete = string.IsNullOrWhiteSpace(txtFrete.Text) ? 0 : Convert.ToDecimal(txtFrete.Text),
+                Seguro = string.IsNullOrWhiteSpace(txtSeguro.Text) ? 0 : Convert.ToDecimal(txtSeguro.Text),
+                Despesas = string.IsNullOrWhiteSpace(txtDespesas.Text) ? 0 : Convert.ToDecimal(txtDespesas.Text),
+                ValorTotal = string.IsNullOrWhiteSpace(txtValorTotal.Text) ? 0 : Convert.ToDecimal(txtValorTotal.Text),
+                CondicaoPagamentoId = condicaoSelecionadoId > 0 ? (int?)condicaoSelecionadoId : null
+            };
+
+            foreach (ListViewItem item in listViewProdutos.Items)
+            {
+                compra.Itens.Add(new ItemCompra
+                {
+                    ProdutoId = int.Parse(item.SubItems[0].Text),
+                    Quantidade = decimal.Parse(item.SubItems[3].Text),
+                    ValorUnitario = decimal.Parse(item.SubItems[4].Text),
+                    ValorTotalItem = decimal.Parse(item.SubItems[5].Text)
+                });
+            }
+
+            return compra;
+        }
 
         private void CalcularTotalItem()
         {

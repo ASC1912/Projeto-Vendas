@@ -46,8 +46,9 @@ namespace Projeto.Views.Consultas
                 {
                     ListViewItem item = new ListViewItem(produto.Id.ToString());
                     item.SubItems.Add(produto.NomeProduto);
-                    item.SubItems.Add(produto.PrecoCusto.ToString("F2")); // Alterado
-                    item.SubItems.Add(produto.PrecoVenda.ToString("F2")); // Adicionado
+                    item.SubItems.Add(produto.PrecoCusto.ToString("F2")); 
+                    item.SubItems.Add(produto.PrecoVenda.ToString("F2"));
+                    item.SubItems.Add(produto.NomeUnidadeMedida ?? ""); 
                     item.SubItems.Add(produto.Estoque.ToString());
                     item.SubItems.Add(produto.NomeMarca ?? "");
                     item.SubItems.Add(produto.NomeGrupo ?? "");
@@ -81,8 +82,9 @@ namespace Projeto.Views.Consultas
                     {
                         ListViewItem item = new ListViewItem(produto.Id.ToString());
                         item.SubItems.Add(produto.NomeProduto);
-                        item.SubItems.Add(produto.PrecoCusto.ToString("F2")); // Alterado
-                        item.SubItems.Add(produto.PrecoVenda.ToString("F2")); // Adicionado
+                        item.SubItems.Add(produto.PrecoCusto.ToString("F2")); 
+                        item.SubItems.Add(produto.PrecoVenda.ToString("F2"));
+                        item.SubItems.Add(produto.NomeUnidadeMedida ?? ""); 
                         item.SubItems.Add(produto.Estoque.ToString());
                         item.SubItems.Add(produto.NomeMarca ?? "");
                         item.SubItems.Add(produto.NomeGrupo ?? "");
@@ -225,6 +227,10 @@ namespace Projeto.Views.Consultas
                     case "Preço Venda": 
                         column.Width = 90;
                         column.TextAlign = HorizontalAlignment.Right;
+                        break;
+                    case "Unidade": 
+                        column.Width = 80;
+                        column.TextAlign = HorizontalAlignment.Center;
                         break;
                     case "Estoque":
                         column.Width = 70;

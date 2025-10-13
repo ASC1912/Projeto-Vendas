@@ -29,7 +29,7 @@ namespace Projeto.Views.Cadastros
             txtCodigo.Enabled = false;
             cbTipo.SelectedIndex = 0;
             cbTipo.SelectedIndexChanged += cbTipo_SelectedIndexChanged;
-            cbTipo_SelectedIndexChanged(null, null); // Chama o evento para definir o rótulo inicial
+            cbTipo_SelectedIndexChanged(null, null);
         }
 
         public override void ConhecaObj(object obj, object ctrl)
@@ -78,6 +78,7 @@ namespace Projeto.Views.Cadastros
             txtCPF.Text = aTransportadora.CPF_CNPJ;
             txtInscEst.Text = aTransportadora.InscricaoEstadual;
             txtInscEstSubTrib.Text = aTransportadora.InscricaoEstadualSubTrib;
+            txtIdCondPgto.Text = aTransportadora.IdCondicao.ToString(); 
             txtCondicao.Text = aTransportadora.oCondicaoPagamento?.Descricao;
             condicaoSelecionadoId = aTransportadora.IdCondicao ?? -1;
             chkInativo.Checked = !aTransportadora.Ativo;
@@ -101,6 +102,7 @@ namespace Projeto.Views.Cadastros
             txtCPF.Enabled = false;
             txtInscEst.Enabled = false;
             txtInscEstSubTrib.Enabled = false;
+            txtIdCondPgto.Enabled = false; 
             txtCondicao.Enabled = false;
             btnBuscarCond.Enabled = false;
             chkInativo.Enabled = false;
@@ -122,6 +124,7 @@ namespace Projeto.Views.Cadastros
             txtCPF.Enabled = true;
             txtInscEst.Enabled = true;
             txtInscEstSubTrib.Enabled = true;
+            txtIdCondPgto.Enabled = true; 
             txtCondicao.Enabled = true;
             btnBuscarCond.Enabled = true;
             chkInativo.Enabled = true;
@@ -145,6 +148,7 @@ namespace Projeto.Views.Cadastros
             txtCPF.Clear();
             txtInscEst.Clear();
             txtInscEstSubTrib.Clear();
+            txtIdCondPgto.Clear(); 
             txtCondicao.Clear();
             condicaoSelecionadoId = -1;
             chkInativo.Checked = false;
@@ -268,6 +272,7 @@ namespace Projeto.Views.Cadastros
             if (oFrmConsultaCondPgto.ShowDialog() == DialogResult.OK && oFrmConsultaCondPgto.CondicaoSelecionado != null)
             {
                 txtCondicao.Text = oFrmConsultaCondPgto.CondicaoSelecionado.Descricao;
+                txtIdCondPgto.Text = oFrmConsultaCondPgto.CondicaoSelecionado.Id.ToString(); // Adicionado
                 condicaoSelecionadoId = oFrmConsultaCondPgto.CondicaoSelecionado.Id;
             }
         }
@@ -301,6 +306,36 @@ namespace Projeto.Views.Cadastros
                 MessageBox.Show("ID da cidade inválido.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtCidade.Clear();
                 cidadeSelecionadoId = -1;
+            }
+        }
+
+        private async void txtIdCondPgto_Leave(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtIdCondPgto.Text))
+            {
+                txtCondicao.Text = "";
+                condicaoSelecionadoId = -1;
+                return;
+            }
+            if (!Validador.ValidarNumerico(txtIdCondPgto, "O campo ID Cond. Pag. deve conter apenas números."))
+            {
+                txtCondicao.Text = "";
+                condicaoSelecionadoId = -1;
+                return;
+            }
+            int id = int.Parse(txtIdCondPgto.Text);
+            var condicao = await condicaoPagamentoController.BuscarPorId(id);
+
+            if (condicao != null)
+            {
+                txtCondicao.Text = condicao.Descricao;
+                condicaoSelecionadoId = condicao.Id;
+            }
+            else
+            {
+                MessageBox.Show("Condição de Pagamento não encontrada.");
+                txtCondicao.Text = "";
+                condicaoSelecionadoId = -1;
             }
         }
 

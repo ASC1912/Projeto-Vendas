@@ -61,6 +61,8 @@
             this.lblCidade = new System.Windows.Forms.Label();
             this.IDCidade = new System.Windows.Forms.Label();
             this.txtIdCidade = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.txtIdCondPgto = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // txtCodigo
@@ -129,7 +131,7 @@
             // 
             // txtCondicao
             // 
-            this.txtCondicao.Location = new System.Drawing.Point(515, 264);
+            this.txtCondicao.Location = new System.Drawing.Point(610, 264);
             this.txtCondicao.Name = "txtCondicao";
             this.txtCondicao.ReadOnly = true;
             this.txtCondicao.Size = new System.Drawing.Size(200, 22);
@@ -137,7 +139,7 @@
             // 
             // btnBuscarCond
             // 
-            this.btnBuscarCond.Location = new System.Drawing.Point(741, 261);
+            this.btnBuscarCond.Location = new System.Drawing.Point(836, 261);
             this.btnBuscarCond.Name = "btnBuscarCond";
             this.btnBuscarCond.Size = new System.Drawing.Size(150, 23);
             this.btnBuscarCond.TabIndex = 17;
@@ -166,7 +168,7 @@
             // lblCondPgto
             // 
             this.lblCondPgto.AutoSize = true;
-            this.lblCondPgto.Location = new System.Drawing.Point(512, 243);
+            this.lblCondPgto.Location = new System.Drawing.Point(607, 243);
             this.lblCondPgto.Name = "lblCondPgto";
             this.lblCondPgto.Size = new System.Drawing.Size(143, 16);
             this.lblCondPgto.TabIndex = 98;
@@ -362,10 +364,30 @@
             this.txtIdCidade.TabIndex = 8;
             this.txtIdCidade.Leave += new System.EventHandler(this.txtIdCidade_Leave);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(512, 245);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(88, 16);
+            this.label1.TabIndex = 107;
+            this.label1.Text = "ID CongPgto*";
+            // 
+            // txtIdCondPgto
+            // 
+            this.txtIdCondPgto.Location = new System.Drawing.Point(515, 264);
+            this.txtIdCondPgto.Name = "txtIdCondPgto";
+            this.txtIdCondPgto.Size = new System.Drawing.Size(67, 22);
+            this.txtIdCondPgto.TabIndex = 106;
+            this.txtIdCondPgto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtIdCondPgto.Leave += new System.EventHandler(this.txtIdCondPgto_Leave);
+            // 
             // frmCadastroTransportadora
             // 
             //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             //this.ClientSize = new System.Drawing.Size(1342, 681);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.txtIdCondPgto);
             this.Controls.Add(this.IDCidade);
             this.Controls.Add(this.txtIdCidade);
             this.Controls.Add(this.txtCondicao);
@@ -441,6 +463,8 @@
             this.Controls.SetChildIndex(this.txtCondicao, 0);
             this.Controls.SetChildIndex(this.txtIdCidade, 0);
             this.Controls.SetChildIndex(this.IDCidade, 0);
+            this.Controls.SetChildIndex(this.txtIdCondPgto, 0);
+            this.Controls.SetChildIndex(this.label1, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -481,5 +505,7 @@
         private System.Windows.Forms.Label lblCidade;
         private System.Windows.Forms.Label IDCidade;
         private System.Windows.Forms.TextBox txtIdCidade;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox txtIdCondPgto;
     }
 }

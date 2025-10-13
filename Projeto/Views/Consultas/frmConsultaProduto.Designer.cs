@@ -37,6 +37,7 @@
             this.Marca = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Grupo = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnSelecionar = new System.Windows.Forms.Button();
+            this.Unidade = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // listView1
@@ -46,6 +47,7 @@
             this.Nome,
             this.PrecoCusto,
             this.PrecoVenda,
+            this.Unidade,
             this.Estoque,
             this.Marca,
             this.Grupo,
@@ -110,6 +112,10 @@
             this.btnSelecionar.UseVisualStyleBackColor = true;
             this.btnSelecionar.Click += new System.EventHandler(this.btnSelecionar_Click);
             // 
+            // Unidade
+            // 
+            this.Unidade.Text = "Unidade";
+            // 
             // frmConsultaProduto
             // 
             //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -142,5 +148,6 @@
         private System.Windows.Forms.ColumnHeader Marca;
         private System.Windows.Forms.ColumnHeader Grupo;
         private System.Windows.Forms.Button btnSelecionar;
+        private System.Windows.Forms.ColumnHeader Unidade;
     }
 }

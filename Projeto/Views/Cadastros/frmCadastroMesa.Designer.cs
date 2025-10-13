@@ -122,6 +122,7 @@
             this.Controls.Add(this.lblQtdCadeira);
             this.Controls.Add(this.txtQtdCadeiras);
             this.Name = "frmCadastroMesa";
+            this.Text = "Cadastro Mesas";
             this.Controls.SetChildIndex(this.btnSair, 0);
             this.Controls.SetChildIndex(this.txtCodigo, 0);
             this.Controls.SetChildIndex(this.chkInativo, 0);

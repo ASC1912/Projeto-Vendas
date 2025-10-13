@@ -49,6 +49,7 @@ namespace Projeto.Views
         {
             txtCodigo.Text = aCidade.Id.ToString();
             txtNome.Text = aCidade.NomeCidade;
+            txtIdEstado.Text = aCidade.EstadoId.ToString(); 
             txtEstado.Text = aCidade.EstadoNome;
             estadoSelecionadoId = aCidade.EstadoId;
             txtDDD.Text = aCidade.DDD;
@@ -61,6 +62,7 @@ namespace Projeto.Views
         {
             txtNome.Enabled = false;
             txtDDD.Enabled = false;
+            txtIdEstado.Enabled = false; 
             btnBuscar.Enabled = false;
             chkInativo.Enabled = false;
         }
@@ -69,6 +71,7 @@ namespace Projeto.Views
         {
             txtNome.Enabled = true;
             txtDDD.Enabled = true;
+            txtIdEstado.Enabled = true; 
             btnBuscar.Enabled = true;
             chkInativo.Enabled = true;
         }
@@ -77,6 +80,7 @@ namespace Projeto.Views
         {
             txtCodigo.Text = "0";
             txtNome.Clear();
+            txtIdEstado.Clear(); 
             txtEstado.Clear();
             txtDDD.Clear();
             estadoSelecionadoId = -1;
@@ -146,7 +150,7 @@ namespace Projeto.Views
                     {
                         Id = id,
                         NomeCidade = nome,
-                        DDD = txtDDD.Text, 
+                        DDD = txtDDD.Text,
                         Ativo = !chkInativo.Checked,
                         DataCadastro = dataCriacao,
                         DataAlteracao = dataModificacao,
@@ -173,7 +177,40 @@ namespace Projeto.Views
             if (resultado == DialogResult.OK && oFrmConsultaEstado.EstadoSelecionado != null)
             {
                 txtEstado.Text = oFrmConsultaEstado.EstadoSelecionado.NomeEstado;
+                txtIdEstado.Text = oFrmConsultaEstado.EstadoSelecionado.Id.ToString(); // Adicionado
                 estadoSelecionadoId = oFrmConsultaEstado.EstadoSelecionado.Id;
+            }
+        }
+
+        private async void txtIdEstado_Leave(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtIdEstado.Text))
+            {
+                txtEstado.Text = "";
+                estadoSelecionadoId = -1;
+                return;
+            }
+
+            if (!int.TryParse(txtIdEstado.Text, out int id))
+            {
+                MessageBox.Show("O campo ID Estado deve conter apenas números.");
+                txtEstado.Text = "";
+                estadoSelecionadoId = -1;
+                return;
+            }
+
+            var estado = await estadoController.BuscarPorId(id);
+
+            if (estado != null)
+            {
+                txtEstado.Text = estado.NomeEstado;
+                estadoSelecionadoId = estado.Id;
+            }
+            else
+            {
+                MessageBox.Show("Estado não encontrado.");
+                txtEstado.Text = "";
+                estadoSelecionadoId = -1;
             }
         }
     }

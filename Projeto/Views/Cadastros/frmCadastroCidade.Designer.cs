@@ -36,6 +36,8 @@
             this.txtEstado = new System.Windows.Forms.TextBox();
             this.lblDDD = new System.Windows.Forms.Label();
             this.txtDDD = new System.Windows.Forms.TextBox();
+            this.lblIdFornecedor = new System.Windows.Forms.Label();
+            this.txtIdEstado = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // txtCodigo
@@ -45,21 +47,22 @@
             // 
             // btnSair
             // 
-            this.btnSair.TabIndex = 7;
+            this.btnSair.TabIndex = 8;
             // 
             // chkInativo
             // 
-            this.chkInativo.TabIndex = 5;
+            this.chkInativo.TabIndex = 6;
             // 
-            // btnSalvar2
+            // btnSalvar
             // 
             this.btnSalvar.Location = new System.Drawing.Point(1120, 634);
+            this.btnSalvar.TabIndex = 7;
             this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
             // 
             // lblEstado
             // 
             this.lblEstado.AutoSize = true;
-            this.lblEstado.Location = new System.Drawing.Point(9, 207);
+            this.lblEstado.Location = new System.Drawing.Point(99, 209);
             this.lblEstado.Name = "lblEstado";
             this.lblEstado.Size = new System.Drawing.Size(55, 16);
             this.lblEstado.TabIndex = 6;
@@ -93,21 +96,21 @@
             // 
             // btnBuscar
             // 
-            this.btnBuscar.Location = new System.Drawing.Point(228, 225);
+            this.btnBuscar.Location = new System.Drawing.Point(318, 227);
             this.btnBuscar.Name = "btnBuscar";
             this.btnBuscar.Size = new System.Drawing.Size(150, 23);
-            this.btnBuscar.TabIndex = 3;
+            this.btnBuscar.TabIndex = 4;
             this.btnBuscar.Text = "Buscar Estado";
             this.btnBuscar.UseVisualStyleBackColor = true;
             this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
             // 
             // txtEstado
             // 
-            this.txtEstado.Location = new System.Drawing.Point(12, 226);
+            this.txtEstado.Location = new System.Drawing.Point(102, 228);
             this.txtEstado.Name = "txtEstado";
             this.txtEstado.ReadOnly = true;
             this.txtEstado.Size = new System.Drawing.Size(181, 22);
-            this.txtEstado.TabIndex = 2;
+            this.txtEstado.TabIndex = 3;
             // 
             // lblDDD
             // 
@@ -124,12 +127,34 @@
             this.txtDDD.MaxLength = 5;
             this.txtDDD.Name = "txtDDD";
             this.txtDDD.Size = new System.Drawing.Size(80, 22);
-            this.txtDDD.TabIndex = 4;
+            this.txtDDD.TabIndex = 5;
+            // 
+            // lblIdFornecedor
+            // 
+            this.lblIdFornecedor.AutoSize = true;
+            this.lblIdFornecedor.Location = new System.Drawing.Point(9, 210);
+            this.lblIdFornecedor.Name = "lblIdFornecedor";
+            this.lblIdFornecedor.Size = new System.Drawing.Size(71, 16);
+            this.lblIdFornecedor.TabIndex = 9;
+            this.lblIdFornecedor.Text = "ID Estado*";
+            // 
+            // txtIdEstado
+            // 
+            this.txtIdEstado.Location = new System.Drawing.Point(12, 228);
+            this.txtIdEstado.Margin = new System.Windows.Forms.Padding(4);
+            this.txtIdEstado.Name = "txtIdEstado";
+            this.txtIdEstado.ShortcutsEnabled = false;
+            this.txtIdEstado.Size = new System.Drawing.Size(52, 22);
+            this.txtIdEstado.TabIndex = 2;
+            this.txtIdEstado.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtIdEstado.Leave += new System.EventHandler(this.txtIdEstado_Leave);
             // 
             // frmCadastroCidade
             // 
             //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             //this.ClientSize = new System.Drawing.Size(1342, 681);
+            this.Controls.Add(this.lblIdFornecedor);
+            this.Controls.Add(this.txtIdEstado);
             this.Controls.Add(this.lblDDD);
             this.Controls.Add(this.txtDDD);
             this.Controls.Add(this.txtEstado);
@@ -155,6 +180,8 @@
             this.Controls.SetChildIndex(this.txtEstado, 0);
             this.Controls.SetChildIndex(this.txtDDD, 0);
             this.Controls.SetChildIndex(this.lblDDD, 0);
+            this.Controls.SetChildIndex(this.txtIdEstado, 0);
+            this.Controls.SetChildIndex(this.lblIdFornecedor, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -170,5 +197,7 @@
         private System.Windows.Forms.TextBox txtEstado;
         private System.Windows.Forms.Label lblDDD;
         private System.Windows.Forms.TextBox txtDDD;
+        private System.Windows.Forms.Label lblIdFornecedor;
+        private System.Windows.Forms.TextBox txtIdEstado;
     }
 }

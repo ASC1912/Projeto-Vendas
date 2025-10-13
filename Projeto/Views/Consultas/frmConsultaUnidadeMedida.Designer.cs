@@ -92,6 +92,7 @@
             //this.ClientSize = new System.Drawing.Size(1342, 681);
             this.Controls.Add(this.btnSelecionar);
             this.Name = "frmConsultaUnidadeMedida";
+            this.Text = "Consulta Unidades de Medida";
             this.Load += new System.EventHandler(this.frmConsultaUnidadeMedida_Load);
             this.Controls.SetChildIndex(this.listView1, 0);
             this.Controls.SetChildIndex(this.txtPesquisar, 0);
