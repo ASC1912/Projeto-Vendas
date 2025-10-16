@@ -164,9 +164,17 @@ namespace Projeto.DAO
                         }
                     }
 
-                    string updateCompraQuery = @"UPDATE Compras SET Ativo = 0, DataAlteracao = @DataAlteracao WHERE Modelo = @Modelo AND Serie = @Serie AND NumeroNota = @NumeroNota AND FornecedorId = @FornecedorId";
+                    string updateCompraQuery = @"UPDATE Compras 
+                                                 SET Ativo = 0, 
+                                                     Observacao = @Observacao, 
+                                                     DataAlteracao = @DataAlteracao 
+                                                 WHERE Modelo = @Modelo 
+                                                   AND Serie = @Serie 
+                                                   AND NumeroNota = @NumeroNota 
+                                                   AND FornecedorId = @FornecedorId";
                     using (MySqlCommand cmd = new MySqlCommand(updateCompraQuery, conn, tran))
                     {
+                        cmd.Parameters.AddWithValue("@Observacao", compra.Observacao); 
                         cmd.Parameters.AddWithValue("@DataAlteracao", DateTime.Now);
                         cmd.Parameters.AddWithValue("@Modelo", compra.Modelo);
                         cmd.Parameters.AddWithValue("@Serie", compra.Serie);
@@ -252,9 +260,11 @@ namespace Projeto.DAO
                     string queryItens = @"
                         SELECT 
                             i.*,
-                            p.Produto AS NomeProduto
+                            p.Produto AS NomeProduto,
+                            um.Nome AS NomeUnidadeMedida
                         FROM ItensCompra i
                         JOIN Produtos p ON i.ProdutoId = p.Id
+                        LEFT JOIN UnidadesMedida um ON p.UnidadeMedidaId = um.Id
                         WHERE i.CompraModelo = @Modelo AND i.CompraSerie = @Serie AND i.CompraNumeroNota = @NumeroNota AND i.CompraFornecedorId = @FornecedorId";
 
                     using (MySqlCommand cmdItens = new MySqlCommand(queryItens, conn))
@@ -321,7 +331,8 @@ namespace Projeto.DAO
                 Quantidade = reader.GetDecimal("Quantidade"),
                 ValorUnitario = reader.GetDecimal("ValorUnitario"),
                 ValorTotalItem = reader.GetDecimal("ValorTotalItem"),
-                NomeProduto = reader.IsDBNull(reader.GetOrdinal("NomeProduto")) ? "" : reader.GetString("NomeProduto")
+                NomeProduto = reader.IsDBNull(reader.GetOrdinal("NomeProduto")) ? "" : reader.GetString("NomeProduto"),
+                NomeUnidadeMedida = reader.IsDBNull(reader.GetOrdinal("NomeUnidadeMedida")) ? "UN" : reader.GetString("NomeUnidadeMedida")
             };
         }
     }

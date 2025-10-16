@@ -17,6 +17,7 @@ namespace Projeto.Views.Cadastros
         private frmConsultaMarca oFrmConsultaMarca;
 
         private VeiculoController controller = new VeiculoController();
+        private MarcaController marcaController = new MarcaController(); 
         private int transportadoraSelecionadaId = -1;
         private int marcaSelecionadaId = -1;
         public bool modoEdicao = false;
@@ -63,6 +64,7 @@ namespace Projeto.Views.Cadastros
             txtCodigo.Text = oVeiculo.Id.ToString();
             txtPlaca.Text = oVeiculo.Placa;
             txtModelo.Text = oVeiculo.Modelo;
+            txtIdMarca.Text = oVeiculo.IdMarca.ToString();
             txtMarca.Text = oVeiculo.NomeMarca;
             marcaSelecionadaId = oVeiculo.IdMarca ?? -1;
             txtAnoFabricacao.Text = oVeiculo.AnoFabricacao.ToString();
@@ -78,6 +80,7 @@ namespace Projeto.Views.Cadastros
         {
             txtPlaca.Enabled = false;
             txtModelo.Enabled = false;
+            txtIdMarca.Enabled = false;
             txtMarca.Enabled = false;
             btnMarca.Enabled = false;
             txtAnoFabricacao.Enabled = false;
@@ -91,6 +94,7 @@ namespace Projeto.Views.Cadastros
         {
             txtPlaca.Enabled = true;
             txtModelo.Enabled = true;
+            txtIdMarca.Enabled = true;
             txtMarca.Enabled = true;
             btnMarca.Enabled = true;
             txtAnoFabricacao.Enabled = true;
@@ -105,6 +109,7 @@ namespace Projeto.Views.Cadastros
             txtCodigo.Text = "0";
             txtPlaca.Clear();
             txtModelo.Clear();
+            txtIdMarca.Clear();
             txtMarca.Clear();
             txtAnoFabricacao.Clear();
             txtCapacidadeCarga.Clear();
@@ -194,8 +199,41 @@ namespace Projeto.Views.Cadastros
             oFrmConsultaMarca.ModoSelecao = true;
             if (oFrmConsultaMarca.ShowDialog() == DialogResult.OK && oFrmConsultaMarca.MarcaSelecionado != null)
             {
-                txtMarca.Text = oFrmConsultaMarca.MarcaSelecionado.NomeMarca;
-                marcaSelecionadaId = oFrmConsultaMarca.MarcaSelecionado.Id;
+                var marca = oFrmConsultaMarca.MarcaSelecionado;
+                txtIdMarca.Text = marca.Id.ToString();
+                txtMarca.Text = marca.NomeMarca;
+                marcaSelecionadaId = marca.Id;
+            }
+        }
+
+        private async void txtIdMarca_Leave(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtIdMarca.Text))
+            {
+                txtMarca.Clear();
+                marcaSelecionadaId = -1;
+                return;
+            }
+            if (int.TryParse(txtIdMarca.Text, out int id))
+            {
+                var marca = await marcaController.BuscarPorId(id);
+                if (marca != null)
+                {
+                    txtMarca.Text = marca.NomeMarca;
+                    marcaSelecionadaId = marca.Id;
+                }
+                else
+                {
+                    MessageBox.Show("Marca não encontrada.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtMarca.Clear();
+                    marcaSelecionadaId = -1;
+                }
+            }
+            else
+            {
+                MessageBox.Show("ID da Marca inválido.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtMarca.Clear();
+                marcaSelecionadaId = -1;
             }
         }
 

@@ -5,7 +5,7 @@ using Projeto.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks; 
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Projeto
@@ -56,7 +56,7 @@ namespace Projeto
             txtJuros.Text = aCondPgto.Juros.ToString("F2");
             txtMulta.Text = aCondPgto.Multa.ToString("F2");
             txtDesconto.Text = aCondPgto.Desconto.ToString("F2");
-            chkInativo.Checked = !aCondPgto.Ativo; 
+            chkInativo.Checked = !aCondPgto.Ativo;
             lblDataCriacao.Text = aCondPgto.DataCadastro.HasValue ? $"Criado em: {aCondPgto.DataCadastro.Value:dd/MM/yyyy HH:mm}" : "Criado em: -";
             lblDataModificacao.Text = aCondPgto.DataAlteracao.HasValue ? $"Modificado em: {aCondPgto.DataAlteracao.Value:dd/MM/yyyy HH:mm}" : "Modificado em: -";
 
@@ -89,6 +89,7 @@ namespace Projeto
             txtNumParcela.Enabled = false;
             txtPorcentagem.Enabled = false;
             txtPrazoDias.Enabled = false;
+            txtIdFormaPagamento.Enabled = false;
             txtFormaPagamento.Enabled = false;
             btnFormaPagamento.Enabled = false;
             btnGerarParcelas.Enabled = false;
@@ -108,6 +109,7 @@ namespace Projeto
             txtNumParcela.Enabled = true;
             txtPorcentagem.Enabled = true;
             txtPrazoDias.Enabled = true;
+            txtIdFormaPagamento.Enabled = true;
             txtFormaPagamento.Enabled = true;
             btnFormaPagamento.Enabled = true;
             btnGerarParcelas.Enabled = true;
@@ -128,6 +130,7 @@ namespace Projeto
             txtNumParcela.Clear();
             txtPorcentagem.Clear();
             txtPrazoDias.Clear();
+            txtIdFormaPagamento.Clear();
             txtFormaPagamento.Clear();
             formaPagamentoSelecionadaId = -1;
             listView1.Items.Clear();
@@ -153,7 +156,7 @@ namespace Projeto
                     ListViewItem item = new ListViewItem(parcela.NumParcela.ToString());
                     item.SubItems.Add(parcela.PrazoDias.ToString());
                     item.SubItems.Add(parcela.Porcentagem.ToString("N2") + "%");
-                    string descricaoFormaPagamento = await formaPagamentoController.ObterDescricaoFormaPagamento(parcela.FormaPagamentoId); 
+                    string descricaoFormaPagamento = await formaPagamentoController.ObterDescricaoFormaPagamento(parcela.FormaPagamentoId);
                     item.SubItems.Add(descricaoFormaPagamento);
                     listView1.Items.Add(item);
                 }
@@ -174,7 +177,7 @@ namespace Projeto
                     try
                     {
                         int id = int.Parse(txtCodigo.Text);
-                        await condicaoPagamentoController.Excluir(id); 
+                        await condicaoPagamentoController.Excluir(id);
                         MessageBox.Show("Condição de pagamento excluída com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         this.Close();
                     }
@@ -213,7 +216,7 @@ namespace Projeto
                     int id = string.IsNullOrEmpty(txtCodigo.Text) ? 0 : int.Parse(txtCodigo.Text);
                     string descricao = txtDescricao.Text;
 
-                    var condicoes = await condicaoPagamentoController.ListarCondicaoPagamento(); 
+                    var condicoes = await condicaoPagamentoController.ListarCondicaoPagamento();
 
                     if (Validador.VerificarDuplicidade(condicoes, c => c.Descricao.Trim().Equals(descricao.Trim(), StringComparison.OrdinalIgnoreCase) && c.Id != id, "Já existe uma condição de pagamento com esta descrição."))
                     {
@@ -242,7 +245,7 @@ namespace Projeto
                         decimal porcentagem = decimal.Parse(item.SubItems[2].Text.Replace("%", ""));
                         string descricaoFormaPagamento = item.SubItems[3].Text;
 
-                        int formaPagamentoId = await formaPagamentoController.ObterIdFormaPagamento(descricaoFormaPagamento); 
+                        int formaPagamentoId = await formaPagamentoController.ObterIdFormaPagamento(descricaoFormaPagamento);
 
                         parcelas.Add(new Parcelamento
                         {
@@ -250,11 +253,11 @@ namespace Projeto
                             Porcentagem = porcentagem,
                             PrazoDias = prazoDias,
                             FormaPagamentoId = formaPagamentoId,
-                            FormaPagamento = new FormaPagamento { Id = formaPagamentoId } 
+                            FormaPagamento = new FormaPagamento { Id = formaPagamentoId }
                         });
                     }
 
-                    await condicaoPagamentoController.Salvar(condicao, parcelas); 
+                    await condicaoPagamentoController.Salvar(condicao, parcelas);
 
                     MessageBox.Show("Condição de pagamento e parcelas salvas com sucesso!");
                     this.Close();
@@ -344,9 +347,42 @@ namespace Projeto
             if (oFrmConsultaFrmPgto.ShowDialog() == DialogResult.OK && oFrmConsultaFrmPgto.FormaSelecionada != null)
             {
                 txtFormaPagamento.Text = oFrmConsultaFrmPgto.FormaSelecionada.Descricao;
+                txtIdFormaPagamento.Text = oFrmConsultaFrmPgto.FormaSelecionada.Id.ToString();
                 formaPagamentoSelecionadaId = oFrmConsultaFrmPgto.FormaSelecionada.Id;
             }
         }
+        private async void txtIdFormaPagamento_Leave(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtIdFormaPagamento.Text))
+            {
+                txtFormaPagamento.Text = "";
+                formaPagamentoSelecionadaId = -1;
+                return;
+            }
+
+            if (!int.TryParse(txtIdFormaPagamento.Text, out int id))
+            {
+                MessageBox.Show("O campo ID Forma de Pagamento deve conter apenas números.");
+                txtFormaPagamento.Text = "";
+                formaPagamentoSelecionadaId = -1;
+                return;
+            }
+
+            var formaPagamento = await formaPagamentoController.BuscarPorId(id);
+
+            if (formaPagamento != null)
+            {
+                txtFormaPagamento.Text = formaPagamento.Descricao;
+                formaPagamentoSelecionadaId = formaPagamento.Id;
+            }
+            else
+            {
+                MessageBox.Show("Forma de Pagamento não encontrada.");
+                txtFormaPagamento.Text = "";
+                formaPagamentoSelecionadaId = -1;
+            }
+        }
+
 
         private void frmCadastroCondPgto_Load(object sender, EventArgs e)
         {

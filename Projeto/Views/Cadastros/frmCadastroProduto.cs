@@ -40,7 +40,6 @@ namespace Projeto.Views.Cadastros
             txtMarca.ReadOnly = true;
             txtGrupo.ReadOnly = true;
             txtFornecedor.ReadOnly = true;
-            txtPrecoVenda.ReadOnly = true;
 
             txtPrecoCusto.TextChanged += CalcularPrecoVenda;
             txtPorcentagemLucro.TextChanged += CalcularPrecoVenda;

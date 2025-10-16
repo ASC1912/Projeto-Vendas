@@ -57,6 +57,8 @@
             this.txtMulta = new System.Windows.Forms.TextBox();
             this.lblDesconto = new System.Windows.Forms.Label();
             this.txtDesconto = new System.Windows.Forms.TextBox();
+            this.lblIdFormaPgto = new System.Windows.Forms.Label();
+            this.txtIdFormaPagamento = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // txtCodigo
@@ -72,7 +74,7 @@
             // 
             this.chkInativo.TabIndex = 13;
             // 
-            // btnSalvar2
+            // btnSalvar
             // 
             this.btnSalvar.Location = new System.Drawing.Point(1134, 634);
             this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
@@ -137,7 +139,7 @@
             // lblFormaPagamento
             // 
             this.lblFormaPagamento.AutoSize = true;
-            this.lblFormaPagamento.Location = new System.Drawing.Point(515, 188);
+            this.lblFormaPagamento.Location = new System.Drawing.Point(605, 190);
             this.lblFormaPagamento.Name = "lblFormaPagamento";
             this.lblFormaPagamento.Size = new System.Drawing.Size(143, 16);
             this.lblFormaPagamento.TabIndex = 17;
@@ -198,7 +200,7 @@
             // 
             // btnGerarParcelas
             // 
-            this.btnGerarParcelas.Location = new System.Drawing.Point(883, 150);
+            this.btnGerarParcelas.Location = new System.Drawing.Point(973, 152);
             this.btnGerarParcelas.Name = "btnGerarParcelas";
             this.btnGerarParcelas.Size = new System.Drawing.Size(172, 23);
             this.btnGerarParcelas.TabIndex = 10;
@@ -233,7 +235,7 @@
             // 
             // btnEditarParcela
             // 
-            this.btnEditarParcela.Location = new System.Drawing.Point(883, 179);
+            this.btnEditarParcela.Location = new System.Drawing.Point(973, 181);
             this.btnEditarParcela.Name = "btnEditarParcela";
             this.btnEditarParcela.Size = new System.Drawing.Size(172, 23);
             this.btnEditarParcela.TabIndex = 11;
@@ -243,7 +245,7 @@
             // 
             // btnRemoverParcela
             // 
-            this.btnRemoverParcela.Location = new System.Drawing.Point(883, 208);
+            this.btnRemoverParcela.Location = new System.Drawing.Point(973, 210);
             this.btnRemoverParcela.Name = "btnRemoverParcela";
             this.btnRemoverParcela.Size = new System.Drawing.Size(172, 23);
             this.btnRemoverParcela.TabIndex = 12;
@@ -253,7 +255,7 @@
             // 
             // btnFormaPagamento
             // 
-            this.btnFormaPagamento.Location = new System.Drawing.Point(725, 207);
+            this.btnFormaPagamento.Location = new System.Drawing.Point(815, 209);
             this.btnFormaPagamento.Name = "btnFormaPagamento";
             this.btnFormaPagamento.Size = new System.Drawing.Size(150, 23);
             this.btnFormaPagamento.TabIndex = 9;
@@ -263,7 +265,7 @@
             // 
             // txtFormaPagamento
             // 
-            this.txtFormaPagamento.Location = new System.Drawing.Point(519, 208);
+            this.txtFormaPagamento.Location = new System.Drawing.Point(609, 210);
             this.txtFormaPagamento.Name = "txtFormaPagamento";
             this.txtFormaPagamento.ReadOnly = true;
             this.txtFormaPagamento.Size = new System.Drawing.Size(200, 22);
@@ -317,10 +319,29 @@
             this.txtDesconto.Size = new System.Drawing.Size(100, 22);
             this.txtDesconto.TabIndex = 5;
             // 
+            // lblIdFormaPgto
+            // 
+            this.lblIdFormaPgto.AutoSize = true;
+            this.lblIdFormaPgto.Location = new System.Drawing.Point(517, 191);
+            this.lblIdFormaPgto.Name = "lblIdFormaPgto";
+            this.lblIdFormaPgto.Size = new System.Drawing.Size(87, 16);
+            this.lblIdFormaPgto.TabIndex = 153;
+            this.lblIdFormaPgto.Text = "ID FormPgto*";
+            // 
+            // txtIdFormaPagamento
+            // 
+            this.txtIdFormaPagamento.Location = new System.Drawing.Point(517, 210);
+            this.txtIdFormaPagamento.Name = "txtIdFormaPagamento";
+            this.txtIdFormaPagamento.Size = new System.Drawing.Size(86, 22);
+            this.txtIdFormaPagamento.TabIndex = 152;
+            this.txtIdFormaPagamento.Leave += new System.EventHandler(this.txtIdFormaPagamento_Leave);
+            // 
             // frmCadastroCondPgto
             // 
             //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             //this.ClientSize = new System.Drawing.Size(1342, 681);
+            this.Controls.Add(this.lblIdFormaPgto);
+            this.Controls.Add(this.txtIdFormaPagamento);
             this.Controls.Add(this.lblDesconto);
             this.Controls.Add(this.txtDesconto);
             this.Controls.Add(this.lblMulta);
@@ -380,6 +401,8 @@
             this.Controls.SetChildIndex(this.lblMulta, 0);
             this.Controls.SetChildIndex(this.txtDesconto, 0);
             this.Controls.SetChildIndex(this.lblDesconto, 0);
+            this.Controls.SetChildIndex(this.txtIdFormaPagamento, 0);
+            this.Controls.SetChildIndex(this.lblIdFormaPgto, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -416,5 +439,7 @@
         private System.Windows.Forms.TextBox txtMulta;
         private System.Windows.Forms.Label lblDesconto;
         private System.Windows.Forms.TextBox txtDesconto;
+        private System.Windows.Forms.Label lblIdFormaPgto;
+        private System.Windows.Forms.TextBox txtIdFormaPagamento;
     }
 }

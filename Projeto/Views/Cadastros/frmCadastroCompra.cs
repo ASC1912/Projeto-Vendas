@@ -5,6 +5,7 @@ using Projeto.Views.Consultas;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Projeto.Views.Cadastros
@@ -18,6 +19,7 @@ namespace Projeto.Views.Cadastros
         private FornecedorController fornecedorController = new FornecedorController();
         private ProdutoController produtoController = new ProdutoController();
         private CondicaoPagamentoController condicaoPagamentoController = new CondicaoPagamentoController();
+        private FormaPagamentoController formaPagamentoController = new FormaPagamentoController();
 
         private frmConsultaFornecedor oFrmConsultaFornecedor;
         private frmConsultaProduto oFrmConsultaProduto;
@@ -29,9 +31,9 @@ namespace Projeto.Views.Cadastros
         private List<Control> parte2Controles;
         private List<Control> parte3Controles;
 
+        public bool modoCancelamento = false;
+
         #endregion
-
-
 
         #region Construtor e Inicialização
 
@@ -47,8 +49,6 @@ namespace Projeto.Views.Cadastros
         }
 
         #endregion
-
-
 
         #region Conexões com outros Formulários
 
@@ -68,8 +68,6 @@ namespace Projeto.Views.Cadastros
         }
 
         #endregion
-
-
 
         #region Gestão de Estado do Formulário
 
@@ -111,20 +109,17 @@ namespace Projeto.Views.Cadastros
             txtFornecedor.Clear();
             dtpEmissao.Value = DateTime.Now;
             dtpChegada.Value = DateTime.Now;
-            txtIdProduto.Clear();
-            txtProduto.Clear();
-            txtQuantidade.Clear();
-            txtValorUnitario.Clear();
-            txtTotal.Clear();
+            LimparCamposItem();
             listViewProdutos.Items.Clear();
             txtFrete.Clear();
             txtSeguro.Clear();
             txtDespesas.Clear();
             txtValorTotal.Clear();
-            txtIdCondPgto.Clear();
-            txtCondPgto.Clear();
-            listViewCondPgto.Items.Clear();
-            condicaoSelecionadoId = -1;
+            LimparCamposCondPgto();
+
+            lblMotivoCancelamento.Visible = false;
+            lblMotivoCancelamento.Text = "Motivo do Cancelamento: ";
+
             ConfigurarEstadoInicial();
         }
 
@@ -151,7 +146,7 @@ namespace Projeto.Views.Cadastros
                 {
                     ListViewItem item = new ListViewItem(itemCompra.ProdutoId.ToString());
                     item.SubItems.Add(itemCompra.NomeProduto);
-                    item.SubItems.Add("UN");
+                    item.SubItems.Add(itemCompra.NomeUnidadeMedida ?? "UN"); 
                     item.SubItems.Add(itemCompra.Quantidade.ToString());
                     item.SubItems.Add(itemCompra.ValorUnitario.ToString("F2"));
                     item.SubItems.Add(itemCompra.ValorTotalItem.ToString("F2"));
@@ -171,8 +166,20 @@ namespace Projeto.Views.Cadastros
                 condicaoSelecionadoId = aCompra.CondicaoPagamentoId.Value;
             }
 
+            chkInativo.Checked = !aCompra.Ativo;
             lblDataCriacao.Text = aCompra.DataCadastro.HasValue ? $"Criado em: {aCompra.DataCadastro.Value:dd/MM/yyyy HH:mm}" : "Criado em: -";
             lblDataModificacao.Text = aCompra.DataAlteracao.HasValue ? $"Modificado em: {aCompra.DataAlteracao.Value:dd/MM/yyyy HH:mm}" : "Modificado em: -";
+
+            if (!aCompra.Ativo)
+            {
+                lblMotivoCancelamento.Visible = true;
+                lblMotivoCancelamento.Text = "Motivo do Cancelamento: " + aCompra.Observacao;
+            }
+            else
+            {
+                lblMotivoCancelamento.Visible = false;
+                lblMotivoCancelamento.Text = "Motivo do Cancelamento: ";
+            }
 
             CalculaTotalCompra();
         }
@@ -192,105 +199,53 @@ namespace Projeto.Views.Cadastros
         }
         #endregion
 
-
-
         #region Event Handlers de Controles
 
         private async void txtIDFornecedor_Leave(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtIDFornecedor.Text))
+            if (string.IsNullOrWhiteSpace(txtIDFornecedor.Text)) { txtFornecedor.Clear(); return; }
+            if (int.TryParse(txtIDFornecedor.Text, out int id))
             {
-                txtFornecedor.Clear();
-                return;
+                Fornecedor f = await fornecedorController.BuscarPorId(id);
+                txtFornecedor.Text = f?.Nome;
+                if (f == null) { MessageBox.Show("Fornecedor não encontrado."); txtFornecedor.Clear(); }
             }
-            if (!int.TryParse(txtIDFornecedor.Text, out int id))
-            {
-                MessageBox.Show("O ID do Fornecedor deve ser um número.", "Inválido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            Fornecedor fornecedor = await fornecedorController.BuscarPorId(id);
-            if (fornecedor != null)
-            {
-                txtFornecedor.Text = fornecedor.Nome;
-            }
-            else
-            {
-                MessageBox.Show("Fornecedor não encontrado.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtFornecedor.Clear();
-            }
+            else { MessageBox.Show("ID de Fornecedor inválido."); txtFornecedor.Clear(); }
         }
 
         private async void txtIdProduto_Leave(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtIdProduto.Text))
+            if (string.IsNullOrWhiteSpace(txtIdProduto.Text)) { LimparCamposItemParcial(); return; }
+            if (int.TryParse(txtIdProduto.Text, out int id))
             {
-                txtProduto.Clear();
-                txtValorUnitario.Clear();
-                produtoSelecionado = null;
-                return;
+                Produto p = await produtoController.BuscarPorId(id);
+                if (p != null)
+                {
+                    produtoSelecionado = p;
+                    txtProduto.Text = p.NomeProduto;
+                    txtValorUnitario.Text = p.PrecoCusto.ToString("F2");
+                    txtQuantidade.Focus();
+                }
+                else { MessageBox.Show("Produto não encontrado."); LimparCamposItemParcial(); }
             }
-            if (!int.TryParse(txtIdProduto.Text, out int id))
-            {
-                MessageBox.Show("O ID do produto deve ser um número.", "Inválido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            Produto produto = await produtoController.BuscarPorId(id);
-            if (produto != null)
-            {
-                produtoSelecionado = produto;
-                txtProduto.Text = produto.NomeProduto;
-                txtValorUnitario.Text = produto.PrecoCusto.ToString("F2");
-                txtQuantidade.Focus();
-            }
-            else
-            {
-                MessageBox.Show("Produto não encontrado.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtProduto.Clear();
-                txtValorUnitario.Clear();
-                produtoSelecionado = null;
-            }
+            else { MessageBox.Show("ID do Produto inválido."); LimparCamposItemParcial(); }
         }
 
         private async void txtIdCondPgto_Leave(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtIdCondPgto.Text))
+            if (string.IsNullOrWhiteSpace(txtIdCondPgto.Text)) { LimparCamposCondPgto(); return; }
+            if (int.TryParse(txtIdCondPgto.Text, out int id))
             {
-                txtCondPgto.Clear();
-                listViewCondPgto.Items.Clear();
-                condicaoSelecionadoId = -1;
-                return;
-            }
-            if (!int.TryParse(txtIdCondPgto.Text, out int id))
-            {
-                MessageBox.Show("O ID da Condição de Pagamento deve ser um número.", "Inválido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            CondicaoPagamento condicao = await condicaoPagamentoController.BuscarPorId(id);
-            if (condicao != null)
-            {
-                txtCondPgto.Text = condicao.Descricao;
-                condicaoSelecionadoId = condicao.Id;
-                listViewCondPgto.Items.Clear();
-                if (condicao.Parcelas != null)
+                CondicaoPagamento cond = await condicaoPagamentoController.BuscarPorId(id);
+                if (cond != null)
                 {
-                    foreach (var parcela in condicao.Parcelas)
-                    {
-                        ListViewItem item = new ListViewItem(parcela.NumParcela.ToString());
-                        item.SubItems.Add(parcela.PrazoDias.ToString());
-                        item.SubItems.Add(parcela.Porcentagem.ToString("N2") + "%");
-                        item.SubItems.Add(parcela.FormaPagamento?.Descricao ?? "N/D");
-                        listViewCondPgto.Items.Add(item);
-                    }
+                    txtCondPgto.Text = cond.Descricao;
+                    condicaoSelecionadoId = cond.Id;
+                    await AtualizarListViewCondPgto(cond);
                 }
-                CalculaTotalCompra();
+                else { MessageBox.Show("Condição de Pagamento não encontrada."); LimparCamposCondPgto(); }
             }
-            else
-            {
-                MessageBox.Show("Condição de Pagamento não encontrada.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtCondPgto.Clear();
-                listViewCondPgto.Items.Clear();
-                condicaoSelecionadoId = -1;
-            }
+            else { MessageBox.Show("ID da Condição de Pagamento inválido."); LimparCamposCondPgto(); }
         }
 
         private void txtQuantidade_TextChanged(object sender, EventArgs e) => CalcularTotalItem();
@@ -301,44 +256,28 @@ namespace Projeto.Views.Cadastros
         {
             if (!ValidarCabecalho())
             {
-                MessageBox.Show("Por favor, preencha todos os dados do cabeçalho da nota (Modelo, Série, Número e Fornecedor) antes de adicionar produtos.", "Dados Incompletos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return; 
+                MessageBox.Show("Preencha todos os dados do cabeçalho da nota antes de adicionar produtos.", "Dados Incompletos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (produtoSelecionado == null || !decimal.TryParse(txtQuantidade.Text, out decimal qtd) || qtd <= 0 || !decimal.TryParse(txtValorUnitario.Text, out _))
+            {
+                MessageBox.Show("Selecione um produto e informe quantidade e valor válidos.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
 
-            if (produtoSelecionado == null)
-            {
-                MessageBox.Show("Por favor, pesquise e selecione um produto válido.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            if (!decimal.TryParse(txtQuantidade.Text, out decimal quantidade) || quantidade <= 0)
-            {
-                MessageBox.Show("Por favor, insira uma quantidade válida.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtQuantidade.Focus();
-                return;
-            }
-            if (!decimal.TryParse(txtValorUnitario.Text, out decimal valorUnitario) || valorUnitario < 0)
-            {
-                MessageBox.Show("Por favor, insira um valor unitário válido.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtValorUnitario.Focus();
-                return;
-            }
-            decimal totalItem = quantidade * valorUnitario;
-            txtTotal.Text = totalItem.ToString("F2");
             ListViewItem item = new ListViewItem(produtoSelecionado.Id.ToString());
-            item.SubItems.Add(produtoSelecionado.NomeProduto);
-            item.SubItems.Add(produtoSelecionado.NomeUnidadeMedida ?? "UN"); 
-            item.SubItems.Add(quantidade.ToString());
-            item.SubItems.Add(valorUnitario.ToString("F2"));
-            item.SubItems.Add(totalItem.ToString("F2"));
+            item.SubItems.AddRange(new string[] {
+                produtoSelecionado.NomeProduto,
+                produtoSelecionado.NomeUnidadeMedida ?? "UN",
+                txtQuantidade.Text,
+                txtValorUnitario.Text,
+                txtTotal.Text
+            });
             listViewProdutos.Items.Add(item);
-            produtoSelecionado = null;
-            txtProduto.Clear();
-            txtIdProduto.Clear();
-            txtQuantidade.Clear();
-            txtValorUnitario.Clear();
-            txtTotal.Clear();
-            txtProduto.Focus();
-            if (listViewProdutos.Items.Count >= 1)
+
+            LimparCamposItem();
+
+            if (listViewProdutos.Items.Count > 0)
             {
                 HabilitarControles(parte1Controles, false);
                 HabilitarControles(parte3Controles, true);
@@ -353,16 +292,13 @@ namespace Projeto.Views.Cadastros
             {
                 listViewProdutos.Items.Remove(listViewProdutos.SelectedItems[0]);
                 CalculaTotalCompra();
+
+                if (listViewProdutos.Items.Count == 0)
+                {
+                    ConfigurarEstadoInicial();
+                }
             }
-            else
-            {
-                MessageBox.Show("Selecione um produto para remover.");
-            }
-            if (listViewProdutos.Items.Count == 0)
-            {
-                HabilitarControles(parte3Controles, false);
-                btnSalvar.Enabled = false;
-            }
+            else { MessageBox.Show("Selecione um produto para remover."); }
         }
 
         private void btnPesquisarFornecedor_Click(object sender, EventArgs e)
@@ -371,9 +307,9 @@ namespace Projeto.Views.Cadastros
             oFrmConsultaFornecedor.ModoSelecao = true;
             if (oFrmConsultaFornecedor.ShowDialog() == DialogResult.OK && oFrmConsultaFornecedor.FornecedorSelecionado != null)
             {
-                var fornecedor = oFrmConsultaFornecedor.FornecedorSelecionado;
-                txtIDFornecedor.Text = fornecedor.Id.ToString();
-                txtFornecedor.Text = fornecedor.Nome;
+                var f = oFrmConsultaFornecedor.FornecedorSelecionado;
+                txtIDFornecedor.Text = f.Id.ToString();
+                txtFornecedor.Text = f.Nome;
             }
             oFrmConsultaFornecedor.ModoSelecao = false;
         }
@@ -384,16 +320,16 @@ namespace Projeto.Views.Cadastros
             oFrmConsultaProduto.ModoSelecao = true;
             if (oFrmConsultaProduto.ShowDialog() == DialogResult.OK && oFrmConsultaProduto.ProdutoSelecionado != null)
             {
-                this.produtoSelecionado = oFrmConsultaProduto.ProdutoSelecionado;
-                txtProduto.Text = this.produtoSelecionado.NomeProduto;
-                txtIdProduto.Text = this.produtoSelecionado.Id.ToString();
-                txtValorUnitario.Text = this.produtoSelecionado.PrecoCusto.ToString("F2");
+                produtoSelecionado = oFrmConsultaProduto.ProdutoSelecionado;
+                txtIdProduto.Text = produtoSelecionado.Id.ToString();
+                txtProduto.Text = produtoSelecionado.NomeProduto;
+                txtValorUnitario.Text = produtoSelecionado.PrecoCusto.ToString("F2");
                 txtQuantidade.Focus();
             }
             oFrmConsultaProduto.ModoSelecao = false;
         }
 
-        private void btnAdicionarCondPgto_Click(object sender, EventArgs e)
+        private async void btnAdicionarCondPgto_Click(object sender, EventArgs e)
         {
             if (oFrmConsultaCondPgto == null) return;
             oFrmConsultaCondPgto.ModoSelecao = true;
@@ -403,83 +339,139 @@ namespace Projeto.Views.Cadastros
                 txtIdCondPgto.Text = condicao.Id.ToString();
                 txtCondPgto.Text = condicao.Descricao;
                 condicaoSelecionadoId = condicao.Id;
-                listViewCondPgto.Items.Clear();
-                if (condicao.Parcelas != null)
-                {
-                    foreach (var parcela in condicao.Parcelas)
-                    {
-                        ListViewItem item = new ListViewItem(parcela.NumParcela.ToString());
-                        item.SubItems.Add(parcela.PrazoDias.ToString());
-                        item.SubItems.Add(parcela.Porcentagem.ToString("N2") + "%");
-                        item.SubItems.Add(parcela.FormaPagamento?.Descricao ?? "N/D");
-                        listViewCondPgto.Items.Add(item);
-                    }
-                }
-                CalculaTotalCompra();
+                await AtualizarListViewCondPgto(condicao);
             }
             oFrmConsultaCondPgto.ModoSelecao = false;
         }
 
         private void btnSalvar_Click(object sender, EventArgs e)
         {
-            if (!ValidarDadosGerais())
+            if (modoCancelamento)
             {
+                using (Form prompt = new Form())
+                {
+                    prompt.Width = 500; prompt.Height = 250;
+                    prompt.Text = "Motivo do Cancelamento";
+                    prompt.StartPosition = FormStartPosition.CenterParent;
+                    prompt.FormBorderStyle = FormBorderStyle.FixedDialog;
+                    prompt.MinimizeBox = false; prompt.MaximizeBox = false;
+
+                    Label textLabel = new Label() { Left = 50, Top = 20, Width = 400, Text = "Para cancelar esta nota, digite o motivo do cancelamento abaixo." };
+                    TextBox textBox = new TextBox() { Left = 50, Top = 50, Width = 400, Height = 80, Multiline = true, ScrollBars = ScrollBars.Vertical, MaxLength = 255 };
+                    Button confirmation = new Button() { Text = "Confirmar", Left = 240, Width = 100, Top = 150, DialogResult = DialogResult.OK };
+                    Button cancel = new Button() { Text = "Voltar", Left = 350, Width = 100, Top = 150, DialogResult = DialogResult.Cancel };
+
+                    confirmation.Enabled = false;
+                    textBox.TextChanged += (s, ev) => { confirmation.Enabled = !string.IsNullOrWhiteSpace(textBox.Text); };
+                    confirmation.Click += (s, ev) => { prompt.Close(); };
+                    cancel.Click += (s, ev) => { prompt.Close(); };
+
+                    prompt.Controls.AddRange(new Control[] { textBox, confirmation, cancel, textLabel });
+                    prompt.AcceptButton = confirmation;
+                    prompt.CancelButton = cancel;
+
+                    if (prompt.ShowDialog() == DialogResult.OK)
+                    {
+                        try
+                        {
+                            if (aCompra != null)
+                            {
+                                aCompra.Observacao = textBox.Text;
+                                controller.Cancelar(aCompra);
+                                MessageBox.Show("Compra cancelada com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                this.Close();
+                            }
+                        }
+                        catch (Exception ex) { MessageBox.Show($"Erro ao cancelar a compra: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+                    }
+                }
                 return;
             }
+
+            if (!ValidarDadosGerais()) return;
+
             try
             {
                 Compra novaCompra = MontarObjetoCompra();
-
                 GerarParcelas(novaCompra);
-
                 controller.Salvar(novaCompra);
-
                 MessageBox.Show("Compra salva com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();
             }
-            catch (InvalidOperationException opEx)
-            {
-                MessageBox.Show(opEx.Message, "Erro de Operação", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Ocorreu um erro ao salvar a compra: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            catch (InvalidOperationException opEx) { MessageBox.Show(opEx.Message, "Erro de Operação", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+            catch (Exception ex) { MessageBox.Show("Ocorreu um erro ao salvar a compra: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
 
-       
-        private void btnLimparProduto_Click(object sender, EventArgs e) => LimparTxt();
-
-        private void btnLimparCondPgto_Click(object sender, EventArgs e)
+        private void btnLimparProduto_Click(object sender, EventArgs e)
         {
-            listViewCondPgto.Items.Clear();
-            txtCondPgto.Clear();
-            txtIdCondPgto.Clear();
-            condicaoSelecionadoId = -1;
+            listViewProdutos.Items.Clear();
+            ConfigurarEstadoInicial();
+            CalculaTotalCompra();
         }
+
+        private void btnLimparCondPgto_Click(object sender, EventArgs e) => LimparCamposCondPgto();
+
         #endregion
-
-
 
         #region Lógica de Cálculos e Suporte
 
+        private void LimparCamposItem()
+        {
+            produtoSelecionado = null;
+            txtIdProduto.Clear();
+            txtProduto.Clear();
+            txtQuantidade.Clear();
+            txtValorUnitario.Clear();
+            txtTotal.Clear();
+            btnPesquisarProduto.Focus();
+        }
+
+        private void LimparCamposItemParcial()
+        {
+            txtProduto.Clear();
+            txtValorUnitario.Clear();
+            produtoSelecionado = null;
+        }
+
+        private void LimparCamposCondPgto()
+        {
+            txtIdCondPgto.Clear();
+            txtCondPgto.Clear();
+            listViewCondPgto.Items.Clear();
+            condicaoSelecionadoId = -1;
+        }
+
+        private async Task AtualizarListViewCondPgto(CondicaoPagamento condicao)
+        {
+            listViewCondPgto.Items.Clear();
+            if (condicao?.Parcelas != null)
+            {
+                foreach (var parcela in condicao.Parcelas)
+                {
+                    ListViewItem item = new ListViewItem(parcela.NumParcela.ToString());
+                    item.SubItems.Add(parcela.PrazoDias.ToString());
+                    item.SubItems.Add(parcela.Porcentagem.ToString("N2") + "%");
+                    string desc = parcela.FormaPagamento?.Descricao ?? await formaPagamentoController.ObterDescricaoFormaPagamento(parcela.FormaPagamentoId);
+                    item.SubItems.Add(desc);
+                    listViewCondPgto.Items.Add(item);
+                }
+            }
+            CalculaTotalCompra();
+        }
+
         private bool ValidarCabecalho()
         {
-            if (string.IsNullOrWhiteSpace(txtCodigo.Text) ||
-                string.IsNullOrWhiteSpace(txtSerie.Text) ||
-                string.IsNullOrWhiteSpace(txtNumero.Text) ||
-                string.IsNullOrWhiteSpace(txtIDFornecedor.Text))
-            {
-                return false;
-            }
-            return true;
+            return !string.IsNullOrWhiteSpace(txtCodigo.Text) &&
+                   !string.IsNullOrWhiteSpace(txtSerie.Text) &&
+                   !string.IsNullOrWhiteSpace(txtNumero.Text) &&
+                   !string.IsNullOrWhiteSpace(txtIDFornecedor.Text);
         }
 
         private bool ValidarDadosGerais()
         {
             if (!int.TryParse(txtNumero.Text, out _) || !int.TryParse(txtIDFornecedor.Text, out _))
             {
-                MessageBox.Show("Os dados do cabeçalho da nota (Modelo, Série, Número, Fornecedor) são obrigatórios e devem ser válidos.", "Validação", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Os dados do cabeçalho da nota são obrigatórios e devem ser válidos.", "Validação", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
             if (listViewProdutos.Items.Count == 0)
@@ -489,7 +481,6 @@ namespace Projeto.Views.Cadastros
             }
             return true;
         }
-
 
         private Compra MontarObjetoCompra()
         {
@@ -581,8 +572,6 @@ namespace Projeto.Views.Cadastros
 
         #endregion
 
-
-
         #region Preparação de Dados
 
         private void GerarParcelas(Compra compra)
@@ -613,7 +602,6 @@ namespace Projeto.Views.Cadastros
                 compra.ParcelasCompra.Add(novaParcela);
             }
         }
-
         #endregion
     }
 }

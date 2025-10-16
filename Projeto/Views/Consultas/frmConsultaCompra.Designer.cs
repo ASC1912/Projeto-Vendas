@@ -58,6 +58,7 @@
             // 
             // btnEditar
             // 
+            this.btnEditar.Text = "Visualizar";
             this.btnEditar.Click += new System.EventHandler(this.btnEditar_Click);
             // 
             // btnIncluir

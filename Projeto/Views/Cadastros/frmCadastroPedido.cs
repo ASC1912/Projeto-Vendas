@@ -14,6 +14,7 @@ namespace Projeto.Views.Cadastros
         private PedidoController controller = new PedidoController();
         private FuncionarioController funcionarioController = new FuncionarioController();
         private ProdutoController produtoController = new ProdutoController();
+        private MesaController mesaController = new MesaController();
 
         private frmConsultaMesa oFrmConsultaMesa;
         private frmConsultaFuncionario oFrmConsultaFuncionario;
@@ -32,6 +33,8 @@ namespace Projeto.Views.Cadastros
             InitializeComponent();
             txtCodigo.Enabled = false;
             txtTotal.ReadOnly = true;
+            // O txtMesa será para entrada de dados, então não será ReadOnly
+            txtMesa.ReadOnly = false; 
 
             listViewProdutos.SelectedIndexChanged += new EventHandler(listViewProdutos_SelectedIndexChanged);
             txtQuantidade.TextChanged += new EventHandler(CalcularTotalItem);
@@ -60,14 +63,18 @@ namespace Projeto.Views.Cadastros
         public override void BloquearTxt()
         {
             txtMesa.Enabled = false;
+            btnPesquisarMesa.Enabled = false;
+            
+            txtIdFuncionario.Enabled = false;
             txtFuncionario.Enabled = false;
+            btnPesquisarFuncionario.Enabled = false;
+            
             txtObservacao.Enabled = false;
             chkInativo.Enabled = false;
-            btnPesquisarMesa.Enabled = false;
-            btnPesquisarFuncionario.Enabled = false;
             txtQuantidadeClientes.Enabled = false;
             chkFinalizado.Enabled = false;
 
+            txtIdProduto.Enabled = false;
             txtProduto.Enabled = false;
             btnPesquisarProduto.Enabled = false;
             txtQuantidade.Enabled = false;
@@ -82,14 +89,18 @@ namespace Projeto.Views.Cadastros
         public override void DesbloquearTxt()
         {
             txtMesa.Enabled = true;
+            btnPesquisarMesa.Enabled = true;
+
+            txtIdFuncionario.Enabled = true;
             txtFuncionario.Enabled = true;
+            btnPesquisarFuncionario.Enabled = true;
+
             txtObservacao.Enabled = true;
             chkInativo.Enabled = true;
-            btnPesquisarMesa.Enabled = true;
-            btnPesquisarFuncionario.Enabled = true;
             txtQuantidadeClientes.Enabled = true;
             chkFinalizado.Enabled = true;
 
+            txtIdProduto.Enabled = true;
             txtProduto.Enabled = true;
             btnPesquisarProduto.Enabled = true;
             txtQuantidade.Enabled = true;
@@ -117,6 +128,7 @@ namespace Projeto.Views.Cadastros
             if (oFrmConsultaFuncionario.ShowDialog() == DialogResult.OK && oFrmConsultaFuncionario.FuncionarioSelecionado != null)
             {
                 funcionarioSelecionado = oFrmConsultaFuncionario.FuncionarioSelecionado;
+                txtIdFuncionario.Text = funcionarioSelecionado.Id.ToString();
                 txtFuncionario.Text = funcionarioSelecionado.Nome;
             }
         }
@@ -127,8 +139,9 @@ namespace Projeto.Views.Cadastros
             if (oFrmConsultaProduto.ShowDialog() == DialogResult.OK && oFrmConsultaProduto.ProdutoSelecionado != null)
             {
                 produtoSelecionado = oFrmConsultaProduto.ProdutoSelecionado;
+                txtIdProduto.Text = produtoSelecionado.Id.ToString();
                 txtProduto.Text = produtoSelecionado.NomeProduto;
-                txtValorUnitario.Text = produtoSelecionado.PrecoCusto.ToString("F2");
+                txtValorUnitario.Text = produtoSelecionado.PrecoVenda.ToString("F2"); 
                 txtQuantidade.Focus();
             }
         }
@@ -148,7 +161,7 @@ namespace Projeto.Views.Cadastros
 
             ListViewItem item = new ListViewItem(produtoSelecionado.Id.ToString());
             item.SubItems.Add(produtoSelecionado.NomeProduto);
-            item.SubItems.Add("UN");
+            item.SubItems.Add(produtoSelecionado.NomeUnidadeMedida ?? "UN");
             item.SubItems.Add(txtQuantidade.Text);
             item.SubItems.Add(txtValorUnitario.Text);
             item.SubItems.Add(txtTotal.Text);
@@ -201,6 +214,7 @@ namespace Projeto.Views.Cadastros
                 var item = listViewProdutos.SelectedItems[0];
                 produtoSelecionado = (Produto)item.Tag;
 
+                txtIdProduto.Text = produtoSelecionado.Id.ToString();
                 txtProduto.Text = produtoSelecionado.NomeProduto;
                 txtQuantidade.Text = item.SubItems[3].Text;
                 txtValorUnitario.Text = item.SubItems[4].Text;
@@ -284,6 +298,7 @@ namespace Projeto.Views.Cadastros
         {
             base.LimparTxt();
             txtMesa.Clear();
+            txtIdFuncionario.Clear();
             txtFuncionario.Clear();
             txtObservacao.Clear();
             chkInativo.Checked = false;
@@ -291,7 +306,6 @@ namespace Projeto.Views.Cadastros
             LimparCamposItem();
             CalcularTotalPedido();
 
-            // Limpeza dos novos campos
             txtQuantidadeClientes.Clear();
             chkFinalizado.Checked = false;
         }
@@ -299,6 +313,7 @@ namespace Projeto.Views.Cadastros
         private void LimparCamposItem()
         {
             produtoSelecionado = null;
+            txtIdProduto.Clear();
             txtProduto.Clear();
             txtQuantidade.Text = "1";
             txtValorUnitario.Clear();
@@ -332,6 +347,7 @@ namespace Projeto.Views.Cadastros
             txtMesa.Text = mesaSelecionada?.NumeroMesa.ToString();
 
             funcionarioSelecionado = await funcionarioController.BuscarPorId(aPedido.FuncionarioId);
+            txtIdFuncionario.Text = funcionarioSelecionado?.Id.ToString();
             txtFuncionario.Text = funcionarioSelecionado?.Nome;
 
             txtObservacao.Text = aPedido.Observacao;
@@ -362,6 +378,69 @@ namespace Projeto.Views.Cadastros
                 }
             }
             CalcularTotalPedido();
+        }
+        
+        private async void txtIdFuncionario_Leave(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtIdFuncionario.Text))
+            {
+                txtFuncionario.Clear();
+                funcionarioSelecionado = null;
+                return;
+            }
+            if (int.TryParse(txtIdFuncionario.Text, out int id))
+            {
+                var func = await funcionarioController.BuscarPorId(id);
+                if (func != null)
+                {
+                    txtFuncionario.Text = func.Nome;
+                    funcionarioSelecionado = func;
+                }
+                else
+                {
+                    MessageBox.Show("Funcionário não encontrado.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtFuncionario.Clear();
+                    funcionarioSelecionado = null;
+                }
+            }
+            else
+            {
+                MessageBox.Show("ID do Funcionário inválido.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtFuncionario.Clear();
+                funcionarioSelecionado = null;
+            }
+        }
+
+        private async void txtIdProduto_Leave(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtIdProduto.Text))
+            {
+                txtProduto.Clear();
+                produtoSelecionado = null;
+                return;
+            }
+            if (int.TryParse(txtIdProduto.Text, out int id))
+            {
+                var prod = await produtoController.BuscarPorId(id);
+                if (prod != null)
+                {
+                    txtProduto.Text = prod.NomeProduto;
+                    txtValorUnitario.Text = prod.PrecoVenda.ToString("F2");
+                    produtoSelecionado = prod;
+                }
+                else
+                {
+                    MessageBox.Show("Produto não encontrado.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtProduto.Clear();
+                    produtoSelecionado = null;
+                }
+            }
+            else
+            {
+                MessageBox.Show("ID do Produto inválido.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtProduto.Clear();
+                produtoSelecionado = null;
+            }
         }
     }
 }

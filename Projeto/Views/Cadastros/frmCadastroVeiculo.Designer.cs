@@ -43,6 +43,8 @@
             this.lblTransportadora = new System.Windows.Forms.Label();
             this.txtMarca = new System.Windows.Forms.TextBox();
             this.btnMarca = new System.Windows.Forms.Button();
+            this.lblIdMarca = new System.Windows.Forms.Label();
+            this.txtIdMarca = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // txtCodigo
@@ -59,7 +61,7 @@
             // 
             this.chkInativo.TabIndex = 9;
             // 
-            // btnSalvar2
+            // btnSalvar
             // 
             this.btnSalvar.Location = new System.Drawing.Point(1113, 634);
             this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
@@ -93,7 +95,7 @@
             // lblMarca
             // 
             this.lblMarca.AutoSize = true;
-            this.lblMarca.Location = new System.Drawing.Point(517, 105);
+            this.lblMarca.Location = new System.Drawing.Point(620, 105);
             this.lblMarca.Name = "lblMarca";
             this.lblMarca.Size = new System.Drawing.Size(50, 16);
             this.lblMarca.TabIndex = 97;
@@ -176,7 +178,7 @@
             // 
             // txtMarca
             // 
-            this.txtMarca.Location = new System.Drawing.Point(520, 124);
+            this.txtMarca.Location = new System.Drawing.Point(623, 124);
             this.txtMarca.Name = "txtMarca";
             this.txtMarca.ReadOnly = true;
             this.txtMarca.Size = new System.Drawing.Size(200, 22);
@@ -184,7 +186,7 @@
             // 
             // btnMarca
             // 
-            this.btnMarca.Location = new System.Drawing.Point(746, 124);
+            this.btnMarca.Location = new System.Drawing.Point(849, 124);
             this.btnMarca.Name = "btnMarca";
             this.btnMarca.Size = new System.Drawing.Size(195, 23);
             this.btnMarca.TabIndex = 4;
@@ -192,10 +194,30 @@
             this.btnMarca.UseVisualStyleBackColor = true;
             this.btnMarca.Click += new System.EventHandler(this.btnBuscarMarca_Click);
             // 
+            // lblIdMarca
+            // 
+            this.lblIdMarca.AutoSize = true;
+            this.lblIdMarca.Location = new System.Drawing.Point(517, 105);
+            this.lblIdMarca.Name = "lblIdMarca";
+            this.lblIdMarca.Size = new System.Drawing.Size(66, 16);
+            this.lblIdMarca.TabIndex = 109;
+            this.lblIdMarca.Text = "ID Marca*";
+            // 
+            // txtIdMarca
+            // 
+            this.txtIdMarca.Location = new System.Drawing.Point(520, 124);
+            this.txtIdMarca.Name = "txtIdMarca";
+            this.txtIdMarca.Size = new System.Drawing.Size(67, 22);
+            this.txtIdMarca.TabIndex = 108;
+            this.txtIdMarca.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtIdMarca.Leave += new System.EventHandler(this.txtIdMarca_Leave);
+            // 
             // frmCadastroVeiculo
             // 
             //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             //this.ClientSize = new System.Drawing.Size(1342, 681);
+            this.Controls.Add(this.lblIdMarca);
+            this.Controls.Add(this.txtIdMarca);
             this.Controls.Add(this.btnMarca);
             this.Controls.Add(this.txtMarca);
             this.Controls.Add(this.txtTransportadora);
@@ -235,6 +257,8 @@
             this.Controls.SetChildIndex(this.txtTransportadora, 0);
             this.Controls.SetChildIndex(this.txtMarca, 0);
             this.Controls.SetChildIndex(this.btnMarca, 0);
+            this.Controls.SetChildIndex(this.txtIdMarca, 0);
+            this.Controls.SetChildIndex(this.lblIdMarca, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -257,5 +281,7 @@
         private System.Windows.Forms.Label lblTransportadora;
         private System.Windows.Forms.TextBox txtMarca;
         private System.Windows.Forms.Button btnMarca;
+        private System.Windows.Forms.Label lblIdMarca;
+        private System.Windows.Forms.TextBox txtIdMarca;
     }
 }

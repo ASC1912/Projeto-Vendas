@@ -61,6 +61,10 @@
             this.lblQuantidadeClientes = new System.Windows.Forms.Label();
             this.txtQuantidadeClientes = new System.Windows.Forms.TextBox();
             this.chkFinalizado = new System.Windows.Forms.CheckBox();
+            this.lblIdFuncionario = new System.Windows.Forms.Label();
+            this.txtIdFuncionario = new System.Windows.Forms.TextBox();
+            this.lblIdProduto = new System.Windows.Forms.Label();
+            this.txtIdProduto = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // txtCodigo
@@ -74,7 +78,7 @@
             // lblFuncionario
             // 
             this.lblFuncionario.AutoSize = true;
-            this.lblFuncionario.Location = new System.Drawing.Point(389, 72);
+            this.lblFuncionario.Location = new System.Drawing.Point(522, 72);
             this.lblFuncionario.Name = "lblFuncionario";
             this.lblFuncionario.Size = new System.Drawing.Size(77, 16);
             this.lblFuncionario.TabIndex = 77;
@@ -83,7 +87,7 @@
             // txtFuncionario
             // 
             this.txtFuncionario.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtFuncionario.Location = new System.Drawing.Point(392, 91);
+            this.txtFuncionario.Location = new System.Drawing.Point(525, 91);
             this.txtFuncionario.Name = "txtFuncionario";
             this.txtFuncionario.ReadOnly = true;
             this.txtFuncionario.Size = new System.Drawing.Size(200, 22);
@@ -92,7 +96,7 @@
             // lblMesa
             // 
             this.lblMesa.AutoSize = true;
-            this.lblMesa.Location = new System.Drawing.Point(9, 72);
+            this.lblMesa.Location = new System.Drawing.Point(9, 71);
             this.lblMesa.Name = "lblMesa";
             this.lblMesa.Size = new System.Drawing.Size(111, 16);
             this.lblMesa.TabIndex = 76;
@@ -101,7 +105,7 @@
             // txtMesa
             // 
             this.txtMesa.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtMesa.Location = new System.Drawing.Point(12, 91);
+            this.txtMesa.Location = new System.Drawing.Point(12, 90);
             this.txtMesa.Name = "txtMesa";
             this.txtMesa.ReadOnly = true;
             this.txtMesa.Size = new System.Drawing.Size(200, 22);
@@ -118,7 +122,7 @@
             // 
             // btnLimparProduto
             // 
-            this.btnLimparProduto.Location = new System.Drawing.Point(1137, 207);
+            this.btnLimparProduto.Location = new System.Drawing.Point(1112, 218);
             this.btnLimparProduto.Name = "btnLimparProduto";
             this.btnLimparProduto.Size = new System.Drawing.Size(91, 23);
             this.btnLimparProduto.TabIndex = 160;
@@ -128,7 +132,7 @@
             // 
             // btnRemoverProduto
             // 
-            this.btnRemoverProduto.Location = new System.Drawing.Point(1025, 207);
+            this.btnRemoverProduto.Location = new System.Drawing.Point(1015, 217);
             this.btnRemoverProduto.Name = "btnRemoverProduto";
             this.btnRemoverProduto.Size = new System.Drawing.Size(91, 23);
             this.btnRemoverProduto.TabIndex = 159;
@@ -138,7 +142,7 @@
             // 
             // btnEditarProduto
             // 
-            this.btnEditarProduto.Location = new System.Drawing.Point(903, 207);
+            this.btnEditarProduto.Location = new System.Drawing.Point(918, 218);
             this.btnEditarProduto.Name = "btnEditarProduto";
             this.btnEditarProduto.Size = new System.Drawing.Size(91, 23);
             this.btnEditarProduto.TabIndex = 158;
@@ -148,7 +152,7 @@
             // 
             // btnAdicionarProduto
             // 
-            this.btnAdicionarProduto.Location = new System.Drawing.Point(790, 207);
+            this.btnAdicionarProduto.Location = new System.Drawing.Point(821, 218);
             this.btnAdicionarProduto.Name = "btnAdicionarProduto";
             this.btnAdicionarProduto.Size = new System.Drawing.Size(91, 23);
             this.btnAdicionarProduto.TabIndex = 157;
@@ -159,7 +163,7 @@
             // lblTotalProduto
             // 
             this.lblTotalProduto.AutoSize = true;
-            this.lblTotalProduto.Location = new System.Drawing.Point(637, 187);
+            this.lblTotalProduto.Location = new System.Drawing.Point(668, 198);
             this.lblTotalProduto.Name = "lblTotalProduto";
             this.lblTotalProduto.Size = new System.Drawing.Size(66, 16);
             this.lblTotalProduto.TabIndex = 156;
@@ -167,7 +171,7 @@
             // 
             // txtTotal
             // 
-            this.txtTotal.Location = new System.Drawing.Point(637, 206);
+            this.txtTotal.Location = new System.Drawing.Point(668, 217);
             this.txtTotal.Name = "txtTotal";
             this.txtTotal.Size = new System.Drawing.Size(126, 22);
             this.txtTotal.TabIndex = 155;
@@ -175,7 +179,7 @@
             // lblValorUnitario
             // 
             this.lblValorUnitario.AutoSize = true;
-            this.lblValorUnitario.Location = new System.Drawing.Point(543, 188);
+            this.lblValorUnitario.Location = new System.Drawing.Point(574, 199);
             this.lblValorUnitario.Name = "lblValorUnitario";
             this.lblValorUnitario.Size = new System.Drawing.Size(88, 16);
             this.lblValorUnitario.TabIndex = 154;
@@ -183,7 +187,7 @@
             // 
             // txtValorUnitario
             // 
-            this.txtValorUnitario.Location = new System.Drawing.Point(543, 207);
+            this.txtValorUnitario.Location = new System.Drawing.Point(574, 218);
             this.txtValorUnitario.Name = "txtValorUnitario";
             this.txtValorUnitario.Size = new System.Drawing.Size(88, 22);
             this.txtValorUnitario.TabIndex = 153;
@@ -191,7 +195,7 @@
             // lblQuantidade
             // 
             this.lblQuantidade.AutoSize = true;
-            this.lblQuantidade.Location = new System.Drawing.Point(417, 188);
+            this.lblQuantidade.Location = new System.Drawing.Point(448, 199);
             this.lblQuantidade.Name = "lblQuantidade";
             this.lblQuantidade.Size = new System.Drawing.Size(77, 16);
             this.lblQuantidade.TabIndex = 152;
@@ -199,14 +203,14 @@
             // 
             // txtQuantidade
             // 
-            this.txtQuantidade.Location = new System.Drawing.Point(417, 207);
+            this.txtQuantidade.Location = new System.Drawing.Point(448, 218);
             this.txtQuantidade.Name = "txtQuantidade";
             this.txtQuantidade.Size = new System.Drawing.Size(100, 22);
             this.txtQuantidade.TabIndex = 151;
             // 
             // btnPesquisarProduto
             // 
-            this.btnPesquisarProduto.Location = new System.Drawing.Point(251, 206);
+            this.btnPesquisarProduto.Location = new System.Drawing.Point(327, 216);
             this.btnPesquisarProduto.Name = "btnPesquisarProduto";
             this.btnPesquisarProduto.Size = new System.Drawing.Size(91, 23);
             this.btnPesquisarProduto.TabIndex = 150;
@@ -217,7 +221,7 @@
             // lblProduto
             // 
             this.lblProduto.AutoSize = true;
-            this.lblProduto.Location = new System.Drawing.Point(12, 188);
+            this.lblProduto.Location = new System.Drawing.Point(88, 198);
             this.lblProduto.Name = "lblProduto";
             this.lblProduto.Size = new System.Drawing.Size(54, 16);
             this.lblProduto.TabIndex = 149;
@@ -225,7 +229,7 @@
             // 
             // txtProduto
             // 
-            this.txtProduto.Location = new System.Drawing.Point(12, 207);
+            this.txtProduto.Location = new System.Drawing.Point(88, 217);
             this.txtProduto.Name = "txtProduto";
             this.txtProduto.ReadOnly = true;
             this.txtProduto.Size = new System.Drawing.Size(211, 22);
@@ -307,7 +311,7 @@
             // 
             // btnPesquisarMesa
             // 
-            this.btnPesquisarMesa.Location = new System.Drawing.Point(251, 90);
+            this.btnPesquisarMesa.Location = new System.Drawing.Point(251, 89);
             this.btnPesquisarMesa.Name = "btnPesquisarMesa";
             this.btnPesquisarMesa.Size = new System.Drawing.Size(91, 23);
             this.btnPesquisarMesa.TabIndex = 165;
@@ -317,7 +321,7 @@
             // 
             // btnPesquisarFuncionario
             // 
-            this.btnPesquisarFuncionario.Location = new System.Drawing.Point(612, 91);
+            this.btnPesquisarFuncionario.Location = new System.Drawing.Point(745, 91);
             this.btnPesquisarFuncionario.Name = "btnPesquisarFuncionario";
             this.btnPesquisarFuncionario.Size = new System.Drawing.Size(91, 23);
             this.btnPesquisarFuncionario.TabIndex = 166;
@@ -328,7 +332,7 @@
             // lblQuantidadeClientes
             // 
             this.lblQuantidadeClientes.AutoSize = true;
-            this.lblQuantidadeClientes.Location = new System.Drawing.Point(392, 133);
+            this.lblQuantidadeClientes.Location = new System.Drawing.Point(417, 133);
             this.lblQuantidadeClientes.Name = "lblQuantidadeClientes";
             this.lblQuantidadeClientes.Size = new System.Drawing.Size(147, 16);
             this.lblQuantidadeClientes.TabIndex = 168;
@@ -336,7 +340,7 @@
             // 
             // txtQuantidadeClientes
             // 
-            this.txtQuantidadeClientes.Location = new System.Drawing.Point(392, 152);
+            this.txtQuantidadeClientes.Location = new System.Drawing.Point(417, 152);
             this.txtQuantidadeClientes.Name = "txtQuantidadeClientes";
             this.txtQuantidadeClientes.Size = new System.Drawing.Size(100, 22);
             this.txtQuantidadeClientes.TabIndex = 167;
@@ -344,17 +348,55 @@
             // chkFinalizado
             // 
             this.chkFinalizado.AutoSize = true;
-            this.chkFinalizado.Location = new System.Drawing.Point(790, 94);
+            this.chkFinalizado.Location = new System.Drawing.Point(888, 94);
             this.chkFinalizado.Name = "chkFinalizado";
             this.chkFinalizado.Size = new System.Drawing.Size(91, 20);
             this.chkFinalizado.TabIndex = 169;
             this.chkFinalizado.Text = "Finalizado";
             this.chkFinalizado.UseVisualStyleBackColor = true;
             // 
+            // lblIdFuncionario
+            // 
+            this.lblIdFuncionario.AutoSize = true;
+            this.lblIdFuncionario.Location = new System.Drawing.Point(414, 72);
+            this.lblIdFuncionario.Name = "lblIdFuncionario";
+            this.lblIdFuncionario.Size = new System.Drawing.Size(98, 16);
+            this.lblIdFuncionario.TabIndex = 173;
+            this.lblIdFuncionario.Text = "ID Funcionário*";
+            // 
+            // txtIdFuncionario
+            // 
+            this.txtIdFuncionario.Location = new System.Drawing.Point(417, 91);
+            this.txtIdFuncionario.Name = "txtIdFuncionario";
+            this.txtIdFuncionario.Size = new System.Drawing.Size(95, 22);
+            this.txtIdFuncionario.TabIndex = 172;
+            this.txtIdFuncionario.Leave += new System.EventHandler(this.txtIdFuncionario_Leave);
+            // 
+            // lblIdProduto
+            // 
+            this.lblIdProduto.AutoSize = true;
+            this.lblIdProduto.Location = new System.Drawing.Point(9, 199);
+            this.lblIdProduto.Name = "lblIdProduto";
+            this.lblIdProduto.Size = new System.Drawing.Size(75, 16);
+            this.lblIdProduto.TabIndex = 175;
+            this.lblIdProduto.Text = "ID Produto*";
+            // 
+            // txtIdProduto
+            // 
+            this.txtIdProduto.Location = new System.Drawing.Point(12, 218);
+            this.txtIdProduto.Name = "txtIdProduto";
+            this.txtIdProduto.Size = new System.Drawing.Size(67, 22);
+            this.txtIdProduto.TabIndex = 174;
+            this.txtIdProduto.Leave += new System.EventHandler(this.txtIdProduto_Leave);
+            // 
             // frmCadastroPedido
             // 
             //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             //this.ClientSize = new System.Drawing.Size(1342, 681);
+            this.Controls.Add(this.lblIdProduto);
+            this.Controls.Add(this.txtIdProduto);
+            this.Controls.Add(this.lblIdFuncionario);
+            this.Controls.Add(this.txtIdFuncionario);
             this.Controls.Add(this.chkFinalizado);
             this.Controls.Add(this.lblQuantidadeClientes);
             this.Controls.Add(this.txtQuantidadeClientes);
@@ -383,6 +425,7 @@
             this.Controls.Add(this.lblMesa);
             this.Controls.Add(this.txtMesa);
             this.Name = "frmCadastroPedido";
+            this.Text = "Cadastro Produtos";
             this.Controls.SetChildIndex(this.txtMesa, 0);
             this.Controls.SetChildIndex(this.lblMesa, 0);
             this.Controls.SetChildIndex(this.txtFuncionario, 0);
@@ -416,6 +459,10 @@
             this.Controls.SetChildIndex(this.lblDataCriacao, 0);
             this.Controls.SetChildIndex(this.lblDataModificacao, 0);
             this.Controls.SetChildIndex(this.btnSalvar, 0);
+            this.Controls.SetChildIndex(this.txtIdFuncionario, 0);
+            this.Controls.SetChildIndex(this.lblIdFuncionario, 0);
+            this.Controls.SetChildIndex(this.txtIdProduto, 0);
+            this.Controls.SetChildIndex(this.lblIdProduto, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -455,5 +502,9 @@
         private System.Windows.Forms.Label lblQuantidadeClientes;
         private System.Windows.Forms.TextBox txtQuantidadeClientes;
         private System.Windows.Forms.CheckBox chkFinalizado;
+        private System.Windows.Forms.Label lblIdFuncionario;
+        private System.Windows.Forms.TextBox txtIdFuncionario;
+        private System.Windows.Forms.Label lblIdProduto;
+        private System.Windows.Forms.TextBox txtIdProduto;
     }
 }

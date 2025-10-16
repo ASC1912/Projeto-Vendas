@@ -86,6 +86,7 @@
             this.txtIdProduto = new System.Windows.Forms.TextBox();
             this.lblIdCondicaoPgto = new System.Windows.Forms.Label();
             this.txtIdCondPgto = new System.Windows.Forms.TextBox();
+            this.lblMotivoCancelamento = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txtCodigo
@@ -593,10 +594,20 @@
             this.txtIdCondPgto.TabIndex = 22;
             this.txtIdCondPgto.Leave += new System.EventHandler(this.txtIdCondPgto_Leave);
             // 
+            // lblMotivoCancelamento
+            // 
+            this.lblMotivoCancelamento.AutoSize = true;
+            this.lblMotivoCancelamento.Location = new System.Drawing.Point(317, 620);
+            this.lblMotivoCancelamento.Name = "lblMotivoCancelamento";
+            this.lblMotivoCancelamento.Size = new System.Drawing.Size(73, 16);
+            this.lblMotivoCancelamento.TabIndex = 154;
+            this.lblMotivoCancelamento.Text = "Valor Total";
+            // 
             // frmCadastroCompra
             // 
             //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             //this.ClientSize = new System.Drawing.Size(1342, 681);
+            this.Controls.Add(this.lblMotivoCancelamento);
             this.Controls.Add(this.lblIdCondicaoPgto);
             this.Controls.Add(this.txtIdCondPgto);
             this.Controls.Add(this.lblIdProduto);
@@ -700,6 +711,7 @@
             this.Controls.SetChildIndex(this.lblIdProduto, 0);
             this.Controls.SetChildIndex(this.txtIdCondPgto, 0);
             this.Controls.SetChildIndex(this.lblIdCondicaoPgto, 0);
+            this.Controls.SetChildIndex(this.lblMotivoCancelamento, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -765,5 +777,6 @@
         private System.Windows.Forms.Label lblIdCondicaoPgto;
         private System.Windows.Forms.TextBox txtIdCondPgto;
         private System.Windows.Forms.ColumnHeader Valor;
+        private System.Windows.Forms.Label lblMotivoCancelamento;
     }
 }

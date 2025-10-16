@@ -35,8 +35,7 @@ namespace Projeto.Views.Consultas
 
         private void frmConsultaCompra_Load(object sender, EventArgs e)
         {
-            //btnEditar.Enabled = false;
-            btnDeletar.Text = "Cancelar";
+            btnDeletar.Text = "Cancelar"; 
 
             CarregarCompras();
             ConfigurarColunas();
@@ -46,7 +45,7 @@ namespace Projeto.Views.Consultas
         {
             foreach (ColumnHeader column in listView1.Columns)
             {
-                switch (column.Name) 
+                switch (column.Name)
                 {
                     case "Modelo":
                         column.Width = 80;
@@ -58,14 +57,14 @@ namespace Projeto.Views.Consultas
                         column.TextAlign = HorizontalAlignment.Center;
                         break;
 
-                    case "Numero": 
+                    case "Numero":
                         column.Width = 100;
                         column.TextAlign = HorizontalAlignment.Center;
                         break;
 
                     case "Fornecedor":
-                        column.Width = 280; 
-                        column.TextAlign = HorizontalAlignment.Center; 
+                        column.Width = 280;
+                        column.TextAlign = HorizontalAlignment.Center;
                         break;
 
                     case "DataEmissao":
@@ -80,7 +79,7 @@ namespace Projeto.Views.Consultas
 
                     case "ValorTotal":
                         column.Width = 120;
-                        column.TextAlign = HorizontalAlignment.Center; 
+                        column.TextAlign = HorizontalAlignment.Center;
                         break;
 
                     case "CondPgto":
@@ -111,7 +110,7 @@ namespace Projeto.Views.Consultas
                     item.SubItems.Add(compra.NomeFornecedor);
                     item.SubItems.Add(compra.DataEmissao?.ToString("dd/MM/yyyy"));
                     item.SubItems.Add(compra.DataChegada?.ToString("dd/MM/yyyy"));
-                    item.SubItems.Add(compra.ValorTotal.ToString("C2")); 
+                    item.SubItems.Add(compra.ValorTotal.ToString("C2"));
                     item.SubItems.Add(compra.NomeCondPgto);
                     item.SubItems.Add(compra.Ativo ? "Ativo" : "Cancelado");
 
@@ -128,11 +127,12 @@ namespace Projeto.Views.Consultas
 
         private void btnIncluir_Click(object sender, EventArgs e)
         {
-            oFrmCadastroCompra.LimparTxt(); 
+            oFrmCadastroCompra.modoCancelamento = false;
+            oFrmCadastroCompra.LimparTxt();
+            oFrmCadastroCompra.btnSalvar.Text = "Salvar";
             oFrmCadastroCompra.ShowDialog();
-            CarregarCompras(); 
+            CarregarCompras();
         }
-
 
         private void btnEditar_Click(object sender, EventArgs e)
         {
@@ -149,10 +149,11 @@ namespace Projeto.Views.Consultas
 
                 if (compraCompleta != null)
                 {
+                    oFrmCadastroCompra.modoCancelamento = false;
                     oFrmCadastroCompra.ConhecaObj(compraCompleta, controller);
-                    oFrmCadastroCompra.CarregaTxt();      
-                    oFrmCadastroCompra.BloquearTxt();     
-                    oFrmCadastroCompra.btnSalvar.Enabled = false; 
+                    oFrmCadastroCompra.CarregaTxt();
+                    oFrmCadastroCompra.BloquearTxt();
+                    oFrmCadastroCompra.btnSalvar.Enabled = false;
                     oFrmCadastroCompra.ShowDialog();
                 }
                 else
@@ -166,36 +167,45 @@ namespace Projeto.Views.Consultas
             }
         }
 
-        private void btnDeletar_Click(object sender, EventArgs e) 
+        private void btnDeletar_Click(object sender, EventArgs e)
         {
-            if (listView1.SelectedItems.Count == 0)
+            if (listView1.SelectedItems.Count > 0)
             {
-                MessageBox.Show("Por favor, selecione uma compra para cancelar.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+                var compraSelecionada = (Compra)listView1.SelectedItems[0].Tag;
 
-            var confirmacao = MessageBox.Show("Tem certeza que deseja cancelar esta compra? Esta ação não pode ser desfeita.", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-
-            if (confirmacao == DialogResult.Yes)
-            {
-                try
+                if (!compraSelecionada.Ativo)
                 {
-                    Compra compraSelecionada = (Compra)listView1.SelectedItems[0].Tag;
+                    MessageBox.Show("Esta compra já está cancelada.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
 
-                    if (!compraSelecionada.Ativo)
-                    {
-                        MessageBox.Show("Esta compra já está cancelada.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        return;
-                    }
+                Compra compraCompleta = controller.BuscarPorChave(
+                    compraSelecionada.Modelo,
+                    compraSelecionada.Serie,
+                    compraSelecionada.NumeroNota,
+                    compraSelecionada.FornecedorId
+                );
 
-                    controller.Cancelar(compraSelecionada);
-                    MessageBox.Show("Compra cancelada com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (compraCompleta != null)
+                {
+                    oFrmCadastroCompra.modoCancelamento = true;
+                    oFrmCadastroCompra.ConhecaObj(compraCompleta, controller);
+                    oFrmCadastroCompra.CarregaTxt();
+                    oFrmCadastroCompra.BloquearTxt();
+                    oFrmCadastroCompra.btnSalvar.Enabled = true; 
+                    oFrmCadastroCompra.btnSalvar.Text = "Cancelar Compra";
+                    oFrmCadastroCompra.ShowDialog();
+
+                    oFrmCadastroCompra.btnSalvar.Text = "Salvar";
+                    oFrmCadastroCompra.DesbloquearTxt();
+                    oFrmCadastroCompra.modoCancelamento = false;
+
                     CarregarCompras(); 
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Erro ao cancelar a compra: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+            }
+            else
+            {
+                MessageBox.Show("Por favor, selecione uma compra para cancelar.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
     }
