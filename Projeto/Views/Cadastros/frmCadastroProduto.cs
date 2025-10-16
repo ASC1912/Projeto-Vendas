@@ -42,12 +42,12 @@ namespace Projeto.Views.Cadastros
             InitializeComponent();
             txtCodigo.Enabled = false;
 
+            // Campos ReadOnly
             txtUnidade.ReadOnly = true;
             txtMarca.ReadOnly = true;
             txtGrupo.ReadOnly = true;
             txtFornecedor.ReadOnly = true;
-
-            // A conexão dos eventos será feita no arquivo Designer
+            txtPrecoCustoAntigo.ReadOnly = true; // Novo campo
         }
 
         #endregion
@@ -90,6 +90,7 @@ namespace Projeto.Views.Cadastros
             txtNome.Text = oProduto.NomeProduto;
             txtEstoque.Text = oProduto.Estoque.ToString();
             txtPrecoCusto.Text = oProduto.PrecoCusto.ToString("F2");
+            txtPrecoCustoAntigo.Text = oProduto.PrecoCustoAnterior.ToString("F2"); // Novo campo
             txtPrecoVenda.Text = oProduto.PrecoVenda.ToString("F2");
             txtPorcentagemLucro.Text = oProduto.PorcentagemLucro.ToString("F2");
 
@@ -123,6 +124,7 @@ namespace Projeto.Views.Cadastros
             txtUnidade.Clear();
             txtIdUnidade.Clear();
             txtPrecoCusto.Text = "0,00";
+            txtPrecoCustoAntigo.Text = "0,00"; // Novo campo
             txtPrecoVenda.Text = "0,00";
             txtPorcentagemLucro.Text = "0";
             txtEstoque.Clear();
@@ -190,6 +192,7 @@ namespace Projeto.Views.Cadastros
                     Id = string.IsNullOrEmpty(txtCodigo.Text) ? 0 : int.Parse(txtCodigo.Text),
                     NomeProduto = txtNome.Text,
                     PrecoCusto = Convert.ToDecimal(txtPrecoCusto.Text),
+                    PrecoCustoAnterior = string.IsNullOrWhiteSpace(txtPrecoCustoAntigo.Text) ? 0 : Convert.ToDecimal(txtPrecoCustoAntigo.Text),
                     PrecoVenda = Convert.ToDecimal(txtPrecoVenda.Text),
                     PorcentagemLucro = Convert.ToDecimal(txtPorcentagemLucro.Text),
                     Estoque = string.IsNullOrWhiteSpace(txtEstoque.Text) ? 0 : Convert.ToInt32(txtEstoque.Text),
@@ -227,7 +230,7 @@ namespace Projeto.Views.Cadastros
             {
                 MessageBox.Show("Erro ao salvar o produto: " + ex.Message);
             }
-        }
+        } 
 
         private void btnUnidade_Click(object sender, EventArgs e)
         {
@@ -427,7 +430,7 @@ namespace Projeto.Views.Cadastros
 
         #endregion
 
-        #region Métodos de Cálculo Dinâmico (NOVO)
+        #region Métodos de Cálculo Dinâmico 
 
         private void CalcularPrecoVenda()
         {

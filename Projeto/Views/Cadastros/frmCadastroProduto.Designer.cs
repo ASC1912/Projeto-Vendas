@@ -65,6 +65,8 @@
             this.btnRemoverFornecedor = new System.Windows.Forms.Button();
             this.btnAdicionarFornecedor = new System.Windows.Forms.Button();
             this.lblIdFornecedor = new System.Windows.Forms.Label();
+            this.lblPrecoCustoAntigo = new System.Windows.Forms.Label();
+            this.txtPrecoCustoAntigo = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // txtCodigo
@@ -193,8 +195,10 @@
             // 
             this.txtPrecoCusto.Location = new System.Drawing.Point(15, 232);
             this.txtPrecoCusto.Name = "txtPrecoCusto";
+            this.txtPrecoCusto.ReadOnly = true;
             this.txtPrecoCusto.Size = new System.Drawing.Size(150, 22);
             this.txtPrecoCusto.TabIndex = 4;
+            this.txtPrecoCusto.Text = "0.00";
             this.txtPrecoCusto.Leave += new System.EventHandler(this.txtPrecoCusto_Leave);
             // 
             // lblEstoque
@@ -210,8 +214,10 @@
             // 
             this.txtEstoque.Location = new System.Drawing.Point(15, 296);
             this.txtEstoque.Name = "txtEstoque";
+            this.txtEstoque.ReadOnly = true;
             this.txtEstoque.Size = new System.Drawing.Size(150, 22);
             this.txtEstoque.TabIndex = 7;
+            this.txtEstoque.Text = "0";
             // 
             // lblValorVenda
             // 
@@ -232,6 +238,7 @@
             this.txtPrecoVenda.ShortcutsEnabled = false;
             this.txtPrecoVenda.Size = new System.Drawing.Size(163, 22);
             this.txtPrecoVenda.TabIndex = 126;
+            this.txtPrecoVenda.Text = "0.00";
             this.txtPrecoVenda.Leave += new System.EventHandler(this.txtPrecoVenda_Leave);
             // 
             // btnUnidade
@@ -421,10 +428,33 @@
             this.lblIdFornecedor.TabIndex = 146;
             this.lblIdFornecedor.Text = "ID Forn*";
             // 
+            // lblPrecoCustoAntigo
+            // 
+            this.lblPrecoCustoAntigo.AutoSize = true;
+            this.lblPrecoCustoAntigo.Location = new System.Drawing.Point(8, 486);
+            this.lblPrecoCustoAntigo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblPrecoCustoAntigo.Name = "lblPrecoCustoAntigo";
+            this.lblPrecoCustoAntigo.Size = new System.Drawing.Size(140, 16);
+            this.lblPrecoCustoAntigo.TabIndex = 148;
+            this.lblPrecoCustoAntigo.Text = "Preço de Custo Antigo";
+            // 
+            // txtPrecoCustoAntigo
+            // 
+            this.txtPrecoCustoAntigo.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtPrecoCustoAntigo.Location = new System.Drawing.Point(12, 509);
+            this.txtPrecoCustoAntigo.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
+            this.txtPrecoCustoAntigo.Name = "txtPrecoCustoAntigo";
+            this.txtPrecoCustoAntigo.ShortcutsEnabled = false;
+            this.txtPrecoCustoAntigo.Size = new System.Drawing.Size(163, 22);
+            this.txtPrecoCustoAntigo.TabIndex = 147;
+            this.txtPrecoCustoAntigo.Text = "0.00";
+            // 
             // frmCadastroProduto
             // 
             //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             //this.ClientSize = new System.Drawing.Size(1342, 681);
+            this.Controls.Add(this.lblPrecoCustoAntigo);
+            this.Controls.Add(this.txtPrecoCustoAntigo);
             this.Controls.Add(this.lblIdFornecedor);
             this.Controls.Add(this.btnRemoverFornecedor);
             this.Controls.Add(this.btnAdicionarFornecedor);
@@ -462,12 +492,6 @@
             this.Name = "frmCadastroProduto";
             this.Text = "Cadastro Produtos";
             this.Load += new System.EventHandler(this.frmCadastroProduto_Load);
-            this.Controls.SetChildIndex(this.btnSalvar, 0);
-            this.Controls.SetChildIndex(this.btnSair, 0);
-            this.Controls.SetChildIndex(this.txtCodigo, 0);
-            this.Controls.SetChildIndex(this.chkInativo, 0);
-            this.Controls.SetChildIndex(this.lblDataCriacao, 0);
-            this.Controls.SetChildIndex(this.lblDataModificacao, 0);
             this.Controls.SetChildIndex(this.lblCodigo, 0);
             this.Controls.SetChildIndex(this.txtNome, 0);
             this.Controls.SetChildIndex(this.lblNome, 0);
@@ -502,6 +526,14 @@
             this.Controls.SetChildIndex(this.btnAdicionarFornecedor, 0);
             this.Controls.SetChildIndex(this.btnRemoverFornecedor, 0);
             this.Controls.SetChildIndex(this.lblIdFornecedor, 0);
+            this.Controls.SetChildIndex(this.btnSalvar, 0);
+            this.Controls.SetChildIndex(this.btnSair, 0);
+            this.Controls.SetChildIndex(this.txtCodigo, 0);
+            this.Controls.SetChildIndex(this.chkInativo, 0);
+            this.Controls.SetChildIndex(this.lblDataCriacao, 0);
+            this.Controls.SetChildIndex(this.lblDataModificacao, 0);
+            this.Controls.SetChildIndex(this.txtPrecoCustoAntigo, 0);
+            this.Controls.SetChildIndex(this.lblPrecoCustoAntigo, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -546,5 +578,7 @@
         private System.Windows.Forms.Button btnRemoverFornecedor;
         private System.Windows.Forms.Button btnAdicionarFornecedor;
         private System.Windows.Forms.Label lblIdFornecedor;
+        private System.Windows.Forms.Label lblPrecoCustoAntigo;
+        private System.Windows.Forms.TextBox txtPrecoCustoAntigo;
     }
 }

@@ -23,7 +23,7 @@ namespace Projeto.DAO
                     int estoqueAtual = reader.GetInt32("Estoque");
                     decimal custoAtual = reader.GetDecimal("PrecoCusto");
                     decimal valorVenda = reader.GetDecimal("PrecoVenda");
-                    reader.Close(); 
+                    reader.Close();
 
                     decimal novoCustoMedio = ((custoAtual * estoqueAtual) + (custoUnitarioReal * item.Quantidade)) / (estoqueAtual + item.Quantidade);
 
@@ -285,9 +285,6 @@ namespace Projeto.DAO
                 }
             }
         }
-
-        // SEUS OUTROS MÉTODOS (Listar, BuscarPorChave, MontarObjetoCompra, MontarObjetoItem) PERMANECEM IGUAIS
-        // ... (cole o resto do seu código original aqui) ...
         public List<Compra> Listar()
         {
             List<Compra> lista = new List<Compra>();
