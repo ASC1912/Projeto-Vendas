@@ -2,12 +2,104 @@
 using Projeto.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Projeto.DAO
 {
     internal class DAOCompra
     {
         private string connectionString = "Server=localhost;Database=sistema;Uid=root;Pwd=12345678;";
+
+        private void AtualizarProduto(ItemCompra item, decimal custoUnitarioReal, MySqlConnection conn, MySqlTransaction trans)
+        {
+            string sqlSelect = "SELECT Estoque, PrecoCusto, PrecoVenda FROM Produtos WHERE Id = @ProdutoId";
+            MySqlCommand cmdSelect = new MySqlCommand(sqlSelect, conn, trans);
+            cmdSelect.Parameters.AddWithValue("@ProdutoId", item.ProdutoId);
+
+            using (var reader = cmdSelect.ExecuteReader())
+            {
+                if (reader.Read())
+                {
+                    int estoqueAtual = reader.GetInt32("Estoque");
+                    decimal custoAtual = reader.GetDecimal("PrecoCusto");
+                    decimal valorVenda = reader.GetDecimal("PrecoVenda");
+                    reader.Close(); 
+
+                    decimal novoCustoMedio = ((custoAtual * estoqueAtual) + (custoUnitarioReal * item.Quantidade)) / (estoqueAtual + item.Quantidade);
+
+                    decimal novoPercentualLucro = 0;
+                    if (novoCustoMedio > 0)
+                    {
+                        novoPercentualLucro = ((valorVenda / novoCustoMedio) - 1) * 100;
+                    }
+
+                    string sqlUpdate = "UPDATE Produtos SET Estoque = @NovoEstoque, PrecoCusto = @NovoCustoMedio, PrecoCustoAnterior = @CustoAnterior, PorcentagemLucro = @NovoPercentualLucro WHERE Id = @ProdutoId";
+                    MySqlCommand cmdUpdate = new MySqlCommand(sqlUpdate, conn, trans);
+                    cmdUpdate.Parameters.AddWithValue("@NovoEstoque", estoqueAtual + item.Quantidade);
+                    cmdUpdate.Parameters.AddWithValue("@NovoCustoMedio", novoCustoMedio);
+                    cmdUpdate.Parameters.AddWithValue("@CustoAnterior", custoAtual);
+                    cmdUpdate.Parameters.AddWithValue("@NovoPercentualLucro", novoPercentualLucro);
+                    cmdUpdate.Parameters.AddWithValue("@ProdutoId", item.ProdutoId);
+                    cmdUpdate.ExecuteNonQuery();
+                }
+                else
+                {
+                    reader.Close();
+                    throw new Exception($"Produto com ID {item.ProdutoId} não encontrado para atualização de estoque.");
+                }
+            }
+        }
+
+        private void ReverterAtualizacaoProduto(ItemCompra item, MySqlConnection conn, MySqlTransaction trans)
+        {
+            string sqlSelect = "SELECT Estoque, PrecoCusto, PrecoCustoAnterior, PrecoVenda FROM Produtos WHERE Id = @ProdutoId";
+            MySqlCommand cmdSelect = new MySqlCommand(sqlSelect, conn, trans);
+            cmdSelect.Parameters.AddWithValue("@ProdutoId", item.ProdutoId);
+
+            using (var reader = cmdSelect.ExecuteReader())
+            {
+                if (reader.Read())
+                {
+                    int estoqueAtual = reader.GetInt32("Estoque");
+                    decimal custoMedioAtual = reader.GetDecimal("PrecoCusto");
+                    decimal valorCustoAnterior = reader.GetDecimal("PrecoCustoAnterior");
+                    decimal valorVenda = reader.GetDecimal("PrecoVenda");
+                    reader.Close();
+
+                    int novoEstoque = estoqueAtual - (int)item.Quantidade;
+
+                    decimal novoCustoMedio;
+                    if (novoEstoque > 0)
+                    {
+                        // Recalcula o custo médio removendo o custo dos itens estornados
+                        novoCustoMedio = ((custoMedioAtual * estoqueAtual) - (item.ValorUnitario * item.Quantidade)) / novoEstoque;
+                    }
+                    else
+                    {
+                        // Se o estoque zerar, o custo volta a ser o que era antes desta compra
+                        novoCustoMedio = valorCustoAnterior;
+                    }
+
+                    decimal novoPercentualLucro = 0;
+                    if (novoCustoMedio > 0)
+                    {
+                        novoPercentualLucro = ((valorVenda / novoCustoMedio) - 1) * 100;
+                    }
+
+                    string sqlUpdate = "UPDATE Produtos SET Estoque = @NovoEstoque, PrecoCusto = @NovoCustoMedio, PorcentagemLucro = @NovoPercentualLucro WHERE Id = @ProdutoId";
+                    MySqlCommand cmdUpdate = new MySqlCommand(sqlUpdate, conn, trans);
+                    cmdUpdate.Parameters.AddWithValue("@NovoEstoque", novoEstoque);
+                    cmdUpdate.Parameters.AddWithValue("@NovoCustoMedio", novoCustoMedio);
+                    cmdUpdate.Parameters.AddWithValue("@NovoPercentualLucro", novoPercentualLucro);
+                    cmdUpdate.Parameters.AddWithValue("@ProdutoId", item.ProdutoId);
+                    cmdUpdate.ExecuteNonQuery();
+                }
+                else
+                {
+                    reader.Close();
+                }
+            }
+        }
 
         public void Salvar(Compra compra)
         {
@@ -62,7 +154,10 @@ namespace Projeto.DAO
                     if (compra.Itens != null && compra.Itens.Count > 0)
                     {
                         string insertItemQuery = @"INSERT INTO ItensCompra (CompraModelo, CompraSerie, CompraNumeroNota, CompraFornecedorId, ProdutoId, Quantidade, ValorUnitario, ValorTotalItem) VALUES (@CompraModelo, @CompraSerie, @CompraNumeroNota, @CompraFornecedorId, @ProdutoId, @Quantidade, @ValorUnitario, @ValorTotalItem)";
-                        string updateEstoqueQuery = "UPDATE Produtos SET Estoque = Estoque + @Quantidade WHERE Id = @ProdutoId";
+
+                        // Lógica para calcular o custo real dos produtos
+                        decimal totalCustosAdicionais = compra.ValorFrete + compra.Seguro + compra.Despesas;
+                        decimal valorTotalCompra = compra.Itens.Sum(i => i.ValorTotalItem);
 
                         foreach (var item in compra.Itens)
                         {
@@ -78,12 +173,15 @@ namespace Projeto.DAO
                                 cmdItem.Parameters.AddWithValue("@ValorTotalItem", item.ValorTotalItem);
                                 cmdItem.ExecuteNonQuery();
                             }
-                            using (MySqlCommand cmdEstoque = new MySqlCommand(updateEstoqueQuery, conn, tran))
+
+                            // Calcula o custo real do item, distribuindo as despesas
+                            decimal custoUnitarioReal = item.ValorUnitario;
+                            if (valorTotalCompra > 0 && item.Quantidade > 0)
                             {
-                                cmdEstoque.Parameters.AddWithValue("@Quantidade", item.Quantidade);
-                                cmdEstoque.Parameters.AddWithValue("@ProdutoId", item.ProdutoId);
-                                cmdEstoque.ExecuteNonQuery();
+                                custoUnitarioReal += (totalCustosAdicionais * (item.ValorTotalItem / valorTotalCompra)) / item.Quantidade;
                             }
+
+                            AtualizarProduto(item, custoUnitarioReal, conn, tran);
                         }
                     }
 
@@ -132,7 +230,7 @@ namespace Projeto.DAO
                 MySqlTransaction tran = conn.BeginTransaction();
                 try
                 {
-                    string selectItensQuery = "SELECT ProdutoId, Quantidade FROM ItensCompra WHERE CompraModelo = @Modelo AND CompraSerie = @Serie AND CompraNumeroNota = @NumeroNota AND CompraFornecedorId = @FornecedorId";
+                    string selectItensQuery = "SELECT ProdutoId, Quantidade, ValorUnitario FROM ItensCompra WHERE CompraModelo = @Modelo AND CompraSerie = @Serie AND CompraNumeroNota = @NumeroNota AND CompraFornecedorId = @FornecedorId";
                     var itensParaEstornar = new List<ItemCompra>();
                     using (MySqlCommand cmdSelect = new MySqlCommand(selectItensQuery, conn, tran))
                     {
@@ -147,21 +245,16 @@ namespace Projeto.DAO
                                 itensParaEstornar.Add(new ItemCompra
                                 {
                                     ProdutoId = reader.GetInt32("ProdutoId"),
-                                    Quantidade = reader.GetDecimal("Quantidade")
+                                    Quantidade = reader.GetDecimal("Quantidade"),
+                                    ValorUnitario = reader.GetDecimal("ValorUnitario")
                                 });
                             }
                         }
                     }
 
-                    string updateEstoqueQuery = "UPDATE Produtos SET Estoque = Estoque - @Quantidade WHERE Id = @ProdutoId";
                     foreach (var item in itensParaEstornar)
                     {
-                        using (MySqlCommand cmdEstoque = new MySqlCommand(updateEstoqueQuery, conn, tran))
-                        {
-                            cmdEstoque.Parameters.AddWithValue("@Quantidade", item.Quantidade);
-                            cmdEstoque.Parameters.AddWithValue("@ProdutoId", item.ProdutoId);
-                            cmdEstoque.ExecuteNonQuery();
-                        }
+                        ReverterAtualizacaoProduto(item, conn, tran);
                     }
 
                     string updateCompraQuery = @"UPDATE Compras 
@@ -174,7 +267,7 @@ namespace Projeto.DAO
                                                    AND FornecedorId = @FornecedorId";
                     using (MySqlCommand cmd = new MySqlCommand(updateCompraQuery, conn, tran))
                     {
-                        cmd.Parameters.AddWithValue("@Observacao", compra.Observacao); 
+                        cmd.Parameters.AddWithValue("@Observacao", compra.Observacao);
                         cmd.Parameters.AddWithValue("@DataAlteracao", DateTime.Now);
                         cmd.Parameters.AddWithValue("@Modelo", compra.Modelo);
                         cmd.Parameters.AddWithValue("@Serie", compra.Serie);
@@ -193,6 +286,8 @@ namespace Projeto.DAO
             }
         }
 
+        // SEUS OUTROS MÉTODOS (Listar, BuscarPorChave, MontarObjetoCompra, MontarObjetoItem) PERMANECEM IGUAIS
+        // ... (cole o resto do seu código original aqui) ...
         public List<Compra> Listar()
         {
             List<Compra> lista = new List<Compra>();
@@ -286,7 +381,6 @@ namespace Projeto.DAO
             }
             return compra;
         }
-
         private Compra MontarObjetoCompra(MySqlDataReader reader)
         {
             return new Compra

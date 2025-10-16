@@ -12,6 +12,8 @@ namespace Projeto.Views.Cadastros
 {
     public partial class frmCadastroProduto : frmBase
     {
+        #region Variáveis e Propriedades
+
         Produto oProduto;
         private ProdutoController controller = new ProdutoController();
         private ProdutoFornecedorController pfController = new ProdutoFornecedorController();
@@ -31,6 +33,10 @@ namespace Projeto.Views.Cadastros
         public bool modoEdicao = false;
         public bool modoExclusao = false;
 
+        #endregion
+
+        #region Construtor e Inicialização
+
         public frmCadastroProduto() : base()
         {
             InitializeComponent();
@@ -41,18 +47,12 @@ namespace Projeto.Views.Cadastros
             txtGrupo.ReadOnly = true;
             txtFornecedor.ReadOnly = true;
 
-            txtPrecoCusto.TextChanged += CalcularPrecoVenda;
-            txtPorcentagemLucro.TextChanged += CalcularPrecoVenda;
-            txtPrecoVenda.Leave += CalcularPorcentagemLucro;
-
-            txtCodFornecedor.Leave += new System.EventHandler(this.txtCodFornecedor_Leave);
+            // A conexão dos eventos será feita no arquivo Designer
         }
 
-        public override void ConhecaObj(object obj, object ctrl)
-        {
-            if (obj != null) oProduto = (Produto)obj;
-            if (ctrl != null) controller = (ProdutoController)ctrl;
-        }
+        #endregion
+
+        #region Conexões com outros Formulários
 
         public void setFrmConsultaGrupo(object obj)
         {
@@ -73,7 +73,17 @@ namespace Projeto.Views.Cadastros
         {
             if (obj != null) oFrmConsultaFornecedor = (frmConsultaFornecedor)obj;
         }
-       
+
+        #endregion
+
+        #region Carregamento e Limpeza de Dados
+
+        public override void ConhecaObj(object obj, object ctrl)
+        {
+            if (obj != null) oProduto = (Produto)obj;
+            if (ctrl != null) controller = (ProdutoController)ctrl;
+        }
+
         public async override void CarregaTxt()
         {
             txtCodigo.Text = oProduto.Id.ToString();
@@ -134,6 +144,10 @@ namespace Projeto.Views.Cadastros
             lblDataCriacao.Text = $"Criado em: {agora:dd/MM/yyyy HH:mm}";
             lblDataModificacao.Text = $"Modificado em: {agora:dd/MM/yyyy HH:mm}";
         }
+
+        #endregion
+
+        #region Lógica de Botões (Salvar, Pesquisar, Adicionar, etc.)
 
         private async void btnSalvar_Click(object sender, EventArgs e)
         {
@@ -305,39 +319,9 @@ namespace Projeto.Views.Cadastros
             await CarregarFornecedoresNaListView();
         }
 
-        private void CalcularPrecoVenda(object sender, EventArgs e)
-        {
-            if (decimal.TryParse(txtPrecoCusto.Text, out decimal precoCusto) &&
-                decimal.TryParse(txtPorcentagemLucro.Text, out decimal porcentagem))
-            {
-                decimal valorVenda = precoCusto * (1 + (porcentagem / 100));
-                txtPrecoVenda.Text = valorVenda.ToString("F2");
-            }
-            else
-            {
-                txtPrecoVenda.Text = "0,00";
-            }
-        }
+        #endregion
 
-        private void CalcularPorcentagemLucro(object sender, EventArgs e)
-        {
-            if (this.ActiveControl != txtPorcentagemLucro)
-            {
-                if (decimal.TryParse(txtPrecoCusto.Text, out decimal precoCusto) &&
-                    decimal.TryParse(txtPrecoVenda.Text, out decimal valorVenda))
-                {
-                    if (precoCusto > 0)
-                    {
-                        decimal percentualLucro = ((valorVenda / precoCusto) - 1) * 100;
-                        txtPorcentagemLucro.Text = percentualLucro.ToString("F2");
-                    }
-                    else
-                    {
-                        txtPorcentagemLucro.Text = "0,00";
-                    }
-                }
-            }
-        }
+        #region Métodos de Cálculo e Suporte
 
         private async void txtIdUnidade_Leave(object sender, EventArgs e)
         {
@@ -440,5 +424,57 @@ namespace Projeto.Views.Cadastros
         private void frmCadastroProduto_Load(object sender, EventArgs e)
         {
         }
+
+        #endregion
+
+        #region Métodos de Cálculo Dinâmico (NOVO)
+
+        private void CalcularPrecoVenda()
+        {
+            if (decimal.TryParse(txtPrecoCusto.Text, out decimal precoCusto) &&
+                decimal.TryParse(txtPorcentagemLucro.Text, out decimal porcentagem))
+            {
+                decimal valorVenda = precoCusto * (1 + (porcentagem / 100));
+                txtPrecoVenda.Text = valorVenda.ToString("F2");
+            }
+        }
+
+        private void CalcularPorcentagemLucro()
+        {
+            if (decimal.TryParse(txtPrecoCusto.Text, out decimal precoCusto) &&
+                decimal.TryParse(txtPrecoVenda.Text, out decimal valorVenda))
+            {
+                if (precoCusto > 0)
+                {
+                    decimal percentualLucro = ((valorVenda / precoCusto) - 1) * 100;
+                    txtPorcentagemLucro.Text = percentualLucro.ToString("F2");
+                }
+                else
+                {
+                    txtPorcentagemLucro.Text = "0,00";
+                }
+            }
+        }
+
+        #endregion
+
+        #region Handlers de Evento para Cálculo Dinâmico
+
+        private void txtPrecoCusto_Leave(object sender, EventArgs e)
+        {
+            CalcularPrecoVenda();
+        }
+
+        private void txtPorcentagemLucro_Leave(object sender, EventArgs e)
+        {
+            CalcularPrecoVenda();
+        }
+
+        private void txtPrecoVenda_Leave(object sender, EventArgs e)
+        {
+            CalcularPorcentagemLucro();
+        }
+
+        #endregion
     }
 }

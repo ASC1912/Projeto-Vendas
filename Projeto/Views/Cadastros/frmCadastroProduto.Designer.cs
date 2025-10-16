@@ -195,6 +195,7 @@
             this.txtPrecoCusto.Name = "txtPrecoCusto";
             this.txtPrecoCusto.Size = new System.Drawing.Size(150, 22);
             this.txtPrecoCusto.TabIndex = 4;
+            this.txtPrecoCusto.Leave += new System.EventHandler(this.txtPrecoCusto_Leave);
             // 
             // lblEstoque
             // 
@@ -231,6 +232,7 @@
             this.txtPrecoVenda.ShortcutsEnabled = false;
             this.txtPrecoVenda.Size = new System.Drawing.Size(163, 22);
             this.txtPrecoVenda.TabIndex = 126;
+            this.txtPrecoVenda.Leave += new System.EventHandler(this.txtPrecoVenda_Leave);
             // 
             // btnUnidade
             // 
@@ -310,13 +312,14 @@
             this.txtPorcentagemLucro.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.txtPorcentagemLucro.Name = "txtPorcentagemLucro";
             this.txtPorcentagemLucro.ShortcutsEnabled = false;
-            this.txtPorcentagemLucro.Size = new System.Drawing.Size(257, 22);
+            this.txtPorcentagemLucro.Size = new System.Drawing.Size(163, 22);
             this.txtPorcentagemLucro.TabIndex = 135;
             this.txtPorcentagemLucro.Text = "0";
+            this.txtPorcentagemLucro.Leave += new System.EventHandler(this.txtPorcentagemLucro_Leave);
             // 
             // txtCodFornecedor
             // 
-            this.txtCodFornecedor.Location = new System.Drawing.Point(574, 83);
+            this.txtCodFornecedor.Location = new System.Drawing.Point(549, 128);
             this.txtCodFornecedor.Margin = new System.Windows.Forms.Padding(4);
             this.txtCodFornecedor.Name = "txtCodFornecedor";
             this.txtCodFornecedor.ShortcutsEnabled = false;
@@ -332,10 +335,10 @@
             this.listVFornecedores.FullRowSelect = true;
             this.listVFornecedores.GridLines = true;
             this.listVFornecedores.HideSelection = false;
-            this.listVFornecedores.Location = new System.Drawing.Point(579, 111);
+            this.listVFornecedores.Location = new System.Drawing.Point(549, 156);
             this.listVFornecedores.Margin = new System.Windows.Forms.Padding(4);
             this.listVFornecedores.Name = "listVFornecedores";
-            this.listVFornecedores.Size = new System.Drawing.Size(721, 462);
+            this.listVFornecedores.Size = new System.Drawing.Size(751, 263);
             this.listVFornecedores.TabIndex = 142;
             this.listVFornecedores.UseCompatibleStateImageBehavior = false;
             this.listVFornecedores.View = System.Windows.Forms.View.Details;
@@ -357,19 +360,19 @@
             // 
             // btnPesquisarFornecedor
             // 
-            this.btnPesquisarFornecedor.Location = new System.Drawing.Point(1020, 80);
+            this.btnPesquisarFornecedor.Location = new System.Drawing.Point(995, 125);
             this.btnPesquisarFornecedor.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.btnPesquisarFornecedor.Name = "btnPesquisarFornecedor";
-            this.btnPesquisarFornecedor.Size = new System.Drawing.Size(65, 28);
+            this.btnPesquisarFornecedor.Size = new System.Drawing.Size(90, 28);
             this.btnPesquisarFornecedor.TabIndex = 140;
-            this.btnPesquisarFornecedor.Text = "🔎";
+            this.btnPesquisarFornecedor.Text = "Pesquisar";
             this.btnPesquisarFornecedor.UseVisualStyleBackColor = true;
             this.btnPesquisarFornecedor.Click += new System.EventHandler(this.btnPesquisarFornecedor_Click);
             // 
             // txtFornecedor
             // 
             this.txtFornecedor.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtFornecedor.Location = new System.Drawing.Point(662, 83);
+            this.txtFornecedor.Location = new System.Drawing.Point(637, 128);
             this.txtFornecedor.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.txtFornecedor.Name = "txtFornecedor";
             this.txtFornecedor.ReadOnly = true;
@@ -380,7 +383,7 @@
             // lblFornecedor
             // 
             this.lblFornecedor.AutoSize = true;
-            this.lblFornecedor.Location = new System.Drawing.Point(659, 65);
+            this.lblFornecedor.Location = new System.Drawing.Point(634, 110);
             this.lblFornecedor.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblFornecedor.Name = "lblFornecedor";
             this.lblFornecedor.Size = new System.Drawing.Size(85, 16);
@@ -389,7 +392,7 @@
             // 
             // btnRemoverFornecedor
             // 
-            this.btnRemoverFornecedor.Location = new System.Drawing.Point(1200, 80);
+            this.btnRemoverFornecedor.Location = new System.Drawing.Point(1200, 125);
             this.btnRemoverFornecedor.Margin = new System.Windows.Forms.Padding(4);
             this.btnRemoverFornecedor.Name = "btnRemoverFornecedor";
             this.btnRemoverFornecedor.Size = new System.Drawing.Size(100, 28);
@@ -400,7 +403,7 @@
             // 
             // btnAdicionarFornecedor
             // 
-            this.btnAdicionarFornecedor.Location = new System.Drawing.Point(1093, 80);
+            this.btnAdicionarFornecedor.Location = new System.Drawing.Point(1093, 125);
             this.btnAdicionarFornecedor.Margin = new System.Windows.Forms.Padding(4);
             this.btnAdicionarFornecedor.Name = "btnAdicionarFornecedor";
             this.btnAdicionarFornecedor.Size = new System.Drawing.Size(99, 28);
@@ -412,7 +415,7 @@
             // lblIdFornecedor
             // 
             this.lblIdFornecedor.AutoSize = true;
-            this.lblIdFornecedor.Location = new System.Drawing.Point(571, 65);
+            this.lblIdFornecedor.Location = new System.Drawing.Point(546, 110);
             this.lblIdFornecedor.Name = "lblIdFornecedor";
             this.lblIdFornecedor.Size = new System.Drawing.Size(55, 16);
             this.lblIdFornecedor.TabIndex = 146;

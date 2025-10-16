@@ -15,7 +15,10 @@ namespace Projeto.Models
         public string Descricao { get; set; }
 
         [JsonPropertyName("precoCusto")]
-        public decimal PrecoCusto { get; set; } 
+        public decimal PrecoCusto { get; set; }
+
+        [JsonPropertyName("precoCustoAnterior")]
+        public decimal PrecoCustoAnterior { get; set; }
 
         [JsonPropertyName("precoVenda")]
         public decimal PrecoVenda { get; set; } 
