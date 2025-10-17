@@ -74,5 +74,45 @@ namespace Projeto.DAO
             }
             return lista;
         }
+
+        public void SincronizarFornecedores(List<ProdutoFornecedor> fornecedores, int produtoId)
+        {
+            using (var conexao = new MySqlConnection(connectionString))
+            {
+                conexao.Open();
+                MySqlTransaction transaction = conexao.BeginTransaction();
+
+                try
+                {
+                    string deleteQuery = "DELETE FROM ProdutoFornecedores WHERE ProdutoId = @ProdutoId";
+                    using (var cmdDelete = new MySqlCommand(deleteQuery, conexao, transaction))
+                    {
+                        cmdDelete.Parameters.AddWithValue("@ProdutoId", produtoId);
+                        cmdDelete.ExecuteNonQuery();
+                    }
+
+                    if (fornecedores != null && fornecedores.Count > 0)
+                    {
+                        string insertQuery = "INSERT INTO ProdutoFornecedores (ProdutoId, FornecedorId) VALUES (@ProdutoId, @FornecedorId)";
+                        using (var cmdInsert = new MySqlCommand(insertQuery, conexao, transaction))
+                        {
+                            foreach (var relacao in fornecedores)
+                            {
+                                cmdInsert.Parameters.Clear();
+                                cmdInsert.Parameters.AddWithValue("@ProdutoId", produtoId);
+                                cmdInsert.Parameters.AddWithValue("@FornecedorId", relacao.FornecedorId);
+                                cmdInsert.ExecuteNonQuery();
+                            }
+                        }
+                    }
+                    transaction.Commit();
+                }
+                catch (Exception)
+                {
+                    transaction.Rollback();
+                    throw; 
+                }
+            }
+        }
     }
 }

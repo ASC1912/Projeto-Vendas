@@ -9,7 +9,7 @@ namespace Projeto.DAO
     {
         private string connectionString = "Server=localhost;Database=sistema;Uid=root;Pwd=12345678;";
 
-        public void Salvar(Produto produto)
+        public int Salvar(Produto produto)
         {
             try
             {
@@ -25,6 +25,7 @@ namespace Projeto.DAO
                             Produto = @Produto,
                             Descricao = @Descricao,
                             PrecoCusto = @PrecoCusto,
+                            PrecoCustoAnterior = @PrecoCustoAnterior,
                             PrecoVenda = @PrecoVenda,
                             PorcentagemLucro = @PorcentagemLucro,
                             Estoque = @Estoque,
@@ -39,9 +40,9 @@ namespace Projeto.DAO
                     {
                         query = @"
                         INSERT INTO Produtos (
-                            Produto, Descricao, PrecoCusto, PrecoVenda, PorcentagemLucro, Estoque, IdMarca, GrupoId, UnidadeMedidaId, Ativo, DataCadastro, DataAlteracao
+                            Produto, Descricao, PrecoCusto, PrecoCustoAnterior, PrecoVenda, PorcentagemLucro, Estoque, IdMarca, GrupoId, UnidadeMedidaId, Ativo, DataCadastro, DataAlteracao
                         ) VALUES (
-                            @Produto, @Descricao, @PrecoCusto, @PrecoVenda, @PorcentagemLucro, @Estoque, @IdMarca, @GrupoId, @UnidadeMedidaId, @Ativo, @DataCadastro, @DataAlteracao
+                            @Produto, @Descricao, @PrecoCusto, @PrecoCustoAnterior, @PrecoVenda, @PorcentagemLucro, @Estoque, @IdMarca, @GrupoId, @UnidadeMedidaId, @Ativo, @DataCadastro, @DataAlteracao
                         )";
                     }
 
@@ -50,6 +51,7 @@ namespace Projeto.DAO
                         cmd.Parameters.AddWithValue("@Produto", produto.NomeProduto);
                         cmd.Parameters.AddWithValue("@Descricao", string.IsNullOrEmpty(produto.Descricao) ? (object)DBNull.Value : produto.Descricao);
                         cmd.Parameters.AddWithValue("@PrecoCusto", produto.PrecoCusto);
+                        cmd.Parameters.AddWithValue("@PrecoCustoAnterior", produto.PrecoCustoAnterior);
                         cmd.Parameters.AddWithValue("@PrecoVenda", produto.PrecoVenda);
                         cmd.Parameters.AddWithValue("@PorcentagemLucro", produto.PorcentagemLucro);
                         cmd.Parameters.AddWithValue("@Estoque", produto.Estoque);
@@ -62,13 +64,15 @@ namespace Projeto.DAO
                         if (produto.Id > 0)
                         {
                             cmd.Parameters.AddWithValue("@Id", produto.Id);
+                            cmd.ExecuteNonQuery();
+                            return produto.Id;
                         }
                         else
                         {
                             cmd.Parameters.AddWithValue("@DataCadastro", DateTime.Now);
+                            cmd.ExecuteNonQuery();
+                            return (int)cmd.LastInsertedId;
                         }
-
-                        cmd.ExecuteNonQuery();
                     }
                 }
             }

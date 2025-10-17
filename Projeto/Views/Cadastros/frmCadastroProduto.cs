@@ -42,12 +42,11 @@ namespace Projeto.Views.Cadastros
             InitializeComponent();
             txtCodigo.Enabled = false;
 
-            // Campos ReadOnly
             txtUnidade.ReadOnly = true;
             txtMarca.ReadOnly = true;
             txtGrupo.ReadOnly = true;
             txtFornecedor.ReadOnly = true;
-            txtPrecoCustoAntigo.ReadOnly = true; // Novo campo
+            txtPrecoCustoAntigo.ReadOnly = true; 
         }
 
         #endregion
@@ -90,7 +89,7 @@ namespace Projeto.Views.Cadastros
             txtNome.Text = oProduto.NomeProduto;
             txtEstoque.Text = oProduto.Estoque.ToString();
             txtPrecoCusto.Text = oProduto.PrecoCusto.ToString("F2");
-            txtPrecoCustoAntigo.Text = oProduto.PrecoCustoAnterior.ToString("F2"); // Novo campo
+            txtPrecoCustoAntigo.Text = oProduto.PrecoCustoAnterior.ToString("F2"); 
             txtPrecoVenda.Text = oProduto.PrecoVenda.ToString("F2");
             txtPorcentagemLucro.Text = oProduto.PorcentagemLucro.ToString("F2");
 
@@ -124,10 +123,10 @@ namespace Projeto.Views.Cadastros
             txtUnidade.Clear();
             txtIdUnidade.Clear();
             txtPrecoCusto.Text = "0,00";
-            txtPrecoCustoAntigo.Text = "0,00"; // Novo campo
+            txtPrecoCustoAntigo.Text = "0,00"; 
             txtPrecoVenda.Text = "0,00";
             txtPorcentagemLucro.Text = "0";
-            txtEstoque.Clear();
+            txtEstoque.Text = "0";
             txtMarca.Clear();
             txtIdMarca.Clear();
             txtGrupo.Clear();
@@ -160,13 +159,8 @@ namespace Projeto.Views.Cadastros
                 {
                     try
                     {
-                        var fornecedoresVinculados = await pfController.ListarPorProduto(int.Parse(txtCodigo.Text));
-                        foreach (var vinculo in fornecedoresVinculados)
-                        {
-                            await pfController.Excluir(vinculo);
-                        }
-
-                        await controller.Excluir(int.Parse(txtCodigo.Text));
+                        int produtoId = int.Parse(txtCodigo.Text);
+                        await controller.Excluir(produtoId);
 
                         MessageBox.Show("Produto excluído com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         this.Close();
@@ -201,27 +195,7 @@ namespace Projeto.Views.Cadastros
                     GrupoId = grupoSelecionadoId,
                     UnidadeMedidaId = unidadeSelecionadaId,
                 };
-
-                await controller.Salvar(produto);
-
-                if (produto.Id > 0)
-                {
-                    var fornecedoresNoBanco = await pfController.ListarPorProduto(produto.Id);
-
-                    foreach (var relacaoBanco in fornecedoresNoBanco)
-                    {
-                        if (!listaProdutoFornecedor.Any(itemTela => itemTela.FornecedorId == relacaoBanco.FornecedorId))
-                        {
-                            await pfController.Excluir(relacaoBanco);
-                        }
-                    }
-
-                    foreach (var relacaoTela in listaProdutoFornecedor)
-                    {
-                        relacaoTela.ProdutoId = produto.Id;
-                        await pfController.Salvar(relacaoTela);
-                    }
-                }
+                await controller.Salvar(produto, listaProdutoFornecedor);
 
                 MessageBox.Show("Produto salvo com sucesso!");
                 this.Close();
@@ -230,7 +204,7 @@ namespace Projeto.Views.Cadastros
             {
                 MessageBox.Show("Erro ao salvar o produto: " + ex.Message);
             }
-        } 
+        }
 
         private void btnUnidade_Click(object sender, EventArgs e)
         {

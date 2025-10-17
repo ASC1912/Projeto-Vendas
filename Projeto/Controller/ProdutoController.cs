@@ -4,6 +4,7 @@ using Projeto.Services;
 using Projeto.Services.Interfaces;
 using Projeto.Utils;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Projeto.Controller
@@ -28,7 +29,7 @@ namespace Projeto.Controller
             }
         }
 
-        public Task Salvar(Produto produto)
+        public Task Salvar(Produto produto, List<ProdutoFornecedor> fornecedores)
         {
             if (_useApi)
             {
@@ -36,7 +37,15 @@ namespace Projeto.Controller
             }
             else
             {
-                return Task.Run(() => _dao.Salvar(produto));
+                return Task.Run(() => {
+                    int produtoId = _dao.Salvar(produto);
+
+                    if (produtoId > 0)
+                    {
+                        DAOProdutoFornecedor pfDao = new DAOProdutoFornecedor();
+                        pfDao.SincronizarFornecedores(fornecedores, produtoId);
+                    }
+                });
             }
         }
 
