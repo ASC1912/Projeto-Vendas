@@ -9,14 +9,17 @@ namespace Projeto.DAO
     {
         private string connectionString = "Server=localhost;Database=sistema;Uid=root;Pwd=12345678;";
 
-        public int Salvar(Produto produto)
+        public int Salvar(Produto produto, List<ProdutoFornecedor> fornecedores)
         {
-            try
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                conn.Open();
+                MySqlTransaction transaction = conn.BeginTransaction();
+
+                try
                 {
-                    conn.Open();
                     string query;
+                    int produtoId;
 
                     if (produto.Id > 0)
                     {
@@ -43,10 +46,11 @@ namespace Projeto.DAO
                             Produto, Descricao, PrecoCusto, PrecoCustoAnterior, PrecoVenda, PorcentagemLucro, Estoque, IdMarca, GrupoId, UnidadeMedidaId, Ativo, DataCadastro, DataAlteracao
                         ) VALUES (
                             @Produto, @Descricao, @PrecoCusto, @PrecoCustoAnterior, @PrecoVenda, @PorcentagemLucro, @Estoque, @IdMarca, @GrupoId, @UnidadeMedidaId, @Ativo, @DataCadastro, @DataAlteracao
-                        )";
+                        );
+                        SELECT LAST_INSERT_ID();";
                     }
 
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn, transaction))
                     {
                         cmd.Parameters.AddWithValue("@Produto", produto.NomeProduto);
                         cmd.Parameters.AddWithValue("@Descricao", string.IsNullOrEmpty(produto.Descricao) ? (object)DBNull.Value : produto.Descricao);
@@ -65,20 +69,48 @@ namespace Projeto.DAO
                         {
                             cmd.Parameters.AddWithValue("@Id", produto.Id);
                             cmd.ExecuteNonQuery();
-                            return produto.Id;
+                            produtoId = produto.Id;
                         }
                         else
                         {
                             cmd.Parameters.AddWithValue("@DataCadastro", DateTime.Now);
-                            cmd.ExecuteNonQuery();
-                            return (int)cmd.LastInsertedId;
+                            produtoId = Convert.ToInt32(cmd.ExecuteScalar());
                         }
                     }
+
+                    if (produtoId > 0)
+                    {
+                        string deleteQuery = "DELETE FROM ProdutoFornecedores WHERE ProdutoId = @ProdutoId";
+                        using (var cmdDelete = new MySqlCommand(deleteQuery, conn, transaction))
+                        {
+                            cmdDelete.Parameters.AddWithValue("@ProdutoId", produtoId);
+                            cmdDelete.ExecuteNonQuery();
+                        }
+
+                        if (fornecedores != null && fornecedores.Count > 0)
+                        {
+                            string insertQuery = "INSERT INTO ProdutoFornecedores (ProdutoId, FornecedorId) VALUES (@ProdutoId, @FornecedorId)";
+                            using (var cmdInsert = new MySqlCommand(insertQuery, conn, transaction))
+                            {
+                                foreach (var relacao in fornecedores)
+                                {
+                                    cmdInsert.Parameters.Clear();
+                                    cmdInsert.Parameters.AddWithValue("@ProdutoId", produtoId);
+                                    cmdInsert.Parameters.AddWithValue("@FornecedorId", relacao.FornecedorId);
+                                    cmdInsert.ExecuteNonQuery();
+                                }
+                            }
+                        }
+                    }
+
+                    transaction.Commit();
+                    return produtoId;
                 }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Erro ao salvar produto: " + ex.Message);
+                catch (Exception)
+                {
+                    transaction.Rollback();
+                    throw;
+                }
             }
         }
 
@@ -160,6 +192,7 @@ namespace Projeto.DAO
                 NomeProduto = reader.GetString("Produto"),
                 Descricao = reader.IsDBNull(reader.GetOrdinal("Descricao")) ? null : reader.GetString("Descricao"),
                 PrecoCusto = reader.GetDecimal("PrecoCusto"),
+                PrecoCustoAnterior = reader.IsDBNull(reader.GetOrdinal("PrecoCustoAnterior")) ? 0 : reader.GetDecimal("PrecoCustoAnterior"),
                 PrecoVenda = reader.IsDBNull(reader.GetOrdinal("PrecoVenda")) ? 0 : reader.GetDecimal("PrecoVenda"),
                 PorcentagemLucro = reader.IsDBNull(reader.GetOrdinal("PorcentagemLucro")) ? 0 : reader.GetDecimal("PorcentagemLucro"),
                 Estoque = reader.GetInt32("Estoque"),

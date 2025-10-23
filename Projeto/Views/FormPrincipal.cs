@@ -37,6 +37,7 @@ namespace Projeto
         Mesa aMesa = new Mesa(); 
         Pedido oPedido = new Pedido(); 
         UnidadeMedida aUnidadeMedida = new UnidadeMedida(); 
+        ContasAPagar aContasAPagar = new ContasAPagar();
 
         PaisController CtrlPais = new PaisController();
         EstadoController CtrlEstado = new EstadoController();
@@ -55,6 +56,7 @@ namespace Projeto
         MesaController CtrlMesa = new MesaController(); 
         PedidoController CtrlPedido = new PedidoController(); 
         UnidadeMedidaController CtrlUnidadeMedida = new UnidadeMedidaController();
+        ContasAPagarController CtrlContasAPagar = new ContasAPagarController();
         public FormPrincipal()
         {
             InitializeComponent();
@@ -151,6 +153,11 @@ namespace Projeto
         private void unidadesDeMedidaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             aInter.PecaUnidadeMedida(aUnidadeMedida, CtrlUnidadeMedida);
+        }
+
+        private void contasAPagarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            aInter.PecaContasAPagar(aContasAPagar, CtrlContasAPagar);
         }
     }
 }

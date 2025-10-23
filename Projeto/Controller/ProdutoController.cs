@@ -38,13 +38,7 @@ namespace Projeto.Controller
             else
             {
                 return Task.Run(() => {
-                    int produtoId = _dao.Salvar(produto);
-
-                    if (produtoId > 0)
-                    {
-                        DAOProdutoFornecedor pfDao = new DAOProdutoFornecedor();
-                        pfDao.SincronizarFornecedores(fornecedores, produtoId);
-                    }
+                    _dao.Salvar(produto, fornecedores);
                 });
             }
         }

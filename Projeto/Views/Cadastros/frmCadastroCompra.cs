@@ -41,13 +41,24 @@ namespace Projeto.Views.Cadastros
         public frmCadastroCompra()
         {
             InitializeComponent();
+
+            DateTime dataAtual = DateTime.Now;
+
+            dtpEmissao.Value = dataAtual;
+            dtpChegada.Value = dataAtual;
+
+            dtpEmissao.MaxDate = dataAtual;
+
+            dtpChegada.MinDate = dataAtual.Date;
+
             AgruparControles();
             ConfigurarEstadoInicial();
 
-            // Eventos para recalcular os totais dinamicamente
             txtFrete.TextChanged += new System.EventHandler(this.txtCustosExtras_TextChanged);
             txtSeguro.TextChanged += new System.EventHandler(this.txtCustosExtras_TextChanged);
             txtDespesas.TextChanged += new System.EventHandler(this.txtCustosExtras_TextChanged);
+
+            this.dtpEmissao.ValueChanged += new System.EventHandler(this.dtpEmissao_ValueChanged);
         }
 
         #endregion
@@ -110,6 +121,20 @@ namespace Projeto.Views.Cadastros
             }
         }
 
+        public override void BloquearTxt()
+        {
+            HabilitarControles(parte1Controles, false);
+            HabilitarControles(parte2Controles, false);
+            HabilitarControles(parte3Controles, false);
+            btnSalvar.Enabled = false;
+        }
+
+        public override void DesbloquearTxt()
+        {
+            // Apenas o cabeçalho é liberado. O resto é controlado dinamicamente.
+            HabilitarControles(parte1Controles, true);
+        }
+
         #endregion
 
         #region Carregamento e Limpeza de Dados
@@ -122,14 +147,18 @@ namespace Projeto.Views.Cadastros
 
         public override void LimparTxt()
         {
-            aCompra = new Compra(); // Zera o objeto para uma nova compra
+            aCompra = new Compra();
             txtCodigo.Text = "0";
             txtSerie.Clear();
             txtNumero.Clear();
             txtIDFornecedor.Clear();
             txtFornecedor.Clear();
-            dtpEmissao.Value = DateTime.Now;
-            dtpChegada.Value = DateTime.Now;
+
+            DateTime dataAgora = DateTime.Now;
+
+            dtpEmissao.MaxDate = dataAgora;
+            dtpEmissao.Value = dataAgora;
+            dtpChegada.Value = dataAgora;
 
             LimparCamposItem();
             listViewProdutos.Items.Clear();
@@ -160,8 +189,20 @@ namespace Projeto.Views.Cadastros
             txtNumero.Text = aCompra.NumeroNota.ToString();
             txtIDFornecedor.Text = aCompra.FornecedorId.ToString();
             txtFornecedor.Text = aCompra.NomeFornecedor;
-            dtpEmissao.Value = aCompra.DataEmissao ?? DateTime.Now;
-            dtpChegada.Value = aCompra.DataChegada ?? DateTime.Now;
+
+            DateTime dataEmissao = aCompra.DataEmissao ?? DateTime.Now;
+            if (dataEmissao > dtpEmissao.MaxDate)
+            {
+                dtpEmissao.MaxDate = dataEmissao;
+            }
+            dtpEmissao.Value = dataEmissao;
+
+            DateTime dataChegada = aCompra.DataChegada ?? DateTime.Now;
+            if (dataChegada < dtpChegada.MinDate)
+            {
+                dtpChegada.MinDate = dataChegada;
+            }
+            dtpChegada.Value = dataChegada;
 
             listViewProdutos.Items.Clear();
             if (aCompra.Itens != null)
@@ -215,23 +256,90 @@ namespace Projeto.Views.Cadastros
             CalculaTotalCompra();
         }
 
-        public override void BloquearTxt()
-        {
-            HabilitarControles(parte1Controles, false);
-            HabilitarControles(parte2Controles, false);
-            HabilitarControles(parte3Controles, false);
-            btnSalvar.Enabled = false;
-        }
-
-        public override void DesbloquearTxt()
-        {
-            // Apenas o cabeçalho é liberado. O resto é controlado dinamicamente.
-            HabilitarControles(parte1Controles, true);
-        }
-
         #endregion
 
         #region Eventos de Controles
+
+        private void dtpEmissao_ValueChanged(object sender, EventArgs e)
+        {
+            dtpChegada.MinDate = dtpEmissao.Value.Date;
+            if (dtpChegada.Value.Date < dtpEmissao.Value.Date)
+            {
+                dtpChegada.Value = dtpEmissao.Value.Date;
+            }
+        }
+
+        private void btnSalvar_Click(object sender, EventArgs e)
+        {
+            if (modoCancelamento)
+            {
+                using (Form prompt = new Form())
+                {
+                    prompt.Width = 500; prompt.Height = 250;
+                    prompt.Text = "Motivo do Cancelamento";
+                    prompt.StartPosition = FormStartPosition.CenterParent;
+                    prompt.FormBorderStyle = FormBorderStyle.FixedDialog;
+                    prompt.MinimizeBox = false; prompt.MaximizeBox = false;
+
+                    Label textLabel = new Label() { Left = 50, Top = 20, Width = 400, Text = "Para cancelar esta nota, digite o motivo do cancelamento abaixo." };
+                    TextBox textBox = new TextBox() { Left = 50, Top = 50, Width = 400, Height = 80, Multiline = true, ScrollBars = ScrollBars.Vertical, MaxLength = 255 };
+                    Button confirmation = new Button() { Text = "Confirmar", Left = 240, Width = 100, Top = 150, DialogResult = DialogResult.OK };
+                    Button cancel = new Button() { Text = "Voltar", Left = 350, Width = 100, Top = 150, DialogResult = DialogResult.Cancel };
+
+                    confirmation.Enabled = false;
+                    textBox.TextChanged += (s, ev) => { confirmation.Enabled = !string.IsNullOrWhiteSpace(textBox.Text); };
+                    confirmation.Click += (s, ev) => { prompt.Close(); };
+                    cancel.Click += (s, ev) => { prompt.Close(); };
+
+                    prompt.Controls.AddRange(new Control[] { textBox, confirmation, cancel, textLabel });
+                    prompt.AcceptButton = confirmation;
+                    prompt.CancelButton = cancel;
+
+                    if (prompt.ShowDialog() == DialogResult.OK)
+                    {
+                        try
+                        {
+                            if (aCompra != null)
+                            {
+                                aCompra.Observacao = textBox.Text;
+                                controller.Cancelar(aCompra);
+                                MessageBox.Show("Compra cancelada com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                this.Close();
+                            }
+                        }
+                        catch (Exception ex) { MessageBox.Show($"Erro ao cancelar a compra: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+                    }
+                }
+                return;
+            }
+
+            if (dtpEmissao.Value.Date > DateTime.Now.Date)
+            {
+                MessageBox.Show("A Data de Emissão não pode ser posterior à data atual.", "Data Inválida", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                dtpEmissao.Focus();
+                return;
+            }
+
+            if (dtpChegada.Value.Date < dtpEmissao.Value.Date)
+            {
+                MessageBox.Show("A Data de Chegada não pode ser anterior à Data de Emissão.", "Data Inválida", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                dtpChegada.Focus();
+                return;
+            }
+
+            if (!ValidarDadosGerais()) return;
+
+            try
+            {
+                Compra novaCompra = MontarObjetoCompra();
+                GerarParcelas(novaCompra);
+                controller.Salvar(novaCompra);
+                MessageBox.Show("Compra salva com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.Close();
+            }
+            catch (InvalidOperationException opEx) { MessageBox.Show(opEx.Message, "Erro de Operação", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+            catch (Exception ex) { MessageBox.Show("Ocorreu um erro ao salvar a compra: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+        }
 
         private async void txtIDFornecedor_Leave(object sender, EventArgs e)
         {
@@ -333,7 +441,7 @@ namespace Projeto.Views.Cadastros
                 var f = oFrmConsultaFornecedor.FornecedorSelecionado;
                 txtIDFornecedor.Text = f.Id.ToString();
                 txtFornecedor.Text = f.Nome;
-                txtIDFornecedor_Leave(sender, e); // Dispara o evento para atualizar a UI
+                txtIDFornecedor_Leave(sender, e); 
             }
             oFrmConsultaFornecedor.ModoSelecao = false;
         }
@@ -572,64 +680,6 @@ namespace Projeto.Views.Cadastros
                 };
                 compra.ParcelasCompra.Add(novaParcela);
             }
-        }
-
-        private void btnSalvar_Click(object sender, EventArgs e)
-        {
-            if (modoCancelamento)
-            {
-                using (Form prompt = new Form())
-                {
-                    prompt.Width = 500; prompt.Height = 250;
-                    prompt.Text = "Motivo do Cancelamento";
-                    prompt.StartPosition = FormStartPosition.CenterParent;
-                    prompt.FormBorderStyle = FormBorderStyle.FixedDialog;
-                    prompt.MinimizeBox = false; prompt.MaximizeBox = false;
-
-                    Label textLabel = new Label() { Left = 50, Top = 20, Width = 400, Text = "Para cancelar esta nota, digite o motivo do cancelamento abaixo." };
-                    TextBox textBox = new TextBox() { Left = 50, Top = 50, Width = 400, Height = 80, Multiline = true, ScrollBars = ScrollBars.Vertical, MaxLength = 255 };
-                    Button confirmation = new Button() { Text = "Confirmar", Left = 240, Width = 100, Top = 150, DialogResult = DialogResult.OK };
-                    Button cancel = new Button() { Text = "Voltar", Left = 350, Width = 100, Top = 150, DialogResult = DialogResult.Cancel };
-
-                    confirmation.Enabled = false;
-                    textBox.TextChanged += (s, ev) => { confirmation.Enabled = !string.IsNullOrWhiteSpace(textBox.Text); };
-                    confirmation.Click += (s, ev) => { prompt.Close(); };
-                    cancel.Click += (s, ev) => { prompt.Close(); };
-
-                    prompt.Controls.AddRange(new Control[] { textBox, confirmation, cancel, textLabel });
-                    prompt.AcceptButton = confirmation;
-                    prompt.CancelButton = cancel;
-
-                    if (prompt.ShowDialog() == DialogResult.OK)
-                    {
-                        try
-                        {
-                            if (aCompra != null)
-                            {
-                                aCompra.Observacao = textBox.Text;
-                                controller.Cancelar(aCompra);
-                                MessageBox.Show("Compra cancelada com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                this.Close();
-                            }
-                        }
-                        catch (Exception ex) { MessageBox.Show($"Erro ao cancelar a compra: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error); }
-                    }
-                }
-                return;
-            }
-
-            if (!ValidarDadosGerais()) return;
-
-            try
-            {
-                Compra novaCompra = MontarObjetoCompra();
-                GerarParcelas(novaCompra);
-                controller.Salvar(novaCompra);
-                MessageBox.Show("Compra salva com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                this.Close();
-            }
-            catch (InvalidOperationException opEx) { MessageBox.Show(opEx.Message, "Erro de Operação", MessageBoxButtons.OK, MessageBoxIcon.Error); }
-            catch (Exception ex) { MessageBox.Show("Ocorreu um erro ao salvar a compra: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
 
         #endregion

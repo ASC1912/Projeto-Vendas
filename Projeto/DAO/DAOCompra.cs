@@ -49,7 +49,6 @@ namespace Projeto.DAO
                 }
             }
         }
-
         private void ReverterAtualizacaoProduto(ItemCompra item, MySqlConnection conn, MySqlTransaction trans)
         {
             string sqlSelect = "SELECT Estoque, PrecoCusto, PrecoCustoAnterior, PrecoVenda FROM Produtos WHERE Id = @ProdutoId";
@@ -61,35 +60,39 @@ namespace Projeto.DAO
                 if (reader.Read())
                 {
                     int estoqueAtual = reader.GetInt32("Estoque");
-                    decimal custoMedioAtual = reader.GetDecimal("PrecoCusto");
-                    decimal valorCustoAnterior = reader.GetDecimal("PrecoCustoAnterior");
+                    decimal custoAtual = reader.GetDecimal("PrecoCusto");
+                    decimal custoParaRestaurar = reader.GetDecimal("PrecoCustoAnterior"); 
                     decimal valorVenda = reader.GetDecimal("PrecoVenda");
-                    reader.Close();
+                    reader.Close(); 
 
+                    // 1. Calcula o novo estoque
                     int novoEstoque = estoqueAtual - (int)item.Quantidade;
+                    if (novoEstoque < 0) novoEstoque = 0; // Segurança para não negativar
 
-                    decimal novoCustoMedio;
-                    if (novoEstoque > 0)
-                    {
-                        // Recalcula o custo médio removendo o custo dos itens estornados
-                        novoCustoMedio = ((custoMedioAtual * estoqueAtual) - (item.ValorUnitario * item.Quantidade)) / novoEstoque;
-                    }
-                    else
-                    {
-                        // Se o estoque zerar, o custo volta a ser o que era antes desta compra
-                        novoCustoMedio = valorCustoAnterior;
-                    }
+                    // 2. O "Novo Custo" é o Custo Antigo que estava salvo
+                    decimal precoCustoRestaurado = custoParaRestaurar;
 
+                    // 3. Recalcula o percentual de lucro com base no custo RESTAURADO
                     decimal novoPercentualLucro = 0;
-                    if (novoCustoMedio > 0)
+                    if (precoCustoRestaurado > 0)
                     {
-                        novoPercentualLucro = ((valorVenda / novoCustoMedio) - 1) * 100;
+                        novoPercentualLucro = ((valorVenda / precoCustoRestaurado) - 1) * 100;
                     }
 
-                    string sqlUpdate = "UPDATE Produtos SET Estoque = @NovoEstoque, PrecoCusto = @NovoCustoMedio, PorcentagemLucro = @NovoPercentualLucro WHERE Id = @ProdutoId";
+                    // 4. O "PrecoCustoAnterior" deve ser revertido.
+                    decimal novoPrecoCustoAnterior = custoParaRestaurar;
+
+                    string sqlUpdate = @"UPDATE Produtos SET 
+                                    Estoque = @NovoEstoque, 
+                                    PrecoCusto = @PrecoCustoRestaurado, 
+                                    PrecoCustoAnterior = @NovoPrecoCustoAnterior, 
+                                    PorcentagemLucro = @NovoPercentualLucro 
+                                 WHERE Id = @ProdutoId";
+
                     MySqlCommand cmdUpdate = new MySqlCommand(sqlUpdate, conn, trans);
                     cmdUpdate.Parameters.AddWithValue("@NovoEstoque", novoEstoque);
-                    cmdUpdate.Parameters.AddWithValue("@NovoCustoMedio", novoCustoMedio);
+                    cmdUpdate.Parameters.AddWithValue("@PrecoCustoRestaurado", precoCustoRestaurado);
+                    cmdUpdate.Parameters.AddWithValue("@NovoPrecoCustoAnterior", novoPrecoCustoAnterior);
                     cmdUpdate.Parameters.AddWithValue("@NovoPercentualLucro", novoPercentualLucro);
                     cmdUpdate.Parameters.AddWithValue("@ProdutoId", item.ProdutoId);
                     cmdUpdate.ExecuteNonQuery();
@@ -97,6 +100,7 @@ namespace Projeto.DAO
                 else
                 {
                     reader.Close();
+                    throw new Exception($"Produto com ID {item.ProdutoId} não encontrado durante a reversão de estoque.");
                 }
             }
         }

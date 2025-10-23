@@ -146,6 +146,57 @@ namespace Projeto.Views.Cadastros
             lblDataModificacao.Text = $"Modificado em: {agora:dd/MM/yyyy HH:mm}";
         }
 
+
+        public override void BloquearTxt()
+        {
+            txtNome.Enabled = false;
+            txtIdUnidade.Enabled = false;
+            txtUnidade.Enabled = false;
+            btnUnidade.Enabled = false;
+            txtPrecoCusto.Enabled = false;
+            txtPrecoVenda.Enabled = false;
+            txtPorcentagemLucro.Enabled = false;
+            txtEstoque.Enabled = false;
+            txtIdGrupo.Enabled = false;
+            txtGrupo.Enabled = false;
+            btnBuscarGrupo.Enabled = false;
+            txtIdMarca.Enabled = false;
+            txtMarca.Enabled = false;
+            btnMarca.Enabled = false;
+            chkInativo.Enabled = false;
+
+            txtCodFornecedor.Enabled = false;
+            txtFornecedor.Enabled = false;
+            btnPesquisarFornecedor.Enabled = false;
+            btnAdicionarFornecedor.Enabled = false;
+            btnRemoverFornecedor.Enabled = false;
+            listVFornecedores.Enabled = false;
+        }
+
+
+
+        public override void DesbloquearTxt()
+        {
+            txtNome.Enabled = true;
+            txtIdUnidade.Enabled = true;
+            btnUnidade.Enabled = true;
+            txtPrecoCusto.Enabled = true;
+            txtPrecoVenda.Enabled = true;
+            txtPorcentagemLucro.Enabled = true;
+            txtEstoque.Enabled = true;
+            txtIdGrupo.Enabled = true;
+            btnBuscarGrupo.Enabled = true;
+            txtIdMarca.Enabled = true;
+            btnMarca.Enabled = true;
+            chkInativo.Enabled = true;
+
+            txtCodFornecedor.Enabled = true;
+            btnPesquisarFornecedor.Enabled = true;
+            btnAdicionarFornecedor.Enabled = true;
+            btnRemoverFornecedor.Enabled = true;
+            listVFornecedores.Enabled = true;
+        }
+
         #endregion
 
         #region Lógica de Botões (Salvar, Pesquisar, Adicionar, etc.)
@@ -411,8 +462,11 @@ namespace Projeto.Views.Cadastros
             if (decimal.TryParse(txtPrecoCusto.Text, out decimal precoCusto) &&
                 decimal.TryParse(txtPorcentagemLucro.Text, out decimal porcentagem))
             {
-                decimal valorVenda = precoCusto * (1 + (porcentagem / 100));
-                txtPrecoVenda.Text = valorVenda.ToString("F2");
+                if (precoCusto > 0)
+                {
+                    decimal valorVenda = precoCusto * (1 + (porcentagem / 100));
+                    txtPrecoVenda.Text = valorVenda.ToString("F2");
+                }
             }
         }
 

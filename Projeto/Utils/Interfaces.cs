@@ -28,6 +28,7 @@ namespace Projeto.Utils
         frmConsultaPedido oFrmConsultaPedido;
         frmConsultaMesa oFrmConsultaMesa;
         frmConsultaUnidadeMedida oFrmConsultaUnidadeMedida;
+        frmConsultasContasAPagar oFrmConsultaContasAPagar;
 
         frmCadastroPais oFrmCadastroPais;
         frmCadastroEstado oFrmCadastroEstado;
@@ -46,6 +47,7 @@ namespace Projeto.Utils
         frmCadastroPedido oFrmCadastroPedido;
         frmCadastroMesa oFrmCadastroMesa;
         frmCadastroUnidadeMedida oFrmCadastroUnidadeMedida;
+        frmCadastroContasAPagar oFrmCadastroContasAPagar;
 
 
         public Interfaces()
@@ -67,6 +69,7 @@ namespace Projeto.Utils
             oFrmConsultaMesa = new frmConsultaMesa();
             oFrmConsultaPedido = new frmConsultaPedido();
             oFrmConsultaUnidadeMedida = new frmConsultaUnidadeMedida();
+            oFrmConsultaContasAPagar = new frmConsultasContasAPagar();
 
             oFrmCadastroPais = new frmCadastroPais();
             oFrmCadastroEstado = new frmCadastroEstado();
@@ -85,6 +88,7 @@ namespace Projeto.Utils
             oFrmCadastroMesa = new frmCadastroMesa();
             oFrmCadastroPedido = new frmCadastroPedido();
             oFrmCadastroUnidadeMedida = new frmCadastroUnidadeMedida();
+            oFrmCadastroContasAPagar = new frmCadastroContasAPagar();
 
             oFrmConsultaPais.setFrmCadastro(oFrmCadastroPais);
             oFrmConsultaEstado.setFrmCadastro(oFrmCadastroEstado);
@@ -103,6 +107,7 @@ namespace Projeto.Utils
             oFrmConsultaMesa.setFrmCadastro(oFrmCadastroMesa);      
             oFrmConsultaPedido.setFrmCadastro(oFrmCadastroPedido);
             oFrmConsultaUnidadeMedida.setFrmCadastro(oFrmCadastroUnidadeMedida);
+            oFrmConsultaContasAPagar.setFrmCadastro(oFrmCadastroContasAPagar);
 
             oFrmCadastroEstado.setFrmConsultaPais(oFrmConsultaPais);
             oFrmCadastroCidade.setFrmConsultaEstado(oFrmConsultaEstado);
@@ -229,6 +234,12 @@ namespace Projeto.Utils
         {
             oFrmConsultaUnidadeMedida.ConhecaObj(obj, ctrl);
             oFrmConsultaUnidadeMedida.ShowDialog();
+        }
+
+        public void PecaContasAPagar(object obj, object ctrl)
+        {
+            oFrmConsultaContasAPagar.ConhecaObj(obj, ctrl);
+            oFrmConsultaContasAPagar.ShowDialog();
         }
     }
 }
