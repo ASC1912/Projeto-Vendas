@@ -656,18 +656,63 @@ namespace Projeto.Views.Cadastros
 
         private void GerarParcelas(Compra compra)
         {
-            compra.ParcelasCompra.Clear();
-            if (condicaoPagamentoSelecionada == null || condicaoPagamentoSelecionada.Parcelas.Count == 0)
+            compra.Parcelas.Clear();
+            // compra.ParcelasCompra.Clear(); 
+
+            if (condicaoPagamentoSelecionada == null || condicaoPagamentoSelecionada.Parcelas == null || condicaoPagamentoSelecionada.Parcelas.Count == 0)
             {
+                // Se não há condição ou parcelas definidas nela, não há o que gerar.
+                // A lista compra.Parcelas permanecerá vazia.
+                // O método Salvar() depois validará se a lista está vazia se a condição exigir parcelas.
                 return;
             }
 
-            DateTime dataBase = dtpEmissao.Value;
-            foreach (var parcelaDefinicao in condicaoPagamentoSelecionada.Parcelas)
+            DateTime dataBase = dtpEmissao.Value.Date; // Use .Date para evitar problemas com hora
+            decimal valorTotalCompra = compra.ValorTotal;
+            decimal valorAcumulado = 0; // Para ajuste da última parcela
+
+            // Ordena as definições de parcela pelo número da parcela
+            var parcelasOrdenadas = condicaoPagamentoSelecionada.Parcelas.OrderBy(p => p.NumParcela);
+
+            foreach (var parcelaDefinicao in parcelasOrdenadas)
             {
-                decimal valorParcela = compra.ValorTotal * (parcelaDefinicao.Porcentagem / 100);
+                // Calcula o valor base da parcela
+                decimal valorParcela = valorTotalCompra * (parcelaDefinicao.Porcentagem / 100);
+
+                // Arredonda para 2 casas decimais (importante para valores monetários)
+                valorParcela = Math.Round(valorParcela, 2);
+
+                valorAcumulado += valorParcela;
+
+                // Ajuste para garantir que a soma feche EXATAMENTE no valor total
+                // Verifica se é a última parcela da definição
+                if (parcelaDefinicao.NumParcela == parcelasOrdenadas.Last().NumParcela)
+                {
+                    // Adiciona ou subtrai a diferença de arredondamento
+                    valorParcela += (valorTotalCompra - valorAcumulado);
+                }
+
+
                 DateTime dataVencimento = dataBase.AddDays(parcelaDefinicao.PrazoDias);
 
+                // Cria um objeto ContasAPagar 
+                ContasAPagar novaConta = new ContasAPagar
+                {
+                    CompraModelo = compra.Modelo,
+                    CompraSerie = compra.Serie,
+                    CompraNumeroNota = compra.NumeroNota,
+                    CompraFornecedorId = compra.FornecedorId,
+                    NumeroParcela = parcelaDefinicao.NumParcela,
+                    ValorVencimento = valorParcela, // Usa o valor calculado e arredondado
+                    DataVencimento = dataVencimento,
+                    Descricao = $"Parcela {parcelaDefinicao.NumParcela}/{condicaoPagamentoSelecionada.Parcelas.Count} NFe {compra.NumeroNota}", // Descrição padrão
+                                                                                                                                                // Os campos FornecedorId e DataEmissao serão preenchidos pelo DAOCompra.Salvar
+                    Ativo = true,
+                    Status = "Aberta" 
+                };
+                compra.Parcelas.Add(novaConta); 
+
+                /* 
                 ParcelaCompra novaParcela = new ParcelaCompra
                 {
                     CompraModelo = compra.Modelo,
@@ -675,13 +720,20 @@ namespace Projeto.Views.Cadastros
                     CompraNumeroNota = compra.NumeroNota,
                     CompraFornecedorId = compra.FornecedorId,
                     NumeroParcela = parcelaDefinicao.NumParcela,
-                    ValorParcela = Math.Round(valorParcela, 2),
+                    ValorParcela = Math.Round(valorParcela, 2), 
                     DataVencimento = dataVencimento
                 };
                 compra.ParcelasCompra.Add(novaParcela);
+                */
+            }
+
+            decimal totalParcelasGeradas = compra.Parcelas.Sum(p => p.ValorVencimento);
+            if (Math.Abs(totalParcelasGeradas - valorTotalCompra) > 0.01m)
+            {
+                MessageBox.Show($"Erro de arredondamento: O total das parcelas ({totalParcelasGeradas:C2}) não bate com o total da compra ({valorTotalCompra:C2}).", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                compra.Parcelas.Clear(); // Limpa as parcelas erradas
             }
         }
-
         #endregion
     }
 }

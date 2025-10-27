@@ -9,7 +9,7 @@ namespace Projeto.Models
         public string Serie { get; set; }
         public int NumeroNota { get; set; }
         public int FornecedorId { get; set; }
-        public Fornecedor oFornecedor { get; set; } 
+        public Fornecedor oFornecedor { get; set; }
 
         public int? CondicaoPagamentoId { get; set; }
         public CondicaoPagamento oCondicaoPagamento { get; set; }
@@ -26,7 +26,11 @@ namespace Projeto.Models
         public DateTime? DataAlteracao { get; set; }
 
         public List<ItemCompra> Itens { get; set; }
-        public List<ParcelaCompra> ParcelasCompra { get; set; }
+
+        // public List<ParcelaCompra> ParcelasCompra { get; set; }
+
+
+        public List<ContasAPagar> Parcelas { get; set; }
 
 
         public string NomeFornecedor => oFornecedor?.Nome;
@@ -35,7 +39,10 @@ namespace Projeto.Models
         public Compra()
         {
             Itens = new List<ItemCompra>();
-            ParcelasCompra = new List<ParcelaCompra>(); 
+
+            // ParcelasCompra = new List<ParcelaCompra>(); 
+
+            Parcelas = new List<ContasAPagar>();
         }
     }
 }

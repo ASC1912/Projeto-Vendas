@@ -51,7 +51,6 @@
             this.txtNumero = new System.Windows.Forms.TextBox();
             this.txtSerie = new System.Windows.Forms.TextBox();
             this.lblModelo = new System.Windows.Forms.Label();
-            this.txtModelo = new System.Windows.Forms.TextBox();
             this.lblDesconto = new System.Windows.Forms.Label();
             this.txtDesconto = new System.Windows.Forms.TextBox();
             this.lblMulta = new System.Windows.Forms.Label();
@@ -60,7 +59,6 @@
             this.txtJuros = new System.Windows.Forms.TextBox();
             this.lblValorPago = new System.Windows.Forms.Label();
             this.txtValorPago = new System.Windows.Forms.TextBox();
-            this.btnPagar = new System.Windows.Forms.Button();
             this.lblDataPagamento = new System.Windows.Forms.Label();
             this.dtpDataPagamento = new System.Windows.Forms.DateTimePicker();
             this.SuspendLayout();
@@ -69,10 +67,14 @@
             // 
             this.txtCodigo.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             // 
+            // btnSalvar
+            // 
+            this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
+            // 
             // lblDataVencimento
             // 
             this.lblDataVencimento.AutoSize = true;
-            this.lblDataVencimento.Location = new System.Drawing.Point(947, 110);
+            this.lblDataVencimento.Location = new System.Drawing.Point(1038, 11);
             this.lblDataVencimento.Name = "lblDataVencimento";
             this.lblDataVencimento.Size = new System.Drawing.Size(129, 16);
             this.lblDataVencimento.TabIndex = 133;
@@ -81,7 +83,7 @@
             // dtpVencimento
             // 
             this.dtpVencimento.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpVencimento.Location = new System.Drawing.Point(950, 129);
+            this.dtpVencimento.Location = new System.Drawing.Point(1041, 30);
             this.dtpVencimento.Name = "dtpVencimento";
             this.dtpVencimento.Size = new System.Drawing.Size(160, 22);
             this.dtpVencimento.TabIndex = 127;
@@ -90,7 +92,7 @@
             // lblDataEmissao
             // 
             this.lblDataEmissao.AutoSize = true;
-            this.lblDataEmissao.Location = new System.Drawing.Point(730, 110);
+            this.lblDataEmissao.Location = new System.Drawing.Point(821, 11);
             this.lblDataEmissao.Name = "lblDataEmissao";
             this.lblDataEmissao.Size = new System.Drawing.Size(111, 16);
             this.lblDataEmissao.TabIndex = 132;
@@ -99,7 +101,7 @@
             // dtpEmissao
             // 
             this.dtpEmissao.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpEmissao.Location = new System.Drawing.Point(733, 129);
+            this.dtpEmissao.Location = new System.Drawing.Point(824, 30);
             this.dtpEmissao.Name = "dtpEmissao";
             this.dtpEmissao.Size = new System.Drawing.Size(160, 22);
             this.dtpEmissao.TabIndex = 126;
@@ -107,17 +109,18 @@
             // 
             // btnPesquisarFornecedor
             // 
-            this.btnPesquisarFornecedor.Location = new System.Drawing.Point(621, 128);
+            this.btnPesquisarFornecedor.Location = new System.Drawing.Point(712, 29);
             this.btnPesquisarFornecedor.Name = "btnPesquisarFornecedor";
             this.btnPesquisarFornecedor.Size = new System.Drawing.Size(91, 23);
             this.btnPesquisarFornecedor.TabIndex = 125;
             this.btnPesquisarFornecedor.Text = "Pesquisar";
             this.btnPesquisarFornecedor.UseVisualStyleBackColor = true;
+            this.btnPesquisarFornecedor.Click += new System.EventHandler(this.btnPesquisarFornecedor_Click);
             // 
             // lblFornecedor
             // 
             this.lblFornecedor.AutoSize = true;
-            this.lblFornecedor.Location = new System.Drawing.Point(404, 109);
+            this.lblFornecedor.Location = new System.Drawing.Point(495, 10);
             this.lblFornecedor.Name = "lblFornecedor";
             this.lblFornecedor.Size = new System.Drawing.Size(77, 16);
             this.lblFornecedor.TabIndex = 131;
@@ -125,7 +128,7 @@
             // 
             // txtFornecedor
             // 
-            this.txtFornecedor.Location = new System.Drawing.Point(404, 128);
+            this.txtFornecedor.Location = new System.Drawing.Point(495, 29);
             this.txtFornecedor.Name = "txtFornecedor";
             this.txtFornecedor.ReadOnly = true;
             this.txtFornecedor.Size = new System.Drawing.Size(211, 22);
@@ -134,7 +137,7 @@
             // lblIdFornecedor
             // 
             this.lblIdFornecedor.AutoSize = true;
-            this.lblIdFornecedor.Location = new System.Drawing.Point(338, 109);
+            this.lblIdFornecedor.Location = new System.Drawing.Point(429, 10);
             this.lblIdFornecedor.Name = "lblIdFornecedor";
             this.lblIdFornecedor.Size = new System.Drawing.Size(53, 16);
             this.lblIdFornecedor.TabIndex = 130;
@@ -142,15 +145,16 @@
             // 
             // txtIDFornecedor
             // 
-            this.txtIDFornecedor.Location = new System.Drawing.Point(338, 128);
+            this.txtIDFornecedor.Location = new System.Drawing.Point(429, 29);
             this.txtIDFornecedor.Name = "txtIDFornecedor";
             this.txtIDFornecedor.Size = new System.Drawing.Size(48, 22);
             this.txtIDFornecedor.TabIndex = 123;
+            this.txtIDFornecedor.Leave += new System.EventHandler(this.txtIDFornecedor_Leave);
             // 
             // lblValorVencimento
             // 
             this.lblValorVencimento.AutoSize = true;
-            this.lblValorVencimento.Location = new System.Drawing.Point(176, 109);
+            this.lblValorVencimento.Location = new System.Drawing.Point(307, 93);
             this.lblValorVencimento.Name = "lblValorVencimento";
             this.lblValorVencimento.Size = new System.Drawing.Size(118, 16);
             this.lblValorVencimento.TabIndex = 137;
@@ -158,7 +162,7 @@
             // 
             // txtValorVencimento
             // 
-            this.txtValorVencimento.Location = new System.Drawing.Point(176, 128);
+            this.txtValorVencimento.Location = new System.Drawing.Point(307, 112);
             this.txtValorVencimento.Name = "txtValorVencimento";
             this.txtValorVencimento.Size = new System.Drawing.Size(88, 22);
             this.txtValorVencimento.TabIndex = 135;
@@ -166,7 +170,7 @@
             // lblDescricao
             // 
             this.lblDescricao.AutoSize = true;
-            this.lblDescricao.Location = new System.Drawing.Point(15, 109);
+            this.lblDescricao.Location = new System.Drawing.Point(15, 93);
             this.lblDescricao.Name = "lblDescricao";
             this.lblDescricao.Size = new System.Drawing.Size(69, 16);
             this.lblDescricao.TabIndex = 136;
@@ -174,24 +178,25 @@
             // 
             // txtDescricao
             // 
-            this.txtDescricao.Location = new System.Drawing.Point(15, 128);
+            this.txtDescricao.Location = new System.Drawing.Point(15, 112);
             this.txtDescricao.Name = "txtDescricao";
-            this.txtDescricao.Size = new System.Drawing.Size(100, 22);
+            this.txtDescricao.Size = new System.Drawing.Size(249, 22);
             this.txtDescricao.TabIndex = 134;
             // 
             // btnPesquisarFormaPgto
             // 
-            this.btnPesquisarFormaPgto.Location = new System.Drawing.Point(363, 228);
+            this.btnPesquisarFormaPgto.Location = new System.Drawing.Point(363, 212);
             this.btnPesquisarFormaPgto.Name = "btnPesquisarFormaPgto";
             this.btnPesquisarFormaPgto.Size = new System.Drawing.Size(91, 23);
             this.btnPesquisarFormaPgto.TabIndex = 140;
             this.btnPesquisarFormaPgto.Text = "Pesquisar";
             this.btnPesquisarFormaPgto.UseVisualStyleBackColor = true;
+            this.btnPesquisarFormaPgto.Click += new System.EventHandler(this.btnPesquisarFormaPgto_Click);
             // 
             // lblFormaPgto
             // 
             this.lblFormaPgto.AutoSize = true;
-            this.lblFormaPgto.Location = new System.Drawing.Point(146, 209);
+            this.lblFormaPgto.Location = new System.Drawing.Point(146, 193);
             this.lblFormaPgto.Name = "lblFormaPgto";
             this.lblFormaPgto.Size = new System.Drawing.Size(138, 16);
             this.lblFormaPgto.TabIndex = 142;
@@ -199,7 +204,7 @@
             // 
             // txtFormaPgto
             // 
-            this.txtFormaPgto.Location = new System.Drawing.Point(146, 228);
+            this.txtFormaPgto.Location = new System.Drawing.Point(146, 212);
             this.txtFormaPgto.Name = "txtFormaPgto";
             this.txtFormaPgto.ReadOnly = true;
             this.txtFormaPgto.Size = new System.Drawing.Size(211, 22);
@@ -208,7 +213,7 @@
             // lblIdFormaPgto
             // 
             this.lblIdFormaPgto.AutoSize = true;
-            this.lblIdFormaPgto.Location = new System.Drawing.Point(19, 209);
+            this.lblIdFormaPgto.Location = new System.Drawing.Point(12, 193);
             this.lblIdFormaPgto.Name = "lblIdFormaPgto";
             this.lblIdFormaPgto.Size = new System.Drawing.Size(90, 16);
             this.lblIdFormaPgto.TabIndex = 141;
@@ -216,15 +221,16 @@
             // 
             // txtIdFormaPgto
             // 
-            this.txtIdFormaPgto.Location = new System.Drawing.Point(22, 228);
+            this.txtIdFormaPgto.Location = new System.Drawing.Point(15, 212);
             this.txtIdFormaPgto.Name = "txtIdFormaPgto";
             this.txtIdFormaPgto.Size = new System.Drawing.Size(87, 22);
             this.txtIdFormaPgto.TabIndex = 138;
+            this.txtIdFormaPgto.Leave += new System.EventHandler(this.txtIdFormaPgto_Leave);
             // 
             // lblSerie
             // 
             this.lblSerie.AutoSize = true;
-            this.lblSerie.Location = new System.Drawing.Point(344, 8);
+            this.lblSerie.Location = new System.Drawing.Point(164, 11);
             this.lblSerie.Name = "lblSerie";
             this.lblSerie.Size = new System.Drawing.Size(39, 16);
             this.lblSerie.TabIndex = 146;
@@ -233,7 +239,7 @@
             // lblNumero
             // 
             this.lblNumero.AutoSize = true;
-            this.lblNumero.Location = new System.Drawing.Point(484, 8);
+            this.lblNumero.Location = new System.Drawing.Point(304, 11);
             this.lblNumero.Name = "lblNumero";
             this.lblNumero.Size = new System.Drawing.Size(55, 16);
             this.lblNumero.TabIndex = 145;
@@ -241,14 +247,14 @@
             // 
             // txtNumero
             // 
-            this.txtNumero.Location = new System.Drawing.Point(484, 27);
+            this.txtNumero.Location = new System.Drawing.Point(304, 30);
             this.txtNumero.Name = "txtNumero";
             this.txtNumero.Size = new System.Drawing.Size(100, 22);
             this.txtNumero.TabIndex = 144;
             // 
             // txtSerie
             // 
-            this.txtSerie.Location = new System.Drawing.Point(344, 27);
+            this.txtSerie.Location = new System.Drawing.Point(164, 30);
             this.txtSerie.Name = "txtSerie";
             this.txtSerie.Size = new System.Drawing.Size(100, 22);
             this.txtSerie.TabIndex = 143;
@@ -256,18 +262,11 @@
             // lblModelo
             // 
             this.lblModelo.AutoSize = true;
-            this.lblModelo.Location = new System.Drawing.Point(176, 8);
+            this.lblModelo.Location = new System.Drawing.Point(15, 8);
             this.lblModelo.Name = "lblModelo";
             this.lblModelo.Size = new System.Drawing.Size(53, 16);
             this.lblModelo.TabIndex = 148;
             this.lblModelo.Text = "Modelo";
-            // 
-            // txtModelo
-            // 
-            this.txtModelo.Location = new System.Drawing.Point(176, 27);
-            this.txtModelo.Name = "txtModelo";
-            this.txtModelo.Size = new System.Drawing.Size(100, 22);
-            this.txtModelo.TabIndex = 147;
             // 
             // lblDesconto
             // 
@@ -333,15 +332,6 @@
             this.txtValorPago.Size = new System.Drawing.Size(88, 22);
             this.txtValorPago.TabIndex = 155;
             // 
-            // btnPagar
-            // 
-            this.btnPagar.Location = new System.Drawing.Point(994, 634);
-            this.btnPagar.Name = "btnPagar";
-            this.btnPagar.Size = new System.Drawing.Size(82, 35);
-            this.btnPagar.TabIndex = 157;
-            this.btnPagar.Text = "Pagar";
-            this.btnPagar.UseVisualStyleBackColor = true;
-            // 
             // lblDataPagamento
             // 
             this.lblDataPagamento.AutoSize = true;
@@ -366,7 +356,6 @@
             //this.ClientSize = new System.Drawing.Size(1342, 681);
             this.Controls.Add(this.lblDataPagamento);
             this.Controls.Add(this.dtpDataPagamento);
-            this.Controls.Add(this.btnPagar);
             this.Controls.Add(this.lblValorPago);
             this.Controls.Add(this.txtValorPago);
             this.Controls.Add(this.lblDesconto);
@@ -376,7 +365,6 @@
             this.Controls.Add(this.lblJuros);
             this.Controls.Add(this.txtJuros);
             this.Controls.Add(this.lblModelo);
-            this.Controls.Add(this.txtModelo);
             this.Controls.Add(this.lblSerie);
             this.Controls.Add(this.lblNumero);
             this.Controls.Add(this.txtNumero);
@@ -428,7 +416,6 @@
             this.Controls.SetChildIndex(this.txtNumero, 0);
             this.Controls.SetChildIndex(this.lblNumero, 0);
             this.Controls.SetChildIndex(this.lblSerie, 0);
-            this.Controls.SetChildIndex(this.txtModelo, 0);
             this.Controls.SetChildIndex(this.lblModelo, 0);
             this.Controls.SetChildIndex(this.txtJuros, 0);
             this.Controls.SetChildIndex(this.lblJuros, 0);
@@ -438,7 +425,6 @@
             this.Controls.SetChildIndex(this.lblDesconto, 0);
             this.Controls.SetChildIndex(this.txtValorPago, 0);
             this.Controls.SetChildIndex(this.lblValorPago, 0);
-            this.Controls.SetChildIndex(this.btnPagar, 0);
             this.Controls.SetChildIndex(this.dtpDataPagamento, 0);
             this.Controls.SetChildIndex(this.lblDataPagamento, 0);
             this.ResumeLayout(false);
@@ -471,7 +457,6 @@
         private System.Windows.Forms.TextBox txtNumero;
         private System.Windows.Forms.TextBox txtSerie;
         private System.Windows.Forms.Label lblModelo;
-        private System.Windows.Forms.TextBox txtModelo;
         private System.Windows.Forms.Label lblDesconto;
         private System.Windows.Forms.TextBox txtDesconto;
         private System.Windows.Forms.Label lblMulta;
@@ -480,7 +465,6 @@
         private System.Windows.Forms.TextBox txtJuros;
         private System.Windows.Forms.Label lblValorPago;
         private System.Windows.Forms.TextBox txtValorPago;
-        private System.Windows.Forms.Button btnPagar;
         private System.Windows.Forms.Label lblDataPagamento;
         private System.Windows.Forms.DateTimePicker dtpDataPagamento;
     }

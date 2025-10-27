@@ -1,5 +1,6 @@
 ﻿using Projeto.DAO;
 using Projeto.Models;
+using System.Collections.Generic; // Adicionado
 using System.Threading.Tasks;
 
 namespace Projeto.Controller
@@ -13,12 +14,27 @@ namespace Projeto.Controller
             _dao = new DAOContasAPagar();
         }
 
+
         public Task SalvarManual(ContasAPagar conta)
         {
-            //método diferente do Salvar(Compra)
             return Task.Run(() => _dao.SalvarManual(conta));
         }
 
-        // (Futuramente teremos Listar, BuscarPorId, Pagar, etc.)
+
+        public Task<List<ContasAPagar>> Listar(string status, string busca)
+        {
+            return Task.Run(() => _dao.Listar(status, busca));
+        }
+
+        public Task Pagar(ContasAPagar conta)
+        {
+            return Task.Run(() => _dao.Pagar(conta));
+        }
+
+
+        public Task Estornar(ContasAPagar conta)
+        {
+            return Task.Run(() => _dao.Estornar(conta));
+        }
     }
 }

@@ -112,6 +112,8 @@ namespace Projeto.DAO
                 conn.Open();
                 MySqlTransaction tran = conn.BeginTransaction();
 
+                DAOContasAPagar daoContas = new DAOContasAPagar();
+
                 try
                 {
                     string checkQuery = "SELECT COUNT(1) FROM Compras WHERE Modelo = @Modelo AND Serie = @Serie AND NumeroNota = @NumeroNota AND FornecedorId = @FornecedorId";
@@ -189,6 +191,7 @@ namespace Projeto.DAO
                         }
                     }
 
+                    /*
                     if (compra.ParcelasCompra != null && compra.ParcelasCompra.Count > 0)
                     {
                         string insertParcelaQuery = @"
@@ -215,6 +218,20 @@ namespace Projeto.DAO
                             }
                         }
                     }
+                    */
+
+                    if (compra.Parcelas != null && compra.Parcelas.Count > 0)
+                    {
+                        // Agora, iteramos a lista de ContasAPagar (que chamamos de 'Parcelas' no Model)
+                        // e chamamos o DAOContasAPagar para salvar cada uma.
+                        foreach (var conta in compra.Parcelas)
+                        {
+                            conta.FornecedorId = compra.FornecedorId;
+                            conta.DataEmissao = (DateTime)compra.DataEmissao;
+
+                            daoContas.Salvar(conta, conn, tran);
+                        }
+                    }
 
                     tran.Commit();
                 }
@@ -232,6 +249,9 @@ namespace Projeto.DAO
             {
                 conn.Open();
                 MySqlTransaction tran = conn.BeginTransaction();
+
+                DAOContasAPagar daoContas = new DAOContasAPagar();
+
                 try
                 {
                     string selectItensQuery = "SELECT ProdutoId, Quantidade, ValorUnitario FROM ItensCompra WHERE CompraModelo = @Modelo AND CompraSerie = @Serie AND CompraNumeroNota = @NumeroNota AND CompraFornecedorId = @FornecedorId";
@@ -279,6 +299,8 @@ namespace Projeto.DAO
                         cmd.Parameters.AddWithValue("@FornecedorId", compra.FornecedorId);
                         cmd.ExecuteNonQuery();
                     }
+
+                    daoContas.CancelarContasPorCompra(compra, conn, tran);
 
                     tran.Commit();
                 }
