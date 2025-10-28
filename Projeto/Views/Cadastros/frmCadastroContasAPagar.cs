@@ -1,14 +1,15 @@
-﻿using Projeto.Controller;
+﻿using MySql.Data.MySqlClient;
+using Projeto.Controller;
 using Projeto.Models;
 using Projeto.Utils;
-using Projeto.Views.Consultas; 
+using Projeto.Views.Consultas;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Projeto.Views.Cadastros 
+namespace Projeto.Views.Cadastros
 {
-    public partial class frmCadastroContasAPagar : Projeto.frmBase 
+    public partial class frmCadastroContasAPagar : Projeto.frmBase
     {
         private ContasAPagar aConta;
         private ContasAPagarController controller;
@@ -23,7 +24,7 @@ namespace Projeto.Views.Cadastros
 
             txtFornecedor.ReadOnly = true;
             txtFormaPgto.ReadOnly = true;
-            txtValorPago.ReadOnly = true; 
+            txtValorPago.ReadOnly = true; // Valor calculado
 
             dtpDataPagamento.ShowCheckBox = true;
             dtpDataPagamento.Checked = false;
@@ -34,53 +35,53 @@ namespace Projeto.Views.Cadastros
             dtpEmissao.ValueChanged += (s, e) => { dtpVencimento.MinDate = dtpEmissao.Value.Date; };
             dtpVencimento.MinDate = dtpEmissao.Value.Date;
 
-            // Conecta eventos para recalcular (se não fez no designer)
             this.txtJuros.TextChanged += new System.EventHandler(this.RecalcularValorPago);
             this.txtMulta.TextChanged += new System.EventHandler(this.RecalcularValorPago);
             this.txtDesconto.TextChanged += new System.EventHandler(this.RecalcularValorPago);
             this.dtpDataPagamento.ValueChanged += new System.EventHandler(this.RecalcularValorPago);
 
-            // Campos da chave compra ReadOnly (Modelo é txtCodigo herdado?)
-            if (this.Controls.ContainsKey("txtCodigo")) this.Controls["txtCodigo"].Enabled = false;
-            txtSerie.ReadOnly = true;
-            txtNumero.ReadOnly = true;
-            txtSerie.Enabled = false; // Desabilitado também
-            txtNumero.Enabled = false;// Desabilitado também
+            this.txtIDFornecedor.Leave += new System.EventHandler(this.txtIDFornecedor_Leave);
+            this.txtIdFormaPgto.Leave += new System.EventHandler(this.txtIdFormaPgto_Leave);
+
+            if (this.Controls.ContainsKey("txtCodigo")) (this.Controls["txtCodigo"] as TextBox).MaxLength = 50;
+            txtSerie.MaxLength = 50;
+            txtNumero.MaxLength = 10;
+
+            LimparTxt();
         }
 
         public override void ConhecaObj(object obj, object ctrl)
         {
             aConta = (obj as ContasAPagar) ?? new ContasAPagar();
             controller = ctrl as ContasAPagarController;
-            // Opcional: Chamar CarregarNomesAuxiliares se necessário
         }
 
-        // --- MÉTODO CHAVE: Define o modo da tela ---
         public void DefinirModo(string modo)
         {
             this.modoOperacao = modo;
             bool isPagamento = (modo == "Pagamento");
 
             this.Text = isPagamento ? "Pagamento de Conta a Pagar" : "Lançamento Manual de Conta a Pagar";
-            btnSalvar.Text = isPagamento ? "Pagar" : "Salvar"; // Usa btnSalvar da base
+            btnSalvar.Text = isPagamento ? "Pagar" : "Salvar";
 
-            // Habilita/Desabilita campos
             txtIDFornecedor.Enabled = !isPagamento;
             btnPesquisarFornecedor.Enabled = !isPagamento;
             txtDescricao.Enabled = !isPagamento;
             dtpEmissao.Enabled = !isPagamento;
             dtpVencimento.Enabled = !isPagamento;
-            txtValorVencimento.Enabled = !isPagamento; // Usa nome do seu Designer
+            txtValorVencimento.Enabled = !isPagamento;
 
-            // Campos da chave da compra sempre desabilitados
-            if (this.Controls.ContainsKey("txtCodigo")) this.Controls["txtCodigo"].Enabled = false;
-            txtSerie.Enabled = false;
-            txtNumero.Enabled = false;
+            bool chaveEditavel = !isPagamento;
+            if (this.Controls.ContainsKey("txtCodigo")) this.Controls["txtCodigo"].Enabled = chaveEditavel;
+            txtSerie.Enabled = chaveEditavel;
+            txtNumero.Enabled = chaveEditavel;
+            if (this.Controls.ContainsKey("txtCodigo")) (this.Controls["txtCodigo"] as TextBox).ReadOnly = !chaveEditavel;
+            txtSerie.ReadOnly = !chaveEditavel;
+            txtNumero.ReadOnly = !chaveEditavel;
 
-            // Campos de Pagamento
             dtpDataPagamento.Enabled = isPagamento;
             txtValorPago.Enabled = isPagamento;
-            txtValorPago.ReadOnly = isPagamento; // ReadOnly no modo Pagamento
+            txtValorPago.ReadOnly = isPagamento;
             txtJuros.Enabled = isPagamento;
             txtMulta.Enabled = isPagamento;
             txtDesconto.Enabled = isPagamento;
@@ -91,12 +92,16 @@ namespace Projeto.Views.Cadastros
             {
                 DateTime dataSugerida = DateTime.Now.Date;
                 if (dataSugerida < aConta.DataEmissao.Date) dataSugerida = aConta.DataEmissao.Date;
+                if (dtpDataPagamento.MaxDate < dataSugerida) dataSugerida = dtpDataPagamento.MaxDate;
+                if (dtpDataPagamento.MinDate > dataSugerida) dataSugerida = dtpDataPagamento.MinDate;
                 dtpDataPagamento.Value = dataSugerida;
                 dtpDataPagamento.Checked = true;
                 RecalcularValorPago(null, null);
             }
-            else if (!isPagamento) // Modo Lançamento
+            else if (!isPagamento)
             {
+                if (this.Controls.ContainsKey("txtCodigo")) this.Controls["txtCodigo"].Text = "55";
+                txtSerie.Text = "1";
                 dtpDataPagamento.Checked = false;
                 txtValorPago.Text = "0,00";
                 txtJuros.Text = "0,00";
@@ -106,9 +111,9 @@ namespace Projeto.Views.Cadastros
                 txtFormaPgto.Clear();
             }
             else if (isPagamento)
-            { // Modo Pagamento mas conta inválida ou já paga
+            {
                 dtpDataPagamento.Checked = aConta?.DataPagamento.HasValue ?? false;
-                RecalcularValorPago(null, null); // Calcula com base nos dados carregados
+                RecalcularValorPago(null, null);
             }
         }
 
@@ -121,7 +126,7 @@ namespace Projeto.Views.Cadastros
             txtDescricao.Clear();
             dtpEmissao.Value = DateTime.Now;
             dtpVencimento.Value = DateTime.Now;
-            txtValorVencimento.Text = "0,00"; // Usa nome do seu Designer
+            txtValorVencimento.Text = "0,00";
 
             dtpDataPagamento.Value = DateTime.Now;
             dtpDataPagamento.Checked = false;
@@ -132,8 +137,8 @@ namespace Projeto.Views.Cadastros
             txtIdFormaPgto.Clear();
             txtFormaPgto.Clear();
 
-            if (this.Controls.ContainsKey("txtCodigo")) this.Controls["txtCodigo"].Text = "";
-            txtSerie.Clear();
+            if (this.Controls.ContainsKey("txtCodigo")) this.Controls["txtCodigo"].Text = "55";
+            txtSerie.Text = "1";
             txtNumero.Clear();
 
             aConta = new ContasAPagar();
@@ -148,27 +153,28 @@ namespace Projeto.Views.Cadastros
             txtFornecedor.Text = aConta.NomeFornecedor;
             txtDescricao.Text = aConta.Descricao;
 
-            // Ajuste Min/Max das datas antes de setar o Value
             try
             {
-                if (aConta.DataEmissao < dtpEmissao.MinDate) dtpEmissao.MinDate = aConta.DataEmissao.Date.AddYears(-1); // Ajuste range se necessário
-                if (aConta.DataEmissao > dtpEmissao.MaxDate) dtpEmissao.MaxDate = aConta.DataEmissao.Date.AddYears(1);
+                dtpEmissao.MinDate = DateTimePicker.MinimumDateTime;
+                dtpEmissao.MaxDate = DateTimePicker.MaximumDateTime;
                 dtpEmissao.Value = aConta.DataEmissao;
 
                 dtpVencimento.MinDate = dtpEmissao.Value.Date;
+                dtpVencimento.MaxDate = DateTimePicker.MaximumDateTime;
                 if (aConta.DataVencimento < dtpVencimento.MinDate) dtpVencimento.MinDate = aConta.DataVencimento.Date;
                 dtpVencimento.Value = aConta.DataVencimento;
             }
-            catch { /* Ignora erro de data inválida no carregamento inicial */ }
+            catch
+            {
+                // Ignora erros
+            }
 
-
-            txtValorVencimento.Text = aConta.ValorVencimento.ToString("F2"); // Usa nome do seu Designer
+            txtValorVencimento.Text = aConta.ValorVencimento.ToString("F2");
 
             if (this.Controls.ContainsKey("txtCodigo")) this.Controls["txtCodigo"].Text = aConta.CompraModelo ?? "";
             txtSerie.Text = aConta.CompraSerie ?? "";
-            txtNumero.Text = aConta.CompraNumeroNota > 0 ? aConta.CompraNumeroNota.ToString() : "";
+            txtNumero.Text = aConta.CompraNumeroNota.ToString();
 
-            // Carrega dados de pagamento
             dtpDataPagamento.Checked = aConta.DataPagamento.HasValue;
             dtpDataPagamento.Value = aConta.DataPagamento ?? DateTime.Now;
             txtJuros.Text = aConta.Juros?.ToString("F2") ?? "0,00";
@@ -177,15 +183,14 @@ namespace Projeto.Views.Cadastros
             txtIdFormaPgto.Text = aConta.IdFormaPagamento?.ToString() ?? "";
             txtFormaPgto.Text = aConta.NomeFormaPagamento;
 
-            RecalcularValorPago(null, null); // Calcula valor a pagar
+            RecalcularValorPago(null, null);
             if (aConta.Status == "Paga" && aConta.ValorPago.HasValue)
             {
-                txtValorPago.Text = aConta.ValorPago.Value.ToString("F2"); // Mostra valor histórico se paga
+                txtValorPago.Text = aConta.ValorPago.Value.ToString("F2");
             }
         }
 
-        // --- BOTÃO SALVAR / PAGAR ---
-        private async void btnSalvar_Click(object sender, EventArgs e) // Adicionado async
+        private async void btnSalvar_Click(object sender, EventArgs e)
         {
             if (controller == null)
             {
@@ -209,11 +214,22 @@ namespace Projeto.Views.Cadastros
                         dtpDataPagamento.Focus();
                         return;
                     }
-                    if (!Validador.CampoObrigatorio(txtIdFormaPgto, "Forma de Pagamento")) return;
+
+                    if (!Validador.CampoObrigatorio(txtIdFormaPgto, "Forma de Pagamento"))
+                    {
+                        return;
+                    }
 
                     if (!decimal.TryParse(txtValorPago.Text, out decimal valorPagoCalculado) || valorPagoCalculado < 0)
                     {
-                        MessageBox.Show("O Valor Pago calculado é inválido.", "Validação", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("O Valor Pago calculado é inválido. Verifique os valores de juros, multa e desconto.", "Validação", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        txtJuros.Focus();
+                        return;
+                    }
+
+                    string msgConfirm = $"Confirma o pagamento de {valorPagoCalculado:C2} para a conta '{aConta.Descricao}'?";
+                    if (MessageBox.Show(msgConfirm, "Confirmar Pagamento", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                    {
                         return;
                     }
 
@@ -229,17 +245,37 @@ namespace Projeto.Views.Cadastros
                     MessageBox.Show("Conta paga com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.Close();
                 }
-                else // Modo Lançamento
+                else // modoOperacao == "Lancamento"
                 {
-                    if (!Validador.CampoObrigatorio(txtValorVencimento, "Valor da Conta") || Convert.ToDecimal(txtValorVencimento.Text) <= 0) return; // Usa nome do seu Designer
+                    if (!Validador.CampoObrigatorio(txtValorVencimento, "Valor da Conta") || Convert.ToDecimal(txtValorVencimento.Text) <= 0) return;
+
+                    TextBox txtCodigo = this.Controls.ContainsKey("txtCodigo") ? this.Controls["txtCodigo"] as TextBox : null;
+                    if (!Validador.CampoObrigatorio(txtCodigo, "Modelo") ||
+                        !Validador.CampoObrigatorio(txtSerie, "Série") ||
+                        !Validador.CampoObrigatorio(txtNumero, "Número Documento/Nota"))
+                    {
+                        return;
+                    }
+                    if (!int.TryParse(txtNumero.Text, out int numeroNotaValidado))
+                    {
+                        MessageBox.Show("O campo 'Número Documento/Nota' deve conter apenas números inteiros.", "Formato Inválido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        txtNumero.Focus();
+                        return;
+                    }
 
                     ContasAPagar novaContaManual = new ContasAPagar
                     {
+                        CompraModelo = txtCodigo?.Text ?? "ERR",
+                        CompraSerie = txtSerie.Text,
+                        CompraNumeroNota = numeroNotaValidado,
+                        CompraFornecedorId = int.Parse(txtIDFornecedor.Text),
+                        NumeroParcela = 1,
+
                         FornecedorId = int.Parse(txtIDFornecedor.Text),
                         Descricao = txtDescricao.Text,
                         DataEmissao = dtpEmissao.Value.Date,
                         DataVencimento = dtpVencimento.Value.Date,
-                        ValorVencimento = Convert.ToDecimal(txtValorVencimento.Text), // Usa nome do seu Designer
+                        ValorVencimento = Convert.ToDecimal(txtValorVencimento.Text),
                         Status = "Aberta",
                         Ativo = true
                     };
@@ -249,34 +285,43 @@ namespace Projeto.Views.Cadastros
                     this.Close();
                 }
             }
-            catch (FormatException ex)
+            catch (MySqlException sqlEx) when (sqlEx.Number == 1062 && modoOperacao == "Lancamento")
             {
-                MessageBox.Show("Verifique os valores numéricos. Use vírgula decimal.\nDetalhe:" + ex.Message, "Erro de Formato", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(
+                    "Erro: Já existe uma conta registrada com esta combinação de Modelo, Série, Número da Nota, Fornecedor e Parcela.\nVerifique os dados informados.",
+                    "Chave Duplicada",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                txtNumero.Focus();
+                txtNumero.SelectAll();
+            }
+            catch (MySqlException sqlEx)
+            {
+                MessageBox.Show($"Erro de banco de dados: {sqlEx.Message}\n(Código: {sqlEx.Number})", "Erro SQL", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (FormatException formatEx)
+            {
+                MessageBox.Show("Verifique os valores numéricos (ID, Valor, Juros, Multa, Desconto). Use vírgula como separador decimal.\nDetalhe:" + formatEx.Message, "Erro de Formato", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Erro ao processar a conta: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Erro inesperado: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-
-        // --- EVENTOS AUXILIARES ---
-
-        // Pesquisar Fornecedor (AJUSTADO PARA USAR SEU RETORNO)
         private async void btnPesquisarFornecedor_Click(object sender, EventArgs e)
         {
-            using (var frmConsulta = new frmConsultaFornecedor()) // Usa sua consulta
+            using (var frmConsulta = new frmConsultaFornecedor())
             {
-                frmConsulta.ModoSelecao = true; // Ativa modo seleção
+                frmConsulta.ModoSelecao = true;
                 if (frmConsulta.ShowDialog() == DialogResult.OK)
                 {
-                    // CORREÇÃO: Usa a propriedade FornecedorSelecionado
                     var fornecedorSelecionado = frmConsulta.FornecedorSelecionado;
 
                     if (fornecedorSelecionado != null && fornecedorSelecionado.Id > 0)
                     {
                         txtIDFornecedor.Text = fornecedorSelecionado.Id.ToString();
-                        txtFornecedor.Text = fornecedorSelecionado.Nome; // Usa seu txtFornecedor
+                        txtFornecedor.Text = fornecedorSelecionado.Nome;
                     }
                     else
                     {
@@ -287,15 +332,13 @@ namespace Projeto.Views.Cadastros
             }
         }
 
-        // Pesquisar Forma de Pagamento (AJUSTADO PARA USAR SEU RETORNO)
         private async void btnPesquisarFormaPgto_Click(object sender, EventArgs e)
         {
-            using (var frmConsulta = new frmConsultaFrmPgto()) // Usa sua consulta
+            using (var frmConsulta = new frmConsultaFrmPgto())
             {
-                frmConsulta.ModoSelecao = true; // Ativa modo seleção
+                frmConsulta.ModoSelecao = true;
                 if (frmConsulta.ShowDialog() == DialogResult.OK)
                 {
-                    // CORREÇÃO: Usa a propriedade FormaSelecionada
                     var formaSelecionada = frmConsulta.FormaSelecionada;
 
                     if (formaSelecionada != null && formaSelecionada.Id > 0)
@@ -312,34 +355,27 @@ namespace Projeto.Views.Cadastros
             }
         }
 
-        // --- EVENTOS Leave PARA BUSCA AUTOMÁTICA ---
-
         private async void txtIDFornecedor_Leave(object sender, EventArgs e)
         {
-            // Verifica se o campo ID está vazio ou se o modo é Pagamento (onde não se busca)
             if (string.IsNullOrWhiteSpace(txtIDFornecedor.Text) || modoOperacao == "Pagamento")
             {
-                // Se vazio no modo Lançamento, limpa o nome
                 if (modoOperacao == "Lancamento") txtFornecedor.Clear();
                 return;
             }
 
-            // Tenta converter o ID para número
             if (int.TryParse(txtIDFornecedor.Text, out int id))
             {
                 try
                 {
-                    // Busca o fornecedor pelo ID usando o controller
                     Fornecedor f = await fornecedorController.BuscarPorId(id);
                     if (f != null)
                     {
-                        txtFornecedor.Text = f.Nome; // Exibe o nome encontrado
+                        txtFornecedor.Text = f.Nome;
                     }
                     else
                     {
                         MessageBox.Show("Fornecedor não encontrado com este ID.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        txtFornecedor.Clear(); // Limpa o nome se não encontrou
-                        // Opcional: Limpar o ID também? txtIDFornecedor.Clear(); txtIDFornecedor.Focus();
+                        txtFornecedor.Clear();
                     }
                 }
                 catch (Exception ex)
@@ -351,8 +387,7 @@ namespace Projeto.Views.Cadastros
             else
             {
                 MessageBox.Show("ID do Fornecedor inválido. Digite apenas números.", "Erro de Formato", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtFornecedor.Clear(); // Limpa o nome se o ID for inválido
-                                       // Opcional: Limpar o ID também? txtIDFornecedor.Clear(); txtIDFornecedor.Focus();
+                txtFornecedor.Clear();
             }
         }
 
@@ -371,7 +406,7 @@ namespace Projeto.Views.Cadastros
                     FormaPagamento forma = await formaPagamentoController.BuscarPorId(id);
                     if (forma != null)
                     {
-                        txtFormaPgto.Text = forma.Descricao; 
+                        txtFormaPgto.Text = forma.Descricao;
                     }
                     else
                     {
@@ -392,7 +427,6 @@ namespace Projeto.Views.Cadastros
             }
         }
 
-        // --- CÁLCULO DO VALOR PAGO ---
         private void RecalcularValorPago(object sender, EventArgs e)
         {
             if (modoOperacao != "Pagamento")
@@ -411,7 +445,7 @@ namespace Projeto.Views.Cadastros
             {
                 decimal valorBase = aConta?.ValorVencimento ?? 0;
                 if (valorBase <= 0 && decimal.TryParse(txtValorVencimento.Text, out decimal valorTela))
-                { // Usa nome do seu Designer
+                {
                     valorBase = valorTela;
                 }
                 if (valorBase <= 0)
@@ -425,16 +459,16 @@ namespace Projeto.Views.Cadastros
                 Decimal.TryParse(txtDesconto.Text, out decimal desconto);
 
                 decimal valorCalculado = valorBase;
-                valorCalculado += (valorBase * juros / 100); // Juros
+                valorCalculado += (valorBase * juros / 100);
 
                 DateTime dataVenc = aConta?.DataVencimento.Date ?? dtpVencimento.Value.Date;
                 if (dtpDataPagamento.Value.Date > dataVenc)
                 {
-                    valorCalculado += (valorBase * multa / 100); // Multa
+                    valorCalculado += (valorBase * multa / 100);
                 }
                 else
                 {
-                    valorCalculado -= (valorBase * desconto / 100); // Desconto
+                    valorCalculado -= (valorBase * desconto / 100);
                 }
 
                 if (valorCalculado < 0) valorCalculado = 0;
@@ -447,5 +481,5 @@ namespace Projeto.Views.Cadastros
             }
         }
 
-    } 
-} 
+    }
+}

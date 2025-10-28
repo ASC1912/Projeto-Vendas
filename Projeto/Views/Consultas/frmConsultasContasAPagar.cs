@@ -38,8 +38,7 @@ namespace Projeto.Views.Consultas
             //Para evitar duplicação de dados
             if (estaCarregando) return; 
             estaCarregando = true;      
-                                        
-
+                                       
             try
             {
                 string statusSelecionado = cbStatus.SelectedItem?.ToString() ?? "Aberta";

@@ -176,6 +176,7 @@
     <Compile Include="Models\Transportadora.cs" />
     <Compile Include="Models\UnidadeMedida.cs" />
     <Compile Include="Models\Veiculo.cs" />
+    <Compile Include="Models\Venda.cs" />
     <Compile Include="Services\CidadeApiService.cs" />
     <Compile Include="Services\ClienteApiService.cs" />
     <Compile Include="Services\CondicaoPagamentoApiService.cs" />

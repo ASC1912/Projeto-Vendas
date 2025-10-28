@@ -66,9 +66,19 @@
             // txtCodigo
             // 
             this.txtCodigo.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtCodigo.TabIndex = 0;
+            // 
+            // btnSair
+            // 
+            this.btnSair.TabIndex = 20;
+            // 
+            // chkInativo
+            // 
+            this.chkInativo.TabIndex = 18;
             // 
             // btnSalvar
             // 
+            this.btnSalvar.TabIndex = 19;
             this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
             // 
             // lblDataVencimento
@@ -86,7 +96,7 @@
             this.dtpVencimento.Location = new System.Drawing.Point(1041, 30);
             this.dtpVencimento.Name = "dtpVencimento";
             this.dtpVencimento.Size = new System.Drawing.Size(160, 22);
-            this.dtpVencimento.TabIndex = 127;
+            this.dtpVencimento.TabIndex = 7;
             this.dtpVencimento.Value = new System.DateTime(2025, 7, 10, 0, 0, 0, 0);
             // 
             // lblDataEmissao
@@ -104,7 +114,7 @@
             this.dtpEmissao.Location = new System.Drawing.Point(824, 30);
             this.dtpEmissao.Name = "dtpEmissao";
             this.dtpEmissao.Size = new System.Drawing.Size(160, 22);
-            this.dtpEmissao.TabIndex = 126;
+            this.dtpEmissao.TabIndex = 6;
             this.dtpEmissao.Value = new System.DateTime(2025, 7, 10, 0, 0, 0, 0);
             // 
             // btnPesquisarFornecedor
@@ -112,7 +122,7 @@
             this.btnPesquisarFornecedor.Location = new System.Drawing.Point(712, 29);
             this.btnPesquisarFornecedor.Name = "btnPesquisarFornecedor";
             this.btnPesquisarFornecedor.Size = new System.Drawing.Size(91, 23);
-            this.btnPesquisarFornecedor.TabIndex = 125;
+            this.btnPesquisarFornecedor.TabIndex = 5;
             this.btnPesquisarFornecedor.Text = "Pesquisar";
             this.btnPesquisarFornecedor.UseVisualStyleBackColor = true;
             this.btnPesquisarFornecedor.Click += new System.EventHandler(this.btnPesquisarFornecedor_Click);
@@ -132,7 +142,7 @@
             this.txtFornecedor.Name = "txtFornecedor";
             this.txtFornecedor.ReadOnly = true;
             this.txtFornecedor.Size = new System.Drawing.Size(211, 22);
-            this.txtFornecedor.TabIndex = 124;
+            this.txtFornecedor.TabIndex = 4;
             // 
             // lblIdFornecedor
             // 
@@ -148,7 +158,7 @@
             this.txtIDFornecedor.Location = new System.Drawing.Point(429, 29);
             this.txtIDFornecedor.Name = "txtIDFornecedor";
             this.txtIDFornecedor.Size = new System.Drawing.Size(48, 22);
-            this.txtIDFornecedor.TabIndex = 123;
+            this.txtIDFornecedor.TabIndex = 3;
             this.txtIDFornecedor.Leave += new System.EventHandler(this.txtIDFornecedor_Leave);
             // 
             // lblValorVencimento
@@ -165,7 +175,7 @@
             this.txtValorVencimento.Location = new System.Drawing.Point(307, 112);
             this.txtValorVencimento.Name = "txtValorVencimento";
             this.txtValorVencimento.Size = new System.Drawing.Size(88, 22);
-            this.txtValorVencimento.TabIndex = 135;
+            this.txtValorVencimento.TabIndex = 9;
             // 
             // lblDescricao
             // 
@@ -181,14 +191,14 @@
             this.txtDescricao.Location = new System.Drawing.Point(15, 112);
             this.txtDescricao.Name = "txtDescricao";
             this.txtDescricao.Size = new System.Drawing.Size(249, 22);
-            this.txtDescricao.TabIndex = 134;
+            this.txtDescricao.TabIndex = 8;
             // 
             // btnPesquisarFormaPgto
             // 
             this.btnPesquisarFormaPgto.Location = new System.Drawing.Point(363, 212);
             this.btnPesquisarFormaPgto.Name = "btnPesquisarFormaPgto";
             this.btnPesquisarFormaPgto.Size = new System.Drawing.Size(91, 23);
-            this.btnPesquisarFormaPgto.TabIndex = 140;
+            this.btnPesquisarFormaPgto.TabIndex = 12;
             this.btnPesquisarFormaPgto.Text = "Pesquisar";
             this.btnPesquisarFormaPgto.UseVisualStyleBackColor = true;
             this.btnPesquisarFormaPgto.Click += new System.EventHandler(this.btnPesquisarFormaPgto_Click);
@@ -208,7 +218,7 @@
             this.txtFormaPgto.Name = "txtFormaPgto";
             this.txtFormaPgto.ReadOnly = true;
             this.txtFormaPgto.Size = new System.Drawing.Size(211, 22);
-            this.txtFormaPgto.TabIndex = 139;
+            this.txtFormaPgto.TabIndex = 11;
             // 
             // lblIdFormaPgto
             // 
@@ -224,7 +234,7 @@
             this.txtIdFormaPgto.Location = new System.Drawing.Point(15, 212);
             this.txtIdFormaPgto.Name = "txtIdFormaPgto";
             this.txtIdFormaPgto.Size = new System.Drawing.Size(87, 22);
-            this.txtIdFormaPgto.TabIndex = 138;
+            this.txtIdFormaPgto.TabIndex = 10;
             this.txtIdFormaPgto.Leave += new System.EventHandler(this.txtIdFormaPgto_Leave);
             // 
             // lblSerie
@@ -250,14 +260,14 @@
             this.txtNumero.Location = new System.Drawing.Point(304, 30);
             this.txtNumero.Name = "txtNumero";
             this.txtNumero.Size = new System.Drawing.Size(100, 22);
-            this.txtNumero.TabIndex = 144;
+            this.txtNumero.TabIndex = 2;
             // 
             // txtSerie
             // 
             this.txtSerie.Location = new System.Drawing.Point(164, 30);
             this.txtSerie.Name = "txtSerie";
             this.txtSerie.Size = new System.Drawing.Size(100, 22);
-            this.txtSerie.TabIndex = 143;
+            this.txtSerie.TabIndex = 1;
             // 
             // lblModelo
             // 
@@ -282,7 +292,7 @@
             this.txtDesconto.Location = new System.Drawing.Point(283, 298);
             this.txtDesconto.Name = "txtDesconto";
             this.txtDesconto.Size = new System.Drawing.Size(100, 22);
-            this.txtDesconto.TabIndex = 151;
+            this.txtDesconto.TabIndex = 15;
             // 
             // lblMulta
             // 
@@ -298,7 +308,7 @@
             this.txtMulta.Location = new System.Drawing.Point(149, 298);
             this.txtMulta.Name = "txtMulta";
             this.txtMulta.Size = new System.Drawing.Size(100, 22);
-            this.txtMulta.TabIndex = 150;
+            this.txtMulta.TabIndex = 14;
             // 
             // lblJuros
             // 
@@ -314,7 +324,7 @@
             this.txtJuros.Location = new System.Drawing.Point(15, 298);
             this.txtJuros.Name = "txtJuros";
             this.txtJuros.Size = new System.Drawing.Size(100, 22);
-            this.txtJuros.TabIndex = 149;
+            this.txtJuros.TabIndex = 13;
             // 
             // lblValorPago
             // 
@@ -330,7 +340,7 @@
             this.txtValorPago.Location = new System.Drawing.Point(514, 298);
             this.txtValorPago.Name = "txtValorPago";
             this.txtValorPago.Size = new System.Drawing.Size(88, 22);
-            this.txtValorPago.TabIndex = 155;
+            this.txtValorPago.TabIndex = 16;
             // 
             // lblDataPagamento
             // 
@@ -347,7 +357,7 @@
             this.dtpDataPagamento.Location = new System.Drawing.Point(661, 298);
             this.dtpDataPagamento.Name = "dtpDataPagamento";
             this.dtpDataPagamento.Size = new System.Drawing.Size(160, 22);
-            this.dtpDataPagamento.TabIndex = 158;
+            this.dtpDataPagamento.TabIndex = 17;
             this.dtpDataPagamento.Value = new System.DateTime(2025, 7, 10, 0, 0, 0, 0);
             // 
             // frmCadastroContasAPagar
@@ -388,6 +398,7 @@
             this.Controls.Add(this.lblIdFornecedor);
             this.Controls.Add(this.txtIDFornecedor);
             this.Name = "frmCadastroContasAPagar";
+            this.Text = "Cadastro Contas A Pagar";
             this.Controls.SetChildIndex(this.btnSair, 0);
             this.Controls.SetChildIndex(this.txtCodigo, 0);
             this.Controls.SetChildIndex(this.chkInativo, 0);

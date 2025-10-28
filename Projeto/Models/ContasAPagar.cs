@@ -19,7 +19,7 @@ namespace Projeto.Models
         public decimal ValorVencimento { get; set; }
 
         // Dados do Pagamento
-        public int? IdFormaPagamento { get; set; } // O ID da forma de pagamento usada
+        public int? IdFormaPagamento { get; set; } 
         public string Status { get; set; }
         public decimal? Juros { get; set; }
         public decimal? Multa { get; set; }
@@ -27,12 +27,10 @@ namespace Projeto.Models
         public decimal? ValorPago { get; set; }
         public DateTime? DataPagamento { get; set; }
 
-        // Auditoria
         public bool Ativo { get; set; }
         public DateTime? DataCadastro { get; set; }
         public DateTime? DataAlteracao { get; set; }
-
-        // Campos auxiliares (para preencher na listagem/consulta)
+        public string MotivoCancelamento { get; set; }
         public string NomeFornecedor { get; set; }
         public string NomeFormaPagamento { get; set; }
     }

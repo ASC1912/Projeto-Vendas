@@ -47,20 +47,16 @@ namespace Projeto.DAO
 
         public void SalvarManual(ContasAPagar conta)
         {
-            conta.CompraModelo = "MANUAL";
-            conta.CompraSerie = "MAN";
-            // Gera um número único negativo para a chave primária
-            conta.CompraNumeroNota = (int)(DateTime.Now.Ticks % int.MaxValue) * -1;
-            conta.CompraFornecedorId = conta.FornecedorId;
-            conta.NumeroParcela = 1; 
+         
             conta.Ativo = true;
             if (conta.DataEmissao == DateTime.MinValue || conta.DataEmissao == default(DateTime))
                 conta.DataEmissao = DateTime.Now.Date;
+            conta.NumeroParcela = 1;
 
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
-                Salvar(conta, conn, null);
+                Salvar(conta, conn, null); 
             }
         }
 
@@ -230,6 +226,72 @@ namespace Projeto.DAO
                 cmd.Parameters.AddWithValue("@CompraNumeroNota", compra.NumeroNota);
                 cmd.Parameters.AddWithValue("@CompraFornecedorId", compra.FornecedorId);
                 cmd.ExecuteNonQuery();
+            }
+        }
+
+        public bool VerificarExistencia(string modelo, string serie, int numeroNota, int fornecedorId)
+        {
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = "SELECT COUNT(1) FROM Compras WHERE Modelo = @Modelo AND Serie = @Serie AND NumeroNota = @NumeroNota AND FornecedorId = @FornecedorId";
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@Modelo", modelo);
+                    cmd.Parameters.AddWithValue("@Serie", serie);
+                    cmd.Parameters.AddWithValue("@NumeroNota", numeroNota);
+                    cmd.Parameters.AddWithValue("@FornecedorId", fornecedorId);
+                    return Convert.ToInt32(cmd.ExecuteScalar()) > 0;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Cancela uma conta (marca como inativa e registra o motivo).
+        /// Assume que a verificação se a conta PODE ser cancelada manualmente
+        /// foi feita ANTES de chamar este método (verificando se a Compra não existe).
+        /// </summary>
+        public void CancelarContaManual(ContasAPagar conta, string motivo)
+        {
+            if (conta.Status != "Aberta")
+            {
+                throw new InvalidOperationException("Apenas contas com status 'Aberta' podem ser canceladas.");
+            }
+
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = @"
+                    UPDATE ContasAPagar SET
+                        Status = 'Cancelada',
+                        Ativo = 0,                     
+                        MotivoCancelamento = @Motivo,  
+                        DataAlteracao = @DataAlteracao
+                    WHERE CompraModelo = @CompraModelo      
+                      AND CompraSerie = @CompraSerie
+                      AND CompraNumeroNota = @CompraNumeroNota
+                      AND CompraFornecedorId = @CompraFornecedorId
+                      AND NumeroParcela = @NumeroParcela
+                      AND Status = 'Aberta'"; 
+
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@Motivo", motivo);
+                    cmd.Parameters.AddWithValue("@DataAlteracao", DateTime.Now);
+
+                    cmd.Parameters.AddWithValue("@CompraModelo", conta.CompraModelo);
+                    cmd.Parameters.AddWithValue("@CompraSerie", conta.CompraSerie);
+                    cmd.Parameters.AddWithValue("@CompraNumeroNota", conta.CompraNumeroNota);
+                    cmd.Parameters.AddWithValue("@CompraFornecedorId", conta.CompraFornecedorId);
+                    cmd.Parameters.AddWithValue("@NumeroParcela", conta.NumeroParcela);
+
+                    int rowsAffected = cmd.ExecuteNonQuery();
+
+                    if (rowsAffected == 0)
+                    {
+                        throw new Exception("Conta não encontrada ou o status mudou. Nenhuma linha foi atualizada.");
+                    }
+                }
             }
         }
     }
