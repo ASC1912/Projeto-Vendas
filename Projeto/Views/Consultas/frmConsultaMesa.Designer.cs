@@ -68,18 +68,23 @@
             // NumeroMesa
             // 
             this.NumeroMesa.Text = "Número";
+            this.NumeroMesa.Width = 80;
             // 
             // QtdCadeiras
             // 
             this.QtdCadeiras.Text = "QtdCadeiras";
+            this.QtdCadeiras.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.QtdCadeiras.Width = 100;
             // 
             // Localizacao
             // 
             this.Localizacao.Text = "Localização";
+            this.Localizacao.Width = 200;
             // 
             // Status
             // 
             this.Status.Text = "Status";
+            this.Status.Width = 120;
             // 
             // Ativo
             // 
@@ -88,10 +93,14 @@
             // DataCadastro
             // 
             this.DataCadastro.Text = "DataCadastro";
+            this.DataCadastro.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.DataCadastro.Width = 150;
             // 
             // DataAlteracao
             // 
             this.DataAlteracao.Text = "DataAlteracao";
+            this.DataAlteracao.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.DataAlteracao.Width = 150;
             // 
             // btnSelecionar
             // 

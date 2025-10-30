@@ -60,10 +60,12 @@
             // ID
             // 
             this.ID.Text = "ID";
+            this.ID.Width = 50;
             // 
             // Nome
             // 
             this.Nome.Text = "Marca";
+            this.Nome.Width = 150;
             // 
             // Status
             // 

@@ -87,28 +87,34 @@
             // ID
             // 
             this.ID.Text = "ID";
+            this.ID.Width = 50;
             // 
             // Nome
             // 
             this.Nome.Text = "Cliente";
+            this.Nome.Width = 200;
             // 
             // Telefone
             // 
             this.Telefone.Text = "Telefone";
-            this.Telefone.Width = 78;
+            this.Telefone.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.Telefone.Width = 120;
             // 
             // Email
             // 
             this.Email.Text = "Email";
+            this.Email.Width = 200;
             // 
             // Endereco
             // 
             this.Endereco.Text = "Endereço";
-            this.Endereco.Width = 74;
+            this.Endereco.Width = 200;
             // 
             // CEP
             // 
             this.CEP.Text = "CEP";
+            this.CEP.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.CEP.Width = 80;
             // 
             // Tipo
             // 
@@ -117,11 +123,12 @@
             // IDCidade
             // 
             this.IDCidade.Text = "Cidade";
-            this.IDCidade.Width = 71;
+            this.IDCidade.Width = 170;
             // 
             // Bairro
             // 
             this.Bairro.Text = "Bairro";
+            this.Bairro.Width = 150;
             // 
             // Numero
             // 
@@ -130,12 +137,12 @@
             // Complemento
             // 
             this.Complemento.Text = "Complemento";
-            this.Complemento.Width = 106;
+            this.Complemento.Width = 130;
             // 
             // IDCondPgto
             // 
             this.IDCondPgto.Text = "Condição Pag.";
-            this.IDCondPgto.Width = 106;
+            this.IDCondPgto.Width = 150;
             // 
             // Status
             // 
@@ -148,15 +155,20 @@
             // CPF_CNPJ
             // 
             this.CPF_CNPJ.Text = "CPF/CNPJ";
+            this.CPF_CNPJ.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.CPF_CNPJ.Width = 130;
             // 
             // RG
             // 
             this.RG.Text = "RG";
-            this.RG.Width = 67;
+            this.RG.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.RG.Width = 100;
             // 
             // DataNascimento
             // 
             this.DataNascimento.Text = "DataNascimento";
+            this.DataNascimento.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.DataNascimento.Width = 100;
             // 
             // frmConsultaCliente
             // 

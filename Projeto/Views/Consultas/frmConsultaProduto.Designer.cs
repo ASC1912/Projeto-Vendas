@@ -72,23 +72,30 @@
             // ID
             // 
             this.ID.Text = "ID";
+            this.ID.Width = 50;
             // 
             // Nome
             // 
             this.Nome.Text = "Produto";
+            this.Nome.Width = 200;
             // 
             // PrecoCusto
             // 
             this.PrecoCusto.Text = "Preço Custo";
+            this.PrecoCusto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.PrecoCusto.Width = 90;
             // 
             // PrecoVenda
             // 
             this.PrecoVenda.Text = "PreçoVenda";
             this.PrecoVenda.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.PrecoVenda.Width = 90;
             // 
             // Estoque
             // 
             this.Estoque.Text = "Estoque";
+            this.Estoque.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.Estoque.Width = 70;
             // 
             // Status
             // 
@@ -97,10 +104,12 @@
             // Marca
             // 
             this.Marca.Text = "Marca";
+            this.Marca.Width = 100;
             // 
             // Grupo
             // 
             this.Grupo.Text = "Grupo";
+            this.Grupo.Width = 100;
             // 
             // btnSelecionar
             // 
@@ -115,6 +124,7 @@
             // Unidade
             // 
             this.Unidade.Text = "Unidade";
+            this.Unidade.Width = 80;
             // 
             // frmConsultaProduto
             // 

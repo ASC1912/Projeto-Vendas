@@ -70,10 +70,12 @@
             // Nome
             // 
             this.Nome.Text = "País";
+            this.Nome.Width = 150;
             // 
             // Status
             // 
             this.Status.Text = "Ativo";
+            this.Status.Width = 50;
             // 
             // btnSelecionar
             // 
@@ -92,10 +94,12 @@
             // DDI
             // 
             this.DDI.Text = "DDI";
+            this.DDI.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // Moeda
             // 
             this.Moeda.Text = "Moeda";
+            this.Moeda.Width = 70;
             // 
             // frmConsultaPais
             // 

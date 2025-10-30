@@ -69,30 +69,39 @@
             // ID
             // 
             this.ID.Text = "ID";
+            this.ID.Width = 50;
             // 
             // Placa
             // 
             this.Placa.Text = "Placa";
+            this.Placa.Width = 100;
             // 
             // Marca
             // 
             this.Marca.Text = "Marca";
+            this.Marca.Width = 150;
             // 
             // Modelo
             // 
             this.Modelo.Text = "Modelo";
+            this.Modelo.Width = 150;
             // 
             // AnoFabricacao
             // 
             this.AnoFabricacao.Text = "Ano de Fabricação";
+            this.AnoFabricacao.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.AnoFabricacao.Width = 130;
             // 
             // CapacidadeCarga
             // 
             this.CapacidadeCarga.Text = "Capacidade (kg)";
+            this.CapacidadeCarga.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.CapacidadeCarga.Width = 100;
             // 
             // IDTransportadora
             // 
             this.IDTransportadora.Text = "Transportadora";
+            this.IDTransportadora.Width = 200;
             // 
             // Ativo
             // 

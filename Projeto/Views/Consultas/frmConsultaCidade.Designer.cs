@@ -69,14 +69,17 @@
             // Nome
             // 
             this.Nome.Text = "Cidade";
+            this.Nome.Width = 170;
             // 
             // Estado
             // 
             this.Estado.Text = "Estado";
+            this.Estado.Width = 150;
             // 
             // Status
             // 
             this.Status.Text = "Ativo";
+            this.Status.Width = 50;
             // 
             // btnSelecionar
             // 
@@ -91,6 +94,7 @@
             // DDD
             // 
             this.DDD.Text = "DDD";
+            this.DDD.Width = 50;
             // 
             // frmConsultaCidade
             // 

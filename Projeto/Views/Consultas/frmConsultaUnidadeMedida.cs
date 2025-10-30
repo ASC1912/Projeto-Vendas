@@ -37,8 +37,8 @@ namespace Projeto.Views.Consultas
             listView1.Columns.Clear();
             listView1.Columns.Add("ID", 50, HorizontalAlignment.Right);
             listView1.Columns.Add("Nome", 200, HorizontalAlignment.Left);
-            listView1.Columns.Add("Sigla", 80, HorizontalAlignment.Center);
-            listView1.Columns.Add("Ativo", 80, HorizontalAlignment.Center);
+            listView1.Columns.Add("Sigla", 80, HorizontalAlignment.Left);
+            listView1.Columns.Add("Ativo", 80, HorizontalAlignment.Left);
         }
 
         private async Task CarregarUnidades()

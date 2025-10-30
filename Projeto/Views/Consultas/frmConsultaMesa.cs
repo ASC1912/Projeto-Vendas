@@ -44,39 +44,6 @@ namespace Projeto.Views.Consultas
             {
                 btnSelecionar.Visible = ModoSelecao;
             }
-
-            foreach (ColumnHeader column in listView1.Columns)
-            {
-                column.TextAlign = HorizontalAlignment.Center;
-                switch (column.Text)
-                {
-                    case "Número":
-                        column.Width = 80;
-                        column.TextAlign = HorizontalAlignment.Right;
-                        break;
-                    case "Cadeiras":
-                        column.Width = 100;
-                        break;
-                    case "Localização":
-                        column.Width = 250;
-                        break;
-                    case "Status":
-                        column.Width = 120;
-                        break;
-                    case "Ativo":
-                        column.Width = 80;
-                        break;
-                    case "Data de Cadastro": 
-                        column.Width = 150;
-                        break;
-                    case "Data de Modificação": 
-                        column.Width = 150;
-                        break;
-                    default:
-                        column.Width = 120;
-                        break;
-                }
-            }
         }
 
         private async Task CarregarMesas()

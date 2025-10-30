@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.VisualBasic;
 
 namespace Projeto.Views.Consultas
 {
@@ -20,7 +21,7 @@ namespace Projeto.Views.Consultas
 
             btnIncluir.Text = "Lançar Manual";
             btnEditar.Text = "Pagar/Baixar";
-            btnDeletar.Text = "Estornar Pag.";
+            btnDeletar.Text = "Estornar";
 
             oFrmCadastroContasAPagar = new frmCadastroContasAPagar();
         }
@@ -82,13 +83,14 @@ namespace Projeto.Views.Consultas
                 }
                 MessageBox.Show("Erro ao carregar contas: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            finally // Libera a trava ao final
+            finally 
             {
-                estaCarregando = false; // <<< LIBERA A TRAVA para futuras chamadas
+                estaCarregando = false; // Libera a trava para futuras chamadas
+                btnDeletar.Text = "Estornar";
             }
         }
 
-        // --- EVENTOS ---
+
 
         private async void frmConsultasContasAPagar_Load(object sender, EventArgs e)
         {
@@ -168,43 +170,90 @@ namespace Projeto.Views.Consultas
             await CarregarContas();
         }
 
-        public async void btnDeletar_Click(object sender, EventArgs e) 
+        public async void btnDeletar_Click(object sender, EventArgs e)
         {
             if (listView1.SelectedItems.Count == 0)
             {
-                MessageBox.Show("Selecione uma conta paga para estornar.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Selecione uma conta na lista.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             ContasAPagar contaSelecionada = (ContasAPagar)listView1.SelectedItems[0].Tag;
 
-            if (contaSelecionada.Status != "Paga")
+            try
             {
-                MessageBox.Show("Apenas contas com status 'Paga' podem ser estornadas.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
-
-            if (contaSelecionada.CompraModelo != "MANUAL")
-            {
-                MessageBox.Show("Contas geradas por Notas de Compra não podem ser estornadas individualmente.\nCancele a Nota de Compra.", "Operação Inválida", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            var confirmacao = MessageBox.Show($"Deseja realmente estornar o pagamento da conta '{contaSelecionada.Descricao}'?",
-                                             "Confirmação de Estorno", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-            if (confirmacao == DialogResult.Yes)
-            {
-                try
+                switch (contaSelecionada.Status)
                 {
-                    await controller.Estornar(contaSelecionada);
-                    MessageBox.Show("Pagamento estornado com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    await CarregarContas();
+                    case "Paga":
+                        var confirmEstorno = MessageBox.Show($"Deseja realmente ESTORNAR o pagamento da conta '{contaSelecionada.Descricao}'?",
+                                                             "Confirmação de Estorno", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                        if (confirmEstorno == DialogResult.Yes)
+                        {
+                            await controller.Estornar(contaSelecionada);
+                            MessageBox.Show("Pagamento estornado com sucesso! A conta está 'Aberta' novamente.", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            await CarregarContas(); 
+                        }
+                        break;
+
+                    case "Aberta":
+
+                        string motivo = ""; 
+                        using (Form prompt = new Form())
+                        {
+                            prompt.Width = 500;
+                            prompt.Height = 250;
+                            prompt.Text = "Motivo do Cancelamento";
+                            prompt.StartPosition = FormStartPosition.CenterParent;
+                            prompt.FormBorderStyle = FormBorderStyle.FixedDialog;
+                            prompt.MinimizeBox = false;
+                            prompt.MaximizeBox = false;
+
+                            Label textLabel = new Label() { Left = 50, Top = 20, Width = 400, Text = "Para cancelar esta conta manual, digite o motivo:" };
+                            TextBox textBox = new TextBox() { Left = 50, Top = 50, Width = 400, Height = 80, Multiline = true, ScrollBars = ScrollBars.Vertical, MaxLength = 255 };
+                            Button confirmation = new Button() { Text = "Confirmar", Left = 240, Width = 100, Top = 150, DialogResult = DialogResult.OK };
+                            Button cancel = new Button() { Text = "Voltar", Left = 350, Width = 100, Top = 150, DialogResult = DialogResult.Cancel };
+
+                            // Habilita o "Confirmar" apenas se houver texto
+                            confirmation.Enabled = false;
+                            textBox.TextChanged += (s, ev) => { confirmation.Enabled = !string.IsNullOrWhiteSpace(textBox.Text); };
+
+                            prompt.Controls.AddRange(new Control[] { textLabel, textBox, confirmation, cancel });
+                            prompt.AcceptButton = confirmation;
+                            prompt.CancelButton = cancel;
+
+                            if (prompt.ShowDialog() == DialogResult.OK)
+                            {
+                                motivo = textBox.Text; 
+                            }
+                            else
+                            {
+                                MessageBox.Show("Cancelamento abortado.", "Cancelado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                return; 
+                            }
+                        } 
+                        await controller.CancelarManual(contaSelecionada, motivo);
+                        MessageBox.Show("Conta cancelada com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        await CarregarContas(); 
+
+                        break;
+
+                    case "Cancelada":
+                        MessageBox.Show("Esta conta já está cancelada.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        break;
+
+                    default:
+                        MessageBox.Show($"O status '{contaSelecionada.Status}' não permite esta operação.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        break;
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Erro ao estornar pagamento: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+            }
+            catch (InvalidOperationException opEx) 
+            {
+                MessageBox.Show(opEx.Message, "Operação Inválida", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            catch (Exception ex) 
+            {
+                MessageBox.Show("Erro ao processar a solicitação: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -213,6 +262,31 @@ namespace Projeto.Views.Consultas
             if (listView1.SelectedItems.Count > 0)
             {
                 btnEditar_Click(sender, e); 
+            }
+        }
+
+        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (listView1.SelectedItems.Count > 0)
+            {
+                ContasAPagar contaSelecionada = (ContasAPagar)listView1.SelectedItems[0].Tag;
+
+                if (contaSelecionada.Status == "Paga")
+                {
+                    btnDeletar.Text = "Estornar";
+                }
+                else if (contaSelecionada.Status == "Aberta")
+                {
+                    btnDeletar.Text = "Cancelar";
+                }
+                else
+                {
+                    btnDeletar.Text = "Estornar";
+                }
+            }
+            else
+            {
+                btnDeletar.Text = "Estornar";
             }
         }
     }

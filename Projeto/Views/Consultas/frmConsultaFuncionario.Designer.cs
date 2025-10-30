@@ -98,11 +98,12 @@
             // ID
             // 
             this.ID.Text = "ID";
+            this.ID.Width = 50;
             // 
             // Nome
             // 
             this.Nome.Text = "Funcionário";
-            this.Nome.Width = 88;
+            this.Nome.Width = 200;
             // 
             // Telefone
             // 
@@ -112,10 +113,13 @@
             // Email
             // 
             this.Email.Text = "Email";
+            this.Email.Width = 200;
             // 
             // CEP
             // 
             this.CEP.Text = "CEP";
+            this.CEP.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.CEP.Width = 80;
             // 
             // Tipo
             // 
@@ -124,47 +128,55 @@
             // IDCidade
             // 
             this.IDCidade.Text = "Cidade";
-            this.IDCidade.Width = 74;
+            this.IDCidade.Width = 150;
             // 
             // Cargo
             // 
             this.Cargo.Text = "Cargo";
+            this.Cargo.Width = 130;
             // 
             // Salario
             // 
             this.Salario.Text = "Salário";
+            this.Salario.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.Salario.Width = 100;
             // 
             // Endereco
             // 
             this.Endereco.Text = "Endereço";
-            this.Endereco.Width = 74;
+            this.Endereco.Width = 200;
             // 
             // Bairro
             // 
             this.Bairro.Text = "Bairro";
+            this.Bairro.Width = 150;
             // 
             // Numero
             // 
             this.Numero.Text = "Número";
+            this.Numero.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // Complemento
             // 
             this.Complemento.Text = "Complemento";
-            this.Complemento.Width = 104;
+            this.Complemento.Width = 130;
             // 
             // DataAdmissao
             // 
             this.DataAdmissao.Text = "Data de Admissão";
-            this.DataAdmissao.Width = 126;
+            this.DataAdmissao.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.DataAdmissao.Width = 120;
             // 
             // DataDemissao
             // 
             this.DataDemissao.Text = "Data de Demissão";
-            this.DataDemissao.Width = 133;
+            this.DataDemissao.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.DataDemissao.Width = 120;
             // 
             // Status
             // 
             this.Status.Text = "Ativo";
+            this.Status.Width = 100;
             // 
             // Gênero
             // 
@@ -173,6 +185,7 @@
             // Apelido
             // 
             this.Apelido.Text = "Apelido";
+            this.Apelido.Width = 100;
             // 
             // Matricula
             // 
@@ -181,14 +194,20 @@
             // CPF_CNPJ
             // 
             this.CPF_CNPJ.Text = "CPF/CNPJ";
+            this.CPF_CNPJ.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.CPF_CNPJ.Width = 100;
             // 
             // RG
             // 
             this.RG.Text = "RG";
+            this.RG.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.RG.Width = 100;
             // 
             // DataNascimento
             // 
             this.DataNascimento.Text = "DataNascimento";
+            this.DataNascimento.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.DataNascimento.Width = 120;
             // 
             // btnSelecionar
             // 

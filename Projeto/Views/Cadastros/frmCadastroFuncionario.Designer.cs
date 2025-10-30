@@ -147,6 +147,7 @@
             // txtEmail
             // 
             this.txtEmail.Location = new System.Drawing.Point(492, 173);
+            this.txtEmail.MaxLength = 100;
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(200, 22);
             this.txtEmail.TabIndex = 14;
@@ -189,6 +190,7 @@
             // txtNome
             // 
             this.txtNome.Location = new System.Drawing.Point(316, 38);
+            this.txtNome.MaxLength = 100;
             this.txtNome.Name = "txtNome";
             this.txtNome.Size = new System.Drawing.Size(200, 22);
             this.txtNome.TabIndex = 2;
@@ -262,6 +264,7 @@
             // txtComplemento
             // 
             this.txtComplemento.Location = new System.Drawing.Point(546, 100);
+            this.txtComplemento.MaxLength = 100;
             this.txtComplemento.Name = "txtComplemento";
             this.txtComplemento.Size = new System.Drawing.Size(150, 22);
             this.txtComplemento.TabIndex = 9;
@@ -294,6 +297,7 @@
             // txtBairro
             // 
             this.txtBairro.Location = new System.Drawing.Point(316, 100);
+            this.txtBairro.MaxLength = 60;
             this.txtBairro.Name = "txtBairro";
             this.txtBairro.Size = new System.Drawing.Size(200, 22);
             this.txtBairro.TabIndex = 8;

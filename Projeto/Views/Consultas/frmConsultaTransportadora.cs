@@ -39,60 +39,6 @@ namespace Projeto.Views.Consultas
         {
             btnSelecionar.Visible = ModoSelecao;
             await CarregarTransportadoras(); 
-
-            foreach (ColumnHeader column in listView1.Columns)
-            {
-                column.TextAlign = HorizontalAlignment.Center;
-                switch (column.Text)
-                {
-                    case "ID":
-                        column.Width = 40;
-                        column.TextAlign = HorizontalAlignment.Right;
-                        break;
-                    case "Tipo":
-                        column.Width = 60;
-                        break;
-                    case "Transportadora":
-                        column.Width = 200;
-                        break;
-                    case "Endereço":
-                        column.Width = 200;
-                        break;
-                    case "Número":
-                        column.Width = 60;
-                        break;
-                    case "Bairro":
-                        column.Width = 150;
-                        break;
-                    case "Complemento":
-                        column.Width = 130;
-                        break;
-                    case "CEP":
-                        column.Width = 80;
-                        break;
-                    case "Cidade":
-                        column.Width = 150;
-                        break;
-                    case "Telefone":
-                        column.Width = 120;
-                        break;
-                    case "Email":
-                        column.Width = 200;
-                        break;
-                    case "CondPgto":
-                        column.Width = 150;
-                        break;
-                    case "Status":
-                        column.Width = 60;
-                        break;
-                    case "CPF/CNPJ":
-                        column.Width = 130;
-                        break;
-                    default:
-                        column.Width = 100;
-                        break;
-                }
-            }
         }
 
         private async Task CarregarTransportadoras()

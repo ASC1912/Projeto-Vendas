@@ -1,6 +1,7 @@
 ﻿using Projeto.DAO;
 using Projeto.Models;
-using System.Collections.Generic; // Adicionado
+using System;
+using System.Collections.Generic; 
 using System.Threading.Tasks;
 
 namespace Projeto.Controller
@@ -35,6 +36,23 @@ namespace Projeto.Controller
         public Task Estornar(ContasAPagar conta)
         {
             return Task.Run(() => _dao.Estornar(conta));
+        }
+
+        public Task CancelarManual(ContasAPagar conta, string motivo)
+        {
+            bool compraExiste = _dao.VerificarExistencia(
+                conta.CompraModelo,
+                conta.CompraSerie,
+                conta.CompraNumeroNota,
+                conta.CompraFornecedorId
+            );
+
+            if (compraExiste)
+            {
+                throw new InvalidOperationException("Esta conta está vinculada a uma Nota de Compra e não pode ser cancelada manualmente. Cancele a Nota de Compra correspondente.");
+            }
+
+            return Task.Run(() => _dao.CancelarContaManual(conta, motivo));
         }
     }
 }

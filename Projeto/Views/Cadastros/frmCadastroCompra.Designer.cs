@@ -93,6 +93,7 @@
             // 
             this.txtCodigo.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtCodigo.Location = new System.Drawing.Point(12, 43);
+            this.txtCodigo.MaxLength = 5;
             this.txtCodigo.TabIndex = 0;
             // 
             // btnSair
@@ -185,6 +186,7 @@
             // txtNumero
             // 
             this.txtNumero.Location = new System.Drawing.Point(290, 43);
+            this.txtNumero.MaxLength = 100;
             this.txtNumero.Name = "txtNumero";
             this.txtNumero.Size = new System.Drawing.Size(100, 22);
             this.txtNumero.TabIndex = 2;
@@ -599,9 +601,9 @@
             this.lblMotivoCancelamento.AutoSize = true;
             this.lblMotivoCancelamento.Location = new System.Drawing.Point(317, 620);
             this.lblMotivoCancelamento.Name = "lblMotivoCancelamento";
-            this.lblMotivoCancelamento.Size = new System.Drawing.Size(73, 16);
+            this.lblMotivoCancelamento.Size = new System.Drawing.Size(159, 16);
             this.lblMotivoCancelamento.TabIndex = 154;
-            this.lblMotivoCancelamento.Text = "Valor Total";
+            this.lblMotivoCancelamento.Text = "Motivo do Cancelamento:";
             // 
             // frmCadastroCompra
             // 

@@ -657,7 +657,6 @@ namespace Projeto.Views.Cadastros
         private void GerarParcelas(Compra compra)
         {
             compra.Parcelas.Clear();
-            // compra.ParcelasCompra.Clear(); 
 
             if (condicaoPagamentoSelecionada == null || condicaoPagamentoSelecionada.Parcelas == null || condicaoPagamentoSelecionada.Parcelas.Count == 0)
             {
@@ -667,7 +666,7 @@ namespace Projeto.Views.Cadastros
                 return;
             }
 
-            DateTime dataBase = dtpEmissao.Value.Date; // Use .Date para evitar problemas com hora
+            DateTime dataBase = dtpEmissao.Value.Date; 
             decimal valorTotalCompra = compra.ValorTotal;
             decimal valorAcumulado = 0; // Para ajuste da última parcela
 
@@ -676,26 +675,21 @@ namespace Projeto.Views.Cadastros
 
             foreach (var parcelaDefinicao in parcelasOrdenadas)
             {
-                // Calcula o valor base da parcela
                 decimal valorParcela = valorTotalCompra * (parcelaDefinicao.Porcentagem / 100);
 
-                // Arredonda para 2 casas decimais (importante para valores monetários)
                 valorParcela = Math.Round(valorParcela, 2);
-
                 valorAcumulado += valorParcela;
 
                 // Ajuste para garantir que a soma feche EXATAMENTE no valor total
                 // Verifica se é a última parcela da definição
                 if (parcelaDefinicao.NumParcela == parcelasOrdenadas.Last().NumParcela)
                 {
-                    // Adiciona ou subtrai a diferença de arredondamento
                     valorParcela += (valorTotalCompra - valorAcumulado);
                 }
 
 
                 DateTime dataVencimento = dataBase.AddDays(parcelaDefinicao.PrazoDias);
 
-                // Cria um objeto ContasAPagar 
                 ContasAPagar novaConta = new ContasAPagar
                 {
                     CompraModelo = compra.Modelo,
@@ -703,28 +697,15 @@ namespace Projeto.Views.Cadastros
                     CompraNumeroNota = compra.NumeroNota,
                     CompraFornecedorId = compra.FornecedorId,
                     NumeroParcela = parcelaDefinicao.NumParcela,
-                    ValorVencimento = valorParcela, // Usa o valor calculado e arredondado
+                    ValorVencimento = valorParcela, 
                     DataVencimento = dataVencimento,
-                    Descricao = $"Parcela {parcelaDefinicao.NumParcela}/{condicaoPagamentoSelecionada.Parcelas.Count} NFe {compra.NumeroNota}", // Descrição padrão
-                                                                                                                                                // Os campos FornecedorId e DataEmissao serão preenchidos pelo DAOCompra.Salvar
+                    Descricao = $"Parcela {parcelaDefinicao.NumParcela}/{condicaoPagamentoSelecionada.Parcelas.Count} NFe {compra.NumeroNota}",                                                                                                                   
                     Ativo = true,
                     Status = "Aberta" 
                 };
                 compra.Parcelas.Add(novaConta); 
 
-                /* 
-                ParcelaCompra novaParcela = new ParcelaCompra
-                {
-                    CompraModelo = compra.Modelo,
-                    CompraSerie = compra.Serie,
-                    CompraNumeroNota = compra.NumeroNota,
-                    CompraFornecedorId = compra.FornecedorId,
-                    NumeroParcela = parcelaDefinicao.NumParcela,
-                    ValorParcela = Math.Round(valorParcela, 2), 
-                    DataVencimento = dataVencimento
-                };
-                compra.ParcelasCompra.Add(novaParcela);
-                */
+
             }
 
             decimal totalParcelasGeradas = compra.Parcelas.Sum(p => p.ValorVencimento);

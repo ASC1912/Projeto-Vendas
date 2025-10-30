@@ -61,6 +61,7 @@
             this.txtValorPago = new System.Windows.Forms.TextBox();
             this.lblDataPagamento = new System.Windows.Forms.Label();
             this.dtpDataPagamento = new System.Windows.Forms.DateTimePicker();
+            this.lblMotivoCancelamento = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txtCodigo
@@ -360,10 +361,20 @@
             this.dtpDataPagamento.TabIndex = 17;
             this.dtpDataPagamento.Value = new System.DateTime(2025, 7, 10, 0, 0, 0, 0);
             // 
+            // lblMotivoCancelamento
+            // 
+            this.lblMotivoCancelamento.AutoSize = true;
+            this.lblMotivoCancelamento.Location = new System.Drawing.Point(15, 413);
+            this.lblMotivoCancelamento.Name = "lblMotivoCancelamento";
+            this.lblMotivoCancelamento.Size = new System.Drawing.Size(159, 16);
+            this.lblMotivoCancelamento.TabIndex = 160;
+            this.lblMotivoCancelamento.Text = "Motivo do Cancelamento:";
+            // 
             // frmCadastroContasAPagar
             // 
             //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             //this.ClientSize = new System.Drawing.Size(1342, 681);
+            this.Controls.Add(this.lblMotivoCancelamento);
             this.Controls.Add(this.lblDataPagamento);
             this.Controls.Add(this.dtpDataPagamento);
             this.Controls.Add(this.lblValorPago);
@@ -438,6 +449,7 @@
             this.Controls.SetChildIndex(this.lblValorPago, 0);
             this.Controls.SetChildIndex(this.dtpDataPagamento, 0);
             this.Controls.SetChildIndex(this.lblDataPagamento, 0);
+            this.Controls.SetChildIndex(this.lblMotivoCancelamento, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -478,5 +490,6 @@
         private System.Windows.Forms.TextBox txtValorPago;
         private System.Windows.Forms.Label lblDataPagamento;
         private System.Windows.Forms.DateTimePicker dtpDataPagamento;
+        private System.Windows.Forms.Label lblMotivoCancelamento;
     }
 }

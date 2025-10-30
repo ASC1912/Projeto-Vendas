@@ -211,52 +211,6 @@ namespace Projeto.Views.Consultas
         {
             btnSelecionar.Visible = ModoSelecao;
             await CarregarProdutos();
-
-            foreach (ColumnHeader column in listView1.Columns)
-            {
-                switch (column.Text)
-                {
-                    case "ID":
-                        column.Width = 50;
-                        column.TextAlign = HorizontalAlignment.Right;
-                        break;
-                    case "Preço Custo": 
-                        column.Width = 90;
-                        column.TextAlign = HorizontalAlignment.Right;
-                        break;
-                    case "Preço Venda": 
-                        column.Width = 90;
-                        column.TextAlign = HorizontalAlignment.Right;
-                        break;
-                    case "Unidade": 
-                        column.Width = 80;
-                        column.TextAlign = HorizontalAlignment.Center;
-                        break;
-                    case "Estoque":
-                        column.Width = 70;
-                        column.TextAlign = HorizontalAlignment.Right;
-                        break;
-                    case "Produto":
-                        column.Width = 200;
-                        column.TextAlign = HorizontalAlignment.Center;
-                        break;
-                    case "Marca":
-                        column.Width = 100;
-                        column.TextAlign = HorizontalAlignment.Center;
-                        break;
-                    case "Grupo":
-                        column.Width = 100;
-                        column.TextAlign = HorizontalAlignment.Center;
-                        break;
-                    case "Ativo":
-                        column.Width = 60;
-                        column.TextAlign = HorizontalAlignment.Center;
-                        break;
-                    default:
-                        column.Width = 100;
-                        break;
-                }
-            }
         }
     }
 }

@@ -65,26 +65,34 @@
             // ID
             // 
             this.ID.Text = "ID";
+            this.ID.Width = 50;
             // 
             // NumeroMesa
             // 
             this.NumeroMesa.Text = "NúmeroMesa";
+            this.NumeroMesa.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.NumeroMesa.Width = 80;
             // 
             // Funcionario
             // 
             this.Funcionario.Text = "Funcionário";
+            this.Funcionario.Width = 250;
             // 
             // DataPedido
             // 
             this.DataPedido.Text = "DataPedido";
+            this.DataPedido.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.DataPedido.Width = 150;
             // 
             // Status
             // 
             this.Status.Text = "Status";
+            this.Status.Width = 120;
             // 
             // Ativo
             // 
             this.Ativo.Text = "Ativo";
+            this.Ativo.Width = 80;
             // 
             // frmConsultaPedido
             // 

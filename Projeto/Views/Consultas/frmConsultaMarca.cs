@@ -39,28 +39,6 @@ namespace Projeto.Views.Consultas
         {
             await CarregarMarcas();
             btnSelecionar.Visible = ModoSelecao;
-
-            foreach (ColumnHeader column in listView1.Columns)
-            {
-                switch (column.Text)
-                {
-                    case "ID":
-                        column.Width = 50;
-                        column.TextAlign = HorizontalAlignment.Right;
-                        break;
-                    case "Marca":
-                        column.Width = 150;
-                        column.TextAlign = HorizontalAlignment.Center;
-                        break;
-                    case "Ativo":
-                        column.Width = 60;
-                        column.TextAlign = HorizontalAlignment.Center;
-                        break;
-                    default:
-                        column.Width = 100;
-                        break;
-                }
-            }
         }
 
         private async Task CarregarMarcas()

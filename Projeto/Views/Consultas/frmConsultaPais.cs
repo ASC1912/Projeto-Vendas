@@ -43,46 +43,6 @@ namespace Projeto.Views
         {
             btnSelecionar.Visible = ModoSelecao;
             await CarregarPaises();
-
-            foreach (ColumnHeader column in listView1.Columns)
-            {
-                switch (column.Text)
-                {
-                    case "ID":
-                        column.Width = 50;
-                        column.TextAlign = HorizontalAlignment.Right;
-                        break;
-
-                    case "País":
-                        column.Width = 150;
-                        column.TextAlign = HorizontalAlignment.Center;
-                        break;
-
-                    case "Sigla":
-                        column.Width = 60;
-                        column.TextAlign = HorizontalAlignment.Center;
-                        break;
-
-                    case "DDI":
-                        column.Width = 60;
-                        column.TextAlign = HorizontalAlignment.Center;
-                        break;
-
-                    case "Moeda":
-                        column.Width = 70;
-                        column.TextAlign = HorizontalAlignment.Center;
-                        break;
-
-                    case "Ativo":
-                        column.Width = 50;
-                        column.TextAlign = HorizontalAlignment.Center;
-                        break;
-
-                    default:
-                        column.Width = 100;
-                        break;
-                }
-            }
         }
 
         private async void btnIncluir_Click(object sender, EventArgs e)

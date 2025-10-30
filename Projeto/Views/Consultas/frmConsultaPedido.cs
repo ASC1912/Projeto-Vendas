@@ -37,36 +37,6 @@ namespace Projeto.Views.Consultas
         private async void frmConsultaPedido_Load(object sender, EventArgs e)
         {
             await CarregarPedidos();
-
-            foreach (ColumnHeader column in listView1.Columns)
-            {
-                column.TextAlign = HorizontalAlignment.Center;
-                switch (column.Text)
-                {
-                    case "ID":
-                        column.Width = 60;
-                        column.TextAlign = HorizontalAlignment.Right;
-                        break;
-                    case "Mesa":
-                        column.Width = 80;
-                        break;
-                    case "Funcionário":
-                        column.Width = 250;
-                        break;
-                    case "Data do Pedido":
-                        column.Width = 150;
-                        break;
-                    case "Status":
-                        column.Width = 120;
-                        break;
-                    case "Ativo":
-                        column.Width = 80;
-                        break;
-                    default:
-                        column.Width = 120;
-                        break;
-                }
-            }
         }
 
         private async Task CarregarPedidos()
@@ -81,7 +51,6 @@ namespace Projeto.Views.Consultas
                     ListViewItem item = new ListViewItem(pedido.Id.ToString());
                     item.SubItems.Add(pedido.MesaNumero.ToString());
                     item.SubItems.Add(pedido.NomeFuncionario);
-                    // --- CORREÇÃO APLICADA AQUI ---
                     item.SubItems.Add(pedido.DataAberturaPedido.ToString("g"));
                     item.SubItems.Add(pedido.Status);
                     item.SubItems.Add(pedido.Ativo ? "Ativo" : "Inativo");

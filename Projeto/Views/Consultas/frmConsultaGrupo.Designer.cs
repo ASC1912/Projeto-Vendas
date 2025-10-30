@@ -62,18 +62,22 @@
             // ID
             // 
             this.ID.Text = "ID";
+            this.ID.Width = 50;
             // 
             // Nome
             // 
             this.Nome.Text = "Grupo";
+            this.Nome.Width = 150;
             // 
             // Descricao
             // 
             this.Descricao.Text = "Descrição";
+            this.Descricao.Width = 200;
             // 
             // Status
             // 
             this.Status.Text = "Ativo";
+            this.Status.Width = 50;
             // 
             // btnSelecionar
             // 

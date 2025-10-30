@@ -68,14 +68,17 @@
             // Nome
             // 
             this.Nome.Text = "Estado";
+            this.Nome.Width = 150;
             // 
             // Pais
             // 
             this.Pais.Text = "País";
+            this.Pais.Width = 150;
             // 
             // Status
             // 
             this.Status.Text = "Ativo";
+            this.Status.Width = 50;
             // 
             // btnSelecionar
             // 
@@ -90,6 +93,7 @@
             // UF
             // 
             this.UF.Text = "UF";
+            this.UF.Width = 50;
             // 
             // frmConsultaEstado
             // 

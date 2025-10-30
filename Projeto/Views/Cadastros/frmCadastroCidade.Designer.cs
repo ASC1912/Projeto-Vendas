@@ -81,6 +81,7 @@
             // 
             this.txtNome.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtNome.Location = new System.Drawing.Point(12, 120);
+            this.txtNome.MaxLength = 60;
             this.txtNome.Name = "txtNome";
             this.txtNome.Size = new System.Drawing.Size(181, 22);
             this.txtNome.TabIndex = 1;
@@ -124,7 +125,7 @@
             // txtDDD
             // 
             this.txtDDD.Location = new System.Drawing.Point(12, 324);
-            this.txtDDD.MaxLength = 5;
+            this.txtDDD.MaxLength = 3;
             this.txtDDD.Name = "txtDDD";
             this.txtDDD.Size = new System.Drawing.Size(80, 22);
             this.txtDDD.TabIndex = 5;
@@ -142,6 +143,7 @@
             // 
             this.txtIdEstado.Location = new System.Drawing.Point(12, 228);
             this.txtIdEstado.Margin = new System.Windows.Forms.Padding(4);
+            this.txtIdEstado.MaxLength = 255;
             this.txtIdEstado.Name = "txtIdEstado";
             this.txtIdEstado.ShortcutsEnabled = false;
             this.txtIdEstado.Size = new System.Drawing.Size(52, 22);

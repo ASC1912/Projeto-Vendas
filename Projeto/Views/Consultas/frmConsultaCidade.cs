@@ -30,36 +30,6 @@ namespace Projeto.Views
         {
             await CarregarCidades();
             btnSelecionar.Visible = ModoSelecao;
-
-            foreach (ColumnHeader column in listView1.Columns)
-            {
-                switch (column.Text)
-                {
-                    case "ID":
-                        column.Width = 40;
-                        column.TextAlign = HorizontalAlignment.Right; 
-                        break;
-                    case "Cidade":
-                        column.Width = 170;
-                        column.TextAlign = HorizontalAlignment.Center; 
-                        break;
-                    case "Estado":
-                        column.Width = 150;
-                        column.TextAlign = HorizontalAlignment.Center; 
-                        break;
-                    case "DDD":
-                        column.Width = 50;
-                        column.TextAlign = HorizontalAlignment.Center; 
-                        break;
-                    case "Ativo":
-                        column.Width = 50;
-                        column.TextAlign = HorizontalAlignment.Center; 
-                        break;
-                    default:
-                        column.Width = 100;
-                        break;
-                }
-            }
         }
 
         private async void btnIncluir_Click(object sender, EventArgs e)

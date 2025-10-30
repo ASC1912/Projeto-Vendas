@@ -246,11 +246,6 @@ namespace Projeto.DAO
             }
         }
 
-        /// <summary>
-        /// Cancela uma conta (marca como inativa e registra o motivo).
-        /// Assume que a verificação se a conta PODE ser cancelada manualmente
-        /// foi feita ANTES de chamar este método (verificando se a Compra não existe).
-        /// </summary>
         public void CancelarContaManual(ContasAPagar conta, string motivo)
         {
             if (conta.Status != "Aberta")

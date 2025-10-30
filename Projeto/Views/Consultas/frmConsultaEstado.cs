@@ -41,19 +41,19 @@ namespace Projeto.Views
                         break;
                     case "Estado":
                         column.Width = 150;
-                        column.TextAlign = HorizontalAlignment.Center;
+                        column.TextAlign = HorizontalAlignment.Left;
                         break;
                     case "UF":
                         column.Width = 50;
-                        column.TextAlign = HorizontalAlignment.Center;
+                        column.TextAlign = HorizontalAlignment.Left;
                         break;
                     case "País":
                         column.Width = 150;
-                        column.TextAlign = HorizontalAlignment.Center;
+                        column.TextAlign = HorizontalAlignment.Left;
                         break;
                     case "Ativo":
                         column.Width = 50;
-                        column.TextAlign = HorizontalAlignment.Center;
+                        column.TextAlign = HorizontalAlignment.Left;
                         break;
                     default:
                         column.Width = 100;

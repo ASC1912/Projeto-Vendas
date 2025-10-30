@@ -56,37 +56,88 @@ namespace Projeto.Views.Cadastros
             controller = ctrl as ContasAPagarController;
         }
 
+
         public void DefinirModo(string modo)
         {
             this.modoOperacao = modo;
             bool isPagamento = (modo == "Pagamento");
+            bool isLancamento = (modo == "Lancamento");
+            bool isCancelamento = (modo == "Cancelamento");
+            bool isEstorno = (modo == "Estorno");
 
-            this.Text = isPagamento ? "Pagamento de Conta a Pagar" : "Lançamento Manual de Conta a Pagar";
-            btnSalvar.Text = isPagamento ? "Pagar" : "Salvar";
+            this.Text = "Conta a Pagar";
+            btnSalvar.Text = "Salvar";
+            btnSalvar.Enabled = true; 
 
-            txtIDFornecedor.Enabled = !isPagamento;
-            btnPesquisarFornecedor.Enabled = !isPagamento;
-            txtDescricao.Enabled = !isPagamento;
-            dtpEmissao.Enabled = !isPagamento;
-            dtpVencimento.Enabled = !isPagamento;
-            txtValorVencimento.Enabled = !isPagamento;
+            txtIDFornecedor.Enabled = false;
+            btnPesquisarFornecedor.Enabled = false;
+            txtDescricao.Enabled = false;
+            dtpEmissao.Enabled = false;
+            dtpVencimento.Enabled = false;
+            txtValorVencimento.Enabled = false;
+            if (this.Controls.ContainsKey("txtCodigo")) this.Controls["txtCodigo"].Enabled = false;
+            txtSerie.Enabled = false;
+            txtNumero.Enabled = false;
+            if (this.Controls.ContainsKey("txtCodigo")) (this.Controls["txtCodigo"] as TextBox).ReadOnly = true;
+            txtSerie.ReadOnly = true;
+            txtNumero.ReadOnly = true;
+            dtpDataPagamento.Enabled = false;
+            txtValorPago.ReadOnly = true;
+            txtJuros.Enabled = false;
+            txtMulta.Enabled = false;
+            txtDesconto.Enabled = false;
+            txtIdFormaPgto.Enabled = false;
+            btnPesquisarFormaPgto.Enabled = false;
+            chkInativo.Enabled = false; 
 
-            bool chaveEditavel = !isPagamento;
-            if (this.Controls.ContainsKey("txtCodigo")) this.Controls["txtCodigo"].Enabled = chaveEditavel;
-            txtSerie.Enabled = chaveEditavel;
-            txtNumero.Enabled = chaveEditavel;
-            if (this.Controls.ContainsKey("txtCodigo")) (this.Controls["txtCodigo"] as TextBox).ReadOnly = !chaveEditavel;
-            txtSerie.ReadOnly = !chaveEditavel;
-            txtNumero.ReadOnly = !chaveEditavel;
+            if (isLancamento)
+            {
+                txtIDFornecedor.Enabled = true;
+                btnPesquisarFornecedor.Enabled = true;
+                txtDescricao.Enabled = true;
+                dtpEmissao.Enabled = true;
+                dtpVencimento.Enabled = true;
+                txtValorVencimento.Enabled = true;
+                if (this.Controls.ContainsKey("txtCodigo")) this.Controls["txtCodigo"].Enabled = true;
+                txtSerie.Enabled = true;
+                txtNumero.Enabled = true;
+                if (this.Controls.ContainsKey("txtCodigo")) (this.Controls["txtCodigo"] as TextBox).ReadOnly = false;
+                txtSerie.ReadOnly = false;
+                txtNumero.ReadOnly = false;
+                chkInativo.Enabled = true; 
 
-            dtpDataPagamento.Enabled = isPagamento;
-            txtValorPago.Enabled = isPagamento;
-            txtValorPago.ReadOnly = isPagamento;
-            txtJuros.Enabled = isPagamento;
-            txtMulta.Enabled = isPagamento;
-            txtDesconto.Enabled = isPagamento;
-            txtIdFormaPgto.Enabled = isPagamento;
-            btnPesquisarFormaPgto.Enabled = isPagamento;
+                this.Text = "Lançamento Manual de Conta a Pagar";
+                btnSalvar.Text = "Salvar";
+            }
+            else if (isPagamento)
+            {
+                dtpDataPagamento.Enabled = true;
+                txtValorPago.Enabled = true; 
+                txtJuros.Enabled = true;
+                txtMulta.Enabled = true;
+                txtDesconto.Enabled = true;
+                txtIdFormaPgto.Enabled = true;
+                btnPesquisarFormaPgto.Enabled = true;
+
+                this.Text = "Pagamento de Conta a Pagar";
+                btnSalvar.Text = "Pagar";
+            }
+            else if (isCancelamento)
+            {
+                this.Text = "Cancelar Conta Manual";
+                btnSalvar.Text = "Cancelar Conta";
+
+                if (Controls.ContainsKey("lblMotivoCancelamento"))
+                {
+                    Controls["lblMotivoCancelamento"].Text = "Motivo do Cancelamento:";
+                    Controls["lblMotivoCancelamento"].Visible = true;
+                }
+            }
+            else if (isEstorno)
+            {
+                this.Text = "Estornar Pagamento";
+                btnSalvar.Text = "Estornar";
+            }
 
             if (isPagamento && aConta != null && aConta.Status == "Aberta")
             {
@@ -98,22 +149,28 @@ namespace Projeto.Views.Cadastros
                 dtpDataPagamento.Checked = true;
                 RecalcularValorPago(null, null);
             }
-            else if (!isPagamento)
+            else if (isLancamento)
             {
                 if (this.Controls.ContainsKey("txtCodigo")) this.Controls["txtCodigo"].Text = "55";
                 txtSerie.Text = "1";
                 dtpDataPagamento.Checked = false;
-                txtValorPago.Text = "0,00";
-                txtJuros.Text = "0,00";
-                txtMulta.Text = "0,00";
-                txtDesconto.Text = "0,00";
-                txtIdFormaPgto.Clear();
-                txtFormaPgto.Clear();
             }
-            else if (isPagamento)
+
+            if (aConta != null && aConta.Status == "Cancelada")
             {
-                dtpDataPagamento.Checked = aConta?.DataPagamento.HasValue ?? false;
-                RecalcularValorPago(null, null);
+                if (Controls.ContainsKey("lblMotivoCancelamento"))
+                {
+                    Controls["lblMotivoCancelamento"].Text = "Motivo: " + aConta.MotivoCancelamento;
+                    Controls["lblMotivoCancelamento"].Visible = true;
+                }
+                btnSalvar.Enabled = false; 
+            }
+            else if (!isCancelamento) 
+            {
+                if (Controls.ContainsKey("lblMotivoCancelamento"))
+                {
+                    Controls["lblMotivoCancelamento"].Visible = false;
+                }
             }
         }
 
@@ -198,12 +255,6 @@ namespace Projeto.Views.Cadastros
                 return;
             }
 
-            if (!Validador.CampoObrigatorio(txtIDFornecedor, "Fornecedor") ||
-                !Validador.CampoObrigatorio(txtDescricao, "Descrição"))
-            {
-                return;
-            }
-
             try
             {
                 if (modoOperacao == "Pagamento")
@@ -214,12 +265,10 @@ namespace Projeto.Views.Cadastros
                         dtpDataPagamento.Focus();
                         return;
                     }
-
                     if (!Validador.CampoObrigatorio(txtIdFormaPgto, "Forma de Pagamento"))
                     {
                         return;
                     }
-
                     if (!decimal.TryParse(txtValorPago.Text, out decimal valorPagoCalculado) || valorPagoCalculado < 0)
                     {
                         MessageBox.Show("O Valor Pago calculado é inválido. Verifique os valores de juros, multa e desconto.", "Validação", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -245,8 +294,13 @@ namespace Projeto.Views.Cadastros
                     MessageBox.Show("Conta paga com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.Close();
                 }
-                else // modoOperacao == "Lancamento"
+                else if (modoOperacao == "Lancamento")
                 {
+                    if (!Validador.CampoObrigatorio(txtIDFornecedor, "Fornecedor") ||
+                        !Validador.CampoObrigatorio(txtDescricao, "Descrição"))
+                    {
+                        return;
+                    }
                     if (!Validador.CampoObrigatorio(txtValorVencimento, "Valor da Conta") || Convert.ToDecimal(txtValorVencimento.Text) <= 0) return;
 
                     TextBox txtCodigo = this.Controls.ContainsKey("txtCodigo") ? this.Controls["txtCodigo"] as TextBox : null;
@@ -284,6 +338,56 @@ namespace Projeto.Views.Cadastros
                     MessageBox.Show("Conta lançada manualmente com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.Close();
                 }
+                else if (modoOperacao == "Estorno")
+                {
+                    var confirmEstorno = MessageBox.Show($"Deseja realmente ESTORNAR o pagamento desta conta?",
+                                                         "Confirmação de Estorno", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                    if (confirmEstorno == DialogResult.Yes)
+                    {
+                        await controller.Estornar(aConta);
+                        MessageBox.Show("Pagamento estornado com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        this.Close();
+                    }
+                }
+                else if (modoOperacao == "Cancelamento")
+                {
+                    string motivo = "";
+
+                    using (Form prompt = new Form())
+                    {
+                        prompt.Width = 500; prompt.Height = 250;
+                        prompt.Text = "Motivo do Cancelamento";
+                        prompt.StartPosition = FormStartPosition.CenterParent;
+                        prompt.FormBorderStyle = FormBorderStyle.FixedDialog;
+                        prompt.MinimizeBox = false; prompt.MaximizeBox = false;
+
+                        Label textLabel = new Label() { Left = 50, Top = 20, Width = 400, Text = "Para cancelar esta conta, digite o motivo:" };
+                        TextBox textBox = new TextBox() { Left = 50, Top = 50, Width = 400, Height = 80, Multiline = true, ScrollBars = ScrollBars.Vertical, MaxLength = 255 };
+                        Button confirmation = new Button() { Text = "Confirmar", Left = 240, Width = 100, Top = 150, DialogResult = DialogResult.OK };
+                        Button cancel = new Button() { Text = "Voltar", Left = 350, Width = 100, Top = 150, DialogResult = DialogResult.Cancel };
+
+                        confirmation.Enabled = false;
+                        textBox.TextChanged += (s, ev) => { confirmation.Enabled = !string.IsNullOrWhiteSpace(textBox.Text); };
+
+                        prompt.Controls.AddRange(new Control[] { textLabel, textBox, confirmation, cancel });
+                        prompt.AcceptButton = confirmation;
+                        prompt.CancelButton = cancel;
+
+                        if (prompt.ShowDialog() == DialogResult.OK)
+                        {
+                            motivo = textBox.Text;
+
+                            await controller.CancelarManual(aConta, motivo); 
+                            MessageBox.Show("Conta cancelada com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            this.Close();
+                        }
+                    }
+                }
+            }
+            catch (InvalidOperationException opEx) 
+            {
+                MessageBox.Show(opEx.Message, "Operação Inválida", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             catch (MySqlException sqlEx) when (sqlEx.Number == 1062 && modoOperacao == "Lancamento")
             {
@@ -294,14 +398,6 @@ namespace Projeto.Views.Cadastros
                     MessageBoxIcon.Error);
                 txtNumero.Focus();
                 txtNumero.SelectAll();
-            }
-            catch (MySqlException sqlEx)
-            {
-                MessageBox.Show($"Erro de banco de dados: {sqlEx.Message}\n(Código: {sqlEx.Number})", "Erro SQL", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (FormatException formatEx)
-            {
-                MessageBox.Show("Verifique os valores numéricos (ID, Valor, Juros, Multa, Desconto). Use vírgula como separador decimal.\nDetalhe:" + formatEx.Message, "Erro de Formato", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             catch (Exception ex)
             {
@@ -480,6 +576,8 @@ namespace Projeto.Views.Cadastros
                 txtValorPago.Text = "0,00";
             }
         }
+
+
 
     }
 }

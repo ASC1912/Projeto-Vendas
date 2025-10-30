@@ -90,55 +90,71 @@
             // Nome
             // 
             this.Nome.Text = "Transportadora";
-            this.Nome.Width = 115;
+            this.Nome.Width = 200;
             // 
             // Telefone
             // 
             this.Telefone.Text = "Telefone";
+            this.Telefone.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.Telefone.Width = 120;
             // 
             // Email
             // 
             this.Email.Text = "Email";
+            this.Email.Width = 200;
             // 
             // Endereco
             // 
             this.Endereco.Text = "Endereço";
+            this.Endereco.Width = 200;
             // 
             // Numero
             // 
             this.Numero.Text = "Número";
+            this.Numero.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // Bairro
             // 
             this.Bairro.Text = "Bairro";
+            this.Bairro.Width = 150;
             // 
             // Complemento
             // 
             this.Complemento.Text = "Complemento";
+            this.Complemento.Width = 130;
             // 
             // CEP
             // 
             this.CEP.Text = "CEP";
+            this.CEP.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.CEP.Width = 80;
             // 
             // Tipo
             // 
             this.Tipo.Text = "Tipo";
+            this.Tipo.Width = 70;
             // 
             // InscricaoEstadual
             // 
             this.InscricaoEstadual.Text = "InscriçãoEstadual";
+            this.InscricaoEstadual.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.InscricaoEstadual.Width = 100;
             // 
             // InscEstSubTrib
             // 
             this.InscEstSubTrib.Text = "InscEstSubTrib";
+            this.InscEstSubTrib.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.InscEstSubTrib.Width = 100;
             // 
             // IDCidade
             // 
             this.IDCidade.Text = "Cidade";
+            this.IDCidade.Width = 150;
             // 
             // IDCondPgto
             // 
             this.IDCondPgto.Text = "CondPgto";
+            this.IDCondPgto.Width = 150;
             // 
             // Status
             // 
@@ -147,6 +163,8 @@
             // CPF_CNPJ
             // 
             this.CPF_CNPJ.Text = "CPF/CNPJ";
+            this.CPF_CNPJ.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.CPF_CNPJ.Width = 120;
             // 
             // btnSelecionar
             // 

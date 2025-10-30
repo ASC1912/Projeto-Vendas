@@ -73,7 +73,6 @@
             // Descricao
             // 
             this.Descricao.Text = "Descrição";
-            this.Descricao.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.Descricao.Width = 200;
             // 
             // Qtd_parcelas
@@ -90,15 +89,17 @@
             // Multa
             // 
             this.Multa.Text = "Multa";
+            this.Multa.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // Desconto
             // 
             this.Desconto.Text = "Desconto";
-            this.Desconto.Width = 77;
+            this.Desconto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // Status
             // 
             this.Status.Text = "Ativo";
+            this.Status.Width = 50;
             // 
             // btnSelecionar
             // 

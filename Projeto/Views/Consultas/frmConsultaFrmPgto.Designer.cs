@@ -60,11 +60,12 @@
             // ID
             // 
             this.ID.Text = "ID";
+            this.ID.Width = 50;
             // 
             // Descricao
             // 
             this.Descricao.Text = "Descrição";
-            this.Descricao.Width = 80;
+            this.Descricao.Width = 200;
             // 
             // btnSelecionar
             // 
@@ -79,6 +80,7 @@
             // Status
             // 
             this.Status.Text = "Ativo";
+            this.Status.Width = 50;
             // 
             // frmConsultaFrmPgto
             // 

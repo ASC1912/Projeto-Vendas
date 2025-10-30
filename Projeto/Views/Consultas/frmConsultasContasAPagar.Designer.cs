@@ -63,6 +63,7 @@
             this.Status,
             this.DataPagamento,
             this.ValorPago});
+            this.listView1.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
             // 
             // btnDeletar
             // 
@@ -120,11 +121,13 @@
             // DataEmissao
             // 
             this.DataEmissao.Text = "Data de Emissão";
+            this.DataEmissao.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.DataEmissao.Width = 140;
             // 
             // DataVencimento
             // 
             this.DataVencimento.Text = "Data de Vencimento";
+            this.DataVencimento.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.DataVencimento.Width = 140;
             // 
             // Ativo
@@ -143,6 +146,7 @@
             // DataPagamento
             // 
             this.DataPagamento.Text = "Data de Pagamento";
+            this.DataPagamento.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.DataPagamento.Width = 140;
             // 
             // ValorPago
