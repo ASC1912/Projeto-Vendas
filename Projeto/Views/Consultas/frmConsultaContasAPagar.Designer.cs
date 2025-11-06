@@ -1,6 +1,6 @@
 ﻿namespace Projeto.Views.Consultas
 {
-    partial class frmConsultasContasAPagar
+    partial class frmConsultaContasAPagar
     {
         /// <summary>
         /// Variável de designer necessária.
@@ -42,8 +42,9 @@
             this.Status = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.DataPagamento = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ValorPago = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.cbStatus = new System.Windows.Forms.ComboBox();
-            this.lblStatus = new System.Windows.Forms.Label();
+            this.chkPaga = new System.Windows.Forms.CheckBox();
+            this.chkAberta = new System.Windows.Forms.CheckBox();
+            this.chkCancelada = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // listView1
@@ -155,37 +156,53 @@
             this.ValorPago.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.ValorPago.Width = 130;
             // 
-            // cbStatus
+            // chkPaga
             // 
-            this.cbStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbStatus.FormattingEnabled = true;
-            this.cbStatus.Items.AddRange(new object[] {
-            "Aberta",
-            "Paga",
-            "Cancelada",
-            "Todos"});
-            this.cbStatus.Location = new System.Drawing.Point(1190, 55);
-            this.cbStatus.Name = "cbStatus";
-            this.cbStatus.Size = new System.Drawing.Size(121, 24);
-            this.cbStatus.TabIndex = 46;
-            this.cbStatus.SelectedIndexChanged += new System.EventHandler(this.cbStatus_SelectedIndexChanged);
+            this.chkPaga.AutoSize = true;
+            this.chkPaga.Checked = true;
+            this.chkPaga.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkPaga.Location = new System.Drawing.Point(555, 57);
+            this.chkPaga.Name = "chkPaga";
+            this.chkPaga.Size = new System.Drawing.Size(62, 20);
+            this.chkPaga.TabIndex = 51;
+            this.chkPaga.Text = "Paga";
+            this.chkPaga.UseVisualStyleBackColor = true;
+            this.chkPaga.CheckedChanged += new System.EventHandler(this.chkPaga_CheckedChanged);
             // 
-            // lblStatus
+            // chkAberta
             // 
-            this.lblStatus.AutoSize = true;
-            this.lblStatus.Location = new System.Drawing.Point(1187, 39);
-            this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(44, 16);
-            this.lblStatus.TabIndex = 47;
-            this.lblStatus.Text = "Status";
+            this.chkAberta.AutoSize = true;
+            this.chkAberta.Checked = true;
+            this.chkAberta.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkAberta.Location = new System.Drawing.Point(709, 57);
+            this.chkAberta.Name = "chkAberta";
+            this.chkAberta.Size = new System.Drawing.Size(69, 20);
+            this.chkAberta.TabIndex = 52;
+            this.chkAberta.Text = "Aberta";
+            this.chkAberta.UseVisualStyleBackColor = true;
+            this.chkAberta.CheckedChanged += new System.EventHandler(this.chkAberta_CheckedChanged);
             // 
-            // frmConsultasContasAPagar
+            // chkCancelada
+            // 
+            this.chkCancelada.AutoSize = true;
+            this.chkCancelada.Checked = true;
+            this.chkCancelada.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkCancelada.Location = new System.Drawing.Point(860, 57);
+            this.chkCancelada.Name = "chkCancelada";
+            this.chkCancelada.Size = new System.Drawing.Size(95, 20);
+            this.chkCancelada.TabIndex = 53;
+            this.chkCancelada.Text = "Cancelada";
+            this.chkCancelada.UseVisualStyleBackColor = true;
+            this.chkCancelada.CheckedChanged += new System.EventHandler(this.chkCancelada_CheckedChanged);
+            // 
+            // frmConsultaContasAPagar
             // 
             //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             //this.ClientSize = new System.Drawing.Size(1342, 681);
-            this.Controls.Add(this.cbStatus);
-            this.Controls.Add(this.lblStatus);
-            this.Name = "frmConsultasContasAPagar";
+            this.Controls.Add(this.chkCancelada);
+            this.Controls.Add(this.chkAberta);
+            this.Controls.Add(this.chkPaga);
+            this.Name = "frmConsultaContasAPagar";
             this.Text = "Consulta Contas A Pagar";
             this.Load += new System.EventHandler(this.frmConsultasContasAPagar_Load);
             this.Controls.SetChildIndex(this.listView1, 0);
@@ -195,8 +212,9 @@
             this.Controls.SetChildIndex(this.btnDeletar, 0);
             this.Controls.SetChildIndex(this.btnEditar, 0);
             this.Controls.SetChildIndex(this.btnIncluir, 0);
-            this.Controls.SetChildIndex(this.lblStatus, 0);
-            this.Controls.SetChildIndex(this.cbStatus, 0);
+            this.Controls.SetChildIndex(this.chkPaga, 0);
+            this.Controls.SetChildIndex(this.chkAberta, 0);
+            this.Controls.SetChildIndex(this.chkCancelada, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -218,7 +236,8 @@
         private System.Windows.Forms.ColumnHeader Status;
         private System.Windows.Forms.ColumnHeader DataPagamento;
         private System.Windows.Forms.ColumnHeader ValorPago;
-        private System.Windows.Forms.ComboBox cbStatus;
-        private System.Windows.Forms.Label lblStatus;
+        private System.Windows.Forms.CheckBox chkPaga;
+        private System.Windows.Forms.CheckBox chkAberta;
+        private System.Windows.Forms.CheckBox chkCancelada;
     }
 }

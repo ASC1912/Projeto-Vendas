@@ -28,7 +28,7 @@ namespace Projeto.Utils
         frmConsultaPedido oFrmConsultaPedido;
         frmConsultaMesa oFrmConsultaMesa;
         frmConsultaUnidadeMedida oFrmConsultaUnidadeMedida;
-        frmConsultasContasAPagar oFrmConsultaContasAPagar;
+        frmConsultaContasAPagar oFrmConsultaContasAPagar;
 
         frmCadastroPais oFrmCadastroPais;
         frmCadastroEstado oFrmCadastroEstado;
@@ -69,7 +69,7 @@ namespace Projeto.Utils
             oFrmConsultaMesa = new frmConsultaMesa();
             oFrmConsultaPedido = new frmConsultaPedido();
             oFrmConsultaUnidadeMedida = new frmConsultaUnidadeMedida();
-            oFrmConsultaContasAPagar = new frmConsultasContasAPagar();
+            oFrmConsultaContasAPagar = new frmConsultaContasAPagar();
 
             oFrmCadastroPais = new frmCadastroPais();
             oFrmCadastroEstado = new frmCadastroEstado();
@@ -131,7 +131,7 @@ namespace Projeto.Utils
             oFrmCadastroCompra.setFrmConsultaCondPgto(oFrmConsultaCondPgto);
             oFrmCadastroProduto.setFrmConsultaUnidadeMedida(oFrmConsultaUnidadeMedida);
             oFrmCadastroProduto.setFrmConsultaFornecedor(oFrmConsultaFornecedor);
-
+            oFrmCadastroContasAPagar.setFrmConsultaFornecedor(oFrmConsultaFornecedor);
         }
 
         public void PecaPaises(object obj, object ctrl)

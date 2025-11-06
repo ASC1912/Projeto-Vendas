@@ -17,11 +17,13 @@ namespace Projeto.DAO
                 INSERT INTO ContasAPagar (
                     CompraModelo, CompraSerie, CompraNumeroNota, CompraFornecedorId, NumeroParcela,
                     FornecedorId, Descricao, DataEmissao, DataVencimento, ValorVencimento,
-                    Status, Ativo, DataCadastro, DataAlteracao
+                    Status, Ativo, DataCadastro, DataAlteracao,
+                    Juros, Multa, Desconto  
                 ) VALUES (
                     @CompraModelo, @CompraSerie, @CompraNumeroNota, @CompraFornecedorId, @NumeroParcela,
                     @FornecedorId, @Descricao, @DataEmissao, @DataVencimento, @ValorVencimento,
-                    @Status, @Ativo, @DataCadastro, @DataAlteracao
+                    @Status, @Ativo, @DataCadastro, @DataAlteracao,
+                    @Juros, @Multa, @Desconto  
                 )";
 
             using (MySqlCommand cmd = new MySqlCommand(query, conn, trans))
@@ -40,6 +42,9 @@ namespace Projeto.DAO
                 cmd.Parameters.AddWithValue("@Ativo", true);
                 cmd.Parameters.AddWithValue("@DataCadastro", DateTime.Now);
                 cmd.Parameters.AddWithValue("@DataAlteracao", DateTime.Now);
+                cmd.Parameters.AddWithValue("@Juros", conta.Juros);
+                cmd.Parameters.AddWithValue("@Multa", conta.Multa);
+                cmd.Parameters.AddWithValue("@Desconto", conta.Desconto);
 
                 cmd.ExecuteNonQuery();
             }
@@ -61,25 +66,50 @@ namespace Projeto.DAO
         }
 
 
-        public List<ContasAPagar> Listar(string status, string busca)
+        public List<ContasAPagar> Listar(List<string> statuses, string busca)
         {
             List<ContasAPagar> lista = new List<ContasAPagar>();
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
+
                 string query = @"
                     SELECT cap.*, f.Fornecedor AS NomeFornecedor, fp.Descricao AS NomeFormaPagamento
                     FROM ContasAPagar cap
                     JOIN Fornecedores f ON cap.FornecedorId = f.Id
-                    LEFT JOIN FormasPagamento fp ON cap.IdFormaPagamento = fp.Id
-                    WHERE (@Status = 'Todos' OR cap.Status = @Status)
-                      AND (f.Fornecedor LIKE @Busca OR cap.Descricao LIKE @Busca)
-                    ORDER BY cap.DataVencimento";
+                    LEFT JOIN FormasPagamento fp ON cap.IdFormaPagamento = fp.Id";
+
+                var whereClauses = new List<string>();
+
+                whereClauses.Add("(f.Fornecedor LIKE @Busca OR cap.Descricao LIKE @Busca)");
+
+                if (statuses != null && statuses.Count > 0)
+                {
+                    var statusParams = new List<string>();
+                    for (int i = 0; i < statuses.Count; i++)
+                    {
+                        statusParams.Add($"@Status{i}");
+                    }
+                    whereClauses.Add($"cap.Status IN ({string.Join(", ", statusParams)})");
+                }
+                else
+                {
+                    whereClauses.Add("1 = 0"); 
+                }
+
+                query += $" WHERE {string.Join(" AND ", whereClauses)} ORDER BY cap.DataVencimento";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
-                    cmd.Parameters.AddWithValue("@Status", status);
                     cmd.Parameters.AddWithValue("@Busca", $"%{busca}%");
+
+                    if (statuses != null)
+                    {
+                        for (int i = 0; i < statuses.Count; i++)
+                        {
+                            cmd.Parameters.AddWithValue($"@Status{i}", statuses[i]);
+                        }
+                    }
 
                     using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -125,7 +155,6 @@ namespace Projeto.DAO
                     cmd.Parameters.AddWithValue("@Desconto", conta.Desconto);
                     cmd.Parameters.AddWithValue("@DataAlteracao", DateTime.Now);
 
-                    // Chave Composta
                     cmd.Parameters.AddWithValue("@CompraModelo", conta.CompraModelo);
                     cmd.Parameters.AddWithValue("@CompraSerie", conta.CompraSerie);
                     cmd.Parameters.AddWithValue("@CompraNumeroNota", conta.CompraNumeroNota);
@@ -162,7 +191,6 @@ namespace Projeto.DAO
                 {
                     cmd.Parameters.AddWithValue("@DataAlteracao", DateTime.Now);
 
-                    // Chave Composta
                     cmd.Parameters.AddWithValue("@CompraModelo", conta.CompraModelo);
                     cmd.Parameters.AddWithValue("@CompraSerie", conta.CompraSerie);
                     cmd.Parameters.AddWithValue("@CompraNumeroNota", conta.CompraNumeroNota);
@@ -178,14 +206,12 @@ namespace Projeto.DAO
         {
             return new ContasAPagar
             {
-                // Chave Composta
                 CompraModelo = reader.GetString("CompraModelo"),
                 CompraSerie = reader.GetString("CompraSerie"),
                 CompraNumeroNota = reader.GetInt32("CompraNumeroNota"),
                 CompraFornecedorId = reader.GetInt32("CompraFornecedorId"),
                 NumeroParcela = reader.GetInt32("NumeroParcela"),
 
-                // Dados
                 FornecedorId = reader.GetInt32("FornecedorId"),
                 NomeFornecedor = reader.GetString("NomeFornecedor"),
                 Descricao = reader.GetString("Descricao"),
@@ -195,7 +221,6 @@ namespace Projeto.DAO
                 Status = reader.GetString("Status"),
                 Ativo = reader.GetBoolean("Ativo"),
 
-                // Dados Pagamento (podem ser NULOS)
                 IdFormaPagamento = reader.IsDBNull(reader.GetOrdinal("IdFormaPagamento")) ? (int?)null : reader.GetInt32("IdFormaPagamento"),
                 NomeFormaPagamento = reader.IsDBNull(reader.GetOrdinal("NomeFormaPagamento")) ? null : reader.GetString("NomeFormaPagamento"),
                 DataPagamento = reader.IsDBNull(reader.GetOrdinal("DataPagamento")) ? (DateTime?)null : reader.GetDateTime("DataPagamento"),
@@ -242,6 +267,40 @@ namespace Projeto.DAO
                     cmd.Parameters.AddWithValue("@NumeroNota", numeroNota);
                     cmd.Parameters.AddWithValue("@FornecedorId", fornecedorId);
                     return Convert.ToInt32(cmd.ExecuteScalar()) > 0;
+                }
+            }
+        }
+
+        public bool VerificarParcelaAnteriorPaga(ContasAPagar conta)
+        {
+            if (conta.NumeroParcela <= 1)
+            {
+                return true;
+            }
+
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = @"
+                    SELECT Status 
+                    FROM ContasAPagar
+                    WHERE CompraModelo = @CompraModelo
+                      AND CompraSerie = @CompraSerie
+                      AND CompraNumeroNota = @CompraNumeroNota
+                      AND CompraFornecedorId = @CompraFornecedorId
+                      AND NumeroParcela = @NumeroParcelaAnterior";
+
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@CompraModelo", conta.CompraModelo);
+                    cmd.Parameters.AddWithValue("@CompraSerie", conta.CompraSerie);
+                    cmd.Parameters.AddWithValue("@CompraNumeroNota", conta.CompraNumeroNota);
+                    cmd.Parameters.AddWithValue("@CompraFornecedorId", conta.CompraFornecedorId);
+                    cmd.Parameters.AddWithValue("@NumeroParcelaAnterior", conta.NumeroParcela - 1);
+
+                    var resultado = cmd.ExecuteScalar();
+
+                    return (resultado != null && resultado.ToString() == "Paga");
                 }
             }
         }

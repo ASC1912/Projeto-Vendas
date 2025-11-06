@@ -74,7 +74,6 @@
             this.listViewCondPgto = new System.Windows.Forms.ListView();
             this.NumParcela = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Prazo = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.Porcentagem = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.FormaPagamento = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Valor = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lblFormaPagamento = new System.Windows.Forms.Label();
@@ -480,7 +479,6 @@
             this.listViewCondPgto.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.NumParcela,
             this.Prazo,
-            this.Porcentagem,
             this.FormaPagamento,
             this.Valor});
             this.listViewCondPgto.FullRowSelect = true;
@@ -500,13 +498,8 @@
             // 
             // Prazo
             // 
-            this.Prazo.Text = "Prazo Dias";
-            this.Prazo.Width = 93;
-            // 
-            // Porcentagem
-            // 
-            this.Porcentagem.Text = "Porcentagem";
-            this.Porcentagem.Width = 100;
+            this.Prazo.Text = "Data de Vencimento";
+            this.Prazo.Width = 150;
             // 
             // FormaPagamento
             // 
@@ -767,7 +760,6 @@
         protected System.Windows.Forms.ListView listViewCondPgto;
         private System.Windows.Forms.ColumnHeader NumParcela;
         private System.Windows.Forms.ColumnHeader Prazo;
-        private System.Windows.Forms.ColumnHeader Porcentagem;
         private System.Windows.Forms.ColumnHeader FormaPagamento;
         private System.Windows.Forms.Label lblFormaPagamento;
         private System.Windows.Forms.Label lblTotalProdutos;

@@ -17,6 +17,7 @@ namespace Projeto.Views.Cadastros
 
         private FornecedorController fornecedorController = new FornecedorController();
         private FormaPagamentoController formaPagamentoController = new FormaPagamentoController();
+        private frmConsultaFornecedor oFrmConsultaFornecedor;
 
         public frmCadastroContasAPagar()
         {
@@ -40,9 +41,6 @@ namespace Projeto.Views.Cadastros
             this.txtDesconto.TextChanged += new System.EventHandler(this.RecalcularValorPago);
             this.dtpDataPagamento.ValueChanged += new System.EventHandler(this.RecalcularValorPago);
 
-            this.txtIDFornecedor.Leave += new System.EventHandler(this.txtIDFornecedor_Leave);
-            this.txtIdFormaPgto.Leave += new System.EventHandler(this.txtIdFormaPgto_Leave);
-
             if (this.Controls.ContainsKey("txtCodigo")) (this.Controls["txtCodigo"] as TextBox).MaxLength = 50;
             txtSerie.MaxLength = 50;
             txtNumero.MaxLength = 10;
@@ -56,6 +54,13 @@ namespace Projeto.Views.Cadastros
             controller = ctrl as ContasAPagarController;
         }
 
+        public void setFrmConsultaFornecedor(object obj)
+        {
+            if (obj != null)
+            {
+                oFrmConsultaFornecedor = (frmConsultaFornecedor)obj;
+            }
+        }
 
         public void DefinirModo(string modo)
         {
@@ -221,9 +226,9 @@ namespace Projeto.Views.Cadastros
                 if (aConta.DataVencimento < dtpVencimento.MinDate) dtpVencimento.MinDate = aConta.DataVencimento.Date;
                 dtpVencimento.Value = aConta.DataVencimento;
             }
-            catch
+            catch (Exception ex)
             {
-                // Ignora erros
+                MessageBox.Show($"Atenção: Houve um problema ao carregar as datas desta conta.\nErro: {ex.Message}", "Data Inválida", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
 
             txtValorVencimento.Text = aConta.ValorVencimento.ToString("F2");
@@ -407,25 +412,29 @@ namespace Projeto.Views.Cadastros
 
         private async void btnPesquisarFornecedor_Click(object sender, EventArgs e)
         {
-            using (var frmConsulta = new frmConsultaFornecedor())
+            if (oFrmConsultaFornecedor == null)
             {
-                frmConsulta.ModoSelecao = true;
-                if (frmConsulta.ShowDialog() == DialogResult.OK)
-                {
-                    var fornecedorSelecionado = frmConsulta.FornecedorSelecionado;
+                MessageBox.Show("Erro: Formulário de consulta de fornecedor não foi inicializado corretamente.", "Erro de Configuração", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
-                    if (fornecedorSelecionado != null && fornecedorSelecionado.Id > 0)
-                    {
-                        txtIDFornecedor.Text = fornecedorSelecionado.Id.ToString();
-                        txtFornecedor.Text = fornecedorSelecionado.Nome;
-                    }
-                    else
-                    {
-                        txtIDFornecedor.Clear();
-                        txtFornecedor.Clear();
-                    }
+            oFrmConsultaFornecedor.ModoSelecao = true;
+            if (oFrmConsultaFornecedor.ShowDialog() == DialogResult.OK)
+            {
+                var fornecedorSelecionado = oFrmConsultaFornecedor.FornecedorSelecionado;
+
+                if (fornecedorSelecionado != null && fornecedorSelecionado.Id > 0)
+                {
+                    txtIDFornecedor.Text = fornecedorSelecionado.Id.ToString();
+                    txtFornecedor.Text = fornecedorSelecionado.Nome;
+                }
+                else
+                {
+                    txtIDFornecedor.Clear();
+                    txtFornecedor.Clear();
                 }
             }
+            oFrmConsultaFornecedor.ModoSelecao = false; 
         }
 
         private async void btnPesquisarFormaPgto_Click(object sender, EventArgs e)

@@ -1,21 +1,22 @@
-﻿using Projeto.Controller;
+﻿using Microsoft.VisualBasic;
+using Projeto.Controller;
 using Projeto.Models;
 using Projeto.Views.Cadastros;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Microsoft.VisualBasic;
 
 namespace Projeto.Views.Consultas
 {
-    public partial class frmConsultasContasAPagar : Projeto.frmBaseConsulta
+    public partial class frmConsultaContasAPagar : Projeto.frmBaseConsulta
     {
         private ContasAPagarController controller = new ContasAPagarController();
         private frmCadastroContasAPagar oFrmCadastroContasAPagar;
         private bool estaCarregando = false; 
 
-        public frmConsultasContasAPagar()
+        public frmConsultaContasAPagar()
         {
             InitializeComponent();
 
@@ -37,19 +38,34 @@ namespace Projeto.Views.Consultas
         private async Task CarregarContas()
         {
             //Para evitar duplicação de dados
-            if (estaCarregando) return; 
-            estaCarregando = true;      
-                                       
+            if (estaCarregando) return;
+            estaCarregando = true;
+
             try
             {
-                string statusSelecionado = cbStatus.SelectedItem?.ToString() ?? "Aberta";
+                // LÓGICA ANTIGA (será removida)
+                // string statusSelecionado = cbStatus.SelectedItem?.ToString() ?? "Aberta";
+
+                // LÓGICA NOVA (baseada nos seus CheckBoxes)
+                var statusesParaExibir = new List<string>();
+                if (chkAberta.Checked) statusesParaExibir.Add("Aberta");
+                if (chkPaga.Checked) statusesParaExibir.Add("Paga");
+                if (chkCancelada.Checked) statusesParaExibir.Add("Cancelada");
+
                 string termoBusca = txtPesquisar.Text;
 
-                listView1.Items.Clear(); 
+                listView1.Items.Clear();
 
-                List<ContasAPagar> contas = await controller.Listar(statusSelecionado, termoBusca); 
+                List<ContasAPagar> contas = new List<ContasAPagar>();
 
-                listView1.BeginUpdate(); 
+                if (statusesParaExibir.Any()) 
+                {
+                    // ATENÇÃO: Esta linha vai dar um erro de compilação por enquanto.
+                    // Vamos corrigir isso no próximo passo (alterando o Controller).
+                    contas = await controller.Listar(statusesParaExibir, termoBusca);
+                }
+
+                listView1.BeginUpdate();
                 foreach (var conta in contas)
                 {
                     ListViewItem item = new ListViewItem(conta.NumeroParcela.ToString());
@@ -69,7 +85,7 @@ namespace Projeto.Views.Consultas
                     item.Tag = conta;
                     listView1.Items.Add(item);
                 }
-                listView1.EndUpdate(); 
+                listView1.EndUpdate();
             }
             catch (Exception ex)
             {
@@ -83,9 +99,9 @@ namespace Projeto.Views.Consultas
                 }
                 MessageBox.Show("Erro ao carregar contas: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            finally 
+            finally
             {
-                estaCarregando = false; // Libera a trava para futuras chamadas
+                estaCarregando = false; 
                 btnDeletar.Text = "Estornar";
             }
         }
@@ -94,16 +110,6 @@ namespace Projeto.Views.Consultas
 
         private async void frmConsultasContasAPagar_Load(object sender, EventArgs e)
         {
-            if (cbStatus.Items.Count > 0 && cbStatus.SelectedIndex == -1)
-            {
-                cbStatus.SelectedItem = "Aberta";
-            }
-            else if (cbStatus.Items.Count == 0) 
-            {
-                cbStatus.Items.AddRange(new object[] { "Aberta", "Paga", "Cancelada", "Todas" });
-                cbStatus.SelectedItem = "Aberta";
-            }
-
             listView1.View = View.Details;
             listView1.FullRowSelect = true;
             listView1.GridLines = true;
@@ -289,5 +295,21 @@ namespace Projeto.Views.Consultas
                 btnDeletar.Text = "Estornar";
             }
         }
+
+        private async void chkAberta_CheckedChanged(object sender, EventArgs e)
+        {
+            await CarregarContas();
+        }
+
+        private async void chkPaga_CheckedChanged(object sender, EventArgs e)
+        {
+            await CarregarContas();
+        }
+
+        private async void chkCancelada_CheckedChanged(object sender, EventArgs e)
+        {
+            await CarregarContas();
+        }
+
     }
 }

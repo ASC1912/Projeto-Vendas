@@ -131,7 +131,6 @@ namespace Projeto.Views.Cadastros
 
         public override void DesbloquearTxt()
         {
-            // Apenas o cabeçalho é liberado. O resto é controlado dinamicamente.
             HabilitarControles(parte1Controles, true);
         }
 
@@ -250,7 +249,11 @@ namespace Projeto.Views.Cadastros
             else
             {
                 lblMotivoCancelamento.Visible = false;
-                AtualizarEstadoDosControles();
+
+                if (txtSerie.Enabled)
+                {
+                    AtualizarEstadoDosControles();
+                }
             }
 
             CalculaTotalCompra();
@@ -519,13 +522,18 @@ namespace Projeto.Views.Cadastros
         private async Task AtualizarListViewCondPgto(CondicaoPagamento condicao)
         {
             listViewCondPgto.Items.Clear();
+
+            DateTime dataBase = dtpEmissao.Value.Date;
+
             if (condicao?.Parcelas != null)
             {
-                foreach (var parcela in condicao.Parcelas)
+                foreach (var parcela in condicao.Parcelas.OrderBy(p => p.NumParcela))
                 {
                     ListViewItem item = new ListViewItem(parcela.NumParcela.ToString());
-                    item.SubItems.Add(parcela.PrazoDias.ToString());
-                    item.SubItems.Add(parcela.Porcentagem.ToString("N2") + "%");
+
+                    DateTime dataVencimento = dataBase.AddDays(parcela.PrazoDias);
+                    item.SubItems.Add(dataVencimento.ToString("dd/MM/yyyy"));
+
                     string desc = parcela.FormaPagamento?.Descricao ?? await formaPagamentoController.ObterDescricaoFormaPagamento(parcela.FormaPagamentoId);
                     item.SubItems.Add(desc);
                     listViewCondPgto.Items.Add(item);
@@ -533,7 +541,6 @@ namespace Projeto.Views.Cadastros
             }
             CalculaTotalCompra();
         }
-
         private void CalcularTotalItem()
         {
             if (decimal.TryParse(txtQuantidade.Text, out decimal quantidade) && decimal.TryParse(txtValorUnitario.Text, out decimal valorUnitario))
@@ -568,28 +575,51 @@ namespace Projeto.Views.Cadastros
         private void CalcularEExibirParcelas()
         {
             decimal totalParcelas = 0;
-            if (!decimal.TryParse(txtValorTotal.Text, out decimal valorTotalCompra) || valorTotalCompra <= 0)
+            if (!decimal.TryParse(txtValorTotal.Text, out decimal valorTotalCompra) || valorTotalCompra <= 0 ||
+                condicaoPagamentoSelecionada == null || condicaoPagamentoSelecionada.Parcelas == null || condicaoPagamentoSelecionada.Parcelas.Count == 0)
             {
                 foreach (ListViewItem item in listViewCondPgto.Items)
                 {
-                    while (item.SubItems.Count <= 4) item.SubItems.Add("");
-                    item.SubItems[4].Text = "0,00";
+                    while (item.SubItems.Count <= 3) item.SubItems.Add("");
+                    item.SubItems[3].Text = "0,00";
                 }
                 lblTotalCondiçãoPgto.Text = "Total (R$): 0,00";
                 return;
             }
 
+            List<decimal> valoresCalculados = new List<decimal>();
+            decimal valorAcumulado = 0;
+            var parcelasOrdenadas = condicaoPagamentoSelecionada.Parcelas.OrderBy(p => p.NumParcela);
+
+            foreach (var parcelaDefinicao in parcelasOrdenadas)
+            {
+                decimal porcentagem = parcelaDefinicao.Porcentagem;
+                decimal valorParcela = valorTotalCompra * (porcentagem / 100);
+
+                valorParcela = Math.Round(valorParcela, 2);
+                valorAcumulado += valorParcela;
+
+                if (parcelaDefinicao.NumParcela == parcelasOrdenadas.Last().NumParcela)
+                {
+                    valorParcela += (valorTotalCompra - valorAcumulado);
+                }
+                valoresCalculados.Add(valorParcela);
+                totalParcelas += valorParcela;
+            }
+
+            int index = 0;
             foreach (ListViewItem item in listViewCondPgto.Items)
             {
-                decimal porcentagem = decimal.Parse(item.SubItems[2].Text.Replace("%", "").Trim());
-                decimal valorParcela = valorTotalCompra * (porcentagem / 100);
-                totalParcelas += valorParcela;
-                while (item.SubItems.Count <= 4) item.SubItems.Add("");
-                item.SubItems[4].Text = valorParcela.ToString("F2");
+                if (index < valoresCalculados.Count)
+                {
+                    while (item.SubItems.Count <= 3) item.SubItems.Add("");
+                    item.SubItems[3].Text = valoresCalculados[index].ToString("F2");
+                    index++;
+                }
             }
+
             lblTotalCondiçãoPgto.Text = $"Total (R$): {totalParcelas:F2}";
         }
-
         #endregion
 
         #region Preparação de Dados para Salvar
@@ -660,15 +690,12 @@ namespace Projeto.Views.Cadastros
 
             if (condicaoPagamentoSelecionada == null || condicaoPagamentoSelecionada.Parcelas == null || condicaoPagamentoSelecionada.Parcelas.Count == 0)
             {
-                // Se não há condição ou parcelas definidas nela, não há o que gerar.
-                // A lista compra.Parcelas permanecerá vazia.
-                // O método Salvar() depois validará se a lista está vazia se a condição exigir parcelas.
                 return;
             }
 
             DateTime dataBase = dtpEmissao.Value.Date; 
             decimal valorTotalCompra = compra.ValorTotal;
-            decimal valorAcumulado = 0; // Para ajuste da última parcela
+            decimal valorAcumulado = 0; 
 
             // Ordena as definições de parcela pelo número da parcela
             var parcelasOrdenadas = condicaoPagamentoSelecionada.Parcelas.OrderBy(p => p.NumParcela);
@@ -701,7 +728,11 @@ namespace Projeto.Views.Cadastros
                     DataVencimento = dataVencimento,
                     Descricao = $"Parcela {parcelaDefinicao.NumParcela}/{condicaoPagamentoSelecionada.Parcelas.Count} NFe {compra.NumeroNota}",                                                                                                                   
                     Ativo = true,
-                    Status = "Aberta" 
+                    Status = "Aberta",
+
+                    Juros = condicaoPagamentoSelecionada.Juros,
+                    Multa = condicaoPagamentoSelecionada.Multa,
+                    Desconto = condicaoPagamentoSelecionada.Desconto
                 };
                 compra.Parcelas.Add(novaConta); 
 
@@ -712,7 +743,7 @@ namespace Projeto.Views.Cadastros
             if (Math.Abs(totalParcelasGeradas - valorTotalCompra) > 0.01m)
             {
                 MessageBox.Show($"Erro de arredondamento: O total das parcelas ({totalParcelasGeradas:C2}) não bate com o total da compra ({valorTotalCompra:C2}).", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                compra.Parcelas.Clear(); // Limpa as parcelas erradas
+                compra.Parcelas.Clear(); 
             }
         }
         #endregion

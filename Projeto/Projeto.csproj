@@ -266,11 +266,17 @@
     <Compile Include="Views\Cadastros\frmCadastroVeiculo.Designer.cs">
       <DependentUpon>frmCadastroVeiculo.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\Consultas\frmConsultasContasAPagar.cs">
+    <Compile Include="Views\Cadastros\frmCadastroVenda.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\Consultas\frmConsultasContasAPagar.Designer.cs">
-      <DependentUpon>frmConsultasContasAPagar.cs</DependentUpon>
+    <Compile Include="Views\Cadastros\frmCadastroVenda.Designer.cs">
+      <DependentUpon>frmCadastroVenda.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Consultas\frmConsultaContasAPagar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Consultas\frmConsultaContasAPagar.Designer.cs">
+      <DependentUpon>frmConsultaContasAPagar.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Consultas\frmConsultaCompra.cs">
       <SubType>Form</SubType>
@@ -472,6 +478,9 @@
     <EmbeddedResource Include="Views\Cadastros\frmCadastroVeiculo.resx">
       <DependentUpon>frmCadastroVeiculo.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\Cadastros\frmCadastroVenda.resx">
+      <DependentUpon>frmCadastroVenda.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\Consultas\frmConsultaCompra.resx">
       <DependentUpon>frmConsultaCompra.cs</DependentUpon>
     </EmbeddedResource>
@@ -490,8 +499,8 @@
     <EmbeddedResource Include="Views\Consultas\frmConsultaProduto.resx">
       <DependentUpon>frmConsultaProduto.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\Consultas\frmConsultasContasAPagar.resx">
-      <DependentUpon>frmConsultasContasAPagar.cs</DependentUpon>
+    <EmbeddedResource Include="Views\Consultas\frmConsultaContasAPagar.resx">
+      <DependentUpon>frmConsultaContasAPagar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Consultas\frmConsultaTransportadora.resx">
       <DependentUpon>frmConsultaTransportadora.cs</DependentUpon>

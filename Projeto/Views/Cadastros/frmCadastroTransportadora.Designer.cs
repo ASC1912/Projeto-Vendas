@@ -63,6 +63,17 @@
             this.txtIdCidade = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.txtIdCondPgto = new System.Windows.Forms.TextBox();
+            this.lblIdVeiculo = new System.Windows.Forms.Label();
+            this.btnRemoverFornecedor = new System.Windows.Forms.Button();
+            this.btnAdicionarFornecedor = new System.Windows.Forms.Button();
+            this.txtIdVeiculo = new System.Windows.Forms.TextBox();
+            this.listVFornecedores = new System.Windows.Forms.ListView();
+            this.clmCodFornecedor = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.clmNomeRazaoSocial = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.clmTipo = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.btnPesquisarFornecedor = new System.Windows.Forms.Button();
+            this.txtVeiculo = new System.Windows.Forms.TextBox();
+            this.lblVeiculo = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txtCodigo
@@ -382,10 +393,119 @@
             this.txtIdCondPgto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtIdCondPgto.Leave += new System.EventHandler(this.txtIdCondPgto_Leave);
             // 
+            // lblIdVeiculo
+            // 
+            this.lblIdVeiculo.AutoSize = true;
+            this.lblIdVeiculo.Location = new System.Drawing.Point(9, 319);
+            this.lblIdVeiculo.Name = "lblIdVeiculo";
+            this.lblIdVeiculo.Size = new System.Drawing.Size(73, 16);
+            this.lblIdVeiculo.TabIndex = 162;
+            this.lblIdVeiculo.Text = "ID Veículo*";
+            // 
+            // btnRemoverFornecedor
+            // 
+            this.btnRemoverFornecedor.Location = new System.Drawing.Point(638, 334);
+            this.btnRemoverFornecedor.Margin = new System.Windows.Forms.Padding(4);
+            this.btnRemoverFornecedor.Name = "btnRemoverFornecedor";
+            this.btnRemoverFornecedor.Size = new System.Drawing.Size(100, 28);
+            this.btnRemoverFornecedor.TabIndex = 160;
+            this.btnRemoverFornecedor.Text = "Remover";
+            this.btnRemoverFornecedor.UseVisualStyleBackColor = true;
+            // 
+            // btnAdicionarFornecedor
+            // 
+            this.btnAdicionarFornecedor.Location = new System.Drawing.Point(531, 334);
+            this.btnAdicionarFornecedor.Margin = new System.Windows.Forms.Padding(4);
+            this.btnAdicionarFornecedor.Name = "btnAdicionarFornecedor";
+            this.btnAdicionarFornecedor.Size = new System.Drawing.Size(99, 28);
+            this.btnAdicionarFornecedor.TabIndex = 161;
+            this.btnAdicionarFornecedor.Text = "Adicionar ";
+            this.btnAdicionarFornecedor.UseVisualStyleBackColor = true;
+            // 
+            // txtIdVeiculo
+            // 
+            this.txtIdVeiculo.Location = new System.Drawing.Point(12, 337);
+            this.txtIdVeiculo.Margin = new System.Windows.Forms.Padding(4);
+            this.txtIdVeiculo.Name = "txtIdVeiculo";
+            this.txtIdVeiculo.ShortcutsEnabled = false;
+            this.txtIdVeiculo.Size = new System.Drawing.Size(79, 22);
+            this.txtIdVeiculo.TabIndex = 159;
+            // 
+            // listVFornecedores
+            // 
+            this.listVFornecedores.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.clmCodFornecedor,
+            this.clmNomeRazaoSocial,
+            this.clmTipo});
+            this.listVFornecedores.FullRowSelect = true;
+            this.listVFornecedores.GridLines = true;
+            this.listVFornecedores.HideSelection = false;
+            this.listVFornecedores.Location = new System.Drawing.Point(12, 370);
+            this.listVFornecedores.Margin = new System.Windows.Forms.Padding(4);
+            this.listVFornecedores.Name = "listVFornecedores";
+            this.listVFornecedores.Size = new System.Drawing.Size(721, 232);
+            this.listVFornecedores.TabIndex = 158;
+            this.listVFornecedores.UseCompatibleStateImageBehavior = false;
+            this.listVFornecedores.View = System.Windows.Forms.View.Details;
+            // 
+            // clmCodFornecedor
+            // 
+            this.clmCodFornecedor.Text = "Cód. Fornecedor";
+            this.clmCodFornecedor.Width = 100;
+            // 
+            // clmNomeRazaoSocial
+            // 
+            this.clmNomeRazaoSocial.Text = "Nome/Razão Social";
+            this.clmNomeRazaoSocial.Width = 200;
+            // 
+            // clmTipo
+            // 
+            this.clmTipo.Text = "Tipo";
+            this.clmTipo.Width = 100;
+            // 
+            // btnPesquisarFornecedor
+            // 
+            this.btnPesquisarFornecedor.Location = new System.Drawing.Point(458, 334);
+            this.btnPesquisarFornecedor.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
+            this.btnPesquisarFornecedor.Name = "btnPesquisarFornecedor";
+            this.btnPesquisarFornecedor.Size = new System.Drawing.Size(65, 28);
+            this.btnPesquisarFornecedor.TabIndex = 156;
+            this.btnPesquisarFornecedor.Text = "🔎";
+            this.btnPesquisarFornecedor.UseVisualStyleBackColor = true;
+            // 
+            // txtVeiculo
+            // 
+            this.txtVeiculo.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtVeiculo.Location = new System.Drawing.Point(100, 337);
+            this.txtVeiculo.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
+            this.txtVeiculo.Name = "txtVeiculo";
+            this.txtVeiculo.ReadOnly = true;
+            this.txtVeiculo.ShortcutsEnabled = false;
+            this.txtVeiculo.Size = new System.Drawing.Size(351, 22);
+            this.txtVeiculo.TabIndex = 155;
+            // 
+            // lblVeiculo
+            // 
+            this.lblVeiculo.AutoSize = true;
+            this.lblVeiculo.Location = new System.Drawing.Point(97, 319);
+            this.lblVeiculo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblVeiculo.Name = "lblVeiculo";
+            this.lblVeiculo.Size = new System.Drawing.Size(57, 16);
+            this.lblVeiculo.TabIndex = 157;
+            this.lblVeiculo.Text = "Veículo*";
+            // 
             // frmCadastroTransportadora
             // 
             //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             //this.ClientSize = new System.Drawing.Size(1342, 681);
+            this.Controls.Add(this.lblIdVeiculo);
+            this.Controls.Add(this.btnRemoverFornecedor);
+            this.Controls.Add(this.btnAdicionarFornecedor);
+            this.Controls.Add(this.txtIdVeiculo);
+            this.Controls.Add(this.listVFornecedores);
+            this.Controls.Add(this.btnPesquisarFornecedor);
+            this.Controls.Add(this.txtVeiculo);
+            this.Controls.Add(this.lblVeiculo);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtIdCondPgto);
             this.Controls.Add(this.IDCidade);
@@ -465,6 +585,14 @@
             this.Controls.SetChildIndex(this.IDCidade, 0);
             this.Controls.SetChildIndex(this.txtIdCondPgto, 0);
             this.Controls.SetChildIndex(this.label1, 0);
+            this.Controls.SetChildIndex(this.lblVeiculo, 0);
+            this.Controls.SetChildIndex(this.txtVeiculo, 0);
+            this.Controls.SetChildIndex(this.btnPesquisarFornecedor, 0);
+            this.Controls.SetChildIndex(this.listVFornecedores, 0);
+            this.Controls.SetChildIndex(this.txtIdVeiculo, 0);
+            this.Controls.SetChildIndex(this.btnAdicionarFornecedor, 0);
+            this.Controls.SetChildIndex(this.btnRemoverFornecedor, 0);
+            this.Controls.SetChildIndex(this.lblIdVeiculo, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -507,5 +635,16 @@
         private System.Windows.Forms.TextBox txtIdCidade;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtIdCondPgto;
+        private System.Windows.Forms.Label lblIdVeiculo;
+        private System.Windows.Forms.Button btnRemoverFornecedor;
+        private System.Windows.Forms.Button btnAdicionarFornecedor;
+        private System.Windows.Forms.TextBox txtIdVeiculo;
+        private System.Windows.Forms.ListView listVFornecedores;
+        private System.Windows.Forms.ColumnHeader clmCodFornecedor;
+        private System.Windows.Forms.ColumnHeader clmNomeRazaoSocial;
+        private System.Windows.Forms.ColumnHeader clmTipo;
+        private System.Windows.Forms.Button btnPesquisarFornecedor;
+        private System.Windows.Forms.TextBox txtVeiculo;
+        private System.Windows.Forms.Label lblVeiculo;
     }
 }

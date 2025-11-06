@@ -22,13 +22,22 @@ namespace Projeto.Controller
         }
 
 
-        public Task<List<ContasAPagar>> Listar(string status, string busca)
+        public Task<List<ContasAPagar>> Listar(List<string> statuses, string busca)
         {
-            return Task.Run(() => _dao.Listar(status, busca));
+            return Task.Run(() => _dao.Listar(statuses, busca));
         }
 
         public Task Pagar(ContasAPagar conta)
         {
+            if (conta.NumeroParcela > 1)
+            {
+                bool anteriorPaga = _dao.VerificarParcelaAnteriorPaga(conta);
+                if (!anteriorPaga)
+                {
+                    throw new InvalidOperationException($"Não é possível pagar esta parcela (Nº {conta.NumeroParcela}). A parcela anterior (Nº {conta.NumeroParcela - 1}) ainda está em aberto.");
+                }
+            }
+
             return Task.Run(() => _dao.Pagar(conta));
         }
 
