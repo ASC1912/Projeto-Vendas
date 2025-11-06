@@ -43,10 +43,7 @@ namespace Projeto.Views.Consultas
 
             try
             {
-                // LÓGICA ANTIGA (será removida)
-                // string statusSelecionado = cbStatus.SelectedItem?.ToString() ?? "Aberta";
 
-                // LÓGICA NOVA (baseada nos seus CheckBoxes)
                 var statusesParaExibir = new List<string>();
                 if (chkAberta.Checked) statusesParaExibir.Add("Aberta");
                 if (chkPaga.Checked) statusesParaExibir.Add("Paga");
@@ -60,8 +57,6 @@ namespace Projeto.Views.Consultas
 
                 if (statusesParaExibir.Any()) 
                 {
-                    // ATENÇÃO: Esta linha vai dar um erro de compilação por enquanto.
-                    // Vamos corrigir isso no próximo passo (alterando o Controller).
                     contas = await controller.Listar(statusesParaExibir, termoBusca);
                 }
 
