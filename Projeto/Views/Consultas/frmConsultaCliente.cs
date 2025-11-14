@@ -15,6 +15,7 @@ namespace Projeto.Views
     {
         private ClienteController controller = new ClienteController();
         frmCadastroCliente oFrmCadastroCliente;
+        internal Cliente ClienteSelecionado { get; private set; }
 
         public override void setFrmCadastro(object obj)
         {
@@ -203,7 +204,39 @@ namespace Projeto.Views
         private async void frmConsultaCliente_Load(object sender, EventArgs e)
         {
             await CarregarClientes();
+            btnSelecionar.Visible = ModoSelecao; 
         }
 
+        private async void btnSelecionar_Click(object sender, EventArgs e)
+        {
+            if (listView1.SelectedItems.Count > 0)
+            {
+                try
+                {
+                    var itemSelecionado = listView1.SelectedItems[0];
+                    int id = int.Parse(itemSelecionado.SubItems[0].Text);
+
+                    ClienteSelecionado = await controller.BuscarPorId(id);
+
+                    if (ClienteSelecionado != null)
+                    {
+                        this.DialogResult = DialogResult.OK;
+                        this.Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Não foi possível carregar os dados do cliente selecionado.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Erro ao selecionar o cliente: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Por favor, selecione um cliente na lista.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
     }
 }

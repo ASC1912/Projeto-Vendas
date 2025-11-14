@@ -17,6 +17,9 @@ namespace Projeto.Views.Cadastros
         public frmCadastroMesa()
         {
             InitializeComponent();
+
+            this.txtCodigo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosInteiros);
+            this.txtQtdCadeiras.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosInteiros);
         }
 
         public override void ConhecaObj(object obj, object ctrl)

@@ -29,6 +29,7 @@ namespace Projeto.Utils
         frmConsultaMesa oFrmConsultaMesa;
         frmConsultaUnidadeMedida oFrmConsultaUnidadeMedida;
         frmConsultaContasAPagar oFrmConsultaContasAPagar;
+        frmConsultaVenda oFrmConsultaVenda;
 
         frmCadastroPais oFrmCadastroPais;
         frmCadastroEstado oFrmCadastroEstado;
@@ -48,6 +49,8 @@ namespace Projeto.Utils
         frmCadastroMesa oFrmCadastroMesa;
         frmCadastroUnidadeMedida oFrmCadastroUnidadeMedida;
         frmCadastroContasAPagar oFrmCadastroContasAPagar;
+        frmCadastroVenda oFrmCadastroVenda;
+
 
 
         public Interfaces()
@@ -70,6 +73,7 @@ namespace Projeto.Utils
             oFrmConsultaPedido = new frmConsultaPedido();
             oFrmConsultaUnidadeMedida = new frmConsultaUnidadeMedida();
             oFrmConsultaContasAPagar = new frmConsultaContasAPagar();
+            oFrmConsultaVenda = new frmConsultaVenda();
 
             oFrmCadastroPais = new frmCadastroPais();
             oFrmCadastroEstado = new frmCadastroEstado();
@@ -89,6 +93,7 @@ namespace Projeto.Utils
             oFrmCadastroPedido = new frmCadastroPedido();
             oFrmCadastroUnidadeMedida = new frmCadastroUnidadeMedida();
             oFrmCadastroContasAPagar = new frmCadastroContasAPagar();
+            oFrmCadastroVenda = new frmCadastroVenda();
 
             oFrmConsultaPais.setFrmCadastro(oFrmCadastroPais);
             oFrmConsultaEstado.setFrmCadastro(oFrmCadastroEstado);
@@ -108,6 +113,7 @@ namespace Projeto.Utils
             oFrmConsultaPedido.setFrmCadastro(oFrmCadastroPedido);
             oFrmConsultaUnidadeMedida.setFrmCadastro(oFrmCadastroUnidadeMedida);
             oFrmConsultaContasAPagar.setFrmCadastro(oFrmCadastroContasAPagar);
+            oFrmConsultaVenda.setFrmCadastro(oFrmCadastroVenda);
 
             oFrmCadastroEstado.setFrmConsultaPais(oFrmConsultaPais);
             oFrmCadastroCidade.setFrmConsultaEstado(oFrmConsultaEstado);
@@ -132,6 +138,9 @@ namespace Projeto.Utils
             oFrmCadastroProduto.setFrmConsultaUnidadeMedida(oFrmConsultaUnidadeMedida);
             oFrmCadastroProduto.setFrmConsultaFornecedor(oFrmConsultaFornecedor);
             oFrmCadastroContasAPagar.setFrmConsultaFornecedor(oFrmConsultaFornecedor);
+            oFrmCadastroVenda.setFrmConsultaCliente(oFrmConsultaCliente);
+            oFrmCadastroVenda.setFrmConsultaProduto(oFrmConsultaProduto);
+            oFrmCadastroVenda.setFrmConsultaCondPgto(oFrmConsultaCondPgto);
         }
 
         public void PecaPaises(object obj, object ctrl)
@@ -240,6 +249,12 @@ namespace Projeto.Utils
         {
             oFrmConsultaContasAPagar.ConhecaObj(obj, ctrl);
             oFrmConsultaContasAPagar.ShowDialog();
+        }
+
+        public void PecaVenda(object obj, object ctrl)
+        {
+            oFrmConsultaVenda.ConhecaObj(obj, ctrl);
+            oFrmConsultaVenda.ShowDialog();
         }
     }
 }

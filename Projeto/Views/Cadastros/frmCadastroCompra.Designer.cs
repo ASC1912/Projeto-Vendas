@@ -93,6 +93,7 @@
             this.txtCodigo.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtCodigo.Location = new System.Drawing.Point(12, 43);
             this.txtCodigo.MaxLength = 5;
+            this.txtCodigo.Size = new System.Drawing.Size(72, 22);
             this.txtCodigo.TabIndex = 0;
             // 
             // btnSair
@@ -122,7 +123,7 @@
             // 
             // btnPesquisarFornecedor
             // 
-            this.btnPesquisarFornecedor.Location = new System.Drawing.Point(699, 43);
+            this.btnPesquisarFornecedor.Location = new System.Drawing.Point(666, 43);
             this.btnPesquisarFornecedor.Name = "btnPesquisarFornecedor";
             this.btnPesquisarFornecedor.Size = new System.Drawing.Size(91, 23);
             this.btnPesquisarFornecedor.TabIndex = 5;
@@ -133,7 +134,7 @@
             // lblFornecedor
             // 
             this.lblFornecedor.AutoSize = true;
-            this.lblFornecedor.Location = new System.Drawing.Point(482, 24);
+            this.lblFornecedor.Location = new System.Drawing.Point(449, 24);
             this.lblFornecedor.Name = "lblFornecedor";
             this.lblFornecedor.Size = new System.Drawing.Size(77, 16);
             this.lblFornecedor.TabIndex = 115;
@@ -141,7 +142,7 @@
             // 
             // txtFornecedor
             // 
-            this.txtFornecedor.Location = new System.Drawing.Point(482, 43);
+            this.txtFornecedor.Location = new System.Drawing.Point(449, 43);
             this.txtFornecedor.Name = "txtFornecedor";
             this.txtFornecedor.ReadOnly = true;
             this.txtFornecedor.Size = new System.Drawing.Size(211, 22);
@@ -150,7 +151,7 @@
             // lblIdFornecedor
             // 
             this.lblIdFornecedor.AutoSize = true;
-            this.lblIdFornecedor.Location = new System.Drawing.Point(416, 24);
+            this.lblIdFornecedor.Location = new System.Drawing.Point(383, 24);
             this.lblIdFornecedor.Name = "lblIdFornecedor";
             this.lblIdFornecedor.Size = new System.Drawing.Size(53, 16);
             this.lblIdFornecedor.TabIndex = 113;
@@ -158,7 +159,7 @@
             // 
             // txtIDFornecedor
             // 
-            this.txtIDFornecedor.Location = new System.Drawing.Point(416, 43);
+            this.txtIDFornecedor.Location = new System.Drawing.Point(383, 43);
             this.txtIDFornecedor.Name = "txtIDFornecedor";
             this.txtIDFornecedor.Size = new System.Drawing.Size(48, 22);
             this.txtIDFornecedor.TabIndex = 3;
@@ -167,7 +168,7 @@
             // lblSerie
             // 
             this.lblSerie.AutoSize = true;
-            this.lblSerie.Location = new System.Drawing.Point(150, 24);
+            this.lblSerie.Location = new System.Drawing.Point(131, 24);
             this.lblSerie.Name = "lblSerie";
             this.lblSerie.Size = new System.Drawing.Size(39, 16);
             this.lblSerie.TabIndex = 111;
@@ -176,7 +177,7 @@
             // lblNumero
             // 
             this.lblNumero.AutoSize = true;
-            this.lblNumero.Location = new System.Drawing.Point(290, 24);
+            this.lblNumero.Location = new System.Drawing.Point(228, 24);
             this.lblNumero.Name = "lblNumero";
             this.lblNumero.Size = new System.Drawing.Size(55, 16);
             this.lblNumero.TabIndex = 110;
@@ -184,17 +185,18 @@
             // 
             // txtNumero
             // 
-            this.txtNumero.Location = new System.Drawing.Point(290, 43);
-            this.txtNumero.MaxLength = 100;
+            this.txtNumero.Location = new System.Drawing.Point(228, 43);
+            this.txtNumero.MaxLength = 10;
             this.txtNumero.Name = "txtNumero";
             this.txtNumero.Size = new System.Drawing.Size(100, 22);
             this.txtNumero.TabIndex = 2;
             // 
             // txtSerie
             // 
-            this.txtSerie.Location = new System.Drawing.Point(150, 43);
+            this.txtSerie.Location = new System.Drawing.Point(131, 43);
+            this.txtSerie.MaxLength = 5;
             this.txtSerie.Name = "txtSerie";
-            this.txtSerie.Size = new System.Drawing.Size(100, 22);
+            this.txtSerie.Size = new System.Drawing.Size(69, 22);
             this.txtSerie.TabIndex = 1;
             // 
             // lblDataChegada

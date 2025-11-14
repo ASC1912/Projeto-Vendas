@@ -39,6 +39,7 @@ namespace Projeto.Views.Cadastros
             listViewProdutos.SelectedIndexChanged += new EventHandler(listViewProdutos_SelectedIndexChanged);
             txtQuantidade.TextChanged += new EventHandler(CalcularTotalItem);
             txtValorUnitario.TextChanged += new EventHandler(CalcularTotalItem);
+            this.txtValorUnitario.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosEVirgula);
         }
 
         public void setFrmConsultaMesa(object obj)

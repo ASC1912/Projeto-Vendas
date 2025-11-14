@@ -22,7 +22,7 @@ namespace Projeto.Views.Consultas
 
             btnIncluir.Text = "Lançar Manual";
             btnEditar.Text = "Pagar/Baixar";
-            btnDeletar.Text = "Estornar";
+            btnDeletar.Text = "Cancelar"; 
 
             oFrmCadastroContasAPagar = new frmCadastroContasAPagar();
         }
@@ -97,7 +97,7 @@ namespace Projeto.Views.Consultas
             finally
             {
                 estaCarregando = false; 
-                btnDeletar.Text = "Estornar";
+                btnDeletar.Text = "Cancelar";
             }
         }
 
@@ -186,20 +186,11 @@ namespace Projeto.Views.Consultas
                 switch (contaSelecionada.Status)
                 {
                     case "Paga":
-                        var confirmEstorno = MessageBox.Show($"Deseja realmente ESTORNAR o pagamento da conta '{contaSelecionada.Descricao}'?",
-                                                             "Confirmação de Estorno", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-                        if (confirmEstorno == DialogResult.Yes)
-                        {
-                            await controller.Estornar(contaSelecionada);
-                            MessageBox.Show("Pagamento estornado com sucesso! A conta está 'Aberta' novamente.", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            await CarregarContas(); 
-                        }
+                        MessageBox.Show("Não é possível cancelar uma conta que já foi paga.", "Operação Inválida", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         break;
 
                     case "Aberta":
-
-                        string motivo = ""; 
+                        string motivo = "";
                         using (Form prompt = new Form())
                         {
                             prompt.Width = 500;
@@ -215,9 +206,11 @@ namespace Projeto.Views.Consultas
                             Button confirmation = new Button() { Text = "Confirmar", Left = 240, Width = 100, Top = 150, DialogResult = DialogResult.OK };
                             Button cancel = new Button() { Text = "Voltar", Left = 350, Width = 100, Top = 150, DialogResult = DialogResult.Cancel };
 
-                            // Habilita o "Confirmar" apenas se houver texto
                             confirmation.Enabled = false;
                             textBox.TextChanged += (s, ev) => { confirmation.Enabled = !string.IsNullOrWhiteSpace(textBox.Text); };
+
+                            confirmation.Click += (s, ev) => { prompt.Close(); };
+                            cancel.Click += (s, ev) => { prompt.Close(); };
 
                             prompt.Controls.AddRange(new Control[] { textLabel, textBox, confirmation, cancel });
                             prompt.AcceptButton = confirmation;
@@ -225,18 +218,17 @@ namespace Projeto.Views.Consultas
 
                             if (prompt.ShowDialog() == DialogResult.OK)
                             {
-                                motivo = textBox.Text; 
+                                motivo = textBox.Text;
                             }
                             else
                             {
                                 MessageBox.Show("Cancelamento abortado.", "Cancelado", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                return; 
+                                return;
                             }
-                        } 
+                        }
                         await controller.CancelarManual(contaSelecionada, motivo);
                         MessageBox.Show("Conta cancelada com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        await CarregarContas(); 
-
+                        await CarregarContas();
                         break;
 
                     case "Cancelada":
@@ -248,11 +240,11 @@ namespace Projeto.Views.Consultas
                         break;
                 }
             }
-            catch (InvalidOperationException opEx) 
+            catch (InvalidOperationException opEx)
             {
                 MessageBox.Show(opEx.Message, "Operação Inválida", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 MessageBox.Show("Erro ao processar a solicitação: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -268,27 +260,7 @@ namespace Projeto.Views.Consultas
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (listView1.SelectedItems.Count > 0)
-            {
-                ContasAPagar contaSelecionada = (ContasAPagar)listView1.SelectedItems[0].Tag;
 
-                if (contaSelecionada.Status == "Paga")
-                {
-                    btnDeletar.Text = "Estornar";
-                }
-                else if (contaSelecionada.Status == "Aberta")
-                {
-                    btnDeletar.Text = "Cancelar";
-                }
-                else
-                {
-                    btnDeletar.Text = "Estornar";
-                }
-            }
-            else
-            {
-                btnDeletar.Text = "Estornar";
-            }
         }
 
         private async void chkAberta_CheckedChanged(object sender, EventArgs e)

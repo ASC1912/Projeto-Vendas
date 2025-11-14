@@ -1,18 +1,749 @@
-﻿using System;
+﻿using Projeto.Controller;
+using Projeto.Models;
+using Projeto.Utils;
+using Projeto.Views.Consultas;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Projeto.Views.Cadastros
 {
+    // MUDANÇA: Herda de frmBase
     public partial class frmCadastroVenda : Projeto.frmBase
     {
+        #region Variáveis e Propriedades
+
+        private Venda aVenda = new Venda();
+        private VendaController controller = new VendaController();
+
+        private ClienteController clienteController = new ClienteController();
+        private ProdutoController produtoController = new ProdutoController();
+        private CondicaoPagamentoController condicaoPagamentoController = new CondicaoPagamentoController();
+        private FormaPagamentoController formaPagamentoController = new FormaPagamentoController();
+
+        private frmConsultaCliente oFrmConsultaCliente;
+        private frmConsultaProduto oFrmConsultaProduto;
+        private frmConsultaCondPgto oFrmConsultaCondPgto;
+
+        private Produto produtoSelecionado;
+        private CondicaoPagamento condicaoPagamentoSelecionada;
+
+        private List<Control> parte1Controles;
+        private List<Control> parte2Controles;
+        private List<Control> parte3Controles;
+
+        public bool modoCancelamento = false;
+        public bool modoVisualizacao = false;
+
+        #endregion
+
+        #region Construtor e Inicialização
+
         public frmCadastroVenda()
         {
             InitializeComponent();
+
+            DateTime dataAtual = DateTime.Now;
+
+            dtpEmissao.Value = dataAtual;
+            dtpSaida.Value = dataAtual; 
+
+            dtpEmissao.MaxDate = dataAtual;
+            dtpSaida.MinDate = dataAtual.Date;
+
+            AgruparControles();
+            ConfigurarEstadoInicial();
+
+            this.txtQuantidade.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosInteiros);
+            this.txtValorUnitario.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosEVirgula);
+            this.txtFrete.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosEVirgula);
+            this.txtDescontoGeral.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosEVirgula);
+            this.txtIDCliente.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosInteiros);
+            this.txtIdProduto.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosInteiros);
+            this.txtIdCondPgto.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosInteiros);
+
+            txtFrete.TextChanged += new System.EventHandler(this.txtCustosExtras_TextChanged);
+            txtDescontoGeral.TextChanged += new System.EventHandler(this.txtCustosExtras_TextChanged);
+
+            this.dtpEmissao.ValueChanged += new System.EventHandler(this.dtpEmissao_ValueChanged);
         }
+
+        #endregion
+
+        #region Conexões com outros Formulários
+
+        public void setFrmConsultaCliente(object obj)
+        {
+            if (obj != null) oFrmConsultaCliente = (frmConsultaCliente)obj;
+        }
+
+        public void setFrmConsultaProduto(object obj)
+        {
+            if (obj != null) oFrmConsultaProduto = (frmConsultaProduto)obj;
+        }
+
+        public void setFrmConsultaCondPgto(object obj)
+        {
+            if (obj != null) oFrmConsultaCondPgto = (frmConsultaCondPgto)obj;
+        }
+
+        #endregion
+
+        #region Gestão de Estado do Formulário
+
+        private void AgruparControles()
+        {
+            parte1Controles = new List<Control> { txtCodigo, txtSerie, txtNumero, txtIDCliente, txtCliente, btnPesquisarCliente, dtpEmissao, dtpSaida };
+            parte2Controles = new List<Control> { txtIdProduto, txtProduto, btnPesquisarProduto, txtQuantidade, txtValorUnitario, txtTotal, btnAdicionarProduto, btnEditarProduto, btnRemoverProduto, btnLimparProduto, listViewProdutos };
+            parte3Controles = new List<Control> { txtFrete, txtDescontoGeral, txtValorTotal, txtIdCondPgto, txtCondPgto, btnAdicionarCondPgto, btnLimparCondPgto, listViewCondPgto };
+        }
+
+        private void ConfigurarEstadoInicial()
+        {
+            HabilitarControles(parte1Controles, true);
+            HabilitarControles(parte2Controles, false);
+            HabilitarControles(parte3Controles, false);
+            btnSalvar.Enabled = false;
+        }
+
+        private void AtualizarEstadoDosControles()
+        {
+            bool cabecalhoValido = !string.IsNullOrWhiteSpace(txtCodigo.Text) &&
+                                 !string.IsNullOrWhiteSpace(txtSerie.Text) &&
+                                 !string.IsNullOrWhiteSpace(txtNumero.Text) &&
+                                 !string.IsNullOrWhiteSpace(txtIDCliente.Text);
+
+            bool temItens = listViewProdutos.Items.Count > 0;
+
+            HabilitarControles(parte2Controles, cabecalhoValido);
+            HabilitarControles(parte3Controles, temItens);
+            btnSalvar.Enabled = temItens;
+        }
+
+        private void HabilitarControles(List<Control> controles, bool habilitar)
+        {
+            foreach (var control in controles)
+            {
+                control.Enabled = habilitar;
+            }
+        }
+
+        public override void BloquearTxt()
+        {
+            HabilitarControles(parte1Controles, false);
+            HabilitarControles(parte2Controles, false);
+            HabilitarControles(parte3Controles, false);
+            btnSalvar.Enabled = false;
+        }
+
+        public override void DesbloquearTxt()
+        {
+            HabilitarControles(parte1Controles, true);
+        }
+
+        #endregion
+
+        #region Carregamento e Limpeza de Dados
+
+        public override void ConhecaObj(object obj, object ctrl)
+        {
+            if (obj != null) aVenda = (Venda)obj; 
+            if (ctrl != null) controller = (VendaController)ctrl;
+        }
+
+        public override void LimparTxt()
+        {
+            modoVisualizacao = false;
+
+            aVenda = new Venda();
+            txtCodigo.Text = "55"; 
+            txtSerie.Clear();
+            txtNumero.Clear();
+            txtIDCliente.Clear(); 
+            txtCliente.Clear(); 
+
+            DateTime dataAgora = DateTime.Now;
+
+            dtpEmissao.MaxDate = dataAgora;
+            dtpEmissao.Value = dataAgora;
+            dtpSaida.MinDate = dataAgora.Date; 
+            dtpSaida.Value = dataAgora; 
+
+            LimparCamposItem();
+            listViewProdutos.Items.Clear();
+
+            txtFrete.Text = "0,00";
+            txtDescontoGeral.Text = "0,00";
+            txtValorTotal.Clear();
+            LimparCamposCondPgto();
+
+            lblMotivoCancelamento.Visible = false;
+            lblMotivoCancelamento.Text = "Motivo do Cancelamento: ";
+
+            ConfigurarEstadoInicial();
+            CalculaTotalVenda(); 
+        }
+
+        public override async void CarregaTxt()
+        {
+            if (aVenda == null)
+            {
+                MessageBox.Show("Não foi possível carregar os dados da venda.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            txtCodigo.Text = aVenda.Modelo;
+            txtSerie.Text = aVenda.Serie;
+            txtNumero.Text = aVenda.NumeroNota.ToString();
+            txtIDCliente.Text = aVenda.ClienteId.ToString(); 
+            txtCliente.Text = aVenda.NomeCliente; 
+
+            DateTime dataEmissao = aVenda.DataEmissao ?? DateTime.Now;
+            if (dataEmissao > dtpEmissao.MaxDate)
+            {
+                dtpEmissao.MaxDate = dataEmissao;
+            }
+            dtpEmissao.Value = dataEmissao;
+
+            DateTime dataSaida = aVenda.DataSaida ?? DateTime.Now; 
+            if (dataSaida < dtpSaida.MinDate) 
+            {
+                dtpSaida.MinDate = dataSaida; 
+            }
+            dtpSaida.Value = dataSaida; 
+
+            listViewProdutos.Items.Clear();
+            if (aVenda.Itens != null)
+            {
+                foreach (var itemVenda in aVenda.Itens) // MUDANÇA
+                {
+                    ListViewItem item = new ListViewItem(itemVenda.ProdutoId.ToString());
+                    item.SubItems.AddRange(new string[] {
+                        itemVenda.NomeProduto,
+                        itemVenda.NomeUnidadeMedida ?? "UN",
+                        itemVenda.Quantidade.ToString(),
+                        itemVenda.ValorUnitario.ToString("F2"),
+                        itemVenda.ValorTotalItem.ToString("F2")
+                    });
+                    listViewProdutos.Items.Add(item);
+                }
+            }
+
+            txtFrete.Text = aVenda.ValorFrete.ToString("F2");
+            txtDescontoGeral.Text = aVenda.ValorDesconto.ToString("F2");
+
+            if (aVenda.CondicaoPagamentoId.HasValue)
+            {
+                condicaoPagamentoSelecionada = await condicaoPagamentoController.BuscarPorId(aVenda.CondicaoPagamentoId.Value);
+                if (condicaoPagamentoSelecionada != null)
+                {
+                    txtIdCondPgto.Text = condicaoPagamentoSelecionada.Id.ToString();
+                    txtCondPgto.Text = condicaoPagamentoSelecionada.Descricao;
+                    await AtualizarListViewCondPgto(condicaoPagamentoSelecionada);
+                }
+            }
+
+            chkInativo.Checked = !aVenda.Ativo;
+            lblDataCriacao.Text = aVenda.DataCadastro.HasValue ? $"Criado em: {aVenda.DataCadastro.Value:dd/MM/yyyy HH:mm}" : "Criado em: -";
+            lblDataModificacao.Text = aVenda.DataAlteracao.HasValue ? $"Modificado em: {aVenda.DataAlteracao.Value:dd/MM/yyyy HH:mm}" : "Modificado em: -";
+
+            if (!aVenda.Ativo)
+            {
+                lblMotivoCancelamento.Visible = true;
+                lblMotivoCancelamento.Text = "Motivo do Cancelamento: " + aVenda.Observacao;
+                BloquearTxt();
+                btnSalvar.Enabled = false;
+            }
+            else
+            {
+                lblMotivoCancelamento.Visible = false;
+
+                if (!modoVisualizacao && !modoCancelamento)
+                {
+                    AtualizarEstadoDosControles();
+                }
+            }
+
+            CalculaTotalVenda(); 
+        }
+
+        #endregion
+
+        #region Eventos de Controles
+
+        private void dtpEmissao_ValueChanged(object sender, EventArgs e)
+        {
+            dtpSaida.MinDate = dtpEmissao.Value.Date; 
+            if (dtpSaida.Value.Date < dtpEmissao.Value.Date) 
+            {
+                dtpSaida.Value = dtpEmissao.Value.Date; 
+            }
+        }
+
+        private void btnSalvar_Click(object sender, EventArgs e)
+        {
+            if (modoCancelamento)
+            {
+                using (Form prompt = new Form())
+                {
+                    prompt.Width = 500; prompt.Height = 250;
+                    prompt.Text = "Motivo do Cancelamento";
+                    prompt.StartPosition = FormStartPosition.CenterParent;
+                    prompt.FormBorderStyle = FormBorderStyle.FixedDialog;
+                    prompt.MinimizeBox = false; prompt.MaximizeBox = false;
+
+                    Label textLabel = new Label() { Left = 50, Top = 20, Width = 400, Text = "Para cancelar esta nota, digite o motivo do cancelamento abaixo." };
+                    TextBox textBox = new TextBox() { Left = 50, Top = 50, Width = 400, Height = 80, Multiline = true, ScrollBars = ScrollBars.Vertical, MaxLength = 255 };
+                    Button confirmation = new Button() { Text = "Confirmar", Left = 240, Width = 100, Top = 150, DialogResult = DialogResult.OK };
+                    Button cancel = new Button() { Text = "Voltar", Left = 350, Width = 100, Top = 150, DialogResult = DialogResult.Cancel };
+
+                    confirmation.Enabled = false;
+                    textBox.TextChanged += (s, ev) => { confirmation.Enabled = !string.IsNullOrWhiteSpace(textBox.Text); };
+                    confirmation.Click += (s, ev) => { prompt.Close(); };
+                    cancel.Click += (s, ev) => { prompt.Close(); };
+
+                    prompt.Controls.AddRange(new Control[] { textBox, confirmation, cancel, textLabel });
+                    prompt.AcceptButton = confirmation;
+                    prompt.CancelButton = cancel;
+
+                    if (prompt.ShowDialog() == DialogResult.OK)
+                    {
+                        try
+                        {
+                            if (aVenda != null)
+                            {
+                                aVenda.Observacao = textBox.Text;
+                                controller.Cancelar(aVenda); 
+                                MessageBox.Show("Venda cancelada com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information); // MUDANÇA
+                                this.Close();
+                            }
+                        }
+                        catch (Exception ex) { MessageBox.Show($"Erro ao cancelar a venda: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error); } // MUDANÇA
+                    }
+                }
+                return;
+            }
+
+            if (dtpEmissao.Value.Date > DateTime.Now.Date)
+            {
+                MessageBox.Show("A Data de Emissão não pode ser posterior à data atual.", "Data Inválida", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                dtpEmissao.Focus();
+                return;
+            }
+
+            if (dtpSaida.Value.Date < dtpEmissao.Value.Date) 
+            {
+                MessageBox.Show("A Data de Saída não pode ser anterior à Data de Emissão.", "Data Inválida", MessageBoxButtons.OK, MessageBoxIcon.Warning); // MUDANÇA
+                dtpSaida.Focus();
+                return;
+            }
+
+            if (!ValidarDadosGerais()) return;
+
+            try
+            {
+                Venda novaVenda = MontarObjetoVenda(); 
+                // GerarParcelas(novaVenda);
+                controller.Salvar(novaVenda); 
+                MessageBox.Show("Venda salva com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information); // MUDANÇA
+                this.Close();
+            }
+            catch (InvalidOperationException opEx) { MessageBox.Show(opEx.Message, "Erro de Operação", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+            catch (Exception ex) { MessageBox.Show("Ocorreu um erro ao salvar a venda: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error); } // MUDANÇA
+        }
+
+        private async void txtIDCliente_Leave(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtIDCliente.Text)) { txtCliente.Clear(); return; }
+            if (int.TryParse(txtIDCliente.Text, out int id))
+            {
+                Cliente c = await clienteController.BuscarPorId(id); 
+                txtCliente.Text = c?.Nome;
+                if (c == null) { MessageBox.Show("Cliente não encontrado."); txtCliente.Clear(); } 
+            }
+            else { MessageBox.Show("ID de Cliente inválido."); txtCliente.Clear(); } 
+            AtualizarEstadoDosControles();
+        }
+
+        private async void txtIdProduto_Leave(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtIdProduto.Text)) { LimparCamposItemParcial(); return; }
+            if (int.TryParse(txtIdProduto.Text, out int id))
+            {
+                Produto p = await produtoController.BuscarPorId(id);
+                if (p != null)
+                {
+                    produtoSelecionado = p;
+                    txtProduto.Text = p.NomeProduto;
+                    txtValorUnitario.Text = p.PrecoVenda.ToString("F2");
+                    txtQuantidade.Text = "1";
+                    txtQuantidade.Focus();
+                }
+                else { MessageBox.Show("Produto não encontrado."); LimparCamposItemParcial(); }
+            }
+            else { MessageBox.Show("ID do Produto inválido."); LimparCamposItemParcial(); }
+        }
+
+        private async void txtIdCondPgto_Leave(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtIdCondPgto.Text)) { LimparCamposCondPgto(); return; }
+            if (int.TryParse(txtIdCondPgto.Text, out int id))
+            {
+                condicaoPagamentoSelecionada = await condicaoPagamentoController.BuscarPorId(id);
+                if (condicaoPagamentoSelecionada != null)
+                {
+                    txtCondPgto.Text = condicaoPagamentoSelecionada.Descricao;
+                    await AtualizarListViewCondPgto(condicaoPagamentoSelecionada);
+                }
+                else { MessageBox.Show("Condição de Pagamento não encontrada."); LimparCamposCondPgto(); }
+            }
+            else { MessageBox.Show("ID da Condição de Pagamento inválido."); LimparCamposCondPgto(); }
+        }
+
+        private void txtQuantidade_TextChanged(object sender, EventArgs e) => CalcularTotalItem();
+        private void txtValorUnitario_TextChanged(object sender, EventArgs e) => CalcularTotalItem();
+        private void txtCustosExtras_TextChanged(object sender, EventArgs e) => CalculaTotalVenda(); // MUDANÇA
+
+        private void btnAdicionarProduto_Click(object sender, EventArgs e)
+        {
+            if (!ValidarCabecalho())
+            {
+                MessageBox.Show("Preencha todos os dados do cabeçalho da nota antes de adicionar produtos.", "Dados Incompletos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (produtoSelecionado == null || !decimal.TryParse(txtQuantidade.Text, out decimal qtd) || qtd <= 0 || !decimal.TryParse(txtValorUnitario.Text, out _))
+            {
+                MessageBox.Show("Selecione um produto e informe quantidade e valor válidos.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            ListViewItem item = new ListViewItem(produtoSelecionado.Id.ToString());
+            item.SubItems.AddRange(new string[] {
+                produtoSelecionado.NomeProduto,
+                produtoSelecionado.NomeUnidadeMedida ?? "UN",
+                txtQuantidade.Text,
+                txtValorUnitario.Text,
+                txtTotal.Text
+            });
+            listViewProdutos.Items.Add(item);
+
+            LimparCamposItem();
+            CalculaTotalVenda(); 
+            AtualizarEstadoDosControles();
+        }
+
+        private void btnRemoverProduto_Click(object sender, EventArgs e)
+        {
+            if (listViewProdutos.SelectedItems.Count > 0)
+            {
+                listViewProdutos.Items.Remove(listViewProdutos.SelectedItems[0]);
+                CalculaTotalVenda(); 
+                AtualizarEstadoDosControles();
+            }
+            else { MessageBox.Show("Selecione um produto para remover."); }
+        }
+
+        private void btnPesquisarCliente_Click(object sender, EventArgs e)
+        {
+            if (oFrmConsultaCliente == null) oFrmConsultaCliente = new frmConsultaCliente();
+            oFrmConsultaCliente.ModoSelecao = true;
+            if (oFrmConsultaCliente.ShowDialog() == DialogResult.OK && oFrmConsultaCliente.ClienteSelecionado != null)
+            {
+                var c = oFrmConsultaCliente.ClienteSelecionado;
+                txtIDCliente.Text = c.Id.ToString();
+                txtCliente.Text = c.Nome;
+                txtIDCliente_Leave(sender, e);
+            }
+            oFrmConsultaCliente.ModoSelecao = false;
+        }
+
+        private void btnPesquisarProduto_Click(object sender, EventArgs e)
+        {
+            if (oFrmConsultaProduto == null) oFrmConsultaProduto = new frmConsultaProduto();
+            oFrmConsultaProduto.ModoSelecao = true;
+            if (oFrmConsultaProduto.ShowDialog() == DialogResult.OK && oFrmConsultaProduto.ProdutoSelecionado != null)
+            {
+                produtoSelecionado = oFrmConsultaProduto.ProdutoSelecionado;
+                txtIdProduto.Text = produtoSelecionado.Id.ToString();
+                txtProduto.Text = produtoSelecionado.NomeProduto;
+                txtValorUnitario.Text = produtoSelecionado.PrecoVenda.ToString("F2");
+                txtQuantidade.Text = "1";
+                txtQuantidade.Focus();
+            }
+            oFrmConsultaProduto.ModoSelecao = false;
+        }
+
+        private async void btnAdicionarCondPgto_Click(object sender, EventArgs e)
+        {
+            if (oFrmConsultaCondPgto == null) oFrmConsultaCondPgto = new frmConsultaCondPgto();
+            oFrmConsultaCondPgto.ModoSelecao = true;
+            if (oFrmConsultaCondPgto.ShowDialog() == DialogResult.OK && oFrmConsultaCondPgto.CondicaoSelecionado != null)
+            {
+                condicaoPagamentoSelecionada = oFrmConsultaCondPgto.CondicaoSelecionado;
+                txtIdCondPgto.Text = condicaoPagamentoSelecionada.Id.ToString();
+                txtCondPgto.Text = condicaoPagamentoSelecionada.Descricao;
+                await AtualizarListViewCondPgto(condicaoPagamentoSelecionada);
+            }
+            oFrmConsultaCondPgto.ModoSelecao = false;
+        }
+
+        private void btnLimparProduto_Click(object sender, EventArgs e)
+        {
+            listViewProdutos.Items.Clear();
+            CalculaTotalVenda();
+            AtualizarEstadoDosControles();
+        }
+
+        private void btnLimparCondPgto_Click(object sender, EventArgs e) => LimparCamposCondPgto();
+
+        #endregion
+
+        #region Lógica de Cálculos e Suporte
+
+        private void LimparCamposItem()
+        {
+            produtoSelecionado = null;
+            txtIdProduto.Clear();
+            txtProduto.Clear();
+            txtQuantidade.Clear();
+            txtValorUnitario.Clear();
+            txtTotal.Clear();
+            btnPesquisarProduto.Focus();
+        }
+
+        private void LimparCamposItemParcial()
+        {
+            txtProduto.Clear();
+            txtValorUnitario.Clear();
+            produtoSelecionado = null;
+        }
+
+        private void LimparCamposCondPgto()
+        {
+            txtIdCondPgto.Clear();
+            txtCondPgto.Clear();
+            listViewCondPgto.Items.Clear();
+            condicaoPagamentoSelecionada = null;
+            CalculaTotalVenda(); 
+        }
+
+        private async Task AtualizarListViewCondPgto(CondicaoPagamento condicao)
+        {
+            listViewCondPgto.Items.Clear();
+
+            DateTime dataBase = dtpEmissao.Value.Date;
+
+            if (condicao?.Parcelas != null)
+            {
+                foreach (var parcela in condicao.Parcelas.OrderBy(p => p.NumParcela))
+                {
+                    ListViewItem item = new ListViewItem(parcela.NumParcela.ToString());
+
+                    DateTime dataVencimento = dataBase.AddDays(parcela.PrazoDias);
+                    item.SubItems.Add(dataVencimento.ToString("dd/MM/yyyy")); 
+
+                    string desc = parcela.FormaPagamento?.Descricao ?? await formaPagamentoController.ObterDescricaoFormaPagamento(parcela.FormaPagamentoId);
+                    item.SubItems.Add(desc); 
+                    listViewCondPgto.Items.Add(item);
+                }
+            }
+            CalculaTotalVenda();
+        }
+
+        private void CalcularTotalItem()
+        {
+            if (decimal.TryParse(txtQuantidade.Text, out decimal quantidade) && decimal.TryParse(txtValorUnitario.Text, out decimal valorUnitario))
+            {
+                txtTotal.Text = (quantidade * valorUnitario).ToString("F2");
+            }
+            else
+            {
+                txtTotal.Text = "0,00";
+            }
+        }
+
+        private void CalculaTotalVenda()
+        {
+            decimal totalProdutos = 0;
+            foreach (ListViewItem item in listViewProdutos.Items)
+            {
+                totalProdutos += Convert.ToDecimal(item.SubItems[5].Text);
+            }
+            lblTotalProdutos.Text = $"Total Produtos (R$): {totalProdutos:F2}";
+
+            decimal.TryParse(txtFrete.Text, out decimal frete);
+            decimal.TryParse(txtDescontoGeral.Text, out decimal desconto);
+
+            decimal valorTotalVenda = totalProdutos + frete - desconto;
+            txtValorTotal.Text = valorTotalVenda.ToString("F2");
+
+            CalcularEExibirParcelas();
+        }
+
+        private void CalcularEExibirParcelas()
+        {
+            decimal totalParcelas = 0;
+            if (!decimal.TryParse(txtValorTotal.Text, out decimal valorTotalVenda) || valorTotalVenda <= 0 ||
+              condicaoPagamentoSelecionada == null || condicaoPagamentoSelecionada.Parcelas == null || condicaoPagamentoSelecionada.Parcelas.Count == 0)
+            {
+                foreach (ListViewItem item in listViewCondPgto.Items)
+                {
+                    while (item.SubItems.Count <= 3) item.SubItems.Add("");
+                    item.SubItems[3].Text = "0,00"; 
+                }
+                lblTotalCondiçãoPgto.Text = "Total (R$): 0,00";
+                return;
+            }
+
+            List<decimal> valoresCalculados = new List<decimal>();
+            decimal valorAcumulado = 0;
+            var parcelasOrdenadas = condicaoPagamentoSelecionada.Parcelas.OrderBy(p => p.NumParcela);
+
+            foreach (var parcelaDefinicao in parcelasOrdenadas)
+            {
+                decimal porcentagem = parcelaDefinicao.Porcentagem;
+                decimal valorParcela = valorTotalVenda * (porcentagem / 100);
+
+                valorParcela = Math.Round(valorParcela, 2);
+                valorAcumulado += valorParcela;
+
+                if (parcelaDefinicao.NumParcela == parcelasOrdenadas.Last().NumParcela)
+                {
+                    valorParcela += (valorTotalVenda - valorAcumulado);
+                }
+                valoresCalculados.Add(valorParcela);
+                totalParcelas += valorParcela;
+            }
+
+            int index = 0;
+            foreach (ListViewItem item in listViewCondPgto.Items)
+            {
+                if (index < valoresCalculados.Count)
+                {
+                    while (item.SubItems.Count <= 3) item.SubItems.Add("");
+                    item.SubItems[3].Text = valoresCalculados[index].ToString("F2"); 
+                    index++;
+                }
+            }
+
+            lblTotalCondiçãoPgto.Text = $"Total (R$): {totalParcelas:F2}";
+        }
+
+        #endregion
+
+        #region Preparação de Dados para Salvar
+
+        private bool ValidarCabecalho()
+        {
+            return !string.IsNullOrWhiteSpace(txtCodigo.Text) &&
+                   !string.IsNullOrWhiteSpace(txtSerie.Text) &&
+                   !string.IsNullOrWhiteSpace(txtNumero.Text) &&
+                   !string.IsNullOrWhiteSpace(txtIDCliente.Text);
+        }
+
+        private bool ValidarDadosGerais()
+        {
+            if (!int.TryParse(txtNumero.Text, out _) || !int.TryParse(txtIDCliente.Text, out _))
+            {
+                MessageBox.Show("Os dados do cabeçalho da nota são obrigatórios e devem ser válidos.", "Validação", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+            if (listViewProdutos.Items.Count == 0)
+            {
+                MessageBox.Show("É necessário adicionar pelo menos um produto à venda.", "Validação", MessageBoxButtons.OK, MessageBoxIcon.Warning); // MUDANÇA
+                return false;
+            }
+            if (condicaoPagamentoSelecionada == null)
+            {
+                MessageBox.Show("É necessário selecionar uma condição de pagamento.", "Validação", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+            return true;
+        }
+
+        private Venda MontarObjetoVenda()
+        {
+            Venda venda = new Venda
+            {
+                Modelo = txtCodigo.Text,
+                Serie = txtSerie.Text,
+                NumeroNota = int.Parse(txtNumero.Text),
+                ClienteId = int.Parse(txtIDCliente.Text), 
+                DataEmissao = dtpEmissao.Value,
+                DataSaida = dtpSaida.Value,
+                Ativo = !chkInativo.Checked,
+                ValorFrete = string.IsNullOrWhiteSpace(txtFrete.Text) ? 0 : Convert.ToDecimal(txtFrete.Text),
+                ValorDesconto = string.IsNullOrWhiteSpace(txtDescontoGeral.Text) ? 0 : Convert.ToDecimal(txtDescontoGeral.Text),
+                ValorTotal = string.IsNullOrWhiteSpace(txtValorTotal.Text) ? 0 : Convert.ToDecimal(txtValorTotal.Text),
+                CondicaoPagamentoId = condicaoPagamentoSelecionada?.Id
+            };
+
+            foreach (ListViewItem item in listViewProdutos.Items)
+            {
+                venda.Itens.Add(new ItemVenda 
+                {
+                    ProdutoId = int.Parse(item.SubItems[0].Text),
+                    Quantidade = decimal.Parse(item.SubItems[3].Text),
+                    ValorUnitario = decimal.Parse(item.SubItems[4].Text),
+                    ValorTotalItem = decimal.Parse(item.SubItems[5].Text)
+                });
+            }
+
+            return venda;
+        }
+
+        /*
+        private void GerarParcelas(Venda venda)
+        {
+            venda.Parcelas.Clear();
+            if (condicaoPagamentoSelecionada == null || condicaoPagamentoSelecionada.Parcelas == null) return;
+            
+            DateTime dataBase = dtpEmissao.Value.Date; 
+            decimal valorTotalVenda = venda.ValorTotal;
+            decimal valorAcumulado = 0;
+
+            var parcelasOrdenadas = condicaoPagamentoSelecionada.Parcelas.OrderBy(p => p.NumParcela);
+
+            foreach (var parcelaDefinicao in parcelasOrdenadas)
+            {
+                decimal valorParcela = valorTotalVenda * (parcelaDefinicao.Porcentagem / 100);
+                valorParcela = Math.Round(valorParcela, 2);
+                valorAcumulado += valorParcela;
+
+                if (parcelaDefinicao.NumParcela == parcelasOrdenadas.Last().NumParcela)
+                {
+                    valorParcela += (valorTotalVenda - valorAcumulado);
+                }
+
+                DateTime dataVencimento = dataBase.AddDays(parcelaDefinicao.PrazoDias);
+
+                ContasAReceber novaConta = new ContasAReceber // MUDANÇA
+                {
+                    VendaModelo = venda.Modelo,
+                    VendaSerie = venda.Serie,
+                    VendaNumeroNota = venda.NumeroNota,
+                    VendaClienteId = venda.ClienteId,
+                    NumeroParcela = parcelaDefinicao.NumParcela,
+                    ValorVencimento = valorParcela, 
+                    DataVencimento = dataVencimento,
+                    Descricao = $"Parcela {parcelaDefinicao.NumParcela}/{condicaoPagamentoSelecionada.Parcelas.Count} NFe {venda.NumeroNota}",                                                                                                                   
+                    Ativo = true,
+                    Status = "Aberta",
+                    ClienteId = venda.ClienteId
+                };
+                venda.Parcelas.Add(novaConta); // MUDANÇA
+            }
+
+            decimal totalParcelasGeradas = venda.Parcelas.Sum(p => p.ValorVencimento);
+            if (Math.Abs(totalParcelasGeradas - valorTotalVenda) > 0.01m)
+            {
+                MessageBox.Show($"Erro de arredondamento: O total das parcelas ({totalParcelasGeradas:C2}) não bate com o total da venda ({valorTotalVenda:C2}).", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                venda.Parcelas.Clear(); 
+            }
+        }
+        */
+        #endregion
     }
 }

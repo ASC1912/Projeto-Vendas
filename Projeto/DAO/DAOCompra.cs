@@ -161,7 +161,6 @@ namespace Projeto.DAO
                     {
                         string insertItemQuery = @"INSERT INTO ItensCompra (CompraModelo, CompraSerie, CompraNumeroNota, CompraFornecedorId, ProdutoId, Quantidade, ValorUnitario, ValorTotalItem) VALUES (@CompraModelo, @CompraSerie, @CompraNumeroNota, @CompraFornecedorId, @ProdutoId, @Quantidade, @ValorUnitario, @ValorTotalItem)";
 
-                        // Lógica para calcular o custo real dos produtos
                         decimal totalCustosAdicionais = compra.ValorFrete + compra.Seguro + compra.Despesas;
                         decimal valorTotalCompra = compra.Itens.Sum(i => i.ValorTotalItem);
 
@@ -191,39 +190,11 @@ namespace Projeto.DAO
                         }
                     }
 
-                    /*
-                    if (compra.ParcelasCompra != null && compra.ParcelasCompra.Count > 0)
-                    {
-                        string insertParcelaQuery = @"
-                            INSERT INTO ParcelasCompra (
-                                CompraModelo, CompraSerie, CompraNumeroNota, CompraFornecedorId, NumeroParcela, 
-                                ValorParcela, DataVencimento
-                            ) VALUES (
-                                @CompraModelo, @CompraSerie, @CompraNumeroNota, @CompraFornecedorId, @NumeroParcela, 
-                                @ValorParcela, @DataVencimento
-                            )";
 
-                        foreach (var parcela in compra.ParcelasCompra)
-                        {
-                            using (MySqlCommand cmdParcela = new MySqlCommand(insertParcelaQuery, conn, tran))
-                            {
-                                cmdParcela.Parameters.AddWithValue("@CompraModelo", parcela.CompraModelo);
-                                cmdParcela.Parameters.AddWithValue("@CompraSerie", parcela.CompraSerie);
-                                cmdParcela.Parameters.AddWithValue("@CompraNumeroNota", parcela.CompraNumeroNota);
-                                cmdParcela.Parameters.AddWithValue("@CompraFornecedorId", parcela.CompraFornecedorId);
-                                cmdParcela.Parameters.AddWithValue("@NumeroParcela", parcela.NumeroParcela);
-                                cmdParcela.Parameters.AddWithValue("@ValorParcela", parcela.ValorParcela);
-                                cmdParcela.Parameters.AddWithValue("@DataVencimento", parcela.DataVencimento);
-                                cmdParcela.ExecuteNonQuery();
-                            }
-                        }
-                    }
-                    */
 
                     if (compra.Parcelas != null && compra.Parcelas.Count > 0)
                     {
-                        // Agora, iteramos a lista de ContasAPagar (que chamamos de 'Parcelas' no Model)
-                        // e chamamos o DAOContasAPagar para salvar cada uma.
+
                         foreach (var conta in compra.Parcelas)
                         {
                             conta.FornecedorId = compra.FornecedorId;
@@ -248,6 +219,29 @@ namespace Projeto.DAO
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
+
+
+                string checkPagamentosQuery = @"
+                    SELECT COUNT(*) FROM ContasAPagar 
+                    WHERE CompraModelo = @Modelo 
+                      AND CompraSerie = @Serie 
+                      AND CompraNumeroNota = @NumeroNota 
+                      AND CompraFornecedorId = @FornecedorId 
+                      AND Status = 'Paga'";
+
+                using (MySqlCommand checkCmd = new MySqlCommand(checkPagamentosQuery, conn))
+                {
+                    checkCmd.Parameters.AddWithValue("@Modelo", compra.Modelo);
+                    checkCmd.Parameters.AddWithValue("@Serie", compra.Serie);
+                    checkCmd.Parameters.AddWithValue("@NumeroNota", compra.NumeroNota);
+                    checkCmd.Parameters.AddWithValue("@FornecedorId", compra.FornecedorId);
+
+                    if (Convert.ToInt32(checkCmd.ExecuteScalar()) > 0)
+                    {
+                        throw new InvalidOperationException("Esta compra não pode ser cancelada, pois já possui uma ou mais parcelas pagas.");
+                    }
+                }
+
                 MySqlTransaction tran = conn.BeginTransaction();
 
                 DAOContasAPagar daoContas = new DAOContasAPagar();

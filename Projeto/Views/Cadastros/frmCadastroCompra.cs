@@ -49,10 +49,20 @@ namespace Projeto.Views.Cadastros
 
             dtpEmissao.MaxDate = dataAtual;
 
-            dtpChegada.MinDate = dataAtual.Date;
+            //dtpChegada.MinDate = dataAtual.Date;
+            dtpChegada.MaxDate = dataAtual.Date; 
 
             AgruparControles();
             ConfigurarEstadoInicial();
+
+            this.txtQuantidade.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosInteiros);
+            this.txtValorUnitario.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosEVirgula);
+            this.txtFrete.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosEVirgula);
+            this.txtSeguro.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosEVirgula);
+            this.txtDespesas.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosEVirgula);
+            this.txtIDFornecedor.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosInteiros);
+            this.txtIdProduto.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosInteiros);
+            this.txtIdCondPgto.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosInteiros);
 
             txtFrete.TextChanged += new System.EventHandler(this.txtCustosExtras_TextChanged);
             txtSeguro.TextChanged += new System.EventHandler(this.txtCustosExtras_TextChanged);
@@ -157,7 +167,7 @@ namespace Projeto.Views.Cadastros
 
             dtpEmissao.MaxDate = dataAgora;
             dtpEmissao.Value = dataAgora;
-            dtpChegada.Value = dataAgora;
+            dtpChegada.Value = dataAgora.Date;
 
             LimparCamposItem();
             listViewProdutos.Items.Clear();
@@ -197,6 +207,14 @@ namespace Projeto.Views.Cadastros
             dtpEmissao.Value = dataEmissao;
 
             DateTime dataChegada = aCompra.DataChegada ?? DateTime.Now;
+
+            DateTime maxDatePermitida = DateTime.Now;
+            if (dataChegada > maxDatePermitida)
+            {
+                maxDatePermitida = dataChegada;
+            }
+            dtpChegada.MaxDate = maxDatePermitida;
+
             if (dataChegada < dtpChegada.MinDate)
             {
                 dtpChegada.MinDate = dataChegada;
@@ -323,9 +341,9 @@ namespace Projeto.Views.Cadastros
                 return;
             }
 
-            if (dtpChegada.Value.Date < dtpEmissao.Value.Date)
+            if (dtpChegada.Value.Date > DateTime.Now.Date)
             {
-                MessageBox.Show("A Data de Chegada não pode ser anterior à Data de Emissão.", "Data Inválida", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("A Data de Chegada não pode ser uma data futura.", "Data Inválida", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 dtpChegada.Focus();
                 return;
             }
@@ -346,14 +364,55 @@ namespace Projeto.Views.Cadastros
 
         private async void txtIDFornecedor_Leave(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtIDFornecedor.Text)) { txtFornecedor.Clear(); return; }
+            if (string.IsNullOrWhiteSpace(txtIDFornecedor.Text))
+            {
+                txtFornecedor.Clear();
+                LimparCamposCondPgto(); 
+                AtualizarEstadoDosControles();
+                return;
+            }
+
             if (int.TryParse(txtIDFornecedor.Text, out int id))
             {
-                Fornecedor f = await fornecedorController.BuscarPorId(id);
+                Fornecedor f = await fornecedorController.BuscarPorId(id);
                 txtFornecedor.Text = f?.Nome;
-                if (f == null) { MessageBox.Show("Fornecedor não encontrado."); txtFornecedor.Clear(); }
+
+                if (f == null)
+                {
+                    MessageBox.Show("Fornecedor não encontrado.");
+                    txtFornecedor.Clear();
+                    LimparCamposCondPgto();
+                }
+                else
+                {
+                    
+                    if (f.IdCondicao.HasValue)
+                    {
+                        condicaoPagamentoSelecionada = await condicaoPagamentoController.BuscarPorId(f.IdCondicao.Value);
+                        if (condicaoPagamentoSelecionada != null)
+                        {
+                            txtIdCondPgto.Text = condicaoPagamentoSelecionada.Id.ToString();
+                            txtCondPgto.Text = condicaoPagamentoSelecionada.Descricao;
+                            await AtualizarListViewCondPgto(condicaoPagamentoSelecionada);
+                        }
+                        else
+                        {
+                            LimparCamposCondPgto();
+                        }
+                    }
+                    else
+                    {
+                        LimparCamposCondPgto();
+                    }
+                }
             }
-            else { MessageBox.Show("ID de Fornecedor inválido."); txtFornecedor.Clear(); }
+            else
+            {
+                MessageBox.Show("ID de Fornecedor inválido.");
+                txtFornecedor.Clear();
+                LimparCamposCondPgto();
+            }
+
             AtualizarEstadoDosControles();
         }
 

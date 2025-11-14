@@ -30,6 +30,10 @@ namespace Projeto.Views.Cadastros
             cbTipo.SelectedIndex = 0;
             cbTipo.SelectedIndexChanged += cbTipo_SelectedIndexChanged;
             cbTipo_SelectedIndexChanged(null, null);
+
+            this.txtNumEnd.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosInteiros);
+            this.txtIdCidade.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosInteiros);
+            this.txtIdCondPgto.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosInteiros);
         }
 
         public override void ConhecaObj(object obj, object ctrl)

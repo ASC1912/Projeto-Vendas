@@ -67,6 +67,29 @@ namespace Projeto
         }
 
 
+        protected void TextBox_KeyPress_ApenasNumerosEVirgula(object sender, KeyPressEventArgs e)
+        {
+
+            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar) && e.KeyChar != ',')
+            {
+                e.Handled = true;
+            }
+
+            TextBox textBox = sender as TextBox;
+            if (e.KeyChar == ',' && textBox.Text.Contains(","))
+            {
+                e.Handled = true;
+            }
+        }
+
+        protected void TextBox_KeyPress_ApenasNumerosInteiros(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
+
 
         public virtual void ConfigurarFormularioBase()
         {

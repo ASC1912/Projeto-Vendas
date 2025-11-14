@@ -67,6 +67,7 @@
             // txtCodigo
             // 
             this.txtCodigo.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtCodigo.MaxLength = 5;
             this.txtCodigo.TabIndex = 0;
             // 
             // btnSair
@@ -259,6 +260,7 @@
             // txtNumero
             // 
             this.txtNumero.Location = new System.Drawing.Point(304, 30);
+            this.txtNumero.MaxLength = 10;
             this.txtNumero.Name = "txtNumero";
             this.txtNumero.Size = new System.Drawing.Size(100, 22);
             this.txtNumero.TabIndex = 2;
@@ -266,6 +268,7 @@
             // txtSerie
             // 
             this.txtSerie.Location = new System.Drawing.Point(164, 30);
+            this.txtSerie.MaxLength = 5;
             this.txtSerie.Name = "txtSerie";
             this.txtSerie.Size = new System.Drawing.Size(100, 22);
             this.txtSerie.TabIndex = 1;

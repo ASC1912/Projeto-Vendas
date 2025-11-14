@@ -1,6 +1,6 @@
 ﻿namespace Projeto.Views.Consultas
 {
-    partial class frmConsultaCompra
+    partial class frmConsultaVenda
     {
         /// <summary>
         /// Variável de designer necessária.
@@ -31,11 +31,11 @@
             this.Modelo = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Serie = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Numero = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.Fornecedor = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Cliente = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.DataEmissao = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.DataChegada = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.DataSaida = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ValorTotal = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.CondPgto = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.CondicaoPagamento = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Status = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
@@ -45,11 +45,11 @@
             this.Modelo,
             this.Serie,
             this.Numero,
-            this.Fornecedor,
+            this.Cliente,
             this.DataEmissao,
-            this.DataChegada,
+            this.DataSaida,
             this.ValorTotal,
-            this.CondPgto,
+            this.CondicaoPagamento,
             this.Status});
             // 
             // btnDeletar
@@ -78,11 +78,12 @@
             // 
             this.Numero.Text = "Número";
             this.Numero.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.Numero.Width = 100;
             // 
-            // Fornecedor
+            // Cliente
             // 
-            this.Fornecedor.Text = "Fornecedor";
-            this.Fornecedor.Width = 200;
+            this.Cliente.Text = "Cliente";
+            this.Cliente.Width = 280;
             // 
             // DataEmissao
             // 
@@ -90,11 +91,11 @@
             this.DataEmissao.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.DataEmissao.Width = 120;
             // 
-            // DataChegada
+            // DataSaida
             // 
-            this.DataChegada.Text = "Data de Chegada";
-            this.DataChegada.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.DataChegada.Width = 120;
+            this.DataSaida.Text = "Data de Saída";
+            this.DataSaida.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.DataSaida.Width = 120;
             // 
             // ValorTotal
             // 
@@ -102,23 +103,23 @@
             this.ValorTotal.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.ValorTotal.Width = 100;
             // 
-            // CondPgto
+            // CondicaoPagamento
             // 
-            this.CondPgto.Text = "CondPgto";
-            this.CondPgto.Width = 150;
+            this.CondicaoPagamento.Text = "CondPgto";
+            this.CondicaoPagamento.Width = 120;
             // 
             // Status
             // 
             this.Status.Text = "Status";
             this.Status.Width = 70;
             // 
-            // frmConsultaCompra
+            // frmConsultaVenda
             // 
             //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             //this.ClientSize = new System.Drawing.Size(1342, 681);
-            this.Name = "frmConsultaCompra";
-            this.Text = "Consulta Compra";
-            this.Load += new System.EventHandler(this.frmConsultaCompra_Load);
+            this.Name = "frmConsultaVenda";
+            this.Text = "Consulta Venda";
+            this.Load += new System.EventHandler(this.frmConsultaVenda_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -129,11 +130,11 @@
         private System.Windows.Forms.ColumnHeader Modelo;
         private System.Windows.Forms.ColumnHeader Serie;
         private System.Windows.Forms.ColumnHeader Numero;
-        private System.Windows.Forms.ColumnHeader Fornecedor;
+        private System.Windows.Forms.ColumnHeader Cliente;
         private System.Windows.Forms.ColumnHeader DataEmissao;
-        private System.Windows.Forms.ColumnHeader DataChegada;
+        private System.Windows.Forms.ColumnHeader DataSaida;
         private System.Windows.Forms.ColumnHeader ValorTotal;
-        private System.Windows.Forms.ColumnHeader CondPgto;
+        private System.Windows.Forms.ColumnHeader CondicaoPagamento;
         private System.Windows.Forms.ColumnHeader Status;
     }
 }

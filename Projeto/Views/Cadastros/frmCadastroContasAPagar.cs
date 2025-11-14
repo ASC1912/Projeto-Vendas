@@ -4,6 +4,7 @@ using Projeto.Models;
 using Projeto.Utils;
 using Projeto.Views.Consultas;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -13,11 +14,14 @@ namespace Projeto.Views.Cadastros
     {
         private ContasAPagar aConta;
         private ContasAPagarController controller;
+        private CondicaoPagamento condicaoDaConta; 
         private string modoOperacao;
 
+        private CompraController compraController = new CompraController();
         private FornecedorController fornecedorController = new FornecedorController();
         private FormaPagamentoController formaPagamentoController = new FormaPagamentoController();
         private frmConsultaFornecedor oFrmConsultaFornecedor;
+
 
         public frmCadastroContasAPagar()
         {
@@ -40,6 +44,8 @@ namespace Projeto.Views.Cadastros
             this.txtMulta.TextChanged += new System.EventHandler(this.RecalcularValorPago);
             this.txtDesconto.TextChanged += new System.EventHandler(this.RecalcularValorPago);
             this.dtpDataPagamento.ValueChanged += new System.EventHandler(this.RecalcularValorPago);
+            this.txtIDFornecedor.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosInteiros);
+            this.txtIdFormaPgto.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosInteiros);
 
             if (this.Controls.ContainsKey("txtCodigo")) (this.Controls["txtCodigo"] as TextBox).MaxLength = 50;
             txtSerie.MaxLength = 50;
@@ -68,7 +74,6 @@ namespace Projeto.Views.Cadastros
             bool isPagamento = (modo == "Pagamento");
             bool isLancamento = (modo == "Lancamento");
             bool isCancelamento = (modo == "Cancelamento");
-            bool isEstorno = (modo == "Estorno");
 
             this.Text = "Conta a Pagar";
             btnSalvar.Text = "Salvar";
@@ -138,12 +143,7 @@ namespace Projeto.Views.Cadastros
                     Controls["lblMotivoCancelamento"].Visible = true;
                 }
             }
-            else if (isEstorno)
-            {
-                this.Text = "Estornar Pagamento";
-                btnSalvar.Text = "Estornar";
-            }
-
+          
             if (isPagamento && aConta != null && aConta.Status == "Aberta")
             {
                 DateTime dataSugerida = DateTime.Now.Date;
@@ -207,9 +207,44 @@ namespace Projeto.Views.Cadastros
             DefinirModo("Lancamento");
         }
 
-        public override void CarregaTxt()
+        public async override void CarregaTxt()
         {
             if (aConta == null) return;
+
+            bool formaPgtoPreenchida = false;
+
+            condicaoDaConta = null;
+
+            if (!string.IsNullOrEmpty(aConta.CompraModelo)) 
+            {
+                try
+                {
+                    var compra = compraController.BuscarPorChave(aConta.CompraModelo, aConta.CompraSerie, aConta.CompraNumeroNota, aConta.CompraFornecedorId);
+                    if (compra != null && compra.CondicaoPagamentoId.HasValue)
+                    {
+                        condicaoDaConta = await new CondicaoPagamentoController().BuscarPorId(compra.CondicaoPagamentoId.Value);
+                    }
+                }
+                catch { condicaoDaConta = null; } 
+            }
+
+            if (condicaoDaConta != null && condicaoDaConta.Parcelas != null)
+            {
+                var definicaoDaParcela = condicaoDaConta.Parcelas
+                    .FirstOrDefault(p => p.NumParcela == aConta.NumeroParcela);
+
+                if (definicaoDaParcela != null)
+                {
+                    var formaPgto = await formaPagamentoController.BuscarPorId(definicaoDaParcela.FormaPagamentoId);
+                    if (formaPgto != null)
+                    {
+                        txtIdFormaPgto.Text = formaPgto.Id.ToString();
+                        txtFormaPgto.Text = formaPgto.Descricao;
+
+                        formaPgtoPreenchida = true;
+                    }
+                }
+            }
 
             txtIDFornecedor.Text = aConta.FornecedorId.ToString();
             txtFornecedor.Text = aConta.NomeFornecedor;
@@ -242,8 +277,12 @@ namespace Projeto.Views.Cadastros
             txtJuros.Text = aConta.Juros?.ToString("F2") ?? "0,00";
             txtMulta.Text = aConta.Multa?.ToString("F2") ?? "0,00";
             txtDesconto.Text = aConta.Desconto?.ToString("F2") ?? "0,00";
-            txtIdFormaPgto.Text = aConta.IdFormaPagamento?.ToString() ?? "";
-            txtFormaPgto.Text = aConta.NomeFormaPagamento;
+
+            if (!formaPgtoPreenchida)
+            {
+                txtIdFormaPgto.Text = aConta.IdFormaPagamento?.ToString() ?? "";
+                txtFormaPgto.Text = aConta.NomeFormaPagamento;
+            }
 
             RecalcularValorPago(null, null);
             if (aConta.Status == "Paga" && aConta.ValorPago.HasValue)
@@ -342,18 +381,6 @@ namespace Projeto.Views.Cadastros
                     await controller.SalvarManual(novaContaManual);
                     MessageBox.Show("Conta lançada manualmente com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.Close();
-                }
-                else if (modoOperacao == "Estorno")
-                {
-                    var confirmEstorno = MessageBox.Show($"Deseja realmente ESTORNAR o pagamento desta conta?",
-                                                         "Confirmação de Estorno", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-                    if (confirmEstorno == DialogResult.Yes)
-                    {
-                        await controller.Estornar(aConta);
-                        MessageBox.Show("Pagamento estornado com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        this.Close();
-                    }
                 }
                 else if (modoOperacao == "Cancelamento")
                 {
@@ -559,21 +586,51 @@ namespace Projeto.Views.Cadastros
                     return;
                 }
 
-                Decimal.TryParse(txtJuros.Text, out decimal juros);
-                Decimal.TryParse(txtMulta.Text, out decimal multa);
-                Decimal.TryParse(txtDesconto.Text, out decimal desconto);
+                decimal jurosCalc = 0;
+                decimal multaCalc = 0;
+                decimal descontoCalc = 0;
+                DateTime dataVenc = aConta?.DataVencimento.Date ?? dtpVencimento.Value.Date;
+                DateTime dataPag = dtpDataPagamento.Value.Date;
+
+                if (condicaoDaConta != null)
+                {
+                    if (dataPag > dataVenc)
+                    {
+                        if (condicaoDaConta.Juros > 0)
+                            jurosCalc = valorBase * (condicaoDaConta.Juros / 100);
+
+                        if (condicaoDaConta.Multa > 0)
+                            multaCalc = valorBase * (condicaoDaConta.Multa / 100);
+                    }
+                    else 
+                    {
+                        if (condicaoDaConta.Desconto > 0)
+                            descontoCalc = valorBase * (condicaoDaConta.Desconto / 100);
+                    }
+
+                    if (string.IsNullOrWhiteSpace(txtJuros.Text) || txtJuros.Text == "0,00")
+                        txtJuros.Text = jurosCalc.ToString("F2");
+
+                    if (string.IsNullOrWhiteSpace(txtMulta.Text) || txtMulta.Text == "0,00")
+                        txtMulta.Text = multaCalc.ToString("F2");
+
+                    if (string.IsNullOrWhiteSpace(txtDesconto.Text) || txtDesconto.Text == "0,00")
+                        txtDesconto.Text = descontoCalc.ToString("F2");
+                }
+
+                Decimal.TryParse(txtJuros.Text, out decimal jurosFinal);
+                Decimal.TryParse(txtMulta.Text, out decimal multaFinal);
+                Decimal.TryParse(txtDesconto.Text, out decimal descontoFinal);
 
                 decimal valorCalculado = valorBase;
-                valorCalculado += (valorBase * juros / 100);
 
-                DateTime dataVenc = aConta?.DataVencimento.Date ?? dtpVencimento.Value.Date;
-                if (dtpDataPagamento.Value.Date > dataVenc)
+                if (dataPag > dataVenc) 
                 {
-                    valorCalculado += (valorBase * multa / 100);
+                    valorCalculado = valorBase + jurosFinal + multaFinal;
                 }
-                else
+                else 
                 {
-                    valorCalculado -= (valorBase * desconto / 100);
+                    valorCalculado = valorBase - descontoFinal;
                 }
 
                 if (valorCalculado < 0) valorCalculado = 0;
@@ -585,7 +642,6 @@ namespace Projeto.Views.Cadastros
                 txtValorPago.Text = "0,00";
             }
         }
-
 
 
     }

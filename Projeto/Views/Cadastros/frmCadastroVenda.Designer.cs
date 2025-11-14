@@ -39,11 +39,11 @@
             this.lblQuantidade = new System.Windows.Forms.Label();
             this.txtQuantidade = new System.Windows.Forms.TextBox();
             this.btnPesquisarProduto = new System.Windows.Forms.Button();
-            this.lblDataChegada = new System.Windows.Forms.Label();
-            this.dtpChegada = new System.Windows.Forms.DateTimePicker();
+            this.lblDataSaida = new System.Windows.Forms.Label();
+            this.dtpSaida = new System.Windows.Forms.DateTimePicker();
             this.lblDataEmissao = new System.Windows.Forms.Label();
             this.dtpEmissao = new System.Windows.Forms.DateTimePicker();
-            this.btnPesquisarFornecedor = new System.Windows.Forms.Button();
+            this.btnPesquisarCliente = new System.Windows.Forms.Button();
             this.lblCliente = new System.Windows.Forms.Label();
             this.txtCliente = new System.Windows.Forms.TextBox();
             this.lblIdCliente = new System.Windows.Forms.Label();
@@ -70,10 +70,8 @@
             this.FormaPagamento = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Valor = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lblFormaPagamento = new System.Windows.Forms.Label();
-            this.lblDespesas = new System.Windows.Forms.Label();
-            this.txtDespesas = new System.Windows.Forms.TextBox();
-            this.lblSeguro = new System.Windows.Forms.Label();
-            this.txtSeguro = new System.Windows.Forms.TextBox();
+            this.lblDescontoGeral = new System.Windows.Forms.Label();
+            this.txtDescontoGeral = new System.Windows.Forms.TextBox();
             this.lblFrete = new System.Windows.Forms.Label();
             this.txtFrete = new System.Windows.Forms.TextBox();
             this.listViewProdutos = new System.Windows.Forms.ListView();
@@ -83,11 +81,19 @@
             this.Quantidade = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.PrecoUnitario = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Total = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lblModelo = new System.Windows.Forms.Label();
+            this.lblTotalCondiçãoPgto = new System.Windows.Forms.Label();
+            this.lblMotivoCancelamento = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txtCodigo
             // 
             this.txtCodigo.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtCodigo.MaxLength = 5;
+            // 
+            // btnSalvar
+            // 
+            this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
             // 
             // btnLimparProduto
             // 
@@ -97,6 +103,7 @@
             this.btnLimparProduto.TabIndex = 146;
             this.btnLimparProduto.Text = "Limpar";
             this.btnLimparProduto.UseVisualStyleBackColor = true;
+            this.btnLimparProduto.Click += new System.EventHandler(this.btnLimparProduto_Click);
             // 
             // btnRemoverProduto
             // 
@@ -106,6 +113,7 @@
             this.btnRemoverProduto.TabIndex = 145;
             this.btnRemoverProduto.Text = "Remover";
             this.btnRemoverProduto.UseVisualStyleBackColor = true;
+            this.btnRemoverProduto.Click += new System.EventHandler(this.btnRemoverProduto_Click);
             // 
             // btnEditarProduto
             // 
@@ -124,6 +132,7 @@
             this.btnAdicionarProduto.TabIndex = 143;
             this.btnAdicionarProduto.Text = "Adicionar";
             this.btnAdicionarProduto.UseVisualStyleBackColor = true;
+            this.btnAdicionarProduto.Click += new System.EventHandler(this.btnAdicionarProduto_Click);
             // 
             // lblTotalProduto
             // 
@@ -157,6 +166,7 @@
             this.txtValorUnitario.Name = "txtValorUnitario";
             this.txtValorUnitario.Size = new System.Drawing.Size(88, 22);
             this.txtValorUnitario.TabIndex = 141;
+            this.txtValorUnitario.TextChanged += new System.EventHandler(this.txtValorUnitario_TextChanged);
             // 
             // lblQuantidade
             // 
@@ -173,6 +183,7 @@
             this.txtQuantidade.Name = "txtQuantidade";
             this.txtQuantidade.Size = new System.Drawing.Size(100, 22);
             this.txtQuantidade.TabIndex = 140;
+            this.txtQuantidade.TextChanged += new System.EventHandler(this.txtQuantidade_TextChanged);
             // 
             // btnPesquisarProduto
             // 
@@ -182,24 +193,25 @@
             this.btnPesquisarProduto.TabIndex = 139;
             this.btnPesquisarProduto.Text = "Pesquisar";
             this.btnPesquisarProduto.UseVisualStyleBackColor = true;
+            this.btnPesquisarProduto.Click += new System.EventHandler(this.btnPesquisarProduto_Click);
             // 
-            // lblDataChegada
+            // lblDataSaida
             // 
-            this.lblDataChegada.AutoSize = true;
-            this.lblDataChegada.Location = new System.Drawing.Point(1023, 9);
-            this.lblDataChegada.Name = "lblDataChegada";
-            this.lblDataChegada.Size = new System.Drawing.Size(114, 16);
-            this.lblDataChegada.TabIndex = 152;
-            this.lblDataChegada.Text = "Data de Chegada";
+            this.lblDataSaida.AutoSize = true;
+            this.lblDataSaida.Location = new System.Drawing.Point(1023, 9);
+            this.lblDataSaida.Name = "lblDataSaida";
+            this.lblDataSaida.Size = new System.Drawing.Size(94, 16);
+            this.lblDataSaida.TabIndex = 152;
+            this.lblDataSaida.Text = "Data de Saída";
             // 
-            // dtpChegada
+            // dtpSaida
             // 
-            this.dtpChegada.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpChegada.Location = new System.Drawing.Point(1026, 28);
-            this.dtpChegada.Name = "dtpChegada";
-            this.dtpChegada.Size = new System.Drawing.Size(160, 22);
-            this.dtpChegada.TabIndex = 137;
-            this.dtpChegada.Value = new System.DateTime(2025, 7, 10, 0, 0, 0, 0);
+            this.dtpSaida.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpSaida.Location = new System.Drawing.Point(1026, 28);
+            this.dtpSaida.Name = "dtpSaida";
+            this.dtpSaida.Size = new System.Drawing.Size(160, 22);
+            this.dtpSaida.TabIndex = 137;
+            this.dtpSaida.Value = new System.DateTime(2025, 7, 10, 0, 0, 0, 0);
             // 
             // lblDataEmissao
             // 
@@ -219,14 +231,15 @@
             this.dtpEmissao.TabIndex = 136;
             this.dtpEmissao.Value = new System.DateTime(2025, 7, 10, 0, 0, 0, 0);
             // 
-            // btnPesquisarFornecedor
+            // btnPesquisarCliente
             // 
-            this.btnPesquisarFornecedor.Location = new System.Drawing.Point(697, 27);
-            this.btnPesquisarFornecedor.Name = "btnPesquisarFornecedor";
-            this.btnPesquisarFornecedor.Size = new System.Drawing.Size(91, 23);
-            this.btnPesquisarFornecedor.TabIndex = 135;
-            this.btnPesquisarFornecedor.Text = "Pesquisar";
-            this.btnPesquisarFornecedor.UseVisualStyleBackColor = true;
+            this.btnPesquisarCliente.Location = new System.Drawing.Point(697, 27);
+            this.btnPesquisarCliente.Name = "btnPesquisarCliente";
+            this.btnPesquisarCliente.Size = new System.Drawing.Size(91, 23);
+            this.btnPesquisarCliente.TabIndex = 135;
+            this.btnPesquisarCliente.Text = "Pesquisar";
+            this.btnPesquisarCliente.UseVisualStyleBackColor = true;
+            this.btnPesquisarCliente.Click += new System.EventHandler(this.btnPesquisarCliente_Click);
             // 
             // lblCliente
             // 
@@ -250,9 +263,9 @@
             this.lblIdCliente.AutoSize = true;
             this.lblIdCliente.Location = new System.Drawing.Point(414, 8);
             this.lblIdCliente.Name = "lblIdCliente";
-            this.lblIdCliente.Size = new System.Drawing.Size(53, 16);
+            this.lblIdCliente.Size = new System.Drawing.Size(64, 16);
             this.lblIdCliente.TabIndex = 149;
-            this.lblIdCliente.Text = "ID Forn.";
+            this.lblIdCliente.Text = "ID Cliente";
             // 
             // txtIDCliente
             // 
@@ -260,6 +273,7 @@
             this.txtIDCliente.Name = "txtIDCliente";
             this.txtIDCliente.Size = new System.Drawing.Size(48, 22);
             this.txtIDCliente.TabIndex = 133;
+            this.txtIDCliente.Leave += new System.EventHandler(this.txtIDCliente_Leave);
             // 
             // lblSerie
             // 
@@ -282,7 +296,7 @@
             // txtNumero
             // 
             this.txtNumero.Location = new System.Drawing.Point(288, 27);
-            this.txtNumero.MaxLength = 100;
+            this.txtNumero.MaxLength = 10;
             this.txtNumero.Name = "txtNumero";
             this.txtNumero.Size = new System.Drawing.Size(100, 22);
             this.txtNumero.TabIndex = 132;
@@ -290,6 +304,7 @@
             // txtSerie
             // 
             this.txtSerie.Location = new System.Drawing.Point(148, 27);
+            this.txtSerie.MaxLength = 5;
             this.txtSerie.Name = "txtSerie";
             this.txtSerie.Size = new System.Drawing.Size(100, 22);
             this.txtSerie.TabIndex = 131;
@@ -309,6 +324,7 @@
             this.txtIdProduto.Name = "txtIdProduto";
             this.txtIdProduto.Size = new System.Drawing.Size(48, 22);
             this.txtIdProduto.TabIndex = 156;
+            this.txtIdProduto.Leave += new System.EventHandler(this.txtIdProduto_Leave);
             // 
             // lblProduto
             // 
@@ -342,6 +358,7 @@
             this.txtIdCondPgto.Name = "txtIdCondPgto";
             this.txtIdCondPgto.Size = new System.Drawing.Size(48, 22);
             this.txtIdCondPgto.TabIndex = 164;
+            this.txtIdCondPgto.Leave += new System.EventHandler(this.txtIdCondPgto_Leave);
             // 
             // lblValorTotal
             // 
@@ -377,6 +394,7 @@
             this.btnLimparCondPgto.TabIndex = 167;
             this.btnLimparCondPgto.Text = "Limpar";
             this.btnLimparCondPgto.UseVisualStyleBackColor = true;
+            this.btnLimparCondPgto.Click += new System.EventHandler(this.btnLimparCondPgto_Click);
             // 
             // txtCondPgto
             // 
@@ -394,6 +412,7 @@
             this.btnAdicionarCondPgto.TabIndex = 166;
             this.btnAdicionarCondPgto.Text = "Adicionar";
             this.btnAdicionarCondPgto.UseVisualStyleBackColor = true;
+            this.btnAdicionarCondPgto.Click += new System.EventHandler(this.btnAdicionarCondPgto_Click);
             // 
             // listViewCondPgto
             // 
@@ -441,37 +460,21 @@
             this.lblFormaPagamento.TabIndex = 172;
             this.lblFormaPagamento.Text = "Condição de Pagamento*";
             // 
-            // lblDespesas
+            // lblDescontoGeral
             // 
-            this.lblDespesas.AutoSize = true;
-            this.lblDespesas.Location = new System.Drawing.Point(235, 329);
-            this.lblDespesas.Name = "lblDespesas";
-            this.lblDespesas.Size = new System.Drawing.Size(70, 16);
-            this.lblDespesas.TabIndex = 171;
-            this.lblDespesas.Text = "Despesas";
+            this.lblDescontoGeral.AutoSize = true;
+            this.lblDescontoGeral.Location = new System.Drawing.Point(235, 329);
+            this.lblDescontoGeral.Name = "lblDescontoGeral";
+            this.lblDescontoGeral.Size = new System.Drawing.Size(101, 16);
+            this.lblDescontoGeral.TabIndex = 171;
+            this.lblDescontoGeral.Text = "Desconto Geral";
             // 
-            // txtDespesas
+            // txtDescontoGeral
             // 
-            this.txtDespesas.Location = new System.Drawing.Point(235, 348);
-            this.txtDespesas.Name = "txtDespesas";
-            this.txtDespesas.Size = new System.Drawing.Size(126, 22);
-            this.txtDespesas.TabIndex = 162;
-            // 
-            // lblSeguro
-            // 
-            this.lblSeguro.AutoSize = true;
-            this.lblSeguro.Location = new System.Drawing.Point(128, 330);
-            this.lblSeguro.Name = "lblSeguro";
-            this.lblSeguro.Size = new System.Drawing.Size(51, 16);
-            this.lblSeguro.TabIndex = 170;
-            this.lblSeguro.Text = "Seguro";
-            // 
-            // txtSeguro
-            // 
-            this.txtSeguro.Location = new System.Drawing.Point(128, 349);
-            this.txtSeguro.Name = "txtSeguro";
-            this.txtSeguro.Size = new System.Drawing.Size(88, 22);
-            this.txtSeguro.TabIndex = 161;
+            this.txtDescontoGeral.Location = new System.Drawing.Point(235, 348);
+            this.txtDescontoGeral.Name = "txtDescontoGeral";
+            this.txtDescontoGeral.Size = new System.Drawing.Size(126, 22);
+            this.txtDescontoGeral.TabIndex = 162;
             // 
             // lblFrete
             // 
@@ -537,10 +540,40 @@
             // 
             this.Total.Text = "Total";
             // 
+            // lblModelo
+            // 
+            this.lblModelo.AutoSize = true;
+            this.lblModelo.Location = new System.Drawing.Point(14, 8);
+            this.lblModelo.Name = "lblModelo";
+            this.lblModelo.Size = new System.Drawing.Size(53, 16);
+            this.lblModelo.TabIndex = 177;
+            this.lblModelo.Text = "Modelo";
+            // 
+            // lblTotalCondiçãoPgto
+            // 
+            this.lblTotalCondiçãoPgto.AutoSize = true;
+            this.lblTotalCondiçãoPgto.Location = new System.Drawing.Point(965, 562);
+            this.lblTotalCondiçãoPgto.Name = "lblTotalCondiçãoPgto";
+            this.lblTotalCondiçãoPgto.Size = new System.Drawing.Size(66, 16);
+            this.lblTotalCondiçãoPgto.TabIndex = 178;
+            this.lblTotalCondiçãoPgto.Text = "Total (R$)";
+            // 
+            // lblMotivoCancelamento
+            // 
+            this.lblMotivoCancelamento.AutoSize = true;
+            this.lblMotivoCancelamento.Location = new System.Drawing.Point(303, 620);
+            this.lblMotivoCancelamento.Name = "lblMotivoCancelamento";
+            this.lblMotivoCancelamento.Size = new System.Drawing.Size(159, 16);
+            this.lblMotivoCancelamento.TabIndex = 179;
+            this.lblMotivoCancelamento.Text = "Motivo do Cancelamento:";
+            // 
             // frmCadastroVenda
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.ClientSize = new System.Drawing.Size(1342, 681);
+            //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            //this.ClientSize = new System.Drawing.Size(1342, 681);
+            this.Controls.Add(this.lblMotivoCancelamento);
+            this.Controls.Add(this.lblTotalCondiçãoPgto);
+            this.Controls.Add(this.lblModelo);
             this.Controls.Add(this.lblIdCondicaoPgto);
             this.Controls.Add(this.txtIdCondPgto);
             this.Controls.Add(this.lblValorTotal);
@@ -551,10 +584,8 @@
             this.Controls.Add(this.btnAdicionarCondPgto);
             this.Controls.Add(this.listViewCondPgto);
             this.Controls.Add(this.lblFormaPagamento);
-            this.Controls.Add(this.lblDespesas);
-            this.Controls.Add(this.txtDespesas);
-            this.Controls.Add(this.lblSeguro);
-            this.Controls.Add(this.txtSeguro);
+            this.Controls.Add(this.lblDescontoGeral);
+            this.Controls.Add(this.txtDescontoGeral);
             this.Controls.Add(this.lblFrete);
             this.Controls.Add(this.txtFrete);
             this.Controls.Add(this.listViewProdutos);
@@ -573,11 +604,11 @@
             this.Controls.Add(this.lblQuantidade);
             this.Controls.Add(this.txtQuantidade);
             this.Controls.Add(this.btnPesquisarProduto);
-            this.Controls.Add(this.lblDataChegada);
-            this.Controls.Add(this.dtpChegada);
+            this.Controls.Add(this.lblDataSaida);
+            this.Controls.Add(this.dtpSaida);
             this.Controls.Add(this.lblDataEmissao);
             this.Controls.Add(this.dtpEmissao);
-            this.Controls.Add(this.btnPesquisarFornecedor);
+            this.Controls.Add(this.btnPesquisarCliente);
             this.Controls.Add(this.lblCliente);
             this.Controls.Add(this.txtCliente);
             this.Controls.Add(this.lblIdCliente);
@@ -601,11 +632,11 @@
             this.Controls.SetChildIndex(this.lblIdCliente, 0);
             this.Controls.SetChildIndex(this.txtCliente, 0);
             this.Controls.SetChildIndex(this.lblCliente, 0);
-            this.Controls.SetChildIndex(this.btnPesquisarFornecedor, 0);
+            this.Controls.SetChildIndex(this.btnPesquisarCliente, 0);
             this.Controls.SetChildIndex(this.dtpEmissao, 0);
             this.Controls.SetChildIndex(this.lblDataEmissao, 0);
-            this.Controls.SetChildIndex(this.dtpChegada, 0);
-            this.Controls.SetChildIndex(this.lblDataChegada, 0);
+            this.Controls.SetChildIndex(this.dtpSaida, 0);
+            this.Controls.SetChildIndex(this.lblDataSaida, 0);
             this.Controls.SetChildIndex(this.btnPesquisarProduto, 0);
             this.Controls.SetChildIndex(this.txtQuantidade, 0);
             this.Controls.SetChildIndex(this.lblQuantidade, 0);
@@ -624,10 +655,8 @@
             this.Controls.SetChildIndex(this.listViewProdutos, 0);
             this.Controls.SetChildIndex(this.txtFrete, 0);
             this.Controls.SetChildIndex(this.lblFrete, 0);
-            this.Controls.SetChildIndex(this.txtSeguro, 0);
-            this.Controls.SetChildIndex(this.lblSeguro, 0);
-            this.Controls.SetChildIndex(this.txtDespesas, 0);
-            this.Controls.SetChildIndex(this.lblDespesas, 0);
+            this.Controls.SetChildIndex(this.txtDescontoGeral, 0);
+            this.Controls.SetChildIndex(this.lblDescontoGeral, 0);
             this.Controls.SetChildIndex(this.lblFormaPagamento, 0);
             this.Controls.SetChildIndex(this.listViewCondPgto, 0);
             this.Controls.SetChildIndex(this.btnAdicionarCondPgto, 0);
@@ -638,6 +667,9 @@
             this.Controls.SetChildIndex(this.lblValorTotal, 0);
             this.Controls.SetChildIndex(this.txtIdCondPgto, 0);
             this.Controls.SetChildIndex(this.lblIdCondicaoPgto, 0);
+            this.Controls.SetChildIndex(this.lblModelo, 0);
+            this.Controls.SetChildIndex(this.lblTotalCondiçãoPgto, 0);
+            this.Controls.SetChildIndex(this.lblMotivoCancelamento, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -656,11 +688,11 @@
         private System.Windows.Forms.Label lblQuantidade;
         private System.Windows.Forms.TextBox txtQuantidade;
         private System.Windows.Forms.Button btnPesquisarProduto;
-        private System.Windows.Forms.Label lblDataChegada;
-        private System.Windows.Forms.DateTimePicker dtpChegada;
+        private System.Windows.Forms.Label lblDataSaida;
+        private System.Windows.Forms.DateTimePicker dtpSaida;
         private System.Windows.Forms.Label lblDataEmissao;
         private System.Windows.Forms.DateTimePicker dtpEmissao;
-        private System.Windows.Forms.Button btnPesquisarFornecedor;
+        private System.Windows.Forms.Button btnPesquisarCliente;
         private System.Windows.Forms.Label lblCliente;
         private System.Windows.Forms.TextBox txtCliente;
         private System.Windows.Forms.Label lblIdCliente;
@@ -687,10 +719,8 @@
         private System.Windows.Forms.ColumnHeader FormaPagamento;
         private System.Windows.Forms.ColumnHeader Valor;
         private System.Windows.Forms.Label lblFormaPagamento;
-        private System.Windows.Forms.Label lblDespesas;
-        private System.Windows.Forms.TextBox txtDespesas;
-        private System.Windows.Forms.Label lblSeguro;
-        private System.Windows.Forms.TextBox txtSeguro;
+        private System.Windows.Forms.Label lblDescontoGeral;
+        private System.Windows.Forms.TextBox txtDescontoGeral;
         private System.Windows.Forms.Label lblFrete;
         private System.Windows.Forms.TextBox txtFrete;
         protected System.Windows.Forms.ListView listViewProdutos;
@@ -700,5 +730,8 @@
         private System.Windows.Forms.ColumnHeader Quantidade;
         private System.Windows.Forms.ColumnHeader PrecoUnitario;
         private System.Windows.Forms.ColumnHeader Total;
+        private System.Windows.Forms.Label lblModelo;
+        private System.Windows.Forms.Label lblTotalCondiçãoPgto;
+        private System.Windows.Forms.Label lblMotivoCancelamento;
     }
 }

@@ -22,6 +22,7 @@ namespace Projeto.Views
         {
             InitializeComponent();
             txtCodigo.Enabled = false;
+            this.txtDDI.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosInteiros);
         }
 
         public override void ConhecaObj(object obj, object ctrl)

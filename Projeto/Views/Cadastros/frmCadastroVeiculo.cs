@@ -29,6 +29,11 @@ namespace Projeto.Views.Cadastros
             txtCodigo.Enabled = false;
             txtTransportadora.ReadOnly = true;
             txtMarca.ReadOnly = true;
+
+            this.txtIdMarca.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosInteiros);
+            this.txtAnoFabricacao.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosInteiros);
+
+            this.txtCapacidadeCarga.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosEVirgula);
         }
 
         public override void ConhecaObj(object obj, object ctrl)

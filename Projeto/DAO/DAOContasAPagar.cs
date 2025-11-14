@@ -166,41 +166,6 @@ namespace Projeto.DAO
             }
         }
 
-        public void Estornar(ContasAPagar conta)
-        {
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
-            {
-                conn.Open();
-                string query = @"
-                    UPDATE ContasAPagar SET
-                        IdFormaPagamento = NULL,
-                        DataPagamento = NULL,
-                        ValorPago = NULL,
-                        Juros = 0,
-                        Multa = 0,
-                        Desconto = 0,
-                        Status = 'Aberta',
-                        DataAlteracao = @DataAlteracao
-                    WHERE CompraModelo = @CompraModelo
-                      AND CompraSerie = @CompraSerie
-                      AND CompraNumeroNota = @CompraNumeroNota
-                      AND CompraFornecedorId = @CompraFornecedorId
-                      AND NumeroParcela = @NumeroParcela";
-
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                {
-                    cmd.Parameters.AddWithValue("@DataAlteracao", DateTime.Now);
-
-                    cmd.Parameters.AddWithValue("@CompraModelo", conta.CompraModelo);
-                    cmd.Parameters.AddWithValue("@CompraSerie", conta.CompraSerie);
-                    cmd.Parameters.AddWithValue("@CompraNumeroNota", conta.CompraNumeroNota);
-                    cmd.Parameters.AddWithValue("@CompraFornecedorId", conta.CompraFornecedorId);
-                    cmd.Parameters.AddWithValue("@NumeroParcela", conta.NumeroParcela);
-
-                    cmd.ExecuteNonQuery();
-                }
-            }
-        }
 
         private ContasAPagar MontarObjeto(MySqlDataReader reader)
         {

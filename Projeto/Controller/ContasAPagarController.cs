@@ -42,11 +42,6 @@ namespace Projeto.Controller
         }
 
 
-        public Task Estornar(ContasAPagar conta)
-        {
-            return Task.Run(() => _dao.Estornar(conta));
-        }
-
         public Task CancelarManual(ContasAPagar conta, string motivo)
         {
             bool compraExiste = _dao.VerificarExistencia(
