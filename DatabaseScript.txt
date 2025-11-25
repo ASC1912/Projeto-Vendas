@@ -4,7 +4,7 @@ USE sistema;
 -- Tabela de Formas de Pagamento
 CREATE TABLE FormasPagamento (
     Id INT PRIMARY KEY AUTO_INCREMENT,
-    Descricao VARCHAR(100) NOT NULL, 
+    Descricao VARCHAR(50) NOT NULL,  
     Ativo BIT DEFAULT 1,
     DataCadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
     DataAlteracao DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -13,7 +13,7 @@ CREATE TABLE FormasPagamento (
 -- Tabela de Condições de Pagamento
 CREATE TABLE CondicoesPagamento (
     Id INT AUTO_INCREMENT PRIMARY KEY,
-    Descricao VARCHAR(100) NOT NULL,
+    Descricao VARCHAR(50) NOT NULL,
     QtdParcelas INT NOT NULL,
     Juros DECIMAL(5,2) DEFAULT 0.00,
     Multa DECIMAL(5,2) DEFAULT 0.00,
@@ -38,7 +38,7 @@ CREATE TABLE Parcelamentos (
 -- Tabela de Países
 CREATE TABLE Paises (
     Id INT PRIMARY KEY AUTO_INCREMENT,
-    Pais VARCHAR(100),
+    Pais VARCHAR(60),
     Sigla VARCHAR(3) UNIQUE,
     DDI VARCHAR(5),
     Moeda VARCHAR(5),
@@ -50,7 +50,7 @@ CREATE TABLE Paises (
 -- Tabela de Estados 
 CREATE TABLE Estados (
     Id INT PRIMARY KEY AUTO_INCREMENT,
-    Estado VARCHAR(100),
+    Estado VARCHAR(60),
     UF VARCHAR(5),
     PaisId INT,
     Ativo BIT DEFAULT 1,
@@ -80,10 +80,10 @@ CREATE TABLE Clientes (
     Rg VARCHAR(20),
     Telefone VARCHAR(20),
     Email VARCHAR(100),
-    Endereco VARCHAR(200),
+    Endereco VARCHAR(150),
     NumeroEndereco INT,
-    Bairro VARCHAR(100),
-    Complemento VARCHAR(200),
+    Bairro VARCHAR(60),
+    Complemento VARCHAR(100),
     Cep VARCHAR(10),
     CidadeId INT, 
     IdCondicaoPagamento INT,
@@ -92,7 +92,7 @@ CREATE TABLE Clientes (
     DataNascimento DATE,
     DataCadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
     DataAlteracao DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    UsuarioModificacao VARCHAR(100) DEFAULT 'sistema',
+    UsuarioModificacao VARCHAR(50) DEFAULT 'sistema',
     FOREIGN KEY (CidadeId) REFERENCES Cidades(Id) ON DELETE SET NULL,
     FOREIGN KEY (IdCondicaoPagamento) REFERENCES CondicoesPagamento(Id) ON DELETE SET NULL
 );
@@ -105,15 +105,15 @@ CREATE TABLE Funcionarios (
     Rg VARCHAR(20),
     Telefone VARCHAR(20),
     Email VARCHAR(100),
-    Endereco VARCHAR(200),
+    Endereco VARCHAR(150),
     Cep VARCHAR(10),
     Cargo VARCHAR(50),
     Salario DECIMAL(10,2),
     CidadeId INT, 
     Tipo VARCHAR(10) NOT NULL,
-    Bairro VARCHAR(100),
+    Bairro VARCHAR(60),
     NumeroEndereco INT,
-    Complemento VARCHAR(200),
+    Complemento VARCHAR(100),
     DataAdmissao DATE DEFAULT NULL,
     DataDemissao DATE DEFAULT NULL,
     DataNascimento DATE DEFAULT NULL,
@@ -133,12 +133,12 @@ CREATE TABLE Fornecedores (
     CpfCnpj VARCHAR(18) UNIQUE NOT NULL,
     Telefone VARCHAR(20),
     Email VARCHAR(100),
-    Endereco VARCHAR(200),
+    Endereco VARCHAR(150),
     Cep VARCHAR(10),
     Tipo VARCHAR(10) NOT NULL,
-    Bairro VARCHAR(100),
+    Bairro VARCHAR(60),
     NumeroEndereco INT,
-    Complemento VARCHAR(200),
+    Complemento VARCHAR(100),
     CidadeId INT, 
     InscricaoEstadual VARCHAR(30),
     InscricaoEstadualSubtrib VARCHAR(30),
@@ -157,12 +157,12 @@ CREATE TABLE Transportadoras (
     CpfCnpj VARCHAR(18) UNIQUE NOT NULL,
     Telefone VARCHAR(20),
     Email VARCHAR(100),
-    Endereco VARCHAR(200),
+    Endereco VARCHAR(150),
     Cep VARCHAR(10),
     Tipo VARCHAR(10) NOT NULL,
-    Bairro VARCHAR(100),
+    Bairro VARCHAR(60),
     NumeroEndereco INT,
-    Complemento VARCHAR(200),
+    Complemento VARCHAR(100),
     CidadeId INT, 
     InscricaoEstadual VARCHAR(30),
     InscricaoEstadualSubtrib VARCHAR(30),
@@ -177,7 +177,7 @@ CREATE TABLE Transportadoras (
 -- TABELA: Marcas
 CREATE TABLE Marcas (
     Id INT AUTO_INCREMENT PRIMARY KEY,
-    Marca VARCHAR(100) NOT NULL,
+    Marca VARCHAR(50) NOT NULL,
     Ativo BIT NOT NULL DEFAULT 1,
     DataCadastro DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     DataAlteracao DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -186,7 +186,7 @@ CREATE TABLE Marcas (
 -- TABELA: Grupos
 CREATE TABLE Grupos (
     Id INT PRIMARY KEY AUTO_INCREMENT,
-    Grupo VARCHAR(100),
+    Grupo VARCHAR(50),
     Descricao VARCHAR(255),
     IpImpressora VARCHAR(50),
     Ativo BIT DEFAULT 1,
@@ -197,8 +197,8 @@ CREATE TABLE Grupos (
 -- TABELA: UnidadesMedida
 CREATE TABLE UnidadesMedida (
     Id INT PRIMARY KEY AUTO_INCREMENT,
-    Nome VARCHAR(100) NOT NULL,
-    Sigla VARCHAR(5) NOT NULL,
+    Nome VARCHAR(50) NOT NULL,
+    Sigla VARCHAR(10) NOT NULL,
     Ativo BIT DEFAULT 1,
     DataCadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
     DataAlteracao DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -208,7 +208,7 @@ CREATE TABLE UnidadesMedida (
 CREATE TABLE Produtos (
     Id INT AUTO_INCREMENT PRIMARY KEY,
     Produto VARCHAR(100) NOT NULL,
-    Descricao VARCHAR(255),
+    Descricao VARCHAR(150),
     PrecoCusto DECIMAL(10,2) NOT NULL,
     PrecoCustoAnterior DECIMAL(10,2) NOT NULL DEFAULT 0,
     PrecoVenda DECIMAL(10,2),
@@ -218,7 +218,7 @@ CREATE TABLE Produtos (
     GrupoId INT NOT NULL,
     UnidadeMedidaId INT,
     TempoPreparo INT,
-    Ingredientes VARCHAR(255),
+    Ingredientes VARCHAR(200),
     Ativo BIT NOT NULL DEFAULT 1,
     DataCadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
     DataAlteracao DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -256,25 +256,11 @@ CREATE TABLE Veiculos (
 CREATE TABLE Mesas (
     NumeroMesa INT PRIMARY KEY,
     QuantidadeCadeiras INT,
-    Localizacao VARCHAR(20),
+    Localizacao VARCHAR(50),
     StatusMesa CHAR(1),
     Ativo BIT DEFAULT 1,
     DataCadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
     DataAlteracao DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-);
-
--- Tabela: Vendas
-CREATE TABLE Vendas (
-    Id INT AUTO_INCREMENT PRIMARY KEY,
-    ClienteId INT,
-    CondicaoPagamentoId INT,
-    DataVenda DATETIME DEFAULT CURRENT_TIMESTAMP,
-    ValorTotal DECIMAL(10,2),
-    Ativo BIT DEFAULT 1,
-    DataCadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
-    DataAlteracao DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (ClienteId) REFERENCES Clientes(Id),
-    FOREIGN KEY (CondicaoPagamentoId) REFERENCES CondicoesPagamento(Id)
 );
 
 -- Tabela: Pedidos 
@@ -282,16 +268,14 @@ CREATE TABLE Pedidos (
     Id INT AUTO_INCREMENT PRIMARY KEY,
     MesaNumero INT,
     FuncionarioId INT,
-    VendaId INT,
     Observacao VARCHAR(255),
     Status VARCHAR(20) NOT NULL DEFAULT 'Aberto',
-    DataPedido DATETIME DEFAULT CURRENT_TIMESTAMP, /* Você tem um DataAberturaPedido no seu DAO, talvez queira renomear aqui? */
+    DataPedido DATETIME DEFAULT CURRENT_TIMESTAMP, 
     Ativo BIT DEFAULT 1,
     DataCadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
     DataAlteracao DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (MesaNumero) REFERENCES Mesas(NumeroMesa),
-    FOREIGN KEY (FuncionarioId) REFERENCES Funcionarios(Id),
-    FOREIGN KEY (VendaId) REFERENCES Vendas(Id)
+    FOREIGN KEY (FuncionarioId) REFERENCES Funcionarios(Id)
 );
 
 -- Tabela: ItensPedidos 
@@ -303,7 +287,7 @@ CREATE TABLE ItensPedidos (
     precoUnitario DECIMAL(10,2),
     Status VARCHAR(20) NOT NULL DEFAULT 'Pendente',
     PRIMARY KEY (pedidos_id, produto_id),
-    FOREIGN KEY (pedidos_id) REFERENCES Pedidos(Id),
+    FOREIGN KEY (pedidos_id) REFERENCES Pedidos(Id) ON DELETE CASCADE,
     FOREIGN KEY (produto_id) REFERENCES Produtos(Id),
     FOREIGN KEY (numero_mesa) REFERENCES Mesas(NumeroMesa)
 );
@@ -323,8 +307,8 @@ CREATE TABLE Usuarios (
 
 -- Tabela Compras 
 CREATE TABLE Compras (
-    Modelo VARCHAR(50) NOT NULL,
-    Serie VARCHAR(50) NOT NULL,
+    Modelo VARCHAR(5) NOT NULL,
+    Serie VARCHAR(5) NOT NULL,
     NumeroNota INT NOT NULL,
     FornecedorId INT NOT NULL,
     CondicaoPagamentoId INT,
@@ -343,27 +327,10 @@ CREATE TABLE Compras (
     FOREIGN KEY (CondicaoPagamentoId) REFERENCES CondicoesPagamento(Id)
 );
 
--- Tabela ParcelasCompra 
-CREATE TABLE ParcelasCompra (
-    CompraModelo VARCHAR(20) NOT NULL,
-    CompraSerie VARCHAR(10) NOT NULL,
-    CompraNumeroNota INT NOT NULL,
-    CompraFornecedorId INT NOT NULL,
-    NumeroParcela INT NOT NULL,
-    ValorParcela DECIMAL(10,2) NOT NULL,
-    DataVencimento DATE NOT NULL,
-    DataPagamento DATE NULL,
-    ValorPago DECIMAL(10,2) NULL,
-    PRIMARY KEY (CompraModelo, CompraSerie, CompraNumeroNota, CompraFornecedorId, NumeroParcela),
-    FOREIGN KEY (CompraModelo, CompraSerie, CompraNumeroNota, CompraFornecedorId) 
-        REFERENCES Compras(Modelo, Serie, NumeroNota, FornecedorId)
-        ON DELETE CASCADE
-);
-
 -- Tabela Itens da Compra 
 CREATE TABLE ItensCompra (
-    CompraModelo VARCHAR(50) NOT NULL,
-    CompraSerie VARCHAR(50) NOT NULL,
+    CompraModelo VARCHAR(5) NOT NULL,
+    CompraSerie VARCHAR(5) NOT NULL,
     CompraNumeroNota INT NOT NULL,
     CompraFornecedorId INT NOT NULL,
     ProdutoId INT NOT NULL,
@@ -377,13 +344,12 @@ CREATE TABLE ItensCompra (
 
 -- Tabela ContasAPagar 
 CREATE TABLE ContasAPagar (
-    CompraModelo VARCHAR(50) NOT NULL,
-    CompraSerie VARCHAR(50) NOT NULL,
+    CompraModelo VARCHAR(5) NOT NULL,
+    CompraSerie VARCHAR(5) NOT NULL,
     CompraNumeroNota INT NOT NULL,
     CompraFornecedorId INT NOT NULL,
     NumeroParcela INT NOT NULL,
     FornecedorId INT NOT NULL, 
-    Descricao VARCHAR(255) NOT NULL,
     DataEmissao DATE NOT NULL,
     DataVencimento DATE NOT NULL,
     ValorVencimento DECIMAL(10, 2) NOT NULL,
@@ -397,8 +363,76 @@ CREATE TABLE ContasAPagar (
     Ativo BIT NOT NULL DEFAULT 1,
     DataCadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
     DataAlteracao DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    MotivoCancelamento VARCHAR(255) NULL DEFAULT NULL, -- <<-- NOVA COLUNA
     PRIMARY KEY (CompraModelo, CompraSerie, CompraNumeroNota, CompraFornecedorId, NumeroParcela),
-    
     FOREIGN KEY (FornecedorId) REFERENCES Fornecedores(Id),
     FOREIGN KEY (IdFormaPagamento) REFERENCES FormasPagamento(Id)
+);
+
+-- TABELA: Vendas
+CREATE TABLE Vendas (
+    Modelo VARCHAR(5) NOT NULL,
+    Serie VARCHAR(5) NOT NULL,
+    NumeroNota INT NOT NULL,
+    ClienteId INT NOT NULL,
+    FuncionarioId INT NOT NULL,
+    CondicaoPagamentoId INT,
+    DataEmissao DATETIME,
+    DataSaida DATETIME,
+    ValorFrete DECIMAL(10,2) DEFAULT 0.00,
+    ValorDesconto DECIMAL(10,2) DEFAULT 0.00,
+    ValorTotal DECIMAL(10,2) NOT NULL,
+    Observacao VARCHAR(255),
+    Ativo BIT DEFAULT 1,
+    DataCadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
+    DataAlteracao DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (Modelo, Serie, NumeroNota, ClienteId),
+    FOREIGN KEY (ClienteId) REFERENCES Clientes(Id),
+    FOREIGN KEY (CondicaoPagamentoId) REFERENCES CondicoesPagamento(Id),
+    FOREIGN KEY (FuncionarioId) REFERENCES Funcionarios(Id)
+);
+
+-- TABELA: 'ItensVenda'
+CREATE TABLE ItensVenda (
+    VendaModelo VARCHAR(5) NOT NULL,
+    VendaSerie VARCHAR(5) NOT NULL,
+    VendaNumeroNota INT NOT NULL,
+    VendaClienteId INT NOT NULL,
+    ProdutoId INT NOT NULL,
+    Quantidade DECIMAL(10,2) NOT NULL,
+    ValorUnitario DECIMAL(10,2) NOT NULL,
+    ValorTotalItem DECIMAL(10,2) NOT NULL,
+    PRIMARY KEY (VendaModelo, VendaSerie, VendaNumeroNota, VendaClienteId, ProdutoId),
+    FOREIGN KEY (VendaModelo, VendaSerie, VendaNumeroNota, VendaClienteId) 
+        REFERENCES Vendas(Modelo, Serie, NumeroNota, ClienteId) ON DELETE CASCADE,
+    FOREIGN KEY (ProdutoId) REFERENCES Produtos(Id)
+);
+
+--TABELA: ContasAReceber
+CREATE TABLE ContasAReceber (
+    VendaModelo VARCHAR(5) NOT NULL,
+    VendaSerie VARCHAR(5) NOT NULL,
+    VendaNumeroNota INT NOT NULL,
+    NumeroParcela INT NOT NULL,
+    ClienteId INT NOT NULL,
+    Descricao VARCHAR(255) NOT NULL,
+    DataEmissao DATETIME NOT NULL,
+    DataVencimento DATETIME NOT NULL,
+    ValorVencimento DECIMAL(10, 2) NOT NULL,
+    IdFormaPagamento INT NULL,
+    Status VARCHAR(20) NOT NULL DEFAULT 'Aberta',
+    Juros DECIMAL(10,2) NULL DEFAULT 0.00,
+    Multa DECIMAL(10,2) NULL DEFAULT 0.00,
+    Desconto DECIMAL(10,2) NULL DEFAULT 0.00,
+    ValorPago DECIMAL(10,2) NULL,
+    DataPagamento DATETIME NULL,
+    Ativo BIT NOT NULL DEFAULT 1,
+    MotivoCancelamento VARCHAR(255),
+    DataCadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
+    DataAlteracao DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (VendaModelo, VendaSerie, VendaNumeroNota, ClienteId, NumeroParcela),
+    FOREIGN KEY (ClienteId) REFERENCES Clientes(Id),
+    FOREIGN KEY (IdFormaPagamento) REFERENCES FormasPagamento(Id),
+    FOREIGN KEY (VendaModelo, VendaSerie, VendaNumeroNota, ClienteId) 
+        REFERENCES Vendas(Modelo, Serie, NumeroNota, ClienteId)
 );
