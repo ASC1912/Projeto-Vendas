@@ -10,7 +10,6 @@ using System.Windows.Forms;
 
 namespace Projeto.Views.Cadastros
 {
-    // MUDANÇA: Herda de frmBase
     public partial class frmCadastroVenda : Projeto.frmBase
     {
         #region Variáveis e Propriedades
@@ -36,6 +35,7 @@ namespace Projeto.Views.Cadastros
 
         public bool modoCancelamento = false;
         public bool modoVisualizacao = false;
+        private bool modoEdicaoItem = false; 
 
         #endregion
 
@@ -59,15 +59,17 @@ namespace Projeto.Views.Cadastros
             this.txtQuantidade.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosInteiros);
             this.txtValorUnitario.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosEVirgula);
             this.txtFrete.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosEVirgula);
-            this.txtDescontoGeral.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosEVirgula);
             this.txtIDCliente.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosInteiros);
             this.txtIdProduto.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosInteiros);
             this.txtIdCondPgto.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosInteiros);
 
             txtFrete.TextChanged += new System.EventHandler(this.txtCustosExtras_TextChanged);
-            txtDescontoGeral.TextChanged += new System.EventHandler(this.txtCustosExtras_TextChanged);
 
             this.dtpEmissao.ValueChanged += new System.EventHandler(this.dtpEmissao_ValueChanged);
+
+            this.listViewProdutos.SelectedIndexChanged += new System.EventHandler(this.listViewProdutos_SelectedIndexChanged);
+            this.btnEditarProduto.Click += new System.EventHandler(this.btnEditarProduto_Click);
+        
         }
 
         #endregion
@@ -97,7 +99,7 @@ namespace Projeto.Views.Cadastros
         {
             parte1Controles = new List<Control> { txtCodigo, txtSerie, txtNumero, txtIDCliente, txtCliente, btnPesquisarCliente, dtpEmissao, dtpSaida };
             parte2Controles = new List<Control> { txtIdProduto, txtProduto, btnPesquisarProduto, txtQuantidade, txtValorUnitario, txtTotal, btnAdicionarProduto, btnEditarProduto, btnRemoverProduto, btnLimparProduto, listViewProdutos };
-            parte3Controles = new List<Control> { txtFrete, txtDescontoGeral, txtValorTotal, txtIdCondPgto, txtCondPgto, btnAdicionarCondPgto, btnLimparCondPgto, listViewCondPgto };
+            parte3Controles = new List<Control> { txtFrete, txtValorTotal, txtIdCondPgto, txtCondPgto, btnAdicionarCondPgto, btnLimparCondPgto, listViewCondPgto };
         }
 
         private void ConfigurarEstadoInicial()
@@ -175,7 +177,6 @@ namespace Projeto.Views.Cadastros
             listViewProdutos.Items.Clear();
 
             txtFrete.Text = "0,00";
-            txtDescontoGeral.Text = "0,00";
             txtValorTotal.Clear();
             LimparCamposCondPgto();
 
@@ -217,7 +218,7 @@ namespace Projeto.Views.Cadastros
             listViewProdutos.Items.Clear();
             if (aVenda.Itens != null)
             {
-                foreach (var itemVenda in aVenda.Itens) // MUDANÇA
+                foreach (var itemVenda in aVenda.Itens) 
                 {
                     ListViewItem item = new ListViewItem(itemVenda.ProdutoId.ToString());
                     item.SubItems.AddRange(new string[] {
@@ -232,7 +233,6 @@ namespace Projeto.Views.Cadastros
             }
 
             txtFrete.Text = aVenda.ValorFrete.ToString("F2");
-            txtDescontoGeral.Text = aVenda.ValorDesconto.ToString("F2");
 
             if (aVenda.CondicaoPagamentoId.HasValue)
             {
@@ -413,36 +413,96 @@ namespace Projeto.Views.Cadastros
                 MessageBox.Show("Preencha todos os dados do cabeçalho da nota antes de adicionar produtos.", "Dados Incompletos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            if (produtoSelecionado == null || !decimal.TryParse(txtQuantidade.Text, out decimal qtd) || qtd <= 0 || !decimal.TryParse(txtValorUnitario.Text, out _))
+
+            if (produtoSelecionado == null || !decimal.TryParse(txtQuantidade.Text, out decimal newQty) || newQty <= 0 || !decimal.TryParse(txtValorUnitario.Text, out decimal vlrUnitarioDigitado))
             {
                 MessageBox.Show("Selecione um produto e informe quantidade e valor válidos.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            ListViewItem item = new ListViewItem(produtoSelecionado.Id.ToString());
-            item.SubItems.AddRange(new string[] {
+            int idProdutoAdicionar = produtoSelecionado.Id;
+            int currentStock = produtoSelecionado.Estoque;
+
+            decimal qtyAlreadyInList = 0;
+            foreach (ListViewItem item in listViewProdutos.Items)
+            {
+                int idProdutoNaLista = int.Parse(item.SubItems[0].Text);
+                if (idProdutoNaLista == idProdutoAdicionar)
+                {
+                    qtyAlreadyInList += decimal.Parse(item.SubItems[3].Text);
+                }
+            }
+
+            decimal totalRequestedQty = qtyAlreadyInList + newQty;
+
+            if (totalRequestedQty > currentStock)
+            {
+                MessageBox.Show($"Estoque insuficiente para o produto '{produtoSelecionado.NomeProduto}'.\n\nEstoque Disponível: {currentStock}\nQuantidade já na lista: {qtyAlreadyInList}\nQuantidade Solicitada (total): {totalRequestedQty}",
+                                "Estoque Insuficiente",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Warning);
+                return; 
+            }
+
+            bool itemEncontradoEAgrupado = false;
+            foreach (ListViewItem item in listViewProdutos.Items)
+            {
+                int idProdutoNaLista = int.Parse(item.SubItems[0].Text);
+                decimal vlrUnitarioNaLista = decimal.Parse(item.SubItems[4].Text);
+
+                if (idProdutoNaLista == idProdutoAdicionar && vlrUnitarioNaLista == vlrUnitarioDigitado)
+                {
+                    decimal oldQty = decimal.Parse(item.SubItems[3].Text);
+                    decimal totalQtyAgrupado = oldQty + newQty;
+                    decimal totalValueAgrupado = totalQtyAgrupado * vlrUnitarioDigitado;
+
+                    item.SubItems[3].Text = totalQtyAgrupado.ToString();
+                    item.SubItems[5].Text = totalValueAgrupado.ToString("F2");
+
+                    itemEncontradoEAgrupado = true;
+                    break;
+                }
+            }
+
+            if (!itemEncontradoEAgrupado)
+            {
+                ListViewItem item = new ListViewItem(produtoSelecionado.Id.ToString());
+                item.SubItems.AddRange(new string[] {
                 produtoSelecionado.NomeProduto,
                 produtoSelecionado.NomeUnidadeMedida ?? "UN",
-                txtQuantidade.Text,
-                txtValorUnitario.Text,
-                txtTotal.Text
+                newQty.ToString(), 
+                vlrUnitarioDigitado.ToString("F2"),
+                txtTotal.Text 
             });
-            listViewProdutos.Items.Add(item);
+                listViewProdutos.Items.Add(item);
+            }
 
             LimparCamposItem();
-            CalculaTotalVenda(); 
+            CalculaTotalVenda();
             AtualizarEstadoDosControles();
         }
 
+
         private void btnRemoverProduto_Click(object sender, EventArgs e)
         {
-            if (listViewProdutos.SelectedItems.Count > 0)
+            if (modoEdicaoItem)
             {
-                listViewProdutos.Items.Remove(listViewProdutos.SelectedItems[0]);
-                CalculaTotalVenda(); 
-                AtualizarEstadoDosControles();
+                LimparCamposItem(); 
             }
-            else { MessageBox.Show("Selecione um produto para remover."); }
+            else
+            {
+                if (listViewProdutos.SelectedItems.Count > 0)
+                {
+                    listViewProdutos.Items.Remove(listViewProdutos.SelectedItems[0]);
+                    CalculaTotalVenda();
+                    AtualizarEstadoDosControles();
+                    LimparCamposItem(); 
+                }
+                else
+                {
+                    MessageBox.Show("Selecione um produto para remover.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
         }
 
         private void btnPesquisarCliente_Click(object sender, EventArgs e)
@@ -498,9 +558,93 @@ namespace Projeto.Views.Cadastros
 
         private void btnLimparCondPgto_Click(object sender, EventArgs e) => LimparCamposCondPgto();
 
+
+        private async void listViewProdutos_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (listViewProdutos.SelectedItems.Count > 0)
+            {
+                ListViewItem item = listViewProdutos.SelectedItems[0];
+
+                txtIdProduto.Text = item.SubItems[0].Text;
+                txtProduto.Text = item.SubItems[1].Text;
+                txtQuantidade.Text = item.SubItems[3].Text;
+                txtValorUnitario.Text = item.SubItems[4].Text;
+
+                if (int.TryParse(item.SubItems[0].Text, out int id))
+                {
+                    produtoSelecionado = await produtoController.BuscarPorId(id);
+                }
+
+                modoEdicaoItem = true;
+                btnAdicionarProduto.Enabled = false;
+                btnEditarProduto.Enabled = true;
+                btnRemoverProduto.Text = "Cancelar";
+                txtIdProduto.Enabled = false;
+                btnPesquisarProduto.Enabled = false;
+            }
+        }
+
+        private void btnEditarProduto_Click(object sender, EventArgs e)
+        {
+            if (listViewProdutos.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Nenhum item selecionado para editar.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (produtoSelecionado == null || !decimal.TryParse(txtQuantidade.Text, out decimal newQty) || newQty <= 0 || !decimal.TryParse(txtValorUnitario.Text, out decimal vlrUnitarioDigitado))
+            {
+                MessageBox.Show("Os dados do produto para edição são inválidos.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            ListViewItem itemSelecionado = listViewProdutos.SelectedItems[0];
+            int idProdutoEditar = produtoSelecionado.Id;
+            int currentStock = produtoSelecionado.Estoque;
+            decimal qtyAlreadyInList = 0;
+
+            foreach (ListViewItem item in listViewProdutos.Items)
+            {
+                if (item == itemSelecionado) continue;
+
+                int idProdutoNaLista = int.Parse(item.SubItems[0].Text);
+                if (idProdutoNaLista == idProdutoEditar)
+                {
+                    qtyAlreadyInList += decimal.Parse(item.SubItems[3].Text);
+                }
+            }
+
+            decimal totalRequestedQty = qtyAlreadyInList + newQty;
+
+            if (totalRequestedQty > currentStock)
+            {
+                MessageBox.Show($"Estoque insuficiente para o produto '{produtoSelecionado.NomeProduto}'.\n\nEstoque Disponível: {currentStock}\nQtd. em outras linhas: {qtyAlreadyInList}\nQtd. Solicitada nesta linha: {newQty}",
+                                "Estoque Insuficiente",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Warning);
+                return;
+            }
+
+            decimal oldPrice = decimal.Parse(itemSelecionado.SubItems[4].Text);
+            if (oldPrice != vlrUnitarioDigitado)
+            {
+                MessageBox.Show("Não é permitido alterar o preço unitário de um item na edição.\n\nRemova este item e adicione-o novamente com o novo preço.", "Alteração de Preço Inválida", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtValorUnitario.Text = oldPrice.ToString("F2"); 
+                return;
+            }
+
+            decimal newTotalValue = newQty * vlrUnitarioDigitado;
+            itemSelecionado.SubItems[3].Text = newQty.ToString();
+            itemSelecionado.SubItems[5].Text = newTotalValue.ToString("F2");
+
+            LimparCamposItem();
+            CalculaTotalVenda();
+        }
+
         #endregion
 
         #region Lógica de Cálculos e Suporte
+
 
         private void LimparCamposItem()
         {
@@ -510,6 +654,19 @@ namespace Projeto.Views.Cadastros
             txtQuantidade.Clear();
             txtValorUnitario.Clear();
             txtTotal.Clear();
+
+            modoEdicaoItem = false;
+            btnAdicionarProduto.Enabled = true;
+            btnEditarProduto.Enabled = false;
+            btnRemoverProduto.Text = "Remover";
+
+            txtIdProduto.Enabled = true;
+            btnPesquisarProduto.Enabled = true;
+
+            if (listViewProdutos.SelectedItems.Count > 0)
+            {
+                listViewProdutos.SelectedItems[0].Selected = false;
+            }
             btnPesquisarProduto.Focus();
         }
 
@@ -574,9 +731,8 @@ namespace Projeto.Views.Cadastros
             lblTotalProdutos.Text = $"Total Produtos (R$): {totalProdutos:F2}";
 
             decimal.TryParse(txtFrete.Text, out decimal frete);
-            decimal.TryParse(txtDescontoGeral.Text, out decimal desconto);
 
-            decimal valorTotalVenda = totalProdutos + frete - desconto;
+            decimal valorTotalVenda = totalProdutos + frete;
             txtValorTotal.Text = valorTotalVenda.ToString("F2");
 
             CalcularEExibirParcelas();
@@ -675,7 +831,6 @@ namespace Projeto.Views.Cadastros
                 DataSaida = dtpSaida.Value,
                 Ativo = !chkInativo.Checked,
                 ValorFrete = string.IsNullOrWhiteSpace(txtFrete.Text) ? 0 : Convert.ToDecimal(txtFrete.Text),
-                ValorDesconto = string.IsNullOrWhiteSpace(txtDescontoGeral.Text) ? 0 : Convert.ToDecimal(txtDescontoGeral.Text),
                 ValorTotal = string.IsNullOrWhiteSpace(txtValorTotal.Text) ? 0 : Convert.ToDecimal(txtValorTotal.Text),
                 CondicaoPagamentoId = condicaoPagamentoSelecionada?.Id
             };

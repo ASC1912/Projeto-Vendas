@@ -70,10 +70,6 @@
             this.FormaPagamento = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Valor = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lblFormaPagamento = new System.Windows.Forms.Label();
-            this.lblDescontoGeral = new System.Windows.Forms.Label();
-            this.txtDescontoGeral = new System.Windows.Forms.TextBox();
-            this.lblFrete = new System.Windows.Forms.Label();
-            this.txtFrete = new System.Windows.Forms.TextBox();
             this.listViewProdutos = new System.Windows.Forms.ListView();
             this.Codigo = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Produto = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -84,6 +80,13 @@
             this.lblModelo = new System.Windows.Forms.Label();
             this.lblTotalCondiçãoPgto = new System.Windows.Forms.Label();
             this.lblMotivoCancelamento = new System.Windows.Forms.Label();
+            this.btnPesquisarFuncionario = new System.Windows.Forms.Button();
+            this.lblFuncionario = new System.Windows.Forms.Label();
+            this.txtFuncionario = new System.Windows.Forms.TextBox();
+            this.lblIDFuncionario = new System.Windows.Forms.Label();
+            this.txtIDFuncionario = new System.Windows.Forms.TextBox();
+            this.lblValorFrete = new System.Windows.Forms.Label();
+            this.txtFrete = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // txtCodigo
@@ -346,7 +349,7 @@
             // lblIdCondicaoPgto
             // 
             this.lblIdCondicaoPgto.AutoSize = true;
-            this.lblIdCondicaoPgto.Location = new System.Drawing.Point(15, 390);
+            this.lblIdCondicaoPgto.Location = new System.Drawing.Point(17, 374);
             this.lblIdCondicaoPgto.Name = "lblIdCondicaoPgto";
             this.lblIdCondicaoPgto.Size = new System.Drawing.Size(55, 16);
             this.lblIdCondicaoPgto.TabIndex = 176;
@@ -354,7 +357,7 @@
             // 
             // txtIdCondPgto
             // 
-            this.txtIdCondPgto.Location = new System.Drawing.Point(15, 409);
+            this.txtIdCondPgto.Location = new System.Drawing.Point(17, 393);
             this.txtIdCondPgto.Name = "txtIdCondPgto";
             this.txtIdCondPgto.Size = new System.Drawing.Size(48, 22);
             this.txtIdCondPgto.TabIndex = 164;
@@ -363,7 +366,7 @@
             // lblValorTotal
             // 
             this.lblValorTotal.AutoSize = true;
-            this.lblValorTotal.Location = new System.Drawing.Point(378, 329);
+            this.lblValorTotal.Location = new System.Drawing.Point(306, 321);
             this.lblValorTotal.Name = "lblValorTotal";
             this.lblValorTotal.Size = new System.Drawing.Size(73, 16);
             this.lblValorTotal.TabIndex = 175;
@@ -371,7 +374,7 @@
             // 
             // txtValorTotal
             // 
-            this.txtValorTotal.Location = new System.Drawing.Point(378, 348);
+            this.txtValorTotal.Location = new System.Drawing.Point(306, 340);
             this.txtValorTotal.Name = "txtValorTotal";
             this.txtValorTotal.ReadOnly = true;
             this.txtValorTotal.Size = new System.Drawing.Size(126, 22);
@@ -380,7 +383,7 @@
             // lblTotalProdutos
             // 
             this.lblTotalProdutos.AutoSize = true;
-            this.lblTotalProdutos.Location = new System.Drawing.Point(965, 308);
+            this.lblTotalProdutos.Location = new System.Drawing.Point(544, 308);
             this.lblTotalProdutos.Name = "lblTotalProdutos";
             this.lblTotalProdutos.Size = new System.Drawing.Size(66, 16);
             this.lblTotalProdutos.TabIndex = 174;
@@ -388,7 +391,7 @@
             // 
             // btnLimparCondPgto
             // 
-            this.btnLimparCondPgto.Location = new System.Drawing.Point(446, 409);
+            this.btnLimparCondPgto.Location = new System.Drawing.Point(448, 393);
             this.btnLimparCondPgto.Name = "btnLimparCondPgto";
             this.btnLimparCondPgto.Size = new System.Drawing.Size(150, 23);
             this.btnLimparCondPgto.TabIndex = 167;
@@ -398,7 +401,7 @@
             // 
             // txtCondPgto
             // 
-            this.txtCondPgto.Location = new System.Drawing.Point(72, 410);
+            this.txtCondPgto.Location = new System.Drawing.Point(74, 394);
             this.txtCondPgto.Name = "txtCondPgto";
             this.txtCondPgto.ReadOnly = true;
             this.txtCondPgto.Size = new System.Drawing.Size(200, 22);
@@ -406,7 +409,7 @@
             // 
             // btnAdicionarCondPgto
             // 
-            this.btnAdicionarCondPgto.Location = new System.Drawing.Point(278, 409);
+            this.btnAdicionarCondPgto.Location = new System.Drawing.Point(280, 393);
             this.btnAdicionarCondPgto.Name = "btnAdicionarCondPgto";
             this.btnAdicionarCondPgto.Size = new System.Drawing.Size(150, 23);
             this.btnAdicionarCondPgto.TabIndex = 166;
@@ -424,7 +427,7 @@
             this.listViewCondPgto.FullRowSelect = true;
             this.listViewCondPgto.GridLines = true;
             this.listViewCondPgto.HideSelection = false;
-            this.listViewCondPgto.Location = new System.Drawing.Point(15, 438);
+            this.listViewCondPgto.Location = new System.Drawing.Point(17, 422);
             this.listViewCondPgto.Name = "listViewCondPgto";
             this.listViewCondPgto.Size = new System.Drawing.Size(1241, 121);
             this.listViewCondPgto.TabIndex = 173;
@@ -454,43 +457,11 @@
             // lblFormaPagamento
             // 
             this.lblFormaPagamento.AutoSize = true;
-            this.lblFormaPagamento.Location = new System.Drawing.Point(68, 390);
+            this.lblFormaPagamento.Location = new System.Drawing.Point(70, 374);
             this.lblFormaPagamento.Name = "lblFormaPagamento";
             this.lblFormaPagamento.Size = new System.Drawing.Size(162, 16);
             this.lblFormaPagamento.TabIndex = 172;
             this.lblFormaPagamento.Text = "Condição de Pagamento*";
-            // 
-            // lblDescontoGeral
-            // 
-            this.lblDescontoGeral.AutoSize = true;
-            this.lblDescontoGeral.Location = new System.Drawing.Point(235, 329);
-            this.lblDescontoGeral.Name = "lblDescontoGeral";
-            this.lblDescontoGeral.Size = new System.Drawing.Size(101, 16);
-            this.lblDescontoGeral.TabIndex = 171;
-            this.lblDescontoGeral.Text = "Desconto Geral";
-            // 
-            // txtDescontoGeral
-            // 
-            this.txtDescontoGeral.Location = new System.Drawing.Point(235, 348);
-            this.txtDescontoGeral.Name = "txtDescontoGeral";
-            this.txtDescontoGeral.Size = new System.Drawing.Size(126, 22);
-            this.txtDescontoGeral.TabIndex = 162;
-            // 
-            // lblFrete
-            // 
-            this.lblFrete.AutoSize = true;
-            this.lblFrete.Location = new System.Drawing.Point(15, 330);
-            this.lblFrete.Name = "lblFrete";
-            this.lblFrete.Size = new System.Drawing.Size(73, 16);
-            this.lblFrete.TabIndex = 169;
-            this.lblFrete.Text = "Valor Frete";
-            // 
-            // txtFrete
-            // 
-            this.txtFrete.Location = new System.Drawing.Point(15, 349);
-            this.txtFrete.Name = "txtFrete";
-            this.txtFrete.Size = new System.Drawing.Size(100, 22);
-            this.txtFrete.TabIndex = 160;
             // 
             // listViewProdutos
             // 
@@ -529,16 +500,19 @@
             // Quantidade
             // 
             this.Quantidade.Text = "Qtd";
+            this.Quantidade.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.Quantidade.Width = 48;
             // 
             // PrecoUnitario
             // 
             this.PrecoUnitario.Text = "Preço Unitário";
+            this.PrecoUnitario.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.PrecoUnitario.Width = 111;
             // 
             // Total
             // 
             this.Total.Text = "Total";
+            this.Total.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblModelo
             // 
@@ -552,7 +526,7 @@
             // lblTotalCondiçãoPgto
             // 
             this.lblTotalCondiçãoPgto.AutoSize = true;
-            this.lblTotalCondiçãoPgto.Location = new System.Drawing.Point(965, 562);
+            this.lblTotalCondiçãoPgto.Location = new System.Drawing.Point(544, 549);
             this.lblTotalCondiçãoPgto.Name = "lblTotalCondiçãoPgto";
             this.lblTotalCondiçãoPgto.Size = new System.Drawing.Size(66, 16);
             this.lblTotalCondiçãoPgto.TabIndex = 178;
@@ -567,10 +541,75 @@
             this.lblMotivoCancelamento.TabIndex = 179;
             this.lblMotivoCancelamento.Text = "Motivo do Cancelamento:";
             // 
+            // btnPesquisarFuncionario
+            // 
+            this.btnPesquisarFuncionario.Location = new System.Drawing.Point(296, 568);
+            this.btnPesquisarFuncionario.Name = "btnPesquisarFuncionario";
+            this.btnPesquisarFuncionario.Size = new System.Drawing.Size(91, 23);
+            this.btnPesquisarFuncionario.TabIndex = 182;
+            this.btnPesquisarFuncionario.Text = "Pesquisar";
+            this.btnPesquisarFuncionario.UseVisualStyleBackColor = true;
+            // 
+            // lblFuncionario
+            // 
+            this.lblFuncionario.AutoSize = true;
+            this.lblFuncionario.Location = new System.Drawing.Point(79, 549);
+            this.lblFuncionario.Name = "lblFuncionario";
+            this.lblFuncionario.Size = new System.Drawing.Size(77, 16);
+            this.lblFuncionario.TabIndex = 184;
+            this.lblFuncionario.Text = "Funcionário";
+            // 
+            // txtFuncionario
+            // 
+            this.txtFuncionario.Location = new System.Drawing.Point(79, 568);
+            this.txtFuncionario.Name = "txtFuncionario";
+            this.txtFuncionario.ReadOnly = true;
+            this.txtFuncionario.Size = new System.Drawing.Size(211, 22);
+            this.txtFuncionario.TabIndex = 181;
+            // 
+            // lblIDFuncionario
+            // 
+            this.lblIDFuncionario.AutoSize = true;
+            this.lblIDFuncionario.Location = new System.Drawing.Point(13, 549);
+            this.lblIDFuncionario.Name = "lblIDFuncionario";
+            this.lblIDFuncionario.Size = new System.Drawing.Size(55, 16);
+            this.lblIDFuncionario.TabIndex = 183;
+            this.lblIDFuncionario.Text = "ID Func.";
+            // 
+            // txtIDFuncionario
+            // 
+            this.txtIDFuncionario.Location = new System.Drawing.Point(13, 568);
+            this.txtIDFuncionario.Name = "txtIDFuncionario";
+            this.txtIDFuncionario.Size = new System.Drawing.Size(48, 22);
+            this.txtIDFuncionario.TabIndex = 180;
+            // 
+            // lblValorFrete
+            // 
+            this.lblValorFrete.AutoSize = true;
+            this.lblValorFrete.Location = new System.Drawing.Point(14, 321);
+            this.lblValorFrete.Name = "lblValorFrete";
+            this.lblValorFrete.Size = new System.Drawing.Size(73, 16);
+            this.lblValorFrete.TabIndex = 186;
+            this.lblValorFrete.Text = "Valor Frete";
+            // 
+            // txtFrete
+            // 
+            this.txtFrete.Location = new System.Drawing.Point(14, 340);
+            this.txtFrete.Name = "txtFrete";
+            this.txtFrete.Size = new System.Drawing.Size(100, 22);
+            this.txtFrete.TabIndex = 185;
+            // 
             // frmCadastroVenda
             // 
             //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             //this.ClientSize = new System.Drawing.Size(1342, 681);
+            this.Controls.Add(this.lblValorFrete);
+            this.Controls.Add(this.txtFrete);
+            this.Controls.Add(this.btnPesquisarFuncionario);
+            this.Controls.Add(this.lblFuncionario);
+            this.Controls.Add(this.txtFuncionario);
+            this.Controls.Add(this.lblIDFuncionario);
+            this.Controls.Add(this.txtIDFuncionario);
             this.Controls.Add(this.lblMotivoCancelamento);
             this.Controls.Add(this.lblTotalCondiçãoPgto);
             this.Controls.Add(this.lblModelo);
@@ -584,10 +623,6 @@
             this.Controls.Add(this.btnAdicionarCondPgto);
             this.Controls.Add(this.listViewCondPgto);
             this.Controls.Add(this.lblFormaPagamento);
-            this.Controls.Add(this.lblDescontoGeral);
-            this.Controls.Add(this.txtDescontoGeral);
-            this.Controls.Add(this.lblFrete);
-            this.Controls.Add(this.txtFrete);
             this.Controls.Add(this.listViewProdutos);
             this.Controls.Add(this.lblIdProduto);
             this.Controls.Add(this.txtIdProduto);
@@ -618,12 +653,6 @@
             this.Controls.Add(this.txtNumero);
             this.Controls.Add(this.txtSerie);
             this.Name = "frmCadastroVenda";
-            this.Controls.SetChildIndex(this.btnSair, 0);
-            this.Controls.SetChildIndex(this.txtCodigo, 0);
-            this.Controls.SetChildIndex(this.chkInativo, 0);
-            this.Controls.SetChildIndex(this.lblDataCriacao, 0);
-            this.Controls.SetChildIndex(this.lblDataModificacao, 0);
-            this.Controls.SetChildIndex(this.btnSalvar, 0);
             this.Controls.SetChildIndex(this.txtSerie, 0);
             this.Controls.SetChildIndex(this.txtNumero, 0);
             this.Controls.SetChildIndex(this.lblNumero, 0);
@@ -653,10 +682,6 @@
             this.Controls.SetChildIndex(this.txtIdProduto, 0);
             this.Controls.SetChildIndex(this.lblIdProduto, 0);
             this.Controls.SetChildIndex(this.listViewProdutos, 0);
-            this.Controls.SetChildIndex(this.txtFrete, 0);
-            this.Controls.SetChildIndex(this.lblFrete, 0);
-            this.Controls.SetChildIndex(this.txtDescontoGeral, 0);
-            this.Controls.SetChildIndex(this.lblDescontoGeral, 0);
             this.Controls.SetChildIndex(this.lblFormaPagamento, 0);
             this.Controls.SetChildIndex(this.listViewCondPgto, 0);
             this.Controls.SetChildIndex(this.btnAdicionarCondPgto, 0);
@@ -670,6 +695,19 @@
             this.Controls.SetChildIndex(this.lblModelo, 0);
             this.Controls.SetChildIndex(this.lblTotalCondiçãoPgto, 0);
             this.Controls.SetChildIndex(this.lblMotivoCancelamento, 0);
+            this.Controls.SetChildIndex(this.txtIDFuncionario, 0);
+            this.Controls.SetChildIndex(this.lblIDFuncionario, 0);
+            this.Controls.SetChildIndex(this.txtFuncionario, 0);
+            this.Controls.SetChildIndex(this.lblFuncionario, 0);
+            this.Controls.SetChildIndex(this.btnPesquisarFuncionario, 0);
+            this.Controls.SetChildIndex(this.btnSair, 0);
+            this.Controls.SetChildIndex(this.txtCodigo, 0);
+            this.Controls.SetChildIndex(this.chkInativo, 0);
+            this.Controls.SetChildIndex(this.lblDataCriacao, 0);
+            this.Controls.SetChildIndex(this.lblDataModificacao, 0);
+            this.Controls.SetChildIndex(this.btnSalvar, 0);
+            this.Controls.SetChildIndex(this.txtFrete, 0);
+            this.Controls.SetChildIndex(this.lblValorFrete, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -719,10 +757,6 @@
         private System.Windows.Forms.ColumnHeader FormaPagamento;
         private System.Windows.Forms.ColumnHeader Valor;
         private System.Windows.Forms.Label lblFormaPagamento;
-        private System.Windows.Forms.Label lblDescontoGeral;
-        private System.Windows.Forms.TextBox txtDescontoGeral;
-        private System.Windows.Forms.Label lblFrete;
-        private System.Windows.Forms.TextBox txtFrete;
         protected System.Windows.Forms.ListView listViewProdutos;
         private System.Windows.Forms.ColumnHeader Codigo;
         private System.Windows.Forms.ColumnHeader Produto;
@@ -733,5 +767,12 @@
         private System.Windows.Forms.Label lblModelo;
         private System.Windows.Forms.Label lblTotalCondiçãoPgto;
         private System.Windows.Forms.Label lblMotivoCancelamento;
+        private System.Windows.Forms.Button btnPesquisarFuncionario;
+        private System.Windows.Forms.Label lblFuncionario;
+        private System.Windows.Forms.TextBox txtFuncionario;
+        private System.Windows.Forms.Label lblIDFuncionario;
+        private System.Windows.Forms.TextBox txtIDFuncionario;
+        private System.Windows.Forms.Label lblValorFrete;
+        private System.Windows.Forms.TextBox txtFrete;
     }
 }

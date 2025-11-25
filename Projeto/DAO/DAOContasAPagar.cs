@@ -16,12 +16,12 @@ namespace Projeto.DAO
             string query = @"
                 INSERT INTO ContasAPagar (
                     CompraModelo, CompraSerie, CompraNumeroNota, CompraFornecedorId, NumeroParcela,
-                    FornecedorId, Descricao, DataEmissao, DataVencimento, ValorVencimento,
+                    FornecedorId, DataEmissao, DataVencimento, ValorVencimento,
                     Status, Ativo, DataCadastro, DataAlteracao,
                     Juros, Multa, Desconto  
                 ) VALUES (
                     @CompraModelo, @CompraSerie, @CompraNumeroNota, @CompraFornecedorId, @NumeroParcela,
-                    @FornecedorId, @Descricao, @DataEmissao, @DataVencimento, @ValorVencimento,
+                    @FornecedorId, @DataEmissao, @DataVencimento, @ValorVencimento,
                     @Status, @Ativo, @DataCadastro, @DataAlteracao,
                     @Juros, @Multa, @Desconto  
                 )";
@@ -34,7 +34,6 @@ namespace Projeto.DAO
                 cmd.Parameters.AddWithValue("@CompraFornecedorId", conta.CompraFornecedorId);
                 cmd.Parameters.AddWithValue("@NumeroParcela", conta.NumeroParcela);
                 cmd.Parameters.AddWithValue("@FornecedorId", conta.FornecedorId);
-                cmd.Parameters.AddWithValue("@Descricao", conta.Descricao);
                 cmd.Parameters.AddWithValue("@DataEmissao", conta.DataEmissao);
                 cmd.Parameters.AddWithValue("@DataVencimento", conta.DataVencimento);
                 cmd.Parameters.AddWithValue("@ValorVencimento", conta.ValorVencimento);
@@ -81,7 +80,7 @@ namespace Projeto.DAO
 
                 var whereClauses = new List<string>();
 
-                whereClauses.Add("(f.Fornecedor LIKE @Busca OR cap.Descricao LIKE @Busca)");
+                whereClauses.Add("(f.Fornecedor LIKE @Busca OR cap.CompraNumeroNota LIKE @Busca)");
 
                 if (statuses != null && statuses.Count > 0)
                 {
@@ -94,10 +93,10 @@ namespace Projeto.DAO
                 }
                 else
                 {
-                    whereClauses.Add("1 = 0"); 
+                    whereClauses.Add("1 = 0");
                 }
 
-                query += $" WHERE {string.Join(" AND ", whereClauses)} ORDER BY cap.DataVencimento";
+                query += $" WHERE {string.Join(" AND ", whereClauses)} ORDER BY cap.DataVencimento ASC";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
@@ -122,7 +121,6 @@ namespace Projeto.DAO
             }
             return lista;
         }
-
 
         public void Pagar(ContasAPagar conta)
         {
@@ -179,7 +177,6 @@ namespace Projeto.DAO
 
                 FornecedorId = reader.GetInt32("FornecedorId"),
                 NomeFornecedor = reader.GetString("NomeFornecedor"),
-                Descricao = reader.GetString("Descricao"),
                 DataEmissao = reader.GetDateTime("DataEmissao"),
                 DataVencimento = reader.GetDateTime("DataVencimento"),
                 ValorVencimento = reader.GetDecimal("ValorVencimento"),

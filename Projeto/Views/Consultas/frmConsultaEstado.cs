@@ -55,9 +55,7 @@ namespace Projeto.Views
                         column.Width = 50;
                         column.TextAlign = HorizontalAlignment.Left;
                         break;
-                    default:
-                        column.Width = 100;
-                        break;
+                    
                 }
             }
         }
@@ -80,7 +78,8 @@ namespace Projeto.Views
 
                 foreach (var estado in estados)
                 {
-                    ListViewItem item = new ListViewItem(estado.Id.ToString());
+                    ListViewItem item = new ListViewItem("");
+                    item.SubItems.Add(estado.Id.ToString());
                     item.SubItems.Add(estado.NomeEstado);
                     item.SubItems.Add(estado.UF);
                     item.SubItems.Add(estado.PaisNome);

@@ -38,23 +38,23 @@
             this.DataEmissao = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.DataVencimento = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Ativo = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.Descricao = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Status = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.DataPagamento = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ValorPago = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chkPaga = new System.Windows.Forms.CheckBox();
             this.chkAberta = new System.Windows.Forms.CheckBox();
             this.chkCancelada = new System.Windows.Forms.CheckBox();
+            this.IdFornecedor = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // listView1
             // 
             this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.NumeroParcela,
-            this.Descricao,
             this.Modelo,
             this.Serie,
             this.NumeroNota,
+            this.NumeroParcela,
+            this.IdFornecedor,
             this.Fornecedor,
             this.ValorParcela,
             this.FormaPagamento,
@@ -85,6 +85,7 @@
             // NumeroParcela
             // 
             this.NumeroParcela.Text = "Número da Parcela";
+            this.NumeroParcela.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.NumeroParcela.Width = 130;
             // 
             // Modelo
@@ -135,19 +136,15 @@
             // 
             this.Ativo.Text = "Ativo";
             // 
-            // Descricao
-            // 
-            this.Descricao.Text = "Descrição";
-            this.Descricao.Width = 200;
-            // 
             // Status
             // 
             this.Status.Text = "Status";
+            this.Status.Width = 70;
             // 
             // DataPagamento
             // 
             this.DataPagamento.Text = "Data de Pagamento";
-            this.DataPagamento.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.DataPagamento.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.DataPagamento.Width = 140;
             // 
             // ValorPago
@@ -195,6 +192,12 @@
             this.chkCancelada.UseVisualStyleBackColor = true;
             this.chkCancelada.CheckedChanged += new System.EventHandler(this.chkCancelada_CheckedChanged);
             // 
+            // IdFornecedor
+            // 
+            this.IdFornecedor.Text = "IdFornecedor";
+            this.IdFornecedor.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.IdFornecedor.Width = 100;
+            // 
             // frmConsultaContasAPagar
             // 
             //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -232,12 +235,12 @@
         private System.Windows.Forms.ColumnHeader DataEmissao;
         private System.Windows.Forms.ColumnHeader DataVencimento;
         private System.Windows.Forms.ColumnHeader Ativo;
-        private System.Windows.Forms.ColumnHeader Descricao;
         private System.Windows.Forms.ColumnHeader Status;
         private System.Windows.Forms.ColumnHeader DataPagamento;
         private System.Windows.Forms.ColumnHeader ValorPago;
         private System.Windows.Forms.CheckBox chkPaga;
         private System.Windows.Forms.CheckBox chkAberta;
         private System.Windows.Forms.CheckBox chkCancelada;
+        private System.Windows.Forms.ColumnHeader IdFornecedor;
     }
 }

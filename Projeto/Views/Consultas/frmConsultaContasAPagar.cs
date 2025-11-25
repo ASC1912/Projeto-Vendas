@@ -63,11 +63,11 @@ namespace Projeto.Views.Consultas
                 listView1.BeginUpdate();
                 foreach (var conta in contas)
                 {
-                    ListViewItem item = new ListViewItem(conta.NumeroParcela.ToString());
-                    item.SubItems.Add(conta.Descricao ?? "");
-                    item.SubItems.Add(conta.CompraModelo ?? "");
+                    ListViewItem item = new ListViewItem(conta.CompraModelo ?? "");
                     item.SubItems.Add(conta.CompraSerie ?? "");
                     item.SubItems.Add(conta.CompraNumeroNota.ToString());
+                    item.SubItems.Add(conta.NumeroParcela.ToString());
+                    item.SubItems.Add(conta.FornecedorId.ToString());
                     item.SubItems.Add(conta.NomeFornecedor ?? "");
                     item.SubItems.Add(conta.ValorVencimento.ToString("C2"));
                     item.SubItems.Add(conta.NomeFormaPagamento ?? "");

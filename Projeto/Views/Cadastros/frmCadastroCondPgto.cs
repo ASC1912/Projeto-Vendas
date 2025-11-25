@@ -213,7 +213,7 @@ namespace Projeto
                 if (!Validador.CampoObrigatorio(txtDesconto, "O desconto é obrigatório.")) return;
                 if (!Validador.ValidarNumerico(txtQtdParcelas, "A quantidade de parcelas deve ser um número.")) return;
                 decimal desconto = string.IsNullOrWhiteSpace(txtDesconto.Text) ? 0 : Convert.ToDecimal(txtDesconto.Text);
-                if (!ValidarPorcentagemTotal(desconto)) return;
+                if (!ValidarPorcentagemTotal()) return;
                 int qtdParcelas = int.Parse(txtQtdParcelas.Text);
                 if (qtdParcelas != listView1.Items.Count)
                 {
@@ -324,16 +324,17 @@ namespace Projeto
             catch (Exception ex) { MessageBox.Show("Erro ao editar parcela: " + ex.Message); }
         }
 
-        private bool ValidarPorcentagemTotal(decimal desconto)
+        private bool ValidarPorcentagemTotal() 
         {
             decimal somaPorcentagens = 0;
             foreach (ListViewItem item in listView1.Items)
             {
                 somaPorcentagens += decimal.Parse(item.SubItems[2].Text.Replace("%", "").Trim());
             }
-            if (Math.Round(somaPorcentagens + desconto, 2) != 100)
+
+            if (Math.Round(somaPorcentagens, 2) != 100)
             {
-                MessageBox.Show($"A soma das porcentagens das parcelas é {somaPorcentagens:N2}% e o desconto é {desconto:N2}%. O total deve ser exatamente 100%.", "Erro de Validação", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show($"A soma das porcentagens das parcelas é {somaPorcentagens:N2}%. O total deve ser exatamente 100%.", "Erro de Validação", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
             return true;

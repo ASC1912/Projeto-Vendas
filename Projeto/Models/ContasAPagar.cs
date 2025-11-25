@@ -4,21 +4,17 @@ namespace Projeto.Models
 {
     public class ContasAPagar
     {
-        // Chave Primária Composta (herdada da Compra)
         public string CompraModelo { get; set; }
         public string CompraSerie { get; set; }
         public int CompraNumeroNota { get; set; }
         public int CompraFornecedorId { get; set; }
         public int NumeroParcela { get; set; }
 
-        // Dados da Parcela/Conta
         public int FornecedorId { get; set; }
-        public string Descricao { get; set; }
         public DateTime DataEmissao { get; set; }
         public DateTime DataVencimento { get; set; }
         public decimal ValorVencimento { get; set; }
 
-        // Dados do Pagamento
         public int? IdFormaPagamento { get; set; } 
         public string Status { get; set; }
         public decimal? Juros { get; set; }

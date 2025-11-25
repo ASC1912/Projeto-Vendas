@@ -118,6 +118,7 @@
     <Compile Include="Controller\CompraController.cs" />
     <Compile Include="Controller\CondicaoPagamentoController.cs" />
     <Compile Include="Controller\ContasAPagarController.cs" />
+    <Compile Include="Controller\ContasAReceberController.cs" />
     <Compile Include="Controller\EstadoController.cs" />
     <Compile Include="Controller\FornecedorController.cs" />
     <Compile Include="Controller\FuncionarioController.cs" />
@@ -136,6 +137,7 @@
     <Compile Include="Controller\VendaController.cs" />
     <Compile Include="DAO\DAOCompra.cs" />
     <Compile Include="DAO\DAOContasAPagar.cs" />
+    <Compile Include="DAO\DAOContasAReceber.cs" />
     <Compile Include="DAO\DAOGrupo.cs" />
     <Compile Include="DAO\DAOMesa.cs" />
     <Compile Include="DAO\DAOPedido.cs" />
@@ -222,6 +224,12 @@
     <Compile Include="Views\Cadastros\frmCadastroContasAPagar.Designer.cs">
       <DependentUpon>frmCadastroContasAPagar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\Cadastros\frmCadastroContasAReceber.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Cadastros\frmCadastroContasAReceber.Designer.cs">
+      <DependentUpon>frmCadastroContasAReceber.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\Cadastros\frmCadastroGrupo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -287,6 +295,12 @@
     </Compile>
     <Compile Include="Views\Consultas\frmConsultaCompra.Designer.cs">
       <DependentUpon>frmConsultaCompra.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Consultas\frmConsultaContasAReceber.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Consultas\frmConsultaContasAReceber.Designer.cs">
+      <DependentUpon>frmConsultaContasAReceber.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Consultas\frmConsultaGrupo.cs">
       <SubType>Form</SubType>
@@ -464,6 +478,9 @@
     <EmbeddedResource Include="Views\Cadastros\frmCadastroContasAPagar.resx">
       <DependentUpon>frmCadastroContasAPagar.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\Cadastros\frmCadastroContasAReceber.resx">
+      <DependentUpon>frmCadastroContasAReceber.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\Cadastros\frmCadastroGrupo.resx">
       <DependentUpon>frmCadastroGrupo.cs</DependentUpon>
     </EmbeddedResource>
@@ -493,6 +510,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Consultas\frmConsultaCompra.resx">
       <DependentUpon>frmConsultaCompra.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Consultas\frmConsultaContasAReceber.resx">
+      <DependentUpon>frmConsultaContasAReceber.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Consultas\frmConsultaGrupo.resx">
       <DependentUpon>frmConsultaGrupo.cs</DependentUpon>

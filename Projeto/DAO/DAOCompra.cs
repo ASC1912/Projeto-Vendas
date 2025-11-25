@@ -65,21 +65,17 @@ namespace Projeto.DAO
                     decimal valorVenda = reader.GetDecimal("PrecoVenda");
                     reader.Close(); 
 
-                    // 1. Calcula o novo estoque
                     int novoEstoque = estoqueAtual - (int)item.Quantidade;
-                    if (novoEstoque < 0) novoEstoque = 0; // Segurança para não negativar
+                    if (novoEstoque < 0) novoEstoque = 0; 
 
-                    // 2. O "Novo Custo" é o Custo Antigo que estava salvo
                     decimal precoCustoRestaurado = custoParaRestaurar;
 
-                    // 3. Recalcula o percentual de lucro com base no custo RESTAURADO
                     decimal novoPercentualLucro = 0;
                     if (precoCustoRestaurado > 0)
                     {
                         novoPercentualLucro = ((valorVenda / precoCustoRestaurado) - 1) * 100;
                     }
 
-                    // 4. O "PrecoCustoAnterior" deve ser revertido.
                     decimal novoPrecoCustoAnterior = custoParaRestaurar;
 
                     string sqlUpdate = @"UPDATE Produtos SET 
@@ -319,7 +315,7 @@ namespace Projeto.DAO
                     FROM Compras c
                     LEFT JOIN Fornecedores f ON c.FornecedorId = f.Id
                     LEFT JOIN CondicoesPagamento cp ON c.CondicaoPagamentoId = cp.Id
-                    ORDER BY c.DataEmissao DESC";
+                    ORDER BY c.Modelo, c.Serie, c.NumeroNota, c.FornecedorId";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {

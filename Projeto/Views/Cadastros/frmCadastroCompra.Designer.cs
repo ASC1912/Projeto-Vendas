@@ -267,21 +267,25 @@
             // Unidade
             // 
             this.Unidade.Text = "Unidade";
+            this.Unidade.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.Unidade.Width = 100;
             // 
             // Quantidade
             // 
             this.Quantidade.Text = "Qtd";
+            this.Quantidade.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.Quantidade.Width = 48;
             // 
             // PrecoUnitario
             // 
             this.PrecoUnitario.Text = "Preço Unitário";
+            this.PrecoUnitario.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.PrecoUnitario.Width = 111;
             // 
             // Total
             // 
             this.Total.Text = "Total";
+            this.Total.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblProduto
             // 
@@ -413,7 +417,7 @@
             // 
             this.txtDespesas.Location = new System.Drawing.Point(238, 377);
             this.txtDespesas.Name = "txtDespesas";
-            this.txtDespesas.Size = new System.Drawing.Size(126, 22);
+            this.txtDespesas.Size = new System.Drawing.Size(70, 22);
             this.txtDespesas.TabIndex = 20;
             // 
             // lblSeguro
@@ -429,7 +433,7 @@
             // 
             this.txtSeguro.Location = new System.Drawing.Point(131, 378);
             this.txtSeguro.Name = "txtSeguro";
-            this.txtSeguro.Size = new System.Drawing.Size(88, 22);
+            this.txtSeguro.Size = new System.Drawing.Size(51, 22);
             this.txtSeguro.TabIndex = 19;
             // 
             // lblFrete
@@ -445,7 +449,7 @@
             // 
             this.txtFrete.Location = new System.Drawing.Point(18, 378);
             this.txtFrete.Name = "txtFrete";
-            this.txtFrete.Size = new System.Drawing.Size(100, 22);
+            this.txtFrete.Size = new System.Drawing.Size(73, 22);
             this.txtFrete.TabIndex = 18;
             // 
             // btnLimparCondPgto
@@ -525,7 +529,7 @@
             // lblTotalProdutos
             // 
             this.lblTotalProdutos.AutoSize = true;
-            this.lblTotalProdutos.Location = new System.Drawing.Point(968, 337);
+            this.lblTotalProdutos.Location = new System.Drawing.Point(533, 337);
             this.lblTotalProdutos.Name = "lblTotalProdutos";
             this.lblTotalProdutos.Size = new System.Drawing.Size(66, 16);
             this.lblTotalProdutos.TabIndex = 146;
@@ -551,7 +555,7 @@
             // lblTotalCondiçãoPgto
             // 
             this.lblTotalCondiçãoPgto.AutoSize = true;
-            this.lblTotalCondiçãoPgto.Location = new System.Drawing.Point(968, 591);
+            this.lblTotalCondiçãoPgto.Location = new System.Drawing.Point(533, 591);
             this.lblTotalCondiçãoPgto.Name = "lblTotalCondiçãoPgto";
             this.lblTotalCondiçãoPgto.Size = new System.Drawing.Size(66, 16);
             this.lblTotalCondiçãoPgto.TabIndex = 149;

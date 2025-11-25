@@ -25,10 +25,10 @@ namespace Projeto.DAO
 
                     int novoEstoque = estoqueAtual - (int)item.Quantidade;
 
-                    // Validação de estoque (pode ser melhorada depois, mas é um início)
+                    // Validação de estoque (pode ser melhorada depois)
                     if (novoEstoque < 0)
                     {
-                        // Você pode decidir se quer ou não travar a venda aqui
+                        // decidir se quer ou não travar a venda aqui
                         // throw new InvalidOperationException($"Estoque insuficiente para o produto ID {item.ProdutoId}.");
                     }
 
@@ -103,10 +103,10 @@ namespace Projeto.DAO
 
                     string insertVendaQuery = @"
                         INSERT INTO Vendas (
-                            Modelo, Serie, NumeroNota, ClienteId, CondicaoPagamentoId, DataEmissao, DataSaida,
+                            Modelo, Serie, NumeroNota, ClienteId, FuncionarioId, CondicaoPagamentoId, DataEmissao, DataSaida,
                             ValorFrete, ValorDesconto, ValorTotal, Observacao, Ativo, DataCadastro, DataAlteracao
                         ) VALUES (
-                            @Modelo, @Serie, @NumeroNota, @ClienteId, @CondicaoPagamentoId, @DataEmissao, @DataSaida,
+                            @Modelo, @Serie, @NumeroNota, @ClienteId, @FuncionarioId, @CondicaoPagamentoId, @DataEmissao, @DataSaida,
                             @ValorFrete, @ValorDesconto, @ValorTotal, @Observacao, @Ativo, @DataCadastro, @DataAlteracao
                         )";
 
@@ -116,6 +116,7 @@ namespace Projeto.DAO
                         cmdVenda.Parameters.AddWithValue("@Serie", venda.Serie);
                         cmdVenda.Parameters.AddWithValue("@NumeroNota", venda.NumeroNota);
                         cmdVenda.Parameters.AddWithValue("@ClienteId", venda.ClienteId);
+                        cmdVenda.Parameters.AddWithValue("@FuncionarioId", venda.FuncionarioId);
                         cmdVenda.Parameters.AddWithValue("@CondicaoPagamentoId", venda.CondicaoPagamentoId);
                         cmdVenda.Parameters.AddWithValue("@DataEmissao", venda.DataEmissao);
                         cmdVenda.Parameters.AddWithValue("@DataSaida", venda.DataSaida);
@@ -254,11 +255,13 @@ namespace Projeto.DAO
                     SELECT 
                         v.*,
                         c.Cliente AS NomeCliente,
+                        f.Funcionario AS NomeFuncionario,  
                         cp.Descricao AS NomeCondPgto
                     FROM Vendas v
                     LEFT JOIN Clientes c ON v.ClienteId = c.Id
+                    LEFT JOIN Funcionarios f ON v.FuncionarioId = f.Id 
                     LEFT JOIN CondicoesPagamento cp ON v.CondicaoPagamentoId = cp.Id
-                    ORDER BY v.DataEmissao DESC";
+                    ORDER BY v.Modelo, CAST(v.Serie AS UNSIGNED), v.NumeroNota, v.ClienteId"; 
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
@@ -284,9 +287,11 @@ namespace Projeto.DAO
                     SELECT 
                         v.*,
                         c.Cliente AS NomeCliente,
+                        f.Funcionario AS NomeFuncionario,
                         cp.Descricao AS NomeCondPgto
                     FROM Vendas v
                     LEFT JOIN Clientes c ON v.ClienteId = c.Id
+                    LEFT JOIN Funcionarios f ON v.FuncionarioId = f.Id 
                     LEFT JOIN CondicoesPagamento cp ON v.CondicaoPagamentoId = cp.Id
                     WHERE v.Modelo = @Modelo AND v.Serie = @Serie AND v.NumeroNota = @NumeroNota AND v.ClienteId = @ClienteId";
 
@@ -346,6 +351,7 @@ namespace Projeto.DAO
                 Serie = reader.GetString("Serie"),
                 NumeroNota = reader.GetInt32("NumeroNota"),
                 ClienteId = reader.GetInt32("ClienteId"),
+                FuncionarioId = reader.GetInt32("FuncionarioId"),
                 CondicaoPagamentoId = reader.IsDBNull(reader.GetOrdinal("CondicaoPagamentoId")) ? (int?)null : reader.GetInt32("CondicaoPagamentoId"),
                 DataEmissao = reader.IsDBNull(reader.GetOrdinal("DataEmissao")) ? (DateTime?)null : reader.GetDateTime("DataEmissao"),
                 DataSaida = reader.IsDBNull(reader.GetOrdinal("DataSaida")) ? (DateTime?)null : reader.GetDateTime("DataSaida"),
@@ -360,6 +366,11 @@ namespace Projeto.DAO
                 {
                     Id = reader.GetInt32("ClienteId"),
                     Nome = reader.IsDBNull(reader.GetOrdinal("NomeCliente")) ? "" : reader.GetString("NomeCliente")
+                },
+                oFuncionario = new Funcionario
+                {
+                    Id = reader.GetInt32("FuncionarioId"),
+                    Nome = reader.IsDBNull(reader.GetOrdinal("NomeFuncionario")) ? "" : reader.GetString("NomeFuncionario")
                 },
                 oCondicaoPagamento = new CondicaoPagamento
                 {

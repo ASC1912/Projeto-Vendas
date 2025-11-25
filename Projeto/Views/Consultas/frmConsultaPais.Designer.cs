@@ -35,11 +35,13 @@
             this.Sigla = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.DDI = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Moeda = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.coluna0 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // listView1
             // 
             this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.coluna0,
             this.ID,
             this.Nome,
             this.Sigla,
@@ -66,6 +68,8 @@
             // ID
             // 
             this.ID.Text = "ID";
+            this.ID.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.ID.Width = 40;
             // 
             // Nome
             // 
@@ -101,6 +105,11 @@
             this.Moeda.Text = "Moeda";
             this.Moeda.Width = 70;
             // 
+            // coluna0
+            // 
+            this.coluna0.Text = "";
+            this.coluna0.Width = 0;
+            // 
             // frmConsultaPais
             // 
             //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -131,5 +140,6 @@
         private System.Windows.Forms.ColumnHeader Sigla;
         private System.Windows.Forms.ColumnHeader DDI;
         private System.Windows.Forms.ColumnHeader Moeda;
+        private System.Windows.Forms.ColumnHeader coluna0;
     }
 }

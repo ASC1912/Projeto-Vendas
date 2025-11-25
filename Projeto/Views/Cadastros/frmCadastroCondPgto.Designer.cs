@@ -44,7 +44,6 @@
             this.lblPorcentagem = new System.Windows.Forms.Label();
             this.txtPorcentagem = new System.Windows.Forms.TextBox();
             this.btnGerarParcelas = new System.Windows.Forms.Button();
-            this.lblParcelas = new System.Windows.Forms.Label();
             this.lblNumParcela = new System.Windows.Forms.Label();
             this.txtNumParcela = new System.Windows.Forms.TextBox();
             this.btnEditarParcela = new System.Windows.Forms.Button();
@@ -68,21 +67,22 @@
             // 
             // btnSair
             // 
-            this.btnSair.TabIndex = 15;
+            this.btnSair.TabIndex = 17;
             // 
             // chkInativo
             // 
-            this.chkInativo.TabIndex = 13;
+            this.chkInativo.TabIndex = 15;
             // 
             // btnSalvar
             // 
             this.btnSalvar.Location = new System.Drawing.Point(1134, 634);
+            this.btnSalvar.TabIndex = 16;
             this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
             // 
             // lblPrazo
             // 
             this.lblPrazo.AutoSize = true;
-            this.lblPrazo.Location = new System.Drawing.Point(514, 123);
+            this.lblPrazo.Location = new System.Drawing.Point(324, 191);
             this.lblPrazo.Name = "lblPrazo";
             this.lblPrazo.Size = new System.Drawing.Size(138, 16);
             this.lblPrazo.TabIndex = 10;
@@ -90,10 +90,10 @@
             // 
             // txtPrazoDias
             // 
-            this.txtPrazoDias.Location = new System.Drawing.Point(517, 142);
+            this.txtPrazoDias.Location = new System.Drawing.Point(327, 210);
             this.txtPrazoDias.Name = "txtPrazoDias";
-            this.txtPrazoDias.Size = new System.Drawing.Size(100, 22);
-            this.txtPrazoDias.TabIndex = 7;
+            this.txtPrazoDias.Size = new System.Drawing.Size(54, 22);
+            this.txtPrazoDias.TabIndex = 8;
             // 
             // lblCodigo
             // 
@@ -107,7 +107,7 @@
             // lblDescricao
             // 
             this.lblDescricao.AutoSize = true;
-            this.lblDescricao.Location = new System.Drawing.Point(12, 67);
+            this.lblDescricao.Location = new System.Drawing.Point(166, 8);
             this.lblDescricao.Name = "lblDescricao";
             this.lblDescricao.Size = new System.Drawing.Size(74, 16);
             this.lblDescricao.TabIndex = 13;
@@ -115,7 +115,7 @@
             // 
             // txtDescricao
             // 
-            this.txtDescricao.Location = new System.Drawing.Point(12, 86);
+            this.txtDescricao.Location = new System.Drawing.Point(166, 27);
             this.txtDescricao.MaxLength = 50;
             this.txtDescricao.Name = "txtDescricao";
             this.txtDescricao.Size = new System.Drawing.Size(200, 22);
@@ -124,7 +124,7 @@
             // lblQtdParcelas
             // 
             this.lblQtdParcelas.AutoSize = true;
-            this.lblQtdParcelas.Location = new System.Drawing.Point(9, 131);
+            this.lblQtdParcelas.Location = new System.Drawing.Point(398, 11);
             this.lblQtdParcelas.Name = "lblQtdParcelas";
             this.lblQtdParcelas.Size = new System.Drawing.Size(158, 16);
             this.lblQtdParcelas.TabIndex = 15;
@@ -132,15 +132,15 @@
             // 
             // txtQtdParcelas
             // 
-            this.txtQtdParcelas.Location = new System.Drawing.Point(12, 150);
+            this.txtQtdParcelas.Location = new System.Drawing.Point(404, 30);
             this.txtQtdParcelas.Name = "txtQtdParcelas";
-            this.txtQtdParcelas.Size = new System.Drawing.Size(100, 22);
+            this.txtQtdParcelas.Size = new System.Drawing.Size(59, 22);
             this.txtQtdParcelas.TabIndex = 2;
             // 
             // lblFormaPagamento
             // 
             this.lblFormaPagamento.AutoSize = true;
-            this.lblFormaPagamento.Location = new System.Drawing.Point(605, 190);
+            this.lblFormaPagamento.Location = new System.Drawing.Point(577, 191);
             this.lblFormaPagamento.Name = "lblFormaPagamento";
             this.lblFormaPagamento.Size = new System.Drawing.Size(143, 16);
             this.lblFormaPagamento.TabIndex = 17;
@@ -156,7 +156,7 @@
             this.listView1.FullRowSelect = true;
             this.listView1.GridLines = true;
             this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(41, 256);
+            this.listView1.Location = new System.Drawing.Point(15, 256);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(835, 239);
             this.listView1.TabIndex = 18;
@@ -171,11 +171,13 @@
             // Prazo
             // 
             this.Prazo.Text = "Prazo Dias";
+            this.Prazo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.Prazo.Width = 93;
             // 
             // Porcentagem
             // 
             this.Porcentagem.Text = "Porcentagem";
+            this.Porcentagem.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.Porcentagem.Width = 100;
             // 
             // FormaPagamento
@@ -186,42 +188,33 @@
             // lblPorcentagem
             // 
             this.lblPorcentagem.AutoSize = true;
-            this.lblPorcentagem.Location = new System.Drawing.Point(514, 66);
+            this.lblPorcentagem.Location = new System.Drawing.Point(163, 191);
             this.lblPorcentagem.Name = "lblPorcentagem";
-            this.lblPorcentagem.Size = new System.Drawing.Size(93, 16);
+            this.lblPorcentagem.Size = new System.Drawing.Size(116, 16);
             this.lblPorcentagem.TabIndex = 20;
-            this.lblPorcentagem.Text = "Porcentagem*";
+            this.lblPorcentagem.Text = "Porcentagem (%)*";
             // 
             // txtPorcentagem
             // 
-            this.txtPorcentagem.Location = new System.Drawing.Point(517, 85);
+            this.txtPorcentagem.Location = new System.Drawing.Point(166, 210);
             this.txtPorcentagem.Name = "txtPorcentagem";
-            this.txtPorcentagem.Size = new System.Drawing.Size(100, 22);
-            this.txtPorcentagem.TabIndex = 6;
+            this.txtPorcentagem.Size = new System.Drawing.Size(62, 22);
+            this.txtPorcentagem.TabIndex = 7;
             // 
             // btnGerarParcelas
             // 
-            this.btnGerarParcelas.Location = new System.Drawing.Point(973, 152);
+            this.btnGerarParcelas.Location = new System.Drawing.Point(971, 153);
             this.btnGerarParcelas.Name = "btnGerarParcelas";
             this.btnGerarParcelas.Size = new System.Drawing.Size(172, 23);
-            this.btnGerarParcelas.TabIndex = 10;
+            this.btnGerarParcelas.TabIndex = 12;
             this.btnGerarParcelas.Text = "Inserir Parcela";
             this.btnGerarParcelas.UseVisualStyleBackColor = true;
             this.btnGerarParcelas.Click += new System.EventHandler(this.btnGerarParcelas_Click);
             // 
-            // lblParcelas
-            // 
-            this.lblParcelas.AutoSize = true;
-            this.lblParcelas.Location = new System.Drawing.Point(676, 10);
-            this.lblParcelas.Name = "lblParcelas";
-            this.lblParcelas.Size = new System.Drawing.Size(61, 16);
-            this.lblParcelas.TabIndex = 22;
-            this.lblParcelas.Text = "Parcelas";
-            // 
             // lblNumParcela
             // 
             this.lblNumParcela.AutoSize = true;
-            this.lblNumParcela.Location = new System.Drawing.Point(514, 22);
+            this.lblNumParcela.Location = new System.Drawing.Point(12, 191);
             this.lblNumParcela.Name = "lblNumParcela";
             this.lblNumParcela.Size = new System.Drawing.Size(124, 16);
             this.lblNumParcela.TabIndex = 24;
@@ -229,101 +222,101 @@
             // 
             // txtNumParcela
             // 
-            this.txtNumParcela.Location = new System.Drawing.Point(517, 41);
+            this.txtNumParcela.Location = new System.Drawing.Point(15, 210);
             this.txtNumParcela.Name = "txtNumParcela";
-            this.txtNumParcela.Size = new System.Drawing.Size(100, 22);
-            this.txtNumParcela.TabIndex = 23;
+            this.txtNumParcela.Size = new System.Drawing.Size(63, 22);
+            this.txtNumParcela.TabIndex = 6;
             // 
             // btnEditarParcela
             // 
-            this.btnEditarParcela.Location = new System.Drawing.Point(973, 181);
+            this.btnEditarParcela.Location = new System.Drawing.Point(971, 182);
             this.btnEditarParcela.Name = "btnEditarParcela";
             this.btnEditarParcela.Size = new System.Drawing.Size(172, 23);
-            this.btnEditarParcela.TabIndex = 11;
+            this.btnEditarParcela.TabIndex = 13;
             this.btnEditarParcela.Text = "Editar Parcela";
             this.btnEditarParcela.UseVisualStyleBackColor = true;
             this.btnEditarParcela.Click += new System.EventHandler(this.btnEditarParcela_Click);
             // 
             // btnRemoverParcela
             // 
-            this.btnRemoverParcela.Location = new System.Drawing.Point(973, 210);
+            this.btnRemoverParcela.Location = new System.Drawing.Point(971, 211);
             this.btnRemoverParcela.Name = "btnRemoverParcela";
             this.btnRemoverParcela.Size = new System.Drawing.Size(172, 23);
-            this.btnRemoverParcela.TabIndex = 12;
+            this.btnRemoverParcela.TabIndex = 14;
             this.btnRemoverParcela.Text = "Remover Última Parcela";
             this.btnRemoverParcela.UseVisualStyleBackColor = true;
             this.btnRemoverParcela.Click += new System.EventHandler(this.btnRemoverParcela_Click);
             // 
             // btnFormaPagamento
             // 
-            this.btnFormaPagamento.Location = new System.Drawing.Point(815, 209);
+            this.btnFormaPagamento.Location = new System.Drawing.Point(787, 210);
             this.btnFormaPagamento.Name = "btnFormaPagamento";
             this.btnFormaPagamento.Size = new System.Drawing.Size(150, 23);
-            this.btnFormaPagamento.TabIndex = 9;
+            this.btnFormaPagamento.TabIndex = 11;
             this.btnFormaPagamento.Text = "Buscar FrmPgto";
             this.btnFormaPagamento.UseVisualStyleBackColor = true;
             this.btnFormaPagamento.Click += new System.EventHandler(this.btnFormaPagamento_Click);
             // 
             // txtFormaPagamento
             // 
-            this.txtFormaPagamento.Location = new System.Drawing.Point(609, 210);
+            this.txtFormaPagamento.Location = new System.Drawing.Point(581, 211);
             this.txtFormaPagamento.Name = "txtFormaPagamento";
             this.txtFormaPagamento.ReadOnly = true;
             this.txtFormaPagamento.Size = new System.Drawing.Size(200, 22);
-            this.txtFormaPagamento.TabIndex = 8;
+            this.txtFormaPagamento.TabIndex = 10;
             // 
             // lblJuros
             // 
             this.lblJuros.AutoSize = true;
-            this.lblJuros.Location = new System.Drawing.Point(270, 8);
+            this.lblJuros.Location = new System.Drawing.Point(15, 92);
             this.lblJuros.Name = "lblJuros";
-            this.lblJuros.Size = new System.Drawing.Size(40, 16);
+            this.lblJuros.Size = new System.Drawing.Size(63, 16);
             this.lblJuros.TabIndex = 30;
-            this.lblJuros.Text = "Juros";
+            this.lblJuros.Text = "Juros (%)";
             // 
             // txtJuros
             // 
-            this.txtJuros.Location = new System.Drawing.Point(270, 27);
+            this.txtJuros.Location = new System.Drawing.Point(15, 111);
             this.txtJuros.Name = "txtJuros";
-            this.txtJuros.Size = new System.Drawing.Size(100, 22);
+            this.txtJuros.Size = new System.Drawing.Size(63, 22);
             this.txtJuros.TabIndex = 3;
             // 
             // lblMulta
             // 
             this.lblMulta.AutoSize = true;
-            this.lblMulta.Location = new System.Drawing.Point(270, 67);
+            this.lblMulta.Location = new System.Drawing.Point(166, 92);
             this.lblMulta.Name = "lblMulta";
-            this.lblMulta.Size = new System.Drawing.Size(39, 16);
+            this.lblMulta.Size = new System.Drawing.Size(62, 16);
             this.lblMulta.TabIndex = 32;
-            this.lblMulta.Text = "Multa";
+            this.lblMulta.Text = "Multa (%)";
             // 
             // txtMulta
             // 
-            this.txtMulta.Location = new System.Drawing.Point(270, 86);
+            this.txtMulta.Location = new System.Drawing.Point(166, 111);
             this.txtMulta.Name = "txtMulta";
-            this.txtMulta.Size = new System.Drawing.Size(100, 22);
+            this.txtMulta.Size = new System.Drawing.Size(62, 22);
             this.txtMulta.TabIndex = 4;
             // 
             // lblDesconto
             // 
             this.lblDesconto.AutoSize = true;
-            this.lblDesconto.Location = new System.Drawing.Point(270, 129);
+            this.lblDesconto.Location = new System.Drawing.Point(327, 92);
             this.lblDesconto.Name = "lblDesconto";
-            this.lblDesconto.Size = new System.Drawing.Size(65, 16);
+            this.lblDesconto.Size = new System.Drawing.Size(88, 16);
             this.lblDesconto.TabIndex = 34;
-            this.lblDesconto.Text = "Desconto";
+            this.lblDesconto.Text = "Desconto (%)";
             // 
             // txtDesconto
             // 
-            this.txtDesconto.Location = new System.Drawing.Point(270, 148);
+            this.txtDesconto.Location = new System.Drawing.Point(327, 111);
             this.txtDesconto.Name = "txtDesconto";
-            this.txtDesconto.Size = new System.Drawing.Size(100, 22);
+            this.txtDesconto.Size = new System.Drawing.Size(64, 22);
             this.txtDesconto.TabIndex = 5;
             // 
             // lblIdFormaPgto
             // 
             this.lblIdFormaPgto.AutoSize = true;
-            this.lblIdFormaPgto.Location = new System.Drawing.Point(517, 191);
+            this.lblIdFormaPgto.Location = new System.Drawing.Point(489, 192);
             this.lblIdFormaPgto.Name = "lblIdFormaPgto";
             this.lblIdFormaPgto.Size = new System.Drawing.Size(87, 16);
             this.lblIdFormaPgto.TabIndex = 153;
@@ -331,10 +324,10 @@
             // 
             // txtIdFormaPagamento
             // 
-            this.txtIdFormaPagamento.Location = new System.Drawing.Point(517, 210);
+            this.txtIdFormaPagamento.Location = new System.Drawing.Point(489, 211);
             this.txtIdFormaPagamento.Name = "txtIdFormaPagamento";
-            this.txtIdFormaPagamento.Size = new System.Drawing.Size(86, 22);
-            this.txtIdFormaPagamento.TabIndex = 152;
+            this.txtIdFormaPagamento.Size = new System.Drawing.Size(41, 22);
+            this.txtIdFormaPagamento.TabIndex = 9;
             this.txtIdFormaPagamento.Leave += new System.EventHandler(this.txtIdFormaPagamento_Leave);
             // 
             // frmCadastroCondPgto
@@ -355,7 +348,6 @@
             this.Controls.Add(this.btnEditarParcela);
             this.Controls.Add(this.lblNumParcela);
             this.Controls.Add(this.txtNumParcela);
-            this.Controls.Add(this.lblParcelas);
             this.Controls.Add(this.btnGerarParcelas);
             this.Controls.Add(this.lblPorcentagem);
             this.Controls.Add(this.txtPorcentagem);
@@ -389,7 +381,6 @@
             this.Controls.SetChildIndex(this.txtPorcentagem, 0);
             this.Controls.SetChildIndex(this.lblPorcentagem, 0);
             this.Controls.SetChildIndex(this.btnGerarParcelas, 0);
-            this.Controls.SetChildIndex(this.lblParcelas, 0);
             this.Controls.SetChildIndex(this.txtNumParcela, 0);
             this.Controls.SetChildIndex(this.lblNumParcela, 0);
             this.Controls.SetChildIndex(this.btnEditarParcela, 0);
@@ -427,7 +418,6 @@
         private System.Windows.Forms.ColumnHeader Porcentagem;
         private System.Windows.Forms.ColumnHeader FormaPagamento;
         private System.Windows.Forms.Button btnGerarParcelas;
-        private System.Windows.Forms.Label lblParcelas;
         private System.Windows.Forms.Label lblNumParcela;
         private System.Windows.Forms.TextBox txtNumParcela;
         private System.Windows.Forms.Button btnEditarParcela;

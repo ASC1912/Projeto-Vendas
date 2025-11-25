@@ -37,6 +37,8 @@
             this.ValorTotal = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.CondicaoPagamento = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Status = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.IdCliente = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.IdCondPgto = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // listView1
@@ -45,10 +47,12 @@
             this.Modelo,
             this.Serie,
             this.Numero,
+            this.IdCliente,
             this.Cliente,
             this.DataEmissao,
             this.DataSaida,
             this.ValorTotal,
+            this.IdCondPgto,
             this.CondicaoPagamento,
             this.Status});
             // 
@@ -113,6 +117,18 @@
             this.Status.Text = "Status";
             this.Status.Width = 70;
             // 
+            // IdCliente
+            // 
+            this.IdCliente.Text = "IdCliente";
+            this.IdCliente.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.IdCliente.Width = 100;
+            // 
+            // IdCondPgto
+            // 
+            this.IdCondPgto.Text = "IdCondPgto";
+            this.IdCondPgto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.IdCondPgto.Width = 100;
+            // 
             // frmConsultaVenda
             // 
             //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -136,5 +152,7 @@
         private System.Windows.Forms.ColumnHeader ValorTotal;
         private System.Windows.Forms.ColumnHeader CondicaoPagamento;
         private System.Windows.Forms.ColumnHeader Status;
+        private System.Windows.Forms.ColumnHeader IdCliente;
+        private System.Windows.Forms.ColumnHeader IdCondPgto;
     }
 }

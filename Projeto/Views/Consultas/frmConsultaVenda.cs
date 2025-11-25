@@ -53,10 +53,12 @@ namespace Projeto.Views.Consultas
                     ListViewItem item = new ListViewItem(venda.Modelo);
                     item.SubItems.Add(venda.Serie);
                     item.SubItems.Add(venda.NumeroNota.ToString());
+                    item.SubItems.Add(venda.ClienteId.ToString());
                     item.SubItems.Add(venda.NomeCliente); 
                     item.SubItems.Add(venda.DataEmissao?.ToString("dd/MM/yyyy"));
                     item.SubItems.Add(venda.DataSaida?.ToString("dd/MM/yyyy")); 
                     item.SubItems.Add(venda.ValorTotal.ToString("C2"));
+                    item.SubItems.Add(venda.CondicaoPagamentoId.HasValue ? venda.CondicaoPagamentoId.Value.ToString() : "0");
                     item.SubItems.Add(venda.NomeCondPgto);
                     item.SubItems.Add(venda.Ativo ? "Ativo" : "Cancelado");
 

@@ -33,6 +33,7 @@ namespace Projeto.Views.Cadastros
         private List<Control> parte3Controles;
 
         public bool modoCancelamento = false;
+        private bool modoEdicaoItem = false;
 
         #endregion
 
@@ -49,7 +50,6 @@ namespace Projeto.Views.Cadastros
 
             dtpEmissao.MaxDate = dataAtual;
 
-            //dtpChegada.MinDate = dataAtual.Date;
             dtpChegada.MaxDate = dataAtual.Date; 
 
             AgruparControles();
@@ -64,6 +64,9 @@ namespace Projeto.Views.Cadastros
             this.txtIdProduto.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosInteiros);
             this.txtIdCondPgto.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosInteiros);
 
+
+            this.listViewProdutos.SelectedIndexChanged += new System.EventHandler(this.listViewProdutos_SelectedIndexChanged);
+            this.btnEditarProduto.Click += new System.EventHandler(this.btnEditarProduto_Click);
             txtFrete.TextChanged += new System.EventHandler(this.txtCustosExtras_TextChanged);
             txtSeguro.TextChanged += new System.EventHandler(this.txtCustosExtras_TextChanged);
             txtDespesas.TextChanged += new System.EventHandler(this.txtCustosExtras_TextChanged);
@@ -462,36 +465,76 @@ namespace Projeto.Views.Cadastros
                 MessageBox.Show("Preencha todos os dados do cabeçalho da nota antes de adicionar produtos.", "Dados Incompletos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            if (produtoSelecionado == null || !decimal.TryParse(txtQuantidade.Text, out decimal qtd) || qtd <= 0 || !decimal.TryParse(txtValorUnitario.Text, out _))
+
+            if (produtoSelecionado == null || !decimal.TryParse(txtQuantidade.Text, out decimal qtd) || qtd <= 0 || !decimal.TryParse(txtValorUnitario.Text, out decimal vlrUnitarioDigitado))
             {
                 MessageBox.Show("Selecione um produto e informe quantidade e valor válidos.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            ListViewItem item = new ListViewItem(produtoSelecionado.Id.ToString());
-            item.SubItems.AddRange(new string[] {
+            bool itemEncontrado = false;
+            int idProdutoAdicionar = produtoSelecionado.Id;
+
+            foreach (ListViewItem item in listViewProdutos.Items)
+            {
+                int idProdutoNaLista = int.Parse(item.SubItems[0].Text);
+                decimal vlrUnitarioNaLista = decimal.Parse(item.SubItems[4].Text);
+
+                if (idProdutoNaLista == idProdutoAdicionar && vlrUnitarioNaLista == vlrUnitarioDigitado)
+                {
+                    decimal oldQty = decimal.Parse(item.SubItems[3].Text);
+
+                    decimal newQty = decimal.Parse(txtQuantidade.Text);
+
+                    decimal totalQty = oldQty + newQty;
+                    decimal totalValue = totalQty * vlrUnitarioDigitado; 
+
+                    item.SubItems[3].Text = totalQty.ToString();            
+                    item.SubItems[5].Text = totalValue.ToString("F2");      
+
+                    itemEncontrado = true;
+                    break; 
+                }
+            }
+
+            if (!itemEncontrado)
+            {
+                ListViewItem item = new ListViewItem(produtoSelecionado.Id.ToString());
+                item.SubItems.AddRange(new string[] {
                 produtoSelecionado.NomeProduto,
                 produtoSelecionado.NomeUnidadeMedida ?? "UN",
                 txtQuantidade.Text,
-                txtValorUnitario.Text,
+                vlrUnitarioDigitado.ToString("F2"), 
                 txtTotal.Text
             });
-            listViewProdutos.Items.Add(item);
+                listViewProdutos.Items.Add(item);
+            }
 
             LimparCamposItem();
-            CalculaTotalCompra();
+            CalculaTotalCompra(); 
             AtualizarEstadoDosControles();
         }
 
         private void btnRemoverProduto_Click(object sender, EventArgs e)
         {
-            if (listViewProdutos.SelectedItems.Count > 0)
+            if (modoEdicaoItem)
             {
-                listViewProdutos.Items.Remove(listViewProdutos.SelectedItems[0]);
-                CalculaTotalCompra();
-                AtualizarEstadoDosControles();
+                LimparCamposItem(); 
             }
-            else { MessageBox.Show("Selecione um produto para remover."); }
+            else
+            {
+                if (listViewProdutos.SelectedItems.Count > 0)
+                {
+                    listViewProdutos.Items.Remove(listViewProdutos.SelectedItems[0]);
+                    CalculaTotalCompra();
+                    AtualizarEstadoDosControles();
+                    LimparCamposItem(); 
+                }
+                else
+                {
+                    MessageBox.Show("Selecione um produto para remover.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
         }
 
         private void btnPesquisarFornecedor_Click(object sender, EventArgs e)
@@ -547,6 +590,65 @@ namespace Projeto.Views.Cadastros
 
         private void btnLimparCondPgto_Click(object sender, EventArgs e) => LimparCamposCondPgto();
 
+        private async void listViewProdutos_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (listViewProdutos.SelectedItems.Count > 0)
+            {
+                ListViewItem item = listViewProdutos.SelectedItems[0];
+
+                txtIdProduto.Text = item.SubItems[0].Text;
+                txtProduto.Text = item.SubItems[1].Text;
+                txtQuantidade.Text = item.SubItems[3].Text;
+                txtValorUnitario.Text = item.SubItems[4].Text;
+
+                if (int.TryParse(item.SubItems[0].Text, out int id))
+                {
+                    produtoSelecionado = await produtoController.BuscarPorId(id);
+                }
+
+                modoEdicaoItem = true; 
+                btnAdicionarProduto.Enabled = false;
+                btnEditarProduto.Enabled = true;
+                btnRemoverProduto.Text = "Cancelar";
+
+                txtIdProduto.Enabled = false;
+                btnPesquisarProduto.Enabled = false;
+            }
+        }
+
+        private void btnEditarProduto_Click(object sender, EventArgs e)
+        {
+            if (listViewProdutos.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Nenhum item selecionado para editar.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (produtoSelecionado == null || !decimal.TryParse(txtQuantidade.Text, out decimal newQty) || newQty <= 0 || !decimal.TryParse(txtValorUnitario.Text, out decimal vlrUnitarioDigitado))
+            {
+                MessageBox.Show("Os dados do produto para edição são inválidos.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            ListViewItem itemSelecionado = listViewProdutos.SelectedItems[0];
+
+            decimal oldPrice = decimal.Parse(itemSelecionado.SubItems[4].Text);
+            if (oldPrice != vlrUnitarioDigitado)
+            {
+                MessageBox.Show("Não é permitido alterar o preço unitário de um item na edição.\n\nRemova este item e adicione-o novamente com o novo preço.", "Alteração de Preço Inválida", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtValorUnitario.Text = oldPrice.ToString("F2");
+                return;
+            }
+
+            decimal newTotalValue = newQty * vlrUnitarioDigitado;
+            itemSelecionado.SubItems[3].Text = newQty.ToString();      
+            itemSelecionado.SubItems[5].Text = newTotalValue.ToString("F2"); 
+
+            LimparCamposItem();
+            CalculaTotalCompra();
+            AtualizarEstadoDosControles();
+        }
+
         #endregion
 
         #region Lógica de Cálculos e Suporte
@@ -559,6 +661,19 @@ namespace Projeto.Views.Cadastros
             txtQuantidade.Clear();
             txtValorUnitario.Clear();
             txtTotal.Clear();
+
+            modoEdicaoItem = false; 
+            btnAdicionarProduto.Enabled = true;
+            btnEditarProduto.Enabled = false;
+            btnRemoverProduto.Text = "Remover";
+
+            txtIdProduto.Enabled = true;
+            btnPesquisarProduto.Enabled = true;
+
+            if (listViewProdutos.SelectedItems.Count > 0)
+            {
+                listViewProdutos.SelectedItems[0].Selected = false;
+            }
             btnPesquisarProduto.Focus();
         }
 
@@ -679,6 +794,7 @@ namespace Projeto.Views.Cadastros
 
             lblTotalCondiçãoPgto.Text = $"Total (R$): {totalParcelas:F2}";
         }
+
         #endregion
 
         #region Preparação de Dados para Salvar
@@ -756,7 +872,6 @@ namespace Projeto.Views.Cadastros
             decimal valorTotalCompra = compra.ValorTotal;
             decimal valorAcumulado = 0; 
 
-            // Ordena as definições de parcela pelo número da parcela
             var parcelasOrdenadas = condicaoPagamentoSelecionada.Parcelas.OrderBy(p => p.NumParcela);
 
             foreach (var parcelaDefinicao in parcelasOrdenadas)
@@ -766,8 +881,6 @@ namespace Projeto.Views.Cadastros
                 valorParcela = Math.Round(valorParcela, 2);
                 valorAcumulado += valorParcela;
 
-                // Ajuste para garantir que a soma feche EXATAMENTE no valor total
-                // Verifica se é a última parcela da definição
                 if (parcelaDefinicao.NumParcela == parcelasOrdenadas.Last().NumParcela)
                 {
                     valorParcela += (valorTotalCompra - valorAcumulado);
@@ -785,7 +898,6 @@ namespace Projeto.Views.Cadastros
                     NumeroParcela = parcelaDefinicao.NumParcela,
                     ValorVencimento = valorParcela, 
                     DataVencimento = dataVencimento,
-                    Descricao = $"Parcela {parcelaDefinicao.NumParcela}/{condicaoPagamentoSelecionada.Parcelas.Count} NFe {compra.NumeroNota}",                                                                                                                   
                     Ativo = true,
                     Status = "Aberta",
 

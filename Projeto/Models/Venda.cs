@@ -10,6 +10,8 @@ namespace Projeto.Models
         public int NumeroNota { get; set; }
         public int ClienteId { get; set; } 
         public Cliente oCliente { get; set; }
+        public int FuncionarioId { get; set; }
+        public Funcionario oFuncionario { get; set; }
 
         public int? CondicaoPagamentoId { get; set; }
         public CondicaoPagamento oCondicaoPagamento { get; set; }
@@ -27,7 +29,8 @@ namespace Projeto.Models
         public List<ItemVenda> Itens { get; set; } 
         public List<ContasAReceber> Parcelas { get; set; } 
 
-        public string NomeCliente => oCliente?.Nome; 
+        public string NomeCliente => oCliente?.Nome;
+        public string NomeFuncionario => oFuncionario?.Nome;
         public string NomeCondPgto => oCondicaoPagamento?.Descricao;
 
         public Venda()

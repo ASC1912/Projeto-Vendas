@@ -37,6 +37,8 @@
             this.ValorTotal = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.CondPgto = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Status = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.IdFornecedor = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.IdCondPgto = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // listView1
@@ -45,10 +47,12 @@
             this.Modelo,
             this.Serie,
             this.Numero,
+            this.IdFornecedor,
             this.Fornecedor,
             this.DataEmissao,
             this.DataChegada,
             this.ValorTotal,
+            this.IdCondPgto,
             this.CondPgto,
             this.Status});
             // 
@@ -112,6 +116,18 @@
             this.Status.Text = "Status";
             this.Status.Width = 70;
             // 
+            // IdFornecedor
+            // 
+            this.IdFornecedor.Text = "IdFornecedor";
+            this.IdFornecedor.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.IdFornecedor.Width = 100;
+            // 
+            // IdCondPgto
+            // 
+            this.IdCondPgto.Text = "IdCondPgto";
+            this.IdCondPgto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.IdCondPgto.Width = 100;
+            // 
             // frmConsultaCompra
             // 
             //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -135,5 +151,7 @@
         private System.Windows.Forms.ColumnHeader ValorTotal;
         private System.Windows.Forms.ColumnHeader CondPgto;
         private System.Windows.Forms.ColumnHeader Status;
+        private System.Windows.Forms.ColumnHeader IdFornecedor;
+        private System.Windows.Forms.ColumnHeader IdCondPgto;
     }
 }
