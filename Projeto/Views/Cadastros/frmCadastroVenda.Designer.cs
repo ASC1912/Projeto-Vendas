@@ -85,8 +85,6 @@
             this.txtFuncionario = new System.Windows.Forms.TextBox();
             this.lblIDFuncionario = new System.Windows.Forms.Label();
             this.txtIDFuncionario = new System.Windows.Forms.TextBox();
-            this.lblValorFrete = new System.Windows.Forms.Label();
-            this.txtFrete = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // txtCodigo
@@ -100,7 +98,7 @@
             // 
             // btnLimparProduto
             // 
-            this.btnLimparProduto.Location = new System.Drawing.Point(1138, 95);
+            this.btnLimparProduto.Location = new System.Drawing.Point(1135, 152);
             this.btnLimparProduto.Name = "btnLimparProduto";
             this.btnLimparProduto.Size = new System.Drawing.Size(91, 23);
             this.btnLimparProduto.TabIndex = 146;
@@ -110,7 +108,7 @@
             // 
             // btnRemoverProduto
             // 
-            this.btnRemoverProduto.Location = new System.Drawing.Point(1026, 95);
+            this.btnRemoverProduto.Location = new System.Drawing.Point(1023, 152);
             this.btnRemoverProduto.Name = "btnRemoverProduto";
             this.btnRemoverProduto.Size = new System.Drawing.Size(91, 23);
             this.btnRemoverProduto.TabIndex = 145;
@@ -120,7 +118,7 @@
             // 
             // btnEditarProduto
             // 
-            this.btnEditarProduto.Location = new System.Drawing.Point(904, 95);
+            this.btnEditarProduto.Location = new System.Drawing.Point(901, 152);
             this.btnEditarProduto.Name = "btnEditarProduto";
             this.btnEditarProduto.Size = new System.Drawing.Size(91, 23);
             this.btnEditarProduto.TabIndex = 144;
@@ -129,7 +127,7 @@
             // 
             // btnAdicionarProduto
             // 
-            this.btnAdicionarProduto.Location = new System.Drawing.Point(791, 95);
+            this.btnAdicionarProduto.Location = new System.Drawing.Point(788, 152);
             this.btnAdicionarProduto.Name = "btnAdicionarProduto";
             this.btnAdicionarProduto.Size = new System.Drawing.Size(91, 23);
             this.btnAdicionarProduto.TabIndex = 143;
@@ -140,7 +138,7 @@
             // lblTotalProduto
             // 
             this.lblTotalProduto.AutoSize = true;
-            this.lblTotalProduto.Location = new System.Drawing.Point(638, 75);
+            this.lblTotalProduto.Location = new System.Drawing.Point(635, 132);
             this.lblTotalProduto.Name = "lblTotalProduto";
             this.lblTotalProduto.Size = new System.Drawing.Size(66, 16);
             this.lblTotalProduto.TabIndex = 155;
@@ -148,7 +146,7 @@
             // 
             // txtTotal
             // 
-            this.txtTotal.Location = new System.Drawing.Point(638, 94);
+            this.txtTotal.Location = new System.Drawing.Point(635, 151);
             this.txtTotal.Name = "txtTotal";
             this.txtTotal.ReadOnly = true;
             this.txtTotal.Size = new System.Drawing.Size(126, 22);
@@ -157,7 +155,7 @@
             // lblValorUnitario
             // 
             this.lblValorUnitario.AutoSize = true;
-            this.lblValorUnitario.Location = new System.Drawing.Point(544, 76);
+            this.lblValorUnitario.Location = new System.Drawing.Point(541, 133);
             this.lblValorUnitario.Name = "lblValorUnitario";
             this.lblValorUnitario.Size = new System.Drawing.Size(88, 16);
             this.lblValorUnitario.TabIndex = 154;
@@ -165,7 +163,7 @@
             // 
             // txtValorUnitario
             // 
-            this.txtValorUnitario.Location = new System.Drawing.Point(544, 95);
+            this.txtValorUnitario.Location = new System.Drawing.Point(541, 152);
             this.txtValorUnitario.Name = "txtValorUnitario";
             this.txtValorUnitario.Size = new System.Drawing.Size(88, 22);
             this.txtValorUnitario.TabIndex = 141;
@@ -174,7 +172,7 @@
             // lblQuantidade
             // 
             this.lblQuantidade.AutoSize = true;
-            this.lblQuantidade.Location = new System.Drawing.Point(418, 76);
+            this.lblQuantidade.Location = new System.Drawing.Point(415, 133);
             this.lblQuantidade.Name = "lblQuantidade";
             this.lblQuantidade.Size = new System.Drawing.Size(77, 16);
             this.lblQuantidade.TabIndex = 153;
@@ -182,7 +180,7 @@
             // 
             // txtQuantidade
             // 
-            this.txtQuantidade.Location = new System.Drawing.Point(418, 95);
+            this.txtQuantidade.Location = new System.Drawing.Point(415, 152);
             this.txtQuantidade.Name = "txtQuantidade";
             this.txtQuantidade.Size = new System.Drawing.Size(100, 22);
             this.txtQuantidade.TabIndex = 140;
@@ -190,7 +188,7 @@
             // 
             // btnPesquisarProduto
             // 
-            this.btnPesquisarProduto.Location = new System.Drawing.Point(318, 95);
+            this.btnPesquisarProduto.Location = new System.Drawing.Point(315, 152);
             this.btnPesquisarProduto.Name = "btnPesquisarProduto";
             this.btnPesquisarProduto.Size = new System.Drawing.Size(91, 23);
             this.btnPesquisarProduto.TabIndex = 139;
@@ -201,7 +199,7 @@
             // lblDataSaida
             // 
             this.lblDataSaida.AutoSize = true;
-            this.lblDataSaida.Location = new System.Drawing.Point(1023, 9);
+            this.lblDataSaida.Location = new System.Drawing.Point(225, 66);
             this.lblDataSaida.Name = "lblDataSaida";
             this.lblDataSaida.Size = new System.Drawing.Size(94, 16);
             this.lblDataSaida.TabIndex = 152;
@@ -210,7 +208,7 @@
             // dtpSaida
             // 
             this.dtpSaida.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpSaida.Location = new System.Drawing.Point(1026, 28);
+            this.dtpSaida.Location = new System.Drawing.Point(228, 85);
             this.dtpSaida.Name = "dtpSaida";
             this.dtpSaida.Size = new System.Drawing.Size(160, 22);
             this.dtpSaida.TabIndex = 137;
@@ -219,7 +217,7 @@
             // lblDataEmissao
             // 
             this.lblDataEmissao.AutoSize = true;
-            this.lblDataEmissao.Location = new System.Drawing.Point(806, 9);
+            this.lblDataEmissao.Location = new System.Drawing.Point(8, 66);
             this.lblDataEmissao.Name = "lblDataEmissao";
             this.lblDataEmissao.Size = new System.Drawing.Size(111, 16);
             this.lblDataEmissao.TabIndex = 151;
@@ -228,7 +226,7 @@
             // dtpEmissao
             // 
             this.dtpEmissao.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpEmissao.Location = new System.Drawing.Point(809, 28);
+            this.dtpEmissao.Location = new System.Drawing.Point(11, 85);
             this.dtpEmissao.Name = "dtpEmissao";
             this.dtpEmissao.Size = new System.Drawing.Size(160, 22);
             this.dtpEmissao.TabIndex = 136;
@@ -315,7 +313,7 @@
             // lblIdProduto
             // 
             this.lblIdProduto.AutoSize = true;
-            this.lblIdProduto.Location = new System.Drawing.Point(14, 75);
+            this.lblIdProduto.Location = new System.Drawing.Point(11, 132);
             this.lblIdProduto.Name = "lblIdProduto";
             this.lblIdProduto.Size = new System.Drawing.Size(52, 16);
             this.lblIdProduto.TabIndex = 159;
@@ -323,7 +321,7 @@
             // 
             // txtIdProduto
             // 
-            this.txtIdProduto.Location = new System.Drawing.Point(14, 94);
+            this.txtIdProduto.Location = new System.Drawing.Point(11, 151);
             this.txtIdProduto.Name = "txtIdProduto";
             this.txtIdProduto.Size = new System.Drawing.Size(48, 22);
             this.txtIdProduto.TabIndex = 156;
@@ -332,7 +330,7 @@
             // lblProduto
             // 
             this.lblProduto.AutoSize = true;
-            this.lblProduto.Location = new System.Drawing.Point(74, 75);
+            this.lblProduto.Location = new System.Drawing.Point(71, 132);
             this.lblProduto.Name = "lblProduto";
             this.lblProduto.Size = new System.Drawing.Size(54, 16);
             this.lblProduto.TabIndex = 158;
@@ -340,7 +338,7 @@
             // 
             // txtProduto
             // 
-            this.txtProduto.Location = new System.Drawing.Point(74, 94);
+            this.txtProduto.Location = new System.Drawing.Point(71, 151);
             this.txtProduto.Name = "txtProduto";
             this.txtProduto.ReadOnly = true;
             this.txtProduto.Size = new System.Drawing.Size(211, 22);
@@ -349,7 +347,7 @@
             // lblIdCondicaoPgto
             // 
             this.lblIdCondicaoPgto.AutoSize = true;
-            this.lblIdCondicaoPgto.Location = new System.Drawing.Point(17, 374);
+            this.lblIdCondicaoPgto.Location = new System.Drawing.Point(14, 419);
             this.lblIdCondicaoPgto.Name = "lblIdCondicaoPgto";
             this.lblIdCondicaoPgto.Size = new System.Drawing.Size(55, 16);
             this.lblIdCondicaoPgto.TabIndex = 176;
@@ -357,7 +355,7 @@
             // 
             // txtIdCondPgto
             // 
-            this.txtIdCondPgto.Location = new System.Drawing.Point(17, 393);
+            this.txtIdCondPgto.Location = new System.Drawing.Point(14, 438);
             this.txtIdCondPgto.Name = "txtIdCondPgto";
             this.txtIdCondPgto.Size = new System.Drawing.Size(48, 22);
             this.txtIdCondPgto.TabIndex = 164;
@@ -366,7 +364,7 @@
             // lblValorTotal
             // 
             this.lblValorTotal.AutoSize = true;
-            this.lblValorTotal.Location = new System.Drawing.Point(306, 321);
+            this.lblValorTotal.Location = new System.Drawing.Point(15, 375);
             this.lblValorTotal.Name = "lblValorTotal";
             this.lblValorTotal.Size = new System.Drawing.Size(73, 16);
             this.lblValorTotal.TabIndex = 175;
@@ -374,7 +372,7 @@
             // 
             // txtValorTotal
             // 
-            this.txtValorTotal.Location = new System.Drawing.Point(306, 340);
+            this.txtValorTotal.Location = new System.Drawing.Point(15, 394);
             this.txtValorTotal.Name = "txtValorTotal";
             this.txtValorTotal.ReadOnly = true;
             this.txtValorTotal.Size = new System.Drawing.Size(126, 22);
@@ -383,7 +381,7 @@
             // lblTotalProdutos
             // 
             this.lblTotalProdutos.AutoSize = true;
-            this.lblTotalProdutos.Location = new System.Drawing.Point(544, 308);
+            this.lblTotalProdutos.Location = new System.Drawing.Point(541, 365);
             this.lblTotalProdutos.Name = "lblTotalProdutos";
             this.lblTotalProdutos.Size = new System.Drawing.Size(66, 16);
             this.lblTotalProdutos.TabIndex = 174;
@@ -391,7 +389,7 @@
             // 
             // btnLimparCondPgto
             // 
-            this.btnLimparCondPgto.Location = new System.Drawing.Point(448, 393);
+            this.btnLimparCondPgto.Location = new System.Drawing.Point(445, 438);
             this.btnLimparCondPgto.Name = "btnLimparCondPgto";
             this.btnLimparCondPgto.Size = new System.Drawing.Size(150, 23);
             this.btnLimparCondPgto.TabIndex = 167;
@@ -401,7 +399,7 @@
             // 
             // txtCondPgto
             // 
-            this.txtCondPgto.Location = new System.Drawing.Point(74, 394);
+            this.txtCondPgto.Location = new System.Drawing.Point(71, 439);
             this.txtCondPgto.Name = "txtCondPgto";
             this.txtCondPgto.ReadOnly = true;
             this.txtCondPgto.Size = new System.Drawing.Size(200, 22);
@@ -409,7 +407,7 @@
             // 
             // btnAdicionarCondPgto
             // 
-            this.btnAdicionarCondPgto.Location = new System.Drawing.Point(280, 393);
+            this.btnAdicionarCondPgto.Location = new System.Drawing.Point(277, 438);
             this.btnAdicionarCondPgto.Name = "btnAdicionarCondPgto";
             this.btnAdicionarCondPgto.Size = new System.Drawing.Size(150, 23);
             this.btnAdicionarCondPgto.TabIndex = 166;
@@ -427,7 +425,7 @@
             this.listViewCondPgto.FullRowSelect = true;
             this.listViewCondPgto.GridLines = true;
             this.listViewCondPgto.HideSelection = false;
-            this.listViewCondPgto.Location = new System.Drawing.Point(17, 422);
+            this.listViewCondPgto.Location = new System.Drawing.Point(14, 467);
             this.listViewCondPgto.Name = "listViewCondPgto";
             this.listViewCondPgto.Size = new System.Drawing.Size(1241, 121);
             this.listViewCondPgto.TabIndex = 173;
@@ -457,7 +455,7 @@
             // lblFormaPagamento
             // 
             this.lblFormaPagamento.AutoSize = true;
-            this.lblFormaPagamento.Location = new System.Drawing.Point(70, 374);
+            this.lblFormaPagamento.Location = new System.Drawing.Point(67, 419);
             this.lblFormaPagamento.Name = "lblFormaPagamento";
             this.lblFormaPagamento.Size = new System.Drawing.Size(162, 16);
             this.lblFormaPagamento.TabIndex = 172;
@@ -475,7 +473,7 @@
             this.listViewProdutos.FullRowSelect = true;
             this.listViewProdutos.GridLines = true;
             this.listViewProdutos.HideSelection = false;
-            this.listViewProdutos.Location = new System.Drawing.Point(15, 142);
+            this.listViewProdutos.Location = new System.Drawing.Point(12, 199);
             this.listViewProdutos.Name = "listViewProdutos";
             this.listViewProdutos.Size = new System.Drawing.Size(1230, 163);
             this.listViewProdutos.TabIndex = 168;
@@ -526,7 +524,7 @@
             // lblTotalCondiçãoPgto
             // 
             this.lblTotalCondiçãoPgto.AutoSize = true;
-            this.lblTotalCondiçãoPgto.Location = new System.Drawing.Point(544, 549);
+            this.lblTotalCondiçãoPgto.Location = new System.Drawing.Point(541, 594);
             this.lblTotalCondiçãoPgto.Name = "lblTotalCondiçãoPgto";
             this.lblTotalCondiçãoPgto.Size = new System.Drawing.Size(66, 16);
             this.lblTotalCondiçãoPgto.TabIndex = 178;
@@ -535,7 +533,7 @@
             // lblMotivoCancelamento
             // 
             this.lblMotivoCancelamento.AutoSize = true;
-            this.lblMotivoCancelamento.Location = new System.Drawing.Point(303, 620);
+            this.lblMotivoCancelamento.Location = new System.Drawing.Point(303, 653);
             this.lblMotivoCancelamento.Name = "lblMotivoCancelamento";
             this.lblMotivoCancelamento.Size = new System.Drawing.Size(159, 16);
             this.lblMotivoCancelamento.TabIndex = 179;
@@ -543,17 +541,18 @@
             // 
             // btnPesquisarFuncionario
             // 
-            this.btnPesquisarFuncionario.Location = new System.Drawing.Point(296, 568);
+            this.btnPesquisarFuncionario.Location = new System.Drawing.Point(1089, 27);
             this.btnPesquisarFuncionario.Name = "btnPesquisarFuncionario";
             this.btnPesquisarFuncionario.Size = new System.Drawing.Size(91, 23);
             this.btnPesquisarFuncionario.TabIndex = 182;
             this.btnPesquisarFuncionario.Text = "Pesquisar";
             this.btnPesquisarFuncionario.UseVisualStyleBackColor = true;
+            this.btnPesquisarFuncionario.Click += new System.EventHandler(this.btnPesquisarFuncionario_Click);
             // 
             // lblFuncionario
             // 
             this.lblFuncionario.AutoSize = true;
-            this.lblFuncionario.Location = new System.Drawing.Point(79, 549);
+            this.lblFuncionario.Location = new System.Drawing.Point(872, 8);
             this.lblFuncionario.Name = "lblFuncionario";
             this.lblFuncionario.Size = new System.Drawing.Size(77, 16);
             this.lblFuncionario.TabIndex = 184;
@@ -561,7 +560,7 @@
             // 
             // txtFuncionario
             // 
-            this.txtFuncionario.Location = new System.Drawing.Point(79, 568);
+            this.txtFuncionario.Location = new System.Drawing.Point(872, 27);
             this.txtFuncionario.Name = "txtFuncionario";
             this.txtFuncionario.ReadOnly = true;
             this.txtFuncionario.Size = new System.Drawing.Size(211, 22);
@@ -570,7 +569,7 @@
             // lblIDFuncionario
             // 
             this.lblIDFuncionario.AutoSize = true;
-            this.lblIDFuncionario.Location = new System.Drawing.Point(13, 549);
+            this.lblIDFuncionario.Location = new System.Drawing.Point(806, 8);
             this.lblIDFuncionario.Name = "lblIDFuncionario";
             this.lblIDFuncionario.Size = new System.Drawing.Size(55, 16);
             this.lblIDFuncionario.TabIndex = 183;
@@ -578,33 +577,15 @@
             // 
             // txtIDFuncionario
             // 
-            this.txtIDFuncionario.Location = new System.Drawing.Point(13, 568);
+            this.txtIDFuncionario.Location = new System.Drawing.Point(806, 27);
             this.txtIDFuncionario.Name = "txtIDFuncionario";
             this.txtIDFuncionario.Size = new System.Drawing.Size(48, 22);
             this.txtIDFuncionario.TabIndex = 180;
-            // 
-            // lblValorFrete
-            // 
-            this.lblValorFrete.AutoSize = true;
-            this.lblValorFrete.Location = new System.Drawing.Point(14, 321);
-            this.lblValorFrete.Name = "lblValorFrete";
-            this.lblValorFrete.Size = new System.Drawing.Size(73, 16);
-            this.lblValorFrete.TabIndex = 186;
-            this.lblValorFrete.Text = "Valor Frete";
-            // 
-            // txtFrete
-            // 
-            this.txtFrete.Location = new System.Drawing.Point(14, 340);
-            this.txtFrete.Name = "txtFrete";
-            this.txtFrete.Size = new System.Drawing.Size(100, 22);
-            this.txtFrete.TabIndex = 185;
             // 
             // frmCadastroVenda
             // 
             //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             //this.ClientSize = new System.Drawing.Size(1342, 681);
-            this.Controls.Add(this.lblValorFrete);
-            this.Controls.Add(this.txtFrete);
             this.Controls.Add(this.btnPesquisarFuncionario);
             this.Controls.Add(this.lblFuncionario);
             this.Controls.Add(this.txtFuncionario);
@@ -706,8 +687,6 @@
             this.Controls.SetChildIndex(this.lblDataCriacao, 0);
             this.Controls.SetChildIndex(this.lblDataModificacao, 0);
             this.Controls.SetChildIndex(this.btnSalvar, 0);
-            this.Controls.SetChildIndex(this.txtFrete, 0);
-            this.Controls.SetChildIndex(this.lblValorFrete, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -772,7 +751,5 @@
         private System.Windows.Forms.TextBox txtFuncionario;
         private System.Windows.Forms.Label lblIDFuncionario;
         private System.Windows.Forms.TextBox txtIDFuncionario;
-        private System.Windows.Forms.Label lblValorFrete;
-        private System.Windows.Forms.TextBox txtFrete;
     }
 }

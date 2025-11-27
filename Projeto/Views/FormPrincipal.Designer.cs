@@ -49,6 +49,7 @@
             this.unidadesDeMedidaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contasAPagarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.vendasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.contasAReceberToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -84,7 +85,8 @@
             this.pedidosToolStripMenuItem,
             this.unidadesDeMedidaToolStripMenuItem,
             this.contasAPagarToolStripMenuItem,
-            this.vendasToolStripMenuItem});
+            this.vendasToolStripMenuItem,
+            this.contasAReceberToolStripMenuItem});
             this.consultaToolStripMenuItem.Name = "consultaToolStripMenuItem";
             this.consultaToolStripMenuItem.Size = new System.Drawing.Size(80, 24);
             this.consultaToolStripMenuItem.Text = "Consulta";
@@ -222,6 +224,13 @@
             this.vendasToolStripMenuItem.Text = "Vendas";
             this.vendasToolStripMenuItem.Click += new System.EventHandler(this.vendasToolStripMenuItem_Click);
             // 
+            // contasAReceberToolStripMenuItem
+            // 
+            this.contasAReceberToolStripMenuItem.Name = "contasAReceberToolStripMenuItem";
+            this.contasAReceberToolStripMenuItem.Size = new System.Drawing.Size(255, 26);
+            this.contasAReceberToolStripMenuItem.Text = "Contas a Receber";
+            this.contasAReceberToolStripMenuItem.Click += new System.EventHandler(this.contasAReceberToolStripMenuItem_Click);
+            // 
             // FormPrincipal
             // 
             this.ClientSize = new System.Drawing.Size(1342, 721);
@@ -260,6 +269,7 @@
         private System.Windows.Forms.ToolStripMenuItem unidadesDeMedidaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem contasAPagarToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem vendasToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem contasAReceberToolStripMenuItem;
     }
 }
 

@@ -18,8 +18,6 @@ namespace Projeto.Models
 
         public DateTime? DataEmissao { get; set; }
         public DateTime? DataSaida { get; set; }
-        public decimal ValorFrete { get; set; }
-        public decimal ValorDesconto { get; set; }
         public decimal ValorTotal { get; set; }
         public string Observacao { get; set; }
         public bool Ativo { get; set; }

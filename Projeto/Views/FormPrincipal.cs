@@ -39,6 +39,7 @@ namespace Projeto
         UnidadeMedida aUnidadeMedida = new UnidadeMedida(); 
         ContasAPagar aContasAPagar = new ContasAPagar();
         Venda aVenda = new Venda();
+        ContasAReceber aContasAReceber = new ContasAReceber();
 
         PaisController CtrlPais = new PaisController();
         EstadoController CtrlEstado = new EstadoController();
@@ -59,6 +60,7 @@ namespace Projeto
         UnidadeMedidaController CtrlUnidadeMedida = new UnidadeMedidaController();
         ContasAPagarController CtrlContasAPagar = new ContasAPagarController();
         VendaController CtrlVenda = new VendaController();
+        ContasAReceberController CtrlContasAReceber = new ContasAReceberController();
         public FormPrincipal()
         {
             InitializeComponent();
@@ -165,6 +167,11 @@ namespace Projeto
         private void vendasToolStripMenuItem_Click(object sender, EventArgs e)
         {
             aInter.PecaVenda(aVenda, CtrlVenda);
+        }
+
+        private void contasAReceberToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            aInter.PecaContasAReceber(aContasAReceber, CtrlContasAReceber);
         }
     }
 }

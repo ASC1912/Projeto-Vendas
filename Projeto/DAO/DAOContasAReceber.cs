@@ -8,11 +8,9 @@ namespace Projeto.DAO
 {
     internal class DAOContasAReceber
     {
-        // Sua string de conexão padrão
         private string connectionString = "Server=localhost;Database=sistema;Uid=root;Pwd=12345678;";
 
-        // 1. SALVAR (INSERT)
-        // Chamado automaticamente pelo DAOVenda quando a venda é finalizada
+      
         public void Salvar(ContasAReceber conta, MySqlConnection conn, MySqlTransaction trans)
         {
             string query = @"
@@ -30,20 +28,17 @@ namespace Projeto.DAO
                     @DataCadastro, @DataAlteracao
                 )";
 
-            // Lógica para usar conexão existente (transação) ou abrir uma nova
             bool abrirConexao = (conn.State != System.Data.ConnectionState.Open);
             if (abrirConexao) conn.Open();
 
             using (MySqlCommand cmd = new MySqlCommand(query, conn, trans))
             {
-                // Chave Primária
                 cmd.Parameters.AddWithValue("@VendaModelo", conta.VendaModelo);
                 cmd.Parameters.AddWithValue("@VendaSerie", conta.VendaSerie);
                 cmd.Parameters.AddWithValue("@VendaNumeroNota", conta.VendaNumeroNota);
                 cmd.Parameters.AddWithValue("@NumeroParcela", conta.NumeroParcela);
                 cmd.Parameters.AddWithValue("@ClienteId", conta.ClienteId);
 
-                // Dados
                 cmd.Parameters.AddWithValue("@Descricao", conta.Descricao ?? "");
                 cmd.Parameters.AddWithValue("@DataEmissao", conta.DataEmissao);
                 cmd.Parameters.AddWithValue("@DataVencimento", conta.DataVencimento);
@@ -53,7 +48,6 @@ namespace Projeto.DAO
                 cmd.Parameters.AddWithValue("@Status", "Aberta");
                 cmd.Parameters.AddWithValue("@Ativo", true);
 
-                // Taxas
                 cmd.Parameters.AddWithValue("@Juros", conta.Juros ?? 0);
                 cmd.Parameters.AddWithValue("@Multa", conta.Multa ?? 0);
                 cmd.Parameters.AddWithValue("@Desconto", conta.Desconto ?? 0);
@@ -67,8 +61,6 @@ namespace Projeto.DAO
             if (abrirConexao) conn.Close();
         }
 
-        // 2. LISTAR (SELECT)
-        // Usado na tela de Consulta de Contas a Receber
         public List<ContasAReceber> Listar(List<string> statuses, string busca)
         {
             List<ContasAReceber> lista = new List<ContasAReceber>();
@@ -77,20 +69,18 @@ namespace Projeto.DAO
                 conn.Open();
 
                 string query = @"
-                    SELECT cr.*, c.Nome AS NomeCliente, fp.Descricao AS NomeFormaPagamento
+                    SELECT cr.*, c.Cliente AS NomeCliente, fp.Descricao AS NomeFormaPagamento
                     FROM ContasAReceber cr
                     JOIN Clientes c ON cr.ClienteId = c.Id
                     LEFT JOIN FormasPagamento fp ON cr.IdFormaPagamento = fp.Id";
 
                 var whereClauses = new List<string>();
 
-                // Busca por Nome do Cliente OU Número da Nota
                 if (!string.IsNullOrEmpty(busca))
                 {
-                    whereClauses.Add("(c.Nome LIKE @Busca OR cr.VendaNumeroNota LIKE @Busca)");
+                    whereClauses.Add("(c.Cliente LIKE @Busca OR cr.VendaNumeroNota LIKE @Busca)");
                 }
 
-                // Filtro de Status
                 if (statuses != null && statuses.Count > 0)
                 {
                     var statusParams = new List<string>();
@@ -102,10 +92,9 @@ namespace Projeto.DAO
                 }
                 else
                 {
-                    whereClauses.Add("1 = 0"); // Trava se não selecionar status
+                    whereClauses.Add("1 = 0"); 
                 }
 
-                // Ordena por Vencimento
                 query += $" WHERE {string.Join(" AND ", whereClauses)} ORDER BY cr.DataVencimento ASC";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
@@ -133,7 +122,6 @@ namespace Projeto.DAO
             return lista;
         }
 
-        // 3. RECEBER (UPDATE - DAR BAIXA)
         public void Receber(ContasAReceber conta)
         {
             using (MySqlConnection conn = new MySqlConnection(connectionString))
@@ -157,7 +145,6 @@ namespace Projeto.DAO
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
-                    // Dados do Pagamento
                     cmd.Parameters.AddWithValue("@IdFormaPagamento", conta.IdFormaPagamento);
                     cmd.Parameters.AddWithValue("@DataPagamento", conta.DataPagamento);
                     cmd.Parameters.AddWithValue("@ValorPago", conta.ValorPago);
@@ -166,7 +153,6 @@ namespace Projeto.DAO
                     cmd.Parameters.AddWithValue("@Desconto", conta.Desconto);
                     cmd.Parameters.AddWithValue("@DataAlteracao", DateTime.Now);
 
-                    // Chave Primária (WHERE)
                     cmd.Parameters.AddWithValue("@VendaModelo", conta.VendaModelo);
                     cmd.Parameters.AddWithValue("@VendaSerie", conta.VendaSerie);
                     cmd.Parameters.AddWithValue("@VendaNumeroNota", conta.VendaNumeroNota);
@@ -178,8 +164,7 @@ namespace Projeto.DAO
             }
         }
 
-        // 4. CANCELAR POR VENDA
-        // Usado pelo DAOVenda para cancelar todas as contas quando a venda é cancelada
+       
         public void CancelarContasPorVenda(Venda venda, MySqlConnection conn, MySqlTransaction trans)
         {
             string query = @"

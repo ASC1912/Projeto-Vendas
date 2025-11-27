@@ -25,11 +25,9 @@ namespace Projeto.DAO
 
                     int novoEstoque = estoqueAtual - (int)item.Quantidade;
 
-                    // Validação de estoque (pode ser melhorada depois)
                     if (novoEstoque < 0)
                     {
-                        // decidir se quer ou não travar a venda aqui
-                        // throw new InvalidOperationException($"Estoque insuficiente para o produto ID {item.ProdutoId}.");
+                        throw new InvalidOperationException($"Estoque insuficiente para o produto ID {item.ProdutoId}.");
                     }
 
                     string sqlUpdate = "UPDATE Produtos SET Estoque = @NovoEstoque WHERE Id = @ProdutoId";
@@ -66,7 +64,7 @@ namespace Projeto.DAO
                     WHERE VendaModelo = @Modelo 
                       AND VendaSerie = @Serie 
                       AND VendaNumeroNota = @NumeroNota 
-                      AND VendaClienteId = @ClienteId 
+                      AND ClienteId = @ClienteId 
                       AND Status = 'Paga'";
 
                 using (MySqlCommand checkCmd = new MySqlCommand(checkPagamentosQuery, conn))
@@ -84,7 +82,7 @@ namespace Projeto.DAO
 
                 MySqlTransaction tran = conn.BeginTransaction();
 
-                // DAOContasAReceber daoContas = new DAOContasAReceber();
+                DAOContasAReceber daoContas = new DAOContasAReceber();
 
                 try
                 {
@@ -104,10 +102,10 @@ namespace Projeto.DAO
                     string insertVendaQuery = @"
                         INSERT INTO Vendas (
                             Modelo, Serie, NumeroNota, ClienteId, FuncionarioId, CondicaoPagamentoId, DataEmissao, DataSaida,
-                            ValorFrete, ValorDesconto, ValorTotal, Observacao, Ativo, DataCadastro, DataAlteracao
+                            ValorTotal, Observacao, Ativo, DataCadastro, DataAlteracao
                         ) VALUES (
                             @Modelo, @Serie, @NumeroNota, @ClienteId, @FuncionarioId, @CondicaoPagamentoId, @DataEmissao, @DataSaida,
-                            @ValorFrete, @ValorDesconto, @ValorTotal, @Observacao, @Ativo, @DataCadastro, @DataAlteracao
+                            @ValorTotal, @Observacao, @Ativo, @DataCadastro, @DataAlteracao
                         )";
 
                     using (MySqlCommand cmdVenda = new MySqlCommand(insertVendaQuery, conn, tran))
@@ -120,8 +118,6 @@ namespace Projeto.DAO
                         cmdVenda.Parameters.AddWithValue("@CondicaoPagamentoId", venda.CondicaoPagamentoId);
                         cmdVenda.Parameters.AddWithValue("@DataEmissao", venda.DataEmissao);
                         cmdVenda.Parameters.AddWithValue("@DataSaida", venda.DataSaida);
-                        cmdVenda.Parameters.AddWithValue("@ValorFrete", venda.ValorFrete);
-                        cmdVenda.Parameters.AddWithValue("@ValorDesconto", venda.ValorDesconto);
                         cmdVenda.Parameters.AddWithValue("@ValorTotal", venda.ValorTotal);
                         cmdVenda.Parameters.AddWithValue("@Observacao", venda.Observacao);
                         cmdVenda.Parameters.AddWithValue("@Ativo", true);
@@ -154,13 +150,18 @@ namespace Projeto.DAO
                         }
                     }
 
-                    // if (venda.Parcelas != null && venda.Parcelas.Count > 0)
-                    // {
-                    //     foreach (var conta in venda.Parcelas)
-                    //     {
-                    //         daoContas.Salvar(conta, conn, tran);
-                    //     }
-                    // }
+                    if (venda.Parcelas != null && venda.Parcelas.Count > 0)
+                    {
+                        foreach (var conta in venda.Parcelas)
+                        {
+                            conta.VendaModelo = venda.Modelo;
+                            conta.VendaSerie = venda.Serie;
+                            conta.VendaNumeroNota = venda.NumeroNota;
+                            conta.ClienteId = venda.ClienteId;
+
+                            daoContas.Salvar(conta, conn, tran);
+                        }
+                    }
 
                     tran.Commit();
                 }
@@ -179,13 +180,11 @@ namespace Projeto.DAO
                 conn.Open();
                 MySqlTransaction tran = conn.BeginTransaction();
 
-                // (O DAOContasAReceber será criado/usado depois)
-                // DAOContasAReceber daoContas = new DAOContasAReceber();
+                DAOContasAReceber daoContas = new DAOContasAReceber();
 
                 try
                 {
-                    // 1. Busca os itens para reverter o estoque
-                    string selectItensQuery = "SELECT ProdutoId, Quantidade FROM ItensVenda WHERE VendaModelo = @Modelo AND VendaSerie = @Serie AND VendaNumeroNota = @NumeroNota AND VendaClienteId = @ClienteId";
+                    string selectItensQuery = "SELECT ProdutoId, Quantidade FROM ItensVenda WHERE VendaModelo = @Modelo AND VendaSerie = @Serie AND VendaNumeroNota = @NumeroNota AND ClienteId = @ClienteId";
                     var itensParaEstornar = new List<ItemVenda>();
                     using (MySqlCommand cmdSelect = new MySqlCommand(selectItensQuery, conn, tran))
                     {
@@ -206,13 +205,11 @@ namespace Projeto.DAO
                         }
                     }
 
-                    // 2. Devolve os itens ao estoque
                     foreach (var item in itensParaEstornar)
                     {
                         ReverterAtualizacaoProduto(item, conn, tran);
                     }
 
-                    // 3. Cancela a Venda (Mestre)
                     string updateVendaQuery = @"UPDATE Vendas 
                                                 SET Ativo = 0, 
                                                     Observacao = @Observacao, 
@@ -232,8 +229,7 @@ namespace Projeto.DAO
                         cmd.ExecuteNonQuery();
                     }
 
-                    // 4. Cancela o Contas a Receber 
-                    // daoContas.CancelarContasPorVenda(venda, conn, tran);
+                    daoContas.CancelarContasPorVenda(venda, conn, tran);
 
                     tran.Commit();
                 }
@@ -355,8 +351,6 @@ namespace Projeto.DAO
                 CondicaoPagamentoId = reader.IsDBNull(reader.GetOrdinal("CondicaoPagamentoId")) ? (int?)null : reader.GetInt32("CondicaoPagamentoId"),
                 DataEmissao = reader.IsDBNull(reader.GetOrdinal("DataEmissao")) ? (DateTime?)null : reader.GetDateTime("DataEmissao"),
                 DataSaida = reader.IsDBNull(reader.GetOrdinal("DataSaida")) ? (DateTime?)null : reader.GetDateTime("DataSaida"),
-                ValorFrete = reader.GetDecimal("ValorFrete"),
-                ValorDesconto = reader.GetDecimal("ValorDesconto"),
                 ValorTotal = reader.GetDecimal("ValorTotal"),
                 Observacao = reader.IsDBNull(reader.GetOrdinal("Observacao")) ? null : reader.GetString("Observacao"),
                 Ativo = reader.GetBoolean("Ativo"),
