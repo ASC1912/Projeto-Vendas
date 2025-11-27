@@ -61,11 +61,11 @@ namespace Projeto.Views.Cadastros
             this.txtValorUnitario.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosEVirgula);
 
 
-            this.txtIDCliente.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosInteiros);
+            this.txtIdCliente.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosInteiros);
             this.txtIdProduto.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosInteiros);
             this.txtIdCondPgto.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosInteiros);
-            if (this.Controls.Find("txtIDFuncionario", true).Length > 0)
-                this.Controls.Find("txtIDFuncionario", true)[0].KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosInteiros);
+            if (this.Controls.Find("txtIdFuncionario", true).Length > 0)
+                this.Controls.Find("txtIdFuncionario", true)[0].KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosInteiros);
 
 
             this.dtpEmissao.ValueChanged += new System.EventHandler(this.dtpEmissao_ValueChanged);
@@ -96,9 +96,9 @@ namespace Projeto.Views.Cadastros
 
         private void AgruparControles()
         {
-            parte1Controles = new List<Control> { txtCodigo, txtSerie, txtNumero, txtIDCliente, txtCliente, btnPesquisarCliente, dtpEmissao, dtpSaida };
+            parte1Controles = new List<Control> { txtCodigo, txtSerie, txtNumero, txtIdCliente, txtCliente, btnPesquisarCliente, dtpEmissao, dtpSaida };
 
-            if (this.Controls.Find("txtIDFuncionario", true).Length > 0) parte1Controles.Add(this.Controls.Find("txtIDFuncionario", true)[0]);
+            if (this.Controls.Find("txtIdFuncionario", true).Length > 0) parte1Controles.Add(this.Controls.Find("txtIdFuncionario", true)[0]);
             if (this.Controls.Find("txtFuncionario", true).Length > 0) parte1Controles.Add(this.Controls.Find("txtFuncionario", true)[0]);
             if (this.Controls.Find("btnPesquisarFuncionario", true).Length > 0) parte1Controles.Add(this.Controls.Find("btnPesquisarFuncionario", true)[0]);
 
@@ -120,7 +120,7 @@ namespace Projeto.Views.Cadastros
             bool cabecalhoValido = !string.IsNullOrWhiteSpace(txtCodigo.Text) &&
                                  !string.IsNullOrWhiteSpace(txtSerie.Text) &&
                                  !string.IsNullOrWhiteSpace(txtNumero.Text) &&
-                                 !string.IsNullOrWhiteSpace(txtIDCliente.Text);
+                                 !string.IsNullOrWhiteSpace(txtIdCliente.Text);
 
             bool temItens = listViewProdutos.Items.Count > 0;
 
@@ -168,10 +168,10 @@ namespace Projeto.Views.Cadastros
             txtCodigo.Text = "55";
             txtSerie.Clear();
             txtNumero.Clear();
-            txtIDCliente.Clear();
+            txtIdCliente.Clear();
             txtCliente.Clear();
 
-            if (this.Controls.Find("txtIDFuncionario", true).Length > 0) this.Controls.Find("txtIDFuncionario", true)[0].Text = "";
+            if (this.Controls.Find("txtIdFuncionario", true).Length > 0) this.Controls.Find("txtIdFuncionario", true)[0].Text = "";
             if (this.Controls.Find("txtFuncionario", true).Length > 0) this.Controls.Find("txtFuncionario", true)[0].Text = "";
 
             DateTime dataAgora = DateTime.Now;
@@ -205,11 +205,11 @@ namespace Projeto.Views.Cadastros
             txtCodigo.Text = aVenda.Modelo;
             txtSerie.Text = aVenda.Serie;
             txtNumero.Text = aVenda.NumeroNota.ToString();
-            txtIDCliente.Text = aVenda.ClienteId.ToString();
+            txtIdCliente.Text = aVenda.ClienteId.ToString();
             txtCliente.Text = aVenda.NomeCliente;
 
-            if (this.Controls.Find("txtIDFuncionario", true).Length > 0)
-                this.Controls.Find("txtIDFuncionario", true)[0].Text = aVenda.FuncionarioId.ToString();
+            if (this.Controls.Find("txtIdFuncionario", true).Length > 0)
+                this.Controls.Find("txtIdFuncionario", true)[0].Text = aVenda.FuncionarioId.ToString();
 
             if (this.Controls.Find("txtFuncionario", true).Length > 0)
                 this.Controls.Find("txtFuncionario", true)[0].Text = aVenda.NomeFuncionario;
@@ -360,16 +360,16 @@ namespace Projeto.Views.Cadastros
             catch (Exception ex) { MessageBox.Show("Ocorreu um erro ao salvar a venda: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
 
-        private async void txtIDCliente_Leave(object sender, EventArgs e)
+        private async void txtIdCliente_Leave(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtIDCliente.Text))
+            if (string.IsNullOrWhiteSpace(txtIdCliente.Text))
             {
                 txtCliente.Clear();
                 LimparCamposCondPgto();
                 return;
             }
 
-            if (int.TryParse(txtIDCliente.Text, out int id))
+            if (int.TryParse(txtIdCliente.Text, out int id))
             {
                 await CarregarDadosCliente(id);
             }
@@ -384,7 +384,7 @@ namespace Projeto.Views.Cadastros
                 Cliente c = await clienteController.BuscarPorId(id);
                 if (c != null)
                 {
-                    txtIDCliente.Text = c.Id.ToString();
+                    txtIdCliente.Text = c.Id.ToString();
                     txtCliente.Text = c.Nome;
 
                     if (c.IdCondicao.HasValue && c.IdCondicao > 0)
@@ -402,7 +402,7 @@ namespace Projeto.Views.Cadastros
                 else
                 {
                     MessageBox.Show("Cliente não encontrado.");
-                    txtIDCliente.Clear();
+                    txtIdCliente.Clear();
                     txtCliente.Clear();
                     LimparCamposCondPgto();
                 }
@@ -593,8 +593,8 @@ namespace Projeto.Views.Cadastros
             {
                 var f = oFrmConsultaFuncionario.FuncionarioSelecionado;
 
-                if (this.Controls.Find("txtIDFuncionario", true).Length > 0)
-                    this.Controls.Find("txtIDFuncionario", true)[0].Text = f.Id.ToString();
+                if (this.Controls.Find("txtIdFuncionario", true).Length > 0)
+                    this.Controls.Find("txtIdFuncionario", true)[0].Text = f.Id.ToString();
 
                 if (this.Controls.Find("txtFuncionario", true).Length > 0)
                     this.Controls.Find("txtFuncionario", true)[0].Text = f.Nome;
@@ -865,21 +865,20 @@ namespace Projeto.Views.Cadastros
             return !string.IsNullOrWhiteSpace(txtCodigo.Text) &&
                    !string.IsNullOrWhiteSpace(txtSerie.Text) &&
                    !string.IsNullOrWhiteSpace(txtNumero.Text) &&
-                   !string.IsNullOrWhiteSpace(txtIDCliente.Text);
+                   !string.IsNullOrWhiteSpace(txtIdCliente.Text);
         }
 
         private bool ValidarDadosGerais()
         {
-            if (!int.TryParse(txtNumero.Text, out _) || !int.TryParse(txtIDCliente.Text, out _))
+            if (!int.TryParse(txtNumero.Text, out _) || !int.TryParse(txtIdCliente.Text, out _))
             {
                 MessageBox.Show("Os dados do cabeçalho da nota são obrigatórios e devem ser válidos.", "Validação", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
 
-            // Validação de Funcionário
-            if (this.Controls.Find("txtIDFuncionario", true).Length > 0)
+            if (this.Controls.Find("txtIdFuncionario", true).Length > 0)
             {
-                if (!int.TryParse(this.Controls.Find("txtIDFuncionario", true)[0].Text, out _))
+                if (!int.TryParse(this.Controls.Find("txtIdFuncionario", true)[0].Text, out _))
                 {
                     MessageBox.Show("Selecione um funcionário.", "Validação", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return false;
@@ -906,7 +905,7 @@ namespace Projeto.Views.Cadastros
                 Modelo = txtCodigo.Text,
                 Serie = txtSerie.Text,
                 NumeroNota = int.Parse(txtNumero.Text),
-                ClienteId = int.Parse(txtIDCliente.Text),
+                ClienteId = int.Parse(txtIdCliente.Text),
                 DataEmissao = dtpEmissao.Value,
                 DataSaida = dtpSaida.Value,
                 Ativo = !chkInativo.Checked,
@@ -914,9 +913,9 @@ namespace Projeto.Views.Cadastros
                 CondicaoPagamentoId = condicaoPagamentoSelecionada?.Id
             };
 
-            if (this.Controls.Find("txtIDFuncionario", true).Length > 0)
+            if (this.Controls.Find("txtIdFuncionario", true).Length > 0)
             {
-                if (int.TryParse(this.Controls.Find("txtIDFuncionario", true)[0].Text, out int idFunc))
+                if (int.TryParse(this.Controls.Find("txtIdFuncionario", true)[0].Text, out int idFunc))
                     venda.FuncionarioId = idFunc;
             }
 

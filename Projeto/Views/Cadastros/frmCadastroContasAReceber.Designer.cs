@@ -40,7 +40,7 @@
             this.lblCliente = new System.Windows.Forms.Label();
             this.txtCliente = new System.Windows.Forms.TextBox();
             this.lblIdCliente = new System.Windows.Forms.Label();
-            this.txtIDCliente = new System.Windows.Forms.TextBox();
+            this.txtIdCliente = new System.Windows.Forms.TextBox();
             this.lblModelo = new System.Windows.Forms.Label();
             this.lblMotivoCancelamento = new System.Windows.Forms.Label();
             this.lblDataPagamento = new System.Windows.Forms.Label();
@@ -171,12 +171,12 @@
             this.lblIdCliente.TabIndex = 154;
             this.lblIdCliente.Text = "ID Cliente";
             // 
-            // txtIDCliente
+            // txtIdCliente
             // 
-            this.txtIDCliente.Location = new System.Drawing.Point(424, 27);
-            this.txtIDCliente.Name = "txtIDCliente";
-            this.txtIDCliente.Size = new System.Drawing.Size(48, 22);
-            this.txtIDCliente.TabIndex = 149;
+            this.txtIdCliente.Location = new System.Drawing.Point(424, 27);
+            this.txtIdCliente.Name = "txtIdCliente";
+            this.txtIdCliente.Size = new System.Drawing.Size(48, 22);
+            this.txtIdCliente.TabIndex = 149;
             // 
             // lblModelo
             // 
@@ -371,9 +371,9 @@
             this.Controls.Add(this.lblCliente);
             this.Controls.Add(this.txtCliente);
             this.Controls.Add(this.lblIdCliente);
-            this.Controls.Add(this.txtIDCliente);
+            this.Controls.Add(this.txtIdCliente);
             this.Name = "frmCadastroContasAReceber";
-            this.Controls.SetChildIndex(this.txtIDCliente, 0);
+            this.Controls.SetChildIndex(this.txtIdCliente, 0);
             this.Controls.SetChildIndex(this.lblIdCliente, 0);
             this.Controls.SetChildIndex(this.txtCliente, 0);
             this.Controls.SetChildIndex(this.lblCliente, 0);
@@ -430,7 +430,7 @@
         private System.Windows.Forms.Label lblCliente;
         private System.Windows.Forms.TextBox txtCliente;
         private System.Windows.Forms.Label lblIdCliente;
-        private System.Windows.Forms.TextBox txtIDCliente;
+        private System.Windows.Forms.TextBox txtIdCliente;
         private System.Windows.Forms.Label lblModelo;
         private System.Windows.Forms.Label lblMotivoCancelamento;
         private System.Windows.Forms.Label lblDataPagamento;

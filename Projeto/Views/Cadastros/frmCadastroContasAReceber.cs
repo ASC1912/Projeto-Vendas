@@ -64,7 +64,7 @@ namespace Projeto.Views.Cadastros
             txtCodigo.Text = aConta.VendaModelo;
             txtSerie.Text = aConta.VendaSerie;
             txtNumero.Text = aConta.VendaNumeroNota.ToString();
-            txtIDCliente.Text = aConta.ClienteId.ToString();
+            txtIdCliente.Text = aConta.ClienteId.ToString();
             txtCliente.Text = aConta.NomeCliente;
             dtpEmissao.Value = aConta.DataEmissao;
             dtpVencimento.Value = aConta.DataVencimento;
@@ -174,7 +174,7 @@ namespace Projeto.Views.Cadastros
             txtCodigo.Enabled = false;
             txtSerie.Enabled = false;
             txtNumero.Enabled = false;
-            txtIDCliente.Enabled = false;
+            txtIdCliente.Enabled = false;
             txtCliente.Enabled = false;
             btnPesquisarCliente.Enabled = false;
             dtpEmissao.Enabled = false;
@@ -258,7 +258,7 @@ namespace Projeto.Views.Cadastros
             if (oFrmConsultaCliente.ShowDialog() == DialogResult.OK && oFrmConsultaCliente.ClienteSelecionado != null)
             {
                 var c = oFrmConsultaCliente.ClienteSelecionado;
-                txtIDCliente.Text = c.Id.ToString();
+                txtIdCliente.Text = c.Id.ToString();
                 txtCliente.Text = c.Nome;
             }
             oFrmConsultaCliente.ModoSelecao = false;

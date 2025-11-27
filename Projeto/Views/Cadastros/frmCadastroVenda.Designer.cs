@@ -47,7 +47,7 @@
             this.lblCliente = new System.Windows.Forms.Label();
             this.txtCliente = new System.Windows.Forms.TextBox();
             this.lblIdCliente = new System.Windows.Forms.Label();
-            this.txtIDCliente = new System.Windows.Forms.TextBox();
+            this.txtIdCliente = new System.Windows.Forms.TextBox();
             this.lblSerie = new System.Windows.Forms.Label();
             this.lblNumero = new System.Windows.Forms.Label();
             this.txtNumero = new System.Windows.Forms.TextBox();
@@ -84,7 +84,7 @@
             this.lblFuncionario = new System.Windows.Forms.Label();
             this.txtFuncionario = new System.Windows.Forms.TextBox();
             this.lblIDFuncionario = new System.Windows.Forms.Label();
-            this.txtIDFuncionario = new System.Windows.Forms.TextBox();
+            this.txtIdFuncionario = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // txtCodigo
@@ -268,13 +268,13 @@
             this.lblIdCliente.TabIndex = 149;
             this.lblIdCliente.Text = "ID Cliente";
             // 
-            // txtIDCliente
+            // txtIdCliente
             // 
-            this.txtIDCliente.Location = new System.Drawing.Point(414, 27);
-            this.txtIDCliente.Name = "txtIDCliente";
-            this.txtIDCliente.Size = new System.Drawing.Size(48, 22);
-            this.txtIDCliente.TabIndex = 133;
-            this.txtIDCliente.Leave += new System.EventHandler(this.txtIDCliente_Leave);
+            this.txtIdCliente.Location = new System.Drawing.Point(414, 27);
+            this.txtIdCliente.Name = "txtIdCliente";
+            this.txtIdCliente.Size = new System.Drawing.Size(48, 22);
+            this.txtIdCliente.TabIndex = 133;
+            this.txtIdCliente.Leave += new System.EventHandler(this.txtIdCliente_Leave);
             // 
             // lblSerie
             // 
@@ -575,12 +575,12 @@
             this.lblIDFuncionario.TabIndex = 183;
             this.lblIDFuncionario.Text = "ID Func.";
             // 
-            // txtIDFuncionario
+            // txtIdFuncionario
             // 
-            this.txtIDFuncionario.Location = new System.Drawing.Point(806, 27);
-            this.txtIDFuncionario.Name = "txtIDFuncionario";
-            this.txtIDFuncionario.Size = new System.Drawing.Size(48, 22);
-            this.txtIDFuncionario.TabIndex = 180;
+            this.txtIdFuncionario.Location = new System.Drawing.Point(806, 27);
+            this.txtIdFuncionario.Name = "txtIdFuncionario";
+            this.txtIdFuncionario.Size = new System.Drawing.Size(48, 22);
+            this.txtIdFuncionario.TabIndex = 180;
             // 
             // frmCadastroVenda
             // 
@@ -590,7 +590,7 @@
             this.Controls.Add(this.lblFuncionario);
             this.Controls.Add(this.txtFuncionario);
             this.Controls.Add(this.lblIDFuncionario);
-            this.Controls.Add(this.txtIDFuncionario);
+            this.Controls.Add(this.txtIdFuncionario);
             this.Controls.Add(this.lblMotivoCancelamento);
             this.Controls.Add(this.lblTotalCondiçãoPgto);
             this.Controls.Add(this.lblModelo);
@@ -628,7 +628,7 @@
             this.Controls.Add(this.lblCliente);
             this.Controls.Add(this.txtCliente);
             this.Controls.Add(this.lblIdCliente);
-            this.Controls.Add(this.txtIDCliente);
+            this.Controls.Add(this.txtIdCliente);
             this.Controls.Add(this.lblSerie);
             this.Controls.Add(this.lblNumero);
             this.Controls.Add(this.txtNumero);
@@ -638,7 +638,7 @@
             this.Controls.SetChildIndex(this.txtNumero, 0);
             this.Controls.SetChildIndex(this.lblNumero, 0);
             this.Controls.SetChildIndex(this.lblSerie, 0);
-            this.Controls.SetChildIndex(this.txtIDCliente, 0);
+            this.Controls.SetChildIndex(this.txtIdCliente, 0);
             this.Controls.SetChildIndex(this.lblIdCliente, 0);
             this.Controls.SetChildIndex(this.txtCliente, 0);
             this.Controls.SetChildIndex(this.lblCliente, 0);
@@ -676,7 +676,7 @@
             this.Controls.SetChildIndex(this.lblModelo, 0);
             this.Controls.SetChildIndex(this.lblTotalCondiçãoPgto, 0);
             this.Controls.SetChildIndex(this.lblMotivoCancelamento, 0);
-            this.Controls.SetChildIndex(this.txtIDFuncionario, 0);
+            this.Controls.SetChildIndex(this.txtIdFuncionario, 0);
             this.Controls.SetChildIndex(this.lblIDFuncionario, 0);
             this.Controls.SetChildIndex(this.txtFuncionario, 0);
             this.Controls.SetChildIndex(this.lblFuncionario, 0);
@@ -713,7 +713,7 @@
         private System.Windows.Forms.Label lblCliente;
         private System.Windows.Forms.TextBox txtCliente;
         private System.Windows.Forms.Label lblIdCliente;
-        private System.Windows.Forms.TextBox txtIDCliente;
+        private System.Windows.Forms.TextBox txtIdCliente;
         private System.Windows.Forms.Label lblSerie;
         private System.Windows.Forms.Label lblNumero;
         private System.Windows.Forms.TextBox txtNumero;
@@ -750,6 +750,6 @@
         private System.Windows.Forms.Label lblFuncionario;
         private System.Windows.Forms.TextBox txtFuncionario;
         private System.Windows.Forms.Label lblIDFuncionario;
-        private System.Windows.Forms.TextBox txtIDFuncionario;
+        private System.Windows.Forms.TextBox txtIdFuncionario;
     }
 }
