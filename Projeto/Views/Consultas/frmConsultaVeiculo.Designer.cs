@@ -36,11 +36,13 @@
             this.CapacidadeCarga = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.IDTransportadora = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Ativo = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // listView1
             // 
             this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
             this.ID,
             this.Placa,
             this.Marca,
@@ -69,6 +71,7 @@
             // ID
             // 
             this.ID.Text = "ID";
+            this.ID.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.ID.Width = 50;
             // 
             // Placa
@@ -107,6 +110,11 @@
             // 
             this.Ativo.Text = "Ativo";
             // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "";
+            this.columnHeader1.Width = 0;
+            // 
             // frmConsultaVeiculo
             // 
             //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -129,5 +137,6 @@
         private System.Windows.Forms.ColumnHeader CapacidadeCarga;
         private System.Windows.Forms.ColumnHeader IDTransportadora;
         private System.Windows.Forms.ColumnHeader Ativo;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
     }
 }

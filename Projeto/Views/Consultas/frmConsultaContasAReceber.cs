@@ -112,8 +112,8 @@ namespace Projeto.Views.Consultas
 
                 foreach (var conta in listaOriginal)
                 {
-                    ListViewItem item = new ListViewItem(conta.VendaModelo);
-
+                    ListViewItem item = new ListViewItem("");
+                    item.SubItems.Add(conta.VendaModelo);
                     item.SubItems.Add(conta.VendaSerie);                                    
                     item.SubItems.Add(conta.VendaNumeroNota.ToString());                    
                     item.SubItems.Add(conta.NumeroParcela.ToString());                      

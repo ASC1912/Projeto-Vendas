@@ -56,5 +56,10 @@ namespace Projeto.Controller
                 throw new Exception("Erro ao buscar a venda no controller: " + ex.Message);
             }
         }
+
+        public bool VerificarVendaExistente(int modelo, string serie, int numeroNota, int idCliente)
+        {
+            return dao.VerificarVendaExistente(modelo, serie, numeroNota, idCliente);
+        }
     }
 }

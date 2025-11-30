@@ -48,7 +48,8 @@ namespace Projeto.Views.Consultas
 
                 foreach (var veiculo in veiculos)
                 {
-                    ListViewItem item = new ListViewItem(veiculo.Id.ToString());
+                    ListViewItem item = new ListViewItem("");
+                    item.SubItems.Add(veiculo.Id.ToString());
                     item.SubItems.Add(veiculo.Placa);
                     item.SubItems.Add(veiculo.NomeMarca ?? "");
                     item.SubItems.Add(veiculo.Modelo);
@@ -151,7 +152,8 @@ namespace Projeto.Views.Consultas
                     Veiculo veiculo = await controller.BuscarPorId(id);
                     if (veiculo != null)
                     {
-                        ListViewItem item = new ListViewItem(veiculo.Id.ToString());
+                        ListViewItem item = new ListViewItem("");
+                        item.SubItems.Add(veiculo.Id.ToString());
                         item.SubItems.Add(veiculo.Placa);
                         item.SubItems.Add(veiculo.NomeMarca ?? "");
                         item.SubItems.Add(veiculo.Modelo);

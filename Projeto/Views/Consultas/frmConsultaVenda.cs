@@ -50,7 +50,8 @@ namespace Projeto.Views.Consultas
 
                 foreach (var venda in vendas) 
                 {
-                    ListViewItem item = new ListViewItem(venda.Modelo);
+                    ListViewItem item = new ListViewItem("");
+                    item.SubItems.Add(venda.Modelo);
                     item.SubItems.Add(venda.Serie);
                     item.SubItems.Add(venda.NumeroNota.ToString());
                     item.SubItems.Add(venda.ClienteId.ToString());

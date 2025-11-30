@@ -110,7 +110,8 @@ namespace Projeto.Views
 
                     if (estado != null)
                     {
-                        ListViewItem item = new ListViewItem(estado.Id.ToString());
+                        ListViewItem item = new ListViewItem("");
+                        item.SubItems.Add(estado.Id.ToString());
                         item.SubItems.Add(estado.NomeEstado);
                         item.SubItems.Add(estado.UF);
                         item.SubItems.Add(estado.PaisNome);

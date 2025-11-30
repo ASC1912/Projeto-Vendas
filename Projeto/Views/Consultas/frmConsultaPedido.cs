@@ -48,7 +48,8 @@ namespace Projeto.Views.Consultas
 
                 foreach (var pedido in pedidos)
                 {
-                    ListViewItem item = new ListViewItem(pedido.Id.ToString());
+                    ListViewItem item = new ListViewItem("");
+                    item.SubItems.Add(pedido.Id.ToString());
                     item.SubItems.Add(pedido.MesaNumero.ToString());
                     item.SubItems.Add(pedido.NomeFuncionario);
                     item.SubItems.Add(pedido.DataAberturaPedido.ToString("g"));
@@ -153,7 +154,8 @@ namespace Projeto.Views.Consultas
 
                     if (pedido != null)
                     {
-                        ListViewItem item = new ListViewItem(pedido.Id.ToString());
+                        ListViewItem item = new ListViewItem("");
+                        item.SubItems.Add(pedido.Id.ToString());
                         item.SubItems.Add(pedido.MesaNumero.ToString());
                         item.SubItems.Add(pedido.NomeFuncionario);
                         item.SubItems.Add(pedido.DataAberturaPedido.ToString("g"));

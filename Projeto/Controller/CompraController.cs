@@ -57,6 +57,17 @@ namespace Projeto.Controller
             }
         }
 
+        public bool VerificarDuplicidade(string modelo, string serie, int numeroNota, int fornecedorId)
+        {
+            try
+            {
+                return dao.VerificarDuplicidade(modelo, serie, numeroNota, fornecedorId);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erro no Controller ao verificar duplicidade: " + ex.Message);
+            }
+        }
 
     }
 }

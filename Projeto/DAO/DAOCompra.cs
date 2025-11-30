@@ -3,12 +3,13 @@ using Projeto.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Configuration;
 
 namespace Projeto.DAO
 {
     internal class DAOCompra
     {
-        private string connectionString = "Server=localhost;Database=sistema;Uid=root;Pwd=12345678;";
+        private string connectionString = ConfigurationManager.ConnectionStrings["MySqlConnectionString"].ConnectionString;
 
         private void AtualizarProduto(ItemCompra item, decimal custoUnitarioReal, MySqlConnection conn, MySqlTransaction trans)
         {
@@ -394,6 +395,26 @@ namespace Projeto.DAO
             }
             return compra;
         }
+
+        public bool VerificarDuplicidade(string modelo, string serie, int numeroNota, int fornecedorId)
+        {
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                string sql = "SELECT COUNT(1) FROM Compras WHERE Modelo = @Modelo AND Serie = @Serie AND NumeroNota = @NumeroNota AND FornecedorId = @FornecedorId";
+
+                using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@Modelo", modelo);
+                    cmd.Parameters.AddWithValue("@Serie", serie);
+                    cmd.Parameters.AddWithValue("@NumeroNota", numeroNota);
+                    cmd.Parameters.AddWithValue("@FornecedorId", fornecedorId);
+
+                    return Convert.ToInt32(cmd.ExecuteScalar()) > 0;
+                }
+            }
+        }
+
         private Compra MontarObjetoCompra(MySqlDataReader reader)
         {
             return new Compra

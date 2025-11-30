@@ -49,7 +49,8 @@ namespace Projeto.Views.Consultas
 
                 foreach (var grupo in grupos)
                 {
-                    ListViewItem item = new ListViewItem(grupo.Id.ToString());
+                    ListViewItem item = new ListViewItem("");
+                    item.SubItems.Add(grupo.Id.ToString());
                     item.SubItems.Add(grupo.NomeGrupo);
                     item.SubItems.Add(grupo.Descricao);
                     item.SubItems.Add(grupo.Ativo ? "Ativo" : "Inativo");
@@ -79,7 +80,8 @@ namespace Projeto.Views.Consultas
 
                     if (grupo != null)
                     {
-                        ListViewItem item = new ListViewItem(grupo.Id.ToString());
+                        ListViewItem item = new ListViewItem("");
+                        item.SubItems.Add(grupo.Id.ToString());
                         item.SubItems.Add(grupo.NomeGrupo);
                         item.SubItems.Add(grupo.Descricao);
                         item.SubItems.Add(grupo.Ativo ? "Ativo" : "Inativo");

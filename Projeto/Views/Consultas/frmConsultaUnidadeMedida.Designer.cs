@@ -33,11 +33,13 @@
             this.Sigla = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Ativo = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnSelecionar = new System.Windows.Forms.Button();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // listView1
             // 
             this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
             this.Id,
             this.UnidadeMedida,
             this.Sigla,
@@ -62,6 +64,7 @@
             // Id
             // 
             this.Id.Text = "ID";
+            this.Id.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // UnidadeMedida
             // 
@@ -85,6 +88,11 @@
             this.btnSelecionar.Text = "Selecionar";
             this.btnSelecionar.UseVisualStyleBackColor = true;
             this.btnSelecionar.Click += new System.EventHandler(this.btnSelecionar_Click);
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "";
+            this.columnHeader1.Width = 0;
             // 
             // frmConsultaUnidadeMedida
             // 
@@ -114,5 +122,6 @@
         private System.Windows.Forms.ColumnHeader Sigla;
         private System.Windows.Forms.ColumnHeader Ativo;
         private System.Windows.Forms.Button btnSelecionar;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
     }
 }

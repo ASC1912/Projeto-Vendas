@@ -34,11 +34,6 @@ namespace Projeto.Views.Consultas
             btnSelecionar.Visible = ModoSelecao;
             await CarregarUnidades();
 
-            listView1.Columns.Clear();
-            listView1.Columns.Add("ID", 50, HorizontalAlignment.Right);
-            listView1.Columns.Add("Nome", 200, HorizontalAlignment.Left);
-            listView1.Columns.Add("Sigla", 80, HorizontalAlignment.Left);
-            listView1.Columns.Add("Ativo", 80, HorizontalAlignment.Left);
         }
 
         private async Task CarregarUnidades()
@@ -50,7 +45,8 @@ namespace Projeto.Views.Consultas
 
                 foreach (var unidade in unidades)
                 {
-                    ListViewItem item = new ListViewItem(unidade.Id.ToString());
+                    ListViewItem item = new ListViewItem("");
+                    item.SubItems.Add(unidade.Id.ToString());
                     item.SubItems.Add(unidade.NomeUnidade);
                     item.SubItems.Add(unidade.Sigla);
                     item.SubItems.Add(unidade.Ativo ? "Ativo" : "Inativo");

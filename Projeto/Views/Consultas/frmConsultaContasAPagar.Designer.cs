@@ -45,11 +45,13 @@
             this.chkAberta = new System.Windows.Forms.CheckBox();
             this.chkCancelada = new System.Windows.Forms.CheckBox();
             this.IdFornecedor = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // listView1
             // 
             this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
             this.Modelo,
             this.Serie,
             this.NumeroNota,
@@ -198,6 +200,11 @@
             this.IdFornecedor.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.IdFornecedor.Width = 100;
             // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "";
+            this.columnHeader1.Width = 0;
+            // 
             // frmConsultaContasAPagar
             // 
             //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -242,5 +249,6 @@
         private System.Windows.Forms.CheckBox chkAberta;
         private System.Windows.Forms.CheckBox chkCancelada;
         private System.Windows.Forms.ColumnHeader IdFornecedor;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
     }
 }

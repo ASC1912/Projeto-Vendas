@@ -51,7 +51,8 @@ namespace Projeto
 
                 foreach (var forma in formasPagamento)
                 {
-                    ListViewItem item = new ListViewItem(forma.Id.ToString());
+                    ListViewItem item = new ListViewItem("");
+                    item.SubItems.Add(forma.Id.ToString());
                     item.SubItems.Add(forma.Descricao);
                     item.SubItems.Add(forma.Ativo ? "Ativo" : "Inativo");
                     listView1.Items.Add(item);
@@ -80,7 +81,8 @@ namespace Projeto
 
                     if (forma != null)
                     {
-                        ListViewItem item = new ListViewItem(forma.Id.ToString());
+                        ListViewItem item = new ListViewItem("");
+                        item.SubItems.Add(forma.Id.ToString());
                         item.SubItems.Add(forma.Descricao);
                         item.SubItems.Add(forma.Ativo ? "Ativo" : "Inativo");
                         listView1.Items.Add(item);

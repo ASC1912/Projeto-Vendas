@@ -44,7 +44,8 @@ namespace Projeto.Views.Consultas
 
                 foreach (var produto in produtos)
                 {
-                    ListViewItem item = new ListViewItem(produto.Id.ToString());
+                    ListViewItem item = new ListViewItem("");
+                    item.SubItems.Add(produto.Id.ToString());
                     item.SubItems.Add(produto.NomeProduto);
                     item.SubItems.Add(produto.PrecoCusto.ToString("F2")); 
                     item.SubItems.Add(produto.PrecoVenda.ToString("F2"));
@@ -80,7 +81,8 @@ namespace Projeto.Views.Consultas
 
                     if (produto != null)
                     {
-                        ListViewItem item = new ListViewItem(produto.Id.ToString());
+                        ListViewItem item = new ListViewItem("");
+                        item.SubItems.Add(produto.Id.ToString());
                         item.SubItems.Add(produto.NomeProduto);
                         item.SubItems.Add(produto.PrecoCusto.ToString("F2")); 
                         item.SubItems.Add(produto.PrecoVenda.ToString("F2"));

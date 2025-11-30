@@ -117,9 +117,9 @@
             this.lblModelo.AutoSize = true;
             this.lblModelo.Location = new System.Drawing.Point(12, 25);
             this.lblModelo.Name = "lblModelo";
-            this.lblModelo.Size = new System.Drawing.Size(53, 16);
+            this.lblModelo.Size = new System.Drawing.Size(58, 16);
             this.lblModelo.TabIndex = 98;
-            this.lblModelo.Text = "Modelo";
+            this.lblModelo.Text = "Modelo*";
             // 
             // btnPesquisarFornecedor
             // 
@@ -136,9 +136,9 @@
             this.lblFornecedor.AutoSize = true;
             this.lblFornecedor.Location = new System.Drawing.Point(449, 24);
             this.lblFornecedor.Name = "lblFornecedor";
-            this.lblFornecedor.Size = new System.Drawing.Size(77, 16);
+            this.lblFornecedor.Size = new System.Drawing.Size(82, 16);
             this.lblFornecedor.TabIndex = 115;
-            this.lblFornecedor.Text = "Fornecedor";
+            this.lblFornecedor.Text = "Fornecedor*";
             // 
             // txtFornecedor
             // 
@@ -153,9 +153,9 @@
             this.lblIdFornecedor.AutoSize = true;
             this.lblIdFornecedor.Location = new System.Drawing.Point(383, 24);
             this.lblIdFornecedor.Name = "lblIdFornecedor";
-            this.lblIdFornecedor.Size = new System.Drawing.Size(53, 16);
+            this.lblIdFornecedor.Size = new System.Drawing.Size(58, 16);
             this.lblIdFornecedor.TabIndex = 113;
-            this.lblIdFornecedor.Text = "ID Forn.";
+            this.lblIdFornecedor.Text = "ID Forn.*";
             // 
             // txtIDFornecedor
             // 
@@ -170,18 +170,18 @@
             this.lblSerie.AutoSize = true;
             this.lblSerie.Location = new System.Drawing.Point(131, 24);
             this.lblSerie.Name = "lblSerie";
-            this.lblSerie.Size = new System.Drawing.Size(39, 16);
+            this.lblSerie.Size = new System.Drawing.Size(44, 16);
             this.lblSerie.TabIndex = 111;
-            this.lblSerie.Text = "Série";
+            this.lblSerie.Text = "Série*";
             // 
             // lblNumero
             // 
             this.lblNumero.AutoSize = true;
             this.lblNumero.Location = new System.Drawing.Point(228, 24);
             this.lblNumero.Name = "lblNumero";
-            this.lblNumero.Size = new System.Drawing.Size(55, 16);
+            this.lblNumero.Size = new System.Drawing.Size(60, 16);
             this.lblNumero.TabIndex = 110;
-            this.lblNumero.Text = "Número";
+            this.lblNumero.Text = "Número*";
             // 
             // txtNumero
             // 
@@ -204,9 +204,9 @@
             this.lblDataChegada.AutoSize = true;
             this.lblDataChegada.Location = new System.Drawing.Point(1025, 25);
             this.lblDataChegada.Name = "lblDataChegada";
-            this.lblDataChegada.Size = new System.Drawing.Size(114, 16);
+            this.lblDataChegada.Size = new System.Drawing.Size(119, 16);
             this.lblDataChegada.TabIndex = 120;
-            this.lblDataChegada.Text = "Data de Chegada";
+            this.lblDataChegada.Text = "Data de Chegada*";
             // 
             // dtpChegada
             // 
@@ -222,9 +222,9 @@
             this.lblDataEmissao.AutoSize = true;
             this.lblDataEmissao.Location = new System.Drawing.Point(808, 25);
             this.lblDataEmissao.Name = "lblDataEmissao";
-            this.lblDataEmissao.Size = new System.Drawing.Size(111, 16);
+            this.lblDataEmissao.Size = new System.Drawing.Size(116, 16);
             this.lblDataEmissao.TabIndex = 118;
-            this.lblDataEmissao.Text = "Data de Emissão";
+            this.lblDataEmissao.Text = "Data de Emissão*";
             // 
             // dtpEmissao
             // 
@@ -409,9 +409,9 @@
             this.lblDespesas.AutoSize = true;
             this.lblDespesas.Location = new System.Drawing.Point(238, 358);
             this.lblDespesas.Name = "lblDespesas";
-            this.lblDespesas.Size = new System.Drawing.Size(70, 16);
+            this.lblDespesas.Size = new System.Drawing.Size(75, 16);
             this.lblDespesas.TabIndex = 140;
-            this.lblDespesas.Text = "Despesas";
+            this.lblDespesas.Text = "Despesas*";
             // 
             // txtDespesas
             // 
@@ -425,9 +425,9 @@
             this.lblSeguro.AutoSize = true;
             this.lblSeguro.Location = new System.Drawing.Point(131, 359);
             this.lblSeguro.Name = "lblSeguro";
-            this.lblSeguro.Size = new System.Drawing.Size(51, 16);
+            this.lblSeguro.Size = new System.Drawing.Size(56, 16);
             this.lblSeguro.TabIndex = 138;
-            this.lblSeguro.Text = "Seguro";
+            this.lblSeguro.Text = "Seguro*";
             // 
             // txtSeguro
             // 
@@ -441,9 +441,9 @@
             this.lblFrete.AutoSize = true;
             this.lblFrete.Location = new System.Drawing.Point(18, 359);
             this.lblFrete.Name = "lblFrete";
-            this.lblFrete.Size = new System.Drawing.Size(73, 16);
+            this.lblFrete.Size = new System.Drawing.Size(78, 16);
             this.lblFrete.TabIndex = 136;
-            this.lblFrete.Text = "Valor Frete";
+            this.lblFrete.Text = "Valor Frete*";
             // 
             // txtFrete
             // 
@@ -540,9 +540,9 @@
             this.lblValorTotal.AutoSize = true;
             this.lblValorTotal.Location = new System.Drawing.Point(381, 358);
             this.lblValorTotal.Name = "lblValorTotal";
-            this.lblValorTotal.Size = new System.Drawing.Size(73, 16);
+            this.lblValorTotal.Size = new System.Drawing.Size(78, 16);
             this.lblValorTotal.TabIndex = 148;
-            this.lblValorTotal.Text = "Valor Total";
+            this.lblValorTotal.Text = "Valor Total*";
             // 
             // txtValorTotal
             // 

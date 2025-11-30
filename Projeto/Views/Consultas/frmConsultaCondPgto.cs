@@ -55,7 +55,8 @@ namespace Projeto
 
                 foreach (var cond in condicaoPagamento)
                 {
-                    ListViewItem item = new ListViewItem(cond.Id.ToString());
+                    ListViewItem item = new ListViewItem("");
+                    item.SubItems.Add(cond.Id.ToString());
                     item.SubItems.Add(cond.Descricao);
                     item.SubItems.Add(cond.QtdParcelas.ToString());
                     item.SubItems.Add(cond.Juros.ToString("0.00"));
@@ -88,7 +89,8 @@ namespace Projeto
 
                     if (cond != null)
                     {
-                        ListViewItem item = new ListViewItem(cond.Id.ToString());
+                        ListViewItem item = new ListViewItem("");
+                        item.SubItems.Add(cond.Id.ToString());
                         item.SubItems.Add(cond.Descricao);
                         item.SubItems.Add(cond.QtdParcelas.ToString());
                         item.SubItems.Add(cond.Juros.ToString("0.00"));

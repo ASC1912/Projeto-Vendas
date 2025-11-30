@@ -31,7 +31,7 @@
             this.lblCodigo = new System.Windows.Forms.Label();
             this.lblNome = new System.Windows.Forms.Label();
             this.txtNome = new System.Windows.Forms.TextBox();
-            this.lblDescricao = new System.Windows.Forms.Label();
+            this.lblUnidade = new System.Windows.Forms.Label();
             this.txtUnidade = new System.Windows.Forms.TextBox();
             this.txtGrupo = new System.Windows.Forms.TextBox();
             this.btnBuscarGrupo = new System.Windows.Forms.Button();
@@ -48,7 +48,7 @@
             this.btnUnidade = new System.Windows.Forms.Button();
             this.IDCidade = new System.Windows.Forms.Label();
             this.txtIdGrupo = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblIdUnidade = new System.Windows.Forms.Label();
             this.txtIdUnidade = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.txtIdMarca = new System.Windows.Forms.TextBox();
@@ -113,14 +113,14 @@
             this.txtNome.Size = new System.Drawing.Size(200, 22);
             this.txtNome.TabIndex = 1;
             // 
-            // lblDescricao
+            // lblUnidade
             // 
-            this.lblDescricao.AutoSize = true;
-            this.lblDescricao.Location = new System.Drawing.Point(96, 137);
-            this.lblDescricao.Name = "lblDescricao";
-            this.lblDescricao.Size = new System.Drawing.Size(59, 16);
-            this.lblDescricao.TabIndex = 70;
-            this.lblDescricao.Text = "Unidade";
+            this.lblUnidade.AutoSize = true;
+            this.lblUnidade.Location = new System.Drawing.Point(96, 137);
+            this.lblUnidade.Name = "lblUnidade";
+            this.lblUnidade.Size = new System.Drawing.Size(59, 16);
+            this.lblUnidade.TabIndex = 70;
+            this.lblUnidade.Text = "Unidade";
             // 
             // txtUnidade
             // 
@@ -180,9 +180,9 @@
             this.lblMarca.AutoSize = true;
             this.lblMarca.Location = new System.Drawing.Point(88, 407);
             this.lblMarca.Name = "lblMarca";
-            this.lblMarca.Size = new System.Drawing.Size(45, 16);
+            this.lblMarca.Size = new System.Drawing.Size(50, 16);
             this.lblMarca.TabIndex = 75;
-            this.lblMarca.Text = "Marca";
+            this.lblMarca.Text = "Marca*";
             // 
             // lblPrecoCusto
             // 
@@ -270,14 +270,14 @@
             this.txtIdGrupo.TabIndex = 9;
             this.txtIdGrupo.Leave += new System.EventHandler(this.txtIdGrupo_Leave);
             // 
-            // label1
+            // lblIdUnidade
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(11, 137);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(80, 16);
-            this.label1.TabIndex = 132;
-            this.label1.Text = "ID Unidade*";
+            this.lblIdUnidade.AutoSize = true;
+            this.lblIdUnidade.Location = new System.Drawing.Point(11, 137);
+            this.lblIdUnidade.Name = "lblIdUnidade";
+            this.lblIdUnidade.Size = new System.Drawing.Size(80, 16);
+            this.lblIdUnidade.TabIndex = 132;
+            this.lblIdUnidade.Text = "ID Unidade*";
             // 
             // txtIdUnidade
             // 
@@ -396,9 +396,9 @@
             this.lblFornecedor.Location = new System.Drawing.Point(634, 110);
             this.lblFornecedor.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblFornecedor.Name = "lblFornecedor";
-            this.lblFornecedor.Size = new System.Drawing.Size(85, 16);
+            this.lblFornecedor.Size = new System.Drawing.Size(80, 16);
             this.lblFornecedor.TabIndex = 141;
-            this.lblFornecedor.Text = "Fornecedor *";
+            this.lblFornecedor.Text = "Fornecedor ";
             // 
             // btnRemoverFornecedor
             // 
@@ -427,9 +427,9 @@
             this.lblIdFornecedor.AutoSize = true;
             this.lblIdFornecedor.Location = new System.Drawing.Point(546, 110);
             this.lblIdFornecedor.Name = "lblIdFornecedor";
-            this.lblIdFornecedor.Size = new System.Drawing.Size(55, 16);
+            this.lblIdFornecedor.Size = new System.Drawing.Size(50, 16);
             this.lblIdFornecedor.TabIndex = 146;
-            this.lblIdFornecedor.Text = "ID Forn*";
+            this.lblIdFornecedor.Text = "ID Forn";
             // 
             // lblPrecoCustoAntigo
             // 
@@ -470,7 +470,7 @@
             this.Controls.Add(this.txtPorcentagemLucro);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtIdMarca);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblIdUnidade);
             this.Controls.Add(this.txtIdUnidade);
             this.Controls.Add(this.IDCidade);
             this.Controls.Add(this.txtIdGrupo);
@@ -487,7 +487,7 @@
             this.Controls.Add(this.txtGrupo);
             this.Controls.Add(this.btnBuscarGrupo);
             this.Controls.Add(this.lblGrupo);
-            this.Controls.Add(this.lblDescricao);
+            this.Controls.Add(this.lblUnidade);
             this.Controls.Add(this.txtUnidade);
             this.Controls.Add(this.lblNome);
             this.Controls.Add(this.txtNome);
@@ -499,7 +499,7 @@
             this.Controls.SetChildIndex(this.txtNome, 0);
             this.Controls.SetChildIndex(this.lblNome, 0);
             this.Controls.SetChildIndex(this.txtUnidade, 0);
-            this.Controls.SetChildIndex(this.lblDescricao, 0);
+            this.Controls.SetChildIndex(this.lblUnidade, 0);
             this.Controls.SetChildIndex(this.lblGrupo, 0);
             this.Controls.SetChildIndex(this.btnBuscarGrupo, 0);
             this.Controls.SetChildIndex(this.txtGrupo, 0);
@@ -516,7 +516,7 @@
             this.Controls.SetChildIndex(this.txtIdGrupo, 0);
             this.Controls.SetChildIndex(this.IDCidade, 0);
             this.Controls.SetChildIndex(this.txtIdUnidade, 0);
-            this.Controls.SetChildIndex(this.label1, 0);
+            this.Controls.SetChildIndex(this.lblIdUnidade, 0);
             this.Controls.SetChildIndex(this.txtIdMarca, 0);
             this.Controls.SetChildIndex(this.label2, 0);
             this.Controls.SetChildIndex(this.txtPorcentagemLucro, 0);
@@ -547,7 +547,7 @@
         private System.Windows.Forms.Label lblCodigo;
         private System.Windows.Forms.Label lblNome;
         private System.Windows.Forms.TextBox txtNome;
-        private System.Windows.Forms.Label lblDescricao;
+        private System.Windows.Forms.Label lblUnidade;
         private System.Windows.Forms.TextBox txtUnidade;
         private System.Windows.Forms.TextBox txtGrupo;
         private System.Windows.Forms.Button btnBuscarGrupo;
@@ -564,7 +564,7 @@
         private System.Windows.Forms.Button btnUnidade;
         private System.Windows.Forms.Label IDCidade;
         private System.Windows.Forms.TextBox txtIdGrupo;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblIdUnidade;
         private System.Windows.Forms.TextBox txtIdUnidade;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtIdMarca;

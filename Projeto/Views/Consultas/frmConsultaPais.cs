@@ -96,7 +96,8 @@ namespace Projeto.Views
                     Pais pais = await controller.BuscarPorId(id);
                     if (pais != null)
                     {
-                        ListViewItem item = new ListViewItem(pais.Id.ToString());
+                        ListViewItem item = new ListViewItem("");
+                        item.SubItems.Add(pais.Id.ToString());
                         item.SubItems.Add(pais.NomePais);
                         item.SubItems.Add(pais.Sigla);      
                         item.SubItems.Add(pais.DDI);        

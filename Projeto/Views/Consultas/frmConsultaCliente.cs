@@ -57,7 +57,8 @@ namespace Projeto.Views
 
                 foreach (var cliente in clientes)
                 {
-                    ListViewItem item = new ListViewItem(cliente.Id.ToString());
+                    ListViewItem item = new ListViewItem("");
+                    item.SubItems.Add(cliente.Id.ToString());
                     item.SubItems.Add(cliente.Tipo);
                     item.SubItems.Add(cliente.Nome);
                     item.SubItems.Add(cliente.Genero);
@@ -101,7 +102,8 @@ namespace Projeto.Views
 
                     if (cliente != null)
                     {
-                        ListViewItem item = new ListViewItem(cliente.Id.ToString());
+                        ListViewItem item = new ListViewItem("");
+                        item.SubItems.Add(cliente.Id.ToString());
                         item.SubItems.Add(cliente.Tipo);
                         item.SubItems.Add(cliente.Nome);
                         item.SubItems.Add(cliente.Genero);

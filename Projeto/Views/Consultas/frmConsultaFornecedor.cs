@@ -53,7 +53,8 @@ namespace Projeto.Views
 
                 foreach (var fornecedor in fornecedores)
                 {
-                    ListViewItem item = new ListViewItem(fornecedor.Id.ToString());
+                    ListViewItem item = new ListViewItem("");
+                    item.SubItems.Add(fornecedor.Id.ToString());
                     item.SubItems.Add(fornecedor.Tipo);
                     item.SubItems.Add(fornecedor.Nome);
                     item.SubItems.Add(fornecedor.Endereco);
@@ -95,7 +96,8 @@ namespace Projeto.Views
 
                     if (fornecedor != null)
                     {
-                        ListViewItem item = new ListViewItem(fornecedor.Id.ToString());
+                        ListViewItem item = new ListViewItem("");
+                        item.SubItems.Add(fornecedor.Id.ToString());
                         item.SubItems.Add(fornecedor.Tipo);
                         item.SubItems.Add(fornecedor.Nome);
                         item.SubItems.Add(fornecedor.Endereco);

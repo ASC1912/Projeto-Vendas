@@ -45,11 +45,13 @@
             this.chkCancelada = new System.Windows.Forms.CheckBox();
             this.chkAberta = new System.Windows.Forms.CheckBox();
             this.chkPaga = new System.Windows.Forms.CheckBox();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // listView1
             // 
             this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
             this.Modelo,
             this.Serie,
             this.NumeroNota,
@@ -68,6 +70,7 @@
             // Modelo
             // 
             this.Modelo.Text = "Modelo";
+            this.Modelo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // Serie
             // 
@@ -178,6 +181,11 @@
             this.chkPaga.Text = "Paga";
             this.chkPaga.UseVisualStyleBackColor = true;
             // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "";
+            this.columnHeader1.Width = 0;
+            // 
             // frmConsultaContasAReceber
             // 
             //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -186,6 +194,7 @@
             this.Controls.Add(this.chkAberta);
             this.Controls.Add(this.chkPaga);
             this.Name = "frmConsultaContasAReceber";
+            this.Text = "Consulta Contas a Receber";
             this.Load += new System.EventHandler(this.frmConsultaContasAReceber_Load);
             this.Controls.SetChildIndex(this.listView1, 0);
             this.Controls.SetChildIndex(this.txtPesquisar, 0);
@@ -221,5 +230,6 @@
         private System.Windows.Forms.CheckBox chkCancelada;
         private System.Windows.Forms.CheckBox chkAberta;
         private System.Windows.Forms.CheckBox chkPaga;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
     }
 }

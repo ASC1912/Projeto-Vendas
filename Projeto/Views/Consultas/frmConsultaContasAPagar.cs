@@ -37,7 +37,6 @@ namespace Projeto.Views.Consultas
 
         private async Task CarregarContas()
         {
-            //Para evitar duplicação de dados
             if (estaCarregando) return;
             estaCarregando = true;
 
@@ -63,7 +62,8 @@ namespace Projeto.Views.Consultas
                 listView1.BeginUpdate();
                 foreach (var conta in contas)
                 {
-                    ListViewItem item = new ListViewItem(conta.CompraModelo ?? "");
+                    ListViewItem item = new ListViewItem("");
+                    item.SubItems.Add(conta.CompraModelo ?? "");
                     item.SubItems.Add(conta.CompraSerie ?? "");
                     item.SubItems.Add(conta.CompraNumeroNota.ToString());
                     item.SubItems.Add(conta.NumeroParcela.ToString());

@@ -54,7 +54,8 @@ namespace Projeto.Views.Consultas
 
                 foreach (var compra in compras)
                 {
-                    ListViewItem item = new ListViewItem(compra.Modelo);
+                    ListViewItem item = new ListViewItem("");
+                    item.SubItems.Add(compra.Modelo);
                     item.SubItems.Add(compra.Serie);
                     item.SubItems.Add(compra.NumeroNota.ToString());
                     item.SubItems.Add(compra.FornecedorId.ToString());

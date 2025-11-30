@@ -36,7 +36,7 @@
             this.txtPais = new System.Windows.Forms.TextBox();
             this.lblUF = new System.Windows.Forms.Label();
             this.txtUF = new System.Windows.Forms.TextBox();
-            this.lblIdFornecedor = new System.Windows.Forms.Label();
+            this.lblIdPaís = new System.Windows.Forms.Label();
             this.txtIdPais = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
@@ -129,14 +129,14 @@
             this.txtUF.Size = new System.Drawing.Size(70, 22);
             this.txtUF.TabIndex = 2;
             // 
-            // lblIdFornecedor
+            // lblIdPaís
             // 
-            this.lblIdFornecedor.AutoSize = true;
-            this.lblIdFornecedor.Location = new System.Drawing.Point(9, 162);
-            this.lblIdFornecedor.Name = "lblIdFornecedor";
-            this.lblIdFornecedor.Size = new System.Drawing.Size(55, 16);
-            this.lblIdFornecedor.TabIndex = 148;
-            this.lblIdFornecedor.Text = "ID País*";
+            this.lblIdPaís.AutoSize = true;
+            this.lblIdPaís.Location = new System.Drawing.Point(9, 162);
+            this.lblIdPaís.Name = "lblIdPaís";
+            this.lblIdPaís.Size = new System.Drawing.Size(55, 16);
+            this.lblIdPaís.TabIndex = 148;
+            this.lblIdPaís.Text = "ID País*";
             // 
             // txtIdPais
             // 
@@ -153,7 +153,7 @@
             // 
             //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             //this.ClientSize = new System.Drawing.Size(1342, 681);
-            this.Controls.Add(this.lblIdFornecedor);
+            this.Controls.Add(this.lblIdPaís);
             this.Controls.Add(this.txtIdPais);
             this.Controls.Add(this.lblUF);
             this.Controls.Add(this.txtUF);
@@ -181,7 +181,7 @@
             this.Controls.SetChildIndex(this.txtUF, 0);
             this.Controls.SetChildIndex(this.lblUF, 0);
             this.Controls.SetChildIndex(this.txtIdPais, 0);
-            this.Controls.SetChildIndex(this.lblIdFornecedor, 0);
+            this.Controls.SetChildIndex(this.lblIdPaís, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -197,7 +197,7 @@
         private System.Windows.Forms.TextBox txtPais;
         private System.Windows.Forms.Label lblUF;
         private System.Windows.Forms.TextBox txtUF;
-        private System.Windows.Forms.Label lblIdFornecedor;
+        private System.Windows.Forms.Label lblIdPaís;
         private System.Windows.Forms.TextBox txtIdPais;
     }
 }

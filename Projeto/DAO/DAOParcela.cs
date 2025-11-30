@@ -5,12 +5,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Configuration;
 
 namespace Projeto.DAO
 {
     internal class DAOParcela
     {
-        private string connectionString = "Server=localhost;Database=sistema;Uid=root;Pwd=12345678;";
+        private string connectionString = ConfigurationManager.ConnectionStrings["MySqlConnectionString"].ConnectionString;
 
         public void SalvarParcelas(List<Parcelamento> parcelas, int condicaoPagamentoId)
         {

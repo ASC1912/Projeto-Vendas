@@ -247,9 +247,9 @@
             this.lblCliente.AutoSize = true;
             this.lblCliente.Location = new System.Drawing.Point(480, 8);
             this.lblCliente.Name = "lblCliente";
-            this.lblCliente.Size = new System.Drawing.Size(48, 16);
+            this.lblCliente.Size = new System.Drawing.Size(53, 16);
             this.lblCliente.TabIndex = 150;
-            this.lblCliente.Text = "Cliente";
+            this.lblCliente.Text = "Cliente*";
             // 
             // txtCliente
             // 
@@ -264,9 +264,9 @@
             this.lblIdCliente.AutoSize = true;
             this.lblIdCliente.Location = new System.Drawing.Point(414, 8);
             this.lblIdCliente.Name = "lblIdCliente";
-            this.lblIdCliente.Size = new System.Drawing.Size(64, 16);
+            this.lblIdCliente.Size = new System.Drawing.Size(69, 16);
             this.lblIdCliente.TabIndex = 149;
-            this.lblIdCliente.Text = "ID Cliente";
+            this.lblIdCliente.Text = "ID Cliente*";
             // 
             // txtIdCliente
             // 
@@ -281,18 +281,18 @@
             this.lblSerie.AutoSize = true;
             this.lblSerie.Location = new System.Drawing.Point(148, 8);
             this.lblSerie.Name = "lblSerie";
-            this.lblSerie.Size = new System.Drawing.Size(39, 16);
+            this.lblSerie.Size = new System.Drawing.Size(44, 16);
             this.lblSerie.TabIndex = 148;
-            this.lblSerie.Text = "Série";
+            this.lblSerie.Text = "Série*";
             // 
             // lblNumero
             // 
             this.lblNumero.AutoSize = true;
             this.lblNumero.Location = new System.Drawing.Point(288, 8);
             this.lblNumero.Name = "lblNumero";
-            this.lblNumero.Size = new System.Drawing.Size(55, 16);
+            this.lblNumero.Size = new System.Drawing.Size(60, 16);
             this.lblNumero.TabIndex = 147;
-            this.lblNumero.Text = "Número";
+            this.lblNumero.Text = "Número*";
             // 
             // txtNumero
             // 
@@ -366,9 +366,9 @@
             this.lblValorTotal.AutoSize = true;
             this.lblValorTotal.Location = new System.Drawing.Point(15, 375);
             this.lblValorTotal.Name = "lblValorTotal";
-            this.lblValorTotal.Size = new System.Drawing.Size(73, 16);
+            this.lblValorTotal.Size = new System.Drawing.Size(78, 16);
             this.lblValorTotal.TabIndex = 175;
-            this.lblValorTotal.Text = "Valor Total";
+            this.lblValorTotal.Text = "Valor Total*";
             // 
             // txtValorTotal
             // 
@@ -517,9 +517,9 @@
             this.lblModelo.AutoSize = true;
             this.lblModelo.Location = new System.Drawing.Point(14, 8);
             this.lblModelo.Name = "lblModelo";
-            this.lblModelo.Size = new System.Drawing.Size(53, 16);
+            this.lblModelo.Size = new System.Drawing.Size(58, 16);
             this.lblModelo.TabIndex = 177;
-            this.lblModelo.Text = "Modelo";
+            this.lblModelo.Text = "Modelo*";
             // 
             // lblTotalCondiçãoPgto
             // 
@@ -554,9 +554,9 @@
             this.lblFuncionario.AutoSize = true;
             this.lblFuncionario.Location = new System.Drawing.Point(872, 8);
             this.lblFuncionario.Name = "lblFuncionario";
-            this.lblFuncionario.Size = new System.Drawing.Size(77, 16);
+            this.lblFuncionario.Size = new System.Drawing.Size(82, 16);
             this.lblFuncionario.TabIndex = 184;
-            this.lblFuncionario.Text = "Funcionário";
+            this.lblFuncionario.Text = "Funcionário*";
             // 
             // txtFuncionario
             // 
@@ -571,9 +571,9 @@
             this.lblIDFuncionario.AutoSize = true;
             this.lblIDFuncionario.Location = new System.Drawing.Point(806, 8);
             this.lblIDFuncionario.Name = "lblIDFuncionario";
-            this.lblIDFuncionario.Size = new System.Drawing.Size(55, 16);
+            this.lblIDFuncionario.Size = new System.Drawing.Size(60, 16);
             this.lblIDFuncionario.TabIndex = 183;
-            this.lblIDFuncionario.Text = "ID Func.";
+            this.lblIDFuncionario.Text = "ID Func.*";
             // 
             // txtIdFuncionario
             // 

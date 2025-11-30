@@ -39,11 +39,13 @@
             this.Status = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.IdFornecedor = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.IdCondPgto = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // listView1
             // 
             this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
             this.Modelo,
             this.Serie,
             this.Numero,
@@ -72,6 +74,7 @@
             // Modelo
             // 
             this.Modelo.Text = "Modelo";
+            this.Modelo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // Serie
             // 
@@ -128,6 +131,11 @@
             this.IdCondPgto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.IdCondPgto.Width = 100;
             // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "";
+            this.columnHeader1.Width = 0;
+            // 
             // frmConsultaCompra
             // 
             //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -153,5 +161,6 @@
         private System.Windows.Forms.ColumnHeader Status;
         private System.Windows.Forms.ColumnHeader IdFornecedor;
         private System.Windows.Forms.ColumnHeader IdCondPgto;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
     }
 }

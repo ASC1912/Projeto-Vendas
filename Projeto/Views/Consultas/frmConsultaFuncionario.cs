@@ -55,7 +55,8 @@ namespace Projeto.Views
 
                 foreach (var funcionario in funcionarios)
                 {
-                    ListViewItem item = new ListViewItem(funcionario.Id.ToString());
+                    ListViewItem item = new ListViewItem("");
+                    item.SubItems.Add(funcionario.Id.ToString());
                     item.SubItems.Add(funcionario.Tipo);
                     item.SubItems.Add(funcionario.Nome);
                     item.SubItems.Add(funcionario.Apelido);

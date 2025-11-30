@@ -3,14 +3,15 @@ using Projeto.Models;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using System.Configuration;
 
 namespace Projeto.DAO
 {
     internal class DAOContasAReceber
     {
-        private string connectionString = "Server=localhost;Database=sistema;Uid=root;Pwd=12345678;";
+        private string connectionString = ConfigurationManager.ConnectionStrings["MySqlConnectionString"].ConnectionString;
 
-      
+
         public void Salvar(ContasAReceber conta, MySqlConnection conn, MySqlTransaction trans)
         {
             string query = @"

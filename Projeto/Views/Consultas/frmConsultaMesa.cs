@@ -55,7 +55,8 @@ namespace Projeto.Views.Consultas
 
                 foreach (var mesa in mesas)
                 {
-                    ListViewItem item = new ListViewItem(mesa.NumeroMesa.ToString());
+                    ListViewItem item = new ListViewItem("");
+                    item.SubItems.Add(mesa.NumeroMesa.ToString());
                     item.SubItems.Add(mesa.QuantidadeCadeiras.ToString());
                     item.SubItems.Add(mesa.Localizacao);
 
@@ -176,7 +177,8 @@ namespace Projeto.Views.Consultas
 
                     if (mesa != null)
                     {
-                        ListViewItem item = new ListViewItem(mesa.NumeroMesa.ToString());
+                        ListViewItem item = new ListViewItem("");
+                        item.SubItems.Add(mesa.NumeroMesa.ToString());
                         item.SubItems.Add(mesa.QuantidadeCadeiras.ToString());
                         item.SubItems.Add(mesa.Localizacao);
 

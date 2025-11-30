@@ -3,12 +3,13 @@ using Projeto.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Configuration;
 
 namespace Projeto.DAO
 {
     internal class DAOVenda
     {
-        private string connectionString = "Server=localhost;Database=sistema;Uid=root;Pwd=12345678;";
+        private string connectionString = ConfigurationManager.ConnectionStrings["MySqlConnectionString"].ConnectionString;
 
         private void AtualizarProduto(ItemVenda item, MySqlConnection conn, MySqlTransaction trans)
         {
@@ -337,6 +338,37 @@ namespace Projeto.DAO
                 }
             }
             return venda;
+        }
+
+        public bool VerificarVendaExistente(int modelo, string serie, int numeroNota, int idCliente)
+        {
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+                    string sql = @"SELECT COUNT(1) FROM Vendas 
+                           WHERE Modelo = @Modelo 
+                             AND Serie = @Serie 
+                             AND NumeroNota = @NumeroNota 
+                             AND ClienteId = @ClienteId";
+
+                    using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@Modelo", modelo);
+                        cmd.Parameters.AddWithValue("@Serie", serie);
+                        cmd.Parameters.AddWithValue("@NumeroNota", numeroNota);
+                        cmd.Parameters.AddWithValue("@ClienteId", idCliente);
+
+                        int count = Convert.ToInt32(cmd.ExecuteScalar());
+                        return count > 0;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Erro no DAO ao verificar duplicidade: " + ex.Message);
+                }
+            }
         }
 
         private Venda MontarObjetoVenda(MySqlDataReader reader)

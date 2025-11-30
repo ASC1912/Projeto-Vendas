@@ -237,8 +237,19 @@ namespace Projeto.Views.Cadastros
             if (!Validador.CampoObrigatorio(txtNome, "O nome do produto é obrigatório.")) return;
             if (!Validador.CampoObrigatorio(txtPrecoCusto, "O preço de custo é obrigatório.")) return;
             if (!Validador.ValidarIdSelecionado(unidadeSelecionadaId, "Selecione uma Unidade de Medida.")) return;
+            if (!Validador.ValidarIdSelecionado(marcaSelecionadoId, "Selecione uma Marca.")) return;
             if (!Validador.ValidarIdSelecionado(grupoSelecionadoId, "Selecione um Grupo.")) return;
             if (!Validador.ValidarNumerico(txtEstoque, "O estoque deve ser um número válido.")) return;
+
+            var produtos = await controller.ListarProdutos(); 
+            if (Validador.VerificarDuplicidade(produtos, p =>
+                p.NomeProduto.Trim().Equals(txtNome.Text.Trim(), StringComparison.OrdinalIgnoreCase)
+                && p.Id != (string.IsNullOrEmpty(txtCodigo.Text) ? 0 : int.Parse(txtCodigo.Text)),
+                "Já existe um produto cadastrado com este nome."))
+            {
+                txtNome.Focus();
+                return;
+            }
 
             try
             {

@@ -50,9 +50,11 @@ namespace Projeto.Views.Consultas
 
                 foreach (var marca in marcas)
                 {
-                    ListViewItem item = new ListViewItem(marca.Id.ToString());
+                    ListViewItem item = new ListViewItem("");
+                    item.SubItems.Add(marca.Id.ToString());
                     item.SubItems.Add(marca.NomeMarca);
                     item.SubItems.Add(marca.Ativo ? "Ativo" : "Inativo");
+
                     listView1.Items.Add(item);
                 }
             }
@@ -79,7 +81,8 @@ namespace Projeto.Views.Consultas
 
                     if (marca != null)
                     {
-                        ListViewItem item = new ListViewItem(marca.Id.ToString());
+                        ListViewItem item = new ListViewItem("");
+                        item.SubItems.Add(marca.Id.ToString());
                         item.SubItems.Add(marca.NomeMarca);
                         item.SubItems.Add(marca.Ativo ? "Ativo" : "Inativo");
                         listView1.Items.Add(item);

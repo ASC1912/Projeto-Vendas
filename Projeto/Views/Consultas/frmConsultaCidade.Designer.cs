@@ -34,11 +34,13 @@
             this.Status = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnSelecionar = new System.Windows.Forms.Button();
             this.DDD = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // listView1
             // 
             this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
             this.ID,
             this.Nome,
             this.Estado,
@@ -65,6 +67,7 @@
             // ID
             // 
             this.ID.Text = "ID";
+            this.ID.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // Nome
             // 
@@ -96,6 +99,11 @@
             this.DDD.Text = "DDD";
             this.DDD.Width = 50;
             // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "";
+            this.columnHeader1.Width = 0;
+            // 
             // frmConsultaCidade
             // 
             //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -125,5 +133,6 @@
         private System.Windows.Forms.ColumnHeader Status;
         private System.Windows.Forms.Button btnSelecionar;
         private System.Windows.Forms.ColumnHeader DDD;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
     }
 }

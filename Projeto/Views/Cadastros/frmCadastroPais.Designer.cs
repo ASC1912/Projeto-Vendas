@@ -89,9 +89,9 @@
             this.lblSigla.AutoSize = true;
             this.lblSigla.Location = new System.Drawing.Point(250, 91);
             this.lblSigla.Name = "lblSigla";
-            this.lblSigla.Size = new System.Drawing.Size(38, 16);
+            this.lblSigla.Size = new System.Drawing.Size(43, 16);
             this.lblSigla.TabIndex = 67;
-            this.lblSigla.Text = "Sigla";
+            this.lblSigla.Text = "Sigla*";
             // 
             // txtSigla
             // 
@@ -125,9 +125,9 @@
             this.lblDDI.AutoSize = true;
             this.lblDDI.Location = new System.Drawing.Point(533, 91);
             this.lblDDI.Name = "lblDDI";
-            this.lblDDI.Size = new System.Drawing.Size(30, 16);
+            this.lblDDI.Size = new System.Drawing.Size(35, 16);
             this.lblDDI.TabIndex = 71;
-            this.lblDDI.Text = "DDI";
+            this.lblDDI.Text = "DDI*";
             // 
             // txtDDI
             // 

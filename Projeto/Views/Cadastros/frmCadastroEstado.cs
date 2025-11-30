@@ -82,7 +82,7 @@ namespace Projeto.Views
             txtCodigo.Text = "0";
             txtNome.Clear();
             txtUF.Clear();
-            txtIdPais.Clear(); // Adicionado
+            txtIdPais.Clear(); 
             txtPais.Clear();
             paisSelecionadoId = -1;
             chkInativo.Checked = false;

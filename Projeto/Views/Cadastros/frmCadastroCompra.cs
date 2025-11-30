@@ -160,8 +160,8 @@ namespace Projeto.Views.Cadastros
         public override void LimparTxt()
         {
             aCompra = new Compra();
-            txtCodigo.Text = "0";
-            txtSerie.Clear();
+            txtCodigo.Text = "55";
+            txtSerie.Text = "1";
             txtNumero.Clear();
             txtIDFornecedor.Clear();
             txtFornecedor.Clear();
@@ -352,6 +352,28 @@ namespace Projeto.Views.Cadastros
             }
 
             if (!ValidarDadosGerais()) return;
+
+            try
+            {
+                bool existe = controller.VerificarDuplicidade(
+                    txtCodigo.Text,                 
+                    txtSerie.Text,                  
+                    int.Parse(txtNumero.Text),      
+                    int.Parse(txtIDFornecedor.Text) 
+                );
+
+                if (existe)
+                {
+                    MessageBox.Show("Atenção: Já existe uma nota fiscal lançada com este Modelo, Série e Número para este Fornecedor.\n\nVerifique se não é um lançamento duplicado.",
+                                    "Nota Duplicada", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return; 
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao validar duplicidade: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
             try
             {

@@ -50,7 +50,8 @@ namespace Projeto.Views
 
                 foreach (var cidade in cidades)
                 {
-                    ListViewItem item = new ListViewItem(cidade.Id.ToString());
+                    ListViewItem item = new ListViewItem("");
+                    item.SubItems.Add(cidade.Id.ToString());
                     item.SubItems.Add(cidade.NomeCidade);
                     item.SubItems.Add(cidade.EstadoNome);
                     item.SubItems.Add(cidade.DDD); 

@@ -50,7 +50,8 @@ namespace Projeto.Views.Consultas
 
                 foreach (var transportadora in transportadoras)
                 {
-                    ListViewItem item = new ListViewItem(transportadora.Id.ToString());
+                    ListViewItem item = new ListViewItem("");
+                    item.SubItems.Add(transportadora.Id.ToString());
                     item.SubItems.Add(transportadora.Tipo);
                     item.SubItems.Add(transportadora.Nome);
                     item.SubItems.Add(transportadora.Endereco);
@@ -102,7 +103,8 @@ namespace Projeto.Views.Consultas
                     Transportadora transportadora = await controller.BuscarPorId(id);
                     if (transportadora != null)
                     {
-                        ListViewItem item = new ListViewItem(transportadora.Id.ToString());
+                        ListViewItem item = new ListViewItem("");
+                        item.SubItems.Add(transportadora.Id.ToString());
                         item.SubItems.Add(transportadora.Tipo);
                         item.SubItems.Add(transportadora.Nome);
                         item.SubItems.Add(transportadora.Endereco);

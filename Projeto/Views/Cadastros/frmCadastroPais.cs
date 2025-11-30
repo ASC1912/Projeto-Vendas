@@ -102,7 +102,8 @@ namespace Projeto.Views
             else
             {
                 if (!Validador.CampoObrigatorio(txtNome, "O nome do país é obrigatório.")) return;
-
+                if (!Validador.CampoObrigatorio(txtSigla, "A sigla é obrigatória.")) return;
+                if (!Validador.CampoObrigatorio(txtDDI, "O DDI é obrigatório.")) return;
                 try
                 {
                     int id = string.IsNullOrEmpty(txtCodigo.Text) ? 0 : int.Parse(txtCodigo.Text);
@@ -151,24 +152,6 @@ namespace Projeto.Views
 
         private void frmCadastroPais_Load(object sender, EventArgs e)
         {
-            /*
-            if (modoExclusao)
-            {
-                btnSalvar.Text = "Deletar";
-                BloquearTxt(); 
-            }
-            else if (modoEdicao)
-            {
-                btnSalvar.Text = "Salvar";
-                DesbloquearTxt(); 
-            }
-            else 
-            {
-                btnSalvar.Text = "Salvar";
-                DesbloquearTxt(); 
-                LimparTxt();      
-            }
-            */
         }
     }
 }

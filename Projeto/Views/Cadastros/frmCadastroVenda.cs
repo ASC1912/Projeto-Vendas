@@ -166,7 +166,7 @@ namespace Projeto.Views.Cadastros
 
             aVenda = new Venda();
             txtCodigo.Text = "55";
-            txtSerie.Clear();
+            txtSerie.Text = "1";
             txtNumero.Clear();
             txtIdCliente.Clear();
             txtCliente.Clear();
