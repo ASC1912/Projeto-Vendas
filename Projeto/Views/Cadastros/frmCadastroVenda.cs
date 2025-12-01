@@ -57,6 +57,11 @@ namespace Projeto.Views.Cadastros
             AgruparControles();
             ConfigurarEstadoInicial();
 
+            this.txtCodigo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosInteiros);
+            this.txtSerie.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosInteiros);
+            this.txtNumero.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosInteiros);
+
+
             this.txtQuantidade.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosInteiros);
             this.txtValorUnitario.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosEVirgula);
 
@@ -332,16 +337,22 @@ namespace Projeto.Views.Cadastros
                 return;
             }
 
+            if (!Validador.CampoObrigatorio(txtCodigo, "O Modelo é obrigatório.")) return; 
+            if (!Validador.CampoObrigatorio(txtSerie, "A Série é obrigatória.")) return;
+            if (!Validador.CampoObrigatorio(txtNumero, "O Número da Nota é obrigatório.")) return;
+
+            if (!Validador.CampoObrigatorio(txtIdCliente, "Selecione um Cliente.")) return;
+            if (!Validador.CampoObrigatorio(txtIdFuncionario, "Selecione um Funcionário.")) return;
+
             if (dtpEmissao.Value.Date > DateTime.Now.Date)
             {
-                MessageBox.Show("A Data de Emissão não pode ser posterior à data atual.", "Data Inválida", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("A Data de Emissão não pode ser futura.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 dtpEmissao.Focus();
                 return;
             }
-
             if (dtpSaida.Value.Date < dtpEmissao.Value.Date)
             {
-                MessageBox.Show("A Data de Saída não pode ser anterior à Data de Emissão.", "Data Inválida", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("A Data de Saída não pode ser anterior à Emissão.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 dtpSaida.Focus();
                 return;
             }

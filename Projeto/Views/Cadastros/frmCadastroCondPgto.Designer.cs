@@ -64,6 +64,7 @@
             // 
             this.txtCodigo.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtCodigo.TabIndex = 0;
+            this.txtCodigo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // btnSair
             // 
@@ -91,9 +92,11 @@
             // txtPrazoDias
             // 
             this.txtPrazoDias.Location = new System.Drawing.Point(327, 210);
+            this.txtPrazoDias.MaxLength = 4;
             this.txtPrazoDias.Name = "txtPrazoDias";
             this.txtPrazoDias.Size = new System.Drawing.Size(54, 22);
             this.txtPrazoDias.TabIndex = 8;
+            this.txtPrazoDias.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblCodigo
             // 
@@ -133,9 +136,11 @@
             // txtQtdParcelas
             // 
             this.txtQtdParcelas.Location = new System.Drawing.Point(404, 30);
+            this.txtQtdParcelas.MaxLength = 3;
             this.txtQtdParcelas.Name = "txtQtdParcelas";
             this.txtQtdParcelas.Size = new System.Drawing.Size(59, 22);
             this.txtQtdParcelas.TabIndex = 2;
+            this.txtQtdParcelas.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblFormaPagamento
             // 
@@ -197,9 +202,11 @@
             // txtPorcentagem
             // 
             this.txtPorcentagem.Location = new System.Drawing.Point(166, 210);
+            this.txtPorcentagem.MaxLength = 6;
             this.txtPorcentagem.Name = "txtPorcentagem";
             this.txtPorcentagem.Size = new System.Drawing.Size(62, 22);
             this.txtPorcentagem.TabIndex = 7;
+            this.txtPorcentagem.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // btnGerarParcelas
             // 
@@ -223,9 +230,11 @@
             // txtNumParcela
             // 
             this.txtNumParcela.Location = new System.Drawing.Point(15, 210);
+            this.txtNumParcela.MaxLength = 3;
             this.txtNumParcela.Name = "txtNumParcela";
             this.txtNumParcela.Size = new System.Drawing.Size(63, 22);
             this.txtNumParcela.TabIndex = 6;
+            this.txtNumParcela.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // btnEditarParcela
             // 
@@ -277,9 +286,11 @@
             // txtJuros
             // 
             this.txtJuros.Location = new System.Drawing.Point(15, 111);
+            this.txtJuros.MaxLength = 10;
             this.txtJuros.Name = "txtJuros";
             this.txtJuros.Size = new System.Drawing.Size(63, 22);
             this.txtJuros.TabIndex = 3;
+            this.txtJuros.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblMulta
             // 
@@ -293,9 +304,11 @@
             // txtMulta
             // 
             this.txtMulta.Location = new System.Drawing.Point(166, 111);
+            this.txtMulta.MaxLength = 10;
             this.txtMulta.Name = "txtMulta";
             this.txtMulta.Size = new System.Drawing.Size(62, 22);
             this.txtMulta.TabIndex = 4;
+            this.txtMulta.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblDesconto
             // 
@@ -309,9 +322,11 @@
             // txtDesconto
             // 
             this.txtDesconto.Location = new System.Drawing.Point(327, 111);
+            this.txtDesconto.MaxLength = 10;
             this.txtDesconto.Name = "txtDesconto";
             this.txtDesconto.Size = new System.Drawing.Size(64, 22);
             this.txtDesconto.TabIndex = 5;
+            this.txtDesconto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblIdFormaPgto
             // 
@@ -325,9 +340,11 @@
             // txtIdFormaPagamento
             // 
             this.txtIdFormaPagamento.Location = new System.Drawing.Point(489, 211);
+            this.txtIdFormaPagamento.MaxLength = 10;
             this.txtIdFormaPagamento.Name = "txtIdFormaPagamento";
             this.txtIdFormaPagamento.Size = new System.Drawing.Size(41, 22);
             this.txtIdFormaPagamento.TabIndex = 9;
+            this.txtIdFormaPagamento.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtIdFormaPagamento.Leave += new System.EventHandler(this.txtIdFormaPagamento_Leave);
             // 
             // frmCadastroCondPgto

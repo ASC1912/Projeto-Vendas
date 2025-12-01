@@ -79,6 +79,7 @@
             // txtCodigo
             // 
             this.txtCodigo.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtCodigo.Location = new System.Drawing.Point(12, 32);
             this.txtCodigo.TabIndex = 0;
             // 
             // btnSair
@@ -127,6 +128,7 @@
             // txtNome
             // 
             this.txtNome.Location = new System.Drawing.Point(321, 30);
+            this.txtNome.MaxLength = 150;
             this.txtNome.Name = "txtNome";
             this.txtNome.Size = new System.Drawing.Size(200, 22);
             this.txtNome.TabIndex = 2;
@@ -134,7 +136,7 @@
             // lblCodigo
             // 
             this.lblCodigo.AutoSize = true;
-            this.lblCodigo.Location = new System.Drawing.Point(9, 9);
+            this.lblCodigo.Location = new System.Drawing.Point(9, 14);
             this.lblCodigo.Name = "lblCodigo";
             this.lblCodigo.Size = new System.Drawing.Size(51, 16);
             this.lblCodigo.TabIndex = 70;
@@ -197,6 +199,7 @@
             // txtComplemento
             // 
             this.txtComplemento.Location = new System.Drawing.Point(540, 108);
+            this.txtComplemento.MaxLength = 100;
             this.txtComplemento.Name = "txtComplemento";
             this.txtComplemento.Size = new System.Drawing.Size(150, 22);
             this.txtComplemento.TabIndex = 6;
@@ -213,9 +216,11 @@
             // txtNumEnd
             // 
             this.txtNumEnd.Location = new System.Drawing.Point(233, 108);
+            this.txtNumEnd.MaxLength = 10;
             this.txtNumEnd.Name = "txtNumEnd";
             this.txtNumEnd.Size = new System.Drawing.Size(70, 22);
             this.txtNumEnd.TabIndex = 4;
+            this.txtNumEnd.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblBairro
             // 
@@ -229,6 +234,7 @@
             // txtBairro
             // 
             this.txtBairro.Location = new System.Drawing.Point(321, 108);
+            this.txtBairro.MaxLength = 60;
             this.txtBairro.Name = "txtBairro";
             this.txtBairro.Size = new System.Drawing.Size(200, 22);
             this.txtBairro.TabIndex = 5;
@@ -245,6 +251,7 @@
             // txtEndereco
             // 
             this.txtEndereco.Location = new System.Drawing.Point(12, 108);
+            this.txtEndereco.MaxLength = 100;
             this.txtEndereco.Name = "txtEndereco";
             this.txtEndereco.Size = new System.Drawing.Size(200, 22);
             this.txtEndereco.TabIndex = 3;
@@ -312,6 +319,7 @@
             // txtTelefone
             // 
             this.txtTelefone.Location = new System.Drawing.Point(741, 180);
+            this.txtTelefone.MaxLength = 15;
             this.txtTelefone.Name = "txtTelefone";
             this.txtTelefone.Size = new System.Drawing.Size(150, 22);
             this.txtTelefone.TabIndex = 12;
@@ -328,6 +336,7 @@
             // txtEmail
             // 
             this.txtEmail.Location = new System.Drawing.Point(515, 180);
+            this.txtEmail.MaxLength = 100;
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(200, 22);
             this.txtEmail.TabIndex = 11;
@@ -370,9 +379,11 @@
             // txtIdCidade
             // 
             this.txtIdCidade.Location = new System.Drawing.Point(12, 181);
+            this.txtIdCidade.MaxLength = 10;
             this.txtIdCidade.Name = "txtIdCidade";
             this.txtIdCidade.Size = new System.Drawing.Size(67, 22);
             this.txtIdCidade.TabIndex = 8;
+            this.txtIdCidade.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtIdCidade.Leave += new System.EventHandler(this.txtIdCidade_Leave);
             // 
             // label1
@@ -387,6 +398,7 @@
             // txtIdCondPgto
             // 
             this.txtIdCondPgto.Location = new System.Drawing.Point(515, 264);
+            this.txtIdCondPgto.MaxLength = 10;
             this.txtIdCondPgto.Name = "txtIdCondPgto";
             this.txtIdCondPgto.Size = new System.Drawing.Size(67, 22);
             this.txtIdCondPgto.TabIndex = 106;
@@ -426,10 +438,12 @@
             // 
             this.txtIdVeiculo.Location = new System.Drawing.Point(12, 337);
             this.txtIdVeiculo.Margin = new System.Windows.Forms.Padding(4);
+            this.txtIdVeiculo.MaxLength = 10;
             this.txtIdVeiculo.Name = "txtIdVeiculo";
             this.txtIdVeiculo.ShortcutsEnabled = false;
             this.txtIdVeiculo.Size = new System.Drawing.Size(79, 22);
             this.txtIdVeiculo.TabIndex = 159;
+            this.txtIdVeiculo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // listVFornecedores
             // 

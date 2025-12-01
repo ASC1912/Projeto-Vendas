@@ -63,7 +63,7 @@
             this.lblGenero = new System.Windows.Forms.Label();
             this.lblDataNascimento = new System.Windows.Forms.Label();
             this.dtpNascimento = new System.Windows.Forms.DateTimePicker();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblIdCondPgto = new System.Windows.Forms.Label();
             this.txtIdCondPgto = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
@@ -162,9 +162,9 @@
             this.lblTelefone.AutoSize = true;
             this.lblTelefone.Location = new System.Drawing.Point(684, 167);
             this.lblTelefone.Name = "lblTelefone";
-            this.lblTelefone.Size = new System.Drawing.Size(61, 16);
+            this.lblTelefone.Size = new System.Drawing.Size(66, 16);
             this.lblTelefone.TabIndex = 28;
-            this.lblTelefone.Text = "Telefone";
+            this.lblTelefone.Text = "Telefone*";
             // 
             // txtTelefone
             // 
@@ -188,9 +188,9 @@
             this.lblCEP.AutoSize = true;
             this.lblCEP.Location = new System.Drawing.Point(744, 95);
             this.lblCEP.Name = "lblCEP";
-            this.lblCEP.Size = new System.Drawing.Size(34, 16);
+            this.lblCEP.Size = new System.Drawing.Size(39, 16);
             this.lblCEP.TabIndex = 32;
-            this.lblCEP.Text = "CEP";
+            this.lblCEP.Text = "CEP*";
             // 
             // txtCEP
             // 
@@ -222,9 +222,9 @@
             this.lblBairro.AutoSize = true;
             this.lblBairro.Location = new System.Drawing.Point(340, 95);
             this.lblBairro.Name = "lblBairro";
-            this.lblBairro.Size = new System.Drawing.Size(43, 16);
+            this.lblBairro.Size = new System.Drawing.Size(48, 16);
             this.lblBairro.TabIndex = 36;
-            this.lblBairro.Text = "Bairro";
+            this.lblBairro.Text = "Bairro*";
             // 
             // txtBairro
             // 
@@ -273,9 +273,9 @@
             this.lblCondPgto.AutoSize = true;
             this.lblCondPgto.Location = new System.Drawing.Point(454, 266);
             this.lblCondPgto.Name = "lblCondPgto";
-            this.lblCondPgto.Size = new System.Drawing.Size(138, 16);
+            this.lblCondPgto.Size = new System.Drawing.Size(143, 16);
             this.lblCondPgto.TabIndex = 42;
-            this.lblCondPgto.Text = "Condição Pagamento";
+            this.lblCondPgto.Text = "Condição Pagamento*";
             // 
             // cbTipo
             // 
@@ -288,15 +288,16 @@
             this.cbTipo.Name = "cbTipo";
             this.cbTipo.Size = new System.Drawing.Size(121, 24);
             this.cbTipo.TabIndex = 1;
+            this.cbTipo.SelectedIndexChanged += new System.EventHandler(this.cbTipo_SelectedIndexChanged);
             // 
             // lblRG
             // 
             this.lblRG.AutoSize = true;
             this.lblRG.Location = new System.Drawing.Point(170, 267);
             this.lblRG.Name = "lblRG";
-            this.lblRG.Size = new System.Drawing.Size(27, 16);
+            this.lblRG.Size = new System.Drawing.Size(32, 16);
             this.lblRG.TabIndex = 66;
-            this.lblRG.Text = "RG";
+            this.lblRG.Text = "RG*";
             // 
             // txtRG
             // 
@@ -400,14 +401,14 @@
             this.dtpNascimento.TabIndex = 4;
             this.dtpNascimento.Value = new System.DateTime(2025, 7, 10, 0, 0, 0, 0);
             // 
-            // label1
+            // lblIdCondPgto
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(359, 266);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(88, 16);
-            this.label1.TabIndex = 91;
-            this.label1.Text = "ID CongPgto*";
+            this.lblIdCondPgto.AutoSize = true;
+            this.lblIdCondPgto.Location = new System.Drawing.Point(359, 266);
+            this.lblIdCondPgto.Name = "lblIdCondPgto";
+            this.lblIdCondPgto.Size = new System.Drawing.Size(88, 16);
+            this.lblIdCondPgto.TabIndex = 91;
+            this.lblIdCondPgto.Text = "ID CongPgto*";
             // 
             // txtIdCondPgto
             // 
@@ -423,7 +424,7 @@
             // 
             //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             //this.ClientSize = new System.Drawing.Size(1342, 681);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblIdCondPgto);
             this.Controls.Add(this.txtIdCondPgto);
             this.Controls.Add(this.lblDataNascimento);
             this.Controls.Add(this.dtpNascimento);
@@ -505,7 +506,7 @@
             this.Controls.SetChildIndex(this.dtpNascimento, 0);
             this.Controls.SetChildIndex(this.lblDataNascimento, 0);
             this.Controls.SetChildIndex(this.txtIdCondPgto, 0);
-            this.Controls.SetChildIndex(this.label1, 0);
+            this.Controls.SetChildIndex(this.lblIdCondPgto, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -548,7 +549,7 @@
         private System.Windows.Forms.Label lblGenero;
         private System.Windows.Forms.Label lblDataNascimento;
         private System.Windows.Forms.DateTimePicker dtpNascimento;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblIdCondPgto;
         private System.Windows.Forms.TextBox txtIdCondPgto;
     }
 }

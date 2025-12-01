@@ -98,9 +98,9 @@
             this.lblCEP.AutoSize = true;
             this.lblCEP.Location = new System.Drawing.Point(743, 81);
             this.lblCEP.Name = "lblCEP";
-            this.lblCEP.Size = new System.Drawing.Size(34, 16);
+            this.lblCEP.Size = new System.Drawing.Size(39, 16);
             this.lblCEP.TabIndex = 47;
-            this.lblCEP.Text = "CEP";
+            this.lblCEP.Text = "CEP*";
             // 
             // txtCEP
             // 
@@ -124,25 +124,27 @@
             this.lblTelefone.AutoSize = true;
             this.lblTelefone.Location = new System.Drawing.Point(743, 154);
             this.lblTelefone.Name = "lblTelefone";
-            this.lblTelefone.Size = new System.Drawing.Size(61, 16);
+            this.lblTelefone.Size = new System.Drawing.Size(66, 16);
             this.lblTelefone.TabIndex = 43;
-            this.lblTelefone.Text = "Telefone";
+            this.lblTelefone.Text = "Telefone*";
             // 
             // txtTelefone
             // 
             this.txtTelefone.Location = new System.Drawing.Point(746, 173);
+            this.txtTelefone.MaxLength = 15;
             this.txtTelefone.Name = "txtTelefone";
             this.txtTelefone.Size = new System.Drawing.Size(150, 22);
             this.txtTelefone.TabIndex = 15;
+            this.txtTelefone.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblEmail
             // 
             this.lblEmail.AutoSize = true;
             this.lblEmail.Location = new System.Drawing.Point(489, 154);
             this.lblEmail.Name = "lblEmail";
-            this.lblEmail.Size = new System.Drawing.Size(41, 16);
+            this.lblEmail.Size = new System.Drawing.Size(46, 16);
             this.lblEmail.TabIndex = 41;
-            this.lblEmail.Text = "Email";
+            this.lblEmail.Text = "Email*";
             // 
             // txtEmail
             // 
@@ -207,9 +209,11 @@
             // txtSalario
             // 
             this.txtSalario.Location = new System.Drawing.Point(376, 327);
+            this.txtSalario.MaxLength = 15;
             this.txtSalario.Name = "txtSalario";
             this.txtSalario.Size = new System.Drawing.Size(150, 22);
             this.txtSalario.TabIndex = 20;
+            this.txtSalario.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblCargo
             // 
@@ -223,6 +227,7 @@
             // txtCargo
             // 
             this.txtCargo.Location = new System.Drawing.Point(204, 327);
+            this.txtCargo.MaxLength = 100;
             this.txtCargo.Name = "txtCargo";
             this.txtCargo.Size = new System.Drawing.Size(150, 22);
             this.txtCargo.TabIndex = 19;
@@ -248,6 +253,7 @@
             // txtEndereco
             // 
             this.txtEndereco.Location = new System.Drawing.Point(12, 100);
+            this.txtEndereco.MaxLength = 150;
             this.txtEndereco.Name = "txtEndereco";
             this.txtEndereco.Size = new System.Drawing.Size(200, 22);
             this.txtEndereco.TabIndex = 6;
@@ -281,18 +287,20 @@
             // txtNumEnd
             // 
             this.txtNumEnd.Location = new System.Drawing.Point(224, 100);
+            this.txtNumEnd.MaxLength = 10;
             this.txtNumEnd.Name = "txtNumEnd";
             this.txtNumEnd.Size = new System.Drawing.Size(58, 22);
             this.txtNumEnd.TabIndex = 7;
+            this.txtNumEnd.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblBairro
             // 
             this.lblBairro.AutoSize = true;
             this.lblBairro.Location = new System.Drawing.Point(313, 81);
             this.lblBairro.Name = "lblBairro";
-            this.lblBairro.Size = new System.Drawing.Size(43, 16);
+            this.lblBairro.Size = new System.Drawing.Size(48, 16);
             this.lblBairro.TabIndex = 56;
-            this.lblBairro.Text = "Bairro";
+            this.lblBairro.Text = "Bairro*";
             // 
             // txtBairro
             // 
@@ -354,9 +362,9 @@
             this.lblRG.AutoSize = true;
             this.lblRG.Location = new System.Drawing.Point(201, 234);
             this.lblRG.Name = "lblRG";
-            this.lblRG.Size = new System.Drawing.Size(27, 16);
+            this.lblRG.Size = new System.Drawing.Size(32, 16);
             this.lblRG.TabIndex = 70;
-            this.lblRG.Text = "RG";
+            this.lblRG.Text = "RG*";
             // 
             // txtRG
             // 
@@ -396,9 +404,11 @@
             // txtIdCidade
             // 
             this.txtIdCidade.Location = new System.Drawing.Point(12, 173);
+            this.txtIdCidade.MaxLength = 10;
             this.txtIdCidade.Name = "txtIdCidade";
             this.txtIdCidade.Size = new System.Drawing.Size(67, 22);
             this.txtIdCidade.TabIndex = 11;
+            this.txtIdCidade.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtIdCidade.Leave += new System.EventHandler(this.txtIdCidade_Leave);
             // 
             // lblMatricula
@@ -433,6 +443,7 @@
             // txtApelido
             // 
             this.txtApelido.Location = new System.Drawing.Point(546, 38);
+            this.txtApelido.MaxLength = 100;
             this.txtApelido.Name = "txtApelido";
             this.txtApelido.Size = new System.Drawing.Size(150, 22);
             this.txtApelido.TabIndex = 3;

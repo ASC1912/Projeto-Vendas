@@ -27,7 +27,7 @@ namespace Projeto.Models
         public Pedido()
         {
             Itens = new List<ItemPedido>();
-            Finalizado = false; // Garante que todo novo pedido comece como "não finalizado".
+            Finalizado = false; 
         }
     }
 

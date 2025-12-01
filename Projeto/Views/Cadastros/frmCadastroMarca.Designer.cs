@@ -46,7 +46,7 @@
             // 
             this.chkInativo.TabIndex = 2;
             // 
-            // btnSalvar2
+            // btnSalvar
             // 
             this.btnSalvar.Location = new System.Drawing.Point(1115, 634);
             this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
@@ -72,6 +72,7 @@
             // txtNome
             // 
             this.txtNome.Location = new System.Drawing.Point(12, 106);
+            this.txtNome.MaxLength = 100;
             this.txtNome.Name = "txtNome";
             this.txtNome.Size = new System.Drawing.Size(200, 22);
             this.txtNome.TabIndex = 1;

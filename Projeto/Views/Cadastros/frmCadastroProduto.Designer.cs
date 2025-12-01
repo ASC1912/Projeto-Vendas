@@ -109,6 +109,7 @@
             // txtNome
             // 
             this.txtNome.Location = new System.Drawing.Point(12, 91);
+            this.txtNome.MaxLength = 150;
             this.txtNome.Name = "txtNome";
             this.txtNome.Size = new System.Drawing.Size(200, 22);
             this.txtNome.TabIndex = 1;
@@ -201,6 +202,7 @@
             this.txtPrecoCusto.Size = new System.Drawing.Size(150, 22);
             this.txtPrecoCusto.TabIndex = 5;
             this.txtPrecoCusto.Text = "0.00";
+            this.txtPrecoCusto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtPrecoCusto.Leave += new System.EventHandler(this.txtPrecoCusto_Leave);
             // 
             // lblEstoque
@@ -220,6 +222,7 @@
             this.txtEstoque.Size = new System.Drawing.Size(150, 22);
             this.txtEstoque.TabIndex = 7;
             this.txtEstoque.Text = "0";
+            this.txtEstoque.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblValorVenda
             // 
@@ -236,11 +239,13 @@
             this.txtPrecoVenda.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtPrecoVenda.Location = new System.Drawing.Point(219, 232);
             this.txtPrecoVenda.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
+            this.txtPrecoVenda.MaxLength = 15;
             this.txtPrecoVenda.Name = "txtPrecoVenda";
             this.txtPrecoVenda.ShortcutsEnabled = false;
             this.txtPrecoVenda.Size = new System.Drawing.Size(163, 22);
             this.txtPrecoVenda.TabIndex = 6;
             this.txtPrecoVenda.Text = "0.00";
+            this.txtPrecoVenda.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtPrecoVenda.Leave += new System.EventHandler(this.txtPrecoVenda_Leave);
             // 
             // btnUnidade
@@ -265,9 +270,11 @@
             // txtIdGrupo
             // 
             this.txtIdGrupo.Location = new System.Drawing.Point(15, 353);
+            this.txtIdGrupo.MaxLength = 10;
             this.txtIdGrupo.Name = "txtIdGrupo";
             this.txtIdGrupo.Size = new System.Drawing.Size(67, 22);
             this.txtIdGrupo.TabIndex = 9;
+            this.txtIdGrupo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtIdGrupo.Leave += new System.EventHandler(this.txtIdGrupo_Leave);
             // 
             // lblIdUnidade
@@ -282,9 +289,11 @@
             // txtIdUnidade
             // 
             this.txtIdUnidade.Location = new System.Drawing.Point(14, 156);
+            this.txtIdUnidade.MaxLength = 10;
             this.txtIdUnidade.Name = "txtIdUnidade";
             this.txtIdUnidade.Size = new System.Drawing.Size(67, 22);
             this.txtIdUnidade.TabIndex = 2;
+            this.txtIdUnidade.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtIdUnidade.Leave += new System.EventHandler(this.txtIdUnidade_Leave);
             // 
             // label2
@@ -299,9 +308,11 @@
             // txtIdMarca
             // 
             this.txtIdMarca.Location = new System.Drawing.Point(15, 427);
+            this.txtIdMarca.MaxLength = 10;
             this.txtIdMarca.Name = "txtIdMarca";
             this.txtIdMarca.Size = new System.Drawing.Size(67, 22);
             this.txtIdMarca.TabIndex = 12;
+            this.txtIdMarca.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtIdMarca.Leave += new System.EventHandler(this.txtIdMarca_Leave);
             // 
             // lblPorcentagemLucro
@@ -319,21 +330,25 @@
             this.txtPorcentagemLucro.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtPorcentagemLucro.Location = new System.Drawing.Point(219, 296);
             this.txtPorcentagemLucro.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
+            this.txtPorcentagemLucro.MaxLength = 6;
             this.txtPorcentagemLucro.Name = "txtPorcentagemLucro";
             this.txtPorcentagemLucro.ShortcutsEnabled = false;
             this.txtPorcentagemLucro.Size = new System.Drawing.Size(163, 22);
             this.txtPorcentagemLucro.TabIndex = 8;
             this.txtPorcentagemLucro.Text = "0";
+            this.txtPorcentagemLucro.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtPorcentagemLucro.Leave += new System.EventHandler(this.txtPorcentagemLucro_Leave);
             // 
             // txtCodFornecedor
             // 
             this.txtCodFornecedor.Location = new System.Drawing.Point(549, 128);
             this.txtCodFornecedor.Margin = new System.Windows.Forms.Padding(4);
+            this.txtCodFornecedor.MaxLength = 10;
             this.txtCodFornecedor.Name = "txtCodFornecedor";
             this.txtCodFornecedor.ShortcutsEnabled = false;
             this.txtCodFornecedor.Size = new System.Drawing.Size(79, 22);
             this.txtCodFornecedor.TabIndex = 16;
+            this.txtCodFornecedor.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtCodFornecedor.Leave += new System.EventHandler(this.txtCodFornecedor_Leave);
             // 
             // listVFornecedores
@@ -446,11 +461,13 @@
             this.txtPrecoCustoAntigo.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtPrecoCustoAntigo.Location = new System.Drawing.Point(12, 509);
             this.txtPrecoCustoAntigo.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
+            this.txtPrecoCustoAntigo.MaxLength = 15;
             this.txtPrecoCustoAntigo.Name = "txtPrecoCustoAntigo";
             this.txtPrecoCustoAntigo.ShortcutsEnabled = false;
             this.txtPrecoCustoAntigo.Size = new System.Drawing.Size(163, 22);
             this.txtPrecoCustoAntigo.TabIndex = 15;
             this.txtPrecoCustoAntigo.Text = "0.00";
+            this.txtPrecoCustoAntigo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // frmCadastroProduto
             // 

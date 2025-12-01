@@ -40,6 +40,7 @@ namespace Projeto.Views.Cadastros
         public frmCadastroProduto() : base()
         {
             InitializeComponent();
+
             txtCodigo.Enabled = false;
 
             txtUnidade.ReadOnly = true;

@@ -31,9 +31,10 @@ namespace Projeto.Views.Cadastros
         public frmCadastroPedido()
         {
             InitializeComponent();
+            VerificarMaxLength(this);
+
             txtCodigo.Enabled = false;
             txtTotal.ReadOnly = true;
-            // O txtMesa será para entrada de dados, então não será ReadOnly
             txtMesa.ReadOnly = false; 
 
             listViewProdutos.SelectedIndexChanged += new EventHandler(listViewProdutos_SelectedIndexChanged);

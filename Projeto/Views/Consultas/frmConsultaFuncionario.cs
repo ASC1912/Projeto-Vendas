@@ -150,7 +150,7 @@ namespace Projeto.Views
             if (listView1.SelectedItems.Count > 0)
             {
                 var itemSelecionado = listView1.SelectedItems[0];
-                int id = int.Parse(itemSelecionado.SubItems[0].Text);
+                int id = int.Parse(itemSelecionado.SubItems[1].Text);
 
                 Funcionario funcionario = await controller.BuscarPorId(id);
 
@@ -180,7 +180,7 @@ namespace Projeto.Views
             if (listView1.SelectedItems.Count > 0)
             {
                 var itemSelecionado = listView1.SelectedItems[0];
-                int id = int.Parse(itemSelecionado.SubItems[0].Text);
+                int id = int.Parse(itemSelecionado.SubItems[1].Text);
 
                 Funcionario funcionario = await controller.BuscarPorId(id);
 
@@ -229,7 +229,7 @@ namespace Projeto.Views
             if (listView1.SelectedItems.Count > 0)
             {
                 var itemSelecionado = listView1.SelectedItems[0];
-                int id = int.Parse(itemSelecionado.SubItems[0].Text);
+                int id = int.Parse(itemSelecionado.SubItems[1].Text);
 
                 FuncionarioSelecionado = await controller.BuscarPorId(id);
 

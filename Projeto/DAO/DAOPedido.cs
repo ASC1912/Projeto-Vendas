@@ -25,7 +25,6 @@ namespace Projeto.DAO
                         queryPedido = @"UPDATE Pedidos SET 
                                             MesaNumero = @MesaNumero, 
                                             FuncionarioId = @FuncionarioId,
-                                            VendaId = @VendaId,
                                             Observacao = @Observacao,
                                             Status = @Status,
                                             Ativo = @Ativo,
@@ -38,18 +37,16 @@ namespace Projeto.DAO
                     else
                     {
                         queryPedido = @"INSERT INTO Pedidos 
-                                      (MesaNumero, FuncionarioId, VendaId, Observacao, Status, Ativo, DataAberturaPedido, DataAlteracao, QuantidadeClientes, Finalizado, DataConclusaoPedido, DataCadastro) 
-                                      VALUES (@MesaNumero, @FuncionarioId, @VendaId, @Observacao, @Status, @Ativo, @DataAberturaPedido, @DataAlteracao, @QuantidadeClientes, @Finalizado, @DataConclusaoPedido, @DataCadastro);
+                                      (MesaNumero, FuncionarioId, Observacao, Status, Ativo, DataAberturaPedido, DataAlteracao, QuantidadeClientes, Finalizado, DataConclusaoPedido, DataCadastro) 
+                                      VALUES (@MesaNumero, @FuncionarioId, @Observacao, @Status, @Ativo, @DataAberturaPedido, @DataAlteracao, @QuantidadeClientes, @Finalizado, @DataConclusaoPedido, @DataCadastro);
                                       SELECT LAST_INSERT_ID();";
                     }
 
                     using (MySqlCommand cmdPedido = new MySqlCommand(queryPedido, conn, transaction))
                     {
-                        // --- PARÂMETROS ATUALIZADOS ---
                         cmdPedido.Parameters.AddWithValue("@Id", pedido.Id);
                         cmdPedido.Parameters.AddWithValue("@MesaNumero", pedido.MesaNumero);
                         cmdPedido.Parameters.AddWithValue("@FuncionarioId", pedido.FuncionarioId);
-                        cmdPedido.Parameters.AddWithValue("@VendaId", (object)pedido.VendaId ?? DBNull.Value);
                         cmdPedido.Parameters.AddWithValue("@Observacao", pedido.Observacao);
                         cmdPedido.Parameters.AddWithValue("@Status", pedido.Status);
                         cmdPedido.Parameters.AddWithValue("@Ativo", pedido.Ativo);
@@ -145,7 +142,6 @@ namespace Projeto.DAO
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
-                // --- SELECT ATUALIZADO ---
                 string query = @"SELECT p.*, f.Funcionario AS NomeFuncionario FROM Pedidos p
                                  LEFT JOIN Funcionarios f ON p.FuncionarioId = f.Id
                                  WHERE p.Id = @Id";
@@ -162,7 +158,6 @@ namespace Projeto.DAO
                                 Id = reader.GetInt32("Id"),
                                 MesaNumero = reader.GetInt32("MesaNumero"),
                                 FuncionarioId = reader.GetInt32("FuncionarioId"),
-                                VendaId = reader.IsDBNull(reader.GetOrdinal("VendaId")) ? (int?)null : reader.GetInt32("VendaId"),
                                 Observacao = reader.GetString("Observacao"),
                                 Status = reader.GetString("Status"),
                                 Ativo = reader.GetBoolean("Ativo"),
@@ -227,7 +222,6 @@ namespace Projeto.DAO
                                 Id = reader.GetInt32("Id"),
                                 MesaNumero = reader.GetInt32("MesaNumero"),
                                 FuncionarioId = reader.GetInt32("FuncionarioId"),
-                                VendaId = reader.IsDBNull(reader.GetOrdinal("VendaId")) ? (int?)null : reader.GetInt32("VendaId"),
                                 Observacao = reader.GetString("Observacao"),
                                 Status = reader.GetString("Status"),
                                 Ativo = reader.GetBoolean("Ativo"),

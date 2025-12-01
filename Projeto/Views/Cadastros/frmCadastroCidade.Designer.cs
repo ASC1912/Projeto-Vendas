@@ -143,7 +143,7 @@
             // 
             this.txtIdEstado.Location = new System.Drawing.Point(12, 228);
             this.txtIdEstado.Margin = new System.Windows.Forms.Padding(4);
-            this.txtIdEstado.MaxLength = 255;
+            this.txtIdEstado.MaxLength = 10;
             this.txtIdEstado.Name = "txtIdEstado";
             this.txtIdEstado.ShortcutsEnabled = false;
             this.txtIdEstado.Size = new System.Drawing.Size(52, 22);

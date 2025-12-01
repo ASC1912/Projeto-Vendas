@@ -174,9 +174,11 @@
             // txtIdCliente
             // 
             this.txtIdCliente.Location = new System.Drawing.Point(424, 27);
+            this.txtIdCliente.MaxLength = 10;
             this.txtIdCliente.Name = "txtIdCliente";
             this.txtIdCliente.Size = new System.Drawing.Size(48, 22);
             this.txtIdCliente.TabIndex = 149;
+            this.txtIdCliente.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblModelo
             // 
@@ -226,9 +228,11 @@
             // txtValorPago
             // 
             this.txtValorPago.Location = new System.Drawing.Point(514, 184);
+            this.txtValorPago.MaxLength = 15;
             this.txtValorPago.Name = "txtValorPago";
             this.txtValorPago.Size = new System.Drawing.Size(88, 22);
             this.txtValorPago.TabIndex = 168;
+            this.txtValorPago.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblDesconto
             // 
@@ -242,9 +246,11 @@
             // txtDesconto
             // 
             this.txtDesconto.Location = new System.Drawing.Point(283, 184);
+            this.txtDesconto.MaxLength = 15;
             this.txtDesconto.Name = "txtDesconto";
             this.txtDesconto.Size = new System.Drawing.Size(65, 22);
             this.txtDesconto.TabIndex = 167;
+            this.txtDesconto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblMulta
             // 
@@ -258,9 +264,11 @@
             // txtMulta
             // 
             this.txtMulta.Location = new System.Drawing.Point(149, 184);
+            this.txtMulta.MaxLength = 15;
             this.txtMulta.Name = "txtMulta";
             this.txtMulta.Size = new System.Drawing.Size(62, 22);
             this.txtMulta.TabIndex = 166;
+            this.txtMulta.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblJuros
             // 
@@ -274,9 +282,11 @@
             // txtJuros
             // 
             this.txtJuros.Location = new System.Drawing.Point(15, 184);
+            this.txtJuros.MaxLength = 15;
             this.txtJuros.Name = "txtJuros";
             this.txtJuros.Size = new System.Drawing.Size(69, 22);
             this.txtJuros.TabIndex = 165;
+            this.txtJuros.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // btnPesquisarFormaPgto
             // 
@@ -316,9 +326,11 @@
             // txtIdFormaPgto
             // 
             this.txtIdFormaPgto.Location = new System.Drawing.Point(15, 98);
+            this.txtIdFormaPgto.MaxLength = 10;
             this.txtIdFormaPgto.Name = "txtIdFormaPgto";
             this.txtIdFormaPgto.Size = new System.Drawing.Size(69, 22);
             this.txtIdFormaPgto.TabIndex = 162;
+            this.txtIdFormaPgto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblValorVencimento
             // 
@@ -332,9 +344,11 @@
             // txtValorVencimento
             // 
             this.txtValorVencimento.Location = new System.Drawing.Point(517, 98);
+            this.txtValorVencimento.MaxLength = 15;
             this.txtValorVencimento.Name = "txtValorVencimento";
             this.txtValorVencimento.Size = new System.Drawing.Size(88, 22);
             this.txtValorVencimento.TabIndex = 161;
+            this.txtValorVencimento.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // frmCadastroContasAReceber
             // 

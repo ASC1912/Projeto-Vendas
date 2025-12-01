@@ -164,9 +164,11 @@
             // txtValorUnitario
             // 
             this.txtValorUnitario.Location = new System.Drawing.Point(541, 152);
+            this.txtValorUnitario.MaxLength = 15;
             this.txtValorUnitario.Name = "txtValorUnitario";
             this.txtValorUnitario.Size = new System.Drawing.Size(88, 22);
             this.txtValorUnitario.TabIndex = 141;
+            this.txtValorUnitario.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtValorUnitario.TextChanged += new System.EventHandler(this.txtValorUnitario_TextChanged);
             // 
             // lblQuantidade
@@ -181,9 +183,11 @@
             // txtQuantidade
             // 
             this.txtQuantidade.Location = new System.Drawing.Point(415, 152);
+            this.txtQuantidade.MaxLength = 10;
             this.txtQuantidade.Name = "txtQuantidade";
             this.txtQuantidade.Size = new System.Drawing.Size(100, 22);
             this.txtQuantidade.TabIndex = 140;
+            this.txtQuantidade.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtQuantidade.TextChanged += new System.EventHandler(this.txtQuantidade_TextChanged);
             // 
             // btnPesquisarProduto
@@ -271,9 +275,11 @@
             // txtIdCliente
             // 
             this.txtIdCliente.Location = new System.Drawing.Point(414, 27);
+            this.txtIdCliente.MaxLength = 10;
             this.txtIdCliente.Name = "txtIdCliente";
             this.txtIdCliente.Size = new System.Drawing.Size(48, 22);
             this.txtIdCliente.TabIndex = 133;
+            this.txtIdCliente.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtIdCliente.Leave += new System.EventHandler(this.txtIdCliente_Leave);
             // 
             // lblSerie
@@ -322,9 +328,11 @@
             // txtIdProduto
             // 
             this.txtIdProduto.Location = new System.Drawing.Point(11, 151);
+            this.txtIdProduto.MaxLength = 10;
             this.txtIdProduto.Name = "txtIdProduto";
             this.txtIdProduto.Size = new System.Drawing.Size(48, 22);
             this.txtIdProduto.TabIndex = 156;
+            this.txtIdProduto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtIdProduto.Leave += new System.EventHandler(this.txtIdProduto_Leave);
             // 
             // lblProduto
@@ -356,9 +364,11 @@
             // txtIdCondPgto
             // 
             this.txtIdCondPgto.Location = new System.Drawing.Point(14, 438);
+            this.txtIdCondPgto.MaxLength = 10;
             this.txtIdCondPgto.Name = "txtIdCondPgto";
             this.txtIdCondPgto.Size = new System.Drawing.Size(48, 22);
             this.txtIdCondPgto.TabIndex = 164;
+            this.txtIdCondPgto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtIdCondPgto.Leave += new System.EventHandler(this.txtIdCondPgto_Leave);
             // 
             // lblValorTotal
@@ -578,9 +588,11 @@
             // txtIdFuncionario
             // 
             this.txtIdFuncionario.Location = new System.Drawing.Point(806, 27);
+            this.txtIdFuncionario.MaxLength = 10;
             this.txtIdFuncionario.Name = "txtIdFuncionario";
             this.txtIdFuncionario.Size = new System.Drawing.Size(48, 22);
             this.txtIdFuncionario.TabIndex = 180;
+            this.txtIdFuncionario.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // frmCadastroVenda
             // 
@@ -634,6 +646,7 @@
             this.Controls.Add(this.txtNumero);
             this.Controls.Add(this.txtSerie);
             this.Name = "frmCadastroVenda";
+            this.Text = "Cadastro Vendas";
             this.Controls.SetChildIndex(this.txtSerie, 0);
             this.Controls.SetChildIndex(this.txtNumero, 0);
             this.Controls.SetChildIndex(this.lblNumero, 0);

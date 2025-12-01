@@ -129,7 +129,7 @@ namespace Projeto
             if (listView1.SelectedItems.Count > 0)
             {
                 var itemSelecionado = listView1.SelectedItems[0];
-                int id = int.Parse(itemSelecionado.SubItems[0].Text);
+                int id = int.Parse(itemSelecionado.SubItems[1].Text);
 
                 CondicaoPagamento condicao = await controller.BuscarPorId(id);
 
@@ -159,7 +159,7 @@ namespace Projeto
             if (listView1.SelectedItems.Count > 0)
             {
                 var itemSelecionado = listView1.SelectedItems[0];
-                int id = int.Parse(itemSelecionado.SubItems[0].Text);
+                int id = int.Parse(itemSelecionado.SubItems[1].Text);
 
                 CondicaoPagamento condicao = await controller.BuscarPorId(id);
 
@@ -191,7 +191,7 @@ namespace Projeto
             if (listView1.SelectedItems.Count > 0)
             {
                 var itemSelecionado = listView1.SelectedItems[0];
-                int id = int.Parse(itemSelecionado.SubItems[0].Text);
+                int id = int.Parse(itemSelecionado.SubItems[1].Text);
                 CondicaoSelecionado = await controller.BuscarPorId(id);
                 this.DialogResult = DialogResult.OK;
                 this.Close();

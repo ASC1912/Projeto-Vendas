@@ -124,7 +124,7 @@ namespace Projeto.Views.Consultas
             if (listView1.SelectedItems.Count > 0)
             {
                 var itemSelecionado = listView1.SelectedItems[0];
-                int id = int.Parse(itemSelecionado.SubItems[0].Text);
+                int id = int.Parse(itemSelecionado.SubItems[1].Text);
 
                 Produto produto = await controller.BuscarPorId(id);
 
@@ -154,7 +154,7 @@ namespace Projeto.Views.Consultas
             if (listView1.SelectedItems.Count > 0)
             {
                 var itemSelecionado = listView1.SelectedItems[0];
-                int id = int.Parse(itemSelecionado.SubItems[0].Text);
+                int id = int.Parse(itemSelecionado.SubItems[1].Text);
 
                 Produto produto = await controller.BuscarPorId(id);
 
@@ -189,7 +189,7 @@ namespace Projeto.Views.Consultas
             {
                 try
                 {
-                    int id = int.Parse(listView1.SelectedItems[0].SubItems[0].Text);
+                    int id = int.Parse(listView1.SelectedItems[0].SubItems[1].Text);
                     ProdutoSelecionado = await controller.BuscarPorId(id);
 
                     if (ProdutoSelecionado != null)

@@ -96,7 +96,7 @@ namespace Projeto.Views.Cadastros
             dtpVencimento.MaxDate = DateTimePicker.MaximumDateTime;
             dtpVencimento.Value = DateTime.Today;
 
-            txtValorVencimento.Text = "0,00";
+            txtValorAPagar.Text = "0,00";
 
             dtpDataPagamento.MinDate = DateTimePicker.MinimumDateTime; 
             dtpDataPagamento.MaxDate = DateTimePicker.MaximumDateTime;
@@ -173,7 +173,7 @@ namespace Projeto.Views.Cadastros
                 MessageBox.Show($"Atenção: Houve um problema ao carregar as datas desta conta.\nErro: {ex.Message}", "Data Inválida", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
 
-            txtValorVencimento.Text = aConta.ValorVencimento.ToString("F2");
+            txtValorAPagar.Text = aConta.ValorVencimento.ToString("F2");
 
             if (this.Controls.ContainsKey("txtCodigo")) this.Controls["txtCodigo"].Text = aConta.CompraModelo ?? "";
             txtSerie.Text = aConta.CompraSerie ?? "";
@@ -221,7 +221,7 @@ namespace Projeto.Views.Cadastros
             btnPesquisarFornecedor.Enabled = false;
             dtpEmissao.Enabled = false;
             dtpVencimento.Enabled = false;
-            txtValorVencimento.Enabled = false;
+            txtValorAPagar.Enabled = false;
             if (this.Controls.ContainsKey("txtCodigo")) this.Controls["txtCodigo"].Enabled = false;
             txtSerie.Enabled = false;
             txtNumero.Enabled = false;
@@ -243,7 +243,7 @@ namespace Projeto.Views.Cadastros
                 btnPesquisarFornecedor.Enabled = true;
                 dtpEmissao.Enabled = true;
                 dtpVencimento.Enabled = true;
-                txtValorVencimento.Enabled = true;
+                txtValorAPagar.Enabled = true;
                 if (this.Controls.ContainsKey("txtCodigo")) this.Controls["txtCodigo"].Enabled = true;
                 txtSerie.Enabled = true;
                 txtNumero.Enabled = true;
@@ -376,7 +376,7 @@ namespace Projeto.Views.Cadastros
                     {
                         return;
                     }
-                    if (!Validador.CampoObrigatorio(txtValorVencimento, "Valor da Conta") || Convert.ToDecimal(txtValorVencimento.Text) <= 0) return;
+                    if (!Validador.CampoObrigatorio(txtValorAPagar, "Valor da Conta") || Convert.ToDecimal(txtValorAPagar.Text) <= 0) return;
 
                     TextBox txtCodigo = this.Controls.ContainsKey("txtCodigo") ? this.Controls["txtCodigo"] as TextBox : null;
                     if (!Validador.CampoObrigatorio(txtCodigo, "Modelo") ||
@@ -403,7 +403,7 @@ namespace Projeto.Views.Cadastros
                         FornecedorId = int.Parse(txtIDFornecedor.Text),
                         DataEmissao = dtpEmissao.Value.Date,
                         DataVencimento = dtpVencimento.Value.Date,
-                        ValorVencimento = Convert.ToDecimal(txtValorVencimento.Text),
+                        ValorVencimento = Convert.ToDecimal(txtValorAPagar.Text),
                         Status = "Aberta",
                         Ativo = true,
 
@@ -601,7 +601,7 @@ namespace Projeto.Views.Cadastros
 
         private void AtualizarTotalComValoresManuais()
         {
-            decimal.TryParse(txtValorVencimento.Text, out decimal valorVencimento);
+            decimal.TryParse(txtValorAPagar.Text, out decimal valorVencimento);
             decimal.TryParse(txtJuros.Text, out decimal jurosReais);
             decimal.TryParse(txtMulta.Text, out decimal multaReais);
             decimal.TryParse(txtDesconto.Text, out decimal descontoReais);
@@ -632,7 +632,7 @@ namespace Projeto.Views.Cadastros
             DateTime dataPagamento = dtpDataPagamento.Value.Date;
             DateTime dataVencimento = dtpVencimento.Value.Date;
 
-            decimal.TryParse(txtValorVencimento.Text, out decimal valorVencimento);
+            decimal.TryParse(txtValorAPagar.Text, out decimal valorVencimento);
 
             decimal taxaJuros = aConta.Juros ?? 0;
             decimal taxaMulta = aConta.Multa ?? 0;

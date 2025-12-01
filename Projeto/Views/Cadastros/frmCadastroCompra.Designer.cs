@@ -95,6 +95,7 @@
             this.txtCodigo.MaxLength = 5;
             this.txtCodigo.Size = new System.Drawing.Size(72, 22);
             this.txtCodigo.TabIndex = 0;
+            this.txtCodigo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // btnSair
             // 
@@ -160,9 +161,11 @@
             // txtIDFornecedor
             // 
             this.txtIDFornecedor.Location = new System.Drawing.Point(383, 43);
+            this.txtIDFornecedor.MaxLength = 10;
             this.txtIDFornecedor.Name = "txtIDFornecedor";
             this.txtIDFornecedor.Size = new System.Drawing.Size(48, 22);
             this.txtIDFornecedor.TabIndex = 3;
+            this.txtIDFornecedor.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtIDFornecedor.Leave += new System.EventHandler(this.txtIDFornecedor_Leave);
             // 
             // lblSerie
@@ -190,6 +193,7 @@
             this.txtNumero.Name = "txtNumero";
             this.txtNumero.Size = new System.Drawing.Size(100, 22);
             this.txtNumero.TabIndex = 2;
+            this.txtNumero.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtSerie
             // 
@@ -198,6 +202,7 @@
             this.txtSerie.Name = "txtSerie";
             this.txtSerie.Size = new System.Drawing.Size(69, 22);
             this.txtSerie.TabIndex = 1;
+            this.txtSerie.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblDataChegada
             // 
@@ -343,9 +348,11 @@
             // txtValorUnitario
             // 
             this.txtValorUnitario.Location = new System.Drawing.Point(546, 111);
+            this.txtValorUnitario.MaxLength = 15;
             this.txtValorUnitario.Name = "txtValorUnitario";
             this.txtValorUnitario.Size = new System.Drawing.Size(88, 22);
             this.txtValorUnitario.TabIndex = 12;
+            this.txtValorUnitario.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtValorUnitario.TextChanged += new System.EventHandler(this.txtValorUnitario_TextChanged);
             // 
             // lblQuantidade
@@ -360,9 +367,11 @@
             // txtQuantidade
             // 
             this.txtQuantidade.Location = new System.Drawing.Point(420, 111);
+            this.txtQuantidade.MaxLength = 10;
             this.txtQuantidade.Name = "txtQuantidade";
             this.txtQuantidade.Size = new System.Drawing.Size(100, 22);
             this.txtQuantidade.TabIndex = 11;
+            this.txtQuantidade.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtQuantidade.TextChanged += new System.EventHandler(this.txtQuantidade_TextChanged);
             // 
             // btnAdicionarProduto
@@ -416,9 +425,11 @@
             // txtDespesas
             // 
             this.txtDespesas.Location = new System.Drawing.Point(238, 377);
+            this.txtDespesas.MaxLength = 15;
             this.txtDespesas.Name = "txtDespesas";
             this.txtDespesas.Size = new System.Drawing.Size(70, 22);
             this.txtDespesas.TabIndex = 20;
+            this.txtDespesas.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblSeguro
             // 
@@ -432,9 +443,11 @@
             // txtSeguro
             // 
             this.txtSeguro.Location = new System.Drawing.Point(131, 378);
+            this.txtSeguro.MaxLength = 15;
             this.txtSeguro.Name = "txtSeguro";
-            this.txtSeguro.Size = new System.Drawing.Size(51, 22);
+            this.txtSeguro.Size = new System.Drawing.Size(69, 22);
             this.txtSeguro.TabIndex = 19;
+            this.txtSeguro.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblFrete
             // 
@@ -448,9 +461,11 @@
             // txtFrete
             // 
             this.txtFrete.Location = new System.Drawing.Point(18, 378);
+            this.txtFrete.MaxLength = 15;
             this.txtFrete.Name = "txtFrete";
             this.txtFrete.Size = new System.Drawing.Size(73, 22);
             this.txtFrete.TabIndex = 18;
+            this.txtFrete.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // btnLimparCondPgto
             // 
@@ -551,6 +566,7 @@
             this.txtValorTotal.ReadOnly = true;
             this.txtValorTotal.Size = new System.Drawing.Size(126, 22);
             this.txtValorTotal.TabIndex = 21;
+            this.txtValorTotal.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblTotalCondiçãoPgto
             // 
@@ -573,9 +589,11 @@
             // txtIdProduto
             // 
             this.txtIdProduto.Location = new System.Drawing.Point(21, 112);
+            this.txtIdProduto.MaxLength = 10;
             this.txtIdProduto.Name = "txtIdProduto";
             this.txtIdProduto.Size = new System.Drawing.Size(48, 22);
             this.txtIdProduto.TabIndex = 8;
+            this.txtIdProduto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtIdProduto.Leave += new System.EventHandler(this.txtIdProduto_Leave);
             // 
             // lblIdCondicaoPgto
@@ -590,9 +608,11 @@
             // txtIdCondPgto
             // 
             this.txtIdCondPgto.Location = new System.Drawing.Point(18, 438);
+            this.txtIdCondPgto.MaxLength = 10;
             this.txtIdCondPgto.Name = "txtIdCondPgto";
             this.txtIdCondPgto.Size = new System.Drawing.Size(48, 22);
             this.txtIdCondPgto.TabIndex = 22;
+            this.txtIdCondPgto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtIdCondPgto.Leave += new System.EventHandler(this.txtIdCondPgto_Leave);
             // 
             // lblMotivoCancelamento

@@ -172,9 +172,11 @@
             // txtTotal
             // 
             this.txtTotal.Location = new System.Drawing.Point(668, 217);
+            this.txtTotal.MaxLength = 15;
             this.txtTotal.Name = "txtTotal";
             this.txtTotal.Size = new System.Drawing.Size(126, 22);
             this.txtTotal.TabIndex = 155;
+            this.txtTotal.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblValorUnitario
             // 
@@ -188,9 +190,11 @@
             // txtValorUnitario
             // 
             this.txtValorUnitario.Location = new System.Drawing.Point(574, 218);
+            this.txtValorUnitario.MaxLength = 15;
             this.txtValorUnitario.Name = "txtValorUnitario";
             this.txtValorUnitario.Size = new System.Drawing.Size(88, 22);
             this.txtValorUnitario.TabIndex = 153;
+            this.txtValorUnitario.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblQuantidade
             // 
@@ -204,9 +208,11 @@
             // txtQuantidade
             // 
             this.txtQuantidade.Location = new System.Drawing.Point(448, 218);
+            this.txtQuantidade.MaxLength = 10;
             this.txtQuantidade.Name = "txtQuantidade";
             this.txtQuantidade.Size = new System.Drawing.Size(100, 22);
             this.txtQuantidade.TabIndex = 151;
+            this.txtQuantidade.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // btnPesquisarProduto
             // 
@@ -305,6 +311,7 @@
             // 
             this.txtObservacao.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtObservacao.Location = new System.Drawing.Point(12, 152);
+            this.txtObservacao.MaxLength = 255;
             this.txtObservacao.Name = "txtObservacao";
             this.txtObservacao.Size = new System.Drawing.Size(200, 22);
             this.txtObservacao.TabIndex = 163;
@@ -341,9 +348,11 @@
             // txtQuantidadeClientes
             // 
             this.txtQuantidadeClientes.Location = new System.Drawing.Point(417, 152);
+            this.txtQuantidadeClientes.MaxLength = 3;
             this.txtQuantidadeClientes.Name = "txtQuantidadeClientes";
             this.txtQuantidadeClientes.Size = new System.Drawing.Size(100, 22);
             this.txtQuantidadeClientes.TabIndex = 167;
+            this.txtQuantidadeClientes.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // chkFinalizado
             // 
@@ -367,9 +376,11 @@
             // txtIdFuncionario
             // 
             this.txtIdFuncionario.Location = new System.Drawing.Point(417, 91);
+            this.txtIdFuncionario.MaxLength = 10;
             this.txtIdFuncionario.Name = "txtIdFuncionario";
             this.txtIdFuncionario.Size = new System.Drawing.Size(95, 22);
             this.txtIdFuncionario.TabIndex = 172;
+            this.txtIdFuncionario.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtIdFuncionario.Leave += new System.EventHandler(this.txtIdFuncionario_Leave);
             // 
             // lblIdProduto
@@ -384,9 +395,11 @@
             // txtIdProduto
             // 
             this.txtIdProduto.Location = new System.Drawing.Point(12, 218);
+            this.txtIdProduto.MaxLength = 10;
             this.txtIdProduto.Name = "txtIdProduto";
             this.txtIdProduto.Size = new System.Drawing.Size(67, 22);
             this.txtIdProduto.TabIndex = 174;
+            this.txtIdProduto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtIdProduto.Leave += new System.EventHandler(this.txtIdProduto_Leave);
             // 
             // frmCadastroPedido

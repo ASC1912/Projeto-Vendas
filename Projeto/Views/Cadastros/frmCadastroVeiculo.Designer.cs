@@ -113,6 +113,7 @@
             // txtModelo
             // 
             this.txtModelo.Location = new System.Drawing.Point(260, 124);
+            this.txtModelo.MaxLength = 100;
             this.txtModelo.Name = "txtModelo";
             this.txtModelo.Size = new System.Drawing.Size(200, 22);
             this.txtModelo.TabIndex = 2;
@@ -129,9 +130,11 @@
             // txtAnoFabricacao
             // 
             this.txtAnoFabricacao.Location = new System.Drawing.Point(15, 205);
+            this.txtAnoFabricacao.MaxLength = 4;
             this.txtAnoFabricacao.Name = "txtAnoFabricacao";
-            this.txtAnoFabricacao.Size = new System.Drawing.Size(150, 22);
+            this.txtAnoFabricacao.Size = new System.Drawing.Size(78, 22);
             this.txtAnoFabricacao.TabIndex = 5;
+            this.txtAnoFabricacao.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblCapacidadeCarga
             // 
@@ -145,9 +148,11 @@
             // txtCapacidadeCarga
             // 
             this.txtCapacidadeCarga.Location = new System.Drawing.Point(260, 205);
+            this.txtCapacidadeCarga.MaxLength = 10;
             this.txtCapacidadeCarga.Name = "txtCapacidadeCarga";
             this.txtCapacidadeCarga.Size = new System.Drawing.Size(150, 22);
             this.txtCapacidadeCarga.TabIndex = 6;
+            this.txtCapacidadeCarga.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtTransportadora
             // 
@@ -206,6 +211,7 @@
             // txtIdMarca
             // 
             this.txtIdMarca.Location = new System.Drawing.Point(520, 124);
+            this.txtIdMarca.MaxLength = 10;
             this.txtIdMarca.Name = "txtIdMarca";
             this.txtIdMarca.Size = new System.Drawing.Size(67, 22);
             this.txtIdMarca.TabIndex = 108;

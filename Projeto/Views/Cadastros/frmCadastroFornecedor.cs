@@ -29,6 +29,7 @@ namespace Projeto.Views
         public frmCadastroFornecedor() : base()
         {
             InitializeComponent();
+
             txtCodigo.Enabled = false;
             cbTipo.SelectedIndex = 0;
             cbTipo.SelectedIndexChanged += cbTipo_SelectedIndexChanged;
@@ -167,11 +168,14 @@ namespace Projeto.Views
         {
             if (cbTipo.Text == "JURÍDICO")
             {
-                lblCPF.Text = "CNPJ";
+                lblCPF.Text = "CNPJ*";
+                lblInscEst.Text = "Inscrição Estadual*";
             }
             else
             {
-                lblCPF.Text = "CPF";
+                lblCPF.Text = "CPF*";
+                lblInscEst.Text = "RG*";
+
             }
         }
 
@@ -232,6 +236,10 @@ namespace Projeto.Views
                 if (!Validador.CampoObrigatorio(txtNumEnd, "O Número de endereço é obrigatório.")) return;
                 if (!Validador.ValidarNumerico(txtNumEnd, "O número do endereço deve ser numérico.")) return;
                 if (!Validador.CampoObrigatorio(txtBairro, "O Bairro é obrigatório.")) return;
+                if (!Validador.CampoObrigatorio(txtCEP, "O CEP é obrigatório.")) return;
+                if (!Validador.CampoObrigatorio(txtTelefone, "O Telefone é obrigatório.")) return;
+
+
                 if (!Validador.ValidarEmail(txtEmail)) return;
 
                 string tipoPessoa = cbTipo.Text.Trim();

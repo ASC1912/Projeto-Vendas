@@ -90,7 +90,23 @@ namespace Projeto
             }
         }
 
+        protected void VerificarMaxLength(Control parent)
+        {
+            foreach (Control c in parent.Controls)
+            {
+                if (c is TextBox txt && !txt.ReadOnly && txt.MaxLength == 32767)
+                {
+                    txt.BackColor = Color.FromArgb(255, 255, 200); 
 
+                    System.Diagnostics.Debug.WriteLine($"ALERTA: O campo '{txt.Name}' no formulário '{this.Name}' está sem limite (MaxLength).");
+                }
+
+                if (c.HasChildren)
+                {
+                    VerificarMaxLength(c);
+                }
+            }
+        }
         public virtual void ConfigurarFormularioBase()
         {
             this.AutoScaleMode = AutoScaleMode.Font;

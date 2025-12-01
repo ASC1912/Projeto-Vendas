@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -21,8 +22,23 @@ namespace Projeto.Utils
             return true;
         }
 
+        public static bool CampoObrigatorio(ComboBox cb, string mensagem)
+        {
+            if (cb.SelectedIndex == -1 || string.IsNullOrWhiteSpace(cb.Text))
+            {
+                MessageBox.Show(mensagem, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cb.Focus();
+                cb.BackColor = Color.MistyRose;
+                return false;
+            }
+            cb.BackColor = Color.White;
+            return true;
+        }
+
         public static bool ValidarEmail(TextBox campo)
         {
+            if (string.IsNullOrWhiteSpace(campo.Text)) return true;
+
             if (!string.IsNullOrWhiteSpace(campo.Text) &&
                 !Regex.IsMatch(campo.Text, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
             {

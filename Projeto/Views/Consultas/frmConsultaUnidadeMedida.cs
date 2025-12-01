@@ -72,7 +72,7 @@ namespace Projeto.Views.Consultas
         {
             if (listView1.SelectedItems.Count > 0)
             {
-                int id = int.Parse(listView1.SelectedItems[0].Text);
+                int id = int.Parse(listView1.SelectedItems[0].SubItems[1].Text);
                 UnidadeMedida unidade = await controller.BuscarPorId(id);
                 if (unidade != null)
                 {
@@ -94,7 +94,7 @@ namespace Projeto.Views.Consultas
         {
             if (listView1.SelectedItems.Count > 0)
             {
-                int id = int.Parse(listView1.SelectedItems[0].Text);
+                int id = int.Parse(listView1.SelectedItems[0].SubItems[1].Text);
                 UnidadeMedida unidade = await controller.BuscarPorId(id);
                 if (unidade != null)
                 {
@@ -119,7 +119,7 @@ namespace Projeto.Views.Consultas
         {
             if (listView1.SelectedItems.Count > 0)
             {
-                int id = int.Parse(listView1.SelectedItems[0].Text);
+                int id = int.Parse(listView1.SelectedItems[0].SubItems[1].Text);
                 UnidadeSelecionada = await controller.BuscarPorId(id);
                 this.DialogResult = DialogResult.OK;
                 this.Close();

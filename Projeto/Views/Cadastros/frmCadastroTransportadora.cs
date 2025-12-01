@@ -26,6 +26,7 @@ namespace Projeto.Views.Cadastros
         public frmCadastroTransportadora() : base()
         {
             InitializeComponent();
+
             txtCodigo.Enabled = false;
             cbTipo.SelectedIndex = 0;
             cbTipo.SelectedIndexChanged += cbTipo_SelectedIndexChanged;
@@ -163,7 +164,17 @@ namespace Projeto.Views.Cadastros
 
         private void cbTipo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            lblCPF.Text = (cbTipo.Text == "JURÍDICO") ? "CNPJ" : "CPF";
+            if (cbTipo.Text == "JURÍDICO")
+            {
+                lblCPF.Text = "CNPJ*";
+                lblInscEst.Text = "Inscrição Estadual*";
+            }
+            else
+            {
+                lblCPF.Text = "CPF*";
+                lblInscEst.Text = "RG*";
+
+            }
         }
 
         private async void btnSalvar_Click(object sender, EventArgs e)

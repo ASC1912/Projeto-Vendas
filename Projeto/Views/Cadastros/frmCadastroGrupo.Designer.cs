@@ -48,7 +48,7 @@
             // 
             this.chkInativo.TabIndex = 3;
             // 
-            // btnSalvar2
+            // btnSalvar
             // 
             this.btnSalvar.Location = new System.Drawing.Point(1110, 634);
             this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
@@ -74,6 +74,7 @@
             // txtDescricao
             // 
             this.txtDescricao.Location = new System.Drawing.Point(15, 150);
+            this.txtDescricao.MaxLength = 100;
             this.txtDescricao.Name = "txtDescricao";
             this.txtDescricao.Size = new System.Drawing.Size(200, 22);
             this.txtDescricao.TabIndex = 2;
@@ -90,6 +91,7 @@
             // txtNome
             // 
             this.txtNome.Location = new System.Drawing.Point(12, 90);
+            this.txtNome.MaxLength = 100;
             this.txtNome.Name = "txtNome";
             this.txtNome.Size = new System.Drawing.Size(200, 22);
             this.txtNome.TabIndex = 1;

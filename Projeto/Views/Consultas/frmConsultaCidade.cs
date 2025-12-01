@@ -82,7 +82,8 @@ namespace Projeto.Views
 
                     if (cidade != null)
                     {
-                        ListViewItem item = new ListViewItem(cidade.Id.ToString());
+                        ListViewItem item = new ListViewItem("");
+                        item.SubItems.Add(cidade.Id.ToString());
                         item.SubItems.Add(cidade.NomeCidade);
                         item.SubItems.Add(cidade.EstadoNome);
                         item.SubItems.Add(cidade.DDD); 
@@ -110,7 +111,7 @@ namespace Projeto.Views
             if (listView1.SelectedItems.Count > 0)
             {
                 var itemSelecionado = listView1.SelectedItems[0];
-                int id = int.Parse(itemSelecionado.SubItems[0].Text);
+                int id = int.Parse(itemSelecionado.SubItems[1].Text);
                 Cidade cidade = await controller.BuscarPorId(id);
 
                 if (cidade != null)
@@ -139,7 +140,7 @@ namespace Projeto.Views
             if (listView1.SelectedItems.Count > 0)
             {
                 var itemSelecionado = listView1.SelectedItems[0];
-                int id = int.Parse(itemSelecionado.SubItems[0].Text);
+                int id = int.Parse(itemSelecionado.SubItems[1].Text);
                 Cidade cidade = await controller.BuscarPorId(id);
 
                 if (cidade != null)
@@ -172,7 +173,7 @@ namespace Projeto.Views
             if (listView1.SelectedItems.Count > 0)
             {
                 var itemSelecionado = listView1.SelectedItems[0];
-                int id = int.Parse(itemSelecionado.SubItems[0].Text);
+                int id = int.Parse(itemSelecionado.SubItems[1].Text);
                 CidadeSelecionado = await controller.BuscarPorId(id);
                 this.DialogResult = DialogResult.OK;
                 this.Close();

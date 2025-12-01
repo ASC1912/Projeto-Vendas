@@ -25,6 +25,7 @@ namespace Projeto
         public frmCadastroCondPgto() : base()
         {
             InitializeComponent();
+
             txtCodigo.Enabled = false;
             txtFormaPagamento.ReadOnly = true;
 

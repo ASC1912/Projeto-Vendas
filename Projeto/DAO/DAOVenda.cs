@@ -185,7 +185,7 @@ namespace Projeto.DAO
 
                 try
                 {
-                    string selectItensQuery = "SELECT ProdutoId, Quantidade FROM ItensVenda WHERE VendaModelo = @Modelo AND VendaSerie = @Serie AND VendaNumeroNota = @NumeroNota AND ClienteId = @ClienteId";
+                    string selectItensQuery = "SELECT ProdutoId, Quantidade FROM ItensVenda WHERE VendaModelo = @Modelo AND VendaSerie = @Serie AND VendaNumeroNota = @NumeroNota AND VendaClienteId = @ClienteId";
                     var itensParaEstornar = new List<ItemVenda>();
                     using (MySqlCommand cmdSelect = new MySqlCommand(selectItensQuery, conn, tran))
                     {

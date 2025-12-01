@@ -38,7 +38,7 @@
             this.lblIdFornecedor = new System.Windows.Forms.Label();
             this.txtIDFornecedor = new System.Windows.Forms.TextBox();
             this.lblValorVencimento = new System.Windows.Forms.Label();
-            this.txtValorVencimento = new System.Windows.Forms.TextBox();
+            this.txtValorAPagar = new System.Windows.Forms.TextBox();
             this.btnPesquisarFormaPgto = new System.Windows.Forms.Button();
             this.lblFormaPgto = new System.Windows.Forms.Label();
             this.txtFormaPgto = new System.Windows.Forms.TextBox();
@@ -156,9 +156,11 @@
             // txtIDFornecedor
             // 
             this.txtIDFornecedor.Location = new System.Drawing.Point(429, 29);
+            this.txtIDFornecedor.MaxLength = 10;
             this.txtIDFornecedor.Name = "txtIDFornecedor";
             this.txtIDFornecedor.Size = new System.Drawing.Size(48, 22);
             this.txtIDFornecedor.TabIndex = 3;
+            this.txtIDFornecedor.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtIDFornecedor.Leave += new System.EventHandler(this.txtIDFornecedor_Leave);
             // 
             // lblValorVencimento
@@ -170,12 +172,14 @@
             this.lblValorVencimento.TabIndex = 137;
             this.lblValorVencimento.Text = "Valor a Pagar (R$)";
             // 
-            // txtValorVencimento
+            // txtValorAPagar
             // 
-            this.txtValorVencimento.Location = new System.Drawing.Point(514, 117);
-            this.txtValorVencimento.Name = "txtValorVencimento";
-            this.txtValorVencimento.Size = new System.Drawing.Size(88, 22);
-            this.txtValorVencimento.TabIndex = 9;
+            this.txtValorAPagar.Location = new System.Drawing.Point(514, 117);
+            this.txtValorAPagar.MaxLength = 15;
+            this.txtValorAPagar.Name = "txtValorAPagar";
+            this.txtValorAPagar.Size = new System.Drawing.Size(88, 22);
+            this.txtValorAPagar.TabIndex = 9;
+            this.txtValorAPagar.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // btnPesquisarFormaPgto
             // 
@@ -216,9 +220,11 @@
             // txtIdFormaPgto
             // 
             this.txtIdFormaPgto.Location = new System.Drawing.Point(12, 117);
+            this.txtIdFormaPgto.MaxLength = 10;
             this.txtIdFormaPgto.Name = "txtIdFormaPgto";
             this.txtIdFormaPgto.Size = new System.Drawing.Size(69, 22);
             this.txtIdFormaPgto.TabIndex = 10;
+            this.txtIdFormaPgto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtIdFormaPgto.Leave += new System.EventHandler(this.txtIdFormaPgto_Leave);
             // 
             // lblSerie
@@ -276,9 +282,11 @@
             // txtDesconto
             // 
             this.txtDesconto.Location = new System.Drawing.Point(280, 203);
+            this.txtDesconto.MaxLength = 15;
             this.txtDesconto.Name = "txtDesconto";
             this.txtDesconto.Size = new System.Drawing.Size(65, 22);
             this.txtDesconto.TabIndex = 15;
+            this.txtDesconto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblMulta
             // 
@@ -292,9 +300,11 @@
             // txtMulta
             // 
             this.txtMulta.Location = new System.Drawing.Point(146, 203);
+            this.txtMulta.MaxLength = 15;
             this.txtMulta.Name = "txtMulta";
             this.txtMulta.Size = new System.Drawing.Size(62, 22);
             this.txtMulta.TabIndex = 14;
+            this.txtMulta.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblJuros
             // 
@@ -308,9 +318,11 @@
             // txtJuros
             // 
             this.txtJuros.Location = new System.Drawing.Point(12, 203);
+            this.txtJuros.MaxLength = 15;
             this.txtJuros.Name = "txtJuros";
             this.txtJuros.Size = new System.Drawing.Size(69, 22);
             this.txtJuros.TabIndex = 13;
+            this.txtJuros.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblValorPago
             // 
@@ -324,9 +336,11 @@
             // txtValorPago
             // 
             this.txtValorPago.Location = new System.Drawing.Point(511, 203);
+            this.txtValorPago.MaxLength = 15;
             this.txtValorPago.Name = "txtValorPago";
             this.txtValorPago.Size = new System.Drawing.Size(88, 22);
             this.txtValorPago.TabIndex = 16;
+            this.txtValorPago.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblDataPagamento
             // 
@@ -381,7 +395,7 @@
             this.Controls.Add(this.lblIdFormaPgto);
             this.Controls.Add(this.txtIdFormaPgto);
             this.Controls.Add(this.lblValorVencimento);
-            this.Controls.Add(this.txtValorVencimento);
+            this.Controls.Add(this.txtValorAPagar);
             this.Controls.Add(this.lblDataVencimento);
             this.Controls.Add(this.dtpVencimento);
             this.Controls.Add(this.lblDataEmissao);
@@ -408,7 +422,7 @@
             this.Controls.SetChildIndex(this.lblDataEmissao, 0);
             this.Controls.SetChildIndex(this.dtpVencimento, 0);
             this.Controls.SetChildIndex(this.lblDataVencimento, 0);
-            this.Controls.SetChildIndex(this.txtValorVencimento, 0);
+            this.Controls.SetChildIndex(this.txtValorAPagar, 0);
             this.Controls.SetChildIndex(this.lblValorVencimento, 0);
             this.Controls.SetChildIndex(this.txtIdFormaPgto, 0);
             this.Controls.SetChildIndex(this.lblIdFormaPgto, 0);
@@ -448,7 +462,7 @@
         private System.Windows.Forms.Label lblIdFornecedor;
         private System.Windows.Forms.TextBox txtIDFornecedor;
         private System.Windows.Forms.Label lblValorVencimento;
-        private System.Windows.Forms.TextBox txtValorVencimento;
+        private System.Windows.Forms.TextBox txtValorAPagar;
         private System.Windows.Forms.Button btnPesquisarFormaPgto;
         private System.Windows.Forms.Label lblFormaPgto;
         private System.Windows.Forms.TextBox txtFormaPgto;

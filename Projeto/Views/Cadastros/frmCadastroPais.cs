@@ -21,6 +21,7 @@ namespace Projeto.Views
         public frmCadastroPais() : base()
         {
             InitializeComponent();
+
             txtCodigo.Enabled = false;
             this.txtDDI.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosInteiros);
         }

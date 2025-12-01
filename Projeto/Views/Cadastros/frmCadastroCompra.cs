@@ -55,6 +55,10 @@ namespace Projeto.Views.Cadastros
             AgruparControles();
             ConfigurarEstadoInicial();
 
+            this.txtCodigo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosInteiros);
+            this.txtSerie.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosInteiros);
+            this.txtNumero.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosInteiros);
+
             this.txtQuantidade.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosInteiros);
             this.txtValorUnitario.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosEVirgula);
             this.txtFrete.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosEVirgula);
@@ -336,6 +340,13 @@ namespace Projeto.Views.Cadastros
                 }
                 return;
             }
+
+            if (!Validador.CampoObrigatorio(txtCodigo, "O Modelo é obrigatório.")) return;
+            if (!Validador.CampoObrigatorio(txtSerie, "A Série é obrigatória.")) return;
+            if (!Validador.CampoObrigatorio(txtNumero, "O Número da Nota é obrigatório.")) return;
+
+            if (!Validador.CampoObrigatorio(txtIDFornecedor, "Selecione um Fornecedor.")) return;
+
 
             if (dtpEmissao.Value.Date > DateTime.Now.Date)
             {

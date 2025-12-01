@@ -139,7 +139,7 @@ namespace Projeto.Views
             if (listView1.SelectedItems.Count > 0)
             {
                 var itemSelecionado = listView1.SelectedItems[0];
-                int id = int.Parse(itemSelecionado.SubItems[0].Text);
+                int id = int.Parse(itemSelecionado.SubItems[1].Text);
                 Estado estado = await controller.BuscarPorId(id);
 
                 if (estado != null)
@@ -168,7 +168,7 @@ namespace Projeto.Views
             if (listView1.SelectedItems.Count > 0)
             {
                 var itemSelecionado = listView1.SelectedItems[0];
-                int id = int.Parse(itemSelecionado.SubItems[0].Text);
+                int id = int.Parse(itemSelecionado.SubItems[1].Text);
                 Estado estado = await controller.BuscarPorId(id);
 
                 if (estado != null)
@@ -201,7 +201,7 @@ namespace Projeto.Views
             if (listView1.SelectedItems.Count > 0)
             {
                 var itemSelecionado = listView1.SelectedItems[0];
-                int id = int.Parse(itemSelecionado.SubItems[0].Text);
+                int id = int.Parse(itemSelecionado.SubItems[1].Text);
                 EstadoSelecionado = await controller.BuscarPorId(id);
                 this.DialogResult = DialogResult.OK;
                 this.Close();

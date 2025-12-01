@@ -27,6 +27,7 @@ namespace Projeto.Views
         public frmCadastroFuncionario() : base()
         {
             InitializeComponent();
+
             txtCodigo.Enabled = false;
             cbTipo.SelectedIndex = 0;
             cbGenero.SelectedIndex = 0;
@@ -269,16 +270,27 @@ namespace Projeto.Views
             }
             else
             {
-                if (!Validador.CampoObrigatorio(txtNome, "O nome é obrigatório.")) return;
-                if (!Validador.CampoObrigatorio(txtCPF, "O CPF/CNPJ é obrigatório.")) return;
+                // --- 1. Dados Pessoais ---
+                if (!Validador.CampoObrigatorio(txtNome, "O Nome do Funcionário é obrigatório.")) return;
+                if (!Validador.CampoObrigatorio(cbTipo, "O Tipo é obrigatório.")) return;
+                if (!Validador.CampoObrigatorio(cbGenero, "O Gênero é obrigatório.")) return;
+                if (!Validador.CampoObrigatorio(txtCPF, "O CPF é obrigatório.")) return;
+                if (!Validador.CampoObrigatorio(txtRG, "O RG é obrigatório.")) return; 
+
+                if (!Validador.CampoObrigatorio(txtCEP, "O CEP é obrigatório.")) return;
                 if (!Validador.CampoObrigatorio(txtEndereco, "O Endereço é obrigatório.")) return;
-                if (!Validador.CampoObrigatorio(txtNumEnd, "O Número de endereço é obrigatório.")) return;
-                if (!Validador.ValidarNumerico(txtNumEnd, "O número do endereço deve ser numérico.")) return;
+                if (!Validador.CampoObrigatorio(txtNumEnd, "O Número é obrigatório.")) return;
                 if (!Validador.CampoObrigatorio(txtBairro, "O Bairro é obrigatório.")) return;
+                if (!Validador.CampoObrigatorio(txtIdCidade, "A Cidade é obrigatória.")) return;
+
+                if (!Validador.CampoObrigatorio(txtEmail, "O Email é obrigatório.")) return;
+                if (!Validador.CampoObrigatorio(txtTelefone, "O Telefone é obrigatório.")) return;
+
+                if (!Validador.CampoObrigatorio(txtMatricula, "A Matrícula é obrigatória.")) return;
+                if (!Validador.CampoObrigatorio(txtCargo, "O Cargo é obrigatório.")) return;
+                if (!Validador.CampoObrigatorio(txtSalario, "O Salário é obrigatório.")) return;
+
                 if (!Validador.ValidarEmail(txtEmail)) return;
-                if (!Validador.CampoObrigatorio(txtCargo, "O cargo é obrigatório.")) return;
-                if (!Validador.CampoObrigatorio(txtMatricula, "A matrícula é obrigatória.")) return;
-                if (!Validador.CampoObrigatorio(txtSalario, "O salário é obrigatório.")) return;
 
                 string tipoPessoa = cbTipo.Text.Trim();
                 string documento = new string(txtCPF.Text.Where(char.IsDigit).ToArray());

@@ -179,7 +179,7 @@ namespace Projeto.Views
             if (resultado == DialogResult.OK && oFrmConsultaEstado.EstadoSelecionado != null)
             {
                 txtEstado.Text = oFrmConsultaEstado.EstadoSelecionado.NomeEstado;
-                txtIdEstado.Text = oFrmConsultaEstado.EstadoSelecionado.Id.ToString(); // Adicionado
+                txtIdEstado.Text = oFrmConsultaEstado.EstadoSelecionado.Id.ToString(); 
                 estadoSelecionadoId = oFrmConsultaEstado.EstadoSelecionado.Id;
             }
         }

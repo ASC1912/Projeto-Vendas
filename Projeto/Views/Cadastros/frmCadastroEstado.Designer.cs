@@ -142,6 +142,7 @@
             // 
             this.txtIdPais.Location = new System.Drawing.Point(12, 180);
             this.txtIdPais.Margin = new System.Windows.Forms.Padding(4);
+            this.txtIdPais.MaxLength = 10;
             this.txtIdPais.Name = "txtIdPais";
             this.txtIdPais.ShortcutsEnabled = false;
             this.txtIdPais.Size = new System.Drawing.Size(52, 22);

@@ -117,7 +117,7 @@ namespace Projeto.Views.Consultas
             if (listView1.SelectedItems.Count > 0)
             {
                 var itemSelecionado = listView1.SelectedItems[0];
-                int id = int.Parse(itemSelecionado.SubItems[0].Text);
+                int id = int.Parse(itemSelecionado.SubItems[1].Text);
 
                 Marca marca = await controller.BuscarPorId(id);
 
@@ -147,7 +147,7 @@ namespace Projeto.Views.Consultas
             if (listView1.SelectedItems.Count > 0)
             {
                 var itemSelecionado = listView1.SelectedItems[0];
-                int id = int.Parse(itemSelecionado.SubItems[0].Text);
+                int id = int.Parse(itemSelecionado.SubItems[1].Text);
 
                 Marca marca = await controller.BuscarPorId(id);
 
@@ -181,7 +181,7 @@ namespace Projeto.Views.Consultas
             if (listView1.SelectedItems.Count > 0)
             {
                 var itemSelecionado = listView1.SelectedItems[0];
-                int id = int.Parse(itemSelecionado.SubItems[0].Text);
+                int id = int.Parse(itemSelecionado.SubItems[1].Text);
 
                 MarcaSelecionado = await controller.BuscarPorId(id);
 

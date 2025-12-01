@@ -34,8 +34,6 @@ namespace Projeto.Views
             cbTipo.SelectedIndex = 0;
             cbGenero.SelectedIndex = 0;
             dtpNascimento.MaxDate = DateTime.Now;
-            cbTipo.SelectedIndexChanged += cbTipo_SelectedIndexChanged;
-            cbTipo_SelectedIndexChanged(null, null);
 
             this.txtNumEnd.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosInteiros);
             this.txtIdCidade.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosInteiros);
@@ -205,6 +203,9 @@ namespace Projeto.Views
                 if (!Validador.CampoObrigatorio(txtBairro, "O Bairro é obrigatório.")) return;
                 if (!Validador.ValidarEmail(txtEmail)) return;
                 if (!Validador.ValidarNumerico(txtNumEnd, "O número do endereço deve ser numérico.")) return;
+
+                if (!Validador.CampoObrigatorio(txtEmail, "O E-mail é obrigatório.")) return;
+                if (!Validador.CampoObrigatorio(txtTelefone, "O Telefone é obrigatório.")) return;
 
                 string tipoPessoa = cbTipo.Text.Trim();
                 string documento = new string(txtCPF.Text.Where(char.IsDigit).ToArray());
@@ -390,11 +391,17 @@ namespace Projeto.Views
         {
             if (cbTipo.Text == "JURÍDICO")
             {
-                lblCPF.Text = "CNPJ";
+                lblCPF.Text = "CNPJ*";
+                lblRG.Text = "IE*"; 
+
+                txtCPF.MaxLength = 18; 
             }
             else
             {
-                lblCPF.Text = "CPF";
+                lblCPF.Text = "CPF*";
+                lblRG.Text = "RG*";
+
+                txtCPF.MaxLength = 14; 
             }
         }
 
