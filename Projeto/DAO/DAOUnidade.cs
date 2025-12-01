@@ -93,7 +93,7 @@ namespace Projeto.DAO
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
-                string query = "SELECT Id, Nome, Sigla, Ativo, DataCadastro, DataAlteracao FROM UnidadesMedida ORDER BY Nome";
+                string query = "SELECT Id, Nome, Sigla, Ativo, DataCadastro, DataAlteracao FROM UnidadesMedida ORDER BY Id";
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
                     using (MySqlDataReader reader = cmd.ExecuteReader())

@@ -53,6 +53,7 @@ namespace Projeto.Views.Consultas
             if (this.Controls.Find("btnDeletar", true).Length > 0)
             {
                 Button btnExcluir = (Button)this.Controls.Find("btnDeletar", true)[0];
+                btnExcluir.Text = "Cancelar";
                 btnExcluir.Click += (s, e) => BloquearExclusao();
             }
 
