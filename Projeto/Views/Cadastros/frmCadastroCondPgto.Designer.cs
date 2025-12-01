@@ -127,7 +127,7 @@
             // lblQtdParcelas
             // 
             this.lblQtdParcelas.AutoSize = true;
-            this.lblQtdParcelas.Location = new System.Drawing.Point(398, 11);
+            this.lblQtdParcelas.Location = new System.Drawing.Point(397, 8);
             this.lblQtdParcelas.Name = "lblQtdParcelas";
             this.lblQtdParcelas.Size = new System.Drawing.Size(158, 16);
             this.lblQtdParcelas.TabIndex = 15;
@@ -135,7 +135,7 @@
             // 
             // txtQtdParcelas
             // 
-            this.txtQtdParcelas.Location = new System.Drawing.Point(404, 30);
+            this.txtQtdParcelas.Location = new System.Drawing.Point(403, 27);
             this.txtQtdParcelas.MaxLength = 3;
             this.txtQtdParcelas.Name = "txtQtdParcelas";
             this.txtQtdParcelas.Size = new System.Drawing.Size(59, 22);

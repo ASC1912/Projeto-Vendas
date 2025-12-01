@@ -172,7 +172,7 @@ namespace Projeto.Views.Cadastros
             else
             {
                 lblCPF.Text = "CPF*";
-                lblInscEst.Text = "RG*";
+                lblInscEst.Text = "RG";
 
             }
         }
@@ -205,21 +205,43 @@ namespace Projeto.Views.Cadastros
                 if (!Validador.CampoObrigatorio(txtNumEnd, "O Número de endereço é obrigatório.")) return;
                 if (!Validador.ValidarNumerico(txtNumEnd, "O número do endereço deve ser numérico.")) return;
                 if (!Validador.CampoObrigatorio(txtBairro, "O Bairro é obrigatório.")) return;
+                if (!Validador.CampoObrigatorio(txtCEP, "O CEP é obrigatório.")) return;
+                if (!Validador.CampoObrigatorio(txtTelefone, "O Telefone é obrigatório.")) return;
+
+
                 if (!Validador.ValidarEmail(txtEmail)) return;
 
                 string tipoPessoa = cbTipo.Text.Trim();
                 string documento = new string(txtCPF.Text.Where(char.IsDigit).ToArray());
 
-                if (tipoPessoa == "FÍSICO" && !Validador.ValidarCPF(documento))
+                if (tipoPessoa == "FÍSICO")
                 {
-                    MessageBox.Show("CPF inválido.");
-                    txtCPF.Focus();
-                    return;
+                    if (!Validador.ValidarCPF(documento))
+                    {
+                        MessageBox.Show("CPF inválido.");
+                        txtCPF.Focus();
+                        return;
+                    }
                 }
-                else if (tipoPessoa == "JURÍDICO" && !Validador.ValidarCNPJ(documento))
+                else if (tipoPessoa == "JURÍDICO")
                 {
-                    MessageBox.Show("CNPJ inválido.");
-                    txtCPF.Focus();
+                    if (!Validador.ValidarCNPJ(documento))
+                    {
+                        MessageBox.Show("CNPJ inválido.");
+                        txtCPF.Focus();
+                        return;
+                    }
+                    if (string.IsNullOrWhiteSpace(txtInscEst.Text))
+                    {
+                        MessageBox.Show("Inscrição estadual é obrigatória para pessoa jurídica.");
+                        txtInscEst.Focus();
+                        return;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Tipo de pessoa inválido.");
+                    cbTipo.Focus();
                     return;
                 }
 

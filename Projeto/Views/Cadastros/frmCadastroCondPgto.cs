@@ -15,7 +15,6 @@ namespace Projeto
         Parcelamento aParcela;
         CondicaoPagamento aCondPgto;
         frmConsultaFrmPgto oFrmConsultaFrmPgto;
-        private ParcelaController parcelaController = new ParcelaController();
         private FormaPagamentoController formaPagamentoController = new FormaPagamentoController();
         private CondicaoPagamentoController condicaoPagamentoController = new CondicaoPagamentoController();
         private int formaPagamentoSelecionadaId = -1;
@@ -154,28 +153,6 @@ namespace Projeto
         private async void btnSalvar_Click(object sender, EventArgs e)
         {
             await AdicionarCondicaoeParcela();
-        }
-
-        private async Task CarregarParcelas(int condicaoPagamentoId)
-        {
-            try
-            {
-                listView1.Items.Clear();
-                List<Parcelamento> parcelas = parcelaController.ListarParcelas(condicaoPagamentoId);
-                foreach (var parcela in parcelas)
-                {
-                    ListViewItem item = new ListViewItem(parcela.NumParcela.ToString());
-                    item.SubItems.Add(parcela.PrazoDias.ToString());
-                    item.SubItems.Add(parcela.Porcentagem.ToString("N2") + "%");
-                    string descricaoFormaPagamento = await formaPagamentoController.ObterDescricaoFormaPagamento(parcela.FormaPagamentoId);
-                    item.SubItems.Add(descricaoFormaPagamento);
-                    listView1.Items.Add(item);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Erro ao carregar parcelas: " + ex.Message);
-            }
         }
 
         private async Task AdicionarCondicaoeParcela()

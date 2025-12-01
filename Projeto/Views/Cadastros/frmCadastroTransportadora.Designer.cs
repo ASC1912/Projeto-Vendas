@@ -216,9 +216,9 @@
             this.lblBairro.AutoSize = true;
             this.lblBairro.Location = new System.Drawing.Point(318, 89);
             this.lblBairro.Name = "lblBairro";
-            this.lblBairro.Size = new System.Drawing.Size(43, 16);
+            this.lblBairro.Size = new System.Drawing.Size(48, 16);
             this.lblBairro.TabIndex = 93;
-            this.lblBairro.Text = "Bairro";
+            this.lblBairro.Text = "Bairro*";
             // 
             // txtBairro
             // 
@@ -284,9 +284,9 @@
             this.lblCEP.AutoSize = true;
             this.lblCEP.Location = new System.Drawing.Point(705, 89);
             this.lblCEP.Name = "lblCEP";
-            this.lblCEP.Size = new System.Drawing.Size(34, 16);
+            this.lblCEP.Size = new System.Drawing.Size(39, 16);
             this.lblCEP.TabIndex = 85;
-            this.lblCEP.Text = "CEP";
+            this.lblCEP.Text = "CEP*";
             // 
             // txtCEP
             // 
@@ -301,9 +301,9 @@
             this.lblTelefone.AutoSize = true;
             this.lblTelefone.Location = new System.Drawing.Point(738, 161);
             this.lblTelefone.Name = "lblTelefone";
-            this.lblTelefone.Size = new System.Drawing.Size(61, 16);
+            this.lblTelefone.Size = new System.Drawing.Size(66, 16);
             this.lblTelefone.TabIndex = 83;
-            this.lblTelefone.Text = "Telefone";
+            this.lblTelefone.Text = "Telefone*";
             // 
             // txtTelefone
             // 
@@ -333,7 +333,7 @@
             // lblCPF
             // 
             this.lblCPF.AutoSize = true;
-            this.lblCPF.Location = new System.Drawing.Point(9, 243);
+            this.lblCPF.Location = new System.Drawing.Point(9, 245);
             this.lblCPF.Name = "lblCPF";
             this.lblCPF.Size = new System.Drawing.Size(38, 16);
             this.lblCPF.TabIndex = 79;
@@ -341,7 +341,7 @@
             // 
             // txtCPF
             // 
-            this.txtCPF.Location = new System.Drawing.Point(12, 262);
+            this.txtCPF.Location = new System.Drawing.Point(12, 264);
             this.txtCPF.MaxLength = 18;
             this.txtCPF.Name = "txtCPF";
             this.txtCPF.Size = new System.Drawing.Size(150, 22);

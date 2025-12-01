@@ -112,7 +112,7 @@
             // Grupo
             // 
             this.Grupo.Text = "Grupo";
-            this.Grupo.Width = 100;
+            this.Grupo.Width = 150;
             // 
             // btnSelecionar
             // 
@@ -127,7 +127,7 @@
             // Unidade
             // 
             this.Unidade.Text = "Unidade";
-            this.Unidade.Width = 80;
+            this.Unidade.Width = 130;
             // 
             // columnHeader1
             // 

@@ -170,12 +170,13 @@ namespace Projeto.Views
             {
                 lblCPF.Text = "CNPJ*";
                 lblInscEst.Text = "Inscrição Estadual*";
+                txtCPF.MaxLength = 18; 
             }
             else
             {
                 lblCPF.Text = "CPF*";
-                lblInscEst.Text = "RG*";
-
+                lblInscEst.Text = "RG";
+                txtCPF.MaxLength = 14; 
             }
         }
 
