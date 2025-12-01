@@ -397,8 +397,8 @@
             // 
             // frmCadastroFornecedor
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.ClientSize = new System.Drawing.Size(1342, 681);
+            //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            //this.ClientSize = new System.Drawing.Size(1342, 681);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtIdCondPgto);
             this.Controls.Add(this.IDCidade);
