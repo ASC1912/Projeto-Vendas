@@ -78,15 +78,15 @@ namespace Projeto.DAO
                             {
                                 Parcelamento parcela = new Parcelamento
                                 {
-                                    NumParcela = reader.GetInt32("NumeroParcela"),
-                                    PrazoDias = reader.GetInt32("PrazoDias"),
-                                    Porcentagem = reader.GetDecimal("PorcentagemValor"),
-                                    CondicaoId = reader.GetInt32("CondicaoPagamentoId"),
-                                    FormaPagamentoId = reader.GetInt32("FormaPagamentoId"),
+                                    NumParcela = reader.GetInt32(reader.GetOrdinal("NumeroParcela")),
+                                    PrazoDias = reader.GetInt32(reader.GetOrdinal("PrazoDias")),
+                                    Porcentagem = reader.GetDecimal(reader.GetOrdinal("PorcentagemValor")),
+                                    CondicaoId = reader.GetInt32(reader.GetOrdinal("CondicaoPagamentoId")),
+                                    FormaPagamentoId = reader.GetInt32(reader.GetOrdinal("FormaPagamentoId")),
                                     FormaPagamento = new FormaPagamento
                                     {
-                                        Id = reader.GetInt32("FormaPagamentoId"),
-                                        Descricao = reader.GetString("FormaPagamentoDescricao")
+                                        Id = reader.GetInt32(reader.GetOrdinal("FormaPagamentoId")),
+                                        Descricao = reader.GetString(reader.GetOrdinal("FormaPagamentoDescricao"))
                                     }
                                 };
 

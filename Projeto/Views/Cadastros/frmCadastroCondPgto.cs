@@ -212,6 +212,23 @@ namespace Projeto
                         return;
                     }
 
+                    DateTime dataCadastro;
+                    if (id == 0)
+                    {
+                        dataCadastro = DateTime.Now;
+                    }
+                    else
+                    {
+                        if (aCondPgto != null && aCondPgto.DataCadastro.HasValue)
+                        {
+                            dataCadastro = aCondPgto.DataCadastro.Value;
+                        }
+                        else
+                        {
+                            dataCadastro = DateTime.Now; 
+                        }
+                    }
+
                     CondicaoPagamento condicao = new CondicaoPagamento
                     {
                         Id = id,
@@ -221,7 +238,7 @@ namespace Projeto
                         Multa = string.IsNullOrWhiteSpace(txtMulta.Text) ? 0 : Convert.ToDecimal(txtMulta.Text),
                         Desconto = desconto,
                         Ativo = !chkInativo.Checked,
-                        DataCadastro = id == 0 ? DateTime.Now : DateTime.Parse(lblDataCriacao.Text.Replace("Criado em: ", "")),
+                        DataCadastro = dataCadastro,
                         DataAlteracao = DateTime.Now
                     };
 
@@ -293,16 +310,23 @@ namespace Projeto
                 ListViewItem itemEditado = listView1.Items.Cast<ListViewItem>().FirstOrDefault(item => int.Parse(item.Text) == numParcelaEditada);
                 if (itemEditado != null)
                 {
-                    itemEditado.SubItems[1].Text = txtPrazoDias.Text;
-                    itemEditado.SubItems[2].Text = Convert.ToDecimal(txtPorcentagem.Text).ToString("F2") + "%";
-                    itemEditado.SubItems[3].Text = txtFormaPagamento.Text;
+                    if (decimal.TryParse(txtPorcentagem.Text, out decimal porcentagem))
+                    {
+                        itemEditado.SubItems[1].Text = txtPrazoDias.Text;
+                        itemEditado.SubItems[2].Text = porcentagem.ToString("F2") + "%";
+                        itemEditado.SubItems[3].Text = txtFormaPagamento.Text;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Porcentagem inválida. Insira um número válido.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
                 else { MessageBox.Show("Parcela não encontrada."); }
             }
             catch (Exception ex) { MessageBox.Show("Erro ao editar parcela: " + ex.Message); }
         }
 
-        private bool ValidarPorcentagemTotal() 
+        private bool ValidarPorcentagemTotal()
         {
             decimal somaPorcentagens = 0;
             foreach (ListViewItem item in listView1.Items)
@@ -332,12 +356,15 @@ namespace Projeto
 
         private void btnFormaPagamento_Click(object sender, EventArgs e)
         {
-            oFrmConsultaFrmPgto.ModoSelecao = true;
-            if (oFrmConsultaFrmPgto.ShowDialog() == DialogResult.OK && oFrmConsultaFrmPgto.FormaSelecionada != null)
+            if (oFrmConsultaFrmPgto != null)
             {
-                txtFormaPagamento.Text = oFrmConsultaFrmPgto.FormaSelecionada.Descricao;
-                txtIdFormaPagamento.Text = oFrmConsultaFrmPgto.FormaSelecionada.Id.ToString();
-                formaPagamentoSelecionadaId = oFrmConsultaFrmPgto.FormaSelecionada.Id;
+                oFrmConsultaFrmPgto.ModoSelecao = true;
+                if (oFrmConsultaFrmPgto.ShowDialog() == DialogResult.OK && oFrmConsultaFrmPgto.FormaSelecionada != null)
+                {
+                    txtFormaPagamento.Text = oFrmConsultaFrmPgto.FormaSelecionada.Descricao;
+                    txtIdFormaPagamento.Text = oFrmConsultaFrmPgto.FormaSelecionada.Id.ToString();
+                    formaPagamentoSelecionadaId = oFrmConsultaFrmPgto.FormaSelecionada.Id;
+                }
             }
         }
         private async void txtIdFormaPagamento_Leave(object sender, EventArgs e)

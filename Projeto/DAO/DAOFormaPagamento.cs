@@ -158,7 +158,7 @@ namespace Projeto.DAO
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Erro ao buscar descrição da forma de pagamento: " + ex.Message);
+                    throw new Exception("Erro ao buscar descrição da forma de pagamento: " + ex.Message);
                 }
             }
             return descricao;

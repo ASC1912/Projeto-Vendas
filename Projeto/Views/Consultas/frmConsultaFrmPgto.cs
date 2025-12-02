@@ -3,7 +3,7 @@ using Projeto.Models;
 using Projeto.Views;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks; 
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Projeto
@@ -49,13 +49,16 @@ namespace Projeto
                 listView1.Items.Clear();
                 List<FormaPagamento> formasPagamento = await controller.ListarFormaPagamento();
 
-                foreach (var forma in formasPagamento)
+                if (formasPagamento != null)
                 {
-                    ListViewItem item = new ListViewItem("");
-                    item.SubItems.Add(forma.Id.ToString());
-                    item.SubItems.Add(forma.Descricao);
-                    item.SubItems.Add(forma.Ativo ? "Ativo" : "Inativo");
-                    listView1.Items.Add(item);
+                    foreach (var forma in formasPagamento)
+                    {
+                        ListViewItem item = new ListViewItem("");
+                        item.SubItems.Add(forma.Id.ToString());
+                        item.SubItems.Add(forma.Descricao);
+                        item.SubItems.Add(forma.Ativo ? "Ativo" : "Inativo");
+                        listView1.Items.Add(item);
+                    }
                 }
             }
             catch (Exception ex)
@@ -105,34 +108,40 @@ namespace Projeto
 
         private async void btnIncluir_Click(object sender, EventArgs e)
         {
-            oFrmCadastroFrmPgto.modoEdicao = false;
-            oFrmCadastroFrmPgto.modoExclusao = false;
-            oFrmCadastroFrmPgto.LimparTxt();
-            oFrmCadastroFrmPgto.ShowDialog();
-            await CarregarFormasPagamento();
+            if (oFrmCadastroFrmPgto != null)
+            {
+                oFrmCadastroFrmPgto.modoEdicao = false;
+                oFrmCadastroFrmPgto.modoExclusao = false;
+                oFrmCadastroFrmPgto.LimparTxt();
+                oFrmCadastroFrmPgto.ShowDialog();
+                await CarregarFormasPagamento();
+            }
         }
 
         private async void btnEditar_Click(object sender, EventArgs e)
         {
             if (listView1.SelectedItems.Count > 0)
             {
-                var itemSelecionado = listView1.SelectedItems[0];
-                int id = int.Parse(itemSelecionado.SubItems[1].Text);
-                FormaPagamento forma = await controller.BuscarPorId(id);
+                if (oFrmCadastroFrmPgto != null)
+                {
+                    var itemSelecionado = listView1.SelectedItems[0];
+                    int id = int.Parse(itemSelecionado.SubItems[1].Text);
+                    FormaPagamento forma = await controller.BuscarPorId(id);
 
-                if (forma != null)
-                {
-                    oFrmCadastroFrmPgto.modoEdicao = true;
-                    oFrmCadastroFrmPgto.modoExclusao = false;
-                    oFrmCadastroFrmPgto.ConhecaObj(forma, controller);
-                    oFrmCadastroFrmPgto.LimparTxt();
-                    oFrmCadastroFrmPgto.CarregaTxt();
-                    oFrmCadastroFrmPgto.ShowDialog();
-                    await CarregarFormasPagamento();
-                }
-                else
-                {
-                    MessageBox.Show("Forma de pagamento não encontrada.");
+                    if (forma != null)
+                    {
+                        oFrmCadastroFrmPgto.modoEdicao = true;
+                        oFrmCadastroFrmPgto.modoExclusao = false;
+                        oFrmCadastroFrmPgto.ConhecaObj(forma, controller);
+                        oFrmCadastroFrmPgto.LimparTxt();
+                        oFrmCadastroFrmPgto.CarregaTxt();
+                        oFrmCadastroFrmPgto.ShowDialog();
+                        await CarregarFormasPagamento();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Forma de pagamento não encontrada.");
+                    }
                 }
             }
             else
@@ -145,27 +154,30 @@ namespace Projeto
         {
             if (listView1.SelectedItems.Count > 0)
             {
-                var itemSelecionado = listView1.SelectedItems[0];
-                int id = int.Parse(itemSelecionado.SubItems[1].Text);
-                FormaPagamento forma = await controller.BuscarPorId(id);
+                if (oFrmCadastroFrmPgto != null)
+                {
+                    var itemSelecionado = listView1.SelectedItems[0];
+                    int id = int.Parse(itemSelecionado.SubItems[1].Text);
+                    FormaPagamento forma = await controller.BuscarPorId(id);
 
-                if (forma != null)
-                {
-                    oFrmCadastroFrmPgto.modoExclusao = true;
-                    oFrmCadastroFrmPgto.modoEdicao = false;
-                    oFrmCadastroFrmPgto.ConhecaObj(forma, controller);
-                    oFrmCadastroFrmPgto.LimparTxt();
-                    oFrmCadastroFrmPgto.CarregaTxt();
-                    oFrmCadastroFrmPgto.BloquearTxt();
-                    oFrmCadastroFrmPgto.btnSalvar.Text = "Excluir";
-                    oFrmCadastroFrmPgto.ShowDialog();
-                    oFrmCadastroFrmPgto.btnSalvar.Text = "Salvar";
-                    oFrmCadastroFrmPgto.DesbloquearTxt();
-                    await CarregarFormasPagamento();
-                }
-                else
-                {
-                    MessageBox.Show("Forma de pagamento não encontrada.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    if (forma != null)
+                    {
+                        oFrmCadastroFrmPgto.modoExclusao = true;
+                        oFrmCadastroFrmPgto.modoEdicao = false;
+                        oFrmCadastroFrmPgto.ConhecaObj(forma, controller);
+                        oFrmCadastroFrmPgto.LimparTxt();
+                        oFrmCadastroFrmPgto.CarregaTxt();
+                        oFrmCadastroFrmPgto.BloquearTxt();
+                        oFrmCadastroFrmPgto.btnSalvar.Text = "Excluir";
+                        oFrmCadastroFrmPgto.ShowDialog();
+                        oFrmCadastroFrmPgto.btnSalvar.Text = "Salvar";
+                        oFrmCadastroFrmPgto.DesbloquearTxt();
+                        await CarregarFormasPagamento();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Forma de pagamento não encontrada.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
             else

@@ -8,7 +8,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Text;
-using System.Threading.Tasks; 
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Projeto
@@ -53,17 +53,20 @@ namespace Projeto
                 listView1.Items.Clear();
                 List<CondicaoPagamento> condicaoPagamento = await controller.ListarCondicaoPagamento();
 
-                foreach (var cond in condicaoPagamento)
+                if (condicaoPagamento != null)
                 {
-                    ListViewItem item = new ListViewItem("");
-                    item.SubItems.Add(cond.Id.ToString());
-                    item.SubItems.Add(cond.Descricao);
-                    item.SubItems.Add(cond.QtdParcelas.ToString());
-                    item.SubItems.Add(cond.Juros.ToString("0.00"));
-                    item.SubItems.Add(cond.Multa.ToString("0.00"));
-                    item.SubItems.Add(cond.Desconto.ToString("0.00"));
-                    item.SubItems.Add(cond.Ativo ? "Ativo" : "Inativo");
-                    listView1.Items.Add(item);
+                    foreach (var cond in condicaoPagamento)
+                    {
+                        ListViewItem item = new ListViewItem("");
+                        item.SubItems.Add(cond.Id.ToString());
+                        item.SubItems.Add(cond.Descricao);
+                        item.SubItems.Add(cond.QtdParcelas.ToString());
+                        item.SubItems.Add(cond.Juros.ToString("0.00"));
+                        item.SubItems.Add(cond.Multa.ToString("0.00"));
+                        item.SubItems.Add(cond.Desconto.ToString("0.00"));
+                        item.SubItems.Add(cond.Ativo ? "Ativo" : "Inativo");
+                        listView1.Items.Add(item);
+                    }
                 }
             }
             catch (Exception ex)
@@ -117,35 +120,41 @@ namespace Projeto
 
         private async void btnIncluir_Click(object sender, EventArgs e)
         {
-            oFrmCadastroCondPgto.modoEdicao = false;
-            oFrmCadastroCondPgto.modoExclusao = false;
-            oFrmCadastroCondPgto.LimparTxt();
-            oFrmCadastroCondPgto.ShowDialog();
-            await CarregarCondicoesPagamento();
+            if (oFrmCadastroCondPgto != null)
+            {
+                oFrmCadastroCondPgto.modoEdicao = false;
+                oFrmCadastroCondPgto.modoExclusao = false;
+                oFrmCadastroCondPgto.LimparTxt();
+                oFrmCadastroCondPgto.ShowDialog();
+                await CarregarCondicoesPagamento();
+            }
         }
 
         private async void btnEditar_Click(object sender, EventArgs e)
         {
             if (listView1.SelectedItems.Count > 0)
             {
-                var itemSelecionado = listView1.SelectedItems[0];
-                int id = int.Parse(itemSelecionado.SubItems[1].Text);
-
-                CondicaoPagamento condicao = await controller.BuscarPorId(id);
-
-                if (condicao != null)
+                if (oFrmCadastroCondPgto != null)
                 {
-                    oFrmCadastroCondPgto.modoEdicao = true;
-                    oFrmCadastroCondPgto.modoExclusao = false;
-                    oFrmCadastroCondPgto.ConhecaObj(condicao, controller);
-                    oFrmCadastroCondPgto.LimparTxt();
-                    oFrmCadastroCondPgto.CarregaTxt();
-                    oFrmCadastroCondPgto.ShowDialog();
-                    await CarregarCondicoesPagamento();
-                }
-                else
-                {
-                    MessageBox.Show("Condição de pagamento não encontrada.");
+                    var itemSelecionado = listView1.SelectedItems[0];
+                    int id = int.Parse(itemSelecionado.SubItems[1].Text);
+
+                    CondicaoPagamento condicao = await controller.BuscarPorId(id);
+
+                    if (condicao != null)
+                    {
+                        oFrmCadastroCondPgto.modoEdicao = true;
+                        oFrmCadastroCondPgto.modoExclusao = false;
+                        oFrmCadastroCondPgto.ConhecaObj(condicao, controller);
+                        oFrmCadastroCondPgto.LimparTxt();
+                        oFrmCadastroCondPgto.CarregaTxt();
+                        oFrmCadastroCondPgto.ShowDialog();
+                        await CarregarCondicoesPagamento();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Condição de pagamento não encontrada.");
+                    }
                 }
             }
             else
@@ -158,26 +167,29 @@ namespace Projeto
         {
             if (listView1.SelectedItems.Count > 0)
             {
-                var itemSelecionado = listView1.SelectedItems[0];
-                int id = int.Parse(itemSelecionado.SubItems[1].Text);
-
-                CondicaoPagamento condicao = await controller.BuscarPorId(id);
-
-                if (condicao != null)
+                if (oFrmCadastroCondPgto != null)
                 {
-                    oFrmCadastroCondPgto.modoExclusao = true;
-                    oFrmCadastroCondPgto.modoEdicao = false;
-                    oFrmCadastroCondPgto.ConhecaObj(condicao, controller);
-                    oFrmCadastroCondPgto.LimparTxt();
-                    oFrmCadastroCondPgto.CarregaTxt();
-                    oFrmCadastroCondPgto.BloquearTxt();
-                    oFrmCadastroCondPgto.ShowDialog();
-                    oFrmCadastroCondPgto.DesbloquearTxt();
-                    await CarregarCondicoesPagamento();
-                }
-                else
-                {
-                    MessageBox.Show("Condição de pagamento não encontrada.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    var itemSelecionado = listView1.SelectedItems[0];
+                    int id = int.Parse(itemSelecionado.SubItems[1].Text);
+
+                    CondicaoPagamento condicao = await controller.BuscarPorId(id);
+
+                    if (condicao != null)
+                    {
+                        oFrmCadastroCondPgto.modoExclusao = true;
+                        oFrmCadastroCondPgto.modoEdicao = false;
+                        oFrmCadastroCondPgto.ConhecaObj(condicao, controller);
+                        oFrmCadastroCondPgto.LimparTxt();
+                        oFrmCadastroCondPgto.CarregaTxt();
+                        oFrmCadastroCondPgto.BloquearTxt();
+                        oFrmCadastroCondPgto.ShowDialog();
+                        oFrmCadastroCondPgto.DesbloquearTxt();
+                        await CarregarCondicoesPagamento();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Condição de pagamento não encontrada.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
             else

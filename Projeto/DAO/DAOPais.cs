@@ -96,14 +96,14 @@ namespace Projeto.DAO
                         {
                             return new Pais
                             {
-                                Id = reader.GetInt32("Id"),
-                                NomePais = reader.GetString("Pais"),
-                                Sigla = reader.IsDBNull(reader.GetOrdinal("Sigla")) ? null : reader.GetString("Sigla"),
-                                DDI = reader.IsDBNull(reader.GetOrdinal("DDI")) ? null : reader.GetString("DDI"),
-                                Moeda = reader.IsDBNull(reader.GetOrdinal("Moeda")) ? null : reader.GetString("Moeda"),
-                                Ativo = reader.GetBoolean("Ativo"),
-                                DataCadastro = reader.IsDBNull(reader.GetOrdinal("DataCadastro")) ? (DateTime?)null : reader.GetDateTime("DataCadastro"),
-                                DataAlteracao = reader.IsDBNull(reader.GetOrdinal("DataAlteracao")) ? (DateTime?)null : reader.GetDateTime("DataAlteracao"),
+                                Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                                NomePais = reader.GetString(reader.GetOrdinal("Pais")),
+                                Sigla = reader.IsDBNull(reader.GetOrdinal("Sigla")) ? null : reader.GetString(reader.GetOrdinal("Sigla")),
+                                DDI = reader.IsDBNull(reader.GetOrdinal("DDI")) ? null : reader.GetString(reader.GetOrdinal("DDI")),
+                                Moeda = reader.IsDBNull(reader.GetOrdinal("Moeda")) ? null : reader.GetString(reader.GetOrdinal("Moeda")),
+                                Ativo = reader.GetBoolean(reader.GetOrdinal("Ativo")),
+                                DataCadastro = reader.IsDBNull(reader.GetOrdinal("DataCadastro")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("DataCadastro")),
+                                DataAlteracao = reader.IsDBNull(reader.GetOrdinal("DataAlteracao")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("DataAlteracao")),
                             };
                         }
                     }
@@ -129,14 +129,14 @@ namespace Projeto.DAO
                         {
                             lista.Add(new Pais
                             {
-                                Id = reader.GetInt32("Id"),
-                                NomePais = reader.GetString("Pais"),
-                                Sigla = reader.IsDBNull(reader.GetOrdinal("Sigla")) ? null : reader.GetString("Sigla"),
-                                DDI = reader.IsDBNull(reader.GetOrdinal("DDI")) ? null : reader.GetString("DDI"),
-                                Moeda = reader.IsDBNull(reader.GetOrdinal("Moeda")) ? null : reader.GetString("Moeda"),
-                                Ativo = reader.GetBoolean("Ativo"),
-                                DataCadastro = reader.IsDBNull(reader.GetOrdinal("DataCadastro")) ? (DateTime?)null : reader.GetDateTime("DataCadastro"),
-                                DataAlteracao = reader.IsDBNull(reader.GetOrdinal("DataAlteracao")) ? (DateTime?)null : reader.GetDateTime("DataAlteracao"),
+                                Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                                NomePais = reader.GetString(reader.GetOrdinal("Pais")),
+                                Sigla = reader.IsDBNull(reader.GetOrdinal("Sigla")) ? null : reader.GetString(reader.GetOrdinal("Sigla")),
+                                DDI = reader.IsDBNull(reader.GetOrdinal("DDI")) ? null : reader.GetString(reader.GetOrdinal("DDI")),
+                                Moeda = reader.IsDBNull(reader.GetOrdinal("Moeda")) ? null : reader.GetString(reader.GetOrdinal("Moeda")),
+                                Ativo = reader.GetBoolean(reader.GetOrdinal("Ativo")),
+                                DataCadastro = reader.IsDBNull(reader.GetOrdinal("DataCadastro")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("DataCadastro")),
+                                DataAlteracao = reader.IsDBNull(reader.GetOrdinal("DataAlteracao")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("DataAlteracao")),
                             });
                         }
                     }
