@@ -126,7 +126,7 @@ namespace Projeto.Views.Cadastros
 
                 dtpDataPagamento.MinDate = DateTimePicker.MinimumDateTime;
                 dtpDataPagamento.MaxDate = DateTimePicker.MaximumDateTime;
-                dtpDataPagamento.Value = DateTime.Now;
+                dtpDataPagamento.Value = DateTime.Today;   respeitar o MaxDate
 
                 txtJurosPorcentagem.Text = (aConta.Juros ?? 0).ToString("N2") + "%";
                 txtMultaPorcentagem.Text = (aConta.Multa ?? 0).ToString("N2") + "%";
