@@ -63,6 +63,10 @@
             this.btnDeletar.Text = "Cancelar";
             this.btnDeletar.Click += new System.EventHandler(this.btnDeletar_Click);
             // 
+            // btnPesquisar
+            // 
+            this.btnPesquisar.Click += new System.EventHandler(this.btnPesquisar_Click);
+            // 
             // btnEditar
             // 
             this.btnEditar.Text = "Visualizar";

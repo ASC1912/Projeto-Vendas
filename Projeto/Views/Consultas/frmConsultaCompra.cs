@@ -161,5 +161,44 @@ namespace Projeto.Views.Consultas
                 MessageBox.Show("Por favor, selecione uma compra para cancelar.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
+
+
+        private void btnPesquisar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string termo = txtPesquisar.Text; 
+                List<Compra> lista = controller.Pesquisar(termo);
+
+                listView1.Items.Clear();
+
+                foreach (var compra in lista)
+                {
+                    ListViewItem item = new ListViewItem(""); 
+
+                    item.SubItems.Add(compra.Modelo);
+                    item.SubItems.Add(compra.Serie);
+                    item.SubItems.Add(compra.NumeroNota.ToString());
+                    item.SubItems.Add(compra.FornecedorId.ToString());
+                    item.SubItems.Add(compra.NomeFornecedor);
+                    item.SubItems.Add(compra.DataEmissao?.ToString("dd/MM/yyyy"));
+                    item.SubItems.Add(compra.DataChegada?.ToString("dd/MM/yyyy"));
+                    item.SubItems.Add(compra.ValorTotal.ToString("C2"));
+                    item.SubItems.Add(compra.CondicaoPagamentoId.ToString());
+                    item.SubItems.Add(compra.NomeCondPgto);
+                    item.SubItems.Add(compra.Ativo ? "Ativo" : "Cancelado");
+
+                    item.Tag = compra; 
+
+                    listView1.Items.Add(item);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao pesquisar: " + ex.Message);
+            }
+        }
+
+
     }
 }

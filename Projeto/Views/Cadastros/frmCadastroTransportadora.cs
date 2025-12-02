@@ -206,6 +206,7 @@ namespace Projeto.Views.Cadastros
                 if (!Validador.ValidarNumerico(txtNumEnd, "O número do endereço deve ser numérico.")) return;
                 if (!Validador.CampoObrigatorio(txtBairro, "O Bairro é obrigatório.")) return;
                 if (!Validador.CampoObrigatorio(txtCEP, "O CEP é obrigatório.")) return;
+                if (!Validador.CampoObrigatorio(txtEmail, "O Email é obrigatório.")) return;
                 if (!Validador.CampoObrigatorio(txtTelefone, "O Telefone é obrigatório.")) return;
 
 

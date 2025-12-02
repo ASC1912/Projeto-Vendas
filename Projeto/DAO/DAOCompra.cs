@@ -463,5 +463,49 @@ namespace Projeto.DAO
                 NomeUnidadeMedida = reader.IsDBNull(reader.GetOrdinal("NomeUnidadeMedida")) ? "UN" : reader.GetString("NomeUnidadeMedida")
             };
         }
+
+        public List<Compra> Pesquisar(string busca)
+        {
+            List<Compra> lista = new List<Compra>();
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+
+                string query = @"
+                    SELECT 
+                        c.*,
+                        f.Fornecedor AS NomeFornecedor,
+                        cp.Descricao AS NomeCondPgto
+                    FROM Compras c
+                    LEFT JOIN Fornecedores f ON c.FornecedorId = f.Id
+                    LEFT JOIN CondicoesPagamento cp ON c.CondicaoPagamentoId = cp.Id
+                    WHERE 1=1";
+
+                if (!string.IsNullOrWhiteSpace(busca))
+                {
+                    query += " AND (f.Fornecedor LIKE @Busca OR c.NumeroNota LIKE @Busca)";
+                }
+
+                query += " ORDER BY c.DataEmissao DESC";
+
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    if (!string.IsNullOrWhiteSpace(busca))
+                    {
+                        cmd.Parameters.AddWithValue("@Busca", $"%{busca}%");
+                    }
+
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            lista.Add(MontarObjetoCompra(reader));
+                        }
+                    }
+                }
+            }
+            return lista;
+        }
+
     }
 }

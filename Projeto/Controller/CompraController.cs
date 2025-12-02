@@ -69,5 +69,17 @@ namespace Projeto.Controller
             }
         }
 
+        public List<Compra> Pesquisar(string busca)
+        {
+            try
+            {
+                return dao.Pesquisar(busca);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erro ao pesquisar compras: " + ex.Message);
+            }
+        }
+
     }
 }

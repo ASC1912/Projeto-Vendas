@@ -422,5 +422,53 @@ namespace Projeto.DAO
                 NomeUnidadeMedida = reader.IsDBNull(reader.GetOrdinal("NomeUnidadeMedida")) ? "UN" : reader.GetString("NomeUnidadeMedida")
             };
         }
+
+
+        public List<Venda> Pesquisar(string busca)
+        {
+            List<Venda> lista = new List<Venda>();
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+
+                string query = @"
+                    SELECT 
+                        v.*,
+                        c.Cliente AS NomeCliente,
+                        f.Funcionario AS NomeFuncionario,
+                        cp.Descricao AS NomeCondPgto
+                    FROM Vendas v
+                    LEFT JOIN Clientes c ON v.ClienteId = c.Id
+                    LEFT JOIN Funcionarios f ON v.FuncionarioId = f.Id
+                    LEFT JOIN CondicoesPagamento cp ON v.CondicaoPagamentoId = cp.Id
+                    WHERE 1=1";
+
+                if (!string.IsNullOrWhiteSpace(busca))
+                {
+                    query += " AND (c.Cliente LIKE @Busca OR v.NumeroNota LIKE @Busca)";
+                }
+
+                query += " ORDER BY v.DataEmissao DESC";
+
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    if (!string.IsNullOrWhiteSpace(busca))
+                    {
+                        cmd.Parameters.AddWithValue("@Busca", $"%{busca}%");
+                    }
+
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            lista.Add(MontarObjetoVenda(reader));
+                        }
+                    }
+                }
+            }
+            return lista;
+        }
+
+
     }
 }

@@ -61,5 +61,17 @@ namespace Projeto.Controller
         {
             return dao.VerificarVendaExistente(modelo, serie, numeroNota, idCliente);
         }
+
+        public List<Venda> Pesquisar(string busca)
+        {
+            try
+            {
+                return dao.Pesquisar(busca);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erro ao pesquisar vendas: " + ex.Message);
+            }
+        }
     }
 }

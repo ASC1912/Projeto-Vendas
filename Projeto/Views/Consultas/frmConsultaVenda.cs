@@ -160,5 +160,41 @@ namespace Projeto.Views.Consultas
                 MessageBox.Show("Por favor, selecione uma venda para cancelar.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning); 
             }
         }
+
+        private void btnPesquisar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string termo = txtPesquisar.Text; 
+                List<Venda> lista = controller.Pesquisar(termo);
+
+                listView1.Items.Clear();
+
+                foreach (var venda in lista)
+                {
+                    ListViewItem item = new ListViewItem("");
+                    item.SubItems.Add(venda.Modelo);
+                    item.SubItems.Add(venda.Serie);
+                    item.SubItems.Add(venda.NumeroNota.ToString());
+                    item.SubItems.Add(venda.ClienteId.ToString());
+                    item.SubItems.Add(venda.NomeCliente);
+                    item.SubItems.Add(venda.DataEmissao?.ToString("dd/MM/yyyy"));
+                    item.SubItems.Add(venda.DataSaida?.ToString("dd/MM/yyyy"));
+                    item.SubItems.Add(venda.ValorTotal.ToString("C2"));
+                    item.SubItems.Add(venda.CondicaoPagamentoId.HasValue ? venda.CondicaoPagamentoId.Value.ToString() : "0");
+                    item.SubItems.Add(venda.NomeCondPgto);
+                    item.SubItems.Add(venda.Ativo ? "Ativo" : "Cancelado");
+
+                    item.Tag = venda;
+                    listView1.Items.Add(item);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao pesquisar: " + ex.Message);
+            }
+        }
+
+
     }
 }
