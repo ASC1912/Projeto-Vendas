@@ -95,18 +95,15 @@ namespace Projeto.Views.Consultas
 
                 CheckBox chkAberta = this.Controls.Find("chkAberta", true).FirstOrDefault() as CheckBox;
                 CheckBox chkPaga = this.Controls.Find("chkPaga", true).FirstOrDefault() as CheckBox;
+                CheckBox chkCancelada = this.Controls.Find("chkCancelada", true).FirstOrDefault() as CheckBox;
 
                 if (chkAberta != null && chkAberta.Checked) statusFiltro.Add("Aberta");
                 if (chkPaga != null && chkPaga.Checked) statusFiltro.Add("Paga");
+                if (chkCancelada != null && chkCancelada.Checked) statusFiltro.Add("Cancelada");
 
-                if (statusFiltro.Count == 0 && chkAberta == null)
+                if (!statusFiltro.Any())
                 {
-                    statusFiltro.Add("Aberta");
-                    statusFiltro.Add("Paga");
-                }
-                else if (statusFiltro.Count == 0)
-                {
-                    return; 
+                    return;
                 }
 
                 listaOriginal = controller.Listar(statusFiltro, busca);
@@ -115,17 +112,17 @@ namespace Projeto.Views.Consultas
                 {
                     ListViewItem item = new ListViewItem("");
                     item.SubItems.Add(conta.VendaModelo);
-                    item.SubItems.Add(conta.VendaSerie);                                    
-                    item.SubItems.Add(conta.VendaNumeroNota.ToString());                    
-                    item.SubItems.Add(conta.NumeroParcela.ToString());                      
-                    item.SubItems.Add(conta.ClienteId.ToString());                          
-                    item.SubItems.Add(conta.NomeCliente);                                   
-                    item.SubItems.Add(conta.ValorVencimento.ToString("F2"));                
-                    item.SubItems.Add(conta.NomeFormaPagamento ?? "");                      
-                    item.SubItems.Add(conta.DataEmissao.ToString("dd/MM/yyyy"));            
-                    item.SubItems.Add(conta.DataVencimento.ToString("dd/MM/yyyy"));         
-                    item.SubItems.Add(conta.Ativo ? "Sim" : "Não");                         
-                    item.SubItems.Add(conta.Status);                                        
+                    item.SubItems.Add(conta.VendaSerie);
+                    item.SubItems.Add(conta.VendaNumeroNota.ToString());
+                    item.SubItems.Add(conta.NumeroParcela.ToString());
+                    item.SubItems.Add(conta.ClienteId.ToString());
+                    item.SubItems.Add(conta.NomeCliente);
+                    item.SubItems.Add(conta.ValorVencimento.ToString("F2"));
+                    item.SubItems.Add(conta.NomeFormaPagamento ?? "");
+                    item.SubItems.Add(conta.DataEmissao.ToString("dd/MM/yyyy"));
+                    item.SubItems.Add(conta.DataVencimento.ToString("dd/MM/yyyy"));
+                    item.SubItems.Add(conta.Ativo ? "Sim" : "Não");
+                    item.SubItems.Add(conta.Status);
 
                     item.SubItems.Add(conta.DataPagamento.HasValue ? conta.DataPagamento.Value.ToString("dd/MM/yyyy") : "");
 
@@ -158,7 +155,7 @@ namespace Projeto.Views.Consultas
                 return;
             }
 
-            if (!contaSelecionada.Ativo)
+            if (!contaSelecionada.Ativo || contaSelecionada.Status == "Cancelada")
             {
                 MessageBox.Show("Esta conta está cancelada e não pode ser baixada.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -191,7 +188,7 @@ namespace Projeto.Views.Consultas
 
                 if (frm.ShowDialog() == DialogResult.OK)
                 {
-                    Pesquisar(); 
+                    Pesquisar();
                 }
             }
         }

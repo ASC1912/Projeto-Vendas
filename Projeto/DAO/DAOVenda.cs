@@ -60,27 +60,6 @@ namespace Projeto.DAO
             {
                 conn.Open();
 
-                string checkPagamentosQuery = @"
-                    SELECT COUNT(*) FROM ContasAReceber 
-                    WHERE VendaModelo = @Modelo 
-                      AND VendaSerie = @Serie 
-                      AND VendaNumeroNota = @NumeroNota 
-                      AND ClienteId = @ClienteId 
-                      AND Status = 'Paga'";
-
-                using (MySqlCommand checkCmd = new MySqlCommand(checkPagamentosQuery, conn))
-                {
-                    checkCmd.Parameters.AddWithValue("@Modelo", venda.Modelo);
-                    checkCmd.Parameters.AddWithValue("@Serie", venda.Serie);
-                    checkCmd.Parameters.AddWithValue("@NumeroNota", venda.NumeroNota);
-                    checkCmd.Parameters.AddWithValue("@ClienteId", venda.ClienteId); 
-
-                    if (Convert.ToInt32(checkCmd.ExecuteScalar()) > 0)
-                    {
-                        throw new InvalidOperationException("Esta venda não pode ser cancelada, pois já possui uma ou mais parcelas pagas/recebidas.");
-                    }
-                }
-
                 MySqlTransaction tran = conn.BeginTransaction();
 
                 DAOContasAReceber daoContas = new DAOContasAReceber();
@@ -179,6 +158,28 @@ namespace Projeto.DAO
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
+
+                string checkPagamentosQuery = @"
+                    SELECT COUNT(*) FROM ContasAReceber 
+                    WHERE VendaModelo = @Modelo 
+                      AND VendaSerie = @Serie 
+                      AND VendaNumeroNota = @NumeroNota 
+                      AND ClienteId = @ClienteId 
+                      AND Status = 'Paga'";
+
+                using (MySqlCommand checkCmd = new MySqlCommand(checkPagamentosQuery, conn))
+                {
+                    checkCmd.Parameters.AddWithValue("@Modelo", venda.Modelo);
+                    checkCmd.Parameters.AddWithValue("@Serie", venda.Serie);
+                    checkCmd.Parameters.AddWithValue("@NumeroNota", venda.NumeroNota);
+                    checkCmd.Parameters.AddWithValue("@ClienteId", venda.ClienteId);
+
+                    if (Convert.ToInt32(checkCmd.ExecuteScalar()) > 0)
+                    {
+                        throw new InvalidOperationException("Esta venda não pode ser cancelada, pois já possui uma ou mais parcelas pagas/recebidas.");
+                    }
+                }
+
                 MySqlTransaction tran = conn.BeginTransaction();
 
                 DAOContasAReceber daoContas = new DAOContasAReceber();
@@ -258,7 +259,7 @@ namespace Projeto.DAO
                     LEFT JOIN Clientes c ON v.ClienteId = c.Id
                     LEFT JOIN Funcionarios f ON v.FuncionarioId = f.Id 
                     LEFT JOIN CondicoesPagamento cp ON v.CondicaoPagamentoId = cp.Id
-                    ORDER BY v.Modelo, CAST(v.Serie AS UNSIGNED), v.NumeroNota, v.ClienteId"; 
+                    ORDER BY v.Modelo, CAST(v.Serie AS UNSIGNED), v.NumeroNota, v.ClienteId";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {

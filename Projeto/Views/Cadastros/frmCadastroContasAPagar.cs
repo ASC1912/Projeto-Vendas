@@ -392,7 +392,7 @@ namespace Projeto.Views.Cadastros
                         dtpDataPagamento.Focus();
                         return;
                     }
-                    if (!Validador.CampoObrigatorio(txtIdFormaPgto, "Forma de Pagamento"))
+                    if (!Validador.CampoObrigatorio(txtIdFormaPgto, "Forma de Pagamento é obrigatório"))
                     {
                         return;
                     }
