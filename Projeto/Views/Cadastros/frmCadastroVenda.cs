@@ -55,6 +55,8 @@ namespace Projeto.Views.Cadastros
             dtpEmissao.MaxDate = dataAtual;
             dtpSaida.MinDate = dataAtual.Date;
 
+            dtpEmissao.Enabled = false; 
+
             AgruparControles();
             ConfigurarEstadoInicial();
 
@@ -105,7 +107,7 @@ namespace Projeto.Views.Cadastros
 
         private void AgruparControles()
         {
-            parte1Controles = new List<Control> { txtCodigo, txtSerie, txtNumero, txtIdCliente, txtCliente, btnPesquisarCliente, txtIdFuncionario, txtFuncionario, btnPesquisarFuncionario, dtpEmissao, dtpSaida };
+            parte1Controles = new List<Control> { txtCodigo, txtSerie, txtNumero, txtIdCliente, txtCliente, btnPesquisarCliente, txtIdFuncionario, txtFuncionario, btnPesquisarFuncionario, dtpSaida };
             parte2Controles = new List<Control> { txtIdProduto, txtProduto, btnPesquisarProduto, txtQuantidade, txtValorUnitario, txtTotal, btnAdicionarProduto, btnEditarProduto, btnRemoverProduto, btnLimparProduto, listViewProdutos };
             parte3Controles = new List<Control> { txtValorTotal, txtIdCondPgto, txtCondPgto, btnAdicionarCondPgto, btnLimparCondPgto, listViewCondPgto };
         }
