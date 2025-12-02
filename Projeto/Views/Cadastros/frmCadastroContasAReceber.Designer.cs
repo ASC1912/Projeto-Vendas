@@ -60,6 +60,12 @@
             this.txtIdFormaPgto = new System.Windows.Forms.TextBox();
             this.lblValorVencimento = new System.Windows.Forms.Label();
             this.txtValorVencimento = new System.Windows.Forms.TextBox();
+            this.lblDescontoPorcentagem = new System.Windows.Forms.Label();
+            this.txtDescontoPorcentagem = new System.Windows.Forms.TextBox();
+            this.lblMultaPorcentagem = new System.Windows.Forms.Label();
+            this.txtMultaPorcentagem = new System.Windows.Forms.TextBox();
+            this.lblJurosPorcentagem = new System.Windows.Forms.Label();
+            this.txtJurosPorcentagem = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // txtCodigo
@@ -201,7 +207,7 @@
             // lblDataPagamento
             // 
             this.lblDataPagamento.AutoSize = true;
-            this.lblDataPagamento.Location = new System.Drawing.Point(658, 165);
+            this.lblDataPagamento.Location = new System.Drawing.Point(658, 223);
             this.lblDataPagamento.Name = "lblDataPagamento";
             this.lblDataPagamento.Size = new System.Drawing.Size(128, 16);
             this.lblDataPagamento.TabIndex = 177;
@@ -210,7 +216,7 @@
             // dtpDataPagamento
             // 
             this.dtpDataPagamento.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpDataPagamento.Location = new System.Drawing.Point(661, 184);
+            this.dtpDataPagamento.Location = new System.Drawing.Point(661, 242);
             this.dtpDataPagamento.Name = "dtpDataPagamento";
             this.dtpDataPagamento.Size = new System.Drawing.Size(160, 22);
             this.dtpDataPagamento.TabIndex = 169;
@@ -219,7 +225,7 @@
             // lblValorPago
             // 
             this.lblValorPago.AutoSize = true;
-            this.lblValorPago.Location = new System.Drawing.Point(514, 165);
+            this.lblValorPago.Location = new System.Drawing.Point(514, 223);
             this.lblValorPago.Name = "lblValorPago";
             this.lblValorPago.Size = new System.Drawing.Size(103, 16);
             this.lblValorPago.TabIndex = 176;
@@ -227,7 +233,7 @@
             // 
             // txtValorPago
             // 
-            this.txtValorPago.Location = new System.Drawing.Point(514, 184);
+            this.txtValorPago.Location = new System.Drawing.Point(514, 242);
             this.txtValorPago.MaxLength = 15;
             this.txtValorPago.Name = "txtValorPago";
             this.txtValorPago.Size = new System.Drawing.Size(88, 22);
@@ -237,7 +243,7 @@
             // lblDesconto
             // 
             this.lblDesconto.AutoSize = true;
-            this.lblDesconto.Location = new System.Drawing.Point(283, 165);
+            this.lblDesconto.Location = new System.Drawing.Point(283, 223);
             this.lblDesconto.Name = "lblDesconto";
             this.lblDesconto.Size = new System.Drawing.Size(65, 16);
             this.lblDesconto.TabIndex = 175;
@@ -245,7 +251,7 @@
             // 
             // txtDesconto
             // 
-            this.txtDesconto.Location = new System.Drawing.Point(283, 184);
+            this.txtDesconto.Location = new System.Drawing.Point(283, 242);
             this.txtDesconto.MaxLength = 15;
             this.txtDesconto.Name = "txtDesconto";
             this.txtDesconto.Size = new System.Drawing.Size(65, 22);
@@ -255,7 +261,7 @@
             // lblMulta
             // 
             this.lblMulta.AutoSize = true;
-            this.lblMulta.Location = new System.Drawing.Point(149, 165);
+            this.lblMulta.Location = new System.Drawing.Point(149, 223);
             this.lblMulta.Name = "lblMulta";
             this.lblMulta.Size = new System.Drawing.Size(39, 16);
             this.lblMulta.TabIndex = 174;
@@ -263,7 +269,7 @@
             // 
             // txtMulta
             // 
-            this.txtMulta.Location = new System.Drawing.Point(149, 184);
+            this.txtMulta.Location = new System.Drawing.Point(149, 242);
             this.txtMulta.MaxLength = 15;
             this.txtMulta.Name = "txtMulta";
             this.txtMulta.Size = new System.Drawing.Size(62, 22);
@@ -273,7 +279,7 @@
             // lblJuros
             // 
             this.lblJuros.AutoSize = true;
-            this.lblJuros.Location = new System.Drawing.Point(15, 165);
+            this.lblJuros.Location = new System.Drawing.Point(15, 223);
             this.lblJuros.Name = "lblJuros";
             this.lblJuros.Size = new System.Drawing.Size(40, 16);
             this.lblJuros.TabIndex = 173;
@@ -281,7 +287,7 @@
             // 
             // txtJuros
             // 
-            this.txtJuros.Location = new System.Drawing.Point(15, 184);
+            this.txtJuros.Location = new System.Drawing.Point(15, 242);
             this.txtJuros.MaxLength = 15;
             this.txtJuros.Name = "txtJuros";
             this.txtJuros.Size = new System.Drawing.Size(69, 22);
@@ -335,7 +341,7 @@
             // lblValorVencimento
             // 
             this.lblValorVencimento.AutoSize = true;
-            this.lblValorVencimento.Location = new System.Drawing.Point(517, 79);
+            this.lblValorVencimento.Location = new System.Drawing.Point(514, 147);
             this.lblValorVencimento.Name = "lblValorVencimento";
             this.lblValorVencimento.Size = new System.Drawing.Size(118, 16);
             this.lblValorVencimento.TabIndex = 170;
@@ -343,17 +349,80 @@
             // 
             // txtValorVencimento
             // 
-            this.txtValorVencimento.Location = new System.Drawing.Point(517, 98);
+            this.txtValorVencimento.Location = new System.Drawing.Point(514, 166);
             this.txtValorVencimento.MaxLength = 15;
             this.txtValorVencimento.Name = "txtValorVencimento";
             this.txtValorVencimento.Size = new System.Drawing.Size(88, 22);
             this.txtValorVencimento.TabIndex = 161;
             this.txtValorVencimento.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
+            // lblDescontoPorcentagem
+            // 
+            this.lblDescontoPorcentagem.AutoSize = true;
+            this.lblDescontoPorcentagem.Location = new System.Drawing.Point(283, 147);
+            this.lblDescontoPorcentagem.Name = "lblDescontoPorcentagem";
+            this.lblDescontoPorcentagem.Size = new System.Drawing.Size(85, 16);
+            this.lblDescontoPorcentagem.TabIndex = 184;
+            this.lblDescontoPorcentagem.Text = "Desconto(%)";
+            // 
+            // txtDescontoPorcentagem
+            // 
+            this.txtDescontoPorcentagem.Location = new System.Drawing.Point(283, 166);
+            this.txtDescontoPorcentagem.MaxLength = 15;
+            this.txtDescontoPorcentagem.Name = "txtDescontoPorcentagem";
+            this.txtDescontoPorcentagem.ReadOnly = true;
+            this.txtDescontoPorcentagem.Size = new System.Drawing.Size(65, 22);
+            this.txtDescontoPorcentagem.TabIndex = 181;
+            this.txtDescontoPorcentagem.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // lblMultaPorcentagem
+            // 
+            this.lblMultaPorcentagem.AutoSize = true;
+            this.lblMultaPorcentagem.Location = new System.Drawing.Point(149, 147);
+            this.lblMultaPorcentagem.Name = "lblMultaPorcentagem";
+            this.lblMultaPorcentagem.Size = new System.Drawing.Size(59, 16);
+            this.lblMultaPorcentagem.TabIndex = 183;
+            this.lblMultaPorcentagem.Text = "Multa(%)";
+            // 
+            // txtMultaPorcentagem
+            // 
+            this.txtMultaPorcentagem.Location = new System.Drawing.Point(149, 166);
+            this.txtMultaPorcentagem.MaxLength = 15;
+            this.txtMultaPorcentagem.Name = "txtMultaPorcentagem";
+            this.txtMultaPorcentagem.ReadOnly = true;
+            this.txtMultaPorcentagem.Size = new System.Drawing.Size(62, 22);
+            this.txtMultaPorcentagem.TabIndex = 180;
+            this.txtMultaPorcentagem.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // lblJurosPorcentagem
+            // 
+            this.lblJurosPorcentagem.AutoSize = true;
+            this.lblJurosPorcentagem.Location = new System.Drawing.Point(15, 147);
+            this.lblJurosPorcentagem.Name = "lblJurosPorcentagem";
+            this.lblJurosPorcentagem.Size = new System.Drawing.Size(60, 16);
+            this.lblJurosPorcentagem.TabIndex = 182;
+            this.lblJurosPorcentagem.Text = "Juros(%)";
+            // 
+            // txtJurosPorcentagem
+            // 
+            this.txtJurosPorcentagem.Location = new System.Drawing.Point(15, 166);
+            this.txtJurosPorcentagem.MaxLength = 15;
+            this.txtJurosPorcentagem.Name = "txtJurosPorcentagem";
+            this.txtJurosPorcentagem.ReadOnly = true;
+            this.txtJurosPorcentagem.Size = new System.Drawing.Size(69, 22);
+            this.txtJurosPorcentagem.TabIndex = 179;
+            this.txtJurosPorcentagem.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
             // frmCadastroContasAReceber
             // 
             //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             //this.ClientSize = new System.Drawing.Size(1342, 681);
+            this.Controls.Add(this.lblDescontoPorcentagem);
+            this.Controls.Add(this.txtDescontoPorcentagem);
+            this.Controls.Add(this.lblMultaPorcentagem);
+            this.Controls.Add(this.txtMultaPorcentagem);
+            this.Controls.Add(this.lblJurosPorcentagem);
+            this.Controls.Add(this.txtJurosPorcentagem);
             this.Controls.Add(this.lblMotivoCancelamento);
             this.Controls.Add(this.lblDataPagamento);
             this.Controls.Add(this.dtpDataPagamento);
@@ -425,6 +494,12 @@
             this.Controls.SetChildIndex(this.dtpDataPagamento, 0);
             this.Controls.SetChildIndex(this.lblDataPagamento, 0);
             this.Controls.SetChildIndex(this.lblMotivoCancelamento, 0);
+            this.Controls.SetChildIndex(this.txtJurosPorcentagem, 0);
+            this.Controls.SetChildIndex(this.lblJurosPorcentagem, 0);
+            this.Controls.SetChildIndex(this.txtMultaPorcentagem, 0);
+            this.Controls.SetChildIndex(this.lblMultaPorcentagem, 0);
+            this.Controls.SetChildIndex(this.txtDescontoPorcentagem, 0);
+            this.Controls.SetChildIndex(this.lblDescontoPorcentagem, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -464,5 +539,11 @@
         private System.Windows.Forms.TextBox txtIdFormaPgto;
         private System.Windows.Forms.Label lblValorVencimento;
         private System.Windows.Forms.TextBox txtValorVencimento;
+        private System.Windows.Forms.Label lblDescontoPorcentagem;
+        private System.Windows.Forms.TextBox txtDescontoPorcentagem;
+        private System.Windows.Forms.Label lblMultaPorcentagem;
+        private System.Windows.Forms.TextBox txtMultaPorcentagem;
+        private System.Windows.Forms.Label lblJurosPorcentagem;
+        private System.Windows.Forms.TextBox txtJurosPorcentagem;
     }
 }

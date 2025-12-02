@@ -186,6 +186,10 @@ namespace Projeto.Views.Cadastros
             txtMulta.Text = aConta.Multa?.ToString("F2") ?? "0,00";
             txtDesconto.Text = aConta.Desconto?.ToString("F2") ?? "0,00";
 
+            txtJurosPorcentagem.Text = (aConta.Juros ?? 0).ToString("N2") + "%";
+            txtMultaPorcentagem.Text = (aConta.Multa ?? 0).ToString("N2") + "%";
+            txtDescontoPorcentagem.Text = (aConta.Desconto ?? 0).ToString("N2") + "%";
+
             if (!formaPgtoPreenchida)
             {
                 txtIdFormaPgto.Text = aConta.IdFormaPagamento?.ToString() ?? "";
@@ -212,9 +216,12 @@ namespace Projeto.Views.Cadastros
             bool isPagamento = (modo == "Pagamento");
             bool isLancamento = (modo == "Lancamento");
             bool isCancelamento = (modo == "Cancelamento");
+            bool isVisualizacao = (modo == "Visualizacao");
+
 
             this.Text = "Conta a Pagar";
             btnSalvar.Text = "Salvar";
+            btnSalvar.Visible = true;
             btnSalvar.Enabled = true;
 
             txtIDFornecedor.Enabled = false;
@@ -295,6 +302,25 @@ namespace Projeto.Views.Cadastros
                     Controls["lblMotivoCancelamento"].Text = "Motivo do Cancelamento:";
                     Controls["lblMotivoCancelamento"].Visible = true;
                 }
+            }
+            else if (isVisualizacao)
+            {
+                this.Text = "Detalhes da Conta";
+
+                btnSalvar.Visible = false;
+
+
+                dtpDataPagamento.Enabled = false;
+                txtValorPago.ReadOnly = true;
+                txtJuros.ReadOnly = true;
+                txtMulta.ReadOnly = true;
+                txtDesconto.ReadOnly = true;
+                txtIdFormaPgto.ReadOnly = true;
+
+                btnPesquisarFormaPgto.Enabled = false;
+                btnPesquisarFornecedor.Enabled = false;
+
+                dtpDataPagamento.Checked = (aConta.Status == "Paga");
             }
 
             if (aConta != null && aConta.Status == "Cancelada")
@@ -379,9 +405,9 @@ namespace Projeto.Views.Cadastros
                     if (!Validador.CampoObrigatorio(txtValorAPagar, "Valor da Conta") || Convert.ToDecimal(txtValorAPagar.Text) <= 0) return;
 
                     TextBox txtCodigo = this.Controls.ContainsKey("txtCodigo") ? this.Controls["txtCodigo"] as TextBox : null;
-                    if (!Validador.CampoObrigatorio(txtCodigo, "Modelo") ||
-                        !Validador.CampoObrigatorio(txtSerie, "Série") ||
-                        !Validador.CampoObrigatorio(txtNumero, "Número Documento/Nota"))
+                    if (!Validador.CampoObrigatorio(txtCodigo, "Modelo é obrigatório") ||
+                        !Validador.CampoObrigatorio(txtSerie, "Série é obrigatório") ||
+                        !Validador.CampoObrigatorio(txtNumero, "Número Documento/Nota é obrigatório"))
                     {
                         return;
                     }
@@ -702,9 +728,13 @@ namespace Projeto.Views.Cadastros
 
                         if (condicaoDoFornecedor != null)
                         {
-                            txtJuros.Text = condicaoDoFornecedor.Juros.ToString("F2");
-                            txtMulta.Text = condicaoDoFornecedor.Multa.ToString("F2");
-                            txtDesconto.Text = condicaoDoFornecedor.Desconto.ToString("F2");
+                            txtJurosPorcentagem.Text = condicaoDoFornecedor.Juros.ToString("F2") + "%";
+                            txtMultaPorcentagem.Text = condicaoDoFornecedor.Multa.ToString("F2") + "%";
+                            txtDescontoPorcentagem.Text = condicaoDoFornecedor.Desconto.ToString("F2") + "%";
+
+                            txtJuros.Text = "0,00";
+                            txtMulta.Text = "0,00";
+                            txtDesconto.Text = "0,00";
 
                             var primeiraParcela = condicaoDoFornecedor.Parcelas?
                                 .OrderBy(p => p.NumParcela)

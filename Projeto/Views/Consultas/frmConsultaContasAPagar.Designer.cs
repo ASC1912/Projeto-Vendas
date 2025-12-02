@@ -46,6 +46,7 @@
             this.chkCancelada = new System.Windows.Forms.CheckBox();
             this.IdFornecedor = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.btnVisualizar = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // listView1
@@ -205,10 +206,21 @@
             this.columnHeader1.Text = "";
             this.columnHeader1.Width = 0;
             // 
+            // btnVisualizar
+            // 
+            this.btnVisualizar.Location = new System.Drawing.Point(844, 644);
+            this.btnVisualizar.Name = "btnVisualizar";
+            this.btnVisualizar.Size = new System.Drawing.Size(92, 23);
+            this.btnVisualizar.TabIndex = 54;
+            this.btnVisualizar.Text = "Visualizar";
+            this.btnVisualizar.UseVisualStyleBackColor = true;
+            this.btnVisualizar.Click += new System.EventHandler(this.btnVisualizar_Click);
+            // 
             // frmConsultaContasAPagar
             // 
             //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             //this.ClientSize = new System.Drawing.Size(1342, 681);
+            this.Controls.Add(this.btnVisualizar);
             this.Controls.Add(this.chkCancelada);
             this.Controls.Add(this.chkAberta);
             this.Controls.Add(this.chkPaga);
@@ -225,6 +237,7 @@
             this.Controls.SetChildIndex(this.chkPaga, 0);
             this.Controls.SetChildIndex(this.chkAberta, 0);
             this.Controls.SetChildIndex(this.chkCancelada, 0);
+            this.Controls.SetChildIndex(this.btnVisualizar, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -250,5 +263,6 @@
         private System.Windows.Forms.CheckBox chkCancelada;
         private System.Windows.Forms.ColumnHeader IdFornecedor;
         private System.Windows.Forms.ColumnHeader columnHeader1;
+        protected System.Windows.Forms.Button btnVisualizar;
     }
 }

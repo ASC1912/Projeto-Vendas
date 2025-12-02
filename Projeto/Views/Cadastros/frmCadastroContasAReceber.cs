@@ -106,6 +106,10 @@ namespace Projeto.Views.Cadastros
                 txtMulta.Text = (aConta.Multa ?? 0).ToString("F2");
                 txtDesconto.Text = (aConta.Desconto ?? 0).ToString("F2");
             }
+
+            txtJurosPorcentagem.Text = (aConta.Juros ?? 0).ToString("N2") + "%";
+            txtMultaPorcentagem.Text = (aConta.Multa ?? 0).ToString("N2") + "%";
+            txtDescontoPorcentagem.Text = (aConta.Desconto ?? 0).ToString("N2") + "%";
         }
 
         private void RecalcularValorPago()

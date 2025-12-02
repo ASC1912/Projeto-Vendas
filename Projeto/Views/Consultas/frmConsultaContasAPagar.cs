@@ -250,6 +250,30 @@ namespace Projeto.Views.Consultas
             }
         }
 
+        private async void btnVisualizar_Click(object sender, EventArgs e)
+        {
+            if (listView1.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Selecione uma conta para visualizar.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            ContasAPagar contaSelecionada = (ContasAPagar)listView1.SelectedItems[0].Tag;
+
+            if (oFrmCadastroContasAPagar == null || oFrmCadastroContasAPagar.IsDisposed)
+            {
+                oFrmCadastroContasAPagar = new frmCadastroContasAPagar();
+            }
+
+            oFrmCadastroContasAPagar.ConhecaObj(contaSelecionada, controller);
+            oFrmCadastroContasAPagar.CarregaTxt();
+
+           
+            oFrmCadastroContasAPagar.DefinirModo("Visualizacao");
+
+            oFrmCadastroContasAPagar.ShowDialog();
+        }
+
         private void listView1_DoubleClick(object sender, EventArgs e)
         {
             if (listView1.SelectedItems.Count > 0)
@@ -278,5 +302,6 @@ namespace Projeto.Views.Consultas
             await CarregarContas();
         }
 
+        
     }
 }
