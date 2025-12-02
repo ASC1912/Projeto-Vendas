@@ -1,0 +1,38 @@
+USE sistema;
+
+INSERT INTO Paises (Pais, Sigla, DDI, Moeda) VALUES ('Brasil', 'BRA', '+55', 'BRL');
+INSERT INTO Estados (Estado, UF, PaisId) VALUES ('Paraná', 'PR', 1);
+INSERT INTO Cidades (Cidade, EstadoId, DDD) VALUES ('Foz do Iguaçu', 1, '045');
+
+INSERT INTO FormasPagamento (Descricao) VALUES ('Dinheiro'), ('Pix'), ('Cartão Crédito');
+INSERT INTO CondicoesPagamento (Descricao, QtdParcelas) VALUES ('A Vista', 1), ('30/60 Dias', 2);
+INSERT INTO Parcelamentos (NumeroParcela, CondicaoPagamentoId, FormaPagamentoId, PrazoDias, PorcentagemValor) VALUES (1, 2, 3, 30, 50.00), (2, 2, 3, 60, 50.00);
+
+INSERT INTO Marcas (Marca) VALUES ('Coca-Cola'), ('Samsung');
+INSERT INTO Grupos (Grupo, Descricao) VALUES ('Bebidas', 'Refrigerantes e Sucos');
+INSERT INTO UnidadesMedida (Nome, Sigla) VALUES ('Lata', 'UN');
+
+INSERT INTO Mesas (NumeroMesa, QuantidadeCadeiras, Localizacao, StatusMesa) VALUES (10, 4, 'Salão Principal', 'L');
+
+INSERT INTO Clientes (Cliente, CpfCnpj, Tipo, CidadeId, IdCondicaoPagamento, Endereco, NumeroEndereco, Bairro) VALUES ('João Consumidor', '111.222.333-44', 'Fisica', 1, 1, 'Rua das Flores', 100, 'Centro');
+INSERT INTO Funcionarios (Funcionario, CpfCnpj, Tipo, Cargo, Salario, CidadeId, DataAdmissao) VALUES ('Maria Atendente', '222.333.444-55', 'Fisica', 'Garçonete', 1800.00, 1, CURRENT_DATE);
+INSERT INTO Fornecedores (Fornecedor, CpfCnpj, Tipo, CidadeId, IdCondicaoPagamento) VALUES ('Atacadão de Bebidas', '33.444.555/0001-66', 'Juridica', 1, 2);
+INSERT INTO Transportadoras (Transportadora, CpfCnpj, Tipo, CidadeId, IdCondicaoPagamento) VALUES ('TransRápido', '44.555.666/0001-77', 'Juridica', 1, 1);
+
+INSERT INTO Usuarios (FuncionarioId, Usuario, Senha) VALUES (1, 'maria', '123456');
+
+INSERT INTO Veiculos (TransportadoraId, IdMarca, Placa, Modelo, AnoFabricacao, CapacidadeCargaKg) VALUES (1, 2, 'ABC-1234', 'Caminhão VUC', 2022, 3000.00);
+
+INSERT INTO Produtos (Produto, Descricao, PrecoCusto, PrecoVenda, GrupoId, IdMarca, UnidadeMedidaId, Estoque) VALUES ('Coca-Cola 350ml', 'Refrigerante lata', 2.50, 6.00, 1, 1, 1, 100);
+INSERT INTO ProdutoFornecedores (ProdutoId, FornecedorId) VALUES (1, 1);
+
+INSERT INTO Compras (Modelo, Serie, NumeroNota, FornecedorId, CondicaoPagamentoId, DataEmissao, DataChegada, ValorTotal) VALUES ('55', '1', 500, 1, 2, CURRENT_DATE, CURRENT_DATE, 500.00);
+INSERT INTO ItensCompra (CompraModelo, CompraSerie, CompraNumeroNota, CompraFornecedorId, ProdutoId, Quantidade, ValorUnitario, ValorTotalItem) VALUES ('55', '1', 500, 1, 1, 200, 2.50, 500.00);
+INSERT INTO ContasAPagar (CompraModelo, CompraSerie, CompraNumeroNota, CompraFornecedorId, NumeroParcela, FornecedorId, DataEmissao, DataVencimento, ValorVencimento, Status) VALUES ('55', '1', 500, 1, 1, 1, CURRENT_DATE, ADDDATE(CURRENT_DATE, INTERVAL 30 DAY), 250.00, 'Aberta'), ('55', '1', 500, 1, 2, 1, CURRENT_DATE, ADDDATE(CURRENT_DATE, INTERVAL 60 DAY), 250.00, 'Aberta');
+
+INSERT INTO Vendas (Modelo, Serie, NumeroNota, ClienteId, FuncionarioId, CondicaoPagamentoId, DataEmissao, ValorTotal) VALUES ('65', '1', 1000, 1, 1, 1, NOW(), 12.00);
+INSERT INTO ItensVenda (VendaModelo, VendaSerie, VendaNumeroNota, VendaClienteId, ProdutoId, Quantidade, ValorUnitario, ValorTotalItem) VALUES ('65', '1', 1000, 1, 1, 2, 6.00, 12.00);
+INSERT INTO ContasAReceber (VendaModelo, VendaSerie, VendaNumeroNota, NumeroParcela, ClienteId, Descricao, DataEmissao, DataVencimento, ValorVencimento, Status) VALUES ('65', '1', 1000, 1, 1, 'Venda Balcão', NOW(), NOW(), 12.00, 'Aberta');
+
+INSERT INTO Pedidos (MesaNumero, FuncionarioId, Status, DataPedido) VALUES (10, 1, 'Aberto', NOW());
+INSERT INTO ItensPedidos (pedidos_id, produto_id, numero_mesa, quantidade, precoUnitario, Status) VALUES (1, 1, 10, 2, 6.00, 'Pendente');
