@@ -107,6 +107,11 @@ namespace Projeto.Views.Cadastros
             txtJuros.Text = "0,00";
             txtMulta.Text = "0,00";
             txtDesconto.Text = "0,00";
+
+            if (this.Controls.ContainsKey("txtJurosPorcentagem")) txtJurosPorcentagem.Text = "0,00%";
+            if (this.Controls.ContainsKey("txtMultaPorcentagem")) txtMultaPorcentagem.Text = "0,00%";
+            if (this.Controls.ContainsKey("txtDescontoPorcentagem")) txtDescontoPorcentagem.Text = "0,00%";
+
             txtIdFormaPgto.Clear();
             txtFormaPgto.Clear();
 
@@ -182,13 +187,26 @@ namespace Projeto.Views.Cadastros
             dtpDataPagamento.Checked = aConta.DataPagamento.HasValue;
             dtpDataPagamento.Value = aConta.DataPagamento ?? DateTime.Now;
 
-            txtJuros.Text = aConta.Juros?.ToString("F2") ?? "0,00";
-            txtMulta.Text = aConta.Multa?.ToString("F2") ?? "0,00";
-            txtDesconto.Text = aConta.Desconto?.ToString("F2") ?? "0,00";
+            if (aConta.Status == "Paga")
+            {
+                txtJuros.Text = (aConta.Juros ?? 0).ToString("F2");
+                txtMulta.Text = (aConta.Multa ?? 0).ToString("F2");
+                txtDesconto.Text = (aConta.Desconto ?? 0).ToString("F2");
 
-            txtJurosPorcentagem.Text = (aConta.Juros ?? 0).ToString("N2") + "%";
-            txtMultaPorcentagem.Text = (aConta.Multa ?? 0).ToString("N2") + "%";
-            txtDescontoPorcentagem.Text = (aConta.Desconto ?? 0).ToString("N2") + "%";
+                txtJurosPorcentagem.Text = "0,00%";
+                txtMultaPorcentagem.Text = "0,00%";
+                txtDescontoPorcentagem.Text = "0,00%";
+            }
+            else
+            {
+                txtJurosPorcentagem.Text = (aConta.Juros ?? 0).ToString("N2") + "%";
+                txtMultaPorcentagem.Text = (aConta.Multa ?? 0).ToString("N2") + "%";
+                txtDescontoPorcentagem.Text = (aConta.Desconto ?? 0).ToString("N2") + "%";
+
+                txtJuros.Text = "0,00";
+                txtMulta.Text = "0,00";
+                txtDesconto.Text = "0,00";
+            }
 
             if (!formaPgtoPreenchida)
             {
@@ -259,6 +277,10 @@ namespace Projeto.Views.Cadastros
                 txtNumero.ReadOnly = false;
                 chkInativo.Enabled = true;
 
+                txtJuros.ReadOnly = false;
+                txtMulta.ReadOnly = false;
+                txtDesconto.ReadOnly = false;
+
                 this.Text = "Lançamento Manual de Conta a Pagar";
                 btnSalvar.Text = "Salvar";
 
@@ -275,6 +297,12 @@ namespace Projeto.Views.Cadastros
                 txtDesconto.Enabled = true;
                 txtIdFormaPgto.Enabled = true;
                 btnPesquisarFormaPgto.Enabled = true;
+
+                txtJuros.ReadOnly = false;
+                txtMulta.ReadOnly = false;
+                txtDesconto.ReadOnly = false;
+                txtIdFormaPgto.ReadOnly = false;
+                txtValorPago.ReadOnly = false;
 
                 this.Text = "Pagamento de Conta a Pagar";
                 btnSalvar.Text = "Pagar";
@@ -561,6 +589,11 @@ namespace Projeto.Views.Cadastros
                     txtJuros.Text = "0,00";
                     txtMulta.Text = "0,00";
                     txtDesconto.Text = "0,00";
+
+                    txtJurosPorcentagem.Text = "0,00%";
+                    txtMultaPorcentagem.Text = "0,00%";
+                    txtDescontoPorcentagem.Text = "0,00%";
+
                     txtIdFormaPgto.Clear();
                     txtFormaPgto.Clear();
                 }
@@ -645,11 +678,20 @@ namespace Projeto.Views.Cadastros
             {
                 txtValorPago.Text = "0,00";
 
-                if (aConta != null) 
+                if (aConta != null)
                 {
-                    txtJuros.Text = aConta.Juros?.ToString("F2") ?? "0,00";
-                    txtMulta.Text = aConta.Multa?.ToString("F2") ?? "0,00";
-                    txtDesconto.Text = aConta.Desconto?.ToString("F2") ?? "0,00";
+                    if (aConta.Status == "Paga")
+                    {
+                        txtJuros.Text = (aConta.Juros ?? 0).ToString("F2");
+                        txtMulta.Text = (aConta.Multa ?? 0).ToString("F2");
+                        txtDesconto.Text = (aConta.Desconto ?? 0).ToString("F2");
+                    }
+                    else
+                    {
+                        txtJuros.Text = "0,00";
+                        txtMulta.Text = "0,00";
+                        txtDesconto.Text = "0,00";
+                    }
                 }
                 return;
             }

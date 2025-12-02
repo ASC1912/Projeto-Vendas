@@ -57,6 +57,29 @@ namespace Projeto.Views.Cadastros
             CarregaTxt();
         }
 
+        public override void LimparTxt()
+        {
+            base.LimparTxt();
+
+            txtValorVencimento.Text = "0,00";
+            txtValorPago.Text = "0,00";
+            txtJuros.Text = "0,00";
+            txtMulta.Text = "0,00";
+            txtDesconto.Text = "0,00";
+
+            if (this.Controls.ContainsKey("txtJurosPorcentagem")) txtJurosPorcentagem.Text = "0,00%";
+            if (this.Controls.ContainsKey("txtMultaPorcentagem")) txtMultaPorcentagem.Text = "0,00%";
+            if (this.Controls.ContainsKey("txtDescontoPorcentagem")) txtDescontoPorcentagem.Text = "0,00%";
+
+            dtpEmissao.Value = DateTime.Now;
+            dtpVencimento.Value = DateTime.Now;
+            dtpDataPagamento.Value = DateTime.Now;
+
+            aConta = new ContasAReceber();
+
+            if (lblMotivoCancelamento != null) lblMotivoCancelamento.Visible = false;
+        }
+
         public override void CarregaTxt()
         {
             if (aConta == null) return;
@@ -66,8 +89,15 @@ namespace Projeto.Views.Cadastros
             txtNumero.Text = aConta.VendaNumeroNota.ToString();
             txtIdCliente.Text = aConta.ClienteId.ToString();
             txtCliente.Text = aConta.NomeCliente;
+
+            dtpEmissao.MinDate = DateTimePicker.MinimumDateTime;
+            dtpEmissao.MaxDate = DateTimePicker.MaximumDateTime;
             dtpEmissao.Value = aConta.DataEmissao;
+
+            dtpVencimento.MinDate = DateTimePicker.MinimumDateTime;
+            dtpVencimento.MaxDate = DateTimePicker.MaximumDateTime;
             dtpVencimento.Value = aConta.DataVencimento;
+
             txtValorVencimento.Text = aConta.ValorVencimento.ToString("F2");
             txtIdFormaPgto.Text = aConta.IdFormaPagamento?.ToString() ?? "";
             txtFormaPgto.Text = aConta.NomeFormaPagamento ?? "";
@@ -85,12 +115,22 @@ namespace Projeto.Views.Cadastros
             if (ModoBaixa)
             {
                 this.Text = "Baixa de Conta a Receber";
-                if (btnSalvar != null) btnSalvar.Text = "Confirmar Baixa";
+                if (btnSalvar != null)
+                {
+                    btnSalvar.Text = "Confirmar Baixa";
+                    btnSalvar.Visible = true;
+                }
 
                 BloquearTxt();
                 DesbloquearCamposDePagamento();
 
+                dtpDataPagamento.MinDate = DateTimePicker.MinimumDateTime;
+                dtpDataPagamento.MaxDate = DateTimePicker.MaximumDateTime;
                 dtpDataPagamento.Value = DateTime.Now;
+
+                txtJurosPorcentagem.Text = (aConta.Juros ?? 0).ToString("N2") + "%";
+                txtMultaPorcentagem.Text = (aConta.Multa ?? 0).ToString("N2") + "%";
+                txtDescontoPorcentagem.Text = (aConta.Desconto ?? 0).ToString("N2") + "%";
 
                 RecalcularValorPago();
             }
@@ -100,21 +140,44 @@ namespace Projeto.Views.Cadastros
                 if (btnSalvar != null) btnSalvar.Visible = false;
                 BloquearTxt();
 
+                dtpDataPagamento.MinDate = DateTimePicker.MinimumDateTime;
+                dtpDataPagamento.MaxDate = DateTimePicker.MaximumDateTime;
                 dtpDataPagamento.Value = aConta.DataPagamento ?? DateTime.Now;
-                txtValorPago.Text = (aConta.ValorPago ?? 0).ToString("F2");
-                txtJuros.Text = (aConta.Juros ?? 0).ToString("F2");
-                txtMulta.Text = (aConta.Multa ?? 0).ToString("F2");
-                txtDesconto.Text = (aConta.Desconto ?? 0).ToString("F2");
-            }
 
-            txtJurosPorcentagem.Text = (aConta.Juros ?? 0).ToString("N2") + "%";
-            txtMultaPorcentagem.Text = (aConta.Multa ?? 0).ToString("N2") + "%";
-            txtDescontoPorcentagem.Text = (aConta.Desconto ?? 0).ToString("N2") + "%";
+             
+                bool contaQuitada = (aConta.Status == "Recebida" || aConta.Status == "Paga" || aConta.DataPagamento.HasValue);
+
+                if (contaQuitada)
+                {
+                    txtValorPago.Text = (aConta.ValorPago ?? 0).ToString("F2");
+
+                    txtJuros.Text = (aConta.Juros ?? 0).ToString("F2");
+                    txtMulta.Text = (aConta.Multa ?? 0).ToString("F2");
+                    txtDesconto.Text = (aConta.Desconto ?? 0).ToString("F2");
+
+                    txtJurosPorcentagem.Text = "0,00%";
+                    txtMultaPorcentagem.Text = "0,00%";
+                    txtDescontoPorcentagem.Text = "0,00%";
+                }
+                else
+                {
+                    txtValorPago.Text = "0,00";
+
+                    txtJuros.Text = "0,00";
+                    txtMulta.Text = "0,00";
+                    txtDesconto.Text = "0,00";
+
+                    txtJurosPorcentagem.Text = (aConta.Juros ?? 0).ToString("N2") + "%";
+                    txtMultaPorcentagem.Text = (aConta.Multa ?? 0).ToString("N2") + "%";
+                    txtDescontoPorcentagem.Text = (aConta.Desconto ?? 0).ToString("N2") + "%";
+                }
+            }
         }
 
         private void RecalcularValorPago()
         {
             if (!ModoBaixa) return;
+            if (aConta == null) return;
 
             DateTime dataPagamento = dtpDataPagamento.Value.Date;
             DateTime dataVencimento = dtpVencimento.Value.Date;
@@ -204,6 +267,12 @@ namespace Projeto.Views.Cadastros
             txtDesconto.Enabled = true;
             txtIdFormaPgto.Enabled = true; 
             btnPesquisarFormaPgto.Enabled = true;
+
+            txtValorPago.ReadOnly = false; 
+            txtJuros.ReadOnly = false;
+            txtMulta.ReadOnly = false;
+            txtDesconto.ReadOnly = false;
+            txtIdFormaPgto.ReadOnly = false;
 
             txtValorPago.Focus();
         }
