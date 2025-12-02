@@ -18,6 +18,7 @@ namespace Projeto.Views.Cadastros
         private VendaController controller = new VendaController();
 
         private ClienteController clienteController = new ClienteController();
+        private FuncionarioController funcionarioController = new FuncionarioController();
         private ProdutoController produtoController = new ProdutoController();
         private CondicaoPagamentoController condicaoPagamentoController = new CondicaoPagamentoController();
         private FormaPagamentoController formaPagamentoController = new FormaPagamentoController();
@@ -71,7 +72,11 @@ namespace Projeto.Views.Cadastros
             this.txtIdCondPgto.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosInteiros);
 
             if (this.Controls.Find("txtIdFuncionario", true).Length > 0)
+            {
                 this.Controls.Find("txtIdFuncionario", true)[0].KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosInteiros);
+
+                txtIdFuncionario.Leave += txtIdFuncionario_Leave;
+            }
 
 
             this.dtpEmissao.ValueChanged += new System.EventHandler(this.dtpEmissao_ValueChanged);
@@ -100,14 +105,8 @@ namespace Projeto.Views.Cadastros
 
         private void AgruparControles()
         {
-            parte1Controles = new List<Control> { txtCodigo, txtSerie, txtNumero, txtIdCliente, txtCliente, btnPesquisarCliente, dtpEmissao, dtpSaida };
-
-            if (this.Controls.Find("txtIdFuncionario", true).Length > 0) parte1Controles.Add(this.Controls.Find("txtIdFuncionario", true)[0]);
-            if (this.Controls.Find("txtFuncionario", true).Length > 0) parte1Controles.Add(this.Controls.Find("txtFuncionario", true)[0]);
-            if (this.Controls.Find("btnPesquisarFuncionario", true).Length > 0) parte1Controles.Add(this.Controls.Find("btnPesquisarFuncionario", true)[0]);
-
+            parte1Controles = new List<Control> { txtCodigo, txtSerie, txtNumero, txtIdCliente, txtCliente, btnPesquisarCliente, txtIdFuncionario, txtFuncionario, btnPesquisarFuncionario, dtpEmissao, dtpSaida };
             parte2Controles = new List<Control> { txtIdProduto, txtProduto, btnPesquisarProduto, txtQuantidade, txtValorUnitario, txtTotal, btnAdicionarProduto, btnEditarProduto, btnRemoverProduto, btnLimparProduto, listViewProdutos };
-
             parte3Controles = new List<Control> { txtValorTotal, txtIdCondPgto, txtCondPgto, btnAdicionarCondPgto, btnLimparCondPgto, listViewCondPgto };
         }
 
@@ -424,6 +423,45 @@ namespace Projeto.Views.Cadastros
             }
         }
 
+        private async void txtIdFuncionario_Leave(object sender, EventArgs e)
+        {
+            var txtId = this.Controls.Find("txtIdFuncionario", true).FirstOrDefault() as TextBox;
+            var txtNome = this.Controls.Find("txtFuncionario", true).FirstOrDefault() as TextBox;
+
+            if (txtId == null) return;
+
+            if (string.IsNullOrWhiteSpace(txtId.Text))
+            {
+                if (txtNome != null) txtNome.Clear();
+                AtualizarEstadoDosControles();
+                return;
+            }
+
+            if (int.TryParse(txtId.Text, out int id))
+            {
+                var f = await funcionarioController.BuscarPorId(id);
+
+                if (f != null)
+                {
+                    if (txtNome != null) txtNome.Text = f.Nome;
+                }
+                else
+                {
+                    MessageBox.Show("Funcionário não encontrado.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtId.Clear();
+                    if (txtNome != null) txtNome.Clear();
+                    txtId.Focus();
+                }
+            }
+            else
+            {
+                MessageBox.Show("ID de Funcionário inválido.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtId.Clear();
+                if (txtNome != null) txtNome.Clear();
+            }
+
+            AtualizarEstadoDosControles();
+        }
         private async void txtIdProduto_Leave(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtIdProduto.Text)) { LimparCamposItemParcial(); return; }
