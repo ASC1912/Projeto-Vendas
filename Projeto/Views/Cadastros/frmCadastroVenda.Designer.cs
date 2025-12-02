@@ -91,9 +91,20 @@
             // 
             this.txtCodigo.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtCodigo.MaxLength = 5;
+            this.txtCodigo.TabIndex = 0;
+            this.txtCodigo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // btnSair
+            // 
+            this.btnSair.TabIndex = 29;
+            // 
+            // chkInativo
+            // 
+            this.chkInativo.TabIndex = 28;
             // 
             // btnSalvar
             // 
+            this.btnSalvar.TabIndex = 30;
             this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
             // 
             // btnLimparProduto
@@ -101,7 +112,7 @@
             this.btnLimparProduto.Location = new System.Drawing.Point(1135, 152);
             this.btnLimparProduto.Name = "btnLimparProduto";
             this.btnLimparProduto.Size = new System.Drawing.Size(91, 23);
-            this.btnLimparProduto.TabIndex = 146;
+            this.btnLimparProduto.TabIndex = 20;
             this.btnLimparProduto.Text = "Limpar";
             this.btnLimparProduto.UseVisualStyleBackColor = true;
             this.btnLimparProduto.Click += new System.EventHandler(this.btnLimparProduto_Click);
@@ -111,7 +122,7 @@
             this.btnRemoverProduto.Location = new System.Drawing.Point(1023, 152);
             this.btnRemoverProduto.Name = "btnRemoverProduto";
             this.btnRemoverProduto.Size = new System.Drawing.Size(91, 23);
-            this.btnRemoverProduto.TabIndex = 145;
+            this.btnRemoverProduto.TabIndex = 19;
             this.btnRemoverProduto.Text = "Remover";
             this.btnRemoverProduto.UseVisualStyleBackColor = true;
             this.btnRemoverProduto.Click += new System.EventHandler(this.btnRemoverProduto_Click);
@@ -121,7 +132,7 @@
             this.btnEditarProduto.Location = new System.Drawing.Point(901, 152);
             this.btnEditarProduto.Name = "btnEditarProduto";
             this.btnEditarProduto.Size = new System.Drawing.Size(91, 23);
-            this.btnEditarProduto.TabIndex = 144;
+            this.btnEditarProduto.TabIndex = 18;
             this.btnEditarProduto.Text = "Editar";
             this.btnEditarProduto.UseVisualStyleBackColor = true;
             // 
@@ -130,7 +141,7 @@
             this.btnAdicionarProduto.Location = new System.Drawing.Point(788, 152);
             this.btnAdicionarProduto.Name = "btnAdicionarProduto";
             this.btnAdicionarProduto.Size = new System.Drawing.Size(91, 23);
-            this.btnAdicionarProduto.TabIndex = 143;
+            this.btnAdicionarProduto.TabIndex = 17;
             this.btnAdicionarProduto.Text = "Adicionar";
             this.btnAdicionarProduto.UseVisualStyleBackColor = true;
             this.btnAdicionarProduto.Click += new System.EventHandler(this.btnAdicionarProduto_Click);
@@ -150,7 +161,7 @@
             this.txtTotal.Name = "txtTotal";
             this.txtTotal.ReadOnly = true;
             this.txtTotal.Size = new System.Drawing.Size(126, 22);
-            this.txtTotal.TabIndex = 142;
+            this.txtTotal.TabIndex = 16;
             // 
             // lblValorUnitario
             // 
@@ -167,7 +178,7 @@
             this.txtValorUnitario.MaxLength = 15;
             this.txtValorUnitario.Name = "txtValorUnitario";
             this.txtValorUnitario.Size = new System.Drawing.Size(88, 22);
-            this.txtValorUnitario.TabIndex = 141;
+            this.txtValorUnitario.TabIndex = 15;
             this.txtValorUnitario.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtValorUnitario.TextChanged += new System.EventHandler(this.txtValorUnitario_TextChanged);
             // 
@@ -186,7 +197,7 @@
             this.txtQuantidade.MaxLength = 10;
             this.txtQuantidade.Name = "txtQuantidade";
             this.txtQuantidade.Size = new System.Drawing.Size(100, 22);
-            this.txtQuantidade.TabIndex = 140;
+            this.txtQuantidade.TabIndex = 14;
             this.txtQuantidade.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtQuantidade.TextChanged += new System.EventHandler(this.txtQuantidade_TextChanged);
             // 
@@ -195,7 +206,7 @@
             this.btnPesquisarProduto.Location = new System.Drawing.Point(315, 152);
             this.btnPesquisarProduto.Name = "btnPesquisarProduto";
             this.btnPesquisarProduto.Size = new System.Drawing.Size(91, 23);
-            this.btnPesquisarProduto.TabIndex = 139;
+            this.btnPesquisarProduto.TabIndex = 13;
             this.btnPesquisarProduto.Text = "Pesquisar";
             this.btnPesquisarProduto.UseVisualStyleBackColor = true;
             this.btnPesquisarProduto.Click += new System.EventHandler(this.btnPesquisarProduto_Click);
@@ -215,7 +226,7 @@
             this.dtpSaida.Location = new System.Drawing.Point(228, 85);
             this.dtpSaida.Name = "dtpSaida";
             this.dtpSaida.Size = new System.Drawing.Size(160, 22);
-            this.dtpSaida.TabIndex = 137;
+            this.dtpSaida.TabIndex = 10;
             this.dtpSaida.Value = new System.DateTime(2025, 7, 10, 0, 0, 0, 0);
             // 
             // lblDataEmissao
@@ -233,7 +244,7 @@
             this.dtpEmissao.Location = new System.Drawing.Point(11, 85);
             this.dtpEmissao.Name = "dtpEmissao";
             this.dtpEmissao.Size = new System.Drawing.Size(160, 22);
-            this.dtpEmissao.TabIndex = 136;
+            this.dtpEmissao.TabIndex = 9;
             this.dtpEmissao.Value = new System.DateTime(2025, 7, 10, 0, 0, 0, 0);
             // 
             // btnPesquisarCliente
@@ -241,7 +252,7 @@
             this.btnPesquisarCliente.Location = new System.Drawing.Point(697, 27);
             this.btnPesquisarCliente.Name = "btnPesquisarCliente";
             this.btnPesquisarCliente.Size = new System.Drawing.Size(91, 23);
-            this.btnPesquisarCliente.TabIndex = 135;
+            this.btnPesquisarCliente.TabIndex = 5;
             this.btnPesquisarCliente.Text = "Pesquisar";
             this.btnPesquisarCliente.UseVisualStyleBackColor = true;
             this.btnPesquisarCliente.Click += new System.EventHandler(this.btnPesquisarCliente_Click);
@@ -261,7 +272,7 @@
             this.txtCliente.Name = "txtCliente";
             this.txtCliente.ReadOnly = true;
             this.txtCliente.Size = new System.Drawing.Size(211, 22);
-            this.txtCliente.TabIndex = 134;
+            this.txtCliente.TabIndex = 4;
             // 
             // lblIdCliente
             // 
@@ -278,7 +289,7 @@
             this.txtIdCliente.MaxLength = 10;
             this.txtIdCliente.Name = "txtIdCliente";
             this.txtIdCliente.Size = new System.Drawing.Size(48, 22);
-            this.txtIdCliente.TabIndex = 133;
+            this.txtIdCliente.TabIndex = 3;
             this.txtIdCliente.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtIdCliente.Leave += new System.EventHandler(this.txtIdCliente_Leave);
             // 
@@ -306,7 +317,8 @@
             this.txtNumero.MaxLength = 10;
             this.txtNumero.Name = "txtNumero";
             this.txtNumero.Size = new System.Drawing.Size(100, 22);
-            this.txtNumero.TabIndex = 132;
+            this.txtNumero.TabIndex = 2;
+            this.txtNumero.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtSerie
             // 
@@ -314,7 +326,8 @@
             this.txtSerie.MaxLength = 5;
             this.txtSerie.Name = "txtSerie";
             this.txtSerie.Size = new System.Drawing.Size(100, 22);
-            this.txtSerie.TabIndex = 131;
+            this.txtSerie.TabIndex = 1;
+            this.txtSerie.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblIdProduto
             // 
@@ -331,7 +344,7 @@
             this.txtIdProduto.MaxLength = 10;
             this.txtIdProduto.Name = "txtIdProduto";
             this.txtIdProduto.Size = new System.Drawing.Size(48, 22);
-            this.txtIdProduto.TabIndex = 156;
+            this.txtIdProduto.TabIndex = 11;
             this.txtIdProduto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtIdProduto.Leave += new System.EventHandler(this.txtIdProduto_Leave);
             // 
@@ -350,7 +363,7 @@
             this.txtProduto.Name = "txtProduto";
             this.txtProduto.ReadOnly = true;
             this.txtProduto.Size = new System.Drawing.Size(211, 22);
-            this.txtProduto.TabIndex = 157;
+            this.txtProduto.TabIndex = 12;
             // 
             // lblIdCondicaoPgto
             // 
@@ -367,7 +380,7 @@
             this.txtIdCondPgto.MaxLength = 10;
             this.txtIdCondPgto.Name = "txtIdCondPgto";
             this.txtIdCondPgto.Size = new System.Drawing.Size(48, 22);
-            this.txtIdCondPgto.TabIndex = 164;
+            this.txtIdCondPgto.TabIndex = 23;
             this.txtIdCondPgto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtIdCondPgto.Leave += new System.EventHandler(this.txtIdCondPgto_Leave);
             // 
@@ -386,7 +399,7 @@
             this.txtValorTotal.Name = "txtValorTotal";
             this.txtValorTotal.ReadOnly = true;
             this.txtValorTotal.Size = new System.Drawing.Size(126, 22);
-            this.txtValorTotal.TabIndex = 163;
+            this.txtValorTotal.TabIndex = 22;
             // 
             // lblTotalProdutos
             // 
@@ -402,7 +415,7 @@
             this.btnLimparCondPgto.Location = new System.Drawing.Point(445, 438);
             this.btnLimparCondPgto.Name = "btnLimparCondPgto";
             this.btnLimparCondPgto.Size = new System.Drawing.Size(150, 23);
-            this.btnLimparCondPgto.TabIndex = 167;
+            this.btnLimparCondPgto.TabIndex = 26;
             this.btnLimparCondPgto.Text = "Limpar";
             this.btnLimparCondPgto.UseVisualStyleBackColor = true;
             this.btnLimparCondPgto.Click += new System.EventHandler(this.btnLimparCondPgto_Click);
@@ -413,14 +426,14 @@
             this.txtCondPgto.Name = "txtCondPgto";
             this.txtCondPgto.ReadOnly = true;
             this.txtCondPgto.Size = new System.Drawing.Size(200, 22);
-            this.txtCondPgto.TabIndex = 165;
+            this.txtCondPgto.TabIndex = 24;
             // 
             // btnAdicionarCondPgto
             // 
             this.btnAdicionarCondPgto.Location = new System.Drawing.Point(277, 438);
             this.btnAdicionarCondPgto.Name = "btnAdicionarCondPgto";
             this.btnAdicionarCondPgto.Size = new System.Drawing.Size(150, 23);
-            this.btnAdicionarCondPgto.TabIndex = 166;
+            this.btnAdicionarCondPgto.TabIndex = 25;
             this.btnAdicionarCondPgto.Text = "Adicionar";
             this.btnAdicionarCondPgto.UseVisualStyleBackColor = true;
             this.btnAdicionarCondPgto.Click += new System.EventHandler(this.btnAdicionarCondPgto_Click);
@@ -438,7 +451,7 @@
             this.listViewCondPgto.Location = new System.Drawing.Point(14, 467);
             this.listViewCondPgto.Name = "listViewCondPgto";
             this.listViewCondPgto.Size = new System.Drawing.Size(1241, 121);
-            this.listViewCondPgto.TabIndex = 173;
+            this.listViewCondPgto.TabIndex = 27;
             this.listViewCondPgto.UseCompatibleStateImageBehavior = false;
             this.listViewCondPgto.View = System.Windows.Forms.View.Details;
             // 
@@ -486,7 +499,7 @@
             this.listViewProdutos.Location = new System.Drawing.Point(12, 199);
             this.listViewProdutos.Name = "listViewProdutos";
             this.listViewProdutos.Size = new System.Drawing.Size(1230, 163);
-            this.listViewProdutos.TabIndex = 168;
+            this.listViewProdutos.TabIndex = 21;
             this.listViewProdutos.UseCompatibleStateImageBehavior = false;
             this.listViewProdutos.View = System.Windows.Forms.View.Details;
             // 
@@ -554,7 +567,7 @@
             this.btnPesquisarFuncionario.Location = new System.Drawing.Point(1089, 27);
             this.btnPesquisarFuncionario.Name = "btnPesquisarFuncionario";
             this.btnPesquisarFuncionario.Size = new System.Drawing.Size(91, 23);
-            this.btnPesquisarFuncionario.TabIndex = 182;
+            this.btnPesquisarFuncionario.TabIndex = 8;
             this.btnPesquisarFuncionario.Text = "Pesquisar";
             this.btnPesquisarFuncionario.UseVisualStyleBackColor = true;
             this.btnPesquisarFuncionario.Click += new System.EventHandler(this.btnPesquisarFuncionario_Click);
@@ -574,7 +587,7 @@
             this.txtFuncionario.Name = "txtFuncionario";
             this.txtFuncionario.ReadOnly = true;
             this.txtFuncionario.Size = new System.Drawing.Size(211, 22);
-            this.txtFuncionario.TabIndex = 181;
+            this.txtFuncionario.TabIndex = 7;
             // 
             // lblIDFuncionario
             // 
@@ -591,7 +604,7 @@
             this.txtIdFuncionario.MaxLength = 10;
             this.txtIdFuncionario.Name = "txtIdFuncionario";
             this.txtIdFuncionario.Size = new System.Drawing.Size(48, 22);
-            this.txtIdFuncionario.TabIndex = 180;
+            this.txtIdFuncionario.TabIndex = 6;
             this.txtIdFuncionario.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // frmCadastroVenda

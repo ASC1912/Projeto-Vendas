@@ -69,6 +69,7 @@ namespace Projeto.Views.Cadastros
             this.txtIdCliente.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosInteiros);
             this.txtIdProduto.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosInteiros);
             this.txtIdCondPgto.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosInteiros);
+
             if (this.Controls.Find("txtIdFuncionario", true).Length > 0)
                 this.Controls.Find("txtIdFuncionario", true)[0].KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress_ApenasNumerosInteiros);
 
@@ -78,12 +79,10 @@ namespace Projeto.Views.Cadastros
             this.listViewProdutos.SelectedIndexChanged += new System.EventHandler(this.listViewProdutos_SelectedIndexChanged);
             this.btnEditarProduto.Click += new System.EventHandler(this.btnEditarProduto_Click);
 
-            this.btnPesquisarCliente.Click += btnPesquisarCliente_Click;
-            this.btnPesquisarProduto.Click += btnPesquisarProduto_Click;
-            this.btnAdicionarCondPgto.Click += btnAdicionarCondPgto_Click;
-
-            if (this.Controls.Find("btnPesquisarFuncionario", true).Length > 0)
-                this.Controls.Find("btnPesquisarFuncionario", true)[0].Click += btnPesquisarFuncionario_Click;
+            this.txtIdFuncionario.TextChanged += (s, e) => AtualizarEstadoDosControles();
+            this.txtNumero.TextChanged += (s, e) => AtualizarEstadoDosControles();
+            this.txtSerie.TextChanged += (s, e) => AtualizarEstadoDosControles();
+            this.txtCodigo.TextChanged += (s, e) => AtualizarEstadoDosControles();
         }
 
         #endregion
@@ -123,9 +122,10 @@ namespace Projeto.Views.Cadastros
         private void AtualizarEstadoDosControles()
         {
             bool cabecalhoValido = !string.IsNullOrWhiteSpace(txtCodigo.Text) &&
-                                 !string.IsNullOrWhiteSpace(txtSerie.Text) &&
-                                 !string.IsNullOrWhiteSpace(txtNumero.Text) &&
-                                 !string.IsNullOrWhiteSpace(txtIdCliente.Text);
+                                   !string.IsNullOrWhiteSpace(txtSerie.Text) &&
+                                   !string.IsNullOrWhiteSpace(txtNumero.Text) &&
+                                   !string.IsNullOrWhiteSpace(txtIdCliente.Text) &&
+                                   !string.IsNullOrWhiteSpace(txtIdFuncionario.Text); 
 
             bool temItens = listViewProdutos.Items.Count > 0;
 
@@ -572,6 +572,7 @@ namespace Projeto.Views.Cadastros
                 await CarregarDadosCliente(c.Id);
             }
             oFrmConsultaCliente.ModoSelecao = false;
+            AtualizarEstadoDosControles();
         }
 
         private void btnPesquisarProduto_Click(object sender, EventArgs e)

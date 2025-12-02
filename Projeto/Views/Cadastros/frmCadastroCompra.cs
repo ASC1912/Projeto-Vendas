@@ -76,6 +76,10 @@ namespace Projeto.Views.Cadastros
             txtDespesas.TextChanged += new System.EventHandler(this.txtCustosExtras_TextChanged);
 
             this.dtpEmissao.ValueChanged += new System.EventHandler(this.dtpEmissao_ValueChanged);
+
+            this.txtNumero.TextChanged += (s, e) => AtualizarEstadoDosControles();
+            this.txtSerie.TextChanged += (s, e) => AtualizarEstadoDosControles();
+            this.txtCodigo.TextChanged += (s, e) => AtualizarEstadoDosControles();
         }
 
         #endregion
@@ -582,6 +586,7 @@ namespace Projeto.Views.Cadastros
                 txtIDFornecedor_Leave(sender, e); 
             }
             oFrmConsultaFornecedor.ModoSelecao = false;
+            AtualizarEstadoDosControles();
         }
 
         private void btnPesquisarProduto_Click(object sender, EventArgs e)

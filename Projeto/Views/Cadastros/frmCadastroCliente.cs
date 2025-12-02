@@ -161,7 +161,7 @@ namespace Projeto.Views
             txtTelefone.Clear();
             txtCPF.Clear();
             txtRG.Clear();
-            txtIdCondPgto.Clear(); // Adicionado
+            txtIdCondPgto.Clear(); 
             txtCondicao.Clear();
             condicaoSelecionadoId = -1;
             chkInativo.Checked = false;
@@ -201,6 +201,8 @@ namespace Projeto.Views
                 if (!Validador.CampoObrigatorio(txtEndereco, "O Endereço é obrigatório.")) return;
                 if (!Validador.CampoObrigatorio(txtNumEnd, "O Número de endereço é obrigatório.")) return;
                 if (!Validador.CampoObrigatorio(txtBairro, "O Bairro é obrigatório.")) return;
+                if (!Validador.CampoObrigatorio(txtCEP, "O CEP é obrigatório.")) return;
+
                 if (!Validador.ValidarEmail(txtEmail)) return;
                 if (!Validador.ValidarNumerico(txtNumEnd, "O número do endereço deve ser numérico.")) return;
 

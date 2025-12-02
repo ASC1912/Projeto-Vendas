@@ -216,7 +216,7 @@ namespace Projeto.Views
                 try
                 {
                     var itemSelecionado = listView1.SelectedItems[0];
-                    int id = int.Parse(itemSelecionado.SubItems[0].Text);
+                    int id = int.Parse(itemSelecionado.SubItems[1].Text);
 
                     ClienteSelecionado = await controller.BuscarPorId(id);
 
