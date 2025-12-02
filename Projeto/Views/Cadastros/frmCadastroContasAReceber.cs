@@ -36,6 +36,9 @@ namespace Projeto.Views.Cadastros
             txtJuros.Leave += (s, e) => AtualizarTotalComValoresManuais();
             txtMulta.Leave += (s, e) => AtualizarTotalComValoresManuais();
             txtDesconto.Leave += (s, e) => AtualizarTotalComValoresManuais();
+
+          
+            dtpDataPagamento.MaxDate = DateTime.Today;
         }
 
         public void setFrmConsultaCliente(object obj) { oFrmConsultaCliente = (frmConsultaCliente)obj; }
@@ -71,9 +74,9 @@ namespace Projeto.Views.Cadastros
             if (this.Controls.ContainsKey("txtMultaPorcentagem")) txtMultaPorcentagem.Text = "0,00%";
             if (this.Controls.ContainsKey("txtDescontoPorcentagem")) txtDescontoPorcentagem.Text = "0,00%";
 
-            dtpEmissao.Value = DateTime.Now;
-            dtpVencimento.Value = DateTime.Now;
-            dtpDataPagamento.Value = DateTime.Now;
+            dtpEmissao.Value = DateTime.Today; 
+            dtpVencimento.Value = DateTime.Today; 
+            dtpDataPagamento.Value = DateTime.Today; 
 
             aConta = new ContasAReceber();
 
@@ -125,8 +128,8 @@ namespace Projeto.Views.Cadastros
                 DesbloquearCamposDePagamento();
 
                 dtpDataPagamento.MinDate = DateTimePicker.MinimumDateTime;
-                dtpDataPagamento.MaxDate = DateTimePicker.MaximumDateTime;
-                dtpDataPagamento.Value = DateTime.Today;   respeitar o MaxDate
+                dtpDataPagamento.MaxDate = DateTime.Today; 
+                dtpDataPagamento.Value = DateTime.Today;   
 
                 txtJurosPorcentagem.Text = (aConta.Juros ?? 0).ToString("N2") + "%";
                 txtMultaPorcentagem.Text = (aConta.Multa ?? 0).ToString("N2") + "%";
@@ -142,9 +145,9 @@ namespace Projeto.Views.Cadastros
 
                 dtpDataPagamento.MinDate = DateTimePicker.MinimumDateTime;
                 dtpDataPagamento.MaxDate = DateTimePicker.MaximumDateTime;
-                dtpDataPagamento.Value = aConta.DataPagamento ?? DateTime.Now;
+                dtpDataPagamento.Value = aConta.DataPagamento?.Date ?? DateTime.Today;
 
-             
+
                 bool contaQuitada = (aConta.Status == "Recebida" || aConta.Status == "Paga" || aConta.DataPagamento.HasValue);
 
                 if (contaQuitada)
@@ -265,10 +268,10 @@ namespace Projeto.Views.Cadastros
             txtJuros.Enabled = true;
             txtMulta.Enabled = true;
             txtDesconto.Enabled = true;
-            txtIdFormaPgto.Enabled = true; 
+            txtIdFormaPgto.Enabled = true;
             btnPesquisarFormaPgto.Enabled = true;
 
-            txtValorPago.ReadOnly = false; 
+            txtValorPago.ReadOnly = false;
             txtJuros.ReadOnly = false;
             txtMulta.ReadOnly = false;
             txtDesconto.ReadOnly = false;
@@ -298,7 +301,7 @@ namespace Projeto.Views.Cadastros
                     aConta.ValorPago = vlrPago;
 
                     decimal.TryParse(txtJuros.Text, out decimal juros);
-                    aConta.Juros = juros; 
+                    aConta.Juros = juros;
 
                     decimal.TryParse(txtMulta.Text, out decimal multa);
                     aConta.Multa = multa;

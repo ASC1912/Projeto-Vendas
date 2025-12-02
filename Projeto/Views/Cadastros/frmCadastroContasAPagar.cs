@@ -42,6 +42,8 @@ namespace Projeto.Views.Cadastros
             dtpVencimento.Format = DateTimePickerFormat.Short;
             dtpEmissao.MaxDate = DateTime.Now;
 
+            dtpDataPagamento.MaxDate = DateTime.Today;
+
             dtpEmissao.ValueChanged += (s, e) => { dtpVencimento.MinDate = dtpEmissao.Value.Date; };
             dtpVencimento.MinDate = dtpEmissao.Value.Date;
             this.dtpDataPagamento.ValueChanged += new System.EventHandler(this.dtpDataPagamento_ValueChanged);
@@ -92,14 +94,13 @@ namespace Projeto.Views.Cadastros
 
             dtpEmissao.MaxDate = DateTime.Now;
 
-            dtpVencimento.MinDate = dtpEmissao.Value.Date; 
+            dtpVencimento.MinDate = dtpEmissao.Value.Date;
             dtpVencimento.MaxDate = DateTimePicker.MaximumDateTime;
             dtpVencimento.Value = DateTime.Today;
 
             txtValorAPagar.Text = "0,00";
 
-            dtpDataPagamento.MinDate = DateTimePicker.MinimumDateTime; 
-            dtpDataPagamento.MaxDate = DateTimePicker.MaximumDateTime;
+            dtpDataPagamento.MinDate = DateTimePicker.MinimumDateTime;
             dtpDataPagamento.Value = DateTime.Today;
             dtpDataPagamento.Checked = false;
 
@@ -184,8 +185,17 @@ namespace Projeto.Views.Cadastros
             txtSerie.Text = aConta.CompraSerie ?? "";
             txtNumero.Text = aConta.CompraNumeroNota.ToString();
 
+            dtpDataPagamento.MinDate = DateTimePicker.MinimumDateTime;
+
             dtpDataPagamento.Checked = aConta.DataPagamento.HasValue;
-            dtpDataPagamento.Value = aConta.DataPagamento ?? DateTime.Now;
+
+            DateTime dataPag = aConta.DataPagamento?.Date ?? DateTime.Today;
+            if (dataPag > DateTime.Today)
+            {
+                dataPag = DateTime.Today;
+            }
+
+            dtpDataPagamento.Value = dataPag;
 
             if (aConta.Status == "Paga")
             {
@@ -262,6 +272,10 @@ namespace Projeto.Views.Cadastros
             btnPesquisarFormaPgto.Enabled = false;
             chkInativo.Enabled = false;
 
+            dtpDataPagamento.MaxDate = DateTime.Today;
+            dtpDataPagamento.MinDate = DateTimePicker.MinimumDateTime;
+            dtpDataPagamento.Value = dtpDataPagamento.Value.Date;
+
             if (isLancamento)
             {
                 txtIDFornecedor.Enabled = true;
@@ -287,6 +301,9 @@ namespace Projeto.Views.Cadastros
                 if (this.Controls.ContainsKey("txtCodigo")) this.Controls["txtCodigo"].Text = "55";
                 txtSerie.Text = "1";
                 dtpDataPagamento.Checked = false;
+
+                dtpDataPagamento.MaxDate = DateTimePicker.MaximumDateTime;
+                dtpDataPagamento.Value = aConta?.DataPagamento?.Date ?? DateTime.Today;
             }
             else if (isPagamento)
             {
@@ -309,11 +326,13 @@ namespace Projeto.Views.Cadastros
 
                 if (aConta != null && aConta.Status == "Aberta")
                 {
-                    DateTime dataSugerida = DateTime.Now.Date;
-                    if (dataSugerida < aConta.DataEmissao.Date) dataSugerida = aConta.DataEmissao.Date;
+                    dtpDataPagamento.MaxDate = DateTime.Today;
 
-                    if (dtpDataPagamento.MaxDate < dataSugerida) dataSugerida = dtpDataPagamento.MaxDate;
-                    if (dtpDataPagamento.MinDate > dataSugerida) dataSugerida = dtpDataPagamento.MinDate;
+                    DateTime dataSugerida = DateTime.Today;
+
+                    if (aConta.DataEmissao.Date > dataSugerida) dataSugerida = aConta.DataEmissao.Date;
+
+                    if (dataSugerida > dtpDataPagamento.MaxDate) dataSugerida = dtpDataPagamento.MaxDate;
 
                     dtpDataPagamento.Value = dataSugerida;
                     dtpDataPagamento.Checked = true;
@@ -337,7 +356,6 @@ namespace Projeto.Views.Cadastros
 
                 btnSalvar.Visible = false;
 
-
                 dtpDataPagamento.Enabled = false;
                 txtValorPago.ReadOnly = true;
                 txtJuros.ReadOnly = true;
@@ -349,6 +367,9 @@ namespace Projeto.Views.Cadastros
                 btnPesquisarFornecedor.Enabled = false;
 
                 dtpDataPagamento.Checked = (aConta.Status == "Paga");
+
+         
+                dtpDataPagamento.MaxDate = DateTimePicker.MaximumDateTime;
             }
 
             if (aConta != null && aConta.Status == "Cancelada")
@@ -392,6 +413,13 @@ namespace Projeto.Views.Cadastros
                         dtpDataPagamento.Focus();
                         return;
                     }
+                    if (dtpDataPagamento.Value.Date > DateTime.Today.Date)
+                    {
+                        MessageBox.Show("A Data do Pagamento não pode ser uma data futura.", "Validação", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        dtpDataPagamento.Focus();
+                        return;
+                    }
+
                     if (!Validador.CampoObrigatorio(txtIdFormaPgto, "Forma de Pagamento é obrigatório"))
                     {
                         return;
@@ -804,6 +832,14 @@ namespace Projeto.Views.Cadastros
             {
                 MessageBox.Show($"Erro ao buscar dados do fornecedor: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 txtFornecedor.Clear();
+            }
+        }
+
+        private void TextBox_KeyPress_ApenasNumerosInteiros(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
             }
         }
 

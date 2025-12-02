@@ -1,7 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using Projeto.Models;
 using System;
-using System.Collections.Generic; 
+using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Configuration;
 
@@ -17,12 +17,12 @@ namespace Projeto.DAO
                 INSERT INTO ContasAPagar (
                     CompraModelo, CompraSerie, CompraNumeroNota, CompraFornecedorId, NumeroParcela,
                     FornecedorId, DataEmissao, DataVencimento, ValorVencimento,
-                    Status, Ativo, DataCadastro, DataAlteracao,
+                    IdFormaPagamento, Status, Ativo, DataCadastro, DataAlteracao,
                     Juros, Multa, Desconto  
                 ) VALUES (
                     @CompraModelo, @CompraSerie, @CompraNumeroNota, @CompraFornecedorId, @NumeroParcela,
                     @FornecedorId, @DataEmissao, @DataVencimento, @ValorVencimento,
-                    @Status, @Ativo, @DataCadastro, @DataAlteracao,
+                    @IdFormaPagamento, @Status, @Ativo, @DataCadastro, @DataAlteracao,
                     @Juros, @Multa, @Desconto  
                 )";
 
@@ -37,6 +37,7 @@ namespace Projeto.DAO
                 cmd.Parameters.AddWithValue("@DataEmissao", conta.DataEmissao);
                 cmd.Parameters.AddWithValue("@DataVencimento", conta.DataVencimento);
                 cmd.Parameters.AddWithValue("@ValorVencimento", conta.ValorVencimento);
+                cmd.Parameters.AddWithValue("@IdFormaPagamento", (object)conta.IdFormaPagamento ?? DBNull.Value); // Adicionado para persistir a Forma de Pgto
                 cmd.Parameters.AddWithValue("@Status", "Aberta");
                 cmd.Parameters.AddWithValue("@Ativo", true);
                 cmd.Parameters.AddWithValue("@DataCadastro", DateTime.Now);
@@ -51,7 +52,7 @@ namespace Projeto.DAO
 
         public void SalvarManual(ContasAPagar conta)
         {
-         
+
             conta.Ativo = true;
             if (conta.DataEmissao == DateTime.MinValue || conta.DataEmissao == default(DateTime))
                 conta.DataEmissao = DateTime.Now.Date;
@@ -60,7 +61,7 @@ namespace Projeto.DAO
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
-                Salvar(conta, conn, null); 
+                Salvar(conta, conn, null);
             }
         }
 
@@ -141,7 +142,8 @@ namespace Projeto.DAO
                       AND CompraSerie = @CompraSerie
                       AND CompraNumeroNota = @CompraNumeroNota
                       AND CompraFornecedorId = @CompraFornecedorId
-                      AND NumeroParcela = @NumeroParcela";
+                      AND NumeroParcela = @NumeroParcela
+                      AND Status = 'Aberta'";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
@@ -288,7 +290,7 @@ namespace Projeto.DAO
                       AND CompraNumeroNota = @CompraNumeroNota
                       AND CompraFornecedorId = @CompraFornecedorId
                       AND NumeroParcela = @NumeroParcela
-                      AND Status = 'Aberta'"; 
+                      AND Status = 'Aberta'";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
