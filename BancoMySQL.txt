@@ -406,7 +406,7 @@ CREATE TABLE ItensVenda (
     FOREIGN KEY (ProdutoId) REFERENCES Produtos(Id)
 );
 
---TABELA: ContasAReceber
+-- TABELA: ContasAReceber
 CREATE TABLE ContasAReceber (
     VendaModelo VARCHAR(5) NOT NULL,
     VendaSerie VARCHAR(5) NOT NULL,
@@ -433,3 +433,4 @@ CREATE TABLE ContasAReceber (
     FOREIGN KEY (IdFormaPagamento) REFERENCES FormasPagamento(Id),
     FOREIGN KEY (VendaModelo, VendaSerie, VendaNumeroNota, ClienteId) REFERENCES Vendas(Modelo, Serie, NumeroNota, ClienteId)
 );
+
