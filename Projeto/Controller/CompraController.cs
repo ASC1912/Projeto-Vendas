@@ -8,6 +8,7 @@ namespace Projeto.Controller
     internal class CompraController
     {
         private DAOCompra dao = new DAOCompra();
+        private DAOProduto daoProduto = new DAOProduto();
 
         public void Salvar(Compra compra)
         {
@@ -81,5 +82,32 @@ namespace Projeto.Controller
             }
         }
 
+        public string ValidarCancelamento(Compra compra)
+        {
+            if (compra.Itens == null || compra.Itens.Count == 0)
+            {
+                return "Erro: Os itens da compra não foram carregados para validação.";
+            }
+
+            foreach (var item in compra.Itens)
+            {
+                Produto produtoNoEstoque = daoProduto.BuscarPorId(item.ProdutoId);
+
+                if (produtoNoEstoque != null)
+                {
+                   
+                    if (produtoNoEstoque.Estoque < item.Quantidade)
+                    {
+                        return $"OPERAÇÃO BLOQUEADA!\n\n" +
+                               $"Produto: {produtoNoEstoque.Descricao}\n" +
+                               $"Estoque Atual: {produtoNoEstoque.Estoque}\n" +
+                               $"Qtd. nesta Nota: {item.Quantidade}\n\n" +
+                               $"Você já vendeu itens desta nota. Não é possível cancelá-la pois o estoque ficaria negativo.";
+                    }
+                }
+            }
+
+            return "OK"; 
+        }
     }
 }

@@ -141,6 +141,14 @@ namespace Projeto.Views.Consultas
 
                 if (compraCompleta != null)
                 {
+                    string resultadoValidacao = controller.ValidarCancelamento(compraCompleta);
+
+                    if (resultadoValidacao != "OK")
+                    {
+                        MessageBox.Show(resultadoValidacao, "Cancelamento Negado", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                        return;
+                    }
+
                     oFrmCadastroCompra.modoCancelamento = true;
                     oFrmCadastroCompra.ConhecaObj(compraCompleta, controller);
                     oFrmCadastroCompra.CarregaTxt();
