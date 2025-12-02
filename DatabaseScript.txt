@@ -379,8 +379,6 @@ CREATE TABLE Vendas (
     CondicaoPagamentoId INT,
     DataEmissao DATETIME,
     DataSaida DATETIME,
-    ValorFrete DECIMAL(10,2) DEFAULT 0.00,
-    ValorDesconto DECIMAL(10,2) DEFAULT 0.00,
     ValorTotal DECIMAL(10,2) NOT NULL,
     Observacao VARCHAR(255),
     Ativo BIT DEFAULT 1,
@@ -433,6 +431,5 @@ CREATE TABLE ContasAReceber (
     PRIMARY KEY (VendaModelo, VendaSerie, VendaNumeroNota, ClienteId, NumeroParcela),
     FOREIGN KEY (ClienteId) REFERENCES Clientes(Id),
     FOREIGN KEY (IdFormaPagamento) REFERENCES FormasPagamento(Id),
-    FOREIGN KEY (VendaModelo, VendaSerie, VendaNumeroNota, ClienteId) 
-        REFERENCES Vendas(Modelo, Serie, NumeroNota, ClienteId)
+    FOREIGN KEY (VendaModelo, VendaSerie, VendaNumeroNota, ClienteId) REFERENCES Vendas(Modelo, Serie, NumeroNota, ClienteId)
 );
